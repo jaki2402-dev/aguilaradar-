@@ -1,0 +1,181 @@
+// Orchestration : navigation par onglets, chargement des données JSON, rendu.
+
+const TABS = ["overview", "favoris", "opportunities", "journal", "engine", "notifications"];
+let pricesIntervalStarted = false;
+
+function switchTab(tabId) {
+  TABS.forEach((id) => {
+    document.getElementById(`tab-${id}`).classList.toggle("active", id === tabId);
+    document.querySelector(`[data-tab="${id}"]`).classList.toggle("active", id === tabId);
+  });
+}
+
+async function loadJson(url) {
+  try {
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error(`${url} ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    console.error("Chargement impossible :", url, err);
+    return null;
+  }
+}
+
+function renderFavorisGrid() {
+  const grid = document.getElementById("favoris-grid");
+  grid.innerHTML = FAVORIS.map(
+    (f) => `
+    <div class="favori-card">
+      <div class="favori-header">
+        <div>
+          <span class="favori-ticker">${f.ticker}</span>
+          <span class="favori-name">${f.name}</span>
+        </div>
+        <div class="favori-price skeleton" id="price-${f.ticker}">0 000,00 €</div>
+      </div>
+      <div class="chip skeleton" id="change-${f.ticker}">▲ +0,00 %</div>
+      <div class="tv-chart" id="tv-${f.ticker}"></div>
+      <div class="favori-verdict empty-state">Verdict en attente du premier cycle d'analyse automatisé.</div>
+    </div>`
+  ).join("");
+
+  FAVORIS.forEach((f) => mountTradingViewChart(`tv-${f.ticker}`, f.tvSymbol));
+}
+
+async function refreshPrices() {
+  try {
+    const prices = await fetchFavorisPrices();
+    FAVORIS.forEach((f) => {
+      const p = prices[f.cgId];
+      const priceEl = document.getElementById(`price-${f.ticker}`);
+      const changeEl = document.getElementById(`change-${f.ticker}`);
+      if (!p || !priceEl || !changeEl) return;
+      priceEl.textContent = formatPrice(p.eur, "EUR");
+      priceEl.classList.remove("skeleton");
+      const change = p.eur_24h_change;
+      changeEl.textContent = formatChangePct(change);
+      changeEl.className = "chip skeleton-off " + (change >= 0 ? "positive" : "negative");
+      changeEl.classList.remove("skeleton");
+    });
+    document.getElementById("last-price-update").textContent =
+      "Prix à l'instant : " + new Date().toLocaleTimeString("fr-FR");
+  } catch (err) {
+    console.error("Erreur de rafraîchissement des prix :", err);
+    document.getElementById("last-price-update").textContent =
+      "Prix indisponibles pour l'instant (nouvel essai automatique sous peu).";
+  }
+}
+
+function renderOpportunities(data) {
+  const el = document.getElementById("opportunities-body");
+  const items = (data && data.opportunities) || [];
+  if (items.length === 0) {
+    el.innerHTML = `<p class="empty-state">Aucun screening réalisé pour l'instant — le Top 300 (memecoins exclus) sera analysé au premier cycle profond de la routine programmée.</p>`;
+    return;
+  }
+  el.innerHTML = `
+    <table class="data-table">
+      <thead><tr><th>Actif</th><th>Prix</th><th>24h</th><th>7j</th><th>Score</th><th>Raison</th></tr></thead>
+      <tbody>
+        ${items
+          .map(
+            (o) => `<tr>
+          <td>${o.ticker}</td>
+          <td>${formatPrice(o.price_eur, "EUR")}</td>
+          <td class="${o.change_24h_pct >= 0 ? "positive" : "negative"}">${formatChangePct(o.change_24h_pct)}</td>
+          <td class="${o.change_7d_pct >= 0 ? "positive" : "negative"}">${formatChangePct(o.change_7d_pct)}</td>
+          <td>${o.opportunity_score}</td>
+          <td>${o.reason}</td>
+        </tr>`
+          )
+          .join("")}
+      </tbody>
+    </table>`;
+}
+
+function renderJournal(verdicts) {
+  const el = document.getElementById("journal-body");
+  if (verdicts.length === 0) {
+    el.innerHTML = `<p class="empty-state">Aucun verdict émis pour l'instant. Dès que la routine programmée sera active, chaque verdict apparaîtra ici et y restera de façon permanente.</p>`;
+    return;
+  }
+  el.innerHTML = verdicts
+    .slice()
+    .reverse()
+    .map(
+      (v) => `
+      <div class="journal-entry">
+        <div class="log-header">
+          <span><strong>${v.ticker || v.asset}</strong> · ${v.issued_at}</span>
+          <span class="badge badge-${(v.verdict || "").toLowerCase()}">${v.verdict}</span>
+        </div>
+        <p>${v.reasoning || ""}</p>
+        <p class="hint">Confiance ${v.confidence_pct ?? "—"} % · horizon ${v.horizon_days} j · statut ${v.status}</p>
+      </div>`
+    )
+    .join("");
+}
+
+function renderNotifications(alerts) {
+  const el = document.getElementById("notifications-body");
+  if (!alerts || alerts.length === 0) {
+    el.innerHTML = `<p class="empty-state">Aucune alerte active. Le pouls rapide (prix/seuils toutes les ${REFRESH.quantCycleMinutes} min) déclenchera une notification ici dès qu'un seuil sera franchi, avec le signal technique et le pourquoi.</p>`;
+    return;
+  }
+  el.innerHTML = alerts
+    .map(
+      (a) => `
+      <div class="alert-entry">
+        <div class="log-header">
+          <span><strong>${a.ticker}</strong> · ${a.triggered_at}</span>
+          <span class="badge badge-warning">${a.type}</span>
+        </div>
+        <p>${a.message}</p>
+      </div>`
+    )
+    .join("");
+}
+
+function updateHeroStats(verdicts, alerts) {
+  const verdictsEl = document.getElementById("hero-verdicts");
+  const alertsEl = document.getElementById("hero-alerts");
+  if (verdictsEl) verdictsEl.textContent = verdicts.length;
+  if (alertsEl) alertsEl.textContent = (alerts || []).length;
+}
+
+async function initApp() {
+  document.querySelectorAll("nav button[data-tab]").forEach((btn) => {
+    btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+  });
+
+  renderFavorisGrid();
+  refreshPrices();
+  if (!pricesIntervalStarted) {
+    setInterval(refreshPrices, 60000);
+    pricesIntervalStarted = true;
+  }
+
+  const [verdicts, engineHistory, opportunities, alerts] = await Promise.all([
+    loadJson(DATA_URLS.verdicts),
+    loadJson(DATA_URLS.engineHistory),
+    loadJson(DATA_URLS.opportunities),
+    loadJson(DATA_URLS.alerts),
+  ]);
+
+  renderEngineTab(verdicts || [], engineHistory);
+  renderOpportunities(opportunities);
+  renderJournal(verdicts || []);
+  renderNotifications(alerts);
+  updateHeroStats(verdicts || [], alerts);
+
+  const timestamps = [
+    engineHistory && engineHistory.global_stats && engineHistory.global_stats.last_computed_at,
+    opportunities && opportunities.last_scan_at,
+  ].filter(Boolean);
+  const lastDeepCycle = document.getElementById("last-deep-cycle");
+  lastDeepCycle.textContent = timestamps.length
+    ? "Dernière analyse profonde : " + new Date(Math.max(...timestamps.map((t) => new Date(t)))).toLocaleString("fr-FR")
+    : "Automatisation pas encore activée — routine programmée à configurer.";
+}
+
+window.initApp = initApp;

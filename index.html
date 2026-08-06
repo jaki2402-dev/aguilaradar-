@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>aguilaradar</title>
+<meta name="robots" content="noindex, nofollow" />
+<meta name="theme-color" content="#0a0e13" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<link rel="icon" href="favicon.svg" type="image/svg+xml" />
+<link rel="manifest" href="manifest.json" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<div id="access-gate">
+  <div class="gate-card">
+    <div class="gate-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+    </div>
+    <h1>AGUILARADAR</h1>
+    <p class="tagline">Radar de marché crypto — accès restreint</p>
+    <form id="access-form">
+      <input id="access-input" type="password" inputmode="numeric" autocomplete="off" placeholder="Code d'accès" required />
+      <button type="submit">Entrer</button>
+      <p id="access-error"></p>
+    </form>
+  </div>
+</div>
+
+<div id="app-root" style="display:none">
+
+  <header class="site-header">
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+      </div>
+      <h1>AGUILARADAR</h1>
+    </div>
+    <div class="meta">
+      <div class="live-pill"><span class="live-dot"></span><span id="last-price-update">Prix : chargement…</span></div>
+      <div id="last-deep-cycle">Analyse profonde : chargement…</div>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button data-tab="overview" class="active">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
+      <span class="tab-label">Accueil</span>
+    </button>
+    <button data-tab="favoris">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span class="tab-label">Favoris</span>
+    </button>
+    <button data-tab="opportunities">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
+      <span class="tab-label">Opportunités</span>
+    </button>
+    <button data-tab="journal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      <span class="tab-label">Journal</span>
+    </button>
+    <button data-tab="engine">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      <span class="tab-label">Moteur</span>
+    </button>
+    <button data-tab="notifications">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span class="tab-label">Alertes</span>
+    </button>
+  </nav>
+
+  <main>
+
+    <section id="tab-overview" class="tab-panel active">
+      <div class="section-head">
+        <div class="section-icon section-icon--teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg></div>
+        <h2>Vue d'ensemble</h2>
+      </div>
+      <p class="section-sub">Les prix se rafraîchissent en direct. L'analyse profonde (verdicts, screening, moteur) suit un cycle programmé — voir l'onglet Moteur.</p>
+      <div class="hero-card">
+        <div class="hint">État du radar</div>
+        <div class="hero-stats">
+          <div><div class="hero-stat-value">15</div><div class="hero-stat-label">Favoris suivis</div></div>
+          <div><div class="hero-stat-value" id="hero-verdicts">0</div><div class="hero-stat-label">Verdicts émis</div></div>
+          <div><div class="hero-stat-value" id="hero-alerts">0</div><div class="hero-stat-label">Alertes actives</div></div>
+          <div><div class="hero-stat-value">—</div><div class="hero-stat-label">Automatisation</div></div>
+        </div>
+      </div>
+      <div class="empty-state">
+        Routine d'automatisation pas encore configurée. Une fois active : dernière analyse, alertes en cours et résumé du moteur se mettront à jour ici automatiquement.
+      </div>
+    </section>
+
+    <section id="tab-favoris" class="tab-panel">
+      <div class="section-head">
+        <div class="section-icon section-icon--teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <h2>Mes 15 favoris</h2>
+      </div>
+      <p class="section-sub">Prix en direct (CoinGecko) et graphique chandelier (TradingView). Le verdict par actif apparaît une fois l'analyse automatisée active.</p>
+      <div id="favoris-grid" class="favoris-grid"></div>
+    </section>
+
+    <section id="tab-opportunities" class="tab-panel">
+      <div class="section-head">
+        <div class="section-icon section-icon--gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></div>
+        <h2>Opportunités — Top 300 hors memecoin</h2>
+      </div>
+      <p class="section-sub">Criblage périodique du marché, memecoins exclus (catégorie CoinGecko "Meme"), généré par le cycle profond.</p>
+      <div id="opportunities-body"></div>
+    </section>
+
+    <section id="tab-journal" class="tab-panel">
+      <div class="section-head">
+        <div class="section-icon section-icon--indigo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div>
+        <h2>Journal des verdicts</h2>
+      </div>
+      <p class="section-sub">Historique complet, permanent — rien n'est jamais effacé ni remis à zéro.</p>
+      <div id="journal-body"></div>
+    </section>
+
+    <section id="tab-engine" class="tab-panel">
+      <div class="section-head">
+        <div class="section-icon section-icon--violet"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+        <h2>Performance du moteur</h2>
+      </div>
+      <p class="section-sub">Auto-évaluation honnête : la matrice de confusion reste vide tant qu'aucun verdict n'a atteint son horizon — aucun chiffre n'est inventé avant ça.</p>
+      <div id="engine-summary"></div>
+      <div id="engine-matrix" style="margin-top: 16px;"></div>
+      <div id="engine-classes" style="margin-top: 16px;"></div>
+      <h3 style="margin-top: 28px;">Journal des corrections / améliorations</h3>
+      <p class="section-sub">Chaque tentative d'ajustement du moteur, conservée en permanence (append-only).</p>
+      <div id="engine-log"></div>
+    </section>
+
+    <section id="tab-notifications" class="tab-panel">
+      <div class="section-head">
+        <div class="section-icon section-icon--coral"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></div>
+        <h2>Notifications</h2>
+      </div>
+      <p class="section-sub">Alertes de seuil déclenchées par le pouls rapide (prix / indicateurs techniques / carnet d'ordres), avec le signal et le pourquoi.</p>
+      <div id="notifications-body"></div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    Analyse automatisée à titre informatif — ne constitue pas un conseil en investissement réglementé.
+    Aucune donnée personnelle, aucune exécution d'ordre réelle, uniquement des simulations. Aucun memecoin recommandé.
+  </footer>
+
+</div>
+
+<script src="https://s3.tradingview.com/tv.js"></script>
+<script src="js/config.js"></script>
+<script src="js/prices.js"></script>
+<script src="js/charts.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/app.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

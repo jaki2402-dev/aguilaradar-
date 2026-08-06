@@ -1,0 +1,156 @@
+// Onglet "Performance du moteur" — matrice de confusion et métriques calculées EN DIRECT
+// à partir des verdicts bruts (jamais une valeur juste affirmée dans un JSON opaque).
+// Seule la comparaison "buy & hold BTC" vient d'engine-history.json (calculée par le
+// cycle profond, qui a accès à l'historique de prix nécessaire).
+
+const CLASSES = ["ACHAT", "ATTENTE", "VENTE"];
+
+function classifyActualMove(pctChange, thresholdPct) {
+  if (pctChange === null || pctChange === undefined) return null;
+  if (pctChange > thresholdPct) return "ACHAT";
+  if (pctChange < -thresholdPct) return "VENTE";
+  return "ATTENTE";
+}
+
+function computeConfusionMatrix(resolvedVerdicts) {
+  const matrix = {};
+  CLASSES.forEach((p) => {
+    matrix[p] = {};
+    CLASSES.forEach((a) => (matrix[p][a] = 0));
+  });
+  resolvedVerdicts.forEach((v) => {
+    const predicted = v.verdict;
+    const actual = v.outcome && v.outcome.actual_direction;
+    if (CLASSES.includes(predicted) && CLASSES.includes(actual)) {
+      matrix[predicted][actual] += 1;
+    }
+  });
+  return matrix;
+}
+
+function computeClassMetrics(matrix) {
+  const metrics = {};
+  CLASSES.forEach((c) => {
+    const truePos = matrix[c][c];
+    const predictedTotal = CLASSES.reduce((sum, a) => sum + matrix[c][a], 0);
+    const actualTotal = CLASSES.reduce((sum, p) => sum + matrix[p][c], 0);
+    const precision = predictedTotal > 0 ? truePos / predictedTotal : null;
+    const recall = actualTotal > 0 ? truePos / actualTotal : null;
+    const f1 =
+      precision !== null && recall !== null && precision + recall > 0
+        ? (2 * precision * recall) / (precision + recall)
+        : null;
+    metrics[c] = { precision, recall, f1, predictedTotal, actualTotal };
+  });
+  return metrics;
+}
+
+function computeEngineStats(resolvedVerdicts) {
+  if (resolvedVerdicts.length === 0) return null;
+
+  const matrix = computeConfusionMatrix(resolvedVerdicts);
+  const perClass = computeClassMetrics(matrix);
+
+  const total = resolvedVerdicts.length;
+  const correct = CLASSES.reduce((sum, c) => sum + matrix[c][c], 0);
+  const accuracyPct = (correct / total) * 100;
+
+  const nonAttenteCalls = resolvedVerdicts.filter((v) => v.verdict !== "ATTENTE").length;
+  const coveragePct = (nonAttenteCalls / total) * 100;
+
+  const actualCounts = { ACHAT: 0, ATTENTE: 0, VENTE: 0 };
+  resolvedVerdicts.forEach((v) => {
+    const actual = v.outcome && v.outcome.actual_direction;
+    if (actual in actualCounts) actualCounts[actual] += 1;
+  });
+  const majorityClassCount = Math.max(...Object.values(actualCounts));
+  const baselineMajorityPct = (majorityClassCount / total) * 100;
+
+  const f1Values = CLASSES.map((c) => perClass[c].f1).filter((v) => v !== null);
+  const f1Macro = f1Values.length ? (f1Values.reduce((a, b) => a + b, 0) / f1Values.length) * 100 : null;
+
+  return { matrix, perClass, total, correct, accuracyPct, coveragePct, baselineMajorityPct, f1Macro };
+}
+
+function renderEngineTab(verdicts, engineHistory) {
+  const resolved = verdicts.filter((v) => v.status === "resolved");
+  const pending = verdicts.filter((v) => v.status === "pending");
+  const stats = computeEngineStats(resolved);
+
+  const summaryEl = document.getElementById("engine-summary");
+  const matrixEl = document.getElementById("engine-matrix");
+  const classesEl = document.getElementById("engine-classes");
+  const logEl = document.getElementById("engine-log");
+
+  summaryEl.innerHTML = `<p>${verdicts.length} verdict(s) émis au total — ${resolved.length} vérifié(s), ${pending.length} en attente de leur horizon.</p>`;
+
+  if (!stats) {
+    matrixEl.innerHTML = `<p class="empty-state">Aucun verdict vérifié pour l'instant. La matrice de confusion et les scores d'exactitude apparaîtront dès que les premiers verdicts auront atteint leur horizon annoncé — aucun chiffre n'est inventé avant ça.</p>`;
+    classesEl.innerHTML = "";
+  } else {
+    const buyHoldBtc = engineHistory && engineHistory.global_stats && engineHistory.global_stats.baseline_buy_hold_btc_pct;
+    matrixEl.innerHTML = `
+      <div class="stat-row">
+        <div class="stat-card accent-teal"><div class="stat-label">Exactitude stricte</div><div class="stat-value">${stats.accuracyPct.toFixed(0)} %</div></div>
+        <div class="stat-card accent-gray"><div class="stat-label">Baseline "classe majoritaire"</div><div class="stat-value">${stats.baselineMajorityPct.toFixed(0)} %</div></div>
+        <div class="stat-card accent-gold"><div class="stat-label">Baseline buy&amp;hold BTC</div><div class="stat-value">${buyHoldBtc !== undefined && buyHoldBtc !== null ? buyHoldBtc.toFixed(0) + " %" : "—"}</div></div>
+        <div class="stat-card accent-indigo"><div class="stat-label">Taux de couverture</div><div class="stat-value">${stats.coveragePct.toFixed(0)} %</div></div>
+        <div class="stat-card accent-violet"><div class="stat-label">F1 macro</div><div class="stat-value">${stats.f1Macro !== null ? stats.f1Macro.toFixed(0) : "—"}</div></div>
+      </div>
+      <p class="hint">Couverture = part des verdicts où le moteur a vraiment tranché (Achat/Vente) plutôt que de s'abriter derrière Attente. Seuil de mouvement directionnel unique utilisé partout sur le site : ±${THRESHOLDS.directionalMovePct} %.</p>
+      <table class="matrix-table">
+        <thead><tr><th>Prédit \\ Réel</th>${CLASSES.map((c) => `<th>${c}</th>`).join("")}<th>Total</th></tr></thead>
+        <tbody>
+          ${CLASSES.map((p) => {
+            const rowTotal = CLASSES.reduce((sum, a) => sum + stats.matrix[p][a], 0);
+            return `<tr><th>${p}</th>${CLASSES.map((a) => {
+              const n = stats.matrix[p][a];
+              const pct = rowTotal > 0 ? Math.round((n / rowTotal) * 100) : 0;
+              const cls = p === a ? "cell-correct" : "cell-wrong";
+              return `<td class="${cls}">${n} <span class="cell-pct">${pct}%</span></td>`;
+            }).join("")}<td>${rowTotal}</td></tr>`;
+          }).join("")}
+        </tbody>
+      </table>`;
+
+    classesEl.innerHTML = `
+      <table class="classes-table">
+        <thead><tr><th>Classe</th><th>Précision</th><th>Rappel</th><th>F1</th><th>Cas réels</th><th>Prédits</th></tr></thead>
+        <tbody>
+          ${CLASSES.map((c) => {
+            const m = stats.perClass[c];
+            return `<tr>
+              <td>${c}</td>
+              <td>${m.precision !== null ? (m.precision * 100).toFixed(0) + " %" : "—"}</td>
+              <td>${m.recall !== null ? (m.recall * 100).toFixed(0) + " %" : "—"}</td>
+              <td>${m.f1 !== null ? (m.f1 * 100).toFixed(0) : "—"}</td>
+              <td>${m.actualTotal}</td>
+              <td>${m.predictedTotal}</td>
+            </tr>`;
+          }).join("")}
+        </tbody>
+      </table>
+      <p class="hint">Précision = fiabilité d'un verdict quand il est émis. Rappel = capacité à ne pas rater les vrais mouvements. F1 = équilibre entre les deux (0 à 100).</p>`;
+  }
+
+  const log = (engineHistory && engineHistory.correction_log) || [];
+  if (log.length === 0) {
+    logEl.innerHTML = `<p class="empty-state">Aucune correction tentée pour l'instant — le moteur a besoin de plusieurs verdicts vérifiés avant sa première auto-évaluation.</p>`;
+  } else {
+    logEl.innerHTML = log
+      .slice()
+      .reverse()
+      .map(
+        (entry) => `
+        <div class="log-entry">
+          <div class="log-header">
+            <span>${entry.version} · ${entry.attempted_at}</span>
+            <span class="badge ${entry.status === "appliquée" ? "badge-success" : "badge-neutral"}">${entry.status}</span>
+          </div>
+          <p>${entry.change_description}</p>
+          <p class="hint">${entry.note || ""}</p>
+        </div>`
+      )
+      .join("");
+  }
+}

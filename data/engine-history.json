@@ -1,0 +1,17 @@
+{
+  "current_version": "v1",
+  "global_stats": {
+    "last_computed_at": null,
+    "total_verdicts_issued": 0,
+    "total_verdicts_resolved": 0,
+    "accuracy_strict_pct": null,
+    "coverage_pct": null,
+    "baseline_majority_class_pct": null,
+    "baseline_buy_hold_btc_pct": null,
+    "f1_macro": null,
+    "f1_weighted": null,
+    "confusion_matrix": null,
+    "per_class": null
+  },
+  "correction_log": []
+}
