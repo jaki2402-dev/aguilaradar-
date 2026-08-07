@@ -145,7 +145,7 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData) {
         <div class="stat-card accent-indigo"><div class="stat-label">Taux de couverture</div><div class="stat-value">${stats.coveragePct.toFixed(0)} %</div></div>
         <div class="stat-card accent-violet"><div class="stat-label">F1 macro</div><div class="stat-value">${stats.f1Macro !== null ? stats.f1Macro.toFixed(0) : "—"}</div></div>
       </div>
-      <p class="hint">Couverture = part des verdicts où le moteur a vraiment tranché (Achat/Vente) plutôt que de s'abriter derrière Attente. Seuil de mouvement directionnel unique utilisé partout sur le site : ±${THRESHOLDS.directionalMovePct} %.</p>
+      <p class="hint">Couverture = part des verdicts où le moteur a vraiment tranché (Achat/Vente) plutôt que de s'abriter derrière Attente. Seuil de mouvement directionnel : calibré par actif selon sa volatilité réelle depuis fin août (avant cette date, ±${THRESHOLDS.directionalMovePct} % fixe a été utilisé pour tous — chaque verdict affiche le seuil qui a réellement servi à le juger, jamais rétroactif).</p>
       <table class="matrix-table">
         <thead><tr><th>Prédit \\ Réel</th>${CLASSES.map((c) => `<th>${c}</th>`).join("")}<th>Total</th></tr></thead>
         <tbody>
@@ -203,4 +203,23 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData) {
   }
 
   renderOpportunitiesEngineSection(opportunitiesData);
+  renderPaperPortfolio(engineHistory && engineHistory.paper_portfolio_stats);
+}
+
+function renderPaperPortfolio(stats) {
+  const el = document.getElementById("engine-paper-portfolio");
+  if (!el) return;
+  if (!stats || stats.cumulative_return_pct === null || stats.cumulative_return_pct === undefined) {
+    const need = stats ? stats.min_resolved_required : 10;
+    el.innerHTML = `<p class="empty-state">Pas encore assez de verdicts résolus pour simuler un portefeuille fictif (minimum ${need}) — se remplit avec le temps, jamais un chiffre inventé avant ça.</p>`;
+    return;
+  }
+  const edge = stats.edge_pct;
+  el.innerHTML = `
+    <div class="stat-row">
+      <div class="stat-card accent-teal"><div class="stat-label">Portefeuille fictif (suit mes verdicts)</div><div class="stat-value">${stats.cumulative_return_pct >= 0 ? "+" : ""}${stats.cumulative_return_pct.toFixed(1)} %</div></div>
+      <div class="stat-card accent-gold"><div class="stat-label">Juste garder du BTC</div><div class="stat-value">${stats.btc_buy_hold_return_pct >= 0 ? "+" : ""}${stats.btc_buy_hold_return_pct.toFixed(1)} %</div></div>
+      <div class="stat-card ${edge >= 0 ? "accent-teal" : "accent-gray"}"><div class="stat-label">Écart</div><div class="stat-value ${edge >= 0 ? "positive" : "negative"}">${edge >= 0 ? "+" : ""}${edge.toFixed(1)} pts</div></div>
+    </div>
+    <p class="hint">${stats.method}</p>`;
 }

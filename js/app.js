@@ -153,6 +153,29 @@ function renderNotifications(alerts) {
     .join("");
 }
 
+const REGIME_LABELS = { "risk-on": "Appétit pour le risque", "neutre": "Neutre", "risk-off": "Aversion au risque" };
+
+function renderMacroRegime(engineHistory) {
+  const el = document.getElementById("macro-regime-banner");
+  if (!el) return;
+  const regime = engineHistory && engineHistory.macro_regime;
+  if (!regime || !regime.regime) {
+    el.innerHTML = `<p class="empty-state">Régime de marché pas encore classifié — calculé au premier cycle profond (Fear &amp; Greed + dominance BTC).</p>`;
+    return;
+  }
+  const cls = regime.regime === "risk-on" ? "positive" : regime.regime === "risk-off" ? "negative" : "";
+  el.innerHTML = `
+    <div class="hero-card">
+      <div class="hint">Régime de marché actuel</div>
+      <div class="hero-stats">
+        <div><div class="hero-stat-value ${cls}">${REGIME_LABELS[regime.regime] || regime.regime}</div><div class="hero-stat-label">Contexte macro</div></div>
+        <div><div class="hero-stat-value">${regime.fear_greed_value ?? "—"}</div><div class="hero-stat-label">Fear &amp; Greed</div></div>
+        <div><div class="hero-stat-value">${regime.btc_dominance_pct !== null && regime.btc_dominance_pct !== undefined ? regime.btc_dominance_pct.toFixed(1) + " %" : "—"}</div><div class="hero-stat-label">Dominance BTC</div></div>
+      </div>
+      ${regime.note ? `<p class="hint" style="margin-top:10px;">${regime.note}</p>` : ""}
+    </div>`;
+}
+
 function renderNews(newsData) {
   const el = document.getElementById("news-body");
   if (!el) return;
@@ -193,6 +216,7 @@ async function loadAllData() {
   renderJournal(verdicts || []);
   renderNotifications(alerts);
   renderNews(news);
+  renderMacroRegime(engineHistory);
   updateHeroStats(verdicts || [], alerts);
   updateFavorisVerdicts(verdicts || []);
 

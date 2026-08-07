@@ -27,5 +27,21 @@
     "consecutive_failures": 0,
     "last_failure_reason": null
   },
+  "macro_regime": {
+    "last_computed_at": null,
+    "regime": null,
+    "fear_greed_value": null,
+    "btc_dominance_pct": null,
+    "btc_dominance_trend_7d_pct": null,
+    "note": null
+  },
+  "paper_portfolio_stats": {
+    "last_computed_at": null,
+    "min_resolved_required": 10,
+    "cumulative_return_pct": null,
+    "btc_buy_hold_return_pct": null,
+    "edge_pct": null,
+    "method": "Position virtuelle par verdict resolu, taille proportionnelle a confidence_pct, ouverte a price_at_issue et fermee a price_at_resolution. Compare au meme capital place uniquement en buy-and-hold BTC sur la meme periode. Calcule seulement a partir de min_resolved_required verdicts resolus."
+  },
   "correction_log": []
 }

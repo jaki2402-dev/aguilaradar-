@@ -1,152 +1,392 @@
-[
-  {
-    "id": "v-20260807-btc",
-    "issued_at": "2026-08-07T00:20:00Z",
-    "asset": "bitcoin", "ticker": "BTC",
-    "verdict": "ATTENTE", "horizon_days": 14, "confidence_pct": 50,
-    "signals_used": ["24h -0.4%", "7j -0.8%", "30j +1.2%"],
-    "reasoning": "Range quasi plat sur les trois horizons (24h -0.4%, 7j -0.8%, 30j +1.2%) : consolidation, aucun signal directionnel net.",
-    "price_at_issue": 55800, "resolves_at": "2026-08-21T00:20:00Z", "status": "pending",
-    "outcome": { "price_at_resolution": null, "actual_move_pct": null, "actual_direction": null, "verdict_correct": null, "resolved_at": null }
-  },
-  {
-    "id": "v-20260807-eth",
-    "issued_at": "2026-08-07T00:20:00Z",
-    "asset": "ethereum", "ticker": "ETH",
-    "verdict": "ATTENTE", "horizon_days": 14, "confidence_pct": 50,
-    "signals_used": ["24h -0.1%", "7j -1.1%", "30j +7.2%"],
-    "reasoning": "Léger repli court terme (-1.1% sur 7j) mais tendance 30j toujours positive (+7.2%) : pas un signal de sortie, pas non plus un point d'entrée frais.",
-    "price_at_issue": 1649.89, "resolves_at": "2026-08-21T00:20:00Z", "status": "pending",
-    "outcome": { "price_at_resolution": null, "actual_move_pct": null, "actual_direction": null, "verdict_correct": null, "resolved_at": null }
-  },
-  {
-    "id": "v-20260807-fet",
-    "issued_at": "2026-08-07T00:20:00Z",
-    "asset": "fetch-ai", "ticker": "FET",
-    "verdict": "VENTE", "horizon_days": 14, "confidence_pct": 62,
-    "signals_used": ["24h -4.9%", "7j -6.0%", "30j -17.4%"],
-    "reasoning": "Déclin cohérent et qui s'accélère sur les trois horizons (24h -4.9%, 7j -6.0%, 30j -17.4%). Lecture technique pure, aucune actualité vérifiée à ce stade sur la cause.",
-    "price_at_issue": 0.117162, "resolves_at": "2026-08-21T00:20:00Z", "status": "pending",
-    "outcome": { "price_at_resolution": null, "actual_move_pct": null, "actual_direction": null, "verdict_correct": null, "resolved_at": null }
-  },
-  {
-    "id": "v-20260807-grt",
-    "issued_at": "2026-08-07T00:20:00Z",
-    "asset": "the-graph", "ticker": "GRT",
-    "verdict": "VENTE", "horizon_days": 14, "confidence_pct": 60,
-    "signals_used": ["24h -3.0%", "7j -3.1%", "30j -18.7%"],
-    "reasoning": "Baisse régulière et alignée sur les trois horizons (24h -3.0%, 7j -3.1%, 30j -18.7%), sans signe de stabilisation à ce stade.",
-    "price_at_issue": 0.01257596, "resolves_at": "2026-08-21T00:20:00Z", "status": "pending",
-    "outcome": { "price_at_resolution": null, "actual_move_pct": null, "actual_direction": null, "verdict_correct": null, "resolved_at": null }
-  },
-  {
-    "id": "v-20260807-tia",
-    "issued_at": "2026-08-07T00:20:00Z",
-    "asset": "celestia", "ticker": "TIA",
-    "verdict": "ATTENTE", "horizon_days": 14, "confidence_pct": 50,
-    "signals_used": ["24h +0.7%", "7j +2.4%", "30j -11.0%"],
-    "reasoning": "Léger mieux court terme (+2.4% sur 7j) après un mois négatif (-11.0%) : trop tôt pour parler de retournement, à surveiller si le 7j se confirme au prochain cycle.",
-    "price_at_issue": 0.291794, "resolves_at": "2026-08-21T00:20:00Z", "status": "pending",
-    "outcome": { "price_at_resolution": null, "actual_move_pct": null, "actual_direction": null, "verdict_correct": null, "resolved_at": null }
-  },
-  {
-    "id": "v-20260807-ctsi",
-    "issued_at": "2026-08-07T00:20:00Z",
-    "asset": "cartesi", "ticker": "CTSI",
-    "verdict": "ATTENTE", "horizon_days": 7, "confidence_pct": 45,
-    "signals_used": ["24h +41.2%", "7j +39.4%", "30j +30.6%"],
-    "reasoning": "Mouvement extrême et inhabituel (+41.2% en 24h) sans catalyseur vérifié de mon côté (aucune recherche d'actualité confirmée à cette heure). Un tel pic est aussi souvent suivi d'une correction brutale qu'il ne se poursuit. Ne pas courir après ce mouvement sans confirmation — horizon volontairement raccourci à 7j vu la volatilité.",
-    "price_at_issue": 0.02677609, "resolves_at": "2026-08-14T00:20:00Z", "status": "pending",
-    "outcome": { "price_at_resolution": null, "actual_move_pct": null, "actual_direction": null, "verdict_correct": null, "resolved_at": null }
-  },
-  {
-    "id": "v-20260807-peaq",
-    "issued_at": "2026-08-07T00:20:00Z",
-    "asset": "peaq-2", "ticker": "PEAQ",
-    "verdict": "ATTENTE", "horizon_days": 14, "confidence_pct": 50,
-    "signals_used": ["24h +3.7%", "7j +1.7%", "30j -11.0%"],
-    "reasoning": "Stabilisation récente (+1.7% sur 7j) après un mois négatif (-11.0%) : signal insuffisant pour confirmer un retournement.",
-    "price_at_issue": 0.01549363, "resolves_at": "2026-08-21T00:20:00Z", "status": "pending",
-    "outcome": { "price_at_resolution": null, "actual_move_pct": null, "actual_direction": null, "verdict_correct": null, "resolved_at": null }
-  },
-  {
-    "id": "v-20260807-link",
-    "issued_at": "2026-08-07T00:20:00Z",
-    "asset": "chainlink", "ticker": "LINK",
-    "verdict": "ATTENTE", "horizon_days": 14, "confidence_pct": 50,
-    "signals_used": ["24h +0.6%", "7j -3.3%", "30j +4.1%"],
-    "reasoning": "Signaux contradictoires selon l'horizon (7j -3.3% vs 30j +4.1%) : pas de tendance nette actuellement.",
-    "price_at_issue": 7.12, "resolves_at": "2026-08-21T00:20:00Z", "status": "pending",
-    "outcome": { "price_at_resolution": null, "actual_move_pct": null, "actual_direction": null, "verdict_correct": null, "resolved_at": null }
-  },
-  {
-    "id": "v-20260807-ondo",
-    "issued_at": "2026-08-07T00:20:00Z",
-    "asset": "ondo-finance", "ticker": "ONDO",
-    "verdict": "ATTENTE", "horizon_days": 14, "confidence_pct": 52,
-    "signals_used": ["24h -3.7%", "7j -13.8%", "30j +9.4%"],
-    "reasoning": "Faiblesse court terme marquée (-13.8% sur 7j) alors que le mois reste positif (+9.4%) : tendance de fond pas encore cassée, mais seuil de vigilance posé — si le 7j continue de se dégrader au prochain cycle, ce sera un signal de vente.",
-    "price_at_issue": 0.310451, "resolves_at": "2026-08-21T00:20:00Z", "status": "pending",
-    "outcome": { "price_at_resolution": null, "actual_move_pct": null, "actual_direction": null, "verdict_correct": null, "resolved_at": null }
-  },
-  {
-    "id": "v-20260807-jup",
-    "issued_at": "2026-08-07T00:20:00Z",
-    "asset": "jupiter-exchange-solana", "ticker": "JUP",
-    "verdict": "VENTE", "horizon_days": 14, "confidence_pct": 63,
-    "signals_used": ["24h -3.9%", "7j -7.8%", "30j -23.9%"],
-    "reasoning": "Un des signaux les plus faibles des 15 favoris : déclin aligné sur les trois horizons (24h -3.9%, 7j -7.8%, 30j -23.9%).",
-    "price_at_issue": 0.156368, "resolves_at": "2026-08-21T00:20:00Z", "status": "pending",
-    "outcome": { "price_at_resolution": null, "actual_move_pct": null, "actual_direction": null, "verdict_correct": null, "resolved_at": null }
-  },
-  {
-    "id": "v-20260807-lpt",
-    "issued_at": "2026-08-07T00:20:00Z",
-    "asset": "livepeer", "ticker": "LPT",
-    "verdict": "ATTENTE", "horizon_days": 14, "confidence_pct": 50,
-    "signals_used": ["24h -0.4%", "7j +0.7%", "30j -18.8%"],
-    "reasoning": "Court terme plat (24h -0.4%, 7j +0.7%) malgré une faiblesse notable sur 30j (-18.8%) : pas de nouveau signal exploitable cette semaine.",
-    "price_at_issue": 1.11, "resolves_at": "2026-08-21T00:20:00Z", "status": "pending",
-    "outcome": { "price_at_resolution": null, "actual_move_pct": null, "actual_direction": null, "verdict_correct": null, "resolved_at": null }
-  },
-  {
-    "id": "v-20260807-aioz",
-    "issued_at": "2026-08-07T00:20:00Z",
-    "asset": "aioz-network", "ticker": "AIOZ",
-    "verdict": "ATTENTE", "horizon_days": 14, "confidence_pct": 50,
-    "signals_used": ["24h -0.1%", "7j -5.9%", "30j -10.2%"],
-    "reasoning": "Faiblesse modérée et assez régulière (7j -5.9%, 30j -10.2%) mais pas assez marquée pour un signal de vente ferme.",
-    "price_at_issue": 0.04051463, "resolves_at": "2026-08-21T00:20:00Z", "status": "pending",
-    "outcome": { "price_at_resolution": null, "actual_move_pct": null, "actual_direction": null, "verdict_correct": null, "resolved_at": null }
-  },
-  {
-    "id": "v-20260807-flux",
-    "issued_at": "2026-08-07T00:20:00Z",
-    "asset": "zelcash", "ticker": "FLUX",
-    "verdict": "ATTENTE", "horizon_days": 14, "confidence_pct": 50,
-    "signals_used": ["24h +0.5%", "7j +3.3%", "30j -10.4%"],
-    "reasoning": "Léger rebond sur 7j (+3.3%) après un mois négatif (-10.4%) : même lecture que TIA/PEAQ, trop tôt pour confirmer un retournement.",
-    "price_at_issue": 0.03450754, "resolves_at": "2026-08-21T00:20:00Z", "status": "pending",
-    "outcome": { "price_at_resolution": null, "actual_move_pct": null, "actual_direction": null, "verdict_correct": null, "resolved_at": null }
-  },
-  {
-    "id": "v-20260807-arb",
-    "issued_at": "2026-08-07T00:20:00Z",
-    "asset": "arbitrum", "ticker": "ARB",
-    "verdict": "ATTENTE", "horizon_days": 14, "confidence_pct": 50,
-    "signals_used": ["24h -2.6%", "7j +0.3%", "30j +1.6%"],
-    "reasoning": "Consolidation quasi plate sur 7j et 30j : aucun signal directionnel net actuellement.",
-    "price_at_issue": 0.067826, "resolves_at": "2026-08-21T00:20:00Z", "status": "pending",
-    "outcome": { "price_at_resolution": null, "actual_move_pct": null, "actual_direction": null, "verdict_correct": null, "resolved_at": null }
-  },
-  {
-    "id": "v-20260807-inj",
-    "issued_at": "2026-08-07T00:20:00Z",
-    "asset": "injective-protocol", "ticker": "INJ",
-    "verdict": "VENTE", "horizon_days": 14, "confidence_pct": 55,
-    "signals_used": ["24h -5.7%", "7j -8.0%", "30j -3.0%"],
-    "reasoning": "Court et moyen terme alignés à la baisse (24h -5.7%, 7j -8.0%), 30j moins marqué (-3.0%) : signal plus récent que sur FET/GRT/JUP, confiance modérée.",
-    "price_at_issue": 3.95, "resolves_at": "2026-08-21T00:20:00Z", "status": "pending",
-    "outcome": { "price_at_resolution": null, "actual_move_pct": null, "actual_direction": null, "verdict_correct": null, "resolved_at": null }
-  }
+﻿[
+    {
+        "id":  "v-20260807-btc",
+        "issued_at":  "2026-08-07T00:20:00Z",
+        "asset":  "bitcoin",
+        "ticker":  "BTC",
+        "verdict":  "ATTENTE",
+        "horizon_days":  14,
+        "confidence_pct":  50,
+        "signals_used":  [
+                             "24h -0.4%",
+                             "7j -0.8%",
+                             "30j +1.2%"
+                         ],
+        "reasoning":  "Range quasi plat sur les trois horizons (24h -0.4%, 7j -0.8%, 30j +1.2%) : consolidation, aucun signal directionnel net.",
+        "price_at_issue":  55800,
+        "resolves_at":  "2026-08-21T00:20:00Z",
+        "status":  "pending",
+        "outcome":  {
+                        "price_at_resolution":  null,
+                        "actual_move_pct":  null,
+                        "actual_direction":  null,
+                        "verdict_correct":  null,
+                        "resolved_at":  null
+                    },
+        "threshold_pct":  5
+    },
+    {
+        "id":  "v-20260807-eth",
+        "issued_at":  "2026-08-07T00:20:00Z",
+        "asset":  "ethereum",
+        "ticker":  "ETH",
+        "verdict":  "ATTENTE",
+        "horizon_days":  14,
+        "confidence_pct":  50,
+        "signals_used":  [
+                             "24h -0.1%",
+                             "7j -1.1%",
+                             "30j +7.2%"
+                         ],
+        "reasoning":  "Léger repli court terme (-1.1% sur 7j) mais tendance 30j toujours positive (+7.2%) : pas un signal de sortie, pas non plus un point d\u0027entrée frais.",
+        "price_at_issue":  1649.89,
+        "resolves_at":  "2026-08-21T00:20:00Z",
+        "status":  "pending",
+        "outcome":  {
+                        "price_at_resolution":  null,
+                        "actual_move_pct":  null,
+                        "actual_direction":  null,
+                        "verdict_correct":  null,
+                        "resolved_at":  null
+                    },
+        "threshold_pct":  5
+    },
+    {
+        "id":  "v-20260807-fet",
+        "issued_at":  "2026-08-07T00:20:00Z",
+        "asset":  "fetch-ai",
+        "ticker":  "FET",
+        "verdict":  "VENTE",
+        "horizon_days":  14,
+        "confidence_pct":  62,
+        "signals_used":  [
+                             "24h -4.9%",
+                             "7j -6.0%",
+                             "30j -17.4%"
+                         ],
+        "reasoning":  "Déclin cohérent et qui s\u0027accélère sur les trois horizons (24h -4.9%, 7j -6.0%, 30j -17.4%). Lecture technique pure, aucune actualité vérifiée à ce stade sur la cause.",
+        "price_at_issue":  0.117162,
+        "resolves_at":  "2026-08-21T00:20:00Z",
+        "status":  "pending",
+        "outcome":  {
+                        "price_at_resolution":  null,
+                        "actual_move_pct":  null,
+                        "actual_direction":  null,
+                        "verdict_correct":  null,
+                        "resolved_at":  null
+                    },
+        "threshold_pct":  5
+    },
+    {
+        "id":  "v-20260807-grt",
+        "issued_at":  "2026-08-07T00:20:00Z",
+        "asset":  "the-graph",
+        "ticker":  "GRT",
+        "verdict":  "VENTE",
+        "horizon_days":  14,
+        "confidence_pct":  60,
+        "signals_used":  [
+                             "24h -3.0%",
+                             "7j -3.1%",
+                             "30j -18.7%"
+                         ],
+        "reasoning":  "Baisse régulière et alignée sur les trois horizons (24h -3.0%, 7j -3.1%, 30j -18.7%), sans signe de stabilisation à ce stade.",
+        "price_at_issue":  0.01257596,
+        "resolves_at":  "2026-08-21T00:20:00Z",
+        "status":  "pending",
+        "outcome":  {
+                        "price_at_resolution":  null,
+                        "actual_move_pct":  null,
+                        "actual_direction":  null,
+                        "verdict_correct":  null,
+                        "resolved_at":  null
+                    },
+        "threshold_pct":  5
+    },
+    {
+        "id":  "v-20260807-tia",
+        "issued_at":  "2026-08-07T00:20:00Z",
+        "asset":  "celestia",
+        "ticker":  "TIA",
+        "verdict":  "ATTENTE",
+        "horizon_days":  14,
+        "confidence_pct":  50,
+        "signals_used":  [
+                             "24h +0.7%",
+                             "7j +2.4%",
+                             "30j -11.0%"
+                         ],
+        "reasoning":  "Léger mieux court terme (+2.4% sur 7j) après un mois négatif (-11.0%) : trop tôt pour parler de retournement, à surveiller si le 7j se confirme au prochain cycle.",
+        "price_at_issue":  0.291794,
+        "resolves_at":  "2026-08-21T00:20:00Z",
+        "status":  "pending",
+        "outcome":  {
+                        "price_at_resolution":  null,
+                        "actual_move_pct":  null,
+                        "actual_direction":  null,
+                        "verdict_correct":  null,
+                        "resolved_at":  null
+                    },
+        "threshold_pct":  5
+    },
+    {
+        "id":  "v-20260807-ctsi",
+        "issued_at":  "2026-08-07T00:20:00Z",
+        "asset":  "cartesi",
+        "ticker":  "CTSI",
+        "verdict":  "ATTENTE",
+        "horizon_days":  7,
+        "confidence_pct":  45,
+        "signals_used":  [
+                             "24h +41.2%",
+                             "7j +39.4%",
+                             "30j +30.6%"
+                         ],
+        "reasoning":  "Mouvement extrême et inhabituel (+41.2% en 24h) sans catalyseur vérifié de mon côté (aucune recherche d\u0027actualité confirmée à cette heure). Un tel pic est aussi souvent suivi d\u0027une correction brutale qu\u0027il ne se poursuit. Ne pas courir après ce mouvement sans confirmation — horizon volontairement raccourci à 7j vu la volatilité.",
+        "price_at_issue":  0.02677609,
+        "resolves_at":  "2026-08-14T00:20:00Z",
+        "status":  "pending",
+        "outcome":  {
+                        "price_at_resolution":  null,
+                        "actual_move_pct":  null,
+                        "actual_direction":  null,
+                        "verdict_correct":  null,
+                        "resolved_at":  null
+                    },
+        "threshold_pct":  5
+    },
+    {
+        "id":  "v-20260807-peaq",
+        "issued_at":  "2026-08-07T00:20:00Z",
+        "asset":  "peaq-2",
+        "ticker":  "PEAQ",
+        "verdict":  "ATTENTE",
+        "horizon_days":  14,
+        "confidence_pct":  50,
+        "signals_used":  [
+                             "24h +3.7%",
+                             "7j +1.7%",
+                             "30j -11.0%"
+                         ],
+        "reasoning":  "Stabilisation récente (+1.7% sur 7j) après un mois négatif (-11.0%) : signal insuffisant pour confirmer un retournement.",
+        "price_at_issue":  0.01549363,
+        "resolves_at":  "2026-08-21T00:20:00Z",
+        "status":  "pending",
+        "outcome":  {
+                        "price_at_resolution":  null,
+                        "actual_move_pct":  null,
+                        "actual_direction":  null,
+                        "verdict_correct":  null,
+                        "resolved_at":  null
+                    },
+        "threshold_pct":  5
+    },
+    {
+        "id":  "v-20260807-link",
+        "issued_at":  "2026-08-07T00:20:00Z",
+        "asset":  "chainlink",
+        "ticker":  "LINK",
+        "verdict":  "ATTENTE",
+        "horizon_days":  14,
+        "confidence_pct":  50,
+        "signals_used":  [
+                             "24h +0.6%",
+                             "7j -3.3%",
+                             "30j +4.1%"
+                         ],
+        "reasoning":  "Signaux contradictoires selon l\u0027horizon (7j -3.3% vs 30j +4.1%) : pas de tendance nette actuellement.",
+        "price_at_issue":  7.12,
+        "resolves_at":  "2026-08-21T00:20:00Z",
+        "status":  "pending",
+        "outcome":  {
+                        "price_at_resolution":  null,
+                        "actual_move_pct":  null,
+                        "actual_direction":  null,
+                        "verdict_correct":  null,
+                        "resolved_at":  null
+                    },
+        "threshold_pct":  5
+    },
+    {
+        "id":  "v-20260807-ondo",
+        "issued_at":  "2026-08-07T00:20:00Z",
+        "asset":  "ondo-finance",
+        "ticker":  "ONDO",
+        "verdict":  "ATTENTE",
+        "horizon_days":  14,
+        "confidence_pct":  52,
+        "signals_used":  [
+                             "24h -3.7%",
+                             "7j -13.8%",
+                             "30j +9.4%"
+                         ],
+        "reasoning":  "Faiblesse court terme marquée (-13.8% sur 7j) alors que le mois reste positif (+9.4%) : tendance de fond pas encore cassée, mais seuil de vigilance posé — si le 7j continue de se dégrader au prochain cycle, ce sera un signal de vente.",
+        "price_at_issue":  0.310451,
+        "resolves_at":  "2026-08-21T00:20:00Z",
+        "status":  "pending",
+        "outcome":  {
+                        "price_at_resolution":  null,
+                        "actual_move_pct":  null,
+                        "actual_direction":  null,
+                        "verdict_correct":  null,
+                        "resolved_at":  null
+                    },
+        "threshold_pct":  5
+    },
+    {
+        "id":  "v-20260807-jup",
+        "issued_at":  "2026-08-07T00:20:00Z",
+        "asset":  "jupiter-exchange-solana",
+        "ticker":  "JUP",
+        "verdict":  "VENTE",
+        "horizon_days":  14,
+        "confidence_pct":  63,
+        "signals_used":  [
+                             "24h -3.9%",
+                             "7j -7.8%",
+                             "30j -23.9%"
+                         ],
+        "reasoning":  "Un des signaux les plus faibles des 15 favoris : déclin aligné sur les trois horizons (24h -3.9%, 7j -7.8%, 30j -23.9%).",
+        "price_at_issue":  0.156368,
+        "resolves_at":  "2026-08-21T00:20:00Z",
+        "status":  "pending",
+        "outcome":  {
+                        "price_at_resolution":  null,
+                        "actual_move_pct":  null,
+                        "actual_direction":  null,
+                        "verdict_correct":  null,
+                        "resolved_at":  null
+                    },
+        "threshold_pct":  5
+    },
+    {
+        "id":  "v-20260807-lpt",
+        "issued_at":  "2026-08-07T00:20:00Z",
+        "asset":  "livepeer",
+        "ticker":  "LPT",
+        "verdict":  "ATTENTE",
+        "horizon_days":  14,
+        "confidence_pct":  50,
+        "signals_used":  [
+                             "24h -0.4%",
+                             "7j +0.7%",
+                             "30j -18.8%"
+                         ],
+        "reasoning":  "Court terme plat (24h -0.4%, 7j +0.7%) malgré une faiblesse notable sur 30j (-18.8%) : pas de nouveau signal exploitable cette semaine.",
+        "price_at_issue":  1.11,
+        "resolves_at":  "2026-08-21T00:20:00Z",
+        "status":  "pending",
+        "outcome":  {
+                        "price_at_resolution":  null,
+                        "actual_move_pct":  null,
+                        "actual_direction":  null,
+                        "verdict_correct":  null,
+                        "resolved_at":  null
+                    },
+        "threshold_pct":  5
+    },
+    {
+        "id":  "v-20260807-aioz",
+        "issued_at":  "2026-08-07T00:20:00Z",
+        "asset":  "aioz-network",
+        "ticker":  "AIOZ",
+        "verdict":  "ATTENTE",
+        "horizon_days":  14,
+        "confidence_pct":  50,
+        "signals_used":  [
+                             "24h -0.1%",
+                             "7j -5.9%",
+                             "30j -10.2%"
+                         ],
+        "reasoning":  "Faiblesse modérée et assez régulière (7j -5.9%, 30j -10.2%) mais pas assez marquée pour un signal de vente ferme.",
+        "price_at_issue":  0.04051463,
+        "resolves_at":  "2026-08-21T00:20:00Z",
+        "status":  "pending",
+        "outcome":  {
+                        "price_at_resolution":  null,
+                        "actual_move_pct":  null,
+                        "actual_direction":  null,
+                        "verdict_correct":  null,
+                        "resolved_at":  null
+                    },
+        "threshold_pct":  5
+    },
+    {
+        "id":  "v-20260807-flux",
+        "issued_at":  "2026-08-07T00:20:00Z",
+        "asset":  "zelcash",
+        "ticker":  "FLUX",
+        "verdict":  "ATTENTE",
+        "horizon_days":  14,
+        "confidence_pct":  50,
+        "signals_used":  [
+                             "24h +0.5%",
+                             "7j +3.3%",
+                             "30j -10.4%"
+                         ],
+        "reasoning":  "Léger rebond sur 7j (+3.3%) après un mois négatif (-10.4%) : même lecture que TIA/PEAQ, trop tôt pour confirmer un retournement.",
+        "price_at_issue":  0.03450754,
+        "resolves_at":  "2026-08-21T00:20:00Z",
+        "status":  "pending",
+        "outcome":  {
+                        "price_at_resolution":  null,
+                        "actual_move_pct":  null,
+                        "actual_direction":  null,
+                        "verdict_correct":  null,
+                        "resolved_at":  null
+                    },
+        "threshold_pct":  5
+    },
+    {
+        "id":  "v-20260807-arb",
+        "issued_at":  "2026-08-07T00:20:00Z",
+        "asset":  "arbitrum",
+        "ticker":  "ARB",
+        "verdict":  "ATTENTE",
+        "horizon_days":  14,
+        "confidence_pct":  50,
+        "signals_used":  [
+                             "24h -2.6%",
+                             "7j +0.3%",
+                             "30j +1.6%"
+                         ],
+        "reasoning":  "Consolidation quasi plate sur 7j et 30j : aucun signal directionnel net actuellement.",
+        "price_at_issue":  0.067826,
+        "resolves_at":  "2026-08-21T00:20:00Z",
+        "status":  "pending",
+        "outcome":  {
+                        "price_at_resolution":  null,
+                        "actual_move_pct":  null,
+                        "actual_direction":  null,
+                        "verdict_correct":  null,
+                        "resolved_at":  null
+                    },
+        "threshold_pct":  5
+    },
+    {
+        "id":  "v-20260807-inj",
+        "issued_at":  "2026-08-07T00:20:00Z",
+        "asset":  "injective-protocol",
+        "ticker":  "INJ",
+        "verdict":  "VENTE",
+        "horizon_days":  14,
+        "confidence_pct":  55,
+        "signals_used":  [
+                             "24h -5.7%",
+                             "7j -8.0%",
+                             "30j -3.0%"
+                         ],
+        "reasoning":  "Court et moyen terme alignés à la baisse (24h -5.7%, 7j -8.0%), 30j moins marqué (-3.0%) : signal plus récent que sur FET/GRT/JUP, confiance modérée.",
+        "price_at_issue":  3.95,
+        "resolves_at":  "2026-08-21T00:20:00Z",
+        "status":  "pending",
+        "outcome":  {
+                        "price_at_resolution":  null,
+                        "actual_move_pct":  null,
+                        "actual_direction":  null,
+                        "verdict_correct":  null,
+                        "resolved_at":  null
+                    },
+        "threshold_pct":  5
+    }
 ]
