@@ -60,6 +60,10 @@ function initRadarBackground() {
     { type: "badge", label: "LPT", color: "#f0b429" },
     { type: "glyph", glyph: "◈", size: 28 },
     { type: "badge", label: "FET", color: "#22b8e0" },
+    { type: "badge", label: "CTSI", color: "#fb8362" },
+    { type: "badge", label: "PEAQ", color: "#b48cf2" },
+    { type: "badge", label: "AIOZ", color: "#2fd3b0" },
+    { type: "badge", label: "FLUX", color: "#f0b429" },
   ].map((icon) => ({
     ...icon,
     x: Math.random(),
@@ -73,7 +77,7 @@ function initRadarBackground() {
   function draw(t) {
     ensureSize();
     frameCount++;
-    if (frameCount % 2 === 0 || document.hidden) {
+    if (!ctx || frameCount % 2 === 0 || document.hidden) {
       requestAnimationFrame(draw);
       return;
     }
@@ -86,17 +90,17 @@ function initRadarBackground() {
       const twinkle = 0.6 + 0.4 * Math.sin(t * 0.0009 + icon.phase);
       if (icon.type === "glyph") {
         ctx.font = icon.size + "px Inter, sans-serif";
-        ctx.fillStyle = `rgba(47, 211, 176, ${(0.11 * twinkle).toFixed(3)})`;
+        ctx.fillStyle = `rgba(47, 211, 176, ${(0.22 * twinkle).toFixed(3)})`;
         ctx.fillText(icon.glyph, x, y);
       } else {
         ctx.beginPath();
-        ctx.arc(x, y, 4, 0, Math.PI * 2);
-        ctx.globalAlpha = 0.24 * twinkle;
+        ctx.arc(x, y, 5, 0, Math.PI * 2);
+        ctx.globalAlpha = 0.42 * twinkle;
         ctx.fillStyle = icon.color;
         ctx.fill();
         ctx.globalAlpha = 1;
-        ctx.font = "600 11px Inter, sans-serif";
-        ctx.fillStyle = `rgba(238, 242, 247, ${(0.18 * twinkle).toFixed(3)})`;
+        ctx.font = "600 12px Inter, sans-serif";
+        ctx.fillStyle = `rgba(238, 242, 247, ${(0.32 * twinkle).toFixed(3)})`;
         ctx.fillText(icon.label, x + 9, y + 4);
       }
     });
