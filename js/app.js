@@ -132,21 +132,31 @@ function renderJournal(verdicts) {
     .join("");
 }
 
+const ALERT_TYPE_LABELS = {
+  seuil_technique: "Seuil technique",
+  actualite_macro: "Actu macro",
+  actualite_favori: "Actu favori",
+  opportunite: "Opportunité",
+};
+
 function renderNotifications(alerts) {
   const el = document.getElementById("notifications-body");
   if (!alerts || alerts.length === 0) {
-    el.innerHTML = `<p class="empty-state">Aucune alerte active. Le pouls rapide (prix/seuils toutes les ${REFRESH.quantCycleMinutes} min) déclenchera une notification ici dès qu'un seuil sera franchi, avec le signal technique et le pourquoi.</p>`;
+    el.innerHTML = `<p class="empty-state">Aucune alerte active. La routine (toutes les 2h) déclenchera une notification ici pour un seuil technique franchi, une actualité macro ou sur un favori jugée significative, ou une opportunité forte — avec le signal et le pourquoi.</p>`;
     return;
   }
   el.innerHTML = alerts
+    .slice()
+    .reverse()
     .map(
       (a) => `
       <div class="alert-entry">
         <div class="log-header">
-          <span><strong>${a.ticker}</strong> · ${a.triggered_at}</span>
-          <span class="badge badge-warning">${a.type}</span>
+          <span><strong>${a.ticker_ou_theme || a.ticker || ""}</strong> · ${a.triggered_at}</span>
+          <span class="badge badge-warning">${ALERT_TYPE_LABELS[a.type] || a.type}</span>
         </div>
         <p>${a.message}</p>
+        ${a.source ? `<p class="hint">Source : ${a.source}</p>` : ""}
       </div>`
     )
     .join("");

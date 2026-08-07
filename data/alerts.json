@@ -1,8 +1,10 @@
 [
   {
-    "ticker": "CTSI",
-    "type": "seuil de mouvement",
+    "id": "alert-20260807-ctsi",
+    "ticker_ou_theme": "CTSI",
+    "type": "seuil_technique",
     "triggered_at": "2026-08-07T00:20:00Z",
-    "message": "Cartesi (CTSI) +41.2% en 24h et +39.4% sur 7j — mouvement inhabituel, aucune actualité vérifiée pour l'expliquer à cette heure. Verdict associé : ATTENTE, ne pas courir après ce mouvement sans confirmation."
+    "message": "Cartesi (CTSI) +41.2% en 24h et +39.4% sur 7j — mouvement inhabituel, aucune actualité vérifiée pour l'expliquer à cette heure. Verdict associé : ATTENTE, ne pas courir après ce mouvement sans confirmation.",
+    "source": "criblage technique interne"
   }
 ]

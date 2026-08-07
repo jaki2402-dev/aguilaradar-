@@ -11,7 +11,9 @@
     "f1_macro": null,
     "f1_weighted": null,
     "confusion_matrix": null,
-    "per_class": null
+    "per_class": null,
+    "calibration_by_confidence_bucket": null,
+    "accuracy_by_market_regime": null
   },
   "opportunities_stats": {
     "last_computed_at": "2026-08-07T00:20:00Z",
@@ -19,6 +21,11 @@
     "total_resolved": 0,
     "validated_pct": null,
     "average_move_pct": null
+  },
+  "routine_health": {
+    "last_success_at": "2026-08-07T00:20:00Z",
+    "consecutive_failures": 0,
+    "last_failure_reason": null
   },
   "correction_log": []
 }
