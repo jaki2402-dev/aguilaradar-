@@ -46,11 +46,14 @@ function sparklinePoints(values, w, h) {
     .join(" ");
 }
 
-function renderOpportunityCard(o, idx) {
+function renderOpportunityCard(o, idx, containerId) {
   const conf = computeConfidence(o);
   const trendUp = o.sparkline && o.sparkline.length > 1 && o.sparkline[o.sparkline.length - 1] >= o.sparkline[0];
   const points = sparklinePoints(o.sparkline, 100, 32);
-  const panelId = `detail-opp-${o.id || idx}`;
+  // Prefixe par conteneur : la meme pepite peut s'afficher a la fois sur l'Accueil et dans
+  // Opportunites — sans ca, deux elements partageraient le meme id et getElementById()
+  // ouvrirait toujours la copie cachee de l'autre onglet plutot que celle cliquee.
+  const panelId = `detail-opp-${containerId}-${o.id || idx}`;
   return `
     <div class="opp-card clickable" data-detail-target="${panelId}" data-cgid="${o.cgId}" data-ath="${o.ath_change_pct ?? ""}" data-reason="${(o.reason || "").replace(/"/g, "&quot;")}">
       <div class="opp-card-top">
@@ -90,7 +93,7 @@ function renderOpportunityCards(containerId, opportunities, limit) {
     el.innerHTML = `<p class="empty-state">Aucun screening réalisé pour l'instant — le Top 300 (memecoins exclus) sera analysé au premier cycle profond de la routine programmée.</p>`;
     return;
   }
-  el.innerHTML = `<div class="opp-grid">${shown.map(renderOpportunityCard).join("")}</div>`;
+  el.innerHTML = `<div class="opp-grid">${shown.map((o, i) => renderOpportunityCard(o, i, containerId)).join("")}</div>`;
 
   el.querySelectorAll(".opp-card.clickable").forEach((cardEl) => {
     const panelId = cardEl.dataset.detailTarget;
