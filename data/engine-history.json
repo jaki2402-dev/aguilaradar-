@@ -1,55 +1,55 @@
 {
-  "current_version": "v1",
-  "global_stats": {
-    "last_computed_at": "2026-08-07T10:20:00Z",
-    "total_verdicts_issued": 15,
-    "total_verdicts_resolved": 0,
-    "accuracy_strict_pct": null,
-    "coverage_pct": null,
-    "baseline_majority_class_pct": null,
-    "baseline_buy_hold_btc_pct": null,
-    "f1_macro": null,
-    "f1_weighted": null,
-    "confusion_matrix": null,
-    "per_class": null,
-    "calibration_by_confidence_bucket": null,
-    "accuracy_by_market_regime": null
-  },
-  "opportunities_stats": {
-    "last_computed_at": "2026-08-07T10:20:00Z",
-    "total_flagged": 8,
-    "total_resolved": 0,
-    "validated_pct": null,
-    "average_move_pct": null
-  },
-  "routine_health": {
-    "last_success_at": "2026-08-07T10:20:00Z",
-    "consecutive_failures": 0,
-    "last_failure_reason": "Criblage complet Top 300 (opportunites) et alerte precoce sur verdicts non effectues ce cycle : voir notes ci-dessous, aucune donnee inventee en remplacement."
-  },
-  "macro_regime": {
-    "last_computed_at": "2026-08-07T10:20:00Z",
-    "regime": "neutre",
-    "fear_greed_value": null,
-    "btc_dominance_pct": 56.7,
-    "btc_dominance_trend_7d_pct": null,
-    "note": "Classification par defaut 'neutre', non calculee formellement ce cycle : la source mandatee (api.alternative.me/fng) est inaccessible depuis cet environnement (bloquee par le proxy reseau), et les sources de repli (recherche web) donnent des lectures incoherentes pour aujourd'hui (49/Neutre selon cfgi.io et milkroad.com vs 25-29/Peur selon un article de marche relaye par coingabbar.com, ecart de pres de 20 points). Trop incertain pour trancher entre risk-on/neutre/risk-off, donc statu quo neutre plutot qu'un chiffre invente. Dominance BTC actuelle 56.7% obtenue de maniere fiable (connecteur CoinGecko direct) ; sa tendance sur 7 jours n'a pas pu etre sourcee de facon fiable ce cycle (le connecteur ne donne pas d'historique de dominance globale, et les recherches web donnent des chiffres contradictoires selon la periode citee, de 56% a 63%). A recalculer formellement des que l'acces direct a l'indice sera retabli."
-  },
-  "paper_portfolio_stats": {
-    "last_computed_at": null,
-    "min_resolved_required": 10,
-    "cumulative_return_pct": null,
-    "btc_buy_hold_return_pct": null,
-    "edge_pct": null,
-    "method": "Position virtuelle par verdict resolu, taille proportionnelle a confidence_pct, ouverte a price_at_issue et fermee a price_at_resolution. Compare au meme capital place uniquement en buy-and-hold BTC sur la meme periode. Calcule seulement a partir de min_resolved_required verdicts resolus."
-  },
-  "data_source_reliability": {
-    "last_computed_at": null,
-    "cycles_logged": 0,
-    "coingecko_connector_success_count": 0,
-    "coingecko_curl_fallback_count": 0,
-    "websearch_price_fallback_count": 0,
-    "notes": null
-  },
-  "correction_log": []
+    "current_version": "v1",
+    "global_stats": {
+        "last_computed_at": "2026-08-07T14:30:00Z",
+        "total_verdicts_issued": 15,
+        "total_verdicts_resolved": 0,
+        "accuracy_strict_pct": null,
+        "coverage_pct": null,
+        "baseline_majority_class_pct": null,
+        "baseline_buy_hold_btc_pct": null,
+        "f1_macro": null,
+        "f1_weighted": null,
+        "confusion_matrix": null,
+        "per_class": null,
+        "calibration_by_confidence_bucket": null,
+        "accuracy_by_market_regime": null
+    },
+    "opportunities_stats": {
+        "last_computed_at": "2026-08-07T14:30:00Z",
+        "total_flagged": 8,
+        "total_resolved": 0,
+        "validated_pct": null,
+        "average_move_pct": null
+    },
+    "routine_health": {
+        "last_success_at": "2026-08-07T14:30:00Z",
+        "consecutive_failures": 0,
+        "last_failure_reason": "Cycle réussi dans son ensemble. Deux limitations honnêtement consignées, comme au cycle précédent : (1) criblage complet du Top 300 pour de nouvelles opportunités non effectué — l'outil CoinGecko disponible plafonne à 20 identifiants par appel (get-coin-markets / topN), et l'API brute CoinGecko (vs_currency=eur) ainsi que l'API Binance sont toutes deux bloquées par le proxy réseau sortant de cet environnement ; seules les 8 opportunités déjà suivies ont été rafraîchies (prix/rang/market cap/sparkline en direct). (2) Fear & Greed Index toujours non calculé formellement : la source mandatée (api.alternative.me/fng) reste bloquée par le proxy, et les sources de repli (recherche web) restent incohérentes entre elles (29/Peur selon CFGI et Milkroad, 50/Neutre selon AltIndex, écart inchangé depuis le cycle précédent) — statu quo neutre maintenu plutôt qu'un chiffre inventé. Par ailleurs, faute d'accès direct à l'API CoinGecko en EUR, les prix EUR de ce cycle ont été obtenus par conversion d'un prix USD (connecteur CoinGecko fiable) au taux de change EUR/USD du jour (~0,868, relevé par recherche web sur xe.com/investing.com) plutôt que par une lecture EUR native — méthode de repli documentée, écart attendu négligeable devant les mouvements de prix observés ce cycle."
+    },
+    "macro_regime": {
+        "last_computed_at": "2026-08-07T14:30:00Z",
+        "regime": "neutre",
+        "fear_greed_value": null,
+        "btc_dominance_pct": 56.73,
+        "btc_dominance_trend_7d_pct": null,
+        "note": "Classification 'neutre' maintenue, non recalculée formellement ce cycle non plus : la source mandatée (api.alternative.me/fng) reste inaccessible depuis cet environnement (bloquée par le proxy réseau), et les sources de repli restent incohérentes — 29/Peur selon CFGI.io et Milkroad, contre 50/Neutre selon AltIndex, écart comparable à celui déjà noté au cycle précédent (aucune convergence nouvelle). Le comportement des prix ce cycle penche plutôt vers un lecture neutre à légèrement positive et non vers la peur : BTC +1,0 % et ETH +1,3 % sur 24h, capitalisation totale du marché quasi stable (+0,26 % sur 24h). Dominance BTC actuelle 56,73 % obtenue de manière fiable (connecteur CoinGecko direct), quasi identique au cycle précédent (56,7 %) — cohérent avec l'absence de rotation marquée depuis 4h. Tendance sur 7 jours toujours non calculable (le connecteur ne fournit pas d'historique de dominance globale). Aucun changement de régime à signaler par rapport au cycle précédent, donc pas de ré-signalement regime_change_impact nécessaire ce cycle."
+    },
+    "paper_portfolio_stats": {
+        "last_computed_at": null,
+        "min_resolved_required": 10,
+        "cumulative_return_pct": null,
+        "btc_buy_hold_return_pct": null,
+        "edge_pct": null,
+        "method": "Position virtuelle par verdict resolu, taille proportionnelle a confidence_pct, ouverte a price_at_issue et fermee a price_at_resolution. Compare au meme capital place uniquement en buy-and-hold BTC sur la meme periode. Calcule seulement a partir de min_resolved_required verdicts resolus."
+    },
+    "data_source_reliability": {
+        "last_computed_at": "2026-08-07T14:30:00Z",
+        "cycles_logged": 1,
+        "coingecko_connector_success_count": 7,
+        "coingecko_curl_fallback_count": 0,
+        "websearch_price_fallback_count": 0,
+        "notes": "Premier cycle où ce compteur est réellement peuplé (il ne l'avait jamais été auparavant, donc pas de rattrapage rétroactif des cycles précédents). Ce cycle : 7 appels réussis au connecteur CoinGecko (prix des 15 favoris, marché global, actualités générales, actualités Cartesi, historique de prix Cartesi, catégories, prix des 8 opportunités suivies). 0 repli vers un curl direct CoinGecko (tenté, bloqué par le proxy réseau sortant). 0 repli vers une recherche web pour un prix individuel — en revanche une recherche web a servi à obtenir le taux de change EUR/USD du jour (~0,868) pour convertir les prix USD du connecteur en EUR, faute d'accès direct à l'endpoint CoinGecko en EUR (bloqué par le proxy) ; ce nouveau type de repli n'a pas encore de compteur dédié dans ce schéma. L'API Binance (deuxième source pour la double vérification des prix) est également bloquée par le proxy réseau sortant de cet environnement — aucune résolution de verdict ou d'opportunité n'était de toute façon due ce cycle, donc cette limite n'a affecté que la fiabilité du signal précoce CTSI (source unique, consignée comme telle)."
+    },
+    "correction_log": []
 }

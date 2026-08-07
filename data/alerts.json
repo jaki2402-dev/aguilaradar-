@@ -1,34 +1,42 @@
 [
-  {
-    "id": "alert-20260807-ctsi",
-    "ticker_ou_theme": "CTSI",
-    "type": "seuil_technique",
-    "triggered_at": "2026-08-07T00:20:00Z",
-    "message": "Cartesi (CTSI) +41.2% en 24h et +39.4% sur 7j — mouvement inhabituel, aucune actualité vérifiée pour l'expliquer à cette heure. Verdict associé : ATTENTE, ne pas courir après ce mouvement sans confirmation.",
-    "source": "criblage technique interne"
-  },
-  {
-    "id": "alert-20260807-fed",
-    "ticker_ou_theme": "MACRO",
-    "type": "actualite_macro",
-    "triggered_at": "2026-08-07T04:14:00Z",
-    "message": "La Fed a maintenu ses taux directeurs a 3.50%-3.75% (5e statu quo consecutif), avec 3 dissidents au sein du FOMC en faveur d'une hausse — signe d'un ton plus restrictif ('higher-for-longer') porte par une inflation persistante et la hausse du petrole. Le president Warsh n'a donne aucune indication sur la trajectoire de septembre. Contexte de prudence macro pour les actifs a risque dont les cryptos.",
-    "source": "https://bitcoinfoundation.org/news/altcoins/fed-holds-rates-heres-what-the-decision-means-for-bitcoin-ethereum-and-altcoins-in-august/"
-  },
-  {
-    "id": "alert-20260807-ondo-gouvernance",
-    "ticker_ou_theme": "ONDO",
-    "type": "actualite_favori",
-    "triggered_at": "2026-08-07T06:22:00Z",
-    "message": "Crise de gouvernance chez Ondo Finance : suite au deces du fondateur Nathan Allman (mai 2026), un conflit de controle a eclate entre sa mere Kathleen Allman (nommee representante de la succession via une procedure de succession a Hawaii, 26 juin) et le CEO Ian De Bode, accuse d'avoir tente de s'auto-designer directeur unique avant la fin de la procedure. Le 24 juillet, le conseil a vote la revocation de De Bode de tous ses postes et nomme Kathleen Allman presidente/CEO. Une plainte a ete deposee devant un tribunal du Delaware pour trancher qui controle legalement la societe. Catalyseur negatif plausible et coherent avec la faiblesse recente du token (-13.8% sur 7j, -7.2% sur 24h) meme si aucun lien direct prix/actualite confirme a ce stade — a surveiller pour le prochain verdict ONDO.",
-    "source": "https://www.coindesk.com/policy/2026/08/06/power-struggle-erupts-at-ondo-finance-after-founder-s-death"
-  },
-  {
-    "id": "alert-20260807-clarity-act",
-    "ticker_ou_theme": "MACRO",
-    "type": "actualite_macro",
-    "triggered_at": "2026-08-07T10:20:00Z",
-    "message": "Echeance reglementaire majeure aujourd'hui : le chef de la majorite au Senat americain, John Thune, avait fixe le 7 aout comme date-butoir pour un vote du CLARITY Act (Digital Asset Market Clarity Act) avant la suspension parlementaire du 10 aout. Le texte, deja adopte par la Chambre des representants, n'avait toujours pas de vote programme au Senat a la date du 5 aout. Un report au-dela de la suspension repousserait probablement toute clarification du cadre reglementaire crypto americain (repartition SEC/CFTC, statut des tokens) a l'automne au plus tot. A surveiller de pres, effet potentiel large sur l'ensemble du marche.",
-    "source": "https://thehill.com/policy/technology/5963428-crypto-bill-clarity-act-make-or-break-congress/"
-  }
+    {
+        "id": "alert-20260807-ctsi",
+        "ticker_ou_theme": "CTSI",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-07T00:20:00Z",
+        "message": "Cartesi (CTSI) +41.2% en 24h et +39.4% sur 7j — mouvement inhabituel, aucune actualité vérifiée pour l'expliquer à cette heure. Verdict associé : ATTENTE, ne pas courir après ce mouvement sans confirmation.",
+        "source": "criblage technique interne"
+    },
+    {
+        "id": "alert-20260807-fed",
+        "ticker_ou_theme": "MACRO",
+        "type": "actualite_macro",
+        "triggered_at": "2026-08-07T04:14:00Z",
+        "message": "La Fed a maintenu ses taux directeurs a 3.50%-3.75% (5e statu quo consecutif), avec 3 dissidents au sein du FOMC en faveur d'une hausse — signe d'un ton plus restrictif ('higher-for-longer') porte par une inflation persistante et la hausse du petrole. Le president Warsh n'a donne aucune indication sur la trajectoire de septembre. Contexte de prudence macro pour les actifs a risque dont les cryptos.",
+        "source": "https://bitcoinfoundation.org/news/altcoins/fed-holds-rates-heres-what-the-decision-means-for-bitcoin-ethereum-and-altcoins-in-august/"
+    },
+    {
+        "id": "alert-20260807-ondo-gouvernance",
+        "ticker_ou_theme": "ONDO",
+        "type": "actualite_favori",
+        "triggered_at": "2026-08-07T06:22:00Z",
+        "message": "Crise de gouvernance chez Ondo Finance : suite au deces du fondateur Nathan Allman (mai 2026), un conflit de controle a eclate entre sa mere Kathleen Allman (nommee representante de la succession via une procedure de succession a Hawaii, 26 juin) et le CEO Ian De Bode, accuse d'avoir tente de s'auto-designer directeur unique avant la fin de la procedure. Le 24 juillet, le conseil a vote la revocation de De Bode de tous ses postes et nomme Kathleen Allman presidente/CEO. Une plainte a ete deposee devant un tribunal du Delaware pour trancher qui controle legalement la societe. Catalyseur negatif plausible et coherent avec la faiblesse recente du token (-13.8% sur 7j, -7.2% sur 24h) meme si aucun lien direct prix/actualite confirme a ce stade — a surveiller pour le prochain verdict ONDO.",
+        "source": "https://www.coindesk.com/policy/2026/08/06/power-struggle-erupts-at-ondo-finance-after-founder-s-death"
+    },
+    {
+        "id": "alert-20260807-clarity-act",
+        "ticker_ou_theme": "MACRO",
+        "type": "actualite_macro",
+        "triggered_at": "2026-08-07T10:20:00Z",
+        "message": "Echeance reglementaire majeure aujourd'hui : le chef de la majorite au Senat americain, John Thune, avait fixe le 7 aout comme date-butoir pour un vote du CLARITY Act (Digital Asset Market Clarity Act) avant la suspension parlementaire du 10 aout. Le texte, deja adopte par la Chambre des representants, n'avait toujours pas de vote programme au Senat a la date du 5 aout. Un report au-dela de la suspension repousserait probablement toute clarification du cadre reglementaire crypto americain (repartition SEC/CFTC, statut des tokens) a l'automne au plus tot. A surveiller de pres, effet potentiel large sur l'ensemble du marche.",
+        "source": "https://thehill.com/policy/technology/5963428-crypto-bill-clarity-act-make-or-break-congress/"
+    },
+    {
+        "id": "alert-20260807-ctsi-retournement",
+        "ticker_ou_theme": "CTSI",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-07T14:30:00Z",
+        "message": "Cartesi (CTSI) : le pic de ce matin (+41,2 % en 24h) s'est complètement retourné. Le token affiche désormais -25,6 % sur 24h glissantes et se retrouve environ 13,4 % sous le prix d'émission du verdict ATTENTE de ce matin (seuil de mouvement directionnel de 5 % déjà franchi à la baisse, bien avant l'échéance du 14 août). Aucune actualité spécifique trouvée pour expliquer ce retournement — lecture purement technique, cohérente avec la mise en garde déjà formulée dans le verdict initial contre un mouvement extrême sans confirmation. Signal précoce enregistré sur le verdict correspondant, ne préjuge pas de l'issue finale à l'échéance.",
+        "source": "criblage technique interne"
+    }
 ]
