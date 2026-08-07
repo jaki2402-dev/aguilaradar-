@@ -25,7 +25,7 @@ function renderFavorisGrid() {
   const grid = document.getElementById("favoris-grid");
   grid.innerHTML = FAVORIS.map(
     (f) => `
-    <div class="favori-card">
+    <div class="favori-card clickable" data-detail-target="detail-fav-${f.ticker}">
       <div class="favori-header">
         <div>
           <span class="favori-ticker">${f.ticker}</span>
@@ -36,10 +36,17 @@ function renderFavorisGrid() {
       <div class="chip skeleton" id="change-${f.ticker}">▲ +0,00 %</div>
       <div class="tv-chart" id="tv-${f.ticker}"></div>
       <div class="favori-verdict empty-state" id="verdict-${f.ticker}">Verdict en attente du premier cycle d'analyse automatisé.</div>
+      <div class="expand-hint">Voir l'analyse détaillée <span class="chevron">▾</span></div>
+      <div class="detail-panel" id="detail-fav-${f.ticker}"></div>
     </div>`
   ).join("");
 
   FAVORIS.forEach((f) => mountTradingViewChart(`tv-${f.ticker}`, f.tvSymbol));
+
+  document.querySelectorAll("#favoris-grid .favori-card.clickable").forEach((cardEl, i) => {
+    const f = FAVORIS[i];
+    attachDetailToggle(cardEl, `detail-fav-${f.ticker}`, { cgId: f.cgId, tvSymbol: f.tvSymbol, athChangePct: null, reasoning: null });
+  });
 }
 
 function updateFavorisVerdicts(verdicts) {
@@ -55,6 +62,11 @@ function updateFavorisVerdicts(verdicts) {
       <span class="badge badge-${latest.verdict.toLowerCase()}">${latest.verdict}</span>
       <span class="hint">${latest.status === "pending" ? "en cours (horizon " + latest.horizon_days + " j)" : "résolu"} · confiance ${latest.confidence_pct} %</span>
       <p class="hint" style="margin-top:6px;">${latest.reasoning}</p>`;
+    const cardEl = el.closest(".favori-card");
+    if (cardEl) {
+      cardEl.dataset.reasoning = latest.reasoning;
+      cardEl.dataset.verdict = latest.verdict;
+    }
   });
 }
 

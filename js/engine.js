@@ -124,7 +124,20 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData) {
     classesEl.innerHTML = "";
   } else {
     const buyHoldBtc = engineHistory && engineHistory.global_stats && engineHistory.global_stats.baseline_buy_hold_btc_pct;
+    const edge = stats.accuracyPct - stats.baselineMajorityPct;
+    const selfAssessment =
+      edge > 15
+        ? `Le moteur bat nettement la référence (${edge.toFixed(0)} points d'avance) — avantage réel sur cet échantillon, à confirmer dans la durée.`
+        : edge > 3
+        ? `Le moteur bat la référence de ${edge.toFixed(0)} points — un avantage réel mais modeste, qui se joue sur la répétition, jamais sur un seul verdict.`
+        : edge > -3
+        ? `Le moteur ne fait pas mieux qu'une supposition naïve pour l'instant (écart de ${edge.toFixed(0)} points). Ses verdicts ne doivent pas être suivis mécaniquement tant que ça reste vrai.`
+        : `Le moteur fait actuellement moins bien que le hasard (${edge.toFixed(0)} points) — un vrai problème que la correction automatique doit adresser en priorité, pas un détail.`;
     matrixEl.innerHTML = `
+      <div class="detail-opinion" style="margin-bottom:16px;">
+        <strong>Verdict du moteur sur lui-même</strong>
+        <p>${selfAssessment}</p>
+      </div>
       <div class="stat-row">
         <div class="stat-card accent-teal"><div class="stat-label">Exactitude stricte</div><div class="stat-value">${stats.accuracyPct.toFixed(0)} %</div></div>
         <div class="stat-card accent-gray"><div class="stat-label">Baseline "classe majoritaire"</div><div class="stat-value">${stats.baselineMajorityPct.toFixed(0)} %</div></div>

@@ -46,12 +46,13 @@ function sparklinePoints(values, w, h) {
     .join(" ");
 }
 
-function renderOpportunityCard(o) {
+function renderOpportunityCard(o, idx) {
   const conf = computeConfidence(o);
   const trendUp = o.sparkline && o.sparkline.length > 1 && o.sparkline[o.sparkline.length - 1] >= o.sparkline[0];
   const points = sparklinePoints(o.sparkline, 100, 32);
+  const panelId = `detail-opp-${o.id || idx}`;
   return `
-    <div class="opp-card">
+    <div class="opp-card clickable" data-detail-target="${panelId}" data-cgid="${o.cgId}" data-ath="${o.ath_change_pct ?? ""}" data-reason="${(o.reason || "").replace(/"/g, "&quot;")}">
       <div class="opp-card-top">
         <img src="${o.image}" alt="" class="opp-logo" loading="lazy" onerror="this.style.visibility='hidden'" />
         <div class="opp-title">
@@ -75,6 +76,8 @@ function renderOpportunityCard(o) {
         <span>30j <strong class="${o.change_30d_pct >= 0 ? "positive" : "negative"}">${formatChangePct(o.change_30d_pct)}</strong></span>
         <span>Cap. <strong>${formatMarketCap(o.market_cap)}</strong></span>
       </div>
+      <div class="expand-hint">Voir l'analyse détaillée <span class="chevron">▾</span></div>
+      <div class="detail-panel" id="${panelId}"></div>
     </div>`;
 }
 
@@ -88,4 +91,12 @@ function renderOpportunityCards(containerId, opportunities, limit) {
     return;
   }
   el.innerHTML = `<div class="opp-grid">${shown.map(renderOpportunityCard).join("")}</div>`;
+
+  el.querySelectorAll(".opp-card.clickable").forEach((cardEl) => {
+    const panelId = cardEl.dataset.detailTarget;
+    const cgId = cardEl.dataset.cgid;
+    const ath = cardEl.dataset.ath ? parseFloat(cardEl.dataset.ath) : null;
+    const reason = cardEl.dataset.reason || "";
+    attachDetailToggle(cardEl, panelId, { cgId, athChangePct: ath, reasoning: reason, tvSymbol: null });
+  });
 }

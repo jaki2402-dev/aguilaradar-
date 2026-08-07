@@ -395,6 +395,41 @@ footer.site-footer {
 .disclaimer-box ul { margin: 0; padding-left: 18px; }
 .disclaimer-box li { margin-bottom: 6px; }
 
+/* ---- Fiche d'analyse detaillee (clic sur une carte) ---- */
+.clickable { cursor: pointer; }
+.expand-hint {
+  text-align: center; color: var(--accent); font-size: 0.78rem; font-weight: 600;
+  margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border);
+}
+.chevron { display: inline-block; transition: transform 0.2s ease; }
+.expanded .chevron { transform: rotate(180deg); }
+.detail-panel {
+  max-height: 0; overflow: hidden; opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+}
+.detail-panel.open { max-height: 1000px; opacity: 1; margin-top: 14px; }
+.detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
+.detail-signal {
+  background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 10px 12px;
+}
+.detail-signal strong { font-size: 0.85rem; }
+.detail-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
+.detail-stat {
+  background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 10px; text-align: center;
+}
+.detail-stat strong { display: block; margin-top: 2px; font-size: 1.05rem; }
+.detail-orderbook { margin-top: 14px; }
+.orderbook-bar {
+  height: 8px; border-radius: 999px; background: var(--loss); overflow: hidden; margin: 6px 0;
+}
+.orderbook-bid { height: 100%; background: var(--gain); }
+.detail-opinion {
+  margin-top: 14px; padding: 14px; background: var(--accent-dim); border-radius: var(--radius-sm);
+}
+.detail-opinion strong { color: var(--accent); display: block; margin-bottom: 6px; }
+
 /* ---- Couleurs par section : identité visuelle + repérage rapide ---- */
 :root {
   --c-favoris: var(--accent);
