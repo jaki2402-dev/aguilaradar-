@@ -9,6 +9,7 @@ function switchTab(tabId) {
     document.getElementById(`tab-${id}`).classList.toggle("active", id === tabId);
     document.querySelector(`[data-tab="${id}"]`).classList.toggle("active", id === tabId);
   });
+  if (window.notifyTabActive) notifyTabActive(tabId);
 }
 
 async function loadJson(url) {
@@ -96,10 +97,14 @@ async function refreshPrices() {
   }
 }
 
+let latestOpportunityTickers = [];
+
 function renderOpportunities(data) {
   const items = (data && data.opportunities) || [];
+  latestOpportunityTickers = items.map((o) => o.ticker).filter(Boolean);
   renderOpportunityCards("opportunities-body", items);
   renderOpportunityCards("accueil-highlights", items, 3);
+  if (constellationControllers.opportunities) constellationControllers.opportunities.refresh();
 }
 
 function renderJournal(verdicts) {
@@ -334,6 +339,13 @@ async function initApp() {
   refreshBtn.addEventListener("click", () => refreshAll(refreshBtn));
   initPullToRefresh();
   initSearch();
+
+  if (window.initFloatingGlyphs) initFloatingGlyphs("hero-glyphs-canvas", ["₿", "Ξ", "◈"]);
+  if (window.initCardTilt) initCardTilt();
+  if (window.registerConstellation) {
+    registerConstellation("favoris", createConstellationController("favoris-constellation-canvas", () => FAVORIS.map((f) => f.ticker)));
+    registerConstellation("opportunities", createConstellationController("opp-constellation-canvas", () => latestOpportunityTickers));
+  }
 
   renderFavorisGrid();
   await refreshPrices();

@@ -1,0 +1,270 @@
+// Effets d'ambiance purement décoratifs (fond radar, symboles flottants, réseau de tickers,
+// relief 3D au survol) — n'affichent jamais de donnée, ne bloquent jamais un clic, se
+// désactivent proprement si mouvement réduit demandé ou pas de souris précise (mobile/tactile).
+
+function prefersReducedMotion() {
+  return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
+
+function canHoverPrecisely() {
+  return window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+}
+
+function setupHiDPICanvas(canvas, widthPx, heightPx) {
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+  const w = Math.max(widthPx, 1);
+  const h = Math.max(heightPx, 1);
+  canvas.width = w * dpr;
+  canvas.height = h * dpr;
+  canvas.style.width = w + "px";
+  canvas.style.height = h + "px";
+  const ctx = canvas.getContext("2d");
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  return ctx;
+}
+
+// ---- Piste B : balayage radar ambiant, fixé dans un coin, tourne très lentement ----
+function initRadarBackground() {
+  const canvas = document.getElementById("bg-radar-canvas");
+  if (!canvas || prefersReducedMotion()) return;
+  // Ne jamais faire confiance à window.innerWidth/innerHeight au moment de l'appel : au
+  // DOMContentLoaded, la mise en page (et parfois même le CSS, retardé par l'@import Google
+  // Fonts) n'est pas forcément terminée, ce qui a déjà produit un canvas figé à 1x1px en
+  // test. On remesure donc à chaque frame plutôt qu'une fois pour toutes.
+  let ctx = null, lastW = 0, lastH = 0;
+  function ensureSize() {
+    const w = window.innerWidth, h = window.innerHeight;
+    if (w !== lastW || h !== lastH) {
+      ctx = setupHiDPICanvas(canvas, w, h);
+      lastW = w;
+      lastH = h;
+    }
+  }
+  const blips = [
+    [0.16, 0.22], [0.82, 0.14], [0.7, 0.68], [0.28, 0.78], [0.5, 0.46], [0.9, 0.85], [0.1, 0.6],
+  ];
+  let frameCount = 0;
+  function draw(t) {
+    ensureSize();
+    frameCount++;
+    if (frameCount % 2 === 0 || document.hidden) {
+      requestAnimationFrame(draw);
+      return;
+    }
+    const w = lastW, h = lastH;
+    const cx = w * 0.82, cy = h * 0.12;
+    const maxR = Math.max(w, h) * 0.55;
+    ctx.clearRect(0, 0, w, h);
+    for (let r = maxR / 4; r <= maxR; r += maxR / 4) {
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.strokeStyle = "rgba(47, 211, 176, 0.035)";
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+    const angle = (t * 0.00018) % (Math.PI * 2);
+    if (ctx.createConicGradient) {
+      const grad = ctx.createConicGradient(angle - Math.PI / 2, cx, cy);
+      grad.addColorStop(0, "rgba(47, 211, 176, 0)");
+      grad.addColorStop(0.05, "rgba(47, 211, 176, 0.05)");
+      grad.addColorStop(0.1, "rgba(47, 211, 176, 0)");
+      grad.addColorStop(1, "rgba(47, 211, 176, 0)");
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, maxR, 0, Math.PI * 2);
+      ctx.fillStyle = grad;
+      ctx.fill();
+      ctx.restore();
+    }
+    blips.forEach((b) => {
+      const bx = cx + (b[0] - 0.5) * w * 0.9, by = cy + (b[1] - 0.5) * h * 0.9;
+      if (bx < 0 || bx > w || by < 0 || by > h) return;
+      const blipAngle = Math.atan2(by - cy, bx - cx);
+      const diff = Math.abs((((blipAngle - (angle - Math.PI / 2) + Math.PI * 3) % (Math.PI * 2)) - Math.PI));
+      const lit = diff > Math.PI - 0.3;
+      ctx.beginPath();
+      ctx.arc(bx, by, lit ? 2.2 : 1.2, 0, Math.PI * 2);
+      ctx.fillStyle = lit ? "rgba(240, 180, 41, 0.4)" : "rgba(147, 160, 180, 0.12)";
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+}
+
+// ---- Piste A : symboles crypto flottants derrière une carte contenante ----
+function initFloatingGlyphs(canvasId, glyphs) {
+  const canvas = document.getElementById(canvasId);
+  const host = canvas && canvas.parentElement;
+  if (!canvas || !host || prefersReducedMotion()) return;
+  // Comme pour le radar : on remesure à chaque frame plutôt que de figer une taille au
+  // moment de l'appel, pour ne jamais dépendre d'une mise en page pas encore terminée.
+  let ctx = null, lastW = 0, lastH = 0;
+  function ensureSize() {
+    const w = host.clientWidth, h = host.clientHeight;
+    if (w !== lastW || h !== lastH) {
+      ctx = setupHiDPICanvas(canvas, w, h);
+      lastW = w;
+      lastH = h;
+    }
+  }
+  const drifters = glyphs.map((g, i) => ({
+    x: 0.15 + i * (0.7 / Math.max(glyphs.length - 1, 1)),
+    y: 0.25 + (i % 2) * 0.35,
+    size: 64 + i * 10,
+    speed: 0.00005 + i * 0.000015,
+    angle: i * 2.1,
+    glyph: g,
+  }));
+  let frameCount = 0;
+  function draw(t) {
+    ensureSize();
+    frameCount++;
+    if (!ctx || frameCount % 2 === 0 || document.hidden) {
+      requestAnimationFrame(draw);
+      return;
+    }
+    const w = lastW, h = lastH;
+    ctx.clearRect(0, 0, w, h);
+    drifters.forEach((d) => {
+      const x = (((d.x + Math.cos(d.angle) * t * d.speed) % 1.3) + 1.3) % 1.3 * w - w * 0.15;
+      const y = (((d.y + Math.sin(d.angle) * t * d.speed * 0.6) % 1.3) + 1.3) % 1.3 * h - h * 0.15;
+      ctx.font = d.size + "px Inter, sans-serif";
+      ctx.fillStyle = "rgba(47, 211, 176, 0.06)";
+      ctx.fillText(d.glyph, x, y);
+    });
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+}
+
+// ---- Piste C : réseau de tickers en fond, seulement pendant que son onglet est actif ----
+function createConstellationController(canvasId, getTickers) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return { start() {}, stop() {}, refresh() {} };
+  const colors = ["#2fd3b0", "#22b8e0", "#f0b429", "#7c9eff", "#b48cf2", "#fb8362"];
+  let ctx = null, nodes = [], rafId = null, lastT = 0, ro = null;
+
+  function resize() {
+    const host = canvas.parentElement;
+    ctx = setupHiDPICanvas(canvas, host.clientWidth, host.clientHeight);
+  }
+
+  function buildNodes() {
+    const tickers = getTickers() || [];
+    nodes = tickers.map((ticker, i) => ({
+      x: 0.08 + Math.random() * 0.84,
+      y: 0.08 + Math.random() * 0.84,
+      vx: (Math.random() - 0.5) * 0.00004,
+      vy: (Math.random() - 0.5) * 0.00004,
+      color: colors[i % colors.length],
+      phase: Math.random() * Math.PI * 2,
+    }));
+  }
+
+  function draw(t) {
+    if (!ctx) {
+      rafId = requestAnimationFrame(draw);
+      return;
+    }
+    const dt = document.hidden ? 0 : t - lastT;
+    lastT = t;
+    const w = canvas.parentElement.clientWidth, h = canvas.parentElement.clientHeight;
+    ctx.clearRect(0, 0, w, h);
+    nodes.forEach((n) => {
+      n.x += n.vx * dt;
+      n.y += n.vy * dt;
+      if (n.x < 0.04 || n.x > 0.96) n.vx *= -1;
+      if (n.y < 0.04 || n.y > 0.96) n.vy *= -1;
+    });
+    const maxDist = w * 0.22;
+    for (let a = 0; a < nodes.length; a++) {
+      for (let b = a + 1; b < nodes.length; b++) {
+        const dx = (nodes[a].x - nodes[b].x) * w, dy = (nodes[a].y - nodes[b].y) * h;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < maxDist) {
+          ctx.beginPath();
+          ctx.moveTo(nodes[a].x * w, nodes[a].y * h);
+          ctx.lineTo(nodes[b].x * w, nodes[b].y * h);
+          ctx.strokeStyle = `rgba(147, 160, 180, ${(0.08 * (1 - dist / maxDist)).toFixed(3)})`;
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        }
+      }
+    }
+    nodes.forEach((n) => {
+      const tw = 0.7 + 0.3 * Math.sin(t * 0.0012 + n.phase);
+      ctx.beginPath();
+      ctx.arc(n.x * w, n.y * h, 2.6, 0, Math.PI * 2);
+      ctx.globalAlpha = 0.4 * tw;
+      ctx.fillStyle = n.color;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    });
+    rafId = requestAnimationFrame(draw);
+  }
+
+  return {
+    start() {
+      if (rafId || prefersReducedMotion()) return;
+      resize();
+      if (nodes.length === 0) buildNodes();
+      if (!ro) {
+        ro = new ResizeObserver(resize);
+        ro.observe(canvas.parentElement);
+      }
+      lastT = performance.now();
+      rafId = requestAnimationFrame(draw);
+    },
+    stop() {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = null;
+    },
+    refresh() {
+      resize();
+      buildNodes();
+    },
+  };
+}
+
+const constellationControllers = {};
+function registerConstellation(key, controller) {
+  constellationControllers[key] = controller;
+}
+function notifyTabActive(tabId) {
+  Object.keys(constellationControllers).forEach((key) => {
+    if (key === tabId) constellationControllers[key].start();
+    else constellationControllers[key].stop();
+  });
+}
+
+// ---- Relief 3D au survol, délégué (fonctionne aussi sur les cartes réaffichées) ----
+function initCardTilt() {
+  if (!canHoverPrecisely() || prefersReducedMotion()) return;
+  const selector = ".favori-card.clickable, .opp-card.clickable, .journal-entry.clickable, .gate-card";
+  const maxTilt = 6;
+  let activeCard = null;
+
+  document.addEventListener("mousemove", (e) => {
+    const card = e.target instanceof Element ? e.target.closest(selector) : null;
+    if (!card) {
+      if (activeCard) {
+        activeCard.style.transform = "";
+        activeCard = null;
+      }
+      return;
+    }
+    if (activeCard && activeCard !== card) activeCard.style.transform = "";
+    activeCard = card;
+    const r = card.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transform = `perspective(900px) translateY(-3px) rotateX(${(-py * maxTilt).toFixed(2)}deg) rotateY(${(px * maxTilt).toFixed(2)}deg)`;
+  });
+  document.addEventListener("mouseleave", () => {
+    if (activeCard) {
+      activeCard.style.transform = "";
+      activeCard = null;
+    }
+  });
+}

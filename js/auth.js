@@ -17,10 +17,14 @@ function showApp() {
 }
 
 function initGate() {
+  if (window.initRadarBackground) initRadarBackground();
+
   if (isUnlocked()) {
     showApp();
     return;
   }
+
+  if (window.initFloatingGlyphs) initFloatingGlyphs("gate-glyphs-canvas", ["₿", "Ξ", "◈"]);
 
   const form = document.getElementById("access-form");
   const input = document.getElementById("access-input");

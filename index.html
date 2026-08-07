@@ -14,7 +14,10 @@
 </head>
 <body>
 
+<canvas id="bg-radar-canvas" aria-hidden="true"></canvas>
+
 <div id="access-gate">
+  <canvas id="gate-glyphs-canvas" aria-hidden="true"></canvas>
   <div class="gate-card">
     <div class="gate-mark">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg>
@@ -88,6 +91,7 @@
       <p class="section-sub">Les prix se rafraîchissent en direct. L'analyse profonde (verdicts, screening, moteur) suit un cycle programmé — voir l'onglet Moteur.</p>
       <div id="macro-regime-banner"></div>
       <div class="hero-card">
+        <canvas id="hero-glyphs-canvas" aria-hidden="true"></canvas>
         <div class="hint">État du radar</div>
         <div class="hero-stats">
           <div><div class="hero-stat-value">15</div><div class="hero-stat-label">Favoris suivis</div></div>
@@ -183,7 +187,10 @@
       </form>
       <div id="search-result" style="margin-bottom: 20px;"></div>
 
-      <div id="favoris-grid" class="favoris-grid"></div>
+      <div class="constellation-host">
+        <canvas id="favoris-constellation-canvas" aria-hidden="true"></canvas>
+        <div id="favoris-grid" class="favoris-grid"></div>
+      </div>
     </section>
 
     <section id="tab-opportunities" class="tab-panel">
@@ -192,7 +199,10 @@
         <h2>Opportunités — Top 300 hors memecoin</h2>
       </div>
       <p class="section-sub">Criblage périodique du marché, memecoins exclus (catégorie CoinGecko "Meme"), généré par le cycle profond.</p>
-      <div id="opportunities-body"></div>
+      <div class="constellation-host">
+        <canvas id="opp-constellation-canvas" aria-hidden="true"></canvas>
+        <div id="opportunities-body"></div>
+      </div>
     </section>
 
     <section id="tab-journal" class="tab-panel">
@@ -265,6 +275,7 @@
 <script src="js/cards.js"></script>
 <script src="js/detail.js"></script>
 <script src="js/insights.js"></script>
+<script src="js/background-fx.js"></script>
 <script src="js/search.js"></script>
 <script src="js/app.js"></script>
 <script src="js/auth.js"></script>
