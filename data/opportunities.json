@@ -2,47 +2,63 @@
   "last_scan_at": "2026-08-07T00:20:00Z",
   "scanned_count": 300,
   "excluded_meme_count": 22,
-  "methodology": "Criblage quantitatif Top 300 CoinGecko (catégorie Meme exclue), score = momentum 7j pondéré + 24h + ratio volume/capitalisation plafonné. Candidats avec ratio volume/capitalisation > 25% exclus (marché trop fin/suspect). Rang de capitalisation incohérent exclu (1 cas : anomalie de données). Aucune vérification fondamentale (actualités, équipe, tokenomics) effectuée à ce stade pour les projets peu connus — signal purement technique, à prendre avec prudence proportionnelle à la notoriété du projet.",
+  "methodology": "Criblage quantitatif Top 300 CoinGecko (catégorie Meme exclue), score = momentum 7j pondéré + 24h + ratio volume/capitalisation plafonné. Candidats avec ratio volume/capitalisation > 25% exclus (marché trop fin/suspect). Rang de capitalisation incohérent exclu (1 cas : anomalie de données). Aucune vérification fondamentale (actualités, équipe, tokenomics) effectuée à ce stade pour les projets peu connus — signal purement technique, à prendre avec prudence proportionnelle à la notoriété du projet. Chaque pépite signalée est suivie 14 jours (comme les verdicts) pour vérifier si le signal était réellement bon — intégré à la Performance du moteur.",
   "opportunities": [
     {
-      "ticker": "ADA", "name": "Cardano", "price_eur": 0.174497,
+      "id": "opp-20260807-ada", "ticker": "ADA", "name": "Cardano", "price_eur": 0.174497,
       "change_24h_pct": 5.0, "change_7d_pct": 18.4, "opportunity_score": 12.9,
-      "reason": "Projet établi (rang 16) — momentum positif confirmé sur 24h et 7j. Toujours à -93.3% de son plus haut historique, contexte à garder en tête."
+      "reason": "Projet établi (rang 16) — momentum positif confirmé sur 24h et 7j. Toujours à -93.3% de son plus haut historique, contexte à garder en tête.",
+      "flagged_at": "2026-08-07T00:20:00Z", "price_at_flag": 0.174497, "check_at": "2026-08-21T00:20:00Z",
+      "status": "pending", "outcome": { "price_at_check": null, "move_pct": null, "validated": null, "checked_at": null }
     },
     {
-      "ticker": "ENA", "name": "Ethena", "price_eur": 0.080418,
+      "id": "opp-20260807-ena", "ticker": "ENA", "name": "Ethena", "price_eur": 0.080418,
       "change_24h_pct": 0.6, "change_7d_pct": 14.2, "opportunity_score": 10.0,
-      "reason": "Protocole DeFi reconnu (rang 71) — hausse régulière sur 7j, volume/capitalisation sain (~11%)."
+      "reason": "Protocole DeFi reconnu (rang 71) — hausse régulière sur 7j, volume/capitalisation sain (~11%).",
+      "flagged_at": "2026-08-07T00:20:00Z", "price_at_flag": 0.080418, "check_at": "2026-08-21T00:20:00Z",
+      "status": "pending", "outcome": { "price_at_check": null, "move_pct": null, "validated": null, "checked_at": null }
     },
     {
-      "ticker": "AXS", "name": "Axie Infinity", "price_eur": 0.771579,
+      "id": "opp-20260807-axs", "ticker": "AXS", "name": "Axie Infinity", "price_eur": 0.771579,
       "change_24h_pct": 3.4, "change_7d_pct": 7.7, "opportunity_score": 9.7,
-      "reason": "Projet gaming établi (rang 191) — momentum modéré mais confirmé, liquidité correcte."
+      "reason": "Projet gaming établi (rang 191) — momentum modéré mais confirmé, liquidité correcte.",
+      "flagged_at": "2026-08-07T00:20:00Z", "price_at_flag": 0.771579, "check_at": "2026-08-21T00:20:00Z",
+      "status": "pending", "outcome": { "price_at_check": null, "move_pct": null, "validated": null, "checked_at": null }
     },
     {
-      "ticker": "CVX", "name": "Convex Finance", "price_eur": 1.32,
+      "id": "opp-20260807-cvx", "ticker": "CVX", "name": "Convex Finance", "price_eur": 1.32,
       "change_24h_pct": 4.5, "change_7d_pct": 14.3, "opportunity_score": 9.2,
-      "reason": "Brique DeFi reconnue de l'écosystème Curve (rang 201) — hausse régulière, rien d'anormal dans les volumes."
+      "reason": "Brique DeFi reconnue de l'écosystème Curve (rang 201) — hausse régulière, rien d'anormal dans les volumes.",
+      "flagged_at": "2026-08-07T00:20:00Z", "price_at_flag": 1.32, "check_at": "2026-08-21T00:20:00Z",
+      "status": "pending", "outcome": { "price_at_check": null, "move_pct": null, "validated": null, "checked_at": null }
     },
     {
-      "ticker": "BTW", "name": "Bitway", "price_eur": 0.167043,
+      "id": "opp-20260807-btw", "ticker": "BTW", "name": "Bitway", "price_eur": 0.167043,
       "change_24h_pct": 17.3, "change_7d_pct": 127.2, "opportunity_score": 69.3,
-      "reason": "Score quantitatif le plus élevé du criblage, mais projet que je ne connais pas indépendamment et hausse de +127% sur 7j — aucune actualité vérifiée derrière ce mouvement. À traiter comme spéculatif, pas comme une pépite confirmée."
+      "reason": "Score quantitatif le plus élevé du criblage, mais projet que je ne connais pas indépendamment et hausse de +127% sur 7j — aucune actualité vérifiée derrière ce mouvement. À traiter comme spéculatif, pas comme une pépite confirmée.",
+      "flagged_at": "2026-08-07T00:20:00Z", "price_at_flag": 0.167043, "check_at": "2026-08-21T00:20:00Z",
+      "status": "pending", "outcome": { "price_at_check": null, "move_pct": null, "validated": null, "checked_at": null }
     },
     {
-      "ticker": "US", "name": "Talus", "price_eur": 0.04945023,
+      "id": "opp-20260807-us", "ticker": "US", "name": "Talus", "price_eur": 0.04945023,
       "change_24h_pct": 7.1, "change_7d_pct": 27.1, "opportunity_score": 16.1,
-      "reason": "Projet peu établi, signal purement quantitatif, aucune vérification fondamentale effectuée. Prudence recommandée."
+      "reason": "Projet peu établi, signal purement quantitatif, aucune vérification fondamentale effectuée. Prudence recommandée.",
+      "flagged_at": "2026-08-07T00:20:00Z", "price_at_flag": 0.04945023, "check_at": "2026-08-21T00:20:00Z",
+      "status": "pending", "outcome": { "price_at_check": null, "move_pct": null, "validated": null, "checked_at": null }
     },
     {
-      "ticker": "UB", "name": "Unibase", "price_eur": 0.144905,
+      "id": "opp-20260807-ub", "ticker": "UB", "name": "Unibase", "price_eur": 0.144905,
       "change_24h_pct": 18.3, "change_7d_pct": 10.3, "opportunity_score": 12.3,
-      "reason": "Projet peu établi, hausse récente marquée sur 24h — signal quantitatif uniquement, à vérifier avant toute action."
+      "reason": "Projet peu établi, hausse récente marquée sur 24h — signal quantitatif uniquement, à vérifier avant toute action.",
+      "flagged_at": "2026-08-07T00:20:00Z", "price_at_flag": 0.144905, "check_at": "2026-08-21T00:20:00Z",
+      "status": "pending", "outcome": { "price_at_check": null, "move_pct": null, "validated": null, "checked_at": null }
     },
     {
-      "ticker": "KITE", "name": "Kite", "price_eur": 0.092067,
+      "id": "opp-20260807-kite", "ticker": "KITE", "name": "Kite", "price_eur": 0.092067,
       "change_24h_pct": 4.8, "change_7d_pct": 10.5, "opportunity_score": 9.0,
-      "reason": "Momentum modéré, liquidité correcte (~10% volume/capitalisation), mais projet non vérifié fondamentalement de mon côté."
+      "reason": "Momentum modéré, liquidité correcte (~10% volume/capitalisation), mais projet non vérifié fondamentalement de mon côté.",
+      "flagged_at": "2026-08-07T00:20:00Z", "price_at_flag": 0.092067, "check_at": "2026-08-21T00:20:00Z",
+      "status": "pending", "outcome": { "price_at_check": null, "move_pct": null, "validated": null, "checked_at": null }
     }
   ]
 }

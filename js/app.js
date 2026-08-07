@@ -151,7 +151,7 @@ async function loadAllData() {
     loadJson(DATA_URLS.alerts),
   ]);
 
-  renderEngineTab(verdicts || [], engineHistory);
+  renderEngineTab(verdicts || [], engineHistory, opportunities);
   renderOpportunities(opportunities);
   renderJournal(verdicts || []);
   renderNotifications(alerts);

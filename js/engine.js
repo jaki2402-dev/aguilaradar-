@@ -72,7 +72,42 @@ function computeEngineStats(resolvedVerdicts) {
   return { matrix, perClass, total, correct, accuracyPct, coveragePct, baselineMajorityPct, f1Macro };
 }
 
-function renderEngineTab(verdicts, engineHistory) {
+function computeOpportunitiesStats(opportunities) {
+  const resolved = (opportunities || []).filter((o) => o.status === "resolved");
+  if (resolved.length === 0) return null;
+  const validatedCount = resolved.filter((o) => o.outcome && o.outcome.validated).length;
+  const moves = resolved.map((o) => o.outcome.move_pct).filter((m) => m !== null && m !== undefined);
+  const avgMove = moves.length ? moves.reduce((a, b) => a + b, 0) / moves.length : null;
+  return {
+    total: resolved.length,
+    validatedPct: (validatedCount / resolved.length) * 100,
+    avgMovePct: avgMove,
+  };
+}
+
+function renderOpportunitiesEngineSection(opportunitiesData) {
+  const el = document.getElementById("engine-opportunities");
+  if (!el) return;
+  const items = (opportunitiesData && opportunitiesData.opportunities) || [];
+  const pending = items.filter((o) => o.status === "pending").length;
+  const stats = computeOpportunitiesStats(items);
+
+  let html = `<p>${items.length} opportunité(s) signalée(s) au total — ${items.length - pending} vérifiée(s), ${pending} en attente de leur échéance.</p>`;
+
+  if (!stats) {
+    html += `<p class="empty-state">Aucune opportunité vérifiée pour l'instant — chaque pépite signalée est revérifiée 14 jours après (seuil ±${THRESHOLDS.directionalMovePct} %), aucun taux de réussite avant ça.</p>`;
+  } else {
+    html += `
+      <div class="stat-row">
+        <div class="stat-card accent-gold"><div class="stat-label">Taux de validation</div><div class="stat-value">${stats.validatedPct.toFixed(0)} %</div></div>
+        <div class="stat-card accent-teal"><div class="stat-label">Mouvement moyen</div><div class="stat-value">${stats.avgMovePct !== null ? (stats.avgMovePct >= 0 ? "+" : "") + stats.avgMovePct.toFixed(1) + " %" : "—"}</div></div>
+      </div>
+      <p class="hint">Une opportunité est "validée" si son prix a progressé de plus de ${THRESHOLDS.directionalMovePct} % dans les 14 jours suivant le signalement — même seuil que partout ailleurs sur le site.</p>`;
+  }
+  el.innerHTML = html;
+}
+
+function renderEngineTab(verdicts, engineHistory, opportunitiesData) {
   const resolved = verdicts.filter((v) => v.status === "resolved");
   const pending = verdicts.filter((v) => v.status === "pending");
   const stats = computeEngineStats(resolved);
@@ -153,4 +188,6 @@ function renderEngineTab(verdicts, engineHistory) {
       )
       .join("");
   }
+
+  renderOpportunitiesEngineSection(opportunitiesData);
 }
