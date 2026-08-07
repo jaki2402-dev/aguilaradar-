@@ -128,6 +128,8 @@ const ALERT_TYPE_LABELS = {
   actualite_macro: "Actu macro",
   actualite_favori: "Actu favori",
   opportunite: "Opportunité",
+  signal_precoce: "Signal précoce",
+  regime_change_impact: "Changement de régime",
 };
 
 function renderNotifications(alerts) {
