@@ -143,18 +143,7 @@ function updateHeroStats(verdicts, alerts) {
   if (alertsEl) alertsEl.textContent = (alerts || []).length;
 }
 
-async function initApp() {
-  document.querySelectorAll("nav button[data-tab]").forEach((btn) => {
-    btn.addEventListener("click", () => switchTab(btn.dataset.tab));
-  });
-
-  renderFavorisGrid();
-  refreshPrices();
-  if (!pricesIntervalStarted) {
-    setInterval(refreshPrices, 60000);
-    pricesIntervalStarted = true;
-  }
-
+async function loadAllData() {
   const [verdicts, engineHistory, opportunities, alerts] = await Promise.all([
     loadJson(DATA_URLS.verdicts),
     loadJson(DATA_URLS.engineHistory),
@@ -176,6 +165,82 @@ async function initApp() {
   lastDeepCycle.textContent = timestamps.length
     ? "Dernière analyse profonde : " + new Date(Math.max(...timestamps.map((t) => new Date(t)))).toLocaleString("fr-FR")
     : "Automatisation pas encore activée — routine programmée à configurer.";
+}
+
+let refreshInFlight = false;
+async function refreshAll(indicatorEl) {
+  if (refreshInFlight) return;
+  refreshInFlight = true;
+  if (indicatorEl) indicatorEl.classList.add("spinning");
+  try {
+    await Promise.all([refreshPrices(), loadAllData()]);
+  } finally {
+    if (indicatorEl) {
+      setTimeout(() => indicatorEl.classList.remove("spinning"), 300);
+    }
+    refreshInFlight = false;
+  }
+}
+
+function initPullToRefresh() {
+  const indicator = document.getElementById("pull-indicator");
+  const threshold = 70;
+  let startY = 0;
+  let pulling = false;
+  let triggered = false;
+
+  document.addEventListener(
+    "touchstart",
+    (e) => {
+      if (window.scrollY === 0) {
+        startY = e.touches[0].clientY;
+        pulling = true;
+        triggered = false;
+      }
+    },
+    { passive: true }
+  );
+
+  document.addEventListener(
+    "touchmove",
+    (e) => {
+      if (!pulling) return;
+      const dy = e.touches[0].clientY - startY;
+      if (dy > 0 && window.scrollY === 0) {
+        const dist = Math.min(dy, 110);
+        indicator.style.opacity = Math.min(dist / threshold, 1);
+        indicator.style.transform = `translateX(-50%) translateY(${dist - 34}px) rotate(${dist * 2}deg)`;
+        triggered = dist > threshold;
+      }
+    },
+    { passive: true }
+  );
+
+  document.addEventListener("touchend", () => {
+    if (pulling && triggered) refreshAll(indicator);
+    pulling = false;
+    indicator.style.opacity = "0";
+    indicator.style.transform = "translateX(-50%) translateY(-40px)";
+  });
+}
+
+async function initApp() {
+  document.querySelectorAll("nav button[data-tab]").forEach((btn) => {
+    btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+  });
+
+  const refreshBtn = document.getElementById("refresh-btn");
+  refreshBtn.addEventListener("click", () => refreshAll(refreshBtn));
+  initPullToRefresh();
+
+  renderFavorisGrid();
+  refreshPrices();
+  if (!pricesIntervalStarted) {
+    setInterval(refreshPrices, 60000);
+    pricesIntervalStarted = true;
+  }
+
+  await loadAllData();
 }
 
 window.initApp = initApp;

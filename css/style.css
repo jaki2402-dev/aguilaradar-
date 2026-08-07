@@ -127,6 +127,28 @@ header.site-header h1 { margin: 0; letter-spacing: 0.04em; font-size: 1.05rem; f
 }
 .meta { color: var(--text-dim); font-size: 0.72rem; text-align: right; line-height: 1.5; }
 
+.refresh-btn {
+  width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+  background: var(--card); border: 1px solid var(--border); color: var(--accent);
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+.refresh-btn svg { width: 18px; height: 18px; }
+.refresh-btn:active { transform: scale(0.92); }
+.refresh-btn.spinning svg { animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.pull-indicator {
+  position: fixed; top: 10px; left: 50%;
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--card); border: 1px solid var(--border); color: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transform: translateX(-50%) translateY(-40px);
+  z-index: 40; pointer-events: none;
+}
+.pull-indicator svg { width: 17px; height: 17px; }
+.pull-indicator.spinning svg { animation: spin 0.8s linear infinite; }
+
 /* ---- Navigation : barre du bas sur mobile, barre du haut sur desktop ---- */
 nav.tabs {
   display: flex;

@@ -12,11 +12,11 @@ const ACCESS_STORAGE_KEY = "aguilaradar_access_ok";
 const FAVORIS = [
   { ticker: "BTC",  name: "Bitcoin",                          cgId: "bitcoin",                              tvSymbol: "BINANCE:BTCUSDT" },
   { ticker: "ETH",  name: "Ethereum",                         cgId: "ethereum",                             tvSymbol: "BINANCE:ETHUSDT" },
-  { ticker: "FET",  name: "Artificial Superintelligence Alliance", cgId: "artificial-superintelligence-alliance", tvSymbol: "BINANCE:FETUSDT" },
+  { ticker: "FET",  name: "Artificial Superintelligence Alliance", cgId: "fetch-ai",                              tvSymbol: "BINANCE:FETUSDT" },
   { ticker: "GRT",  name: "The Graph",                        cgId: "the-graph",                            tvSymbol: "BINANCE:GRTUSDT" },
   { ticker: "TIA",  name: "Celestia",                         cgId: "celestia",                             tvSymbol: "BINANCE:TIAUSDT" },
   { ticker: "CTSI", name: "Cartesi",                          cgId: "cartesi",                              tvSymbol: "BINANCE:CTSIUSDT" },
-  { ticker: "PEAQ", name: "Peaq",                             cgId: "peaq",                                 tvSymbol: "MEXC:PEAQUSDT" },
+  { ticker: "PEAQ", name: "Peaq",                             cgId: "peaq-2",                               tvSymbol: "MEXC:PEAQUSDT" },
   { ticker: "LINK", name: "Chainlink",                        cgId: "chainlink",                            tvSymbol: "BINANCE:LINKUSDT" },
   { ticker: "ONDO", name: "Ondo Finance",                     cgId: "ondo-finance",                         tvSymbol: "BINANCE:ONDOUSDT" },
   { ticker: "JUP",  name: "Jupiter",                          cgId: "jupiter-exchange-solana",              tvSymbol: "BINANCE:JUPUSDT" },
