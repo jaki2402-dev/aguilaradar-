@@ -1,7 +1,7 @@
 {
   "current_version": "v1",
   "global_stats": {
-    "last_computed_at": "2026-08-07T04:14:00Z",
+    "last_computed_at": "2026-08-07T10:20:00Z",
     "total_verdicts_issued": 15,
     "total_verdicts_resolved": 0,
     "accuracy_strict_pct": null,
@@ -16,24 +16,24 @@
     "accuracy_by_market_regime": null
   },
   "opportunities_stats": {
-    "last_computed_at": "2026-08-07T04:14:00Z",
+    "last_computed_at": "2026-08-07T10:20:00Z",
     "total_flagged": 8,
     "total_resolved": 0,
     "validated_pct": null,
     "average_move_pct": null
   },
   "routine_health": {
-    "last_success_at": "2026-08-07T08:18:00Z",
+    "last_success_at": "2026-08-07T10:20:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": null
+    "last_failure_reason": "Criblage complet Top 300 (opportunites) et alerte precoce sur verdicts non effectues ce cycle : voir notes ci-dessous, aucune donnee inventee en remplacement."
   },
   "macro_regime": {
-    "last_computed_at": null,
-    "regime": null,
+    "last_computed_at": "2026-08-07T10:20:00Z",
+    "regime": "neutre",
     "fear_greed_value": null,
-    "btc_dominance_pct": null,
+    "btc_dominance_pct": 56.7,
     "btc_dominance_trend_7d_pct": null,
-    "note": null
+    "note": "Classification par defaut 'neutre', non calculee formellement ce cycle : la source mandatee (api.alternative.me/fng) est inaccessible depuis cet environnement (bloquee par le proxy reseau), et les sources de repli (recherche web) donnent des lectures incoherentes pour aujourd'hui (49/Neutre selon cfgi.io et milkroad.com vs 25-29/Peur selon un article de marche relaye par coingabbar.com, ecart de pres de 20 points). Trop incertain pour trancher entre risk-on/neutre/risk-off, donc statu quo neutre plutot qu'un chiffre invente. Dominance BTC actuelle 56.7% obtenue de maniere fiable (connecteur CoinGecko direct) ; sa tendance sur 7 jours n'a pas pu etre sourcee de facon fiable ce cycle (le connecteur ne donne pas d'historique de dominance globale, et les recherches web donnent des chiffres contradictoires selon la periode citee, de 56% a 63%). A recalculer formellement des que l'acces direct a l'indice sera retabli."
   },
   "paper_portfolio_stats": {
     "last_computed_at": null,
