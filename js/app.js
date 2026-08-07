@@ -35,11 +35,27 @@ function renderFavorisGrid() {
       </div>
       <div class="chip skeleton" id="change-${f.ticker}">▲ +0,00 %</div>
       <div class="tv-chart" id="tv-${f.ticker}"></div>
-      <div class="favori-verdict empty-state">Verdict en attente du premier cycle d'analyse automatisé.</div>
+      <div class="favori-verdict empty-state" id="verdict-${f.ticker}">Verdict en attente du premier cycle d'analyse automatisé.</div>
     </div>`
   ).join("");
 
   FAVORIS.forEach((f) => mountTradingViewChart(`tv-${f.ticker}`, f.tvSymbol));
+}
+
+function updateFavorisVerdicts(verdicts) {
+  FAVORIS.forEach((f) => {
+    const el = document.getElementById(`verdict-${f.ticker}`);
+    if (!el) return;
+    const latest = (verdicts || [])
+      .filter((v) => v.asset === f.cgId)
+      .sort((a, b) => new Date(b.issued_at) - new Date(a.issued_at))[0];
+    if (!latest) return;
+    el.classList.remove("empty-state");
+    el.innerHTML = `
+      <span class="badge badge-${latest.verdict.toLowerCase()}">${latest.verdict}</span>
+      <span class="hint">${latest.status === "pending" ? "en cours (horizon " + latest.horizon_days + " j)" : "résolu"} · confiance ${latest.confidence_pct} %</span>
+      <p class="hint" style="margin-top:6px;">${latest.reasoning}</p>`;
+  });
 }
 
 async function refreshPrices() {
@@ -156,6 +172,7 @@ async function loadAllData() {
   renderJournal(verdicts || []);
   renderNotifications(alerts);
   updateHeroStats(verdicts || [], alerts);
+  updateFavorisVerdicts(verdicts || []);
 
   const timestamps = [
     engineHistory && engineHistory.global_stats && engineHistory.global_stats.last_computed_at,
