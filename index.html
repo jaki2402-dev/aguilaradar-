@@ -106,6 +106,14 @@
         <h2>Mes 15 favoris</h2>
       </div>
       <p class="section-sub">Prix en direct (CoinGecko) et graphique chandelier (TradingView). Le verdict par actif apparaît une fois l'analyse automatisée active.</p>
+
+      <form id="search-form" class="search-bar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="search-input" type="text" placeholder="Chercher n'importe quelle crypto (dans ou hors Top 300)…" autocomplete="off" />
+        <button type="submit">Chercher</button>
+      </form>
+      <div id="search-result" style="margin-bottom: 20px;"></div>
+
       <div id="favoris-grid" class="favoris-grid"></div>
     </section>
 
@@ -168,6 +176,7 @@
 <script src="js/prices.js"></script>
 <script src="js/charts.js"></script>
 <script src="js/engine.js"></script>
+<script src="js/search.js"></script>
 <script src="js/app.js"></script>
 <script src="js/auth.js"></script>
 </body>

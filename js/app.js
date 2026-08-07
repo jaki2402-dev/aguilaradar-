@@ -232,6 +232,7 @@ async function initApp() {
   const refreshBtn = document.getElementById("refresh-btn");
   refreshBtn.addEventListener("click", () => refreshAll(refreshBtn));
   initPullToRefresh();
+  initSearch();
 
   renderFavorisGrid();
   refreshPrices();
