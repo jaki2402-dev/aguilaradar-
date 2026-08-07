@@ -23,7 +23,8 @@ function setupHiDPICanvas(canvas, widthPx, heightPx) {
   return ctx;
 }
 
-// ---- Piste B : balayage radar ambiant, fixé dans un coin, tourne très lentement ----
+// ---- Piste A + B : icônes des favoris qui dérivent sur tout l'écran + balayage radar
+// ambiant dans un coin — un seul canvas plein écran, toujours présent (gate comme app). ----
 function initRadarBackground() {
   const canvas = document.getElementById("bg-radar-canvas");
   if (!canvas || prefersReducedMotion()) return;
@@ -43,6 +44,31 @@ function initRadarBackground() {
   const blips = [
     [0.16, 0.22], [0.82, 0.14], [0.7, 0.68], [0.28, 0.78], [0.5, 0.46], [0.9, 0.85], [0.1, 0.6],
   ];
+
+  // Icônes des favoris qui dérivent lentement sur tout l'écran (pas juste le radar dans un
+  // coin) — mélange de symboles (BTC, ETH) et de petits badges ticker colorés.
+  const icons = [
+    { type: "glyph", glyph: "₿", size: 44 },
+    { type: "glyph", glyph: "Ξ", size: 36 },
+    { type: "badge", label: "LINK", color: "#7c9eff" },
+    { type: "badge", label: "ARB", color: "#22b8e0" },
+    { type: "badge", label: "ONDO", color: "#f0b429" },
+    { type: "badge", label: "INJ", color: "#b48cf2" },
+    { type: "badge", label: "TIA", color: "#fb8362" },
+    { type: "badge", label: "JUP", color: "#2fd3b0" },
+    { type: "badge", label: "GRT", color: "#7c9eff" },
+    { type: "badge", label: "LPT", color: "#f0b429" },
+    { type: "glyph", glyph: "◈", size: 28 },
+    { type: "badge", label: "FET", color: "#22b8e0" },
+  ].map((icon) => ({
+    ...icon,
+    x: Math.random(),
+    y: Math.random(),
+    speed: 0.00003 + Math.random() * 0.00003,
+    angle: Math.random() * Math.PI * 2,
+    phase: Math.random() * Math.PI * 2,
+  }));
+
   let frameCount = 0;
   function draw(t) {
     ensureSize();
@@ -52,9 +78,31 @@ function initRadarBackground() {
       return;
     }
     const w = lastW, h = lastH;
+    ctx.clearRect(0, 0, w, h);
+
+    icons.forEach((icon) => {
+      const x = ((((icon.x + Math.cos(icon.angle) * t * icon.speed) % 1.15) + 1.15) % 1.15) * w - w * 0.075;
+      const y = ((((icon.y + Math.sin(icon.angle) * t * icon.speed * 0.7) % 1.15) + 1.15) % 1.15) * h - h * 0.075;
+      const twinkle = 0.6 + 0.4 * Math.sin(t * 0.0009 + icon.phase);
+      if (icon.type === "glyph") {
+        ctx.font = icon.size + "px Inter, sans-serif";
+        ctx.fillStyle = `rgba(47, 211, 176, ${(0.11 * twinkle).toFixed(3)})`;
+        ctx.fillText(icon.glyph, x, y);
+      } else {
+        ctx.beginPath();
+        ctx.arc(x, y, 4, 0, Math.PI * 2);
+        ctx.globalAlpha = 0.24 * twinkle;
+        ctx.fillStyle = icon.color;
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.font = "600 11px Inter, sans-serif";
+        ctx.fillStyle = `rgba(238, 242, 247, ${(0.18 * twinkle).toFixed(3)})`;
+        ctx.fillText(icon.label, x + 9, y + 4);
+      }
+    });
+
     const cx = w * 0.82, cy = h * 0.12;
     const maxR = Math.max(w, h) * 0.55;
-    ctx.clearRect(0, 0, w, h);
     for (let r = maxR / 4; r <= maxR; r += maxR / 4) {
       ctx.beginPath();
       ctx.arc(cx, cy, r, 0, Math.PI * 2);
@@ -86,52 +134,6 @@ function initRadarBackground() {
       ctx.arc(bx, by, lit ? 2.2 : 1.2, 0, Math.PI * 2);
       ctx.fillStyle = lit ? "rgba(240, 180, 41, 0.4)" : "rgba(147, 160, 180, 0.12)";
       ctx.fill();
-    });
-    requestAnimationFrame(draw);
-  }
-  requestAnimationFrame(draw);
-}
-
-// ---- Piste A : symboles crypto flottants derrière une carte contenante ----
-function initFloatingGlyphs(canvasId, glyphs) {
-  const canvas = document.getElementById(canvasId);
-  const host = canvas && canvas.parentElement;
-  if (!canvas || !host || prefersReducedMotion()) return;
-  // Comme pour le radar : on remesure à chaque frame plutôt que de figer une taille au
-  // moment de l'appel, pour ne jamais dépendre d'une mise en page pas encore terminée.
-  let ctx = null, lastW = 0, lastH = 0;
-  function ensureSize() {
-    const w = host.clientWidth, h = host.clientHeight;
-    if (w !== lastW || h !== lastH) {
-      ctx = setupHiDPICanvas(canvas, w, h);
-      lastW = w;
-      lastH = h;
-    }
-  }
-  const drifters = glyphs.map((g, i) => ({
-    x: 0.15 + i * (0.7 / Math.max(glyphs.length - 1, 1)),
-    y: 0.25 + (i % 2) * 0.35,
-    size: 64 + i * 10,
-    speed: 0.00005 + i * 0.000015,
-    angle: i * 2.1,
-    glyph: g,
-  }));
-  let frameCount = 0;
-  function draw(t) {
-    ensureSize();
-    frameCount++;
-    if (!ctx || frameCount % 2 === 0 || document.hidden) {
-      requestAnimationFrame(draw);
-      return;
-    }
-    const w = lastW, h = lastH;
-    ctx.clearRect(0, 0, w, h);
-    drifters.forEach((d) => {
-      const x = (((d.x + Math.cos(d.angle) * t * d.speed) % 1.3) + 1.3) % 1.3 * w - w * 0.15;
-      const y = (((d.y + Math.sin(d.angle) * t * d.speed * 0.6) % 1.3) + 1.3) % 1.3 * h - h * 0.15;
-      ctx.font = d.size + "px Inter, sans-serif";
-      ctx.fillStyle = "rgba(47, 211, 176, 0.06)";
-      ctx.fillText(d.glyph, x, y);
     });
     requestAnimationFrame(draw);
   }

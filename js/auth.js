@@ -24,8 +24,6 @@ function initGate() {
     return;
   }
 
-  if (window.initFloatingGlyphs) initFloatingGlyphs("gate-glyphs-canvas", ["₿", "Ξ", "◈"]);
-
   const form = document.getElementById("access-form");
   const input = document.getElementById("access-input");
   const error = document.getElementById("access-error");

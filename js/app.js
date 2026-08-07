@@ -340,7 +340,6 @@ async function initApp() {
   initPullToRefresh();
   initSearch();
 
-  if (window.initFloatingGlyphs) initFloatingGlyphs("hero-glyphs-canvas", ["₿", "Ξ", "◈"]);
   if (window.initCardTilt) initCardTilt();
   if (window.registerConstellation) {
     registerConstellation("favoris", createConstellationController("favoris-constellation-canvas", () => FAVORIS.map((f) => f.ticker)));
