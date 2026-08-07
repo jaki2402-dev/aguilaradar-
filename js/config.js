@@ -27,6 +27,26 @@ const FAVORIS = [
   { ticker: "INJ",  name: "Injective",                        cgId: "injective-protocol",                   tvSymbol: "BINANCE:INJUSDT" },
 ];
 
+// Secteurs des 15 favoris — classification publique factuelle, utilisée pour repérer une
+// concentration invisible actif par actif (ex: plusieurs positions "IA" qui bougent ensemble).
+const SECTORS = {
+  bitcoin: "Réserve de valeur",
+  ethereum: "Plateforme L1",
+  "fetch-ai": "IA",
+  "the-graph": "IA / Indexation",
+  celestia: "Infra modulaire",
+  cartesi: "Infra modulaire",
+  "peaq-2": "DePIN",
+  chainlink: "Oracle",
+  "ondo-finance": "RWA",
+  "jupiter-exchange-solana": "DEX",
+  livepeer: "IA / Infra vidéo",
+  "aioz-network": "DePIN / Stockage",
+  zelcash: "DePIN / Cloud",
+  arbitrum: "L2",
+  "injective-protocol": "DeFi L1",
+};
+
 const REFRESH = {
   quantCycleMinutes: 10, // pouls rapide : prix / seuils / alertes, sans raisonnement IA
   deepCycleHours: 2,     // cycle profond : verdicts, actus, mise à jour du moteur
@@ -44,4 +64,5 @@ const DATA_URLS = {
   opportunities: "data/opportunities.json",
   alerts: "data/alerts.json",
   news: "data/news.json",
+  controlGroup: "data/control-group.json",
 };

@@ -107,7 +107,26 @@ function renderOpportunitiesEngineSection(opportunitiesData) {
   el.innerHTML = html;
 }
 
-function renderEngineTab(verdicts, engineHistory, opportunitiesData) {
+function renderControlGroupComparison(opportunitiesData, controlGroup) {
+  const el = document.getElementById("engine-control-group");
+  if (!el) return;
+  const oppStats = computeOpportunitiesStats((opportunitiesData && opportunitiesData.opportunities) || []);
+  const cgStats = controlGroup && controlGroup.stats;
+  if (!oppStats || !cgStats || cgStats.validated_pct === null || cgStats.validated_pct === undefined) {
+    el.innerHTML = `<p class="empty-state">Pas encore assez de données pour comparer le criblage à un échantillon aléatoire — se remplit avec le temps, des deux côtés à la fois.</p>`;
+    return;
+  }
+  const edge = oppStats.validatedPct - cgStats.validated_pct;
+  el.innerHTML = `
+    <div class="stat-row">
+      <div class="stat-card accent-teal"><div class="stat-label">Mes pépites (validées)</div><div class="stat-value">${oppStats.validatedPct.toFixed(0)} %</div></div>
+      <div class="stat-card accent-gray"><div class="stat-label">Échantillon aléatoire</div><div class="stat-value">${cgStats.validated_pct.toFixed(0)} %</div></div>
+      <div class="stat-card ${edge >= 0 ? "accent-teal" : "accent-gray"}"><div class="stat-label">Écart réel</div><div class="stat-value ${edge >= 0 ? "positive" : "negative"}">${edge >= 0 ? "+" : ""}${edge.toFixed(0)} pts</div></div>
+    </div>
+    <p class="hint">${cgStats.note}</p>`;
+}
+
+function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGroup) {
   const resolved = verdicts.filter((v) => v.status === "resolved");
   const pending = verdicts.filter((v) => v.status === "pending");
   const stats = computeEngineStats(resolved);
@@ -204,6 +223,7 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData) {
 
   renderOpportunitiesEngineSection(opportunitiesData);
   renderPaperPortfolio(engineHistory && engineHistory.paper_portfolio_stats);
+  renderControlGroupComparison(opportunitiesData, controlGroup);
 }
 
 function renderPaperPortfolio(stats) {

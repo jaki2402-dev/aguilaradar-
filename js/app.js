@@ -203,20 +203,25 @@ function updateHeroStats(verdicts, alerts) {
 }
 
 async function loadAllData() {
-  const [verdicts, engineHistory, opportunities, alerts, news] = await Promise.all([
+  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup] = await Promise.all([
     loadJson(DATA_URLS.verdicts),
     loadJson(DATA_URLS.engineHistory),
     loadJson(DATA_URLS.opportunities),
     loadJson(DATA_URLS.alerts),
     loadJson(DATA_URLS.news),
+    loadJson(DATA_URLS.controlGroup),
   ]);
 
-  renderEngineTab(verdicts || [], engineHistory, opportunities);
+  renderEngineTab(verdicts || [], engineHistory, opportunities, controlGroup);
   renderOpportunities(opportunities);
   renderJournal(verdicts || []);
   renderNotifications(alerts);
   renderNews(news);
   renderMacroRegime(engineHistory);
+  renderSectorBreakdown(verdicts || []);
+  renderConfidenceHistory(verdicts || []);
+  renderWeeklyDigest(verdicts || [], opportunities, alerts || []);
+  initDayReplay({ verdicts: verdicts || [], opportunities, alerts: alerts || [] });
   updateHeroStats(verdicts || [], alerts);
   updateFavorisVerdicts(verdicts || []);
 

@@ -430,6 +430,33 @@ footer.site-footer {
 }
 .detail-opinion strong { color: var(--accent); display: block; margin-bottom: 6px; }
 
+/* ---- Secteurs, historique, digest, replay ---- */
+.sector-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.85rem; }
+.sector-label { width: 140px; flex-shrink: 0; color: var(--text-dim); }
+.sector-track { flex: 1; height: 8px; background: var(--bg-elevated); border-radius: 999px; overflow: hidden; }
+.sector-fill { height: 100%; background: var(--accent); }
+.sector-pct { width: 70px; flex-shrink: 0; text-align: right; color: var(--text-faint); font-size: 0.78rem; }
+
+.replay-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+.replay-bar input[type="date"] {
+  background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text);
+  border-radius: var(--radius-sm); padding: 8px 12px; font-family: inherit;
+}
+
+/* ---- Accordéon des sections secondaires de l'Accueil ---- */
+details.accueil-section {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  margin-top: 14px; overflow: hidden;
+}
+details.accueil-section summary {
+  padding: 14px 16px; cursor: pointer; font-weight: 700; list-style: none;
+  display: flex; justify-content: space-between; align-items: center;
+}
+details.accueil-section summary::-webkit-details-marker { display: none; }
+details.accueil-section summary::after { content: "▾"; color: var(--text-faint); transition: transform 0.2s ease; }
+details.accueil-section[open] summary::after { transform: rotate(180deg); }
+details.accueil-section .accueil-section-body { padding: 0 16px 16px; }
+
 /* ---- Couleurs par section : identité visuelle + repérage rapide ---- */
 :root {
   --c-favoris: var(--accent);

@@ -1,0 +1,120 @@
+// Analyses transversales : diversification sectorielle, historique de confiance,
+// résumé hebdomadaire, et mode "revoir un jour passé". Tout est recalculé en direct à
+// partir des fichiers déjà chargés (verdicts.json, opportunities.json, alerts.json),
+// jamais une donnée séparée à synchroniser.
+
+function renderSectorBreakdown(verdicts) {
+  const el = document.getElementById("sector-breakdown");
+  if (!el) return;
+  const counts = {};
+  FAVORIS.forEach((f) => {
+    const sector = SECTORS[f.cgId] || "Autre";
+    counts[sector] = (counts[sector] || 0) + 1;
+  });
+  const total = FAVORIS.length;
+  const rows = Object.entries(counts).sort((a, b) => b[1] - a[1]);
+  const maxShare = Math.max(...rows.map(([, n]) => n)) / total;
+
+  el.innerHTML = `
+    <div class="sector-bars">
+      ${rows
+        .map(([sector, n]) => {
+          const pct = ((n / total) * 100).toFixed(0);
+          return `<div class="sector-row">
+            <span class="sector-label">${sector}</span>
+            <div class="sector-track"><div class="sector-fill" style="width:${pct}%"></div></div>
+            <span class="sector-pct">${n} · ${pct}%</span>
+          </div>`;
+        })
+        .join("")}
+    </div>
+    ${
+      maxShare > 0.3
+        ? `<p class="hint" style="margin-top:10px; color: var(--warning);">Concentration notable : plus de 30% de tes favoris partagent le même secteur — si son thème tourne mal, plusieurs positions peuvent en pâtir en même temps, même si chacune a l'air correcte isolément.</p>`
+        : `<p class="hint" style="margin-top:10px;">Répartition raisonnablement diversifiée entre secteurs.</p>`
+    }`;
+}
+
+function renderConfidenceHistory(verdicts) {
+  const el = document.getElementById("confidence-history");
+  if (!el) return;
+  const byAsset = {};
+  (verdicts || []).forEach((v) => {
+    if (!byAsset[v.asset]) byAsset[v.asset] = [];
+    byAsset[v.asset].push(v);
+  });
+  const withHistory = Object.entries(byAsset).filter(([, list]) => list.length >= 2);
+
+  if (withHistory.length === 0) {
+    el.innerHTML = `<p class="empty-state">Pas encore d'historique — un seul verdict existe par actif pour l'instant. Cette section se remplit dès qu'un actif a eu au moins deux verdicts successifs.</p>`;
+    return;
+  }
+  el.innerHTML = withHistory
+    .map(([asset, list]) => {
+      const sorted = list.slice().sort((a, b) => new Date(a.issued_at) - new Date(b.issued_at));
+      const first = sorted[0].confidence_pct;
+      const last = sorted[sorted.length - 1].confidence_pct;
+      const trend = last > first ? "▲ en hausse" : last < first ? "▼ en baisse" : "= stable";
+      const ticker = sorted[sorted.length - 1].ticker;
+      return `<div class="journal-entry">
+        <div class="log-header"><span><strong>${ticker}</strong></span><span class="hint">${trend}</span></div>
+        <p class="hint">${sorted.map((v) => v.confidence_pct + "%").join(" → ")}</p>
+      </div>`;
+    })
+    .join("");
+}
+
+function renderWeeklyDigest(verdicts, opportunities, alerts) {
+  const el = document.getElementById("weekly-digest");
+  if (!el) return;
+  const weekAgo = Date.now() - 7 * 24 * 3600 * 1000;
+  const recentVerdicts = (verdicts || []).filter((v) => new Date(v.issued_at).getTime() >= weekAgo);
+  const recentResolved = (verdicts || []).filter((v) => v.outcome && v.outcome.resolved_at && new Date(v.outcome.resolved_at).getTime() >= weekAgo);
+  const recentOpp = ((opportunities && opportunities.opportunities) || []).filter((o) => new Date(o.flagged_at).getTime() >= weekAgo);
+  const recentAlerts = (alerts || []).filter((a) => new Date(a.triggered_at).getTime() >= weekAgo);
+  const correctCount = recentResolved.filter((v) => v.outcome.verdict_correct).length;
+
+  el.innerHTML = `
+    <div class="stat-row">
+      <div class="stat-card accent-teal"><div class="stat-label">Verdicts émis (7j)</div><div class="stat-value">${recentVerdicts.length}</div></div>
+      <div class="stat-card accent-indigo"><div class="stat-label">Vérifiés (7j)</div><div class="stat-value">${recentResolved.length}${recentResolved.length ? " (" + correctCount + " juste)" : ""}</div></div>
+      <div class="stat-card accent-gold"><div class="stat-label">Opportunités (7j)</div><div class="stat-value">${recentOpp.length}</div></div>
+      <div class="stat-card accent-violet"><div class="stat-label">Alertes (7j)</div><div class="stat-value">${recentAlerts.length}</div></div>
+    </div>`;
+}
+
+function renderDayReplay(dateStr, allData) {
+  const el = document.getElementById("replay-result");
+  if (!dateStr) {
+    el.innerHTML = "";
+    return;
+  }
+  const cutoff = new Date(dateStr + "T23:59:59Z").getTime();
+  const verdictsAsOf = (allData.verdicts || [])
+    .filter((v) => new Date(v.issued_at).getTime() <= cutoff)
+    .map((v) => {
+      const wasResolved = v.outcome && v.outcome.resolved_at && new Date(v.outcome.resolved_at).getTime() <= cutoff;
+      return Object.assign({}, v, { status: wasResolved ? "resolved" : "pending" });
+    });
+
+  if (verdictsAsOf.length === 0) {
+    el.innerHTML = `<p class="empty-state">Aucun verdict n'existait encore à cette date.</p>`;
+    return;
+  }
+  el.innerHTML = `
+    <p class="hint">État du radar tel qu'il aurait été vu le ${new Date(dateStr).toLocaleDateString("fr-FR")} — reconstruit depuis l'historique permanent, rien n'est modifié.</p>
+    ${verdictsAsOf
+      .map(
+        (v) => `<div class="journal-entry">
+        <div class="log-header"><span><strong>${v.ticker}</strong> · ${new Date(v.issued_at).toLocaleDateString("fr-FR")}</span><span class="badge badge-${v.verdict.toLowerCase()}">${v.verdict}</span></div>
+        <p class="hint">Statut à cette date : ${v.status === "resolved" ? "résolu" : "en cours"}</p>
+      </div>`
+      )
+      .join("")}`;
+}
+
+function initDayReplay(allData) {
+  const input = document.getElementById("replay-date");
+  if (!input) return;
+  input.addEventListener("change", () => renderDayReplay(input.value, allData));
+}
