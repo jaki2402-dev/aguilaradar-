@@ -21,7 +21,8 @@
         "type": "actualite_favori",
         "triggered_at": "2026-08-07T06:22:00Z",
         "message": "Crise de gouvernance chez Ondo Finance : suite au deces du fondateur Nathan Allman (mai 2026), un conflit de controle a eclate entre sa mere Kathleen Allman (nommee representante de la succession via une procedure de succession a Hawaii, 26 juin) et le CEO Ian De Bode, accuse d'avoir tente de s'auto-designer directeur unique avant la fin de la procedure. Le 24 juillet, le conseil a vote la revocation de De Bode de tous ses postes et nomme Kathleen Allman presidente/CEO. Une plainte a ete deposee devant un tribunal du Delaware pour trancher qui controle legalement la societe. Catalyseur negatif plausible et coherent avec la faiblesse recente du token (-13.8% sur 7j, -7.2% sur 24h) meme si aucun lien direct prix/actualite confirme a ce stade — a surveiller pour le prochain verdict ONDO.",
-        "source": "https://www.coindesk.com/policy/2026/08/06/power-struggle-erupts-at-ondo-finance-after-founder-s-death"
+        "source": "https://www.coindesk.com/policy/2026/08/06/power-struggle-erupts-at-ondo-finance-after-founder-s-death",
+        "sentiment": "négatif"
     },
     {
         "id": "alert-20260807-clarity-act",
@@ -37,6 +38,39 @@
         "type": "seuil_technique",
         "triggered_at": "2026-08-07T14:30:00Z",
         "message": "Cartesi (CTSI) : le pic de ce matin (+41,2 % en 24h) s'est complètement retourné. Le token affiche désormais -25,6 % sur 24h glissantes et se retrouve environ 13,4 % sous le prix d'émission du verdict ATTENTE de ce matin (seuil de mouvement directionnel de 5 % déjà franchi à la baisse, bien avant l'échéance du 14 août). Aucune actualité spécifique trouvée pour expliquer ce retournement — lecture purement technique, cohérente avec la mise en garde déjà formulée dans le verdict initial contre un mouvement extrême sans confirmation. Signal précoce enregistré sur le verdict correspondant, ne préjuge pas de l'issue finale à l'échéance.",
+        "source": "criblage technique interne"
+    },
+    {
+        "id": "alert-20260807-ondo-plainte",
+        "ticker_ou_theme": "ONDO",
+        "type": "actualite_favori",
+        "triggered_at": "2026-08-07T16:25:00Z",
+        "sentiment": "négatif",
+        "message": "La crise de gouvernance chez Ondo Finance signalée ce matin a franchi une nouvelle étape concrète : Kathleen Allman, mère du fondateur décédé Nathan Allman, a formellement déposé une plainte devant un tribunal du Delaware pour reprendre le contrôle de la société et faire révoquer le CEO Ian De Bode de ses fonctions (recoupé par une deuxième source, CoinTurk, qui rapporte un recul de prix d'environ 6 % attribué à cette actualité). Sur la journée, ONDO affiche -5,8 % sur 24h glissantes et environ -2,5 % depuis l'émission du verdict ATTENTE de ce matin — sous le seuil de mouvement directionnel de 5 %, donc pas encore un signal précoce au sens strict, mais une escalade réelle du risque de gouvernance à surveiller pour le prochain verdict.",
+        "source": "https://unchainedcrypto.com/ondo-finance-founders-mother-sues-in-delaware-to-take-control-and-remove-ceo-ian-de-bode/"
+    },
+    {
+        "id": "alert-20260807-nfp",
+        "ticker_ou_theme": "MACRO",
+        "type": "actualite_macro",
+        "triggered_at": "2026-08-07T16:25:00Z",
+        "message": "Le rapport sur l'emploi américain (NFP) de juillet, publié aujourd'hui, est ressorti plus faible que prévu par le consensus. Réaction de marché plutôt accommodante : plusieurs commentateurs (dont Tom Lee, cité par PANews) notent que cela réduit les anticipations de nouvelle hausse des taux, tandis que Decrypt souligne que Bitcoin reste néanmoins en « death cross » technique malgré ce contexte en apparence plus favorable. Ce signal contraste avec le ton plus restrictif exprimé par la Fed via ses trois dissidents pro-hausse la semaine dernière (voir l'alerte du 7 août à 4h14 UTC) : deux lectures macro qui tirent en sens contraire sur la même semaine, sans conclusion tranchée à ce stade sur la trajectoire des taux de septembre.",
+        "source": "https://decrypt.co/375118"
+    },
+    {
+        "id": "alert-20260807-btw-seuil",
+        "ticker_ou_theme": "BTW",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-07T16:25:00Z",
+        "message": "Bitway (BTW), une des opportunités suivies signalées ce matin (score le plus élevé du criblage mais projet non reconnu indépendamment), franchit le seuil de mouvement directionnel de 5 % à la hausse : environ +14,0 % depuis son prix de signalement (+9,5 % sur les dernières 24h glissantes). Confirme la lecture prudente déjà exprimée au signalement — mouvement extrême qui se poursuit sur un projet peu connu, spéculatif par nature, à ne pas confondre avec une validation fondamentale.",
+        "source": "criblage technique interne"
+    },
+    {
+        "id": "alert-20260807-ub-seuil",
+        "ticker_ou_theme": "UB",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-07T16:25:00Z",
+        "message": "Unibase (UB), une des opportunités suivies signalées ce matin (signal purement quantitatif, non vérifié fondamentalement), franchit le seuil de mouvement directionnel de 5 % à la baisse : environ -11,2 % depuis son prix de signalement (-12,1 % sur les dernières 24h glissantes). Aucune actualité spécifique trouvée pour expliquer ce recul. Cohérent avec la prudence déjà exprimée au signalement (7 jours déjà négatifs à l'époque malgré le signal positif à 24h).",
         "source": "criblage technique interne"
     }
 ]

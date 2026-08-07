@@ -1,7 +1,7 @@
 {
     "current_version": "v1",
     "global_stats": {
-        "last_computed_at": "2026-08-07T14:30:00Z",
+        "last_computed_at": "2026-08-07T16:25:00Z",
         "total_verdicts_issued": 15,
         "total_verdicts_resolved": 0,
         "accuracy_strict_pct": null,
@@ -16,24 +16,24 @@
         "accuracy_by_market_regime": null
     },
     "opportunities_stats": {
-        "last_computed_at": "2026-08-07T14:30:00Z",
+        "last_computed_at": "2026-08-07T16:25:00Z",
         "total_flagged": 8,
         "total_resolved": 0,
         "validated_pct": null,
         "average_move_pct": null
     },
     "routine_health": {
-        "last_success_at": "2026-08-07T14:30:00Z",
+        "last_success_at": "2026-08-07T16:25:00Z",
         "consecutive_failures": 0,
-        "last_failure_reason": "Cycle réussi dans son ensemble. Deux limitations honnêtement consignées, comme au cycle précédent : (1) criblage complet du Top 300 pour de nouvelles opportunités non effectué — l'outil CoinGecko disponible plafonne à 20 identifiants par appel (get-coin-markets / topN), et l'API brute CoinGecko (vs_currency=eur) ainsi que l'API Binance sont toutes deux bloquées par le proxy réseau sortant de cet environnement ; seules les 8 opportunités déjà suivies ont été rafraîchies (prix/rang/market cap/sparkline en direct). (2) Fear & Greed Index toujours non calculé formellement : la source mandatée (api.alternative.me/fng) reste bloquée par le proxy, et les sources de repli (recherche web) restent incohérentes entre elles (29/Peur selon CFGI et Milkroad, 50/Neutre selon AltIndex, écart inchangé depuis le cycle précédent) — statu quo neutre maintenu plutôt qu'un chiffre inventé. Par ailleurs, faute d'accès direct à l'API CoinGecko en EUR, les prix EUR de ce cycle ont été obtenus par conversion d'un prix USD (connecteur CoinGecko fiable) au taux de change EUR/USD du jour (~0,868, relevé par recherche web sur xe.com/investing.com) plutôt que par une lecture EUR native — méthode de repli documentée, écart attendu négligeable devant les mouvements de prix observés ce cycle."
+        "last_failure_reason": "Cycle réussi dans son ensemble. Limitations honnêtement consignées, cohérentes avec les cycles précédents : (1) criblage complet du Top 300 pour de nouvelles opportunités toujours non effectué — l'outil CoinGecko disponible plafonne à 20 identifiants par appel (get-coin-markets / topN), ce qui rendrait un criblage complet du Top 300 très coûteux en appels (environ 15 appels successifs) ; l'API brute CoinGecko et l'API Binance restent toutes deux bloquées par le proxy réseau sortant de cet environnement (testé explicitement ce cycle par une requête réseau directe : échec de connexion confirmé sur api.coingecko.com, api.binance.com et api.alternative.me/fng) ; seules les 8 opportunités déjà suivies ont donc été rafraîchies (prix/rang/capitalisation/variation 24h/sparkline en direct). (2) Faute d'accès direct à l'API CoinGecko en EUR (le connecteur MCP disponible ne renvoie que des prix en USD, sans paramètre de devise), les prix EUR de ce cycle ont de nouveau été obtenus par conversion d'un prix USD (connecteur CoinGecko fiable) au taux de change EUR/USD du jour (1 EUR = 1,1529 USD, recoupé sur Yahoo Finance et TradingEconomics) plutôt que par une lecture EUR native — méthode de repli déjà documentée aux cycles précédents, écart attendu négligeable devant les mouvements de prix observés. (3) Double vérification CoinGecko + Binance toujours impossible faute d'accès réseau à Binance : aucune résolution de verdict ou d'opportunité n'était de toute façon due ce cycle (aucun horizon atteint), donc cette limite n'a affecté que la lecture de la tendance provisoire sur Cartesi et sur les opportunités Bitway/Unibase, consignée comme source unique dans chaque cas. Deux franchissements de seuil notables détectés et documentés ce cycle sur des opportunités déjà suivies (Bitway +14,0 %, Unibase -11,2 % depuis leur signalement), sans nouveau franchissement sur les 15 favoris hormis Cartesi, déjà signalé au cycle précédent et pour l'essentiel inchangé (-13,8 % depuis l'émission du verdict contre -13,4 % au cycle précédent, pas un nouveau signal)."
     },
     "macro_regime": {
-        "last_computed_at": "2026-08-07T14:30:00Z",
+        "last_computed_at": "2026-08-07T16:25:00Z",
         "regime": "neutre",
         "fear_greed_value": null,
-        "btc_dominance_pct": 56.73,
+        "btc_dominance_pct": 56.76,
         "btc_dominance_trend_7d_pct": null,
-        "note": "Classification 'neutre' maintenue, non recalculée formellement ce cycle non plus : la source mandatée (api.alternative.me/fng) reste inaccessible depuis cet environnement (bloquée par le proxy réseau), et les sources de repli restent incohérentes — 29/Peur selon CFGI.io et Milkroad, contre 50/Neutre selon AltIndex, écart comparable à celui déjà noté au cycle précédent (aucune convergence nouvelle). Le comportement des prix ce cycle penche plutôt vers un lecture neutre à légèrement positive et non vers la peur : BTC +1,0 % et ETH +1,3 % sur 24h, capitalisation totale du marché quasi stable (+0,26 % sur 24h). Dominance BTC actuelle 56,73 % obtenue de manière fiable (connecteur CoinGecko direct), quasi identique au cycle précédent (56,7 %) — cohérent avec l'absence de rotation marquée depuis 4h. Tendance sur 7 jours toujours non calculable (le connecteur ne fournit pas d'historique de dominance globale). Aucun changement de régime à signaler par rapport au cycle précédent, donc pas de ré-signalement regime_change_impact nécessaire ce cycle."
+        "note": "Régime « neutre » maintenu. Dominance BTC 56,76 %, quasiment identique au cycle précédent (56,73 % à 14h30) : aucune rotation notable depuis plusieurs heures. Capitalisation totale du marché +0,22 % sur 24h, toujours quasiment stable. Indice de peur et de cupidité toujours non calculé formellement : la source mandatée (api.alternative.me/fng) reste inaccessible depuis cet environnement (bloquée par le proxy réseau), et les sources de repli restent partiellement incohérentes entre elles, même si l'écart s'est resserré par rapport aux cycles précédents : CFGI.io affiche désormais 44 (Neutre, contre 29/Peur cité par une source tierce non vérifiée directement au cycle précédent), AltIndex affiche 50 (Neutre), et une actualité reprise par le connecteur CoinGecko (AMBCrypto) mentionne un indice à 40. Trois de ces quatre points convergent désormais dans la bande 40-50 (Neutre à légèrement Peur), ce qui soutient la classification « neutre » déjà retenue plutôt qu'un chiffre inventé. Par ailleurs, le rapport sur l'emploi américain de juillet (NFP) est ressorti plus faible qu'attendu ce cycle, avec une réaction de marché plutôt accommodante qui réduit les anticipations de nouvelle hausse des taux — à mettre en perspective avec le ton plus restrictif exprimé par la Fed via ses trois dissidents la semaine dernière (voir alerte macro correspondante) : deux signaux macro contradictoires apparus la même semaine, sans changement de régime tranché à ce stade. Tendance de dominance sur 7 jours toujours non calculable (le connecteur ne fournit pas d'historique de dominance globale). Aucun changement de régime à signaler par rapport au cycle précédent, donc pas de ré-signalement regime_change_impact nécessaire ce cycle."
     },
     "paper_portfolio_stats": {
         "last_computed_at": null,
@@ -44,12 +44,12 @@
         "method": "Position virtuelle par verdict resolu, taille proportionnelle a confidence_pct, ouverte a price_at_issue et fermee a price_at_resolution. Compare au meme capital place uniquement en buy-and-hold BTC sur la meme periode. Calcule seulement a partir de min_resolved_required verdicts resolus."
     },
     "data_source_reliability": {
-        "last_computed_at": "2026-08-07T14:30:00Z",
-        "cycles_logged": 1,
-        "coingecko_connector_success_count": 7,
+        "last_computed_at": "2026-08-07T16:25:00Z",
+        "cycles_logged": 2,
+        "coingecko_connector_success_count": 10,
         "coingecko_curl_fallback_count": 0,
         "websearch_price_fallback_count": 0,
-        "notes": "Premier cycle où ce compteur est réellement peuplé (il ne l'avait jamais été auparavant, donc pas de rattrapage rétroactif des cycles précédents). Ce cycle : 7 appels réussis au connecteur CoinGecko (prix des 15 favoris, marché global, actualités générales, actualités Cartesi, historique de prix Cartesi, catégories, prix des 8 opportunités suivies). 0 repli vers un curl direct CoinGecko (tenté, bloqué par le proxy réseau sortant). 0 repli vers une recherche web pour un prix individuel — en revanche une recherche web a servi à obtenir le taux de change EUR/USD du jour (~0,868) pour convertir les prix USD du connecteur en EUR, faute d'accès direct à l'endpoint CoinGecko en EUR (bloqué par le proxy) ; ce nouveau type de repli n'a pas encore de compteur dédié dans ce schéma. L'API Binance (deuxième source pour la double vérification des prix) est également bloquée par le proxy réseau sortant de cet environnement — aucune résolution de verdict ou d'opportunité n'était de toute façon due ce cycle, donc cette limite n'a affecté que la fiabilité du signal précoce CTSI (source unique, consignée comme telle)."
+        "notes": "Ce cycle : 10 appels réussis au connecteur CoinGecko (prix des 15 favoris x2, prix des 8 opportunités suivies x2, marché global x2, catégories de marché, actualités générales, actualités Ondo Finance, actualités Cartesi — la double lecture des prix a servi à la cohérence temporelle du cycle, pas à une double vérification indépendante). 0 repli vers un curl direct CoinGecko ou Binance : les trois endpoints (api.coingecko.com, api.binance.com, api.alternative.me/fng) ont été testés explicitement ce cycle par une requête réseau directe, échec de connexion confirmé sur les trois, comme aux cycles précédents. 0 repli vers une recherche web pour un prix individuel — deux recherches web ont en revanche servi ce cycle : une pour le taux de change EUR/USD du jour (faute d'endpoint CoinGecko en EUR disponible dans le connecteur), une pour recouper l'indice de peur et de cupidité entre plusieurs sources (toutes les pages sources restant directement inaccessibles derrière le proxy, résultats obtenus par extraits de recherche uniquement)."
     },
     "correction_log": []
 }
