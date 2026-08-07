@@ -73,6 +73,7 @@ function updateFavorisVerdicts(verdicts) {
 async function refreshPrices() {
   try {
     const prices = await fetchFavorisPrices();
+    latestFavorisPrices = prices;
     FAVORIS.forEach((f) => {
       const p = prices[f.cgId];
       const priceEl = document.getElementById(`price-${f.ticker}`);
@@ -110,17 +111,36 @@ function renderJournal(verdicts) {
     .slice()
     .reverse()
     .map(
-      (v) => `
-      <div class="journal-entry">
+      (v, i) => `
+      <div class="journal-entry clickable" data-detail-target="detail-journal-${v.id || i}" data-cgid="${v.asset}">
         <div class="log-header">
           <span><strong>${v.ticker || v.asset}</strong> · ${v.issued_at}</span>
           <span class="badge badge-${(v.verdict || "").toLowerCase()}">${v.verdict}</span>
         </div>
         <p>${v.reasoning || ""}</p>
         <p class="hint">Confiance ${v.confidence_pct ?? "—"} % · horizon ${v.horizon_days} j · statut ${v.status}</p>
+        ${v.status === "pending" ? renderProvisionalBadge(v) : ""}
+        <div class="expand-hint">Voir l'analyse détaillée <span class="chevron">▾</span></div>
+        <div class="detail-panel" id="detail-journal-${v.id || i}"></div>
       </div>`
     )
     .join("");
+
+  const byPanelId = {};
+  verdicts.forEach((v, i) => (byPanelId[`detail-journal-${v.id || i}`] = v));
+  el.querySelectorAll(".journal-entry.clickable").forEach((entryEl) => {
+    const panelId = entryEl.dataset.detailTarget;
+    const cgId = entryEl.dataset.cgid;
+    const v = byPanelId[panelId];
+    const fav = FAVORIS.find((f) => f.cgId === cgId);
+    attachDetailToggle(entryEl, panelId, {
+      cgId,
+      tvSymbol: fav ? fav.tvSymbol : null,
+      athChangePct: null,
+      reasoning: v ? v.reasoning : null,
+      verdict: v ? v.verdict : null,
+    });
+  });
 }
 
 const ALERT_TYPE_LABELS = {
@@ -223,6 +243,7 @@ async function loadAllData() {
   renderSectorBreakdown(verdicts || []);
   renderConfidenceHistory(verdicts || []);
   renderWeeklyDigest(verdicts || [], opportunities, alerts || []);
+  renderProvisionalOverview(verdicts || []);
   initDayReplay({ verdicts: verdicts || [], opportunities, alerts: alerts || [] });
   updateHeroStats(verdicts || [], alerts);
   updateFavorisVerdicts(verdicts || []);
@@ -243,7 +264,10 @@ async function refreshAll(indicatorEl) {
   refreshInFlight = true;
   if (indicatorEl) indicatorEl.classList.add("spinning");
   try {
-    await Promise.all([refreshPrices(), loadAllData()]);
+    // Sequentiel, pas Promise.all : le journal/moteur ont besoin des prix deja en memoire
+    // (latestFavorisPrices) pour calculer la tendance provisoire au moment ou ils se dessinent.
+    await refreshPrices();
+    await loadAllData();
   } finally {
     if (indicatorEl) {
       setTimeout(() => indicatorEl.classList.remove("spinning"), 300);
@@ -305,7 +329,7 @@ async function initApp() {
   initSearch();
 
   renderFavorisGrid();
-  refreshPrices();
+  await refreshPrices();
   if (!pricesIntervalStarted) {
     setInterval(refreshPrices, 60000);
     pricesIntervalStarted = true;

@@ -1,5 +1,9 @@
 // Prix en direct — appel client, aucune automatisation nécessaire (CoinGecko public API).
 
+// Derniers prix connus, partagés avec le reste du site (journal, moteur) pour calculer
+// une tendance provisoire sans attendre l'horizon — jamais utilisé pour le vrai backtest.
+let latestFavorisPrices = {};
+
 async function fetchFavorisPrices() {
   const ids = FAVORIS.map((f) => f.cgId).join(",");
   const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd,eur&include_24hr_change=true&include_last_updated_at=true`;

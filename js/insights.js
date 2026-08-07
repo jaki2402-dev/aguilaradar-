@@ -3,6 +3,59 @@
 // partir des fichiers déjà chargés (verdicts.json, opportunities.json, alerts.json),
 // jamais une donnée séparée à synchroniser.
 
+// Tendance PROVISOIRE d'un verdict en cours, calculée en direct depuis le prix actuel —
+// jamais un résultat final, jamais compté dans le backtest officiel (qui attend toujours
+// le vrai horizon). Sert juste à montrer que le moteur travaille avec ce qu'il a déjà,
+// pas à remplacer la vérification honnête qui vient plus tard.
+function computeProvisionalStanding(verdict) {
+  const current = latestFavorisPrices[verdict.asset];
+  if (!current || current.eur === undefined) return null;
+  const currentPrice = current.eur;
+  const interimMovePct = ((currentPrice - verdict.price_at_issue) / verdict.price_at_issue) * 100;
+  const threshold = verdict.threshold_pct || THRESHOLDS.directionalMovePct;
+  let onTrack;
+  if (verdict.verdict === "ACHAT") onTrack = interimMovePct > 0;
+  else if (verdict.verdict === "VENTE") onTrack = interimMovePct < 0;
+  else onTrack = Math.abs(interimMovePct) < threshold;
+  const progressPct = Math.min((Math.abs(interimMovePct) / threshold) * 100, 100);
+  return { currentPrice, interimMovePct, onTrack, progressPct, threshold };
+}
+
+function renderProvisionalBadge(verdict) {
+  const standing = computeProvisionalStanding(verdict);
+  if (!standing) return "";
+  const cls = standing.onTrack ? "positive" : "negative";
+  const label = standing.onTrack ? "provisoirement dans le bon sens" : "provisoirement contredit";
+  return `<p class="hint" style="margin-top:4px;">Tendance provisoire (pas le résultat final) : <span class="${cls}">${formatChangePct(standing.interimMovePct)} depuis l'émission — ${label}</span>, ${standing.progressPct.toFixed(0)}% du chemin vers son seuil de ±${standing.threshold}%.</p>`;
+}
+
+function renderProvisionalOverview(verdicts) {
+  const el = document.getElementById("provisional-overview");
+  if (!el) return;
+  const pending = (verdicts || []).filter((v) => v.status === "pending");
+  const withStanding = pending.map((v) => ({ v, s: computeProvisionalStanding(v) })).filter((x) => x.s);
+
+  if (withStanding.length === 0) {
+    el.innerHTML = `<p class="empty-state">Pas encore de prix en direct disponible pour évaluer la tendance provisoire des verdicts en cours.</p>`;
+    return;
+  }
+  const onTrackCount = withStanding.filter((x) => x.s.onTrack).length;
+  el.innerHTML = `
+    <p class="hint">Ceci utilise les prix d'aujourd'hui pour voir où en sont les verdicts en cours — <strong>ce n'est pas le backtest officiel</strong>, qui attend toujours le vrai horizon avant de compter quoi que ce soit. Un verdict "provisoirement contredit" peut très bien se retourner avant son échéance.</p>
+    <div class="stat-row" style="margin-top:10px;">
+      <div class="stat-card accent-teal"><div class="stat-label">Actuellement dans le bon sens</div><div class="stat-value">${onTrackCount} / ${withStanding.length}</div></div>
+    </div>
+    ${withStanding
+      .sort((a, b) => a.s.onTrack - b.s.onTrack)
+      .map(
+        ({ v, s }) => `<div class="journal-entry">
+          <div class="log-header"><span><strong>${v.ticker}</strong></span><span class="badge badge-${v.verdict.toLowerCase()}">${v.verdict}</span></div>
+          ${renderProvisionalBadge(v)}
+        </div>`
+      )
+      .join("")}`;
+}
+
 function renderSectorBreakdown(verdicts) {
   const el = document.getElementById("sector-breakdown");
   if (!el) return;
