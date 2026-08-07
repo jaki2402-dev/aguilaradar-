@@ -407,7 +407,7 @@ footer.site-footer {
   max-height: 0; overflow: hidden; opacity: 0;
   transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
 }
-.detail-panel.open { max-height: 1000px; opacity: 1; margin-top: 14px; }
+.detail-panel.open { max-height: 2400px; opacity: 1; margin-top: 14px; }
 .detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
 .detail-signal {
   background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
@@ -429,6 +429,11 @@ footer.site-footer {
   margin-top: 14px; padding: 14px; background: var(--accent-dim); border-radius: var(--radius-sm);
 }
 .detail-opinion strong { color: var(--accent); display: block; margin-bottom: 6px; }
+.detail-context {
+  margin-top: 14px; padding: 14px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
+}
+.detail-context strong { display: block; margin-bottom: 6px; }
+.detail-context p { margin: 4px 0; }
 
 /* ---- Secteurs, historique, digest, replay ---- */
 .sector-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.85rem; }

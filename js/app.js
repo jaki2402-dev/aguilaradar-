@@ -2,6 +2,7 @@
 
 const TABS = ["overview", "favoris", "opportunities", "journal", "engine", "notifications"];
 let pricesIntervalStarted = false;
+let latestFavorisContext = null;
 
 function switchTab(tabId) {
   TABS.forEach((id) => {
@@ -45,7 +46,7 @@ function renderFavorisGrid() {
 
   document.querySelectorAll("#favoris-grid .favori-card.clickable").forEach((cardEl, i) => {
     const f = FAVORIS[i];
-    attachDetailToggle(cardEl, `detail-fav-${f.ticker}`, { cgId: f.cgId, tvSymbol: f.tvSymbol, athChangePct: null, reasoning: null });
+    attachDetailToggle(cardEl, `detail-fav-${f.ticker}`, { cgId: f.cgId, tvSymbol: f.tvSymbol, ticker: f.ticker, athChangePct: null, reasoning: null });
   });
 }
 
@@ -225,7 +226,7 @@ function updateHeroStats(verdicts, alerts) {
 }
 
 async function loadAllData() {
-  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext] = await Promise.all([
+  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog] = await Promise.all([
     loadJson(DATA_URLS.verdicts),
     loadJson(DATA_URLS.engineHistory),
     loadJson(DATA_URLS.opportunities),
@@ -233,7 +234,10 @@ async function loadAllData() {
     loadJson(DATA_URLS.news),
     loadJson(DATA_URLS.controlGroup),
     loadJson(DATA_URLS.marketContext),
+    loadJson(DATA_URLS.favorisContext),
+    loadJson(DATA_URLS.healthLog),
   ]);
+  latestFavorisContext = favorisContext;
 
   renderEngineTab(verdicts || [], engineHistory, opportunities, controlGroup);
   renderOpportunities(opportunities);
@@ -242,6 +246,7 @@ async function loadAllData() {
   renderNews(news);
   renderMacroRegime(engineHistory);
   renderMarketContext(marketContext);
+  renderHealthStatus(healthLog);
   renderSectorBreakdown(verdicts || []);
   renderConfidenceHistory(verdicts || []);
   renderWeeklyDigest(verdicts || [], opportunities, alerts || []);

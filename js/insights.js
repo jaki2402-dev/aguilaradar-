@@ -66,6 +66,7 @@ function renderMarketContext(ctx) {
   const sc = ctx.stablecoins || {};
   const emp = ctx.employment_us || {};
   const etf = ctx.etf_flows || {};
+  const conf = ctx.site_confidence || {};
   el.innerHTML = `
     <div class="stat-row">
       <div class="stat-card accent-indigo"><div class="stat-label">Dominance stablecoins</div><div class="stat-value">${sc.dominance_pct !== null && sc.dominance_pct !== undefined ? sc.dominance_pct.toFixed(1) + " %" : "—"}</div></div>
@@ -74,7 +75,27 @@ function renderMarketContext(ctx) {
     </div>
     ${sc.note ? `<p class="hint">Stablecoins : ${sc.note}</p>` : ""}
     ${emp.market_reaction_note ? `<p class="hint">Emploi : ${emp.market_reaction_note}</p>` : ""}
-    ${etf.note ? `<p class="hint">ETF : ${etf.note}</p>` : ""}`;
+    ${etf.note ? `<p class="hint">ETF : ${etf.note}</p>` : ""}
+    ${conf.level ? `<p class="hint" style="margin-top:8px;"><strong>Confiance globale du site : ${conf.level}</strong> — ${conf.note || ""}</p>` : ""}`;
+}
+
+function renderHealthStatus(healthLog) {
+  const el = document.getElementById("site-health-body");
+  if (!el) return;
+  const checks = (healthLog && healthLog.checks) || [];
+  if (checks.length === 0) {
+    el.innerHTML = `<p class="empty-state">Pas encore de vérification technique enregistrée — s'alimente à chaque cycle profond.</p>`;
+    return;
+  }
+  const last = checks[checks.length - 1];
+  const ok = last.site_reachable && (!last.files_broken || last.files_broken.length === 0);
+  el.innerHTML = `
+    <div class="journal-entry">
+      <div class="log-header"><span><strong>Dernière vérification</strong> · ${new Date(last.checked_at).toLocaleString("fr-FR")}</span><span class="badge badge-${ok ? "achat" : "vente"}">${ok ? "OK" : "Problème détecté"}</span></div>
+      <p class="hint">Site accessible : ${last.site_reachable ? "oui" : "non"}. Fichiers vérifiés : ${(last.files_ok || []).length}. ${last.files_broken && last.files_broken.length ? "Problèmes : " + last.files_broken.join(", ") : "Aucun problème."}</p>
+      ${last.note ? `<p class="hint">${last.note}</p>` : ""}
+    </div>
+    <p class="hint" style="margin-top:8px;">${checks.length} vérification(s) enregistrée(s) au total, historique permanent.</p>`;
 }
 
 function renderSectorBreakdown(verdicts) {

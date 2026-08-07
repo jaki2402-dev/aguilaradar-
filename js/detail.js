@@ -91,6 +91,27 @@ async function fetchOrderBookImbalance(tvSymbol) {
   }
 }
 
+function renderFavorisContextSection(ticker) {
+  if (!ticker || !latestFavorisContext || !latestFavorisContext.assets) return "";
+  const ctx = latestFavorisContext.assets[ticker];
+  if (!ctx || !ctx.last_computed_at) {
+    return `<div class="detail-context"><p class="hint">Contexte élargi (concurrent, thèse long terme, dérivés, TVL) pas encore calculé pour ${ticker} — la routine couvre les favoris par rotation, quelques cycles à attendre.</p></div>`;
+  }
+  const comp = ctx.competitor || {};
+  const thesis = ctx.long_term_thesis || {};
+  const oi = ctx.open_interest || {};
+  const tvl = ctx.defi_tvl || {};
+  const onchain = ctx.onchain_signal || {};
+  return `<div class="detail-context">
+    <strong>Contexte élargi</strong>
+    ${comp.name ? `<p class="hint"><strong>Concurrent (${comp.ticker || "?"}) :</strong> ${comp.comparison_note || "—"}</p>` : `<p class="hint">Comparaison concurrent : pas encore calculée.</p>`}
+    ${thesis.assumptions_note ? `<p class="hint"><strong>Thèse long terme</strong> — Bull : ${thesis.bull || "—"} · Base : ${thesis.base || "—"} · Bear : ${thesis.bear || "—"} <br/><em>${thesis.assumptions_note}</em></p>` : `<p class="hint">Thèse long terme : pas encore rédigée.</p>`}
+    <p class="hint"><strong>Open interest :</strong> ${oi.value_usd ? formatMarketCap(oi.value_usd) + (oi.funding_rate_pct !== null && oi.funding_rate_pct !== undefined ? ` · funding ${oi.funding_rate_pct.toFixed(3)}%` : "") : (oi.note || "—")}</p>
+    <p class="hint"><strong>TVL DeFi :</strong> ${tvl.value_usd ? formatMarketCap(tvl.value_usd) : (tvl.note || "—")}</p>
+    <p class="hint"><strong>Signal on-chain (opportuniste, pas systématique) :</strong> ${onchain.available ? `${onchain.note} ${onchain.source_url ? `<a href="${onchain.source_url}" target="_blank" rel="noopener">source</a>` : ""}` : (onchain.note || "aucun signal cette fois")}</p>
+  </div>`;
+}
+
 function technicalSignalSentences(price, sma20, sma50, rsi, athChangePct) {
   const lines = [];
   if (sma20 !== null && sma50 !== null) {
@@ -175,7 +196,8 @@ async function renderDetailPanel(panelEl, asset) {
         <strong>Mon avis</strong>
         <p>${asset.reasoning || asset.reason || "Analyse pas encore disponible pour cet actif — en attente du prochain cycle."}</p>
         ${asset.verdict ? `<p class="hint">Verdict actuel : <span class="badge badge-${asset.verdict.toLowerCase()}">${asset.verdict}</span> — vérifié automatiquement à son échéance, jamais avant.</p>` : ""}
-      </div>`;
+      </div>
+      ${renderFavorisContextSection(asset.ticker)}`;
   } catch (err) {
     console.error("Erreur fiche detaillee:", err);
     panelEl.innerHTML = `<p class="empty-state">Indicateurs indisponibles pour l'instant (limite API probable) — réessaie dans une minute.</p>`;
