@@ -56,6 +56,27 @@ function renderProvisionalOverview(verdicts) {
       .join("")}`;
 }
 
+function renderMarketContext(ctx) {
+  const el = document.getElementById("market-context-body");
+  if (!el) return;
+  if (!ctx || !ctx.last_computed_at) {
+    el.innerHTML = `<p class="empty-state">Pas encore calculé — stablecoins, emploi américain, flux ETF. Alimenté au premier cycle profond qui inclut ces signaux.</p>`;
+    return;
+  }
+  const sc = ctx.stablecoins || {};
+  const emp = ctx.employment_us || {};
+  const etf = ctx.etf_flows || {};
+  el.innerHTML = `
+    <div class="stat-row">
+      <div class="stat-card accent-indigo"><div class="stat-label">Dominance stablecoins</div><div class="stat-value">${sc.dominance_pct !== null && sc.dominance_pct !== undefined ? sc.dominance_pct.toFixed(1) + " %" : "—"}</div></div>
+      <div class="stat-card accent-gold"><div class="stat-label">Chômage US</div><div class="stat-value">${emp.unemployment_rate_pct !== null && emp.unemployment_rate_pct !== undefined ? emp.unemployment_rate_pct.toFixed(1) + " %" : "—"}</div></div>
+      <div class="stat-card accent-teal"><div class="stat-label">Flux ETF BTC</div><div class="stat-value">${etf.btc_etf_net_flow_usd !== null && etf.btc_etf_net_flow_usd !== undefined ? formatMarketCap(etf.btc_etf_net_flow_usd) : "—"}</div></div>
+    </div>
+    ${sc.note ? `<p class="hint">Stablecoins : ${sc.note}</p>` : ""}
+    ${emp.market_reaction_note ? `<p class="hint">Emploi : ${emp.market_reaction_note}</p>` : ""}
+    ${etf.note ? `<p class="hint">ETF : ${etf.note}</p>` : ""}`;
+}
+
 function renderSectorBreakdown(verdicts) {
   const el = document.getElementById("sector-breakdown");
   if (!el) return;

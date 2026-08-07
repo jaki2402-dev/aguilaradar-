@@ -65,4 +65,5 @@ const DATA_URLS = {
   alerts: "data/alerts.json",
   news: "data/news.json",
   controlGroup: "data/control-group.json",
+  marketContext: "data/market-context.json",
 };

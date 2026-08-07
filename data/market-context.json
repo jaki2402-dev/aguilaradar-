@@ -1,0 +1,28 @@
+{
+  "last_computed_at": null,
+  "stablecoins": {
+    "total_market_cap_usd": null,
+    "dominance_pct": null,
+    "supply_trend_7d_pct": null,
+    "note": null
+  },
+  "employment_us": {
+    "last_report_date": null,
+    "unemployment_rate_pct": null,
+    "nonfarm_payrolls_change_k": null,
+    "market_reaction_note": null,
+    "source": null
+  },
+  "etf_flows": {
+    "period": null,
+    "btc_etf_net_flow_usd": null,
+    "eth_etf_net_flow_usd": null,
+    "note": null,
+    "source": null
+  },
+  "site_confidence": {
+    "last_computed_at": null,
+    "level": null,
+    "note": "Combine routine_health, data_source_reliability et (une fois disponible) accuracy_strict_pct en une seule lecture globale — distincte de la confiance par verdict."
+  }
+}

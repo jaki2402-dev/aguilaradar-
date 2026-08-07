@@ -225,13 +225,14 @@ function updateHeroStats(verdicts, alerts) {
 }
 
 async function loadAllData() {
-  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup] = await Promise.all([
+  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext] = await Promise.all([
     loadJson(DATA_URLS.verdicts),
     loadJson(DATA_URLS.engineHistory),
     loadJson(DATA_URLS.opportunities),
     loadJson(DATA_URLS.alerts),
     loadJson(DATA_URLS.news),
     loadJson(DATA_URLS.controlGroup),
+    loadJson(DATA_URLS.marketContext),
   ]);
 
   renderEngineTab(verdicts || [], engineHistory, opportunities, controlGroup);
@@ -240,6 +241,7 @@ async function loadAllData() {
   renderNotifications(alerts);
   renderNews(news);
   renderMacroRegime(engineHistory);
+  renderMarketContext(marketContext);
   renderSectorBreakdown(verdicts || []);
   renderConfidenceHistory(verdicts || []);
   renderWeeklyDigest(verdicts || [], opportunities, alerts || []);
