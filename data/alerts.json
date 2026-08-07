@@ -6,5 +6,13 @@
     "triggered_at": "2026-08-07T00:20:00Z",
     "message": "Cartesi (CTSI) +41.2% en 24h et +39.4% sur 7j — mouvement inhabituel, aucune actualité vérifiée pour l'expliquer à cette heure. Verdict associé : ATTENTE, ne pas courir après ce mouvement sans confirmation.",
     "source": "criblage technique interne"
+  },
+  {
+    "id": "alert-20260807-fed",
+    "ticker_ou_theme": "MACRO",
+    "type": "actualite_macro",
+    "triggered_at": "2026-08-07T04:14:00Z",
+    "message": "La Fed a maintenu ses taux directeurs a 3.50%-3.75% (5e statu quo consecutif), avec 3 dissidents au sein du FOMC en faveur d'une hausse — signe d'un ton plus restrictif ('higher-for-longer') porte par une inflation persistante et la hausse du petrole. Le president Warsh n'a donne aucune indication sur la trajectoire de septembre. Contexte de prudence macro pour les actifs a risque dont les cryptos.",
+    "source": "https://bitcoinfoundation.org/news/altcoins/fed-holds-rates-heres-what-the-decision-means-for-bitcoin-ethereum-and-altcoins-in-august/"
   }
 ]
