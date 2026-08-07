@@ -6,5 +6,21 @@
     "triggered_at": "2026-08-07T00:20:00Z",
     "message": "Cartesi (CTSI) +41.2% en 24h et +39.4% sur 7j — mouvement inhabituel, aucune actualité vérifiée pour l'expliquer à cette heure. Verdict associé : ATTENTE, ne pas courir après ce mouvement sans confirmation.",
     "source": "criblage technique interne"
+  },
+  {
+    "id": "alert-20260807-fed",
+    "ticker_ou_theme": "MACRO",
+    "type": "actualite_macro",
+    "triggered_at": "2026-08-07T04:14:00Z",
+    "message": "La Fed a maintenu ses taux directeurs a 3.50%-3.75% (5e statu quo consecutif), avec 3 dissidents au sein du FOMC en faveur d'une hausse — signe d'un ton plus restrictif ('higher-for-longer') porte par une inflation persistante et la hausse du petrole. Le president Warsh n'a donne aucune indication sur la trajectoire de septembre. Contexte de prudence macro pour les actifs a risque dont les cryptos.",
+    "source": "https://bitcoinfoundation.org/news/altcoins/fed-holds-rates-heres-what-the-decision-means-for-bitcoin-ethereum-and-altcoins-in-august/"
+  },
+  {
+    "id": "alert-20260807-ondo-gouvernance",
+    "ticker_ou_theme": "ONDO",
+    "type": "actualite_favori",
+    "triggered_at": "2026-08-07T06:22:00Z",
+    "message": "Crise de gouvernance chez Ondo Finance : suite au deces du fondateur Nathan Allman (mai 2026), un conflit de controle a eclate entre sa mere Kathleen Allman (nommee representante de la succession via une procedure de succession a Hawaii, 26 juin) et le CEO Ian De Bode, accuse d'avoir tente de s'auto-designer directeur unique avant la fin de la procedure. Le 24 juillet, le conseil a vote la revocation de De Bode de tous ses postes et nomme Kathleen Allman presidente/CEO. Une plainte a ete deposee devant un tribunal du Delaware pour trancher qui controle legalement la societe. Catalyseur negatif plausible et coherent avec la faiblesse recente du token (-13.8% sur 7j, -7.2% sur 24h) meme si aucun lien direct prix/actualite confirme a ce stade — a surveiller pour le prochain verdict ONDO.",
+    "source": "https://www.coindesk.com/policy/2026/08/06/power-struggle-erupts-at-ondo-finance-after-founder-s-death"
   }
 ]
