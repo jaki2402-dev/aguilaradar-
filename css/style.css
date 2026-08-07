@@ -338,6 +338,63 @@ footer.site-footer {
   footer.site-footer { padding-bottom: 100px; }
 }
 
+/* ---- Cartes d'opportunites (grille "pepites") ---- */
+.opp-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 14px;
+}
+.opp-card {
+  background: linear-gradient(165deg, var(--card-2), var(--card));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+.opp-card-top { display: flex; align-items: center; gap: 10px; }
+.opp-logo { width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0; background: var(--bg-elevated); }
+.opp-title { flex: 1; min-width: 0; }
+.opp-name { font-weight: 700; }
+.opp-ticker-tag { color: var(--text-faint); font-size: 0.78rem; }
+.gauge { width: 46px; height: 46px; flex-shrink: 0; }
+.gauge-bg { fill: none; stroke: var(--border); stroke-width: 5; }
+.gauge-fill { fill: none; stroke-width: 5; stroke-linecap: round; transform: rotate(-90deg); transform-origin: 30px 30px; transition: stroke-dashoffset 0.4s ease; }
+.gauge-text { fill: var(--text); font-size: 16px; font-weight: 700; text-anchor: middle; font-family: inherit; }
+.opp-price-row { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; }
+.opp-spark { width: 100%; height: 36px; margin-top: 8px; }
+.spark-line { fill: none; stroke-width: 2; }
+.spark-line.positive { stroke: var(--gain); }
+.spark-line.negative { stroke: var(--loss); }
+.opp-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.tag {
+  background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text-dim);
+  font-size: 0.72rem; padding: 3px 9px; border-radius: 999px;
+}
+.tag-confidence { background: var(--accent-dim); border-color: transparent; color: var(--accent); font-weight: 700; }
+.opp-footer {
+  display: flex; justify-content: space-between; margin-top: 12px; padding-top: 12px;
+  border-top: 1px solid var(--border); font-size: 0.78rem; color: var(--text-dim);
+}
+.opp-footer strong { color: var(--text); }
+
+/* ---- Actualites ---- */
+.news-item {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 12px 14px; border-bottom: 1px solid var(--border);
+}
+.news-item:last-child { border-bottom: none; }
+.news-item a { color: var(--text); text-decoration: none; font-size: 0.9rem; }
+.news-item a:hover { color: var(--accent); }
+
+/* ---- Avertissement ---- */
+.disclaimer-box {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 18px; margin-top: 24px; font-size: 0.82rem; color: var(--text-dim); line-height: 1.6;
+}
+.disclaimer-box strong { color: var(--text); display: block; margin-bottom: 8px; }
+.disclaimer-box ul { margin: 0; padding-left: 18px; }
+.disclaimer-box li { margin-bottom: 6px; }
+
 /* ---- Couleurs par section : identité visuelle + repérage rapide ---- */
 :root {
   --c-favoris: var(--accent);

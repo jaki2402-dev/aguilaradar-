@@ -43,4 +43,5 @@ const DATA_URLS = {
   engineHistory: "data/engine-history.json",
   opportunities: "data/opportunities.json",
   alerts: "data/alerts.json",
+  news: "data/news.json",
 };

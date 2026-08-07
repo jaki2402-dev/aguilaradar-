@@ -83,30 +83,9 @@ async function refreshPrices() {
 }
 
 function renderOpportunities(data) {
-  const el = document.getElementById("opportunities-body");
   const items = (data && data.opportunities) || [];
-  if (items.length === 0) {
-    el.innerHTML = `<p class="empty-state">Aucun screening réalisé pour l'instant — le Top 300 (memecoins exclus) sera analysé au premier cycle profond de la routine programmée.</p>`;
-    return;
-  }
-  el.innerHTML = `
-    <table class="data-table">
-      <thead><tr><th>Actif</th><th>Prix</th><th>24h</th><th>7j</th><th>Score</th><th>Raison</th></tr></thead>
-      <tbody>
-        ${items
-          .map(
-            (o) => `<tr>
-          <td>${o.ticker}</td>
-          <td>${formatPrice(o.price_eur, "EUR")}</td>
-          <td class="${o.change_24h_pct >= 0 ? "positive" : "negative"}">${formatChangePct(o.change_24h_pct)}</td>
-          <td class="${o.change_7d_pct >= 0 ? "positive" : "negative"}">${formatChangePct(o.change_7d_pct)}</td>
-          <td>${o.opportunity_score}</td>
-          <td>${o.reason}</td>
-        </tr>`
-          )
-          .join("")}
-      </tbody>
-    </table>`;
+  renderOpportunityCards("opportunities-body", items);
+  renderOpportunityCards("accueil-highlights", items, 3);
 }
 
 function renderJournal(verdicts) {
@@ -162,6 +141,25 @@ function renderNotifications(alerts) {
     .join("");
 }
 
+function renderNews(newsData) {
+  const el = document.getElementById("news-body");
+  if (!el) return;
+  const items = (newsData && newsData.items) || [];
+  if (items.length === 0) {
+    el.innerHTML = `<p class="empty-state">Aucune actualité récupérée pour l'instant — alimenté par la routine à chaque cycle profond.</p>`;
+    return;
+  }
+  el.innerHTML = items
+    .map(
+      (n) => `
+      <div class="news-item">
+        <a href="${n.url}" target="_blank" rel="noopener noreferrer">${n.title}</a>
+        <span class="hint">${n.source || ""}</span>
+      </div>`
+    )
+    .join("");
+}
+
 function updateHeroStats(verdicts, alerts) {
   const verdictsEl = document.getElementById("hero-verdicts");
   const alertsEl = document.getElementById("hero-alerts");
@@ -170,17 +168,19 @@ function updateHeroStats(verdicts, alerts) {
 }
 
 async function loadAllData() {
-  const [verdicts, engineHistory, opportunities, alerts] = await Promise.all([
+  const [verdicts, engineHistory, opportunities, alerts, news] = await Promise.all([
     loadJson(DATA_URLS.verdicts),
     loadJson(DATA_URLS.engineHistory),
     loadJson(DATA_URLS.opportunities),
     loadJson(DATA_URLS.alerts),
+    loadJson(DATA_URLS.news),
   ]);
 
   renderEngineTab(verdicts || [], engineHistory, opportunities);
   renderOpportunities(opportunities);
   renderJournal(verdicts || []);
   renderNotifications(alerts);
+  renderNews(news);
   updateHeroStats(verdicts || [], alerts);
   updateFavorisVerdicts(verdicts || []);
 
