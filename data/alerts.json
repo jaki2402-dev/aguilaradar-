@@ -72,5 +72,38 @@
         "triggered_at": "2026-08-07T16:25:00Z",
         "message": "Unibase (UB), une des opportunités suivies signalées ce matin (signal purement quantitatif, non vérifié fondamentalement), franchit le seuil de mouvement directionnel de 5 % à la baisse : environ -11,2 % depuis son prix de signalement (-12,1 % sur les dernières 24h glissantes). Aucune actualité spécifique trouvée pour expliquer ce recul. Cohérent avec la prudence déjà exprimée au signalement (7 jours déjà négatifs à l'époque malgré le signal positif à 24h).",
         "source": "criblage technique interne"
+    },
+    {
+        "id": "alert-20260808-nfp-fed-odds",
+        "ticker_ou_theme": "MACRO",
+        "type": "actualite_macro",
+        "triggered_at": "2026-08-08T06:20:00Z",
+        "message": "Le rapport officiel sur l'emploi américain (NFP) de juillet, publié le 7 août, confirme un recul net de -23 000 emplois non agricoles — premier chiffre négatif du cycle économique actuel, très en dessous du consensus (+83 000 attendu), avec un taux de chômage en léger repli à 4,1 %. Signal complémentaire notable : les licenciements temporaires ont bondi de 153 000 pour atteindre 921 000, un signe avant-coureur surveillé de près par les analystes du marché du travail. Conséquence directe sur les anticipations : la probabilité implicite d'un statu quo de la Fed en septembre est passée à environ 60 %, contre 45 % la veille et seulement 33 % une semaine plus tôt — un retournement net après le ton plus restrictif exprimé récemment par les dissidents pro-hausse du FOMC. Qualificatif d'exception (premier chiffre négatif du cycle) qui justifie une alerte à lui seul, même si la réaction de marché immédiate a été plutôt favorable aux actifs à risque.",
+        "source": "https://www.cnbc.com/2026/08/07/odds-the-fed-hikes-in-september-tumble-following-big-july-jobs-miss.html"
+    },
+    {
+        "id": "alert-20260808-clarity-act-report",
+        "ticker_ou_theme": "MACRO",
+        "type": "actualite_macro",
+        "triggered_at": "2026-08-08T06:20:00Z",
+        "message": "Confirmation qu'aucun vote sur le CLARITY Act n'aura lieu avant la suspension parlementaire du 10 août : le sénateur John Thune n'a pas déposé la motion de cloture le 7 août comme échéance pressentie, mais son bureau indique vouloir toujours le faire avant le recess, ce qui reporterait le premier vote procédural aux 15-16 septembre. Les cotes du marché de prédiction Polymarket sur une adoption avant le recess se sont effondrées à environ 13 % en l'espace de quelques jours — signal de retournement net des anticipations, pas seulement un report technique. Il manque au moins 7 voix démocrates pour atteindre les 60 nécessaires (53 républicains déjà acquis), et 7 sénateurs démocrates ont publiquement rejeté le texte actuel (éthique, protection des consommateurs, conflits d'intérêts). Confirme et précise l'échéance déjà signalée au cycle précédent : le report est désormais acté dans les faits.",
+        "source": "https://www.cryptotimes.io/2026/08/08/thune-still-plans-clarity-act-cloture-filing-with-no-democrats/"
+    },
+    {
+        "id": "alert-20260808-ondo-ceo-response",
+        "ticker_ou_theme": "ONDO",
+        "type": "actualite_favori",
+        "triggered_at": "2026-08-08T06:20:00Z",
+        "sentiment": "négatif",
+        "message": "Suite de la crise de gouvernance chez Ondo Finance : le CEO Ian De Bode a publiquement qualifié la plainte de Kathleen Allman (mère du fondateur décédé Nathan Allman) de « sans fondement » (« meritless ») et de « regrettable », affirmant conserver le soutien de ses principaux investisseurs et de la Fondation Ondo. Aucune décision du tribunal du Delaware n'a encore été rendue à ce stade ; la plainte demande une audience accélérée pour geler les décisions majeures tant que le contrôle de la société reste contesté. Le marché continue de sanctionner le titre : environ -5,5 % sur 24h glissantes au moment de ce cycle, dans la continuité de la faiblesse déjà signalée. Faute d'un taux de change EUR fiable ce cycle (voir limitations du cycle), aucune comparaison précise n'a pu être faite avec le prix d'émission du verdict ATTENTE : pas de signal précoce formellement déclenché sur le verdict, seulement une escalade qualitative confirmée par une réaction officielle de la partie adverse.",
+        "source": "https://ambcrypto.com/ondo-finance-succession-battle-ceo-calls-lawsuit-meritless-and-regretful/"
+    },
+    {
+        "id": "alert-20260808-btw-poursuite",
+        "ticker_ou_theme": "BTW",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-08T06:20:00Z",
+        "message": "Bitway (BTW), opportunité déjà suivie, poursuit son mouvement extrême : environ +29,6 % sur 24h et une hausse cumulée à trois chiffres sur 7 jours selon deux sources concordantes (CoinGecko, CoinMarketCap), sans qu'aucune actualité fondamentale ne soit ressortie pour l'expliquer. Les fourchettes de prix précises divergent trop entre sources ce cycle pour rafraîchir le prix affiché dans opportunities.json (aucune modification numérique apportée ce cycle, uniquement cette alerte qualitative — voir limitations du cycle). Confirme la lecture prudente déjà exprimée au signalement : mouvement spéculatif sur un projet non reconnu indépendamment, à ne pas confondre avec une validation fondamentale.",
+        "source": "agrégat WebSearch (CoinGecko, CoinMarketCap)"
     }
 ]
