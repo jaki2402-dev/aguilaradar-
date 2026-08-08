@@ -198,9 +198,11 @@ async function renderDetailPanel(panelEl, asset) {
         ${asset.verdict ? `<p class="hint">Verdict actuel : <span class="badge badge-${asset.verdict.toLowerCase()}">${asset.verdict}</span> — vérifié automatiquement à son échéance, jamais avant.</p>` : ""}
       </div>
       ${renderFavorisContextSection(asset.ticker)}`;
+    return true;
   } catch (err) {
     console.error("Erreur fiche detaillee:", err);
-    panelEl.innerHTML = `<p class="empty-state">Indicateurs indisponibles pour l'instant (limite API probable) — réessaie dans une minute.</p>`;
+    panelEl.innerHTML = `<p class="empty-state">Indicateurs indisponibles pour l'instant (limite API probable) — referme et rouvre la fiche pour réessayer.</p>`;
+    return false;
   }
 }
 
@@ -220,7 +222,11 @@ function attachDetailToggle(cardEl, panelId, baseAsset) {
         reasoning: cardEl.dataset.reasoning || baseAsset.reasoning,
         verdict: cardEl.dataset.verdict || baseAsset.verdict,
       });
-      renderDetailPanel(panel, asset);
+      // Si le fetch échoue (ex: limite API), on remet loaded à false pour qu'une prochaine
+      // fermeture/réouverture retente réellement, au lieu de rester bloqué sur l'erreur.
+      renderDetailPanel(panel, asset).then((success) => {
+        if (!success) loaded = false;
+      });
     }
   });
 }
