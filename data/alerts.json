@@ -105,5 +105,13 @@
         "triggered_at": "2026-08-08T06:20:00Z",
         "message": "Bitway (BTW), opportunité déjà suivie, poursuit son mouvement extrême : environ +29,6 % sur 24h et une hausse cumulée à trois chiffres sur 7 jours selon deux sources concordantes (CoinGecko, CoinMarketCap), sans qu'aucune actualité fondamentale ne soit ressortie pour l'expliquer. Les fourchettes de prix précises divergent trop entre sources ce cycle pour rafraîchir le prix affiché dans opportunities.json (aucune modification numérique apportée ce cycle, uniquement cette alerte qualitative — voir limitations du cycle). Confirme la lecture prudente déjà exprimée au signalement : mouvement spéculatif sur un projet non reconnu indépendamment, à ne pas confondre avec une validation fondamentale.",
         "source": "agrégat WebSearch (CoinGecko, CoinMarketCap)"
+    },
+    {
+        "id": "alert-20260808-clarity-act-etape",
+        "ticker_ou_theme": "MACRO",
+        "type": "actualite_macro",
+        "triggered_at": "2026-08-08T11:30:00Z",
+        "message": "Possible évolution du dossier CLARITY Act, à confirmer avec prudence : un article CoinDesk daté d'aujourd'hui titre que le Sénat américain « ouvre la première étape » du vote sur le Digital Asset Market Clarity Act, ce qui laisserait entendre que le sénateur John Thune a déposé, ou est en train de déposer, la motion de clôture qu'il annonçait vouloir déposer avant la suspension parlementaire du 10 août. Une source parallèle (CryptoTimes, également datée d'aujourd'hui) reste toutefois au conditionnel : Thune « prévoit » toujours de la déposer, sans qu'aucun sénateur démocrate ne l'ait co-signée à ce stade — il manquerait donc au moins 7 voix démocrates sur les 60 nécessaires (53 républicains déjà acquis), ce qui la condamnerait en l'état si rien ne change. Impossible de confirmer avec certitude qu'un dépôt effectif a eu lieu après le cycle précédent de 8h20 UTC : les deux sources ne s'accordent pas sur le stade exact de la procédure. Si confirmé, le premier vote procédural interviendrait au plus tôt les 15 et 16 septembre. À reconfirmer au prochain cycle avant de considérer ce dossier comme réellement débloqué.",
+        "source": "https://www.coindesk.com/policy/2026/08/08/u-s-senate-opens-first-stage-of-crypto-clarity-act-voting-to-give-bill-a-chance-next-month"
     }
 ]
