@@ -113,5 +113,13 @@
         "triggered_at": "2026-08-08T11:30:00Z",
         "message": "Possible évolution du dossier CLARITY Act, à confirmer avec prudence : un article CoinDesk daté d'aujourd'hui titre que le Sénat américain « ouvre la première étape » du vote sur le Digital Asset Market Clarity Act, ce qui laisserait entendre que le sénateur John Thune a déposé, ou est en train de déposer, la motion de clôture qu'il annonçait vouloir déposer avant la suspension parlementaire du 10 août. Une source parallèle (CryptoTimes, également datée d'aujourd'hui) reste toutefois au conditionnel : Thune « prévoit » toujours de la déposer, sans qu'aucun sénateur démocrate ne l'ait co-signée à ce stade — il manquerait donc au moins 7 voix démocrates sur les 60 nécessaires (53 républicains déjà acquis), ce qui la condamnerait en l'état si rien ne change. Impossible de confirmer avec certitude qu'un dépôt effectif a eu lieu après le cycle précédent de 8h20 UTC : les deux sources ne s'accordent pas sur le stade exact de la procédure. Si confirmé, le premier vote procédural interviendrait au plus tôt les 15 et 16 septembre. À reconfirmer au prochain cycle avant de considérer ce dossier comme réellement débloqué.",
         "source": "https://www.coindesk.com/policy/2026/08/08/u-s-senate-opens-first-stage-of-crypto-clarity-act-voting-to-give-bill-a-chance-next-month"
+    },
+    {
+        "id": "alert-20260809-clarity-act-cloture",
+        "ticker_ou_theme": "MACRO",
+        "type": "actualite_macro",
+        "triggered_at": "2026-08-09T23:30:00Z",
+        "message": "Le dossier CLARITY Act franchit une étape procédurale concrète, ce qui confirme et précise l'incertitude signalée avec prudence au cycle précédent : le sénateur John Thune (leader de la majorité) a bien déposé la motion de clôture, tôt le samedi 8 août à 4h52 (heure de l'Est), au terme d'une séance de nuit prolongée. Un vote de clôture est désormais fixé au mardi 15 septembre 2026, au lendemain du retour de la pause estivale du Sénat. Ce vote ne fait qu'ouvrir le débat sur le texte, il ne l'adopte pas : au moins 7 voix démocrates ou indépendantes restent nécessaires pour atteindre le seuil de 60 voix (53 républicains déjà acquis), et ce soutien n'est pas confirmé à ce stade. Deux sources concordent sur ces éléments (The Block et CoinDesk, toutes deux datées du 8 août). Élément de contexte : Galaxy Research avait déjà réduit le mois dernier sa probabilité d'adoption en 2026 de 50 % à 30 %, en invoquant un calendrier sénatorial resserré.",
+        "source": "https://www.theblock.co/news/regulation/2026-08-08-majority-leader-thune-files-cloture-on-clarity-act-setting-up-sept-15-senate-vote-411211"
     }
 ]
