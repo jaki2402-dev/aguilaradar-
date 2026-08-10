@@ -67,8 +67,17 @@ function detectDivergence(closes) {
   return null;
 }
 
+// Sans timeout, une requete qui reste en attente (serveur lent, pas forcement une erreur
+// franche) laisse la fiche bloquee sur "Calcul en cours..." indefiniment - fermer/rouvrir ne
+// suffit alors pas a relancer, puisque le fetch precedent n'a jamais echoue pour de bon.
+function fetchWithTimeout(url, ms) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), ms);
+  return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(timer));
+}
+
 async function fetchHistoricalCloses(cgId, days) {
-  const res = await fetch(`https://api.coingecko.com/api/v3/coins/${cgId}/market_chart?vs_currency=eur&days=${days}&interval=daily`);
+  const res = await fetchWithTimeout(`https://api.coingecko.com/api/v3/coins/${cgId}/market_chart?vs_currency=eur&days=${days}&interval=daily`, 12000);
   if (!res.ok) throw new Error(`history ${res.status}`);
   const data = await res.json();
   return (data.prices || []).map((p) => p[1]);
@@ -78,7 +87,7 @@ async function fetchOrderBookImbalance(tvSymbol) {
   if (!tvSymbol || !tvSymbol.startsWith("BINANCE:")) return null;
   const symbol = tvSymbol.replace("BINANCE:", "");
   try {
-    const res = await fetch(`https://api.binance.com/api/v3/depth?symbol=${symbol}&limit=50`);
+    const res = await fetchWithTimeout(`https://api.binance.com/api/v3/depth?symbol=${symbol}&limit=50`, 12000);
     if (!res.ok) return null;
     const data = await res.json();
     const bidVol = (data.bids || []).reduce((sum, [, qty]) => sum + parseFloat(qty), 0);
