@@ -260,5 +260,13 @@
         "triggered_at": "2026-08-10T15:35:00Z",
         "message": "Indice de peur et de cupidité relevé à 51 aujourd'hui (« Neutre »), en nette hausse par rapport à la fourchette resserrée notée sur les cycles précédents (28-31). Le régime macro reste toutefois classé « neutre » selon la méthodologie interne, sans changement de catégorie ni ré-signalement regime_change_impact nécessaire. Dominance BTC à 57,2 % (contre 56,76 % au cycle précédent), mouvement modeste. Reconfirmation par une recherche de marché large : Bitcoin autour de 64 935-65 300 dollars et Ethereum autour de 1 908-1 925 dollars, cohérents avec le cycle précédent et avec l'anomalie de price_at_issue déjà signalée le 10 août à 10h30 UTC (aucune donnée nouvelle sur ce point). Aucun des 15 favoris ne figure dans les classements des plus fortes hausses ou baisses sur 24h consultés ce cycle (une seule recherche large de type « biggest movers », conformément à la portée resserrée adoptée depuis le correctif du 10 août) : aucun nouveau signal précoce déclenché.",
         "source": "agrégat WebSearch (recherche large « biggest movers » + indice de peur et de cupidité + dominance BTC)"
+    },
+    {
+        "id": "alert-20260810-1622-clarity-odds",
+        "ticker_ou_theme": "MACRO",
+        "type": "actualite_macro",
+        "triggered_at": "2026-08-10T16:22:00Z",
+        "message": "CLARITY Act : précision nouvelle sur les probabilités de marché plutôt qu'un changement de calendrier (le vote de procédure reste fixé au 15 septembre, motion de clôture confirmée déposée le 8 août juste avant la suspension parlementaire). Galaxy Research a abaissé sa probabilité d'adoption du texte en 2026 de 50 % à 30 %, tandis que Polymarket la situait déjà autour de 17 % plus tôt ce mois-ci. Point de blocage inchangé : il manque toujours des voix démocrates sur le langage éthique (encadrement des conflits d'intérêts, dont ceux visant le président Trump). Dégradation nette du sentiment de marché sur ce dossier, à suivre pour son effet potentiel sur le régime macro général.",
+        "source": "https://www.disruptionbanking.com/2026/08/10/clarity-act-news-the-crypto-bill-just-slipped-to-a-september-15-senate-showdown/"
     }
 ]
