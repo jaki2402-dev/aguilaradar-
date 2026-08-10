@@ -268,5 +268,13 @@
         "triggered_at": "2026-08-10T16:22:00Z",
         "message": "CLARITY Act : précision nouvelle sur les probabilités de marché plutôt qu'un changement de calendrier (le vote de procédure reste fixé au 15 septembre, motion de clôture confirmée déposée le 8 août juste avant la suspension parlementaire). Galaxy Research a abaissé sa probabilité d'adoption du texte en 2026 de 50 % à 30 %, tandis que Polymarket la situait déjà autour de 17 % plus tôt ce mois-ci. Point de blocage inchangé : il manque toujours des voix démocrates sur le langage éthique (encadrement des conflits d'intérêts, dont ceux visant le président Trump). Dégradation nette du sentiment de marché sur ce dossier, à suivre pour son effet potentiel sur le régime macro général.",
         "source": "https://www.disruptionbanking.com/2026/08/10/clarity-act-news-the-crypto-bill-just-slipped-to-a-september-15-senate-showdown/"
+    },
+    {
+        "id": "alert-20260810-1820-macro-stable",
+        "ticker_ou_theme": "MACRO",
+        "type": "actualite_macro",
+        "triggered_at": "2026-08-10T18:20:00Z",
+        "message": "Recherche large « biggest movers » reconduite ce cycle : classement quasi identique au cycle précédent (gagnants Pump.fun +15,3 %, Canton +8,8 %, Curve DAO Token +5,6 % ; perdants Algorand -5,5 %, Midnight -4,4 %, MemeCore -4,4 %), probablement du contenu indexé peu renouvelé sur un intervalle de moins de 3 heures plutôt qu'une absence réelle de mouvement. Aucun des 15 favoris ni des 8 opportunités suivies ne figure dans ce classement : aucun nouveau signal précoce déclenché. Indice de peur et de cupidité toujours à 51 (« Neutre »), horodatage source identique au cycle précédent (10 août, 14h34 UTC) : valeur conservée sans réconciliation multi-sources, conformément au correctif. Dominance BTC reconfirmée à 57,2 % par une source indépendante ce cycle (contre valeur non retrouvée au cycle précédent). Contexte de marché : Bitcoin range-bound entre 64 700 et 65 300 dollars, Ethereum défend son support à 1 900 dollars, l'ensemble du top 10 varie de moins de 1 % dans l'attente du CPI américain du 12 août — aucun développement substantiellement nouveau par rapport aux cycles précédents, régime macro « neutre » maintenu sans ré-signalement.",
+        "source": "agrégat WebSearch (recherche large « biggest movers » + indice de peur et de cupidité + dominance BTC + veille macro CPI)"
     }
 ]
