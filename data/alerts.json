@@ -172,5 +172,13 @@
         "triggered_at": "2026-08-10T05:35:00Z",
         "message": "Précision nouvelle sur le dossier CLARITY Act, distincte du dépôt de la motion de clôture déjà signalé le 9 août : la motion devient formellement recevable pour un vote de procédure le 15 septembre à 14h15 (heure de l'Est). Élément nouveau ce cycle : les négociateurs travaillent encore activement à résoudre des désaccords sur trois volets précis avant que le texte puisse avancer plus loin — les dispositions anti-blanchiment (illicit-finance protections), la régulation des stablecoins, et les règles d'éthique gouvernementale. Le calendrier annoncé (vote le 15 septembre, seuil de 60 voix, au moins 7 voix démocrates encore manquantes) reste inchangé par rapport à l'alerte du 9 août, mais ce niveau de détail sur les points de blocage concrets est nouveau et permet une lecture plus fine du risque d'échec du texte à cette étape.",
         "source": "https://decrypt.co/375174/senate-keeps-clarity-act-alive-with-crypto-bill-vote-set-for-september"
+    },
+    {
+        "id": "alert-20260810-fet-retournement",
+        "ticker_ou_theme": "FET",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-10T06:30:00Z",
+        "message": "Fetch.ai (FET) : reconfirmation par deux recherches indépendantes ce cycle (fourchette resserrée 0,1356 à 0,1600 dollar selon six sources nommées — CoinMarketCap, CoinLore, Coinbase, TradingView, MarketCapOf, Kraken — nettement plus cohérente que la divergence habituelle sur les favoris de capitalisation moyenne). En retenant la référence CoinMarketCap (0,1356 dollar, borne prudente), le prix affiche +15,7 % par rapport au prix d'émission du verdict VENTE (0,117162 dollar), déjà au-delà du seuil de mouvement directionnel de 5 %, et jusqu'à +36,6 % sur la borne haute (Coinbase/Kraken). Mouvement dans le sens opposé au verdict initial, à surveiller pour confirmation ou infirmation au prochain cycle. Contexte : plusieurs sources évoquent un rally de récupération sur les tokens liés à l'intelligence artificielle malgré un momentum qualifié de baissier début août.",
+        "source": "agrégat WebSearch (CoinMarketCap, CoinLore, Coinbase, TradingView, MarketCapOf, Kraken)"
     }
 ]

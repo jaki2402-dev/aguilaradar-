@@ -75,7 +75,15 @@
             "verdict_correct": null,
             "resolved_at": null
         },
-        "threshold_pct": 5
+        "threshold_pct": 5,
+        "signal_precoce": {
+            "detected_at": "2026-08-10T06:30:00Z",
+            "price_at_signal_eur": 0.1356,
+            "move_pct_since_issue": 15.7,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Fetch.ai (FET) : contrairement à l'habitude sur les favoris de capitalisation moyenne, deux recherches indépendantes menées ce cycle convergent sur une fourchette resserrée, de 0,1356 dollar (CoinMarketCap) à 0,1600 dollar (Coinbase, Kraken), recoupée par six sources nommées au total. En retenant la valeur CoinMarketCap comme référence prudente (borne basse de la fourchette), le prix affiche +15,7 % par rapport au prix d'émission du verdict VENTE (0,117162 dollar), déjà bien au-delà du seuil de mouvement directionnel de 5 % — et jusqu'à +36,6 % si l'on retient la borne haute (Coinbase/Kraken, 0,16 dollar). Ce mouvement va dans le sens opposé au verdict initial. Contexte trouvé en recherche complémentaire : plusieurs sources évoquent un « rally de récupération » sur les tokens liés à l'intelligence artificielle (dont FET) malgré un momentum qualifié de baissier début août (RSI à 36,6, MACD négatif), avec une zone de rejet technique identifiée entre 0,15 et 0,16 dollar où les rallyes ont tendance à buter jusqu'ici. Signal précoce enregistré uniquement, ne préjuge pas de l'issue à l'échéance du 21 août : le verdict VENTE reste en attente, à confirmer ou infirmer au prochain cycle."
+        }
     },
     {
         "id": "v-20260807-grt",
