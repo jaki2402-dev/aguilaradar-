@@ -121,5 +121,48 @@
         "triggered_at": "2026-08-09T23:30:00Z",
         "message": "Le dossier CLARITY Act franchit une étape procédurale concrète, ce qui confirme et précise l'incertitude signalée avec prudence au cycle précédent : le sénateur John Thune (leader de la majorité) a bien déposé la motion de clôture, tôt le samedi 8 août à 4h52 (heure de l'Est), au terme d'une séance de nuit prolongée. Un vote de clôture est désormais fixé au mardi 15 septembre 2026, au lendemain du retour de la pause estivale du Sénat. Ce vote ne fait qu'ouvrir le débat sur le texte, il ne l'adopte pas : au moins 7 voix démocrates ou indépendantes restent nécessaires pour atteindre le seuil de 60 voix (53 républicains déjà acquis), et ce soutien n'est pas confirmé à ce stade. Deux sources concordent sur ces éléments (The Block et CoinDesk, toutes deux datées du 8 août). Élément de contexte : Galaxy Research avait déjà réduit le mois dernier sa probabilité d'adoption en 2026 de 50 % à 30 %, en invoquant un calendrier sénatorial resserré.",
         "source": "https://www.theblock.co/news/regulation/2026-08-08-majority-leader-thune-files-cloture-on-clarity-act-setting-up-sept-15-senate-vote-411211"
+    },
+    {
+        "id": "alert-20260810-ctsi-l2beat",
+        "ticker_ou_theme": "CTSI",
+        "type": "actualite_favori",
+        "triggered_at": "2026-08-10T00:25:00Z",
+        "sentiment": "positif",
+        "message": "Cartesi (CTSI) : développement fondamental positif bien sourcé, distinct de l'incohérence de prix toujours non résolue ce cycle (voir data_source_reliability) — l'application « PRT Honeypot v2 », un bug-bounty en direct sur Ethereum mainnet testant le système de preuve de fraude de Cartesi, a atteint la classification Stage 2 sur L2BEAT (fraud-proofs décentralisés, aucune porte dérobée de mise à niveau), l'un des trois seuls projets à ce niveau fin 2025 selon deux sources concordantes. Une mention non confirmée d'un listing de futures Binance pour CTSI a également été relevée mais reste trop incertaine pour être retenue comme un fait établi (source unique, orthographe du ticker ambiguë dans l'article). Ce jalon de sécurité ne permet pas de trancher l'incohérence persistante sur le prix actuel de Cartesi (fourchette 0,020-0,038 dollar selon la source ce cycle) ni sur l'ampleur réelle du pic du 7 août.",
+        "source": "https://l2beat.com/scaling/projects/cartesi-prt-honeypot-v2"
+    },
+    {
+        "id": "alert-20260810-link-hongkong",
+        "ticker_ou_theme": "LINK",
+        "type": "actualite_favori",
+        "triggered_at": "2026-08-10T00:25:00Z",
+        "sentiment": "positif",
+        "message": "Chainlink (LINK) : lancement le 5 août 2026 d'un « Tokenized Securities Framework » à Hong Kong, en partenariat avec FORMS HK et Apex Group, utilisant le protocole CCIP et le standard ERC-3643 pour la tokenisation de titres. Signal complémentaire relevé le même jour : environ 1,26 million de LINK retirés des plateformes d'échange (lecture technique d'accumulation, non confirmée indépendamment). LBank a par ailleurs annoncé l'adoption de Chainlink Data Streams pour ses marchés prédictifs BTC/ETH. Développement fondamental positif pour la thèse long terme de LINK (adoption institutionnelle réelle de l'oracle), sans lien direct établi avec le prix à ce stade — prix LINK non traité comme vérifié ce cycle (une seule passe de recherche, non recoupée indépendamment).",
+        "source": "https://chain.link/newsroom"
+    },
+    {
+        "id": "alert-20260810-inj-institutionnel",
+        "ticker_ou_theme": "INJ",
+        "type": "actualite_favori",
+        "triggered_at": "2026-08-10T00:25:00Z",
+        "sentiment": "positif",
+        "message": "Injective (INJ) : plusieurs signaux d'adoption institutionnelle relevés début août 2026 — Bitwise serait devenu validateur institutionnel le 2 août, Four Pillars aurait lancé un validateur institutionnel, une connexion testnet IBC avec Cardano aurait été établie le 3 août, et POSCO International ainsi que LG CNS déploieraient des pilotes d'actifs réels tokenisés (factures, créances) sur la chaîne. Ces éléments proviennent d'un agrégat unique (CoinMarketCap Top Stories) sans confirmation indépendante fait par fait : à traiter comme une piste positive à recouper, pas comme des faits tous individuellement établis. Prix INJ non traité comme vérifié ce cycle (une seule passe de recherche, divergence notable entre plateformes, y compris sur le sens de la variation 24h).",
+        "source": "https://coinmarketcap.com/top-stories/6a7408160f129b6e75c61288/"
+    },
+    {
+        "id": "alert-20260810-btw-divergence-tickers",
+        "ticker_ou_theme": "BTW",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-10T00:25:00Z",
+        "message": "Bitway (BTW), une des opportunités suivies : divergence de prix extrême selon la plateforme consultée ce cycle, d'un facteur environ 15 entre la borne basse (0,0137 dollar, Coinbase) et la borne haute (0,2278 dollar, article daté du 8 août rapportant un partenariat non détaillé). Cet écart est nettement plus grave que celui déjà signalé au cycle précédent (0,17-0,20 dollar) et suggère une possible confusion entre plusieurs jetons distincts partageant le même symbole boursier « BTW » sur différentes plateformes, plutôt qu'une simple divergence de méthodologie. Aucune mise à jour de prix effectuée dans opportunities.json ce cycle par prudence maximale — à reconfirmer avant toute action.",
+        "source": "agrégat WebSearch (Coinbase, CoinMarketCap, Bitget, CryptoRank, MEXC, The Currency Analytics)"
+    },
+    {
+        "id": "alert-20260810-ub-bithumb",
+        "ticker_ou_theme": "UB",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-10T00:25:00Z",
+        "message": "Unibase (UB), une des opportunités suivies : listage confirmé sur le marché en won sud-coréen de Bithumb le 6 août 2026 à 1h UTC — développement factuel et bien sourcé. Le prix reste toutefois divergent selon la plateforme (0,092 à 0,139 dollar ce cycle), mais cette fois en partie explicable par une volatilité réelle très rapide (baisses quotidiennes de 13 % à 40 % relevées selon la journée) plutôt que par une simple confusion de méthodologie. Aucune mise à jour de prix effectuée dans opportunities.json ce cycle, la fourchette restant trop large pour retenir un chiffre unique fiable.",
+        "source": "https://bitcoinworld.co.in/bithumb-lists-unibase-ub-south-korean-won-market/"
     }
 ]
