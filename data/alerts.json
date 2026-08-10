@@ -164,5 +164,13 @@
         "triggered_at": "2026-08-10T00:25:00Z",
         "message": "Unibase (UB), une des opportunités suivies : listage confirmé sur le marché en won sud-coréen de Bithumb le 6 août 2026 à 1h UTC — développement factuel et bien sourcé. Le prix reste toutefois divergent selon la plateforme (0,092 à 0,139 dollar ce cycle), mais cette fois en partie explicable par une volatilité réelle très rapide (baisses quotidiennes de 13 % à 40 % relevées selon la journée) plutôt que par une simple confusion de méthodologie. Aucune mise à jour de prix effectuée dans opportunities.json ce cycle, la fourchette restant trop large pour retenir un chiffre unique fiable.",
         "source": "https://bitcoinworld.co.in/bithumb-lists-unibase-ub-south-korean-won-market/"
+    },
+    {
+        "id": "alert-20260810-clarity-act-blocages",
+        "ticker_ou_theme": "MACRO",
+        "type": "actualite_macro",
+        "triggered_at": "2026-08-10T05:35:00Z",
+        "message": "Précision nouvelle sur le dossier CLARITY Act, distincte du dépôt de la motion de clôture déjà signalé le 9 août : la motion devient formellement recevable pour un vote de procédure le 15 septembre à 14h15 (heure de l'Est). Élément nouveau ce cycle : les négociateurs travaillent encore activement à résoudre des désaccords sur trois volets précis avant que le texte puisse avancer plus loin — les dispositions anti-blanchiment (illicit-finance protections), la régulation des stablecoins, et les règles d'éthique gouvernementale. Le calendrier annoncé (vote le 15 septembre, seuil de 60 voix, au moins 7 voix démocrates encore manquantes) reste inchangé par rapport à l'alerte du 9 août, mais ce niveau de détail sur les points de blocage concrets est nouveau et permet une lecture plus fine du risque d'échec du texte à cette étape.",
+        "source": "https://decrypt.co/375174/senate-keeps-clarity-act-alive-with-crypto-bill-vote-set-for-september"
     }
 ]
