@@ -252,5 +252,13 @@
         "triggered_at": "2026-08-10T10:30:00Z",
         "message": "Constat transversal ce cycle : les quatre verdicts VENTE émis le 7 août (FET, GRT, JUP, INJ) sont désormais tous contredits par le marché, avec des hausses de +9,9 % à +18,4 % depuis l'émission, toutes en sens opposé au verdict. Ces quatre verdicts reposaient sur une lecture technique pure (extrapolation d'un déclin sur 24h/7j/30j), sans signal fondamental ni macro à l'appui — schéma cohérent avec un possible biais de sur-extrapolation d'un déclin récent au moment même d'un point bas local, suivi d'un rebond généralisé sur les capitalisations moyennes des favoris (hors Bitcoin et Ethereum, restés stables). Aucune conclusion définitive avant l'échéance officielle du 21 août, mais à garder à l'esprit pour la calibration future de la méthodologie de signal technique pur.",
         "source": "criblage technique interne"
+    },
+    {
+        "id": "alert-20260810-1535-feargreed",
+        "ticker_ou_theme": "MACRO",
+        "type": "actualite_macro",
+        "triggered_at": "2026-08-10T15:35:00Z",
+        "message": "Indice de peur et de cupidité relevé à 51 aujourd'hui (« Neutre »), en nette hausse par rapport à la fourchette resserrée notée sur les cycles précédents (28-31). Le régime macro reste toutefois classé « neutre » selon la méthodologie interne, sans changement de catégorie ni ré-signalement regime_change_impact nécessaire. Dominance BTC à 57,2 % (contre 56,76 % au cycle précédent), mouvement modeste. Reconfirmation par une recherche de marché large : Bitcoin autour de 64 935-65 300 dollars et Ethereum autour de 1 908-1 925 dollars, cohérents avec le cycle précédent et avec l'anomalie de price_at_issue déjà signalée le 10 août à 10h30 UTC (aucune donnée nouvelle sur ce point). Aucun des 15 favoris ne figure dans les classements des plus fortes hausses ou baisses sur 24h consultés ce cycle (une seule recherche large de type « biggest movers », conformément à la portée resserrée adoptée depuis le correctif du 10 août) : aucun nouveau signal précoce déclenché.",
+        "source": "agrégat WebSearch (recherche large « biggest movers » + indice de peur et de cupidité + dominance BTC)"
     }
 ]
