@@ -180,5 +180,77 @@
         "triggered_at": "2026-08-10T06:30:00Z",
         "message": "Fetch.ai (FET) : reconfirmation par deux recherches indépendantes ce cycle (fourchette resserrée 0,1356 à 0,1600 dollar selon six sources nommées — CoinMarketCap, CoinLore, Coinbase, TradingView, MarketCapOf, Kraken — nettement plus cohérente que la divergence habituelle sur les favoris de capitalisation moyenne). En retenant la référence CoinMarketCap (0,1356 dollar, borne prudente), le prix affiche +15,7 % par rapport au prix d'émission du verdict VENTE (0,117162 dollar), déjà au-delà du seuil de mouvement directionnel de 5 %, et jusqu'à +36,6 % sur la borne haute (Coinbase/Kraken). Mouvement dans le sens opposé au verdict initial, à surveiller pour confirmation ou infirmation au prochain cycle. Contexte : plusieurs sources évoquent un rally de récupération sur les tokens liés à l'intelligence artificielle malgré un momentum qualifié de baissier début août.",
         "source": "agrégat WebSearch (CoinMarketCap, CoinLore, Coinbase, TradingView, MarketCapOf, Kraken)"
+    },
+    {
+        "id": "alert-20260810-btc-anomalie-price-at-issue",
+        "ticker_ou_theme": "BTC",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-10T10:30:00Z",
+        "message": "Anomalie de données détectée sur le verdict Bitcoin du 7 août : le prix d'émission enregistré (55 800 dollars) ne correspond pas au prix réel du marché ce jour-là (environ 64 940 dollars selon une recherche dédiée sur des sources datées du 7 août, cohérent avec le niveau actuel de 65 024-65 300 dollars). Bitcoin est donc resté globalement stable depuis l'émission (mouvement réel estimé sous 1 %), et non en hausse de +16,5 % comme le calcul brut price_at_issue le suggérerait. Signalement d'anomalie de données, pas un signal de marché — recommandation de vérification manuelle avant la résolution officielle du verdict le 21 août 2026, qui serait sinon faussée par ce prix d'émission probablement erroné.",
+        "source": "criblage technique interne + recherche dédiée sur le prix du 7 août 2026"
+    },
+    {
+        "id": "alert-20260810-eth-anomalie-price-at-issue",
+        "ticker_ou_theme": "ETH",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-10T10:30:00Z",
+        "message": "Même anomalie que sur Bitcoin ce cycle : le prix d'émission enregistré du verdict Ethereum du 7 août (1 649,89 dollars) ne correspond pas au prix réel du marché ce jour-là (environ 1 910 dollars selon une recherche dédiée, cohérent avec le niveau actuel de 1 914-1 925 dollars). Ethereum est donc resté globalement stable depuis l'émission (mouvement réel estimé sous 1 %), et non en hausse de +16,0 % comme le calcul brut price_at_issue le suggérerait. Signalement d'anomalie de données, pas un signal de marché — même recommandation de vérification manuelle avant la résolution du 21 août 2026.",
+        "source": "criblage technique interne + recherche dédiée sur le prix du 7 août 2026"
+    },
+    {
+        "id": "alert-20260810-grt-hausse",
+        "ticker_ou_theme": "GRT",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-10T10:30:00Z",
+        "message": "The Graph (GRT) +16,0 % depuis le prix d'émission du verdict VENTE (0,01257596 dollar), à 0,01459 dollar ce cycle — mouvement en sens opposé au verdict, seuil de 5 % franchi. Valeur stable sur au moins trois cycles consécutifs mais toujours issue d'une source unique par cycle (CoinGecko), non recoupée. Aucune actualité identifiée pour l'expliquer. Signal précoce enregistré sur le verdict correspondant, à confirmer ou infirmer au prochain cycle.",
+        "source": "criblage technique interne"
+    },
+    {
+        "id": "alert-20260810-peaq-hausse",
+        "ticker_ou_theme": "PEAQ",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-10T10:30:00Z",
+        "message": "Peaq (PEAQ) +13,7 % à +15,4 % depuis le prix d'émission du verdict ATTENTE (0,01549363 dollar), désormais confirmé par deux sources convergentes (CoinGecko 0,01762 dollar, CoinMarketCap 0,01788 dollar) — seuil de 5 % franchi. La lecture isolée du cycle précédent (~0,02184 dollar) est donc écartée, non reproduite. Aucune actualité identifiée pour l'expliquer. Signal précoce enregistré sur le verdict correspondant.",
+        "source": "criblage technique interne"
+    },
+    {
+        "id": "alert-20260810-ondo-hausse",
+        "ticker_ou_theme": "ONDO",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-10T10:30:00Z",
+        "message": "Ondo Finance (ONDO) +12,7 % depuis le prix d'émission du verdict ATTENTE (0,310451 dollar), à 0,35 dollar ce cycle — seuil de 5 % franchi, malgré la crise de gouvernance en cours (plainte Kathleen Allman, voir alertes du 7 août) qui constituait a priori un facteur de risque baissier dans le raisonnement initial. Le marché ne semble pas, à ce stade, sanctionner le titre pour ce risque. Signal précoce enregistré sur le verdict correspondant.",
+        "source": "criblage technique interne"
+    },
+    {
+        "id": "alert-20260810-jup-hausse",
+        "ticker_ou_theme": "JUP",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-10T10:30:00Z",
+        "message": "Jupiter (JUP) +17,9 % à +18,4 % depuis le prix d'émission du verdict VENTE (0,156368 dollar), confirmé par deux recherches convergentes ce cycle (0,1843 puis 0,1852 dollar, CoinMarketCap) — mouvement en sens opposé au verdict, seuil de 5 % franchi. Aucune actualité identifiée pour l'expliquer. Signal précoce enregistré sur le verdict correspondant, à confirmer ou infirmer au prochain cycle.",
+        "source": "criblage technique interne"
+    },
+    {
+        "id": "alert-20260810-arb-hausse",
+        "ticker_ou_theme": "ARB",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-10T10:30:00Z",
+        "message": "Arbitrum (ARB) +14,8 % à +17,6 % depuis le prix d'émission du verdict ATTENTE (0,067826 dollar), désormais confirmé par deux sources convergentes (CoinGecko 0,07785 dollar, CoinMarketCap 0,07978 dollar) — seuil de 5 % franchi. Ceci résout la divergence extrême et isolée du cycle précédent (~0,2174 dollar), désormais considérée comme une erreur de source. Signal précoce enregistré sur le verdict correspondant.",
+        "source": "criblage technique interne"
+    },
+    {
+        "id": "alert-20260810-inj-hausse",
+        "ticker_ou_theme": "INJ",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-10T10:30:00Z",
+        "message": "Injective (INJ) +9,9 % à +17,5 % depuis le prix d'émission du verdict VENTE (3,95 dollars), enfin confirmé par deux sources convergentes ce cycle (CoinMarketCap 4,34 dollars, CoinGecko 4,64 dollars) après plusieurs cycles de valeur suspecte identique — mouvement en sens opposé au verdict, seuil de 5 % franchi. Signal précoce enregistré sur le verdict correspondant, à confirmer ou infirmer au prochain cycle.",
+        "source": "criblage technique interne"
+    },
+    {
+        "id": "alert-20260810-pattern-ventes-contredites",
+        "ticker_ou_theme": "MACRO",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-10T10:30:00Z",
+        "message": "Constat transversal ce cycle : les quatre verdicts VENTE émis le 7 août (FET, GRT, JUP, INJ) sont désormais tous contredits par le marché, avec des hausses de +9,9 % à +18,4 % depuis l'émission, toutes en sens opposé au verdict. Ces quatre verdicts reposaient sur une lecture technique pure (extrapolation d'un déclin sur 24h/7j/30j), sans signal fondamental ni macro à l'appui — schéma cohérent avec un possible biais de sur-extrapolation d'un déclin récent au moment même d'un point bas local, suivi d'un rebond généralisé sur les capitalisations moyennes des favoris (hors Bitcoin et Ethereum, restés stables). Aucune conclusion définitive avant l'échéance officielle du 21 août, mais à garder à l'esprit pour la calibration future de la méthodologie de signal technique pur.",
+        "source": "criblage technique interne"
     }
 ]

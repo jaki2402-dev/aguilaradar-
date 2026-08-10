@@ -23,7 +23,15 @@
             "verdict_correct": null,
             "resolved_at": null
         },
-        "threshold_pct": 5
+        "threshold_pct": 5,
+        "signal_precoce": {
+            "detected_at": "2026-08-10T10:30:00Z",
+            "price_at_signal_eur": 65024.73,
+            "move_pct_since_issue": 16.5,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Bitcoin (BTC) : écart de +16,5 % à +17,0 % entre le prix d'émission enregistré du verdict (55 800 dollars, 7 août 2026) et le prix confirmé ce cycle par double vérification indépendante (65 024,73 à 65 300 dollars, cohérent avec tous les cycles précédents depuis le 7 août). Ce fossé n'a jamais été signalé jusqu'ici car les cycles précédents comparaient uniquement la stabilité d'un cycle à l'autre, sans revérifier par rapport au prix d'émission d'origine. Point important : une recherche dédiée sur le prix réel du Bitcoin le 7 août 2026 (date d'émission) converge sur environ 64 940 dollars (fourchette 64 100-65 300 dollars, Yahoo Finance/TheStreet), cohérent avec le niveau actuel — Bitcoin est donc resté globalement stable (mouvement réel estimé sous 1 %) depuis l'émission du verdict, et non en hausse de 16,5 %. Cela indique fortement que le champ price_at_issue de ce verdict (55 800 dollars) est erroné à la source (probable donnée corrompue ou périmée au moment de l'émission), plutôt qu'un mouvement de marché réel. Signal enregistré ici pour la première fois à titre de signalement d'anomalie de données, et non comme un signal de marché exploitable : recommandation de vérification manuelle du prix d'émission d'origine avant la résolution officielle du 21 août, qui serait sinon faussée."
+        }
     },
     {
         "id": "v-20260807-eth",
@@ -49,7 +57,15 @@
             "verdict_correct": null,
             "resolved_at": null
         },
-        "threshold_pct": 5
+        "threshold_pct": 5,
+        "signal_precoce": {
+            "detected_at": "2026-08-10T10:30:00Z",
+            "price_at_signal_eur": 1914.37,
+            "move_pct_since_issue": 16.0,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Ethereum (ETH) : même anomalie que sur Bitcoin ce cycle. Écart de +16,0 % à +16,7 % entre le prix d'émission enregistré (1 649,89 dollars, 7 août 2026) et le prix confirmé ce cycle (1 914,37 à 1 925,02 dollars, double vérification indépendante, cohérent avec tous les cycles précédents). Une recherche dédiée sur le prix réel de l'Ethereum le 7 août 2026 converge sur environ 1 910 dollars (Yahoo Finance), cohérent avec le niveau actuel — Ethereum est donc resté globalement stable (mouvement réel estimé sous 1 %) depuis l'émission du verdict, comme Bitcoin. Le champ price_at_issue de ce verdict (1 649,89 dollars) semble donc également erroné à la source. Signal enregistré à titre de signalement d'anomalie de données, pas comme signal de marché exploitable : même recommandation de vérification manuelle avant la résolution du 21 août."
+        }
     },
     {
         "id": "v-20260807-fet",
@@ -109,7 +125,15 @@
             "verdict_correct": null,
             "resolved_at": null
         },
-        "threshold_pct": 5
+        "threshold_pct": 5,
+        "signal_precoce": {
+            "detected_at": "2026-08-10T10:30:00Z",
+            "price_at_signal_eur": 0.01459,
+            "move_pct_since_issue": 16.0,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "The Graph (GRT) : seuil de mouvement directionnel (5 %) franchi à la hausse, en sens opposé au verdict VENTE. Prix confirmé ce cycle (CoinGecko, 0,01459 dollar) cohérent avec au moins trois cycles précédents consécutifs (~0,0146 dollar, stable sur plusieurs jours malgré une source unique par cycle — la persistance sur un intervalle aussi long limite le risque de contenu indexé dupliqué). Par rapport au prix d'émission (0,01257596 dollar), le mouvement est de +16,0 %. Aucune actualité spécifique trouvée pour l'expliquer : lecture purement technique. Signal précoce enregistré avec la réserve habituelle (source unique par cycle, non recoupée par une seconde plateforme ce cycle) ; ne préjuge pas de l'issue à l'échéance du 21 août."
+        }
     },
     {
         "id": "v-20260807-tia",
@@ -195,7 +219,15 @@
             "verdict_correct": null,
             "resolved_at": null
         },
-        "threshold_pct": 5
+        "threshold_pct": 5,
+        "signal_precoce": {
+            "detected_at": "2026-08-10T10:30:00Z",
+            "price_at_signal_eur": 0.01762,
+            "move_pct_since_issue": 13.7,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Peaq (PEAQ) : seuil de mouvement directionnel (5 %) franchi à la hausse. Prix confirmé ce cycle par deux sources nommées et convergentes (CoinGecko 0,01762 dollar, CoinMarketCap 0,01788 dollar), après une lecture isolée et écartée au cycle précédent (~0,02184 dollar, non retenue). Par rapport au prix d'émission (0,01549363 dollar), le mouvement est de +13,7 % à +15,4 % selon la source retenue. Aucune actualité spécifique trouvée pour l'expliquer : lecture purement technique. Le verdict ATTENTE reste en attente de son échéance du 21 août, ce signal ne préjuge pas de l'issue."
+        }
     },
     {
         "id": "v-20260807-link",
@@ -247,7 +279,15 @@
             "verdict_correct": null,
             "resolved_at": null
         },
-        "threshold_pct": 5
+        "threshold_pct": 5,
+        "signal_precoce": {
+            "detected_at": "2026-08-10T10:30:00Z",
+            "price_at_signal_eur": 0.35,
+            "move_pct_since_issue": 12.7,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Ondo Finance (ONDO) : seuil de mouvement directionnel (5 %) franchi à la hausse, alors même que la crise de gouvernance (plainte de Kathleen Allman devant le tribunal du Delaware, déjà alertée le 7 août) constituait a priori un catalyseur négatif retenu dans le raisonnement initial du verdict. Prix confirmé ce cycle (MetaMask, 0,35 dollar) cohérent avec plusieurs cycles précédents consécutifs (~0,350-0,353 dollar). Par rapport au prix d'émission (0,310451 dollar), le mouvement est de +12,7 %. Le marché ne semble donc pas, à ce stade, avoir sanctionné le titre pour ce risque de gouvernance — à surveiller si le dossier judiciaire évolue. Le verdict ATTENTE reste en attente de son échéance du 21 août."
+        }
     },
     {
         "id": "v-20260807-jup",
@@ -273,7 +313,15 @@
             "verdict_correct": null,
             "resolved_at": null
         },
-        "threshold_pct": 5
+        "threshold_pct": 5,
+        "signal_precoce": {
+            "detected_at": "2026-08-10T10:30:00Z",
+            "price_at_signal_eur": 0.1843,
+            "move_pct_since_issue": 17.9,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Jupiter (JUP) : seuil de mouvement directionnel (5 %) franchi à la hausse, en sens opposé au verdict VENTE. Deux recherches indépendantes menées ce cycle convergent (0,1843 dollar puis 0,1852 dollar, cette dernière explicitement sourcée CoinMarketCap), cohérent avec la fourchette déjà notée au cycle précédent (0,182-0,208 dollar). Par rapport au prix d'émission (0,156368 dollar), le mouvement est de +17,9 % à +18,4 %. Aucune actualité spécifique trouvée pour l'expliquer : lecture purement technique. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 21 août : le verdict VENTE reste en attente, à confirmer ou infirmer au prochain cycle."
+        }
     },
     {
         "id": "v-20260807-lpt",
@@ -377,7 +425,15 @@
             "verdict_correct": null,
             "resolved_at": null
         },
-        "threshold_pct": 5
+        "threshold_pct": 5,
+        "signal_precoce": {
+            "detected_at": "2026-08-10T10:30:00Z",
+            "price_at_signal_eur": 0.07785,
+            "move_pct_since_issue": 14.8,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Arbitrum (ARB) : seuil de mouvement directionnel (5 %) franchi à la hausse. Prix confirmé ce cycle par deux sources nommées et convergentes (CoinGecko 0,07785 dollar, CoinMarketCap 0,07978 dollar), ce qui résout la divergence extrême et isolée du cycle précédent (~0,2174 dollar, source unique non retenue, désormais considérée comme une erreur de source ou une confusion de méthodologie). Par rapport au prix d'émission (0,067826 dollar), le mouvement est de +14,8 % à +17,6 %. Aucune actualité spécifique trouvée pour l'expliquer : lecture purement technique. Le verdict ATTENTE reste en attente de son échéance du 21 août, ce signal ne préjuge pas de l'issue."
+        }
     },
     {
         "id": "v-20260807-inj",
@@ -403,6 +459,14 @@
             "verdict_correct": null,
             "resolved_at": null
         },
-        "threshold_pct": 5
+        "threshold_pct": 5,
+        "signal_precoce": {
+            "detected_at": "2026-08-10T10:30:00Z",
+            "price_at_signal_eur": 4.34,
+            "move_pct_since_issue": 9.9,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Injective (INJ) : seuil de mouvement directionnel (5 %) franchi à la hausse, en sens opposé au verdict VENTE. Deux sources nommées et indépendantes convergent enfin ce cycle (CoinMarketCap 4,34 dollars, CoinGecko 4,64 dollars), après plusieurs cycles où la valeur restait identique d'une recherche à l'autre (probable contenu indexé dupliqué, non reconfirmé). Par rapport au prix d'émission (3,95 dollars), le mouvement est de +9,9 % à +17,5 % selon la source retenue. Aucune actualité spécifique trouvée pour l'expliquer ce cycle : lecture purement technique. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 21 août : le verdict VENTE reste en attente, à confirmer ou infirmer au prochain cycle."
+        }
     }
 ]
