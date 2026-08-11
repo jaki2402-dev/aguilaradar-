@@ -72,6 +72,85 @@ function computeEngineStats(resolvedVerdicts) {
   return { matrix, perClass, total, correct, accuracyPct, coveragePct, baselineMajorityPct, f1Macro };
 }
 
+const CALIBRATION_BUCKETS = [
+  { label: "40-50 %", min: 40, max: 50 },
+  { label: "50-60 %", min: 50, max: 60 },
+  { label: "60-70 %", min: 60, max: 70 },
+  { label: "70-80 %", min: 70, max: 80 },
+  { label: "80-100 %", min: 80, max: 101 },
+];
+
+function computeCalibrationBuckets(resolvedVerdicts) {
+  return CALIBRATION_BUCKETS.map((b) => {
+    const inBucket = resolvedVerdicts.filter((v) => v.confidence_pct >= b.min && v.confidence_pct < b.max);
+    if (inBucket.length === 0) return null;
+    const correct = inBucket.filter((v) => v.outcome && v.outcome.verdict_correct).length;
+    return { label: b.label, count: inBucket.length, correct, accuracyPct: (correct / inBucket.length) * 100 };
+  }).filter(Boolean);
+}
+
+function renderCalibrationByBucket(resolved) {
+  const el = document.getElementById("engine-calibration");
+  if (!el) return;
+  const buckets = computeCalibrationBuckets(resolved);
+  if (buckets.length === 0) {
+    el.innerHTML = `<p class="empty-state">Pas encore assez de verdicts vérifiés pour évaluer la calibration — se remplit dès que plusieurs verdicts auront atteint leur horizon, aucun chiffre inventé avant ça.</p>`;
+    return;
+  }
+  el.innerHTML = `
+    <table class="classes-table">
+      <thead><tr><th>Confiance annoncée</th><th>Verdicts</th><th>Corrects</th><th>Exactitude réelle</th></tr></thead>
+      <tbody>
+        ${buckets
+          .map(
+            (b) => `<tr><td>${b.label}</td><td>${b.count}</td><td>${b.correct}</td><td>${b.accuracyPct.toFixed(0)} %</td></tr>`
+          )
+          .join("")}
+      </tbody>
+    </table>
+    <p class="hint">Une tranche bien calibrée affiche une exactitude réelle proche de la confiance annoncée. Si "70-80 %" n'est correct que 30% du temps, la confiance est surestimée pour ces cas — un signal pour ajuster, pas juste une statistique.</p>`;
+}
+
+function computeAccuracyByRegime(resolvedVerdicts) {
+  const byRegime = {};
+  resolvedVerdicts.forEach((v) => {
+    const regime = v.regime_at_issue;
+    if (!regime) return;
+    if (!byRegime[regime]) byRegime[regime] = [];
+    byRegime[regime].push(v);
+  });
+  const trackedCount = Object.values(byRegime).reduce((sum, list) => sum + list.length, 0);
+  const withoutRegime = resolvedVerdicts.length - trackedCount;
+  const rows = Object.entries(byRegime).map(([regime, list]) => {
+    const correct = list.filter((v) => v.outcome && v.outcome.verdict_correct).length;
+    return { regime, count: list.length, correct, accuracyPct: (correct / list.length) * 100 };
+  });
+  return { rows, withoutRegime };
+}
+
+function renderAccuracyByRegime(resolved) {
+  const el = document.getElementById("engine-regime-accuracy");
+  if (!el) return;
+  const { rows, withoutRegime } = computeAccuracyByRegime(resolved);
+  if (rows.length === 0) {
+    el.innerHTML = `<p class="empty-state">Pas encore de verdict vérifié avec un régime enregistré à l'émission — ce suivi a démarré le 11/08, se remplit avec les nouveaux verdicts au fil du temps.</p>`;
+    return;
+  }
+  el.innerHTML = `
+    <table class="classes-table">
+      <thead><tr><th>Régime à l'émission</th><th>Verdicts</th><th>Exactitude</th></tr></thead>
+      <tbody>
+        ${rows
+          .map(
+            (r) =>
+              `<tr><td>${(typeof REGIME_LABELS !== "undefined" && REGIME_LABELS[r.regime]) || r.regime}</td><td>${r.count}</td><td>${r.accuracyPct.toFixed(0)} %</td></tr>`
+          )
+          .join("")}
+      </tbody>
+    </table>
+    ${withoutRegime > 0 ? `<p class="hint">${withoutRegime} verdict(s) vérifié(s) sans régime enregistré (émis avant le 11/08) — exclu(s) de ce tableau, jamais estimé rétroactivement.</p>` : ""}`;
+}
+
 function computeOpportunitiesStats(opportunities) {
   const resolved = (opportunities || []).filter((o) => o.status === "resolved");
   if (resolved.length === 0) return null;
@@ -112,8 +191,23 @@ function renderControlGroupComparison(opportunitiesData, controlGroup) {
   if (!el) return;
   const oppStats = computeOpportunitiesStats((opportunitiesData && opportunitiesData.opportunities) || []);
   const cgStats = controlGroup && controlGroup.stats;
+  const cgItems = (controlGroup && controlGroup.items) || [];
+
   if (!oppStats || !cgStats || cgStats.validated_pct === null || cgStats.validated_pct === undefined) {
-    el.innerHTML = `<p class="empty-state">Pas encore assez de données pour comparer le criblage à un échantillon aléatoire — se remplit avec le temps, des deux côtés à la fois.</p>`;
+    if (cgItems.length > 0) {
+      const pending = cgItems.filter((i) => i.status === "pending");
+      const nextResolveDate = pending
+        .map((i) => i.resolves_at)
+        .filter(Boolean)
+        .sort()[0];
+      el.innerHTML = `<p class="empty-state">${cgItems.length} actif(s) échantillonné(s) au hasard pour le groupe témoin${
+        pending.length ? `, ${pending.length} en attente de leur échéance` : ""
+      }${
+        nextResolveDate ? ` (premier résultat le ${new Date(nextResolveDate).toLocaleDateString("fr-FR")})` : ""
+      } — la comparaison chiffrée s'affichera dès la première résolution, jamais un pourcentage inventé avant ça.</p>`;
+    } else {
+      el.innerHTML = `<p class="empty-state">Pas encore assez de données pour comparer le criblage à un échantillon aléatoire — se remplit avec le temps, des deux côtés à la fois.</p>`;
+    }
     return;
   }
   const edge = oppStats.validatedPct - cgStats.validated_pct;
@@ -221,6 +315,8 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGrou
       .join("");
   }
 
+  renderCalibrationByBucket(resolved);
+  renderAccuracyByRegime(resolved);
   renderOpportunitiesEngineSection(opportunitiesData);
   renderPaperPortfolio(engineHistory && engineHistory.paper_portfolio_stats);
   renderControlGroupComparison(opportunitiesData, controlGroup);
