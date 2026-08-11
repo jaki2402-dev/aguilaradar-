@@ -27,7 +27,7 @@ function renderFavorisGrid() {
   const grid = document.getElementById("favoris-grid");
   grid.innerHTML = FAVORIS.map(
     (f) => `
-    <div class="favori-card clickable" data-detail-target="detail-fav-${f.ticker}">
+    <div class="favori-card clickable" data-detail-target="detail-fav-${f.ticker}" style="--sector-color:${SECTOR_COLORS[f.cgId] || "var(--border)"}">
       <div class="favori-row">
         <div class="favori-row-tick">${f.ticker}</div>
         <div class="favori-row-mid">

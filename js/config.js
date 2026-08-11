@@ -46,6 +46,27 @@ const SECTORS = {
   "injective-protocol": "DeFi L1",
 };
 
+// Regroupement des secteurs en 5 familles pour le liseré de couleur des favoris — réutilise
+// les couleurs d'identité déjà utilisées ailleurs (nav, icônes de section) plutôt que d'en
+// inventer de nouvelles, pour rester cohérent avec le reste du site.
+const SECTOR_COLORS = {
+  bitcoin: "#f0b429", // réserve de valeur
+  ethereum: "#7c9eff", // infra L1/L2/DeFi
+  arbitrum: "#7c9eff",
+  "injective-protocol": "#7c9eff",
+  "fetch-ai": "#22b8e0", // IA
+  "the-graph": "#22b8e0",
+  livepeer: "#22b8e0",
+  celestia: "#b48cf2", // infra modulaire / DePIN
+  cartesi: "#b48cf2",
+  "peaq-2": "#b48cf2",
+  "aioz-network": "#b48cf2",
+  zelcash: "#b48cf2",
+  chainlink: "#fb8362", // oracle / RWA / DEX
+  "ondo-finance": "#fb8362",
+  "jupiter-exchange-solana": "#fb8362",
+};
+
 const REFRESH = {
   quantCycleMinutes: 10, // pouls rapide : prix / seuils / alertes, sans raisonnement IA
   deepCycleHours: 2,     // cycle profond : verdicts, actus, mise à jour du moteur
