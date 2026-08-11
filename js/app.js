@@ -158,17 +158,31 @@ const ALERT_TYPE_LABELS = {
   regime_change_impact: "Changement de régime",
 };
 
+const NOTIFICATIONS_PAGE_SIZE = 15;
+let notificationsSorted = [];
+let notificationsShown = NOTIFICATIONS_PAGE_SIZE;
+
 function renderNotifications(alerts) {
   const el = document.getElementById("notifications-body");
   if (!alerts || alerts.length === 0) {
     el.innerHTML = `<p class="empty-state">Aucune alerte active. La routine (toutes les 2h) déclenchera une notification ici pour un seuil technique franchi, une actualité macro ou sur un favori jugée significative, ou une opportunité forte — avec le signal et le pourquoi.</p>`;
     return;
   }
-  el.innerHTML = alerts
-    .slice()
-    .reverse()
-    .map(
-      (a) => `
+  // Historique permanent (jamais purge) : peut grossir indefiniment, d'ou la pagination
+  // plutot qu'un rendu integral qui rendrait l'onglet ingerable au scroll a terme.
+  notificationsSorted = alerts.slice().reverse();
+  notificationsShown = NOTIFICATIONS_PAGE_SIZE;
+  renderNotificationsPage();
+}
+
+function renderNotificationsPage() {
+  const el = document.getElementById("notifications-body");
+  const visible = notificationsSorted.slice(0, notificationsShown);
+  const remaining = notificationsSorted.length - visible.length;
+  el.innerHTML =
+    visible
+      .map(
+        (a) => `
       <div class="alert-entry">
         <div class="log-header">
           <span><strong>${a.ticker_ou_theme || a.ticker || ""}</strong> · ${a.triggered_at}</span>
@@ -177,8 +191,19 @@ function renderNotifications(alerts) {
         <p>${a.message}</p>
         ${a.source ? `<p class="hint">Source : ${a.source}</p>` : ""}
       </div>`
-    )
-    .join("");
+      )
+      .join("") +
+    (remaining > 0
+      ? `<div class="expand-hint clickable" id="notifications-load-more">Voir ${Math.min(remaining, NOTIFICATIONS_PAGE_SIZE)} alerte(s) de plus (${remaining} restante${remaining > 1 ? "s" : ""}) <span class="chevron">▾</span></div>`
+      : `<p class="hint" style="text-align:center; margin-top:12px;">${notificationsSorted.length} alerte(s) au total, historique permanent.</p>`);
+
+  const loadMoreBtn = document.getElementById("notifications-load-more");
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener("click", () => {
+      notificationsShown += NOTIFICATIONS_PAGE_SIZE;
+      renderNotificationsPage();
+    });
+  }
 }
 
 const REGIME_LABELS = { "risk-on": "Appétit pour le risque", "neutre": "Neutre", "risk-off": "Aversion au risque" };
