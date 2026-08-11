@@ -220,12 +220,17 @@ async function renderDetailPanel(panelEl, asset) {
 
 function attachDetailToggle(cardEl, panelId, baseAsset) {
   let loaded = false;
-  cardEl.addEventListener("click", (e) => {
+  cardEl.setAttribute("tabindex", "0");
+  cardEl.setAttribute("role", "button");
+  cardEl.setAttribute("aria-expanded", "false");
+
+  function toggle(e) {
     if (e.target.closest("a")) return;
     const panel = document.getElementById(panelId);
     if (!panel) return;
     const isOpen = panel.classList.toggle("open");
     cardEl.classList.toggle("expanded", isOpen);
+    cardEl.setAttribute("aria-expanded", String(isOpen));
     if (isOpen && !loaded) {
       loaded = true;
       // Relit les données réelles (verdict/raisonnement) au moment du clic, pas à l'attache
@@ -240,5 +245,13 @@ function attachDetailToggle(cardEl, panelId, baseAsset) {
         if (!success) loaded = false;
       });
     }
+  }
+
+  cardEl.addEventListener("click", toggle);
+  cardEl.addEventListener("keydown", (e) => {
+    if (e.target.closest("a")) return;
+    if (e.key !== "Enter" && e.key !== " ") return;
+    e.preventDefault();
+    toggle(e);
   });
 }

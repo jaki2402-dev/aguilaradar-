@@ -23,6 +23,19 @@ async function loadJson(url) {
   }
 }
 
+// Rend un div.clickable navigable et activable au clavier (Entrée/Espace), sans changer son
+// comportement au clic — pour les actions "voir plus" qui n'ont pas de vrai <button>.
+function makeKeyboardClickable(el) {
+  if (!el) return;
+  el.setAttribute("tabindex", "0");
+  el.setAttribute("role", "button");
+  el.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    e.preventDefault();
+    el.click();
+  });
+}
+
 function renderFavorisGrid() {
   const grid = document.getElementById("favoris-grid");
   grid.innerHTML = FAVORIS.map(
@@ -173,6 +186,7 @@ function renderJournalPage() {
 
   const loadMoreBtn = document.getElementById("journal-load-more");
   if (loadMoreBtn) {
+    makeKeyboardClickable(loadMoreBtn);
     loadMoreBtn.addEventListener("click", () => {
       journalShown += JOURNAL_PAGE_SIZE;
       renderJournalPage();
@@ -230,6 +244,7 @@ function renderNotificationsPage() {
 
   const loadMoreBtn = document.getElementById("notifications-load-more");
   if (loadMoreBtn) {
+    makeKeyboardClickable(loadMoreBtn);
     loadMoreBtn.addEventListener("click", () => {
       notificationsShown += NOTIFICATIONS_PAGE_SIZE;
       renderNotificationsPage();
