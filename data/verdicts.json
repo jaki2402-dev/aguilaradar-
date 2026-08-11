@@ -253,7 +253,15 @@
             "verdict_correct": null,
             "resolved_at": null
         },
-        "threshold_pct": 5
+        "threshold_pct": 5,
+        "signal_precoce": {
+            "detected_at": "2026-08-11T16:20:00Z",
+            "price_at_signal_eur": 8.28,
+            "move_pct_since_issue": 16.3,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Chainlink (LINK) : seuil de mouvement directionnel (5 %) franchi à la hausse, repéré ce cycle via un article de marché (« Chainlink Tops Gains ») puis confirmé par trois sources nommées et convergentes (CoinMarketCap 8,28 dollars, CoinDesk 8,31 dollars, CoinGecko 8,50 dollars). Par rapport au prix d'émission du verdict ATTENTE (7,12 dollars), le mouvement est de +16,3 % à +19,4 % selon la source retenue. Catalyseur identifié et cohérent, contrairement à la plupart des signaux précédents sur les autres favoris : Standard Chartered a initié une couverture le 10 août avec un objectif de cours de 200 dollars à horizon 2030 (soit un potentiel de x25), et le volume total sécurisé par les oracles Chainlink a franchi les 33 430 milliards de dollars (contre 30 060 milliards en avril), plus de 3 000 milliards de dollars de transactions supplémentaires en quatre mois. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 21 août : le verdict ATTENTE reste en attente, à confirmer ou infirmer au prochain cycle."
+        }
     },
     {
         "id": "v-20260807-ondo",
