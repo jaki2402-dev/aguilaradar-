@@ -1,13 +1,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="solanaGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9945ff"/>
+      <stop offset="100%" stop-color="#14f195"/>
+    </linearGradient>
+  </defs>
   <rect width="64" height="64" rx="14" fill="#0a0e13"/>
   <path d="M32 32 L32 8 A24 24 0 0 1 52 20 Z" fill="#2fd3b0" opacity="0.14"/>
   <circle cx="32" cy="32" r="22" fill="none" stroke="#2fd3b0" stroke-width="2" opacity="0.3"/>
   <circle cx="32" cy="32" r="13" fill="none" stroke="#2fd3b0" stroke-width="2" opacity="0.5"/>
   <circle cx="32" cy="32" r="3.2" fill="#2fd3b0"/>
-  <circle cx="47" cy="18" r="7.5" fill="#f0b429" opacity="0.22"/>
-  <circle cx="47" cy="18" r="5" fill="#f0b429"/>
-  <text x="47" y="21" font-family="Arial, Helvetica, sans-serif" font-size="7.5" font-weight="800" fill="#0a0e13" text-anchor="middle">B</text>
-  <circle cx="16" cy="42" r="7.5" fill="#22b8e0" opacity="0.22"/>
-  <circle cx="16" cy="42" r="5" fill="#22b8e0"/>
-  <text x="16" y="45" font-family="Arial, Helvetica, sans-serif" font-size="7.5" font-weight="800" fill="#0a0e13" text-anchor="middle">E</text>
+
+  <!-- Bitcoin -->
+  <g transform="translate(47,17)">
+    <circle r="8.3" fill="#0a0e13"/>
+    <circle r="7.3" fill="#f7931a"/>
+    <text x="0" y="4.1" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#fff" text-anchor="middle">&#8383;</text>
+  </g>
+
+  <!-- Ethereum -->
+  <g transform="translate(15,41)">
+    <circle r="7.9" fill="#0a0e13"/>
+    <circle r="6.9" fill="#627eea"/>
+    <polygon points="0,-6.1 4.1,-0.6 0,-0.6 -4.1,-0.6" fill="#fff" opacity="0.6"/>
+    <polygon points="0,-6.1 4.1,-0.6 0,-0.6" fill="#fff" opacity="0.9"/>
+    <polygon points="0,4.8 4.1,-0.6 0,-0.6 -4.1,-0.6" fill="#fff" opacity="0.85"/>
+    <polygon points="0,4.8 4.1,-0.6 0,-0.6" fill="#fff" opacity="1"/>
+  </g>
+
+  <!-- Solana -->
+  <g transform="translate(39,53)">
+    <circle r="7.4" fill="#0a0e13"/>
+    <circle r="6.5" fill="#141a21"/>
+    <rect x="-4.3" y="-4.1" width="8.6" height="1.9" rx="0.9" fill="url(#solanaGrad)"/>
+    <rect x="-4.3" y="-0.95" width="8.6" height="1.9" rx="0.9" fill="url(#solanaGrad)"/>
+    <rect x="-4.3" y="2.2" width="8.6" height="1.9" rx="0.9" fill="url(#solanaGrad)"/>
+  </g>
 </svg>
