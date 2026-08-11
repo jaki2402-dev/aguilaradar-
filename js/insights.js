@@ -217,8 +217,14 @@ function renderDayReplay(dateStr, allData) {
       .join("")}`;
 }
 
+// Appelee a chaque rafraichissement (loadAllData) avec des donnees fraiches — sans retirer
+// l'ecouteur precedent d'abord, ils s'accumulent sur ce champ statique (jamais recree via
+// innerHTML) et un seul changement de date finit par relancer le rendu N fois.
+let dayReplayHandler = null;
 function initDayReplay(allData) {
   const input = document.getElementById("replay-date");
   if (!input) return;
-  input.addEventListener("change", () => renderDayReplay(input.value, allData));
+  if (dayReplayHandler) input.removeEventListener("change", dayReplayHandler);
+  dayReplayHandler = () => renderDayReplay(input.value, allData);
+  input.addEventListener("change", dayReplayHandler);
 }
