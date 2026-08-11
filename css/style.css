@@ -429,6 +429,18 @@ footer.site-footer {
 .news-item a { color: var(--text); text-decoration: none; font-size: 0.9rem; }
 .news-item a:hover { color: var(--accent); }
 
+/* ---- Notifications navigateur (opportunites) ---- */
+.notif-permission-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 16px; margin-bottom: 18px;
+}
+.notif-enable-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #06110d; border: none; border-radius: var(--radius-sm);
+  padding: 12px 18px; font-weight: 700; font-size: 0.88rem; cursor: pointer; font-family: inherit;
+}
+.notif-status { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
 /* ---- Avertissement ---- */
 .disclaimer-box {
   background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
@@ -530,17 +542,13 @@ details.info-toggle .section-sub { margin: 8px 0 0; }
   margin: 0 0 16px;
   box-shadow: var(--shadow);
 }
-.pin-card {
-  text-align: center; padding: 6px 2px; border-radius: 8px;
-  transform-style: preserve-3d;
-  will-change: transform;
-}
+.pin-card { text-align: center; padding: 6px 2px; border-radius: 8px; }
 .pin-val { display: block; font-size: 1.08rem; font-weight: 800; font-variant-numeric: tabular-nums; }
 .pin-label { display: block; font-size: 0.6rem; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
 
 .engine-accordion {
   background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 2px 14px; perspective: 1200px;
+  padding: 2px 14px;
 }
 .engine-acc { border-bottom: 1px solid var(--border); }
 .engine-acc:last-child { border-bottom: none; }
@@ -552,22 +560,9 @@ details.info-toggle .section-sub { margin: 8px 0 0; }
 .engine-acc-summary .chevron { color: var(--text-faint); flex-shrink: 0; }
 .engine-acc-summary[aria-expanded="true"] { color: var(--c-engine); }
 .engine-acc-summary[aria-expanded="true"] .chevron { color: var(--c-engine); transform: rotate(180deg); }
-.engine-acc-body {
-  max-height: 0; overflow: hidden; opacity: 0;
-  transition: max-height 0.4s ease, opacity 0.3s ease;
-}
-.engine-acc-body.open { max-height: 3000px; opacity: 1; }
-.engine-acc-body-inner {
-  padding: 0 2px 22px;
-  transform: rotateX(-8deg);
-  transform-origin: top center;
-  transition: transform 0.35s ease;
-}
-.engine-acc-body.open .engine-acc-body-inner { transform: rotateX(0deg); }
-
-@media (prefers-reduced-motion: reduce) {
-  .engine-acc-body-inner { transition: none; transform: none; }
-}
+.engine-acc-body { display: none; }
+.engine-acc-body.open { display: block; }
+.engine-acc-body-inner { padding: 0 2px 22px; }
 
 /* ---- Couleurs par section : identité visuelle + repérage rapide ---- */
 :root {
@@ -603,7 +598,7 @@ nav.tabs button[data-tab="notifications"].active { background: rgba(251,131,98,0
 
 /* ---- Interactivité : légère élévation au survol (desktop uniquement) ---- */
 @media (hover: hover) {
-  .favori-card, .stat-card, .journal-entry, .log-entry, .alert-entry, .hero-card, .opp-card, .gate-card, .pin-card {
+  .favori-card, .stat-card, .journal-entry, .log-entry, .alert-entry, .hero-card, .opp-card, .gate-card {
     transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, border-color 0.15s ease-out;
   }
   .favori-card:hover, .stat-card:hover, .journal-entry:hover, .log-entry:hover, .alert-entry:hover, .opp-card:hover {
@@ -614,7 +609,6 @@ nav.tabs button[data-tab="notifications"].active { background: rgba(251,131,98,0
   .gate-card:hover {
     box-shadow: 0 20px 44px rgba(0,0,0,0.5), 0 0 0 1px rgba(47,211,176,0.25);
   }
-  .pin-card:hover { box-shadow: 0 8px 18px rgba(0,0,0,0.35); }
 }
 
 /* ---- Chargement (shimmer) ---- */
