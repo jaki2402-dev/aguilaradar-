@@ -4,36 +4,85 @@
       <stop offset="0%" stop-color="#9945ff"/>
       <stop offset="100%" stop-color="#14f195"/>
     </linearGradient>
+    <radialGradient id="radarGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2fd3b0" stop-opacity="0.3"/>
+      <stop offset="100%" stop-color="#2fd3b0" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blurGlow" x="-150%" y="-150%" width="400%" height="400%">
+      <feGaussianBlur stdDeviation="1.3"/>
+    </filter>
+    <clipPath id="iconClip"><rect width="64" height="64" rx="14"/></clipPath>
   </defs>
+
   <rect width="64" height="64" rx="14" fill="#0a0e13"/>
-  <path d="M32 32 L32 8 A24 24 0 0 1 52 20 Z" fill="#2fd3b0" opacity="0.14"/>
-  <circle cx="32" cy="32" r="22" fill="none" stroke="#2fd3b0" stroke-width="2" opacity="0.3"/>
-  <circle cx="32" cy="32" r="13" fill="none" stroke="#2fd3b0" stroke-width="2" opacity="0.5"/>
-  <circle cx="32" cy="32" r="3.2" fill="#2fd3b0"/>
 
-  <!-- Bitcoin -->
-  <g transform="translate(47,17)">
-    <circle r="8.3" fill="#0a0e13"/>
-    <circle r="7.3" fill="#f7931a"/>
-    <text x="0" y="4.1" font-family="Arial, Helvetica, sans-serif" font-size="11.5" font-weight="700" fill="#fff" text-anchor="middle">&#8383;</text>
-  </g>
+  <g clip-path="url(#iconClip)">
+    <circle cx="32" cy="32" r="21" fill="none" stroke="#2fd3b0" stroke-width="0.6" stroke-dasharray="1.2 2.4" opacity="0.35"/>
 
-  <!-- Ethereum -->
-  <g transform="translate(15,41)">
-    <circle r="7.9" fill="#0a0e13"/>
-    <circle r="6.9" fill="#627eea"/>
-    <polygon points="0,-6.1 4.1,-0.6 0,-0.6 -4.1,-0.6" fill="#fff" opacity="0.6"/>
-    <polygon points="0,-6.1 4.1,-0.6 0,-0.6" fill="#fff" opacity="0.9"/>
-    <polygon points="0,4.8 4.1,-0.6 0,-0.6 -4.1,-0.6" fill="#fff" opacity="0.85"/>
-    <polygon points="0,4.8 4.1,-0.6 0,-0.6" fill="#fff" opacity="1"/>
-  </g>
+    <circle cx="32" cy="32" r="14.5" fill="#0d1f1a"/>
+    <circle cx="32" cy="32" r="14.5" fill="url(#radarGlow)"/>
+    <path d="M32 32 L32 17.5 A14.5 14.5 0 0 1 44.56 24.75 Z" fill="#2fd3b0" opacity="0.22"/>
+    <circle cx="32" cy="32" r="14.5" fill="none" stroke="#2fd3b0" stroke-width="1.1" opacity="0.5"/>
+    <circle cx="32" cy="32" r="9.5" fill="none" stroke="#2fd3b0" stroke-width="0.8" opacity="0.35"/>
+    <circle cx="32" cy="32" r="4.8" fill="none" stroke="#2fd3b0" stroke-width="0.8" opacity="0.3"/>
+    <line x1="17.5" y1="32" x2="46.5" y2="32" stroke="#2fd3b0" stroke-width="0.5" opacity="0.18"/>
+    <line x1="32" y1="17.5" x2="32" y2="46.5" stroke="#2fd3b0" stroke-width="0.5" opacity="0.18"/>
+    <ellipse cx="28" cy="24" rx="8" ry="5" fill="#ffffff" opacity="0.06"/>
+    <circle cx="27" cy="26" r="1" fill="#2fd3b0" opacity="0.8"/>
+    <circle cx="37" cy="36" r="0.9" fill="#2fd3b0" opacity="0.6"/>
+    <circle cx="32" cy="32" r="2.3" fill="#2fd3b0"/>
 
-  <!-- Solana -->
-  <g transform="translate(39,53)">
-    <circle r="7.4" fill="#0a0e13"/>
-    <circle r="6.5" fill="#141a21"/>
-    <rect x="-4.3" y="-4.1" width="8.6" height="1.9" rx="0.9" fill="url(#solanaGrad)"/>
-    <rect x="-4.3" y="-0.95" width="8.6" height="1.9" rx="0.9" fill="url(#solanaGrad)"/>
-    <rect x="-4.3" y="2.2" width="8.6" height="1.9" rx="0.9" fill="url(#solanaGrad)"/>
+    <!-- Bitcoin -->
+    <g transform="translate(32,11)">
+      <circle r="6.4" fill="#f7931a" opacity="0.6" filter="url(#blurGlow)"/>
+      <circle r="6.0" fill="#0a0e13"/>
+      <circle r="5.2" fill="#f7931a"/>
+      <text x="0" y="2.9" font-family="Arial, Helvetica, sans-serif" font-size="8.2" font-weight="700" fill="#fff" text-anchor="middle">&#8383;</text>
+    </g>
+
+    <!-- Ethereum -->
+    <g transform="translate(50.19,21.5)">
+      <circle r="6.4" fill="#627eea" opacity="0.6" filter="url(#blurGlow)"/>
+      <circle r="6.0" fill="#0a0e13"/>
+      <circle r="5.2" fill="#627eea"/>
+      <polygon points="0,-4.6 3.1,-0.45 0,-0.45 -3.1,-0.45" fill="#fff" opacity="0.7"/>
+      <polygon points="0,3.6 3.1,-0.45 0,-0.45 -3.1,-0.45" fill="#fff" opacity="1"/>
+    </g>
+
+    <!-- Solana -->
+    <g transform="translate(50.19,42.5)">
+      <circle r="6.4" fill="#14f195" opacity="0.5" filter="url(#blurGlow)"/>
+      <circle r="6.0" fill="#0a0e13"/>
+      <circle r="5.2" fill="#141a21"/>
+      <rect x="-3.45" y="-3.3" width="6.9" height="1.5" rx="0.75" fill="url(#solanaGrad)"/>
+      <rect x="-3.45" y="-0.75" width="6.9" height="1.5" rx="0.75" fill="url(#solanaGrad)"/>
+      <rect x="-3.45" y="1.8" width="6.9" height="1.5" rx="0.75" fill="url(#solanaGrad)"/>
+    </g>
+
+    <!-- Chainlink -->
+    <g transform="translate(32,53)">
+      <circle r="6.4" fill="#375bd2" opacity="0.6" filter="url(#blurGlow)"/>
+      <circle r="6.0" fill="#0a0e13"/>
+      <circle r="5.2" fill="#375bd2"/>
+      <polygon points="0,-3.6 3.12,-1.8 3.12,1.8 0,3.6 -3.12,1.8 -3.12,-1.8" fill="none" stroke="#fff" stroke-width="1"/>
+      <circle r="1" fill="#fff"/>
+    </g>
+
+    <!-- BNB -->
+    <g transform="translate(13.81,42.5)">
+      <circle r="6.4" fill="#f0b90b" opacity="0.6" filter="url(#blurGlow)"/>
+      <circle r="6.0" fill="#0a0e13"/>
+      <circle r="5.2" fill="#f0b90b"/>
+      <polygon points="0,-4 3.2,0 0,4 -3.2,0" fill="none" stroke="#fff" stroke-width="1"/>
+      <polygon points="0,-1.3 1.3,0 0,1.3 -1.3,0" fill="#fff"/>
+    </g>
+
+    <!-- Tether -->
+    <g transform="translate(13.81,21.5)">
+      <circle r="6.4" fill="#26a17b" opacity="0.6" filter="url(#blurGlow)"/>
+      <circle r="6.0" fill="#0a0e13"/>
+      <circle r="5.2" fill="#26a17b"/>
+      <text x="0" y="2.6" font-family="Arial, Helvetica, sans-serif" font-size="7.6" font-weight="700" fill="#fff" text-anchor="middle">T</text>
+    </g>
   </g>
 </svg>
