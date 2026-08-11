@@ -228,12 +228,15 @@ h3 { font-size: 1rem; font-weight: 800; letter-spacing: -0.01em; }
 
 .empty-state {
   color: var(--text-dim);
-  background: var(--card);
-  border: 1px dashed var(--border);
+  background:
+    var(--card)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232fd3b0' stroke-width='1.6'%3E%3Ccircle cx='12' cy='12' r='9' opacity='.4'/%3E%3Ccircle cx='12' cy='12' r='5' opacity='.65'/%3E%3Ccircle cx='12' cy='12' r='1' fill='%232fd3b0'/%3E%3C/svg%3E")
+    no-repeat 18px 18px / 22px 22px;
+  border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 20px;
+  padding: 18px 20px 18px 54px;
   font-size: 0.88rem;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 .hint { color: var(--text-faint); font-size: 0.78rem; line-height: 1.5; }
 
@@ -498,7 +501,7 @@ footer.site-footer {
 .sector-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.85rem; }
 .sector-label { width: 140px; flex-shrink: 0; color: var(--text-dim); }
 .sector-track { flex: 1; height: 8px; background: var(--bg-elevated); border-radius: 999px; overflow: hidden; }
-.sector-fill { height: 100%; background: var(--accent); }
+.sector-fill { height: 100%; background: var(--sector-color, var(--accent)); }
 .sector-pct { width: 70px; flex-shrink: 0; text-align: right; color: var(--text-faint); font-size: 0.78rem; }
 
 .replay-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }

@@ -106,9 +106,13 @@ function renderSectorBreakdown(verdicts) {
   const el = document.getElementById("sector-breakdown");
   if (!el) return;
   const counts = {};
+  // Couleur du secteur = celle du premier favori de ce secteur trouvé — même palette à 5
+  // familles que le liseré des lignes Favoris, pour que "IA" ait la même teinte partout.
+  const colorBySector = {};
   FAVORIS.forEach((f) => {
     const sector = SECTORS[f.cgId] || "Autre";
     counts[sector] = (counts[sector] || 0) + 1;
+    if (!colorBySector[sector] && SECTOR_COLORS[f.cgId]) colorBySector[sector] = SECTOR_COLORS[f.cgId];
   });
   const total = FAVORIS.length;
   const rows = Object.entries(counts).sort((a, b) => b[1] - a[1]);
@@ -119,7 +123,8 @@ function renderSectorBreakdown(verdicts) {
       ${rows
         .map(([sector, n]) => {
           const pct = ((n / total) * 100).toFixed(0);
-          return `<div class="sector-row">
+          const color = colorBySector[sector] || "var(--accent)";
+          return `<div class="sector-row" style="--sector-color:${color}">
             <span class="sector-label">${sector}</span>
             <div class="sector-track"><div class="sector-fill" style="width:${pct}%"></div></div>
             <span class="sector-pct">${n} · ${pct}%</span>
