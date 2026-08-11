@@ -1,7 +1,28 @@
 {
-  "stablecoins": {},
-  "employment_us": {},
-  "etf_flows": {},
-  "site_confidence": {},
-  "last_computed_at": null
+  "last_computed_at": "2026-08-11T08:40:00Z",
+  "stablecoins": {
+    "total_market_cap_usd": 302000000000,
+    "dominance_pct": 13.24,
+    "supply_trend_7d_pct": null,
+    "note": "Capitalisation totale des stablecoins toujours estimée à environ 302 milliards de dollars, pour une dominance d'environ 13,24 % de la capitalisation totale du marché crypto (évaluée à environ 2,28 trillions de dollars). Chiffres reconfirmés ce cycle par WebSearch (agrégation d'articles citant des données CoinGecko/CoinMarketCap), mais identiques mot pour mot à la mise à jour du 10/08 : probable contenu indexé non renouvelé plutôt qu'une confirmation d'un marché parfaitement stable, à surveiller. Accès direct à l'API CoinGecko toujours bloqué par le proxy réseau de cet environnement et aucun connecteur MCP CoinGecko disponible dans cette session. Tether (USDT) reste dominant avec environ 183-186 milliards de dollars (~59 % du segment stablecoins), suivi par USD Coin (USDC) avec environ 74,9 milliards. La variation de l'offre sur 7 jours n'a pas été trouvée via une source fiable et récente, elle est donc laissée à null plutôt que d'être estimée."
+  },
+  "employment_us": {
+    "last_report_date": "2026-08-07",
+    "unemployment_rate_pct": 4.1,
+    "nonfarm_payrolls_change_k": -23,
+    "market_reaction_note": "Rapport sur l'emploi de juillet 2026 publié le 7 août 2026 par le Bureau of Labor Statistics : perte surprise de 23 000 emplois non agricoles (attentes autour de +80 000 à +83 000), avec des révisions à la baisse totalisant environ 103 000 emplois retirés des estimations de mai et juin. Le taux de chômage a légèrement reculé à 4,1 %. Cette faiblesse inattendue a fait chuter les anticipations de hausse de taux de la Fed et a entraîné une baisse des rendements obligataires, une hausse des futures actions et une réaction haussière modérée du Bitcoin, repassé au-dessus de 65 000 dollars ce jour-là. Non modifié ce cycle : le prochain rapport (emploi d'août 2026) est prévu le 4 septembre 2026, aucun nouveau rapport n'est donc paru depuis la dernière mise à jour.",
+    "source": "https://www.bls.gov/news.release/empsit.htm"
+  },
+  "etf_flows": {
+    "period": "7 août 2026 (cinquième jour consécutif d'entrées nettes pour les ETF Bitcoin, quatrième jour consécutif pour les ETF Ethereum)",
+    "btc_etf_net_flow_usd": 101700000,
+    "eth_etf_net_flow_usd": 49600000,
+    "note": "Farside.co.uk toujours bloqué par le proxy réseau de cet environnement (EGRESS_BLOCKED) ce cycle également ; les chiffres proviennent d'articles relayant les données SoSoValue/CoinGlass trouvés via WebSearch, non d'une lecture directe de la page. Aucune figure journalière plus récente que le 7 août 2026 n'a été trouvée via recherche ce cycle (les articles les plus récents du 10 août ne rapportent que des agrégats hebdomadaires portant sur la même semaine du 3-7 août, dont un total de 853,5 millions de dollars d'entrées nettes ETF Bitcoin sur cinq séances et 245 millions de dollars pour les ETF Ethereum) : la donnée journalière au 7 août est donc reconduite sans changement plutôt que d'être estimée pour une date plus récente. Pour rappel, les ETF spot Bitcoin américains avaient enregistré des entrées nettes rapportées entre environ 98,8 et 102 millions de dollars le 7 août selon les sources (IBIT de BlackRock et FBTC de Fidelity en tête), retenues ici à environ 101,7 millions ; les ETF spot Ethereum avaient enregistré une entrée nette d'environ 49,6 millions de dollars le même jour, menée par ETHA (BlackRock) et FETH (Fidelity).",
+    "source": "https://www.kucoin.com/news/flash/bitcoin-etf-sees-102m-inflows-ethereum-etf-adds-50m-on-august-7"
+  },
+  "site_confidence": {
+    "last_computed_at": "2026-08-11T08:40:00Z",
+    "level": "moyen",
+    "note": "Niveau moyen, inchangé : routine_health (aguilaradar-cycle-analyse-v2) affiche 0 échec consécutif sur son dernier cycle (11/08 06h20 UTC), bon signe de continuité. Mais data_source_reliability confirme une dépendance quasi totale à WebSearch en repli (aucun connecteur MCP CoinGecko détecté dans cette session non plus, 131 requêtes WebSearch cumulées en repli de prix selon le dernier cycle logué) avec une anomalie encore non résolue sur price_at_issue de BTC/ETH. accuracy_strict_pct de global_stats reste à null faute de verdicts résolus (0 sur 15 émis à ce jour, seuil minimal de 10 non atteint), donc toujours aucune mesure de justesse réelle disponible pour confirmer ou infirmer ce niveau. Ce cycle marque par ailleurs la reprise effective de la rotation des favoris (4/15 traités : BTC/ETH/FET/TIA) après deux passages précédents entièrement infructueux (08/08 et 09/08)."
+  }
 }
