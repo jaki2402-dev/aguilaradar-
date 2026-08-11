@@ -483,6 +483,19 @@ details.accueil-section summary::after { content: "▾"; color: var(--text-faint
 details.accueil-section[open] summary::after { transform: rotate(180deg); }
 details.accueil-section .accueil-section-body { padding: 0 16px 16px; }
 
+/* ---- Bascule discrete pour le texte d'explication sous un sous-titre h3 :
+   evite d'empiler un paragraphe toujours visible sous chaque section (surtout
+   Moteur, ou ca s'accumule le plus) tout en gardant l'explication a un tap. ---- */
+details.info-toggle { margin: 2px 0 10px; }
+details.info-toggle summary {
+  cursor: pointer; list-style: none; color: var(--text-faint); font-size: 0.78rem;
+  font-weight: 600; display: inline-flex; align-items: center; gap: 4px;
+}
+details.info-toggle summary::-webkit-details-marker { display: none; }
+details.info-toggle summary::after { content: "▾"; transition: transform 0.2s ease; }
+details.info-toggle[open] summary::after { transform: rotate(180deg); }
+details.info-toggle .section-sub { margin: 8px 0 0; }
+
 /* ---- Couleurs par section : identité visuelle + repérage rapide ---- */
 :root {
   --c-favoris: var(--accent);
