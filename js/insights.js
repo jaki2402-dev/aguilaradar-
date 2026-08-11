@@ -88,11 +88,15 @@ function renderHealthStatus(healthLog) {
     return;
   }
   const last = checks[checks.length - 1];
-  const ok = last.site_reachable && (!last.files_broken || last.files_broken.length === 0);
+  // site_reachable reflète l'accès sortant de l'environnement de la routine (bloqué par son proxy
+  // réseau vers ce domaine, constaté systématiquement), pas la disponibilité réelle du site pour un
+  // visiteur — seul files_broken reflète un vrai problème de données, donc seul lui determine le badge.
+  const ok = !last.files_broken || last.files_broken.length === 0;
   el.innerHTML = `
     <div class="journal-entry">
       <div class="log-header"><span><strong>Dernière vérification</strong> · ${new Date(last.checked_at).toLocaleString("fr-FR")}</span><span class="badge badge-${ok ? "achat" : "vente"}">${ok ? "OK" : "Problème détecté"}</span></div>
-      <p class="hint">Site accessible : ${last.site_reachable ? "oui" : "non"}. Fichiers vérifiés : ${(last.files_ok || []).length}. ${last.files_broken && last.files_broken.length ? "Problèmes : " + last.files_broken.join(", ") : "Aucun problème."}</p>
+      <p class="hint">Fichiers vérifiés : ${(last.files_ok || []).length}. ${last.files_broken && last.files_broken.length ? "Problèmes : " + last.files_broken.join(", ") : "Aucun problème."}</p>
+      <p class="hint">Accessibilité du site depuis l'environnement de la routine : ${last.site_reachable ? "oui" : "non testable (restriction réseau de l'environnement d'exécution, pas un indicateur de panne réelle du site)"}.</p>
       ${last.note ? `<p class="hint">${last.note}</p>` : ""}
     </div>
     <p class="hint" style="margin-top:8px;">${checks.length} vérification(s) enregistrée(s) au total, historique permanent.</p>`;
