@@ -271,8 +271,11 @@ h3 { font-size: 1rem; font-weight: 700; }
 /* ---- Favoris ---- */
 .favoris-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 14px;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+@media (min-width: 900px) {
+  .favoris-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
 }
 .favori-card {
   background: linear-gradient(165deg, var(--card-2), var(--card));
@@ -282,6 +285,7 @@ h3 { font-size: 1rem; font-weight: 700; }
   box-shadow: var(--shadow);
   transform-style: preserve-3d;
   will-change: transform;
+  min-width: 0; /* items de grille : ne pas laisser le contenu forcer une largeur > la piste */
 }
 .favori-header { display: flex; justify-content: space-between; align-items: flex-start; }
 .favori-ticker { font-weight: 800; margin-right: 8px; font-size: 0.98rem; }
@@ -294,7 +298,25 @@ h3 { font-size: 1rem; font-weight: 700; }
 .chip.positive { background: rgba(52, 211, 153, 0.14); color: var(--gain); }
 .chip.negative { background: rgba(241, 85, 76, 0.14); color: var(--loss); }
 .tv-chart { height: 260px; border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 10px; border: 1px solid var(--border); }
-.favori-verdict { margin: 0; padding: 10px 12px; font-size: 0.8rem; border-radius: var(--radius-sm); }
+
+/* ---- Favoris : ligne compacte (piste "densité") — le detail-panel ci-dessous porte
+   maintenant le graphique + l'analyse complète, chargés au tap plutôt qu'empilés d'office. ---- */
+.favori-row { display: flex; align-items: center; gap: 10px; }
+.favori-row-tick {
+  width: 40px; height: 40px; border-radius: 11px; flex-shrink: 0;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.62rem; font-weight: 800; letter-spacing: 0.01em;
+}
+.favori-row-mid { flex: 1; min-width: 0; }
+.favori-row-name { font-size: 0.88rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.favori-row-sector { font-size: 0.68rem; color: var(--text-faint); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.favori-row-badge:empty { display: none; }
+.favori-row-badge .badge { font-size: 0.62rem; padding: 3px 8px; }
+.favori-row-right { text-align: right; flex-shrink: 0; }
+.favori-row-right .favori-price { font-size: 0.88rem; }
+.favori-row-right .chip { margin: 3px 0 0; font-size: 0.68rem; padding: 2px 7px; }
+.favori-card .expand-hint { margin-top: 10px; padding-top: 8px; font-size: 0.72rem; }
 
 /* ---- Tables ---- */
 table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
@@ -496,6 +518,57 @@ details.info-toggle summary::after { content: "▾"; transition: transform 0.2s 
 details.info-toggle[open] summary::after { transform: rotate(180deg); }
 details.info-toggle .section-sub { margin: 8px 0 0; }
 
+/* ---- Moteur : bandeau fixe + accordéon exclusif (piste "priorité") ---- */
+.engine-pin {
+  position: sticky; top: calc(82px + env(safe-area-inset-top)); z-index: 15;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+  background: rgba(16, 22, 31, 0.92);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 10px 6px;
+  margin: 0 0 16px;
+  box-shadow: var(--shadow);
+}
+.pin-card {
+  text-align: center; padding: 6px 2px; border-radius: 8px;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.pin-val { display: block; font-size: 1.08rem; font-weight: 800; font-variant-numeric: tabular-nums; }
+.pin-label { display: block; font-size: 0.6rem; color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
+
+.engine-accordion {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 2px 14px; perspective: 1200px;
+}
+.engine-acc { border-bottom: 1px solid var(--border); }
+.engine-acc:last-child { border-bottom: none; }
+.engine-acc-summary {
+  width: 100%; background: none; border: none; color: var(--text); font-family: inherit;
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 15px 2px; cursor: pointer; text-align: left; font-weight: 700; font-size: 0.9rem;
+}
+.engine-acc-summary .chevron { color: var(--text-faint); flex-shrink: 0; }
+.engine-acc-summary[aria-expanded="true"] { color: var(--c-engine); }
+.engine-acc-summary[aria-expanded="true"] .chevron { color: var(--c-engine); transform: rotate(180deg); }
+.engine-acc-body {
+  max-height: 0; overflow: hidden; opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+.engine-acc-body.open { max-height: 3000px; opacity: 1; }
+.engine-acc-body-inner {
+  padding: 0 2px 22px;
+  transform: rotateX(-8deg);
+  transform-origin: top center;
+  transition: transform 0.35s ease;
+}
+.engine-acc-body.open .engine-acc-body-inner { transform: rotateX(0deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .engine-acc-body-inner { transition: none; transform: none; }
+}
+
 /* ---- Couleurs par section : identité visuelle + repérage rapide ---- */
 :root {
   --c-favoris: var(--accent);
@@ -530,7 +603,7 @@ nav.tabs button[data-tab="notifications"].active { background: rgba(251,131,98,0
 
 /* ---- Interactivité : légère élévation au survol (desktop uniquement) ---- */
 @media (hover: hover) {
-  .favori-card, .stat-card, .journal-entry, .log-entry, .alert-entry, .hero-card, .opp-card, .gate-card {
+  .favori-card, .stat-card, .journal-entry, .log-entry, .alert-entry, .hero-card, .opp-card, .gate-card, .pin-card {
     transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, border-color 0.15s ease-out;
   }
   .favori-card:hover, .stat-card:hover, .journal-entry:hover, .log-entry:hover, .alert-entry:hover, .opp-card:hover {
@@ -541,6 +614,7 @@ nav.tabs button[data-tab="notifications"].active { background: rgba(251,131,98,0
   .gate-card:hover {
     box-shadow: 0 20px 44px rgba(0,0,0,0.5), 0 0 0 1px rgba(47,211,176,0.25);
   }
+  .pin-card:hover { box-shadow: 0 8px 18px rgba(0,0,0,0.35); }
 }
 
 /* ---- Chargement (shimmer) ---- */

@@ -220,10 +220,30 @@ function renderControlGroupComparison(opportunitiesData, controlGroup) {
     <p class="hint">${cgStats.note}</p>`;
 }
 
+// Bandeau fixe (piste "priorité") : les 3 chiffres qui comptent le plus, visibles sans
+// défiler ni ouvrir un panneau — le détail complet reste dans l'accordéon en dessous.
+function renderEnginePin(stats) {
+  const el = document.getElementById("engine-pin");
+  if (!el) return;
+  if (!stats) {
+    el.innerHTML = `
+      <div class="pin-card"><span class="pin-val">—</span><span class="pin-label">Exactitude</span></div>
+      <div class="pin-card"><span class="pin-val">—</span><span class="pin-label">Couverture</span></div>
+      <div class="pin-card"><span class="pin-val">—</span><span class="pin-label">Vs référence</span></div>`;
+    return;
+  }
+  const edge = stats.accuracyPct - stats.baselineMajorityPct;
+  el.innerHTML = `
+    <div class="pin-card"><span class="pin-val">${stats.accuracyPct.toFixed(0)} %</span><span class="pin-label">Exactitude</span></div>
+    <div class="pin-card"><span class="pin-val">${stats.coveragePct.toFixed(0)} %</span><span class="pin-label">Couverture</span></div>
+    <div class="pin-card"><span class="pin-val ${edge >= 0 ? "positive" : "negative"}">${edge >= 0 ? "+" : ""}${edge.toFixed(0)} pts</span><span class="pin-label">Vs référence</span></div>`;
+}
+
 function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGroup) {
   const resolved = verdicts.filter((v) => v.status === "resolved");
   const pending = verdicts.filter((v) => v.status === "pending");
   const stats = computeEngineStats(resolved);
+  renderEnginePin(stats);
 
   const summaryEl = document.getElementById("engine-summary");
   const matrixEl = document.getElementById("engine-matrix");

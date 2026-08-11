@@ -218,58 +218,137 @@
         <h2>Performance du moteur</h2>
       </div>
       <p class="section-sub">Auto-évaluation honnête : la matrice de confusion reste vide tant qu'aucun verdict n'a atteint son horizon — aucun chiffre n'est inventé avant ça.</p>
-      <div id="engine-summary"></div>
 
-      <h3 style="margin-top: 20px;">Santé technique du site</h3>
-      <details class="info-toggle"><summary>ⓘ Comment ça marche</summary>
-        <p class="section-sub">Auto-vérification intégrée au cycle d'analyse : le site répond-il, les fichiers de données sont-ils valides.</p>
-      </details>
-      <div id="site-health-body"></div>
+      <div class="engine-pin" id="engine-pin"></div>
 
-      <h3 style="margin-top: 20px;">État provisoire des verdicts en cours</h3>
-      <details class="info-toggle"><summary>ⓘ Comment ça marche</summary>
-        <p class="section-sub">Utilise les prix d'aujourd'hui pour voir où en sont les verdicts en attente — pas le backtest officiel, qui attend toujours le vrai horizon.</p>
-      </details>
-      <div id="provisional-overview"></div>
+      <div class="engine-accordion" id="engine-accordion">
 
-      <div id="engine-matrix" style="margin-top: 16px;"></div>
-      <div id="engine-classes" style="margin-top: 16px;"></div>
+        <div class="engine-acc">
+          <button class="engine-acc-summary" type="button" aria-expanded="true">
+            <span>Vue d'ensemble &amp; matrice de confusion</span><span class="chevron">▾</span>
+          </button>
+          <div class="engine-acc-body open">
+            <div class="engine-acc-body-inner">
+              <div id="engine-summary"></div>
+              <div id="engine-matrix" style="margin-top: 16px;"></div>
+              <div id="engine-classes" style="margin-top: 16px;"></div>
+            </div>
+          </div>
+        </div>
 
-      <h3 style="margin-top: 28px;">Calibration de la confiance</h3>
-      <details class="info-toggle"><summary>ⓘ Comment ça marche</summary>
-        <p class="section-sub">Un verdict annoncé à 70% de confiance devrait être correct environ 70% du temps — sinon la confiance est mal calibrée. Calculé en direct depuis les verdicts vérifiés, comme tout le reste de cette page.</p>
-      </details>
-      <div id="engine-calibration"></div>
+        <div class="engine-acc">
+          <button class="engine-acc-summary" type="button" aria-expanded="false">
+            <span>Santé technique du site</span><span class="chevron">▾</span>
+          </button>
+          <div class="engine-acc-body">
+            <div class="engine-acc-body-inner">
+              <details class="info-toggle"><summary>ⓘ Comment ça marche</summary>
+                <p class="section-sub">Auto-vérification intégrée au cycle d'analyse : le site répond-il, les fichiers de données sont-ils valides.</p>
+              </details>
+              <div id="site-health-body"></div>
+            </div>
+          </div>
+        </div>
 
-      <h3 style="margin-top: 28px;">Exactitude par régime macro</h3>
-      <details class="info-toggle"><summary>ⓘ Comment ça marche</summary>
-        <p class="section-sub">Le moteur est-il plus fiable dans un régime de marché que dans un autre ? Suivi disponible pour les verdicts émis depuis le 11/08 (régime enregistré à l'émission).</p>
-      </details>
-      <div id="engine-regime-accuracy"></div>
+        <div class="engine-acc">
+          <button class="engine-acc-summary" type="button" aria-expanded="false">
+            <span>État provisoire des verdicts en cours</span><span class="chevron">▾</span>
+          </button>
+          <div class="engine-acc-body">
+            <div class="engine-acc-body-inner">
+              <details class="info-toggle"><summary>ⓘ Comment ça marche</summary>
+                <p class="section-sub">Utilise les prix d'aujourd'hui pour voir où en sont les verdicts en attente — pas le backtest officiel, qui attend toujours le vrai horizon.</p>
+              </details>
+              <div id="provisional-overview"></div>
+            </div>
+          </div>
+        </div>
 
-      <h3 style="margin-top: 28px;">Opportunités — suivi de performance</h3>
-      <details class="info-toggle"><summary>ⓘ Comment ça marche</summary>
-        <p class="section-sub">Chaque pépite signalée dans l'onglet Opportunités est aussi vérifiée 14 jours après — même moteur, même exigence.</p>
-      </details>
-      <div id="engine-opportunities"></div>
+        <div class="engine-acc">
+          <button class="engine-acc-summary" type="button" aria-expanded="false">
+            <span>Calibration de la confiance</span><span class="chevron">▾</span>
+          </button>
+          <div class="engine-acc-body">
+            <div class="engine-acc-body-inner">
+              <details class="info-toggle"><summary>ⓘ Comment ça marche</summary>
+                <p class="section-sub">Un verdict annoncé à 70% de confiance devrait être correct environ 70% du temps — sinon la confiance est mal calibrée. Calculé en direct depuis les verdicts vérifiés, comme tout le reste de cette page.</p>
+              </details>
+              <div id="engine-calibration"></div>
+            </div>
+          </div>
+        </div>
 
-      <h3 style="margin-top: 28px;">Portefeuille fictif vs buy&amp;hold BTC</h3>
-      <details class="info-toggle"><summary>ⓘ Comment ça marche</summary>
-        <p class="section-sub">Le vrai test : si j'avais suivi aveuglément mes verdicts, aurais-je fait mieux que juste garder du BTC ?</p>
-      </details>
-      <div id="engine-paper-portfolio"></div>
+        <div class="engine-acc">
+          <button class="engine-acc-summary" type="button" aria-expanded="false">
+            <span>Exactitude par régime macro</span><span class="chevron">▾</span>
+          </button>
+          <div class="engine-acc-body">
+            <div class="engine-acc-body-inner">
+              <details class="info-toggle"><summary>ⓘ Comment ça marche</summary>
+                <p class="section-sub">Le moteur est-il plus fiable dans un régime de marché que dans un autre ? Suivi disponible pour les verdicts émis depuis le 11/08 (régime enregistré à l'émission).</p>
+              </details>
+              <div id="engine-regime-accuracy"></div>
+            </div>
+          </div>
+        </div>
 
-      <h3 style="margin-top: 28px;">Criblage vs sélection au hasard</h3>
-      <details class="info-toggle"><summary>ⓘ Comment ça marche</summary>
-        <p class="section-sub">Est-ce que mes pépites choisies font vraiment mieux qu'un échantillon aléatoire du Top 300 ?</p>
-      </details>
-      <div id="engine-control-group"></div>
+        <div class="engine-acc">
+          <button class="engine-acc-summary" type="button" aria-expanded="false">
+            <span>Opportunités — suivi de performance</span><span class="chevron">▾</span>
+          </button>
+          <div class="engine-acc-body">
+            <div class="engine-acc-body-inner">
+              <details class="info-toggle"><summary>ⓘ Comment ça marche</summary>
+                <p class="section-sub">Chaque pépite signalée dans l'onglet Opportunités est aussi vérifiée 14 jours après — même moteur, même exigence.</p>
+              </details>
+              <div id="engine-opportunities"></div>
+            </div>
+          </div>
+        </div>
 
-      <h3 style="margin-top: 28px;">Journal des corrections / améliorations</h3>
-      <details class="info-toggle"><summary>ⓘ Comment ça marche</summary>
-        <p class="section-sub">Chaque tentative d'ajustement du moteur, conservée en permanence (append-only).</p>
-      </details>
-      <div id="engine-log"></div>
+        <div class="engine-acc">
+          <button class="engine-acc-summary" type="button" aria-expanded="false">
+            <span>Portefeuille fictif vs buy&amp;hold BTC</span><span class="chevron">▾</span>
+          </button>
+          <div class="engine-acc-body">
+            <div class="engine-acc-body-inner">
+              <details class="info-toggle"><summary>ⓘ Comment ça marche</summary>
+                <p class="section-sub">Le vrai test : si j'avais suivi aveuglément mes verdicts, aurais-je fait mieux que juste garder du BTC ?</p>
+              </details>
+              <div id="engine-paper-portfolio"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="engine-acc">
+          <button class="engine-acc-summary" type="button" aria-expanded="false">
+            <span>Criblage vs sélection au hasard</span><span class="chevron">▾</span>
+          </button>
+          <div class="engine-acc-body">
+            <div class="engine-acc-body-inner">
+              <details class="info-toggle"><summary>ⓘ Comment ça marche</summary>
+                <p class="section-sub">Est-ce que mes pépites choisies font vraiment mieux qu'un échantillon aléatoire du Top 300 ?</p>
+              </details>
+              <div id="engine-control-group"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="engine-acc">
+          <button class="engine-acc-summary" type="button" aria-expanded="false">
+            <span>Journal des corrections / améliorations</span><span class="chevron">▾</span>
+          </button>
+          <div class="engine-acc-body">
+            <div class="engine-acc-body-inner">
+              <details class="info-toggle"><summary>ⓘ Comment ça marche</summary>
+                <p class="section-sub">Chaque tentative d'ajustement du moteur, conservée en permanence (append-only).</p>
+              </details>
+              <div id="engine-log"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </section>
 
     <section id="tab-notifications" class="tab-panel">

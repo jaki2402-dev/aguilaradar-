@@ -28,43 +28,49 @@ function renderFavorisGrid() {
   grid.innerHTML = FAVORIS.map(
     (f) => `
     <div class="favori-card clickable" data-detail-target="detail-fav-${f.ticker}">
-      <div class="favori-header">
-        <div>
-          <span class="favori-ticker">${f.ticker}</span>
-          <span class="favori-name">${f.name}</span>
+      <div class="favori-row">
+        <div class="favori-row-tick">${f.ticker}</div>
+        <div class="favori-row-mid">
+          <div class="favori-row-name">${f.name}</div>
+          <div class="favori-row-sector">${SECTORS[f.cgId] || ""}</div>
         </div>
-        <div class="favori-price skeleton" id="price-${f.ticker}">0 000,00 €</div>
+        <span class="favori-row-badge" id="verdict-${f.ticker}"></span>
+        <div class="favori-row-right">
+          <div class="favori-price skeleton" id="price-${f.ticker}">0 000,00 €</div>
+          <div class="chip skeleton" id="change-${f.ticker}">▲ +0,00 %</div>
+        </div>
       </div>
-      <div class="chip skeleton" id="change-${f.ticker}">▲ +0,00 %</div>
-      <div class="tv-chart" id="tv-${f.ticker}"></div>
-      <div class="favori-verdict empty-state" id="verdict-${f.ticker}">Verdict en attente du premier cycle d'analyse automatisé.</div>
-      <div class="expand-hint">Voir l'analyse détaillée <span class="chevron">▾</span></div>
+      <div class="expand-hint">Voir le graphique et l'analyse détaillée <span class="chevron">▾</span></div>
       <div class="detail-panel" id="detail-fav-${f.ticker}"></div>
     </div>`
   ).join("");
 
-  FAVORIS.forEach((f) => mountTradingViewChart(`tv-${f.ticker}`, f.tvSymbol));
-
+  // Graphique TradingView chargé au tap (dans le panneau de détail), plus au chargement de
+  // la page : 15 widgets simultanés étaient la principale cause du défilement lourd de cet
+  // onglet — voir renderDetailPanel (detail.js) pour le montage effectif.
   document.querySelectorAll("#favoris-grid .favori-card.clickable").forEach((cardEl, i) => {
     const f = FAVORIS[i];
-    attachDetailToggle(cardEl, `detail-fav-${f.ticker}`, { cgId: f.cgId, tvSymbol: f.tvSymbol, ticker: f.ticker, athChangePct: null, reasoning: null });
+    attachDetailToggle(cardEl, `detail-fav-${f.ticker}`, {
+      cgId: f.cgId,
+      tvSymbol: f.tvSymbol,
+      ticker: f.ticker,
+      athChangePct: null,
+      reasoning: null,
+      showChart: true,
+    });
   });
 }
 
 function updateFavorisVerdicts(verdicts) {
   FAVORIS.forEach((f) => {
-    const el = document.getElementById(`verdict-${f.ticker}`);
-    if (!el) return;
+    const chipEl = document.getElementById(`verdict-${f.ticker}`);
+    if (!chipEl) return;
     const latest = (verdicts || [])
       .filter((v) => v.asset === f.cgId)
       .sort((a, b) => new Date(b.issued_at) - new Date(a.issued_at))[0];
     if (!latest) return;
-    el.classList.remove("empty-state");
-    el.innerHTML = `
-      <span class="badge badge-${latest.verdict.toLowerCase()}">${latest.verdict}</span>
-      <span class="hint">${latest.status === "pending" ? "en cours (horizon " + latest.horizon_days + " j)" : "résolu"} · confiance ${latest.confidence_pct} %</span>
-      <p class="hint" style="margin-top:6px;">${latest.reasoning}</p>`;
-    const cardEl = el.closest(".favori-card");
+    chipEl.innerHTML = `<span class="badge badge-${latest.verdict.toLowerCase()}">${latest.verdict}</span>`;
+    const cardEl = chipEl.closest(".favori-card");
     if (cardEl) {
       cardEl.dataset.reasoning = latest.reasoning;
       cardEl.dataset.verdict = latest.verdict;
@@ -380,10 +386,34 @@ function initPullToRefresh() {
   });
 }
 
+// Accordéon exclusif de l'onglet Moteur (piste "priorité") : un seul panneau ouvert à la
+// fois, transition gérée en JS (comme .detail-panel) plutôt qu'un <details> natif, pour
+// garder l'ouverture/fermeture fluide au lieu du repli instantané du navigateur.
+function initExclusiveAccordion(container) {
+  if (!container) return;
+  const accs = Array.from(container.querySelectorAll(".engine-acc"));
+  accs.forEach((acc) => {
+    const btn = acc.querySelector(".engine-acc-summary");
+    const body = acc.querySelector(".engine-acc-body");
+    btn.addEventListener("click", () => {
+      const wasOpen = body.classList.contains("open");
+      accs.forEach((other) => {
+        other.querySelector(".engine-acc-body").classList.remove("open");
+        other.querySelector(".engine-acc-summary").setAttribute("aria-expanded", "false");
+      });
+      if (!wasOpen) {
+        body.classList.add("open");
+        btn.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
+}
+
 async function initApp() {
   document.querySelectorAll("nav button[data-tab]").forEach((btn) => {
     btn.addEventListener("click", () => switchTab(btn.dataset.tab));
   });
+  initExclusiveAccordion(document.getElementById("engine-accordion"));
 
   const refreshBtn = document.getElementById("refresh-btn");
   refreshBtn.addEventListener("click", () => refreshAll(refreshBtn));

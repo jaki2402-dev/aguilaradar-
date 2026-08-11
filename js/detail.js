@@ -174,8 +174,10 @@ async function renderDetailPanel(panelEl, asset) {
     }
 
     const orderBook = await fetchOrderBookImbalance(asset.tvSymbol);
+    const chartId = `tv-detail-${asset.ticker}`;
 
     panelEl.innerHTML = `
+      ${asset.showChart && asset.tvSymbol ? `<div class="tv-chart" id="${chartId}"></div>` : ""}
       <div class="detail-grid">
         ${signals
           .map(
@@ -207,6 +209,7 @@ async function renderDetailPanel(panelEl, asset) {
         ${asset.verdict ? `<p class="hint">Verdict actuel : <span class="badge badge-${asset.verdict.toLowerCase()}">${asset.verdict}</span> — vérifié automatiquement à son échéance, jamais avant.</p>` : ""}
       </div>
       ${renderFavorisContextSection(asset.ticker)}`;
+    if (asset.showChart && asset.tvSymbol) mountTradingViewChart(chartId, asset.tvSymbol);
     return true;
   } catch (err) {
     console.error("Erreur fiche detaillee:", err);
