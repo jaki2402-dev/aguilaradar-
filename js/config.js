@@ -3,7 +3,6 @@
 // Hash SHA-256 du code d'accès (voir README "Portail d'accès" pour les limites réelles
 // de cette protection — le dépôt est public, ce n'est pas une vraie sécurité).
 const ACCESS_HASH = "0a23403368cf9a89e31f7d79caef03b54333541471de0488745eb26f20bbf5d6";
-const ACCESS_STORAGE_KEY = "aguilaradar_access_ok";
 
 // Les 15 favoris. IDs CoinGecko vérifiés via /api/v3/search (règle : ne jamais deviner).
 // Symboles TradingView = meilleure estimation d'exchange liquide ; un symbole invalide
