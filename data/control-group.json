@@ -1,10 +1,4 @@
 {
-  "last_sampled_at": null,
-  "sample_size": 0,
-  "items": [],
-  "stats": {
-    "total_resolved": 0,
-    "validated_pct": null,
-    "note": "Échantillon aléatoire d'actifs du Top 300 NON choisis par le criblage — sert à vérifier honnêtement si le criblage d'opportunités choisit vraiment mieux qu'une sélection au hasard, pas seulement à se convaincre qu'il le fait."
-  }
+  "stats": null,
+  "note": "Échantillon aléatoire de contrôle — pas encore calculé"
 }
