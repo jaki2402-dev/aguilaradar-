@@ -107,17 +107,31 @@ function renderOpportunities(data) {
   if (constellationControllers.opportunities) constellationControllers.opportunities.refresh();
 }
 
+const JOURNAL_PAGE_SIZE = 15;
+let journalSorted = [];
+let journalShown = JOURNAL_PAGE_SIZE;
+
 function renderJournal(verdicts) {
   const el = document.getElementById("journal-body");
   if (verdicts.length === 0) {
     el.innerHTML = `<p class="empty-state">Aucun verdict émis pour l'instant. Dès que la routine programmée sera active, chaque verdict apparaîtra ici et y restera de façon permanente.</p>`;
     return;
   }
-  el.innerHTML = verdicts
-    .slice()
-    .reverse()
-    .map(
-      (v, i) => `
+  // Historique permanent : meme logique de pagination que les Alertes, avant que ca devienne
+  // un probleme (croissance plus lente ici, mais le meme motif finirait par se reproduire).
+  journalSorted = verdicts.slice().reverse();
+  journalShown = JOURNAL_PAGE_SIZE;
+  renderJournalPage();
+}
+
+function renderJournalPage() {
+  const el = document.getElementById("journal-body");
+  const visible = journalSorted.slice(0, journalShown);
+  const remaining = journalSorted.length - visible.length;
+  el.innerHTML =
+    visible
+      .map(
+        (v, i) => `
       <div class="journal-entry clickable" data-detail-target="detail-journal-${v.id || i}" data-cgid="${v.asset}">
         <div class="log-header">
           <span><strong>${v.ticker || v.asset}</strong> · ${v.issued_at}</span>
@@ -129,11 +143,14 @@ function renderJournal(verdicts) {
         <div class="expand-hint">Voir l'analyse détaillée <span class="chevron">▾</span></div>
         <div class="detail-panel" id="detail-journal-${v.id || i}"></div>
       </div>`
-    )
-    .join("");
+      )
+      .join("") +
+    (remaining > 0
+      ? `<div class="expand-hint clickable" id="journal-load-more">Voir ${Math.min(remaining, JOURNAL_PAGE_SIZE)} verdict(s) de plus (${remaining} restant${remaining > 1 ? "s" : ""}) <span class="chevron">▾</span></div>`
+      : "");
 
   const byPanelId = {};
-  verdicts.forEach((v, i) => (byPanelId[`detail-journal-${v.id || i}`] = v));
+  visible.forEach((v, i) => (byPanelId[`detail-journal-${v.id || i}`] = v));
   el.querySelectorAll(".journal-entry.clickable").forEach((entryEl) => {
     const panelId = entryEl.dataset.detailTarget;
     const cgId = entryEl.dataset.cgid;
@@ -147,6 +164,14 @@ function renderJournal(verdicts) {
       verdict: v ? v.verdict : null,
     });
   });
+
+  const loadMoreBtn = document.getElementById("journal-load-more");
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener("click", () => {
+      journalShown += JOURNAL_PAGE_SIZE;
+      renderJournalPage();
+    });
+  }
 }
 
 const ALERT_TYPE_LABELS = {
