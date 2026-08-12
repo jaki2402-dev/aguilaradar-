@@ -88,4 +88,5 @@ const DATA_URLS = {
   marketContext: "data/market-context.json",
   favorisContext: "data/favoris-context.json",
   healthLog: "data/health-log.json",
+  digest: "data/digest.json",
 };

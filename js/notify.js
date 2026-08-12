@@ -32,7 +32,7 @@ function notifPermissionStatus() {
 function sendBrowserNotification(title, body, tag) {
   if (!notifSupported() || Notification.permission !== "granted") return;
   try {
-    const n = new Notification(title, { body, tag, icon: "favicon.svg" });
+    const n = new Notification(title, { body, tag, icon: "apple-touch-icon.png" });
     n.onclick = () => {
       window.focus();
       if (window.switchTab) switchTab("notifications");
@@ -77,6 +77,173 @@ function checkForNewOpportunities(opportunitiesData, alerts, isBaseline) {
   if (changed) saveSeenNotifIds(seen);
 }
 
+// Résumé périodique (data/digest.json, régénéré par une routine dédiée toutes les ~6h) :
+// synthèse de toutes les données du site (verdicts, opportunités, contexte marché, favoris)
+// avec quelques conseils. On notifie dès qu'un nouveau digest apparaît (un seul à la fois,
+// pas de risque d'avalanche comme pour les opportunités).
+const DIGEST_SEEN_KEY = "aguilaradar_digest_last_seen";
+
+function loadSeenDigestId() {
+  try {
+    return localStorage.getItem(DIGEST_SEEN_KEY) || "";
+  } catch (e) {
+    return "";
+  }
+}
+
+function saveSeenDigestId(id) {
+  try {
+    localStorage.setItem(DIGEST_SEEN_KEY, id);
+  } catch (e) {}
+}
+
+function renderDigestPanel(digest) {
+  const el = document.getElementById("digest-panel");
+  if (!el) return;
+  if (!digest || !digest.generated_at) {
+    el.innerHTML = "";
+    return;
+  }
+  const tone = digest.market_tone || "neutre";
+  const tipsHtml = (digest.tips || [])
+    .map((t) => `<li>${t}</li>`)
+    .join("");
+  el.innerHTML = `
+    <div class="digest-head">
+      <span class="digest-tone digest-tone--${tone}">${tone.toUpperCase()}</span>
+      <span class="hint">Résumé généré le ${new Date(digest.generated_at).toLocaleString("fr-FR")}</span>
+    </div>
+    <h3 class="digest-headline">${digest.headline || ""}</h3>
+    <p class="digest-summary">${digest.summary || ""}</p>
+    ${tipsHtml ? `<ul class="digest-tips">${tipsHtml}</ul>` : ""}
+  `;
+}
+
+async function checkDigest() {
+  const digest = await loadJson(DATA_URLS.digest);
+  if (!digest || !digest.generated_at) return;
+  renderDigestPanel(digest);
+  const seen = loadSeenDigestId();
+  if (digest.generated_at !== seen) {
+    saveSeenDigestId(digest.generated_at);
+    if (seen) sendBrowserNotification(digest.headline || "Résumé du marché", digest.summary || "", "aguilaradar-digest");
+  }
+}
+
+// --- Vrai push (notifications même app fermée) -----------------------------------------
+// Nécessite un service worker + un abonnement navigateur (mécanisme standard et gratuit
+// d'iOS/Safari, pas un service payant). Ce site est statique (GitHub Pages, sans serveur) :
+// personne ne peut recevoir automatiquement l'abonnement créé par le navigateur. Étape unique
+// à faire une fois : copier le code affiché après activation et l'envoyer dans la conversation.
+const PUSH_VAPID_PUBLIC_KEY = "BDsCZF1Anw1tk3xJ0b1DlC3tdBx_tFf0NqOKX8w3A3qnx2gvJCLwTLZEkYrwjDHj1dQLTjdF1vaHWw-XaiELEfY";
+
+function urlBase64ToUint8Array(base64String) {
+  const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
+  const base64 = (base64String + padding).replace(/-/g, "+").replace(/_/g, "/");
+  const raw = atob(base64);
+  const output = new Uint8Array(raw.length);
+  for (let i = 0; i < raw.length; i++) output[i] = raw.charCodeAt(i);
+  return output;
+}
+
+function pushSupported() {
+  return "serviceWorker" in navigator && "PushManager" in window;
+}
+
+async function getExistingPushSubscription() {
+  if (!pushSupported()) return null;
+  try {
+    const reg = await navigator.serviceWorker.getRegistration();
+    if (!reg) return null;
+    return await reg.pushManager.getSubscription();
+  } catch (e) {
+    return null;
+  }
+}
+
+async function subscribeToPush() {
+  const reg = await navigator.serviceWorker.register("sw.js");
+  await navigator.serviceWorker.ready;
+  const subscribePromise = reg.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: urlBase64ToUint8Array(PUSH_VAPID_PUBLIC_KEY),
+  });
+  const timeout = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error("Délai dépassé, réessaie.")), 20000)
+  );
+  return Promise.race([subscribePromise, timeout]);
+}
+
+function renderPushSection(subscription) {
+  const el = document.getElementById("push-section");
+  if (!el) return;
+  if (!pushSupported()) {
+    el.innerHTML = "";
+    return;
+  }
+
+  if (!subscription) {
+    el.innerHTML = `
+      <button type="button" id="push-enable-btn" class="notif-enable-btn">Activer aussi app fermée</button>
+      <p class="hint" style="margin-top:8px;">Reçois le résumé périodique même quand AguilaRadar est complètement fermé. Étape unique après activation : copier un code et me l'envoyer dans la conversation.</p>`;
+    const btn = document.getElementById("push-enable-btn");
+    if (btn) {
+      btn.addEventListener("click", async () => {
+        btn.disabled = true;
+        btn.textContent = "Activation…";
+        try {
+          const sub = await subscribeToPush();
+          renderPushSection(sub);
+        } catch (e) {
+          console.error("Abonnement push impossible :", e);
+          btn.disabled = false;
+          btn.textContent = "Activer aussi app fermée";
+          el.insertAdjacentHTML(
+            "beforeend",
+            `<p class="hint push-error">Échec de l'activation. Réessaie depuis l'app ouverte via l'icône ajoutée à l'écran d'accueil.</p>`
+          );
+        }
+      });
+    }
+    return;
+  }
+
+  const subText = JSON.stringify(subscription.toJSON());
+  el.innerHTML = `
+    <div class="notif-status"><span class="badge badge-success">APP FERMÉE ACTIVÉE</span><span class="hint">Dernière étape (une seule fois) : copie ce code et envoie-le moi dans la conversation pour terminer la liaison. Déjà fait ? Rien d'autre à faire.</span></div>
+    <textarea id="push-sub-text" class="push-sub-text" readonly rows="3">${subText}</textarea>
+    <button type="button" id="push-copy-btn" class="notif-enable-btn">Copier le code</button>
+  `;
+  const copyBtn = document.getElementById("push-copy-btn");
+  if (copyBtn) {
+    copyBtn.addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(subText);
+        copyBtn.textContent = "Copié";
+        setTimeout(() => {
+          copyBtn.textContent = "Copier le code";
+        }, 2000);
+      } catch (e) {
+        const ta = document.getElementById("push-sub-text");
+        if (ta) {
+          ta.focus();
+          ta.select();
+        }
+      }
+    });
+  }
+}
+
+async function initPushSection() {
+  const el = document.getElementById("push-section");
+  if (!pushSupported() || notifPermissionStatus() !== "granted") {
+    if (el) el.innerHTML = "";
+    return;
+  }
+  const sub = await getExistingPushSubscription();
+  renderPushSection(sub);
+}
+
 let notifPollTimer = null;
 let notifBaselineDone = false;
 function startNotifPolling() {
@@ -88,8 +255,10 @@ function startNotifPolling() {
     ]);
     checkForNewOpportunities(opportunities, alerts, !notifBaselineDone);
     notifBaselineDone = true;
+    checkDigest();
   };
   poll();
+  initPushSection();
   notifPollTimer = setInterval(poll, NOTIF_POLL_MS);
 }
 

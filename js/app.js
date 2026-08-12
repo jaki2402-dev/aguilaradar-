@@ -302,7 +302,7 @@ function updateHeroStats(verdicts, alerts) {
 }
 
 async function loadAllData() {
-  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog] = await Promise.all([
+  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest] = await Promise.all([
     loadJson(DATA_URLS.verdicts),
     loadJson(DATA_URLS.engineHistory),
     loadJson(DATA_URLS.opportunities),
@@ -312,8 +312,10 @@ async function loadAllData() {
     loadJson(DATA_URLS.marketContext),
     loadJson(DATA_URLS.favorisContext),
     loadJson(DATA_URLS.healthLog),
+    loadJson(DATA_URLS.digest),
   ]);
   latestFavorisContext = favorisContext;
+  if (window.renderDigestPanel) renderDigestPanel(digest);
 
   renderEngineTab(verdicts || [], engineHistory, opportunities, controlGroup);
   renderOpportunities(opportunities);
