@@ -121,6 +121,31 @@ function renderFavorisContextSection(ticker) {
   </div>`;
 }
 
+const HORIZON_LABELS = { j1: "1 jour", j3: "3 jours", j7: "7 jours", j14: "14 jours", m6: "6 mois" };
+const HORIZON_ORDER = ["j1", "j3", "j7", "j14", "m6"];
+
+function renderOpportunityHorizonsSection(horizons) {
+  if (!horizons) return "";
+  const chips = HORIZON_ORDER.map((key) => {
+    const h = horizons[key];
+    if (!h) return "";
+    let cls = "badge-neutral";
+    let text = "en attente";
+    if (h.status === "resolved" && h.outcome && h.outcome.validated !== null) {
+      const pct = h.outcome.move_pct;
+      const pctText = (pct >= 0 ? "+" : "") + pct.toFixed(1) + " %";
+      cls = h.outcome.validated ? "badge-achat" : "badge-vente";
+      text = pctText;
+    }
+    return `<div class="horizon-chip"><span class="hint">${HORIZON_LABELS[key]}</span><span class="badge ${cls}">${text}</span></div>`;
+  }).join("");
+  return `<div class="detail-horizons">
+    <strong>Vérification par horizon</strong>
+    <p class="hint">Chaque opportunité est revérifiée à 5 échéances indépendantes plutôt qu'un seul verdict final — vert si le mouvement a dépassé le seuil directionnel dans le bon sens, rouge sinon.</p>
+    <div class="horizons-row">${chips}</div>
+  </div>`;
+}
+
 function technicalSignalSentences(price, sma20, sma50, rsi, athChangePct) {
   const lines = [];
   if (sma20 !== null && sma50 !== null) {
@@ -140,82 +165,105 @@ function technicalSignalSentences(price, sma20, sma50, rsi, athChangePct) {
   return lines;
 }
 
+// Section "indicateurs techniques" : seule partie qui dépend d'un fetch réseau (historique
+// de prix pour RSI/MM/corrélation + carnet d'ordres). Isolée dans sa propre fonction pour
+// qu'un échec réseau (limite API, hors-ligne) ne fasse jamais disparaître le reste de la
+// fiche (avis, horizons, contexte favori) qui sont déjà en mémoire, sans requête à faire.
+async function renderTechnicalSection(asset) {
+  const isBtc = asset.cgId === "bitcoin";
+  const [closes, btcCloses] = await Promise.all([
+    fetchHistoricalCloses(asset.cgId, 60),
+    isBtc ? Promise.resolve(null) : fetchHistoricalCloses("bitcoin", 60).catch(() => null),
+  ]);
+  const rsi = computeRSI(closes, 14);
+  const sma20 = computeSMA(closes, 20);
+  const sma50 = computeSMA(closes, Math.min(50, closes.length));
+  const price = closes[closes.length - 1];
+  const signals = technicalSignalSentences(price, sma20, sma50, rsi, asset.athChangePct);
+
+  const correlation = btcCloses ? computeCorrelation(closes, btcCloses) : null;
+  if (correlation !== null) {
+    const level = Math.abs(correlation) >= 0.7 ? "forte" : Math.abs(correlation) >= 0.4 ? "modérée" : "faible";
+    signals.push({
+      label: `Corrélation à BTC : ${level} (${correlation.toFixed(2)})`,
+      text: Math.abs(correlation) >= 0.7
+        ? "Cet actif suit largement les mouvements de BTC — un verdict propre positif compte moins si BTC casse un support."
+        : "Cet actif se comporte assez indépendamment de BTC en ce moment — ses propres signaux pèsent davantage.",
+    });
+  }
+
+  const divergence = detectDivergence(closes);
+  if (divergence) {
+    signals.push({
+      label: "Divergence baissière prix/RSI détectée",
+      text: `Prix proche de son plus haut récent mais RSI en baisse (${divergence.rsiNow.toFixed(0)} contre ${divergence.rsiPast.toFixed(0)} il y a ~3 semaines) — signal classique d'essoufflement, pas une certitude.`,
+    });
+  }
+
+  const orderBook = await fetchOrderBookImbalance(asset.tvSymbol);
+  const chartId = `tv-detail-${asset.ticker}`;
+
+  const html = `
+    ${asset.showChart && asset.tvSymbol ? `<div class="tv-chart" id="${chartId}"></div>` : ""}
+    <div class="detail-grid">
+      ${signals
+        .map(
+          (s) => `<div class="detail-signal">
+            <strong>${s.label}</strong>
+            <p class="hint">${s.text}</p>
+          </div>`
+        )
+        .join("")}
+    </div>
+    <div class="detail-stats">
+      <div class="detail-stat"><span class="hint">RSI (14)</span><strong>${rsi !== null ? rsi.toFixed(0) : "—"}</strong></div>
+      <div class="detail-stat"><span class="hint">MM20</span><strong>${sma20 !== null ? formatPrice(sma20, "EUR") : "—"}</strong></div>
+      <div class="detail-stat"><span class="hint">MM50</span><strong>${sma50 !== null ? formatPrice(sma50, "EUR") : "—"}</strong></div>
+      <div class="detail-stat"><span class="hint">vs ATH</span><strong>${asset.athChangePct !== undefined && asset.athChangePct !== null ? asset.athChangePct.toFixed(1) + " %" : "—"}</strong></div>
+    </div>
+    ${
+      orderBook
+        ? `<div class="detail-orderbook">
+            <span class="hint">Carnet d'ordres (Binance, temps réel)</span>
+            <div class="orderbook-bar"><div class="orderbook-bid" style="width:${orderBook.bidPct.toFixed(1)}%"></div></div>
+            <p class="hint">Achat ${orderBook.bidPct.toFixed(0)} % · Vente ${orderBook.askPct.toFixed(0)} % — un mur peut être retiré en une seconde, ne pas s'y fier seul.</p>
+          </div>`
+        : `<p class="hint">Carnet d'ordres non disponible pour cet actif (pas de paire Binance directe identifiée).</p>`
+    }`;
+
+  return { html, chartId: asset.showChart && asset.tvSymbol ? chartId : null };
+}
+
 async function renderDetailPanel(panelEl, asset) {
   panelEl.innerHTML = `<p class="empty-state">Calcul des indicateurs en cours…</p>`;
+
+  let technicalHtml = "";
+  let chartId = null;
+  let technicalOk = true;
   try {
-    const isBtc = asset.cgId === "bitcoin";
-    const [closes, btcCloses] = await Promise.all([
-      fetchHistoricalCloses(asset.cgId, 60),
-      isBtc ? Promise.resolve(null) : fetchHistoricalCloses("bitcoin", 60).catch(() => null),
-    ]);
-    const rsi = computeRSI(closes, 14);
-    const sma20 = computeSMA(closes, 20);
-    const sma50 = computeSMA(closes, Math.min(50, closes.length));
-    const price = closes[closes.length - 1];
-    const signals = technicalSignalSentences(price, sma20, sma50, rsi, asset.athChangePct);
-
-    const correlation = btcCloses ? computeCorrelation(closes, btcCloses) : null;
-    if (correlation !== null) {
-      const level = Math.abs(correlation) >= 0.7 ? "forte" : Math.abs(correlation) >= 0.4 ? "modérée" : "faible";
-      signals.push({
-        label: `Corrélation à BTC : ${level} (${correlation.toFixed(2)})`,
-        text: Math.abs(correlation) >= 0.7
-          ? "Cet actif suit largement les mouvements de BTC — un verdict propre positif compte moins si BTC casse un support."
-          : "Cet actif se comporte assez indépendamment de BTC en ce moment — ses propres signaux pèsent davantage.",
-      });
-    }
-
-    const divergence = detectDivergence(closes);
-    if (divergence) {
-      signals.push({
-        label: "Divergence baissière prix/RSI détectée",
-        text: `Prix proche de son plus haut récent mais RSI en baisse (${divergence.rsiNow.toFixed(0)} contre ${divergence.rsiPast.toFixed(0)} il y a ~3 semaines) — signal classique d'essoufflement, pas une certitude.`,
-      });
-    }
-
-    const orderBook = await fetchOrderBookImbalance(asset.tvSymbol);
-    const chartId = `tv-detail-${asset.ticker}`;
-
-    panelEl.innerHTML = `
-      ${asset.showChart && asset.tvSymbol ? `<div class="tv-chart" id="${chartId}"></div>` : ""}
-      <div class="detail-grid">
-        ${signals
-          .map(
-            (s) => `<div class="detail-signal">
-              <strong>${s.label}</strong>
-              <p class="hint">${s.text}</p>
-            </div>`
-          )
-          .join("")}
-      </div>
-      <div class="detail-stats">
-        <div class="detail-stat"><span class="hint">RSI (14)</span><strong>${rsi !== null ? rsi.toFixed(0) : "—"}</strong></div>
-        <div class="detail-stat"><span class="hint">MM20</span><strong>${sma20 !== null ? formatPrice(sma20, "EUR") : "—"}</strong></div>
-        <div class="detail-stat"><span class="hint">MM50</span><strong>${sma50 !== null ? formatPrice(sma50, "EUR") : "—"}</strong></div>
-        <div class="detail-stat"><span class="hint">vs ATH</span><strong>${asset.athChangePct !== undefined && asset.athChangePct !== null ? asset.athChangePct.toFixed(1) + " %" : "—"}</strong></div>
-      </div>
-      ${
-        orderBook
-          ? `<div class="detail-orderbook">
-              <span class="hint">Carnet d'ordres (Binance, temps réel)</span>
-              <div class="orderbook-bar"><div class="orderbook-bid" style="width:${orderBook.bidPct.toFixed(1)}%"></div></div>
-              <p class="hint">Achat ${orderBook.bidPct.toFixed(0)} % · Vente ${orderBook.askPct.toFixed(0)} % — un mur peut être retiré en une seconde, ne pas s'y fier seul.</p>
-            </div>`
-          : `<p class="hint">Carnet d'ordres non disponible pour cet actif (pas de paire Binance directe identifiée).</p>`
-      }
-      <div class="detail-opinion">
-        <strong>Mon avis</strong>
-        <p>${asset.reasoning || asset.reason || "Analyse pas encore disponible pour cet actif — en attente du prochain cycle."}</p>
-        ${asset.verdict ? `<p class="hint">Verdict actuel : <span class="badge badge-${asset.verdict.toLowerCase()}">${asset.verdict}</span> — vérifié automatiquement à son échéance, jamais avant.</p>` : ""}
-      </div>
-      ${renderFavorisContextSection(asset.ticker)}`;
-    if (asset.showChart && asset.tvSymbol) mountTradingViewChart(chartId, asset.tvSymbol);
-    return true;
+    const result = await renderTechnicalSection(asset);
+    technicalHtml = result.html;
+    chartId = result.chartId;
   } catch (err) {
-    console.error("Erreur fiche detaillee:", err);
-    panelEl.innerHTML = `<p class="empty-state">Indicateurs indisponibles pour l'instant (limite API probable) — referme et rouvre la fiche pour réessayer.</p>`;
-    return false;
+    console.error("Erreur indicateurs techniques:", err);
+    technicalOk = false;
+    technicalHtml = `<p class="empty-state">Indicateurs techniques indisponibles pour l'instant (limite API probable) — referme et rouvre la fiche pour réessayer.</p>`;
   }
+
+  // Le reste (avis, horizons, contexte favori) est déjà en mémoire (aucun fetch requis) :
+  // s'affiche toujours, meme si la section technique ci-dessus a échoué.
+  panelEl.innerHTML = `
+    ${technicalHtml}
+    <div class="detail-opinion">
+      <strong>Mon avis</strong>
+      <p>${asset.reasoning || asset.reason || "Analyse pas encore disponible pour cet actif — en attente du prochain cycle."}</p>
+      ${asset.verdict ? `<p class="hint">Verdict actuel : <span class="badge badge-${asset.verdict.toLowerCase()}">${asset.verdict}</span> — vérifié automatiquement à son échéance, jamais avant.</p>` : ""}
+    </div>
+    ${asset.horizons ? renderOpportunityHorizonsSection(asset.horizons) : ""}
+    ${renderFavorisContextSection(asset.ticker)}`;
+
+  if (technicalOk && chartId) mountTradingViewChart(chartId, asset.tvSymbol);
+  return technicalOk;
 }
 
 function attachDetailToggle(cardEl, panelId, baseAsset) {

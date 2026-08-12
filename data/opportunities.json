@@ -2,7 +2,7 @@
     "last_scan_at": "2026-08-07T00:20:00Z",
     "scanned_count": 300,
     "excluded_meme_count": 22,
-    "methodology": "Criblage quantitatif Top 300 CoinGecko (catégorie Meme exclue), score = momentum 7j pondéré + 24h + ratio volume/capitalisation plafonné. Candidats avec ratio volume/capitalisation > 25% exclus (marché trop fin/suspect). Rang de capitalisation incohérent exclu. Confiance = évaluation indépendante (rang de capitalisation, notoriété du projet, caractère extrême ou non du mouvement) — distincte du score de momentum. Chaque pépite est suivie 14 jours pour vérifier si le signal était réellement bon.",
+    "methodology": "Criblage quantitatif Top 300 CoinGecko (categorie Meme exclue), score = momentum 7j pondere + 24h + ratio volume/capitalisation plafonne. Candidats avec ratio volume/capitalisation > 25% exclus (marche trop fin/suspect). Rang de capitalisation incoherent exclu. Confiance = evaluation independante (rang de capitalisation, notoriete du projet, caractere extreme ou non du mouvement) - distincte du score de momentum. Chaque pepite est verifiee a 5 horizons independants (1 jour, 3 jours, 7 jours, 14 jours, 6 mois) pour voir comment le signal se comporte a differentes echeances plutot qu'un seul verdict final.",
     "opportunities": [
         {
             "id": "opp-20260807-ada",
@@ -76,16 +76,60 @@
             "reason": "Momentum positif confirmé sur 24h et 7j, rang 16. Toujours à -93.3% de son plus haut historique, contexte à garder en tête.",
             "flagged_at": "2026-08-07T00:20:00Z",
             "price_at_flag": 0.173737,
-            "check_at": "2026-08-21T00:20:00Z",
-            "status": "pending",
-            "outcome": {
-                "price_at_check": null,
-                "move_pct": null,
-                "validated": null,
-                "checked_at": null
-            },
             "threshold_pct": 5,
-            "price_refreshed_at": "2026-08-07T16:25:00Z"
+            "price_refreshed_at": "2026-08-07T16:25:00Z",
+            "horizons": {
+                "j1": {
+                    "check_at": "2026-08-08T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j3": {
+                    "check_at": "2026-08-10T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j7": {
+                    "check_at": "2026-08-14T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j14": {
+                    "check_at": "2026-08-21T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "m6": {
+                    "check_at": "2027-02-05T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                }
+            }
         },
         {
             "id": "opp-20260807-ena",
@@ -159,16 +203,60 @@
             "reason": "Hausse régulière sur 7j, volume/capitalisation sain (~11%), rang 71.",
             "flagged_at": "2026-08-07T00:20:00Z",
             "price_at_flag": 0.080711,
-            "check_at": "2026-08-21T00:20:00Z",
-            "status": "pending",
-            "outcome": {
-                "price_at_check": null,
-                "move_pct": null,
-                "validated": null,
-                "checked_at": null
-            },
             "threshold_pct": 5,
-            "price_refreshed_at": "2026-08-07T16:25:00Z"
+            "price_refreshed_at": "2026-08-07T16:25:00Z",
+            "horizons": {
+                "j1": {
+                    "check_at": "2026-08-08T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j3": {
+                    "check_at": "2026-08-10T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j7": {
+                    "check_at": "2026-08-14T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j14": {
+                    "check_at": "2026-08-21T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "m6": {
+                    "check_at": "2027-02-05T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                }
+            }
         },
         {
             "id": "opp-20260807-axs",
@@ -242,16 +330,60 @@
             "reason": "Momentum modéré mais confirmé, liquidité correcte, rang 189.",
             "flagged_at": "2026-08-07T00:20:00Z",
             "price_at_flag": 0.779307,
-            "check_at": "2026-08-21T00:20:00Z",
-            "status": "pending",
-            "outcome": {
-                "price_at_check": null,
-                "move_pct": null,
-                "validated": null,
-                "checked_at": null
-            },
             "threshold_pct": 5,
-            "price_refreshed_at": "2026-08-07T16:25:00Z"
+            "price_refreshed_at": "2026-08-07T16:25:00Z",
+            "horizons": {
+                "j1": {
+                    "check_at": "2026-08-08T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j3": {
+                    "check_at": "2026-08-10T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j7": {
+                    "check_at": "2026-08-14T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j14": {
+                    "check_at": "2026-08-21T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "m6": {
+                    "check_at": "2027-02-05T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                }
+            }
         },
         {
             "id": "opp-20260807-cvx",
@@ -325,16 +457,60 @@
             "reason": "Écosystème Curve, hausse régulière, rien d'anormal dans les volumes, rang 199.",
             "flagged_at": "2026-08-07T00:20:00Z",
             "price_at_flag": 1.33,
-            "check_at": "2026-08-21T00:20:00Z",
-            "status": "pending",
-            "outcome": {
-                "price_at_check": null,
-                "move_pct": null,
-                "validated": null,
-                "checked_at": null
-            },
             "threshold_pct": 5,
-            "price_refreshed_at": "2026-08-07T16:25:00Z"
+            "price_refreshed_at": "2026-08-07T16:25:00Z",
+            "horizons": {
+                "j1": {
+                    "check_at": "2026-08-08T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j3": {
+                    "check_at": "2026-08-10T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j7": {
+                    "check_at": "2026-08-14T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j14": {
+                    "check_at": "2026-08-21T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "m6": {
+                    "check_at": "2027-02-05T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                }
+            }
         },
         {
             "id": "opp-20260807-btw",
@@ -408,16 +584,60 @@
             "reason": "Score le plus élevé du criblage, mais projet que je ne connais pas indépendamment et hausse de +105% sur 7j sans actualité vérifiée. Spéculatif, pas une pépite confirmée. Mise à jour du 10/08 : divergence de prix extrême entre plateformes ce cycle (facteur ~15), possible confusion avec un autre jeton partageant le même symbole boursier — prix affiché non rafraîchi par prudence, voir alerte dédiée.",
             "flagged_at": "2026-08-07T00:20:00Z",
             "price_at_flag": 0.149438,
-            "check_at": "2026-08-21T00:20:00Z",
-            "status": "pending",
-            "outcome": {
-                "price_at_check": null,
-                "move_pct": null,
-                "validated": null,
-                "checked_at": null
-            },
             "threshold_pct": 5,
-            "price_refreshed_at": "2026-08-07T16:25:00Z"
+            "price_refreshed_at": "2026-08-07T16:25:00Z",
+            "horizons": {
+                "j1": {
+                    "check_at": "2026-08-08T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j3": {
+                    "check_at": "2026-08-10T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j7": {
+                    "check_at": "2026-08-14T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j14": {
+                    "check_at": "2026-08-21T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "m6": {
+                    "check_at": "2027-02-05T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                }
+            }
         },
         {
             "id": "opp-20260807-us",
@@ -491,16 +711,60 @@
             "reason": "Signal purement quantitatif, aucune vérification fondamentale effectuée. Prudence recommandée.",
             "flagged_at": "2026-08-07T00:20:00Z",
             "price_at_flag": 0.04601519,
-            "check_at": "2026-08-21T00:20:00Z",
-            "status": "pending",
-            "outcome": {
-                "price_at_check": null,
-                "move_pct": null,
-                "validated": null,
-                "checked_at": null
-            },
             "threshold_pct": 5,
-            "price_refreshed_at": "2026-08-07T16:25:00Z"
+            "price_refreshed_at": "2026-08-07T16:25:00Z",
+            "horizons": {
+                "j1": {
+                    "check_at": "2026-08-08T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j3": {
+                    "check_at": "2026-08-10T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j7": {
+                    "check_at": "2026-08-14T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j14": {
+                    "check_at": "2026-08-21T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "m6": {
+                    "check_at": "2027-02-05T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                }
+            }
         },
         {
             "id": "opp-20260807-ub",
@@ -574,16 +838,60 @@
             "reason": "Hausse récente marquée sur 24h, mais 7j négatif — signal quantitatif uniquement, à vérifier avant toute action. Mise à jour du 10/08 : listage confirmé sur le marché KRW de Bithumb (6 août), mais prix toujours trop divergent selon la source (volatilité réelle marquée) pour être rafraîchi ce cycle.",
             "flagged_at": "2026-08-07T00:20:00Z",
             "price_at_flag": 0.13704,
-            "check_at": "2026-08-21T00:20:00Z",
-            "status": "pending",
-            "outcome": {
-                "price_at_check": null,
-                "move_pct": null,
-                "validated": null,
-                "checked_at": null
-            },
             "threshold_pct": 5,
-            "price_refreshed_at": "2026-08-07T16:25:00Z"
+            "price_refreshed_at": "2026-08-07T16:25:00Z",
+            "horizons": {
+                "j1": {
+                    "check_at": "2026-08-08T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j3": {
+                    "check_at": "2026-08-10T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j7": {
+                    "check_at": "2026-08-14T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j14": {
+                    "check_at": "2026-08-21T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "m6": {
+                    "check_at": "2027-02-05T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                }
+            }
         },
         {
             "id": "opp-20260807-kite",
@@ -657,16 +965,60 @@
             "reason": "Momentum modéré, liquidité correcte (~10% volume/capitalisation), mais non vérifié fondamentalement.",
             "flagged_at": "2026-08-07T00:20:00Z",
             "price_at_flag": 0.092685,
-            "check_at": "2026-08-21T00:20:00Z",
-            "status": "pending",
-            "outcome": {
-                "price_at_check": null,
-                "move_pct": null,
-                "validated": null,
-                "checked_at": null
-            },
             "threshold_pct": 5,
-            "price_refreshed_at": "2026-08-07T16:25:00Z"
+            "price_refreshed_at": "2026-08-07T16:25:00Z",
+            "horizons": {
+                "j1": {
+                    "check_at": "2026-08-08T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j3": {
+                    "check_at": "2026-08-10T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j7": {
+                    "check_at": "2026-08-14T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j14": {
+                    "check_at": "2026-08-21T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "m6": {
+                    "check_at": "2027-02-05T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                }
+            }
         }
     ]
 }

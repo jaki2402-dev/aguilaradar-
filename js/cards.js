@@ -55,7 +55,7 @@ function renderOpportunityCard(o, idx, containerId) {
   // ouvrirait toujours la copie cachee de l'autre onglet plutot que celle cliquee.
   const panelId = `detail-opp-${containerId}-${o.id || idx}`;
   return `
-    <div class="opp-card clickable" data-detail-target="${panelId}" data-cgid="${o.cgId}" data-ath="${o.ath_change_pct ?? ""}" data-reason="${(o.reason || "").replace(/"/g, "&quot;")}">
+    <div class="opp-card clickable" data-detail-target="${panelId}" data-cgid="${o.cgId}" data-ath="${o.ath_change_pct ?? ""}" data-reason="${(o.reason || "").replace(/"/g, "&quot;")}" data-opp-id="${o.id || o.ticker}">
       <div class="opp-card-top">
         <img src="${o.image}" alt="" class="opp-logo" loading="lazy" onerror="this.style.visibility='hidden'" />
         <div class="opp-title">
@@ -100,6 +100,7 @@ function renderOpportunityCards(containerId, opportunities, limit) {
     const cgId = cardEl.dataset.cgid;
     const ath = cardEl.dataset.ath ? parseFloat(cardEl.dataset.ath) : null;
     const reason = cardEl.dataset.reason || "";
-    attachDetailToggle(cardEl, panelId, { cgId, athChangePct: ath, reasoning: reason, tvSymbol: null });
+    const opp = shown.find((o) => (o.id || o.ticker) === cardEl.dataset.oppId);
+    attachDetailToggle(cardEl, panelId, { cgId, athChangePct: ath, reasoning: reason, tvSymbol: null, horizons: opp && opp.horizons });
   });
 }

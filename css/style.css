@@ -207,7 +207,6 @@ nav.tabs button.active { color: var(--accent); }
     border-radius: 12px;
   }
   nav.tabs button.active { background: var(--accent-dim); }
-  main { padding-bottom: 96px; }
 }
 
 @media (min-width: 768px) {
@@ -227,6 +226,12 @@ nav.tabs button.active { color: var(--accent); }
 }
 
 main { padding: 20px 20px 40px; max-width: 1100px; margin: 0 auto; }
+/* Doit rester apres la regle "main" ci-dessus (meme specificite) : sur mobile la nav est
+   fixed en bas de l'ecran, sans cette regle en dernier le shorthand ci-dessus ecrase le
+   padding-bottom et masque en permanence le bas de chaque onglet derriere la nav. */
+@media (max-width: 767px) {
+  main { padding-bottom: 96px; }
+}
 section.tab-panel { display: none; animation: fadein 0.2s ease; }
 section.tab-panel.active { display: block; }
 @keyframes fadein { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
@@ -528,6 +533,18 @@ footer.site-footer {
 }
 .detail-context strong { display: block; margin-bottom: 6px; }
 .detail-context p { margin: 4px 0; }
+.detail-horizons {
+  margin-top: 14px; padding: 14px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
+}
+.detail-horizons strong { display: block; margin-bottom: 4px; }
+.detail-horizons > p.hint { margin: 0 0 10px; }
+.horizons-row { display: flex; flex-wrap: wrap; gap: 8px; }
+.horizon-chip {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 8px 10px; min-width: 64px;
+}
+.horizon-chip .hint { font-size: 0.68rem; }
 
 /* ---- Secteurs, historique, digest, replay ---- */
 .sector-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.85rem; }
