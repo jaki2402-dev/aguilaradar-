@@ -73,10 +73,10 @@ function renderMarketContext(ctx) {
       <div class="stat-card accent-gold"><div class="stat-label">Chômage US</div><div class="stat-value">${emp.unemployment_rate_pct !== null && emp.unemployment_rate_pct !== undefined ? emp.unemployment_rate_pct.toFixed(1) + " %" : "—"}</div></div>
       <div class="stat-card accent-teal"><div class="stat-label">Flux ETF BTC</div><div class="stat-value">${etf.btc_etf_net_flow_usd !== null && etf.btc_etf_net_flow_usd !== undefined ? formatMarketCap(etf.btc_etf_net_flow_usd) : "—"}</div></div>
     </div>
-    ${sc.note ? `<p class="hint">Stablecoins : ${sc.note}</p>` : ""}
-    ${emp.market_reaction_note ? `<p class="hint">Emploi : ${emp.market_reaction_note}</p>` : ""}
-    ${etf.note ? `<p class="hint">ETF : ${etf.note}</p>` : ""}
-    ${conf.level ? `<p class="hint" style="margin-top:8px;"><strong>Confiance globale du site : ${conf.level}</strong> — ${conf.note || ""}</p>` : ""}`;
+    ${sc.note ? `<p class="hint">Stablecoins : ${escapeHtml(sc.note)}</p>` : ""}
+    ${emp.market_reaction_note ? `<p class="hint">Emploi : ${escapeHtml(emp.market_reaction_note)}</p>` : ""}
+    ${etf.note ? `<p class="hint">ETF : ${escapeHtml(etf.note)}</p>` : ""}
+    ${conf.level ? `<p class="hint" style="margin-top:8px;"><strong>Confiance globale du site : ${escapeHtml(conf.level)}</strong> — ${escapeHtml(conf.note || "")}</p>` : ""}`;
 }
 
 function renderHealthStatus(healthLog) {
@@ -95,9 +95,9 @@ function renderHealthStatus(healthLog) {
   el.innerHTML = `
     <div class="journal-entry">
       <div class="log-header"><span><strong>Dernière vérification</strong> · ${new Date(last.checked_at).toLocaleString("fr-FR")}</span><span class="badge badge-${ok ? "achat" : "vente"}">${ok ? "OK" : "Problème détecté"}</span></div>
-      <p class="hint">Fichiers vérifiés : ${(last.files_ok || []).length}. ${last.files_broken && last.files_broken.length ? "Problèmes : " + last.files_broken.join(", ") : "Aucun problème."}</p>
+      <p class="hint">Fichiers vérifiés : ${(last.files_ok || []).length}. ${last.files_broken && last.files_broken.length ? "Problèmes : " + escapeHtml(last.files_broken.join(", ")) : "Aucun problème."}</p>
       <p class="hint">Accessibilité du site depuis l'environnement de la routine : ${last.site_reachable ? "oui" : "non testable (restriction réseau de l'environnement d'exécution, pas un indicateur de panne réelle du site)"}.</p>
-      ${last.note ? `<p class="hint">${last.note}</p>` : ""}
+      ${last.note ? `<p class="hint">${escapeHtml(last.note)}</p>` : ""}
     </div>
     <p class="hint" style="margin-top:8px;">${checks.length} vérification(s) enregistrée(s) au total, historique permanent.</p>`;
 }

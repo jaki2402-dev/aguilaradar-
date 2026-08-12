@@ -157,7 +157,7 @@ function renderJournalPage() {
           <span><strong>${v.ticker || v.asset}</strong> · ${v.issued_at}</span>
           <span class="badge badge-${(v.verdict || "").toLowerCase()}">${v.verdict}</span>
         </div>
-        <p>${v.reasoning || ""}</p>
+        <p>${escapeHtml(v.reasoning || "")}</p>
         <p class="hint">Confiance ${v.confidence_pct ?? "—"} % · horizon ${v.horizon_days} j · statut ${v.status}</p>
         ${v.status === "pending" ? renderProvisionalBadge(v) : ""}
         <div class="expand-hint">Voir l'analyse détaillée <span class="chevron">▾</span></div>
@@ -234,8 +234,8 @@ function renderNotificationsPage() {
           <span><strong>${a.ticker_ou_theme || a.ticker || ""}</strong> · ${a.triggered_at}</span>
           <span class="badge badge-warning">${ALERT_TYPE_LABELS[a.type] || a.type}</span>
         </div>
-        <p>${a.message}</p>
-        ${a.source ? `<p class="hint">Source : ${a.source}</p>` : ""}
+        <p>${escapeHtml(a.message)}</p>
+        ${a.source ? `<p class="hint">Source : ${escapeHtml(a.source)}</p>` : ""}
       </div>`
       )
       .join("") +
@@ -272,7 +272,7 @@ function renderMacroRegime(engineHistory) {
         <div><div class="hero-stat-value">${regime.fear_greed_value ?? "—"}</div><div class="hero-stat-label">Fear &amp; Greed</div></div>
         <div><div class="hero-stat-value">${regime.btc_dominance_pct !== null && regime.btc_dominance_pct !== undefined ? regime.btc_dominance_pct.toFixed(1) + " %" : "—"}</div><div class="hero-stat-label">Dominance BTC</div></div>
       </div>
-      ${regime.note ? `<p class="hint" style="margin-top:10px;">${regime.note}</p>` : ""}
+      ${regime.note ? `<p class="hint" style="margin-top:10px;">${escapeHtml(regime.note)}</p>` : ""}
     </div>`;
 }
 
@@ -285,13 +285,15 @@ function renderNews(newsData) {
     return;
   }
   el.innerHTML = items
-    .map(
-      (n) => `
+    .map((n) => {
+      const url = safeUrl(n.url);
+      const title = escapeHtml(n.title);
+      return `
       <div class="news-item">
-        <a href="${n.url}" target="_blank" rel="noopener noreferrer">${n.title}</a>
-        <span class="hint">${n.source || ""}</span>
-      </div>`
-    )
+        ${url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${title}</a>` : `<span>${title}</span>`}
+        <span class="hint">${escapeHtml(n.source || "")}</span>
+      </div>`;
+    })
     .join("");
 }
 

@@ -217,7 +217,7 @@ function renderControlGroupComparison(opportunitiesData, controlGroup) {
       <div class="stat-card accent-gray"><div class="stat-label">Échantillon aléatoire</div><div class="stat-value">${cgStats.validated_pct.toFixed(0)} %</div></div>
       <div class="stat-card ${edge >= 0 ? "accent-teal" : "accent-gray"}"><div class="stat-label">Écart réel</div><div class="stat-value ${edge >= 0 ? "positive" : "negative"}">${edge >= 0 ? "+" : ""}${edge.toFixed(0)} pts</div></div>
     </div>
-    <p class="hint">${cgStats.note}</p>`;
+    <p class="hint">${escapeHtml(cgStats.note)}</p>`;
 }
 
 // Bandeau fixe (piste "priorité") : les 3 chiffres qui comptent le plus, visibles sans
@@ -325,11 +325,11 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGrou
         (entry) => `
         <div class="log-entry">
           <div class="log-header">
-            <span>${entry.version} · ${entry.attempted_at}</span>
-            <span class="badge ${entry.status === "appliquée" ? "badge-success" : "badge-neutral"}">${entry.status}</span>
+            <span>${escapeHtml(entry.version)} · ${escapeHtml(entry.attempted_at)}</span>
+            <span class="badge ${entry.status === "appliquée" ? "badge-success" : "badge-neutral"}">${escapeHtml(entry.status)}</span>
           </div>
-          <p>${entry.change_description}</p>
-          <p class="hint">${entry.note || ""}</p>
+          <p>${escapeHtml(entry.change_description)}</p>
+          <p class="hint">${escapeHtml(entry.note || "")}</p>
         </div>`
       )
       .join("");
@@ -357,5 +357,5 @@ function renderPaperPortfolio(stats) {
       <div class="stat-card accent-gold"><div class="stat-label">Juste garder du BTC</div><div class="stat-value">${stats.btc_buy_hold_return_pct >= 0 ? "+" : ""}${stats.btc_buy_hold_return_pct.toFixed(1)} %</div></div>
       <div class="stat-card ${edge >= 0 ? "accent-teal" : "accent-gray"}"><div class="stat-label">Écart</div><div class="stat-value ${edge >= 0 ? "positive" : "negative"}">${edge >= 0 ? "+" : ""}${edge.toFixed(1)} pts</div></div>
     </div>
-    <p class="hint">${stats.method}</p>`;
+    <p class="hint">${escapeHtml(stats.method)}</p>`;
 }

@@ -27,7 +27,7 @@ function renderSearchResult(coin) {
   el.innerHTML = `
     <div class="favori-card">
       <div class="favori-header">
-        <div><span class="favori-ticker">${(coin.symbol || "").toUpperCase()}</span><span class="favori-name">${coin.name}</span></div>
+        <div><span class="favori-ticker">${escapeHtml((coin.symbol || "").toUpperCase())}</span><span class="favori-name">${escapeHtml(coin.name)}</span></div>
         <div class="favori-price">${formatPrice(coin.current_price, "EUR")}</div>
       </div>
       <div class="chip ${change24h >= 0 ? "positive" : "negative"}">${formatChangePct(change24h)}</div>
@@ -45,7 +45,7 @@ async function handleSearchSubmit(query) {
   try {
     const matches = await searchCoinByName(query.trim());
     if (matches.length === 0) {
-      el.innerHTML = `<p class="empty-state">Aucun résultat pour "${query}".</p>`;
+      el.innerHTML = `<p class="empty-state">Aucun résultat pour "${escapeHtml(query)}".</p>`;
       return;
     }
     const detail = await fetchCoinDetail(matches[0].id);
