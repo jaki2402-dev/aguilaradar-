@@ -81,12 +81,12 @@
             "horizons": {
                 "j1": {
                     "check_at": "2026-08-08T00:20:00Z",
-                    "status": "pending",
+                    "status": "resolved",
                     "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
+                        "price_at_check": 0.17354570276838716,
+                        "move_pct": -0.11,
+                        "validated": false,
+                        "checked_at": "2026-08-12T13:22:43Z"
                     }
                 },
                 "j3": {
@@ -208,12 +208,12 @@
             "horizons": {
                 "j1": {
                     "check_at": "2026-08-08T00:20:00Z",
-                    "status": "pending",
+                    "status": "resolved",
                     "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
+                        "price_at_check": 0.07873319375548908,
+                        "move_pct": -2.45,
+                        "validated": false,
+                        "checked_at": "2026-08-12T13:22:43Z"
                     }
                 },
                 "j3": {
@@ -335,12 +335,12 @@
             "horizons": {
                 "j1": {
                     "check_at": "2026-08-08T00:20:00Z",
-                    "status": "pending",
+                    "status": "resolved",
                     "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
+                        "price_at_check": 0.7646639125148404,
+                        "move_pct": -1.88,
+                        "validated": false,
+                        "checked_at": "2026-08-12T13:22:43Z"
                     }
                 },
                 "j3": {
@@ -462,12 +462,12 @@
             "horizons": {
                 "j1": {
                     "check_at": "2026-08-08T00:20:00Z",
-                    "status": "pending",
+                    "status": "resolved",
                     "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
+                        "price_at_check": 1.2768612430346011,
+                        "move_pct": -4.0,
+                        "validated": false,
+                        "checked_at": "2026-08-12T13:22:43Z"
                     }
                 },
                 "j3": {
@@ -589,12 +589,12 @@
             "horizons": {
                 "j1": {
                     "check_at": "2026-08-08T00:20:00Z",
-                    "status": "pending",
+                    "status": "resolved",
                     "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
+                        "price_at_check": 0.19095857452268605,
+                        "move_pct": 27.78,
+                        "validated": true,
+                        "checked_at": "2026-08-12T13:22:43Z"
                     }
                 },
                 "j3": {
@@ -716,12 +716,12 @@
             "horizons": {
                 "j1": {
                     "check_at": "2026-08-08T00:20:00Z",
-                    "status": "pending",
+                    "status": "resolved",
                     "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
+                        "price_at_check": 0.04453120437041116,
+                        "move_pct": -3.22,
+                        "validated": false,
+                        "checked_at": "2026-08-12T13:22:43Z"
                     }
                 },
                 "j3": {
@@ -843,12 +843,12 @@
             "horizons": {
                 "j1": {
                     "check_at": "2026-08-08T00:20:00Z",
-                    "status": "pending",
+                    "status": "resolved",
                     "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
+                        "price_at_check": 0.12191561263875898,
+                        "move_pct": -11.04,
+                        "validated": false,
+                        "checked_at": "2026-08-12T13:22:43Z"
                     }
                 },
                 "j3": {
@@ -970,12 +970,12 @@
             "horizons": {
                 "j1": {
                     "check_at": "2026-08-08T00:20:00Z",
-                    "status": "pending",
+                    "status": "resolved",
                     "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
+                        "price_at_check": 0.0881733623492525,
+                        "move_pct": -4.87,
+                        "validated": false,
+                        "checked_at": "2026-08-12T13:22:43Z"
                     }
                 },
                 "j3": {
