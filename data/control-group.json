@@ -1,7 +1,128 @@
 {
-  "last_sampled_at": null,
-  "sample_size": 0,
-  "items": [],
+  "last_sampled_at": "2026-08-12T10:45:00Z",
+  "sample_size": 8,
+  "items": [
+    {
+      "id": "cg-20260812-rain",
+      "ticker": "RAIN",
+      "cgId": "rain",
+      "sampled_at": "2026-08-12T10:45:00Z",
+      "price_at_issue": 0.01291452,
+      "resolves_at": "2026-08-26T10:45:00Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20260812-wld",
+      "ticker": "WLD",
+      "cgId": "worldcoin-wld",
+      "sampled_at": "2026-08-12T10:45:00Z",
+      "price_at_issue": 0.33368,
+      "resolves_at": "2026-08-26T10:45:00Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20260812-vet",
+      "ticker": "VET",
+      "cgId": "vechain",
+      "sampled_at": "2026-08-12T10:45:00Z",
+      "price_at_issue": 0.00463171,
+      "resolves_at": "2026-08-26T10:45:00Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20260812-pyth",
+      "ticker": "PYTH",
+      "cgId": "pyth-network",
+      "sampled_at": "2026-08-12T10:45:00Z",
+      "price_at_issue": 0.04079438,
+      "resolves_at": "2026-08-26T10:45:00Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20260812-ens",
+      "ticker": "ENS",
+      "cgId": "ethereum-name-service",
+      "sampled_at": "2026-08-12T10:45:00Z",
+      "price_at_issue": 4.16,
+      "resolves_at": "2026-08-26T10:45:00Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20260812-mana",
+      "ticker": "MANA",
+      "cgId": "decentraland",
+      "sampled_at": "2026-08-12T10:45:00Z",
+      "price_at_issue": 0.065907,
+      "resolves_at": "2026-08-26T10:45:00Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20260812-sand",
+      "ticker": "SAND",
+      "cgId": "the-sandbox",
+      "sampled_at": "2026-08-12T10:45:00Z",
+      "price_at_issue": 0.03978322,
+      "resolves_at": "2026-08-26T10:45:00Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20260812-gala",
+      "ticker": "GALA",
+      "cgId": "gala",
+      "sampled_at": "2026-08-12T10:45:00Z",
+      "price_at_issue": 0.00170881,
+      "resolves_at": "2026-08-26T10:45:00Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    }
+  ],
   "stats": {
     "total_resolved": 0,
     "validated_pct": null,

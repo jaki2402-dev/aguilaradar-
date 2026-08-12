@@ -55,11 +55,11 @@ function renderOpportunityCard(o, idx, containerId) {
   // ouvrirait toujours la copie cachee de l'autre onglet plutot que celle cliquee.
   const panelId = `detail-opp-${containerId}-${o.id || idx}`;
   return `
-    <div class="opp-card clickable" data-detail-target="${panelId}" data-cgid="${o.cgId}" data-ath="${o.ath_change_pct ?? ""}" data-reason="${(o.reason || "").replace(/"/g, "&quot;")}" data-opp-id="${o.id || o.ticker}">
+    <div class="opp-card clickable" data-detail-target="${panelId}" data-cgid="${o.cgId}" data-ath="${o.ath_change_pct ?? ""}" data-reason="${escapeHtml(o.reason || "")}" data-opp-id="${o.id || o.ticker}">
       <div class="opp-card-top">
-        <img src="${o.image}" alt="" class="opp-logo" loading="lazy" onerror="this.style.visibility='hidden'" />
+        <img src="${safeUrl(o.image) || ""}" alt="" class="opp-logo" loading="lazy" onerror="this.style.visibility='hidden'" />
         <div class="opp-title">
-          <div><span class="opp-name">${o.name}</span> <span class="opp-ticker-tag">${o.ticker}</span></div>
+          <div><span class="opp-name">${escapeHtml(o.name)}</span> <span class="opp-ticker-tag">${escapeHtml(o.ticker)}</span></div>
           <span class="hint">Rang capitalisation #${o.market_cap_rank ?? "—"}</span>
         </div>
         ${gaugeSvg(conf)}
@@ -70,10 +70,10 @@ function renderOpportunityCard(o, idx, containerId) {
       </div>
       ${points ? `<svg class="opp-spark" viewBox="0 0 100 32" preserveAspectRatio="none"><polyline points="${points}" class="spark-line ${trendUp ? "positive" : "negative"}" /></svg>` : ""}
       <div class="opp-tags">
-        ${(o.tags || []).map((t) => `<span class="tag">${t}</span>`).join("")}
+        ${(o.tags || []).map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join("")}
         <span class="tag tag-confidence">Confiance ${conf}%</span>
       </div>
-      <p class="hint" style="margin-top: 8px;">${o.reason}</p>
+      <p class="hint" style="margin-top: 8px;">${escapeHtml(o.reason || "")}</p>
       <div class="opp-footer">
         <span>7j <strong class="${o.change_7d_pct >= 0 ? "positive" : "negative"}">${formatChangePct(o.change_7d_pct)}</strong></span>
         <span>30j <strong class="${o.change_30d_pct >= 0 ? "positive" : "negative"}">${formatChangePct(o.change_30d_pct)}</strong></span>

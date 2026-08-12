@@ -1,5 +1,26 @@
 // Configuration centrale — modifier ici, jamais en dur ailleurs dans le code.
 
+// Échappement HTML pour tout texte affiché qui vient d'une source externe/moins fiable
+// (actus web, résumés IA, API CoinGecko publique) — ces fichiers/API ne sont jamais garantis
+// exempts de caractères HTML, donc jamais interpolés bruts dans innerHTML.
+const HTML_ESCAPE_MAP = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" };
+function escapeHtml(value) {
+  if (value === undefined || value === null) return "";
+  return String(value).replace(/[&<>"']/g, (c) => HTML_ESCAPE_MAP[c]);
+}
+
+// N'autorise que http(s) pour toute URL affichée en attribut href — bloque les schémas
+// javascript:/data: qu'un champ texte externe (actu, contexte favori) pourrait contenir.
+function safeUrl(url) {
+  if (!url || typeof url !== "string") return null;
+  try {
+    const u = new URL(url, window.location.href);
+    return u.protocol === "http:" || u.protocol === "https:" ? u.href : null;
+  } catch (e) {
+    return null;
+  }
+}
+
 // Hash SHA-256 du code d'accès (voir README "Portail d'accès" pour les limites réelles
 // de cette protection — le dépôt est public, ce n'est pas une vraie sécurité).
 const ACCESS_HASH = "0a23403368cf9a89e31f7d79caef03b54333541471de0488745eb26f20bbf5d6";
