@@ -151,11 +151,17 @@ function renderAccuracyByRegime(resolved) {
     ${withoutRegime > 0 ? `<p class="hint">${withoutRegime} verdict(s) vérifié(s) sans régime enregistré (émis avant le 11/08) — exclu(s) de ce tableau, jamais estimé rétroactivement.</p>` : ""}`;
 }
 
+// Depuis la migration multi-horizons, chaque opportunité est vérifiée à 5 échéances
+// indépendantes (horizons.j1/j3/j7/j14/m6) — il n'y a plus de status/outcome au niveau
+// racine de l'opportunité. j14 sert de référence pour ces stats agrégées : c'est le même
+// horizon fixe utilisé pour le groupe témoin (comparaison équitable, seuil identique
+// partout ailleurs sur le site). Les 4 autres horizons restent visibles par pépite dans
+// la fiche détaillée (voir detail.js renderOpportunityHorizonsSection).
 function computeOpportunitiesStats(opportunities) {
-  const resolved = (opportunities || []).filter((o) => o.status === "resolved");
+  const resolved = (opportunities || []).filter((o) => o.horizons && o.horizons.j14 && o.horizons.j14.status === "resolved");
   if (resolved.length === 0) return null;
-  const validatedCount = resolved.filter((o) => o.outcome && o.outcome.validated).length;
-  const moves = resolved.map((o) => o.outcome.move_pct).filter((m) => m !== null && m !== undefined);
+  const validatedCount = resolved.filter((o) => o.horizons.j14.outcome && o.horizons.j14.outcome.validated).length;
+  const moves = resolved.map((o) => o.horizons.j14.outcome.move_pct).filter((m) => m !== null && m !== undefined);
   const avgMove = moves.length ? moves.reduce((a, b) => a + b, 0) / moves.length : null;
   return {
     total: resolved.length,
@@ -168,10 +174,10 @@ function renderOpportunitiesEngineSection(opportunitiesData) {
   const el = document.getElementById("engine-opportunities");
   if (!el) return;
   const items = (opportunitiesData && opportunitiesData.opportunities) || [];
-  const pending = items.filter((o) => o.status === "pending").length;
+  const pending = items.filter((o) => !o.horizons || !o.horizons.j14 || o.horizons.j14.status === "pending").length;
   const stats = computeOpportunitiesStats(items);
 
-  let html = `<p>${items.length} opportunité(s) signalée(s) au total — ${items.length - pending} vérifiée(s), ${pending} en attente de leur échéance.</p>`;
+  let html = `<p>${items.length} opportunité(s) signalée(s) au total — ${items.length - pending} vérifiée(s) à 14 jours, ${pending} en attente de leur échéance.</p>`;
 
   if (!stats) {
     html += `<p class="empty-state">Aucune opportunité vérifiée pour l'instant — chaque pépite signalée est revérifiée 14 jours après (seuil ±${THRESHOLDS.directionalMovePct} %), aucun taux de réussite avant ça.</p>`;
