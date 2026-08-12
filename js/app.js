@@ -10,6 +10,7 @@ function switchTab(tabId) {
     document.querySelector(`[data-tab="${id}"]`).classList.toggle("active", id === tabId);
   });
   if (window.notifyTabActive) notifyTabActive(tabId);
+  if (tabId === "notifications" && window.clearNotifBellBadge) clearNotifBellBadge();
 }
 
 async function loadJson(url) {
@@ -321,6 +322,7 @@ async function loadAllData() {
   renderOpportunities(opportunities);
   renderJournal(verdicts || []);
   renderNotifications(alerts);
+  if (window.updateNotifBellFromAlerts) updateNotifBellFromAlerts(alerts);
   renderNews(news);
   renderMacroRegime(engineHistory);
   renderMarketContext(marketContext);
@@ -435,6 +437,9 @@ async function initApp() {
 
   const refreshBtn = document.getElementById("refresh-btn");
   refreshBtn.addEventListener("click", () => refreshAll(refreshBtn));
+
+  const bellBtn = document.getElementById("notif-bell-btn");
+  if (bellBtn) bellBtn.addEventListener("click", () => switchTab("notifications"));
   initPullToRefresh();
   initSearch();
 

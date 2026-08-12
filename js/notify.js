@@ -97,7 +97,63 @@ function saveSeenDigestId(id) {
   } catch (e) {}
 }
 
+// --- Cloche récapitulative dans l'en-tête : indique en un coup d'œil s'il y a du nouveau
+// à voir dans l'onglet Notifications (alertes + résumé périodique), sans avoir à y aller.
+const NOTIF_LAST_VIEWED_KEY = "aguilaradar_notif_last_viewed_at";
+let lastKnownAlerts = [];
+let lastKnownDigest = null;
+
+function loadLastViewedAt() {
+  try {
+    return localStorage.getItem(NOTIF_LAST_VIEWED_KEY) || "";
+  } catch (e) {
+    return "";
+  }
+}
+
+function saveLastViewedAt(iso) {
+  try {
+    localStorage.setItem(NOTIF_LAST_VIEWED_KEY, iso);
+  } catch (e) {}
+}
+
+function updateNotifBellBadge() {
+  const badge = document.getElementById("notif-bell-badge");
+  if (!badge) return;
+  // Première fois (aucun historique) : on prend "maintenant" comme référence plutôt que
+  // de compter tout l'historique existant d'un coup (même logique que les autres baselines
+  // de ce fichier, pour ne pas surprendre un nouvel utilisateur avec "9+" d'un coup).
+  let lastViewed = loadLastViewedAt();
+  if (!lastViewed) {
+    lastViewed = new Date().toISOString();
+    saveLastViewedAt(lastViewed);
+  }
+  const lastViewedTime = new Date(lastViewed).getTime();
+  let count = (lastKnownAlerts || []).filter((a) => new Date(a.triggered_at).getTime() > lastViewedTime).length;
+  if (lastKnownDigest && lastKnownDigest.generated_at && new Date(lastKnownDigest.generated_at).getTime() > lastViewedTime) {
+    count += 1;
+  }
+  if (count > 0) {
+    badge.textContent = count > 9 ? "9+" : String(count);
+    badge.hidden = false;
+  } else {
+    badge.hidden = true;
+  }
+}
+
+function clearNotifBellBadge() {
+  saveLastViewedAt(new Date().toISOString());
+  updateNotifBellBadge();
+}
+
+function updateNotifBellFromAlerts(alerts) {
+  lastKnownAlerts = alerts || [];
+  updateNotifBellBadge();
+}
+
 function renderDigestPanel(digest) {
+  lastKnownDigest = digest;
+  updateNotifBellBadge();
   const el = document.getElementById("digest-panel");
   if (!el) return;
   if (!digest || !digest.generated_at) {
