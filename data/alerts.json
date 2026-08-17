@@ -470,5 +470,13 @@
         "triggered_at": "2026-08-17T01:03:00Z",
         "message": "Double développement réglementaire depuis le dernier cycle committé (12/08) : la SEC a annulé le 14 août sa réunion prévue sur un cadre de levée de fonds pour les cryptoactifs, et Galaxy Research a de nouveau abaissé sa probabilité d'adoption du CLARITY Act en 2026, désormais autour de 10 % (contre 30 % le 10 août). Par ailleurs, Binance restreint ses transactions avec HTX et 10 autres plateformes à compter du 23 août, invoquant les sanctions UE/UK. Régime macro toujours « neutre », aucun changement de catégorie.",
         "source": "agrégat WebSearch (CryptoSlate, Yahoo Finance, Cointelegraph)"
+    },
+    {
+        "id": "alert-20260817-0823-opportunites-mouvements",
+        "ticker_ou_theme": "BTW / US",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-17T08:23:00Z",
+        "message": "Recherche large « biggest movers » : Bitway (BTW) et Talus (US), deux des opportunités déjà suivies, figurent parmi les plus fortes variations du jour — Bitway en hausse de plus de 8 % sur 24h, Talus en repli de plus de 20 % sur 24h (agrégat CoinGabbar, valeurs approximatives non recoupées précisément faute d'accès direct aux données de marché ce cycle). Aucun des 15 favoris ne figure dans ce classement. Prix non rafraîchis dans opportunities.json ce cycle : l'accès HTTP direct à CoinGecko/Binance reste bloqué par la politique réseau de cet environnement (403, voir data_source_reliability).",
+        "source": "agrégat WebSearch (CoinGabbar)"
     }
 ]
