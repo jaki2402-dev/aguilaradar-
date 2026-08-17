@@ -508,6 +508,12 @@ footer.site-footer {
 .digest-summary { margin: 0 0 10px; color: var(--text-dim); font-size: 0.94rem; line-height: 1.6; }
 .digest-tips { margin: 0; padding-left: 18px; color: var(--text); font-size: 0.88rem; line-height: 1.7; }
 
+/* ---- Glossaire débutant ---- */
+.glossary-list { margin: 8px 0 0; }
+.glossary-list dt { font-weight: 700; font-size: 0.88rem; margin-top: 14px; }
+.glossary-list dt:first-child { margin-top: 0; }
+.glossary-list dd { margin: 3px 0 0; color: var(--text-dim); font-size: 0.84rem; line-height: 1.55; }
+
 /* ---- Avertissement ---- */
 .disclaimer-box {
   background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
