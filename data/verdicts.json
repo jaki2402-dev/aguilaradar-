@@ -177,13 +177,13 @@
         "reasoning": "Mouvement extrême et inhabituel (+41.2% en 24h) sans catalyseur vérifié de mon côté (aucune recherche d'actualité confirmée à cette heure). Un tel pic est aussi souvent suivi d'une correction brutale qu'il ne se poursuit. Ne pas courir après ce mouvement sans confirmation — horizon volontairement raccourci à 7j vu la volatilité.",
         "price_at_issue": 0.02677609,
         "resolves_at": "2026-08-14T00:20:00Z",
-        "status": "pending",
+        "status": "resolved",
         "outcome": {
-            "price_at_resolution": null,
-            "actual_move_pct": null,
-            "actual_direction": null,
-            "verdict_correct": null,
-            "resolved_at": null
+            "price_at_resolution": 0.02508,
+            "actual_move_pct": -6.33,
+            "actual_direction": "VENTE",
+            "verdict_correct": false,
+            "resolved_at": "2026-08-17T01:03:00Z"
         },
         "threshold_pct": 5,
         "signal_precoce": {
@@ -476,5 +476,37 @@
             "threshold_crossed": true,
             "note": "Injective (INJ) : seuil de mouvement directionnel (5 %) franchi à la hausse, en sens opposé au verdict VENTE. Deux sources nommées et indépendantes convergent enfin ce cycle (CoinMarketCap 4,34 dollars, CoinGecko 4,64 dollars), après plusieurs cycles où la valeur restait identique d'une recherche à l'autre (probable contenu indexé dupliqué, non reconfirmé). Par rapport au prix d'émission (3,95 dollars), le mouvement est de +9,9 % à +17,5 % selon la source retenue. Aucune actualité spécifique trouvée pour l'expliquer ce cycle : lecture purement technique. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 21 août : le verdict VENTE reste en attente, à confirmer ou infirmer au prochain cycle."
         }
+    },
+    {
+        "id": "v-20260817-ctsi",
+        "issued_at": "2026-08-17T01:03:00Z",
+        "asset": "cartesi",
+        "ticker": "CTSI",
+        "verdict": "ATTENTE",
+        "horizon_days": 7,
+        "confidence_pct": 60,
+        "signals_used": [
+            "24h -5.2%",
+            "7j +17.4%"
+        ],
+        "reasoning": "Consolidation après une semaine volatile : +17,4 % sur 7 jours mais repli de -5,2 % sur les dernières 24h, plutôt un essoufflement du rebond qu'une tendance nette dans un sens ou l'autre. Aucun nouveau catalyseur fondamental identifié ce cycle (le jalon de décentralisation Stage 2 sur L2BEAT du 10 août reste d'actualité mais n'est pas un développement neuf). Régime macro neutre, sans influence directionnelle particulière. Consensus à trois signaux unanimement prudent (3/3 attente) : le précédent verdict ATTENTE sur cet actif vient d'être invalidé par un mouvement de -6,33 % à son échéance, ce qui incite à une lecture encore plus prudente sur un actif historiquement très volatil.",
+        "price_at_issue": 0.02508,
+        "resolves_at": "2026-08-24T01:03:00Z",
+        "status": "pending",
+        "outcome": {
+            "price_at_resolution": null,
+            "actual_move_pct": null,
+            "actual_direction": null,
+            "verdict_correct": null,
+            "resolved_at": null
+        },
+        "threshold_pct": 5,
+        "signal_consensus": {
+            "technique": "ATTENTE",
+            "fondamental": "ATTENTE",
+            "macro": "ATTENTE",
+            "accord_count": 3
+        },
+        "regime_at_issue": "neutre"
     }
 ]
