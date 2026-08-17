@@ -155,6 +155,14 @@ describe("data/favoris-context.json — cohérence avec les 15 favoris de config
   });
 });
 
+describe("data/news.json", () => {
+  it("has the expected top-level shape, including last_updated_at (read by updateFreshnessIndicator)", () => {
+    const news = readJson("data/news.json");
+    expect(Array.isArray(news.items)).toBe(true);
+    expect(isIsoDateString(news.last_updated_at)).toBe(true);
+  });
+});
+
 describe("data/news.json — les URLs passent le même filtre que le rendu réel (safeUrl)", () => {
   it("every news item URL is accepted by safeUrl (http/https only) — the exact guard news-item rendering relies on", () => {
     const news = readJson("data/news.json");
