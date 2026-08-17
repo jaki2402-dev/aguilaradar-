@@ -503,5 +503,13 @@
         "triggered_at": "2026-08-17T10:30:00Z",
         "message": "Bitway (BTW), opportunité déjà suivie : figure de nouveau parmi les plus fortes hausses du jour selon la recherche large « biggest movers » (plus de 8 % sur 24h glissantes). Recherche dédiée en complément : divergence de prix marquée et persistante entre plateformes (de 0,220 à 0,412 dollar selon la source, écart proche d'un facteur 2), rappelant la confusion possible entre plusieurs jetons partageant le même symbole boursier déjà signalée le 10 août. Poursuite qualitative du mouvement haussier confirmée par plusieurs sources (de l'ordre de +30 % sur 24h, +91 % sur 7 jours selon une source), mais aucune mise à jour numérique apportée à opportunities.json ce cycle, la fourchette restant trop large pour un chiffre fiable et unique.",
         "source": "agrégat WebSearch (recherche large « biggest movers » + recherche dédiée Bitway)"
+    },
+    {
+        "id": "alert-20260817-1535-macro-stable",
+        "ticker_ou_theme": "MACRO",
+        "type": "actualite_macro",
+        "triggered_at": "2026-08-17T15:35:00Z",
+        "message": "Cycle du 17 août 2026, 15h35 UTC : rien de nouveau par rapport au cycle précédent (régime neutre, aucun seuil franchi sur les 15 favoris). Bitway et Talus, deux opportunités déjà suivies, poursuivent leurs mouvements déjà signalés (Bitway toujours en forte hausse, Talus toujours en forte baisse), sans élément nouveau justifiant une alerte dédiée supplémentaire.",
+        "source": "agrégat WebSearch (recherche large « biggest movers » + indice de peur et de cupidité + dominance BTC)"
     }
 ]
