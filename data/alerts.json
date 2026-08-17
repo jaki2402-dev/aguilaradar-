@@ -470,5 +470,22 @@
         "triggered_at": "2026-08-17T01:03:00Z",
         "message": "Double développement réglementaire depuis le dernier cycle committé (12/08) : la SEC a annulé le 14 août sa réunion prévue sur un cadre de levée de fonds pour les cryptoactifs, et Galaxy Research a de nouveau abaissé sa probabilité d'adoption du CLARITY Act en 2026, désormais autour de 10 % (contre 30 % le 10 août). Par ailleurs, Binance restreint ses transactions avec HTX et 10 autres plateformes à compter du 23 août, invoquant les sanctions UE/UK. Régime macro toujours « neutre », aucun changement de catégorie.",
         "source": "agrégat WebSearch (CryptoSlate, Yahoo Finance, Cointelegraph)"
+    },
+    {
+        "id": "alert-20260817-1030-talus-baisse",
+        "ticker_ou_theme": "US",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-17T10:30:00Z",
+        "sentiment": "négatif",
+        "message": "Talus (US), une des opportunités suivies : recherche large « biggest movers » ce cycle place Talus parmi les plus fortes baisses du jour, en repli de plus de 20 % sur 24h glissantes selon un agrégat CoinGecko/CoinMarketCap, sans actualité spécifique identifiée pour l'expliquer. Recherche dédiée effectuée en complément : un agrégateur (CoinGecko) évoque une baisse de -62 % sur 7 jours, mais le prix actuel diverge trop fortement selon la plateforme consultée (de 0,015 à 0,0243 dollar) pour retenir un chiffre unique fiable. Aucune mise à jour numérique apportée à opportunities.json ce cycle par prudence (règle « jamais un chiffre inventé, omettre plutôt que deviner ») : alerte qualitative uniquement, mouvement à confirmer au prochain cycle si l'accès direct aux données de marché redevient disponible.",
+        "source": "agrégat WebSearch (recherche large « biggest movers » + recherche dédiée Talus)"
+    },
+    {
+        "id": "alert-20260817-1030-btw-divergence",
+        "ticker_ou_theme": "BTW",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-17T10:30:00Z",
+        "message": "Bitway (BTW), opportunité déjà suivie : figure de nouveau parmi les plus fortes hausses du jour selon la recherche large « biggest movers » (plus de 8 % sur 24h glissantes). Recherche dédiée en complément : divergence de prix marquée et persistante entre plateformes (de 0,220 à 0,412 dollar selon la source, écart proche d'un facteur 2), rappelant la confusion possible entre plusieurs jetons partageant le même symbole boursier déjà signalée le 10 août. Poursuite qualitative du mouvement haussier confirmée par plusieurs sources (de l'ordre de +30 % sur 24h, +91 % sur 7 jours selon une source), mais aucune mise à jour numérique apportée à opportunities.json ce cycle, la fourchette restant trop large pour un chiffre fiable et unique.",
+        "source": "agrégat WebSearch (recherche large « biggest movers » + recherche dédiée Bitway)"
     }
 ]
