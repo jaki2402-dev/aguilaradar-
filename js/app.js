@@ -340,42 +340,62 @@ async function loadAllData() {
   updateHeroStats(verdicts || [], alerts);
   updateFavorisVerdicts(verdicts || []);
 
-  updateFreshnessIndicator(engineHistory, opportunities);
+  updateFreshnessIndicator(engineHistory, opportunities, news);
 }
 
-// Indicateur de fraîcheur bien visible : le cycle profond est cense tourner toutes les 2h,
-// donc un ecart anormal (routine bloquee, silencieuse) doit se voir d'un coup d'oeil ici
-// plutot que de se decouvrir des jours plus tard en remarquant que les alertes sont figees.
-function updateFreshnessIndicator(engineHistory, opportunities) {
-  // routine_health.last_success_at (pas global_stats.last_computed_at) : ce dernier ne bouge
-  // que quand un verdict change, donc reste "perime" pendant des heures sur des cycles reussis
-  // qui n'avaient simplement rien a resoudre — routine_health, lui, est ecrit a CHAQUE passage
-  // reussi du cycle profond, que quelque chose ait change ou non.
-  const timestamps = [
-    engineHistory && engineHistory.routine_health && engineHistory.routine_health.last_success_at,
-    opportunities && opportunities.last_scan_at,
-  ].filter(Boolean);
+// Sources suivies par l'indicateur de fraîcheur, chacune à SON PROPRE rythme attendu.
+// opportunities.last_scan_at est passé à un rythme hebdomadaire le 17/08 (routine dédiée
+// aguilaradar-opportunites-hebdo) — seuils en jours, pas en heures, pour ce champ précis.
+const FRESHNESS_SOURCES = [
+  { key: "routine", label: "Cycle profond", warnHours: 3, staleHours: 6 },
+  { key: "news", label: "Actualités", warnHours: 3, staleHours: 6 },
+  { key: "opportunities", label: "Criblage opportunités", warnHours: 24 * 8, staleHours: 24 * 10 },
+];
+
+// Indicateur de fraîcheur bien visible : plusieurs routines à cadences différentes
+// alimentent le site, donc un écart anormal sur N'IMPORTE LAQUELLE (routine bloquée,
+// silencieuse) doit se voir d'un coup d'oeil ici plutôt que de se découvrir des jours plus
+// tard en remarquant que les actualités ou les opportunités sont figées. Régression du
+// 17/08 : prendre le timestamp le PLUS RÉCENT des trois masquait indéfiniment une source
+// bloquée tant qu'une autre tournait normalement (ex: routine_health frais toutes les 2h
+// pendant qu'opportunities.last_scan_at restait figé 10 jours) — chaque source est donc
+// désormais jugée indépendamment contre son propre rythme, et on affiche la pire.
+function updateFreshnessIndicator(engineHistory, opportunities, news) {
+  const timestampsByKey = {
+    routine: engineHistory && engineHistory.routine_health && engineHistory.routine_health.last_success_at,
+    news: news && news.last_updated_at,
+    opportunities: opportunities && opportunities.last_scan_at,
+  };
+
   const lastDeepCycle = document.getElementById("last-deep-cycle");
   if (!lastDeepCycle) return;
   lastDeepCycle.classList.remove("freshness-ok", "freshness-warning", "freshness-stale");
 
-  if (timestamps.length === 0) {
+  const evaluated = FRESHNESS_SOURCES.map((source) => ({ ...source, at: timestampsByKey[source.key] }))
+    .filter((source) => source.at)
+    .map((source) => {
+      const hoursSince = (Date.now() - new Date(source.at).getTime()) / 3600000;
+      const status = hoursSince > source.staleHours ? "stale" : hoursSince > source.warnHours ? "warning" : "ok";
+      return { ...source, hoursSince, status };
+    });
+
+  if (evaluated.length === 0) {
     lastDeepCycle.textContent = "Automatisation pas encore activée — routine programmée à configurer.";
     return;
   }
-  const lastDate = new Date(Math.max(...timestamps.map((t) => new Date(t))));
-  const hoursSince = (Date.now() - lastDate.getTime()) / 3600000;
-  const formatted = lastDate.toLocaleString("fr-FR");
 
-  if (hoursSince <= 3) {
-    lastDeepCycle.classList.add("freshness-ok");
-    lastDeepCycle.textContent = "Dernière analyse profonde : " + formatted + " — à jour";
-  } else if (hoursSince <= 6) {
-    lastDeepCycle.classList.add("freshness-warning");
-    lastDeepCycle.textContent = "Dernière analyse profonde : " + formatted + " (il y a " + hoursSince.toFixed(0) + " h — un peu en retard)";
+  const severity = { ok: 0, warning: 1, stale: 2 };
+  const worst = evaluated.reduce((a, b) => (severity[b.status] > severity[a.status] ? b : a));
+  const formatted = new Date(worst.at).toLocaleString("fr-FR");
+  const elapsed = worst.hoursSince >= 48 ? Math.round(worst.hoursSince / 24) + " j" : worst.hoursSince.toFixed(0) + " h";
+
+  lastDeepCycle.classList.add("freshness-" + worst.status);
+  if (worst.status === "ok") {
+    lastDeepCycle.textContent = worst.label + " : " + formatted + " — à jour";
   } else {
-    lastDeepCycle.classList.add("freshness-stale");
-    lastDeepCycle.textContent = "⚠ Dernière analyse profonde : " + formatted + " (il y a " + hoursSince.toFixed(0) + " h — la routine semble bloquée)";
+    const tail = worst.status === "stale" ? "la routine semble bloquée" : "un peu en retard";
+    lastDeepCycle.textContent =
+      (worst.status === "stale" ? "⚠ " : "") + worst.label + " : " + formatted + " (il y a " + elapsed + " — " + tail + ")";
   }
 }
 
