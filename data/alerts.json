@@ -454,5 +454,21 @@
         "triggered_at": "2026-08-12T12:32:00Z",
         "message": "Publication du CPI américain de juillet ce jour à 8h30 ET (12h30 UTC), désormais disponible : réaction de marché déjà visible selon l'agrégateur d'actualités CoinGecko (Ethereum et Dogecoin en hausse, Uniswap en repli de 10 %). Aucun des 15 favoris ni des 8 opportunités suivies ne franchit le seuil de mouvement de 15 % sur 24h glissantes d'après les données de marché à jour (connecteur CoinGecko MCP, disponible ce cycle). Dominance BTC mesurée directement à 56,40 % (connecteur, contre 56,3 % estimé les cycles précédents faute d'accès direct). Indice de peur et de cupidité retrouvé à 44 (« Neutre », source CFGI.io), en léger repli depuis la valeur figée de 49 des cycles précédents mais toujours dans la même catégorie « Neutre » — pas de changement de régime macro, aucun ré-signalement regime_change_impact nécessaire.",
         "source": "connecteur CoinGecko MCP (get-global-market, get-coin-markets) + WebSearch (CFGI.io, CoinGape)"
+    },
+    {
+        "id": "alert-20260817-ctsi-resolution",
+        "ticker_ou_theme": "CTSI",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-17T01:03:00Z",
+        "message": "Première résolution de verdict de cette routine : Cartesi (CTSI), verdict ATTENTE du 7 août, invalidé à son échéance (-6,33 % par rapport au prix d'émission, mouvement classé VENTE, seuil de 5 % dépassé). Un nouveau verdict ATTENTE a été émis pour CTSI (consensus à 3 signaux, confiance 60 %), l'actif restant très volatil.",
+        "source": "criblage technique interne"
+    },
+    {
+        "id": "alert-20260817-macro-reglementaire",
+        "ticker_ou_theme": "MACRO",
+        "type": "actualite_macro",
+        "triggered_at": "2026-08-17T01:03:00Z",
+        "message": "Double développement réglementaire depuis le dernier cycle committé (12/08) : la SEC a annulé le 14 août sa réunion prévue sur un cadre de levée de fonds pour les cryptoactifs, et Galaxy Research a de nouveau abaissé sa probabilité d'adoption du CLARITY Act en 2026, désormais autour de 10 % (contre 30 % le 10 août). Par ailleurs, Binance restreint ses transactions avec HTX et 10 autres plateformes à compter du 23 août, invoquant les sanctions UE/UK. Régime macro toujours « neutre », aucun changement de catégorie.",
+        "source": "agrégat WebSearch (CryptoSlate, Yahoo Finance, Cointelegraph)"
     }
 ]
