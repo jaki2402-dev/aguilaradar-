@@ -166,21 +166,103 @@ function technicalSignalSentences(price, sma20, sma50, rsi, athChangePct) {
   return lines;
 }
 
+async function fetchMarketChartData(cgId, days) {
+  const res = await fetchWithTimeout(`https://api.coingecko.com/api/v3/coins/${cgId}/market_chart?vs_currency=eur&days=${days}&interval=daily`, 12000);
+  if (!res.ok) throw new Error(`market_chart ${res.status}`);
+  const data = await res.json();
+  return {
+    closes: (data.prices || []).map((p) => p[1]),
+    volumes: (data.total_volumes || []).map((v) => v[1]),
+  };
+}
+
+// Volume Profile : où le volume s'est concentré par NIVEAU DE PRIX (pas dans le temps comme
+// un histogramme de volume classique) — construit à partir des clôtures/volumes quotidiens
+// déjà récupérés pour RSI/MM (aucun appel réseau de plus). Version quotidienne, pas
+// intra-journalière : moins fine qu'un vrai profil tick par tick, mais réelle, pas inventée,
+// et suffisante pour repérer le point de contrôle et la zone de valeur sur la fenêtre récente.
+function computeVolumeProfile(closes, volumes, binCount) {
+  if (!closes || !volumes || closes.length < 10 || closes.length !== volumes.length) return null;
+  const min = Math.min(...closes);
+  const max = Math.max(...closes);
+  if (min === max) return null;
+  const binSize = (max - min) / binCount;
+  const bins = new Array(binCount).fill(0);
+  for (let i = 0; i < closes.length; i++) {
+    let idx = Math.floor((closes[i] - min) / binSize);
+    if (idx >= binCount) idx = binCount - 1;
+    if (idx < 0) idx = 0;
+    bins[idx] += volumes[i] || 0;
+  }
+  const totalVolume = bins.reduce((a, b) => a + b, 0);
+  if (totalVolume === 0) return null;
+
+  let pocIdx = 0;
+  for (let i = 1; i < binCount; i++) if (bins[i] > bins[pocIdx]) pocIdx = i;
+
+  // Zone de valeur : étend depuis le point de contrôle jusqu'à couvrir ~70% du volume total,
+  // en ajoutant à chaque étape le côté (au-dessus ou en dessous) le plus charge en volume.
+  let lo = pocIdx, hi = pocIdx;
+  let included = bins[pocIdx];
+  while (included / totalVolume < 0.7 && (lo > 0 || hi < binCount - 1)) {
+    const volBelow = lo > 0 ? bins[lo - 1] : -1;
+    const volAbove = hi < binCount - 1 ? bins[hi + 1] : -1;
+    if (volAbove >= volBelow) { hi++; included += bins[hi]; }
+    else { lo--; included += bins[lo]; }
+  }
+
+  return {
+    poc: min + (pocIdx + 0.5) * binSize,
+    val: min + lo * binSize,
+    vah: min + (hi + 1) * binSize,
+  };
+}
+
+function volumeProfileSignal(price, vp) {
+  if (!vp || price === undefined || price === null) return null;
+  const pocText = formatPrice(vp.poc, "EUR");
+  const valText = formatPrice(vp.val, "EUR");
+  const vahText = formatPrice(vp.vah, "EUR");
+  const inValueArea = price >= vp.val && price <= vp.vah;
+
+  if (inValueArea) {
+    const nearPoc = Math.abs(price - vp.poc) <= (vp.vah - vp.val) * 0.15;
+    return {
+      label: nearPoc ? `Volume Profile : proche du point de contrôle (${pocText})` : `Volume Profile : dans la zone de valeur (${valText} – ${vahText})`,
+      text: nearPoc
+        ? "C'est le niveau de prix où s'est échangé le plus de volume récemment — zone d'équilibre entre acheteurs et vendeurs, souvent peu directionnelle tant que le prix y reste."
+        : "Le prix évolue dans la zone où s'est concentré l'essentiel du volume récent (~70%) — terrain plutôt équilibré, sans forte pression dans un sens.",
+    };
+  }
+  const above = price > vp.vah;
+  return {
+    label: above ? `Volume Profile : au-dessus de la zone de valeur (> ${vahText})` : `Volume Profile : en dessous de la zone de valeur (< ${valText})`,
+    text: above
+      ? `Le prix s'est éloigné vers le haut de la zone où s'est concentré le volume récent (point de contrôle à ${pocText}) — soit un vrai mouvement en cours, soit une extension qui peut revenir se combler vers ce niveau.`
+      : `Le prix s'est éloigné vers le bas de la zone où s'est concentré le volume récent (point de contrôle à ${pocText}) — soit une vraie pression vendeuse, soit une extension qui peut revenir se combler vers ce niveau.`,
+  };
+}
+
 // Section "indicateurs techniques" : seule partie qui dépend d'un fetch réseau (historique
-// de prix pour RSI/MM/corrélation + carnet d'ordres). Isolée dans sa propre fonction pour
-// qu'un échec réseau (limite API, hors-ligne) ne fasse jamais disparaître le reste de la
-// fiche (avis, horizons, contexte favori) qui sont déjà en mémoire, sans requête à faire.
+// de prix pour RSI/MM/corrélation/Volume Profile + carnet d'ordres). Isolée dans sa propre
+// fonction pour qu'un échec réseau (limite API, hors-ligne) ne fasse jamais disparaître le
+// reste de la fiche (avis, horizons, contexte favori) qui sont déjà en mémoire, sans requête.
 async function renderTechnicalSection(asset) {
   const isBtc = asset.cgId === "bitcoin";
-  const [closes, btcCloses] = await Promise.all([
-    fetchHistoricalCloses(asset.cgId, 60),
+  const [assetChart, btcCloses] = await Promise.all([
+    fetchMarketChartData(asset.cgId, 60),
     isBtc ? Promise.resolve(null) : fetchHistoricalCloses("bitcoin", 60).catch(() => null),
   ]);
+  const closes = assetChart.closes;
   const rsi = computeRSI(closes, 14);
   const sma20 = computeSMA(closes, 20);
   const sma50 = computeSMA(closes, Math.min(50, closes.length));
   const price = closes[closes.length - 1];
   const signals = technicalSignalSentences(price, sma20, sma50, rsi, asset.athChangePct);
+
+  const volumeProfile = computeVolumeProfile(closes, assetChart.volumes, 24);
+  const vpSignal = volumeProfileSignal(price, volumeProfile);
+  if (vpSignal) signals.push(vpSignal);
 
   const correlation = btcCloses ? computeCorrelation(closes, btcCloses) : null;
   if (correlation !== null) {
