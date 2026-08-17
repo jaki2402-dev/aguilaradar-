@@ -512,5 +512,13 @@
         "sentiment": "négatif",
         "message": "Le Sénat américain a fixé la motion de clôture du CLARITY Act (Digital Asset Market Clarity Act) au 15 septembre 2026, 14h15 heure locale — une étape procédurale nécessitant 60 voix, pas un vote final d'adoption. Le texte a déjà franchi la Chambre des représentants (294 voix contre 134) et la commission bancaire du Sénat (15 contre 9), mais le désaccord persiste entre démocrates (garde-fous éthiques et anti-blanchiment) et républicains (clarté réglementaire pour les marchés). Les probabilités de passage sur Polymarket sont tombées sous 20 %, contre un pic à 58 % auparavant — confirmation du report à l'automne déjà anticipé le 7 août, avec un calendrier désormais précis mais des chances d'adoption jugées faibles par le marché des prédictions.",
         "source": "https://news.bitcoin.com/regulation-and-legal/clarity-act-heads-toward-sept-15-senate-vote-as-crypto-bill-advances/"
+    },
+    {
+        "id": "alert-20260817-1535-macro-stable",
+        "ticker_ou_theme": "MACRO",
+        "type": "actualite_macro",
+        "triggered_at": "2026-08-17T15:35:00Z",
+        "message": "Cycle du 17 août 2026, 15h35 UTC : rien de nouveau par rapport au cycle précédent (régime neutre, aucun seuil franchi sur les 15 favoris). Bitway et Talus, deux opportunités déjà suivies, poursuivent leurs mouvements déjà signalés (Bitway toujours en forte hausse, Talus toujours en forte baisse), sans élément nouveau justifiant une alerte dédiée supplémentaire.",
+        "source": "agrégat WebSearch (recherche large « biggest movers » + indice de peur et de cupidité + dominance BTC)"
     }
 ]
