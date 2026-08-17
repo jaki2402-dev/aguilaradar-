@@ -347,8 +347,12 @@ async function loadAllData() {
 // donc un ecart anormal (routine bloquee, silencieuse) doit se voir d'un coup d'oeil ici
 // plutot que de se decouvrir des jours plus tard en remarquant que les alertes sont figees.
 function updateFreshnessIndicator(engineHistory, opportunities) {
+  // routine_health.last_success_at (pas global_stats.last_computed_at) : ce dernier ne bouge
+  // que quand un verdict change, donc reste "perime" pendant des heures sur des cycles reussis
+  // qui n'avaient simplement rien a resoudre — routine_health, lui, est ecrit a CHAQUE passage
+  // reussi du cycle profond, que quelque chose ait change ou non.
   const timestamps = [
-    engineHistory && engineHistory.global_stats && engineHistory.global_stats.last_computed_at,
+    engineHistory && engineHistory.routine_health && engineHistory.routine_health.last_success_at,
     opportunities && opportunities.last_scan_at,
   ].filter(Boolean);
   const lastDeepCycle = document.getElementById("last-deep-cycle");
