@@ -340,14 +340,39 @@ async function loadAllData() {
   updateHeroStats(verdicts || [], alerts);
   updateFavorisVerdicts(verdicts || []);
 
+  updateFreshnessIndicator(engineHistory, opportunities);
+}
+
+// Indicateur de fraîcheur bien visible : le cycle profond est cense tourner toutes les 2h,
+// donc un ecart anormal (routine bloquee, silencieuse) doit se voir d'un coup d'oeil ici
+// plutot que de se decouvrir des jours plus tard en remarquant que les alertes sont figees.
+function updateFreshnessIndicator(engineHistory, opportunities) {
   const timestamps = [
     engineHistory && engineHistory.global_stats && engineHistory.global_stats.last_computed_at,
     opportunities && opportunities.last_scan_at,
   ].filter(Boolean);
   const lastDeepCycle = document.getElementById("last-deep-cycle");
-  lastDeepCycle.textContent = timestamps.length
-    ? "Dernière analyse profonde : " + new Date(Math.max(...timestamps.map((t) => new Date(t)))).toLocaleString("fr-FR")
-    : "Automatisation pas encore activée — routine programmée à configurer.";
+  if (!lastDeepCycle) return;
+  lastDeepCycle.classList.remove("freshness-ok", "freshness-warning", "freshness-stale");
+
+  if (timestamps.length === 0) {
+    lastDeepCycle.textContent = "Automatisation pas encore activée — routine programmée à configurer.";
+    return;
+  }
+  const lastDate = new Date(Math.max(...timestamps.map((t) => new Date(t))));
+  const hoursSince = (Date.now() - lastDate.getTime()) / 3600000;
+  const formatted = lastDate.toLocaleString("fr-FR");
+
+  if (hoursSince <= 3) {
+    lastDeepCycle.classList.add("freshness-ok");
+    lastDeepCycle.textContent = "Dernière analyse profonde : " + formatted + " — à jour";
+  } else if (hoursSince <= 6) {
+    lastDeepCycle.classList.add("freshness-warning");
+    lastDeepCycle.textContent = "Dernière analyse profonde : " + formatted + " (il y a " + hoursSince.toFixed(0) + " h — un peu en retard)";
+  } else {
+    lastDeepCycle.classList.add("freshness-stale");
+    lastDeepCycle.textContent = "⚠ Dernière analyse profonde : " + formatted + " (il y a " + hoursSince.toFixed(0) + " h — la routine semble bloquée)";
+  }
 }
 
 let refreshInFlight = false;

@@ -139,6 +139,9 @@ header.site-header h1 { margin: 0; font-family: var(--font-mono); letter-spacing
   100% { box-shadow: 0 0 0 0 rgba(47,211,176,0); }
 }
 .meta { color: var(--text-dim); font-size: 0.72rem; text-align: right; line-height: 1.5; }
+#last-deep-cycle.freshness-ok { color: var(--gain); }
+#last-deep-cycle.freshness-warning { color: var(--warning); }
+#last-deep-cycle.freshness-stale { color: var(--loss); font-weight: 600; }
 
 .header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .refresh-btn, .notif-bell-btn {
