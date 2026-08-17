@@ -28,15 +28,31 @@ async function ensureChatData() {
   return chatDataLoading;
 }
 
+// Correspondance sur un mot ENTIER, jamais un simple sous-texte — sans ça, un ticker court
+// comme "ENA" matche à l'intérieur de "maintenant", ce qui donnait des réponses sur le
+// mauvais actif (bug réel constaté : "Solana maintenant ?" répondait sur Ethena).
+function wordBoundaryMatch(haystack, needle) {
+  if (!needle) return false;
+  const escaped = needle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`(^|[^a-z0-9àâäéèêëïîôöùûüç])${escaped}($|[^a-z0-9àâäéèêëïîôöùûüç])`, "i").test(haystack);
+}
+
 function findAssetMention(text) {
   const norm = text.toLowerCase();
-  const fav = FAVORIS.find((f) => norm.includes(f.ticker.toLowerCase()) || norm.includes(f.name.toLowerCase()));
+  const fav = FAVORIS.find((f) => wordBoundaryMatch(norm, f.ticker.toLowerCase()) || wordBoundaryMatch(norm, f.name.toLowerCase()));
   if (fav) return { cgId: fav.cgId, ticker: fav.ticker, name: fav.name, tracked: "favori" };
   const opp = ((chatData.opportunities && chatData.opportunities.opportunities) || []).find(
-    (o) => norm.includes(o.ticker.toLowerCase()) || norm.includes(o.name.toLowerCase())
+    (o) => wordBoundaryMatch(norm, o.ticker.toLowerCase()) || wordBoundaryMatch(norm, o.name.toLowerCase())
   );
   if (opp) return { cgId: opp.cgId, ticker: opp.ticker, name: opp.name, tracked: "opportunite" };
   return null;
+}
+
+// Repère un mot qui ressemble à un nom de projet/ticker que la question mentionne mais que
+// ni les favoris ni les opportunités ne couvrent — pour répondre "pas suivi" au lieu de
+// tomber sur le message générique quand la question visait clairement un actif précis.
+function looksLikeUnknownAssetMention(text) {
+  return /\b[A-Z]{2,6}\b/.test(text) || /\b(bitcoin|coin|token|crypto|monnaie|actif|projet)\b/i.test(text);
 }
 
 function answerAboutAsset(mention) {
@@ -100,12 +116,17 @@ function answerEngine() {
   return `Le moteur a émis ${stats.total_verdicts_issued} verdicts, dont ${stats.total_verdicts_resolved} vérifiés, avec une exactitude de ${stats.accuracy_strict_pct.toFixed(1)} %. Détail complet dans l'onglet Moteur.`;
 }
 
+function answerGenericInvesting() {
+  return `Aguilaradar ne donne pas de conseil en investissement réglementé — seulement de l'analyse informative. Pour un actif précis, demande-moi directement par son nom ou son ticker (ex. "que penses-tu de Chainlink ?") : s'il fait partie des 15 favoris ou des opportunités suivies, je te donne le vrai verdict du moteur avec son raisonnement. Sinon, utilise la recherche de l'onglet Favoris pour un prix et une fiche d'identité en direct.`;
+}
+
 const CHAT_INTENTS = [
-  { keywords: ["résume", "resume", "résumé", "briefing", "synthèse", "synthese"], handler: answerDigest },
-  { keywords: ["opportunité", "opportunites", "opportunités", "pépite", "pepite"], handler: answerOpportunities },
-  { keywords: ["alerte", "actualité", "actualites", "actualités", "news", "quoi de neuf"], handler: answerAlerts },
-  { keywords: ["performance", "taux de réussite", "taux de reussite", "précision", "precision", "moteur", "backtest", "fiable"], handler: answerEngine },
-  { keywords: ["pourquoi", "hausse", "baisse", "monte", "descend", "chute", "analyse du marché", "analyse le marché", "état du marché", "etat du marche", "régime", "regime"], handler: answerMarketWhy },
+  { keywords: ["résume", "resume", "résumé", "briefing", "synthèse", "synthese", "récap", "recap"], handler: answerDigest },
+  { keywords: ["opportunité", "opportunites", "opportunités", "pépite", "pepite", "meilleur", "prometteur"], handler: answerOpportunities },
+  { keywords: ["alerte", "actualité", "actualites", "actualités", "news", "quoi de neuf", "du nouveau", "s'est-il passé", "sest il passe"], handler: answerAlerts },
+  { keywords: ["performance", "taux de réussite", "taux de reussite", "précision", "precision", "moteur", "backtest", "rétrotest", "retrotest", "fiable", "se trompe"], handler: answerEngine },
+  { keywords: ["pourquoi", "hausse", "baisse", "monte", "descend", "chute", "analyse du marché", "analyse le marché", "analyse-moi le marché", "état du marché", "etat du marche", "régime", "regime", "tendance", "sentiment"], handler: answerMarketWhy },
+  { keywords: ["investir", "acheter", "vendre", "placer", "position", "que penses-tu", "quel est ton avis", "ton avis", "conseil", "conseilles"], handler: answerGenericInvesting },
 ];
 
 async function answerQuestion(question) {
@@ -117,6 +138,10 @@ async function answerQuestion(question) {
 
   const intent = CHAT_INTENTS.find((i) => i.keywords.some((k) => norm.includes(k)));
   if (intent) return intent.handler();
+
+  if (looksLikeUnknownAssetMention(question)) {
+    return `Je ne trouve pas cet actif parmi les 15 favoris ou les opportunités suivies, donc pas de verdict du moteur dessus. Utilise la recherche de l'onglet Favoris pour son prix et sa fiche d'identité en direct — tape simplement son nom.`;
+  }
 
   return `Je réponds à partir de ce que le radar a déjà analysé : le résumé du moment, un actif suivi (favori ou opportunité), les meilleures opportunités, les dernières alertes, ou la performance du moteur.\n\nEssaie par exemple : "résume-moi la semaine", "pourquoi le marché est neutre", ou "que penses-tu de Chainlink".`;
 }
