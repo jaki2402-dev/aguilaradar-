@@ -503,5 +503,14 @@
         "triggered_at": "2026-08-17T10:30:00Z",
         "message": "Bitway (BTW), opportunité déjà suivie : figure de nouveau parmi les plus fortes hausses du jour selon la recherche large « biggest movers » (plus de 8 % sur 24h glissantes). Recherche dédiée en complément : divergence de prix marquée et persistante entre plateformes (de 0,220 à 0,412 dollar selon la source, écart proche d'un facteur 2), rappelant la confusion possible entre plusieurs jetons partageant le même symbole boursier déjà signalée le 10 août. Poursuite qualitative du mouvement haussier confirmée par plusieurs sources (de l'ordre de +30 % sur 24h, +91 % sur 7 jours selon une source), mais aucune mise à jour numérique apportée à opportunities.json ce cycle, la fourchette restant trop large pour un chiffre fiable et unique.",
         "source": "agrégat WebSearch (recherche large « biggest movers » + recherche dédiée Bitway)"
+    },
+    {
+        "id": "alert-20260817-1253-clarity-sept15",
+        "ticker_ou_theme": "MACRO",
+        "type": "actualite_macro",
+        "triggered_at": "2026-08-17T12:53:00Z",
+        "sentiment": "négatif",
+        "message": "Le Sénat américain a fixé la motion de clôture du CLARITY Act (Digital Asset Market Clarity Act) au 15 septembre 2026, 14h15 heure locale — une étape procédurale nécessitant 60 voix, pas un vote final d'adoption. Le texte a déjà franchi la Chambre des représentants (294 voix contre 134) et la commission bancaire du Sénat (15 contre 9), mais le désaccord persiste entre démocrates (garde-fous éthiques et anti-blanchiment) et républicains (clarté réglementaire pour les marchés). Les probabilités de passage sur Polymarket sont tombées sous 20 %, contre un pic à 58 % auparavant — confirmation du report à l'automne déjà anticipé le 7 août, avec un calendrier désormais précis mais des chances d'adoption jugées faibles par le marché des prédictions.",
+        "source": "https://news.bitcoin.com/regulation-and-legal/clarity-act-heads-toward-sept-15-senate-vote-as-crypto-bill-advances/"
     }
 ]
