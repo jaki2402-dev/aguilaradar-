@@ -96,6 +96,7 @@
       </div>
       <p class="section-sub">Les prix se rafraîchissent en direct. L'analyse profonde (verdicts, screening, moteur) suit un cycle programmé — voir l'onglet Moteur.</p>
       <div id="macro-regime-banner"></div>
+      <div class="digest-panel" id="digest-panel"></div>
       <div class="hero-card">
         <div class="hint">État du radar</div>
         <div class="hero-stats">
@@ -122,31 +123,7 @@
         </div>
       </details>
 
-      <details class="accueil-section">
-        <summary>Contexte marché élargi</summary>
-        <div class="accueil-section-body">
-          <p class="section-sub">Stablecoins, emploi américain, flux ETF — signaux macro complémentaires au régime de marché.</p>
-          <div id="market-context-body"></div>
-        </div>
-      </details>
-
-      <details class="accueil-section">
-        <summary>Diversification sectorielle des favoris</summary>
-        <div class="accueil-section-body">
-          <p class="section-sub">Plusieurs favoris peuvent partager le même secteur sans que ça se voie actif par actif.</p>
-          <div id="sector-breakdown"></div>
-        </div>
-      </details>
-
-      <details class="accueil-section">
-        <summary>Évolution de la confiance par actif</summary>
-        <div class="accueil-section-body">
-          <p class="section-sub">Se remplit dès qu'un actif a eu plusieurs verdicts successifs.</p>
-          <div id="confidence-history"></div>
-        </div>
-      </details>
-
-      <details class="accueil-section">
+      <details class="accueil-section" open>
         <summary>Ce qui bouge</summary>
         <div class="accueil-section-body">
           <p class="section-sub">Actualités marché récupérées à chaque cycle profond.</p>
@@ -154,26 +131,57 @@
         </div>
       </details>
 
-      <details class="accueil-section">
-        <summary>Revoir un jour passé</summary>
+      <details class="accueil-section accueil-more">
+        <summary>Voir plus d'analyse</summary>
         <div class="accueil-section-body">
-          <p class="section-sub">Reconstruit depuis l'historique permanent — rien n'est modifié, juste filtré à la date choisie.</p>
-          <div class="replay-bar">
-            <input type="date" id="replay-date" />
-          </div>
-          <div id="replay-result"></div>
-        </div>
-      </details>
 
-      <details class="accueil-section">
-        <summary>Ce qu'aguilaradar fait — et ne fait pas</summary>
-        <div class="accueil-section-body disclaimer-box" style="margin-top:0;">
-          <ul>
-            <li>Il lit la structure du marché (tendance, momentum, volume, valorisation) pour dire où penche le rapport de force. Il ne prédit pas l'avenir, personne ne le peut.</li>
-            <li>Une confiance élevée signifie « les probabilités sont de mon côté », pas « ça va monter ». Une partie des signaux se révélera fausse — c'est normal, et c'est justement ce que le backtest mesure honnêtement.</li>
-            <li>Les verdicts sont donnés par horizon. Un actif peut être à éviter à court terme et intéressant à long terme en même temps.</li>
-            <li>Ceci n'est pas un conseil en investissement réglementé — uniquement des simulations informatives, jamais une exécution réelle d'ordre.</li>
-          </ul>
+          <details class="accueil-section">
+            <summary>Contexte marché élargi</summary>
+            <div class="accueil-section-body">
+              <p class="section-sub">Stablecoins, emploi américain, flux ETF — signaux macro complémentaires au régime de marché.</p>
+              <div id="market-context-body"></div>
+            </div>
+          </details>
+
+          <details class="accueil-section">
+            <summary>Diversification sectorielle des favoris</summary>
+            <div class="accueil-section-body">
+              <p class="section-sub">Plusieurs favoris peuvent partager le même secteur sans que ça se voie actif par actif.</p>
+              <div id="sector-breakdown"></div>
+            </div>
+          </details>
+
+          <details class="accueil-section">
+            <summary>Évolution de la confiance par actif</summary>
+            <div class="accueil-section-body">
+              <p class="section-sub">Se remplit dès qu'un actif a eu plusieurs verdicts successifs.</p>
+              <div id="confidence-history"></div>
+            </div>
+          </details>
+
+          <details class="accueil-section">
+            <summary>Revoir un jour passé</summary>
+            <div class="accueil-section-body">
+              <p class="section-sub">Reconstruit depuis l'historique permanent — rien n'est modifié, juste filtré à la date choisie.</p>
+              <div class="replay-bar">
+                <input type="date" id="replay-date" />
+              </div>
+              <div id="replay-result"></div>
+            </div>
+          </details>
+
+          <details class="accueil-section">
+            <summary>Ce qu'aguilaradar fait — et ne fait pas</summary>
+            <div class="accueil-section-body disclaimer-box" style="margin-top:0;">
+              <ul>
+                <li>Il lit la structure du marché (tendance, momentum, volume, valorisation) pour dire où penche le rapport de force. Il ne prédit pas l'avenir, personne ne le peut.</li>
+                <li>Une confiance élevée signifie « les probabilités sont de mon côté », pas « ça va monter ». Une partie des signaux se révélera fausse — c'est normal, et c'est justement ce que le backtest mesure honnêtement.</li>
+                <li>Les verdicts sont donnés par horizon. Un actif peut être à éviter à court terme et intéressant à long terme en même temps.</li>
+                <li>Ceci n'est pas un conseil en investissement réglementé — uniquement des simulations informatives, jamais une exécution réelle d'ordre.</li>
+              </ul>
+            </div>
+          </details>
+
         </div>
       </details>
     </section>
@@ -366,7 +374,6 @@
       <p class="section-sub">Générées par le cycle d'analyse (toutes les 2h) : seuils techniques franchis, actualités macro/géopolitiques ou sur un favori jugées significatives, et opportunités fortes — toujours avec le signal et le pourquoi.</p>
       <div class="notif-permission-card" id="notif-permission-card"></div>
       <div class="notif-permission-card" id="push-section"></div>
-      <div class="digest-panel" id="digest-panel"></div>
       <div id="notifications-body"></div>
     </section>
 

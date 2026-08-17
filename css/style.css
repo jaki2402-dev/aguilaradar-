@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
   --bg: #0a0e13;
@@ -18,7 +18,7 @@
   --radius: 18px;
   --radius-sm: 12px;
   --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Consolas, monospace;
+  --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Consolas, monospace;
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -37,7 +37,7 @@ body {
     radial-gradient(1200px 500px at 50% -10%, rgba(47, 211, 176, 0.08), transparent 60%),
     var(--bg);
   color: var(--text);
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: "Space Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
 }
@@ -236,8 +236,8 @@ section.tab-panel { display: none; animation: fadein 0.2s ease; }
 section.tab-panel.active { display: block; }
 @keyframes fadein { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
-h2 { margin: 4px 0 4px; font-size: 1.2rem; font-weight: 800; letter-spacing: -0.015em; }
-h3 { font-size: 1rem; font-weight: 800; letter-spacing: -0.01em; }
+h2 { margin: 4px 0 4px; font-size: 1.32rem; font-weight: 700; letter-spacing: -0.02em; }
+h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
 .section-sub { color: var(--text-dim); font-size: 0.85rem; margin: 0 0 18px; line-height: 1.5; }
 
 .empty-state {
@@ -254,13 +254,35 @@ h3 { font-size: 1rem; font-weight: 800; letter-spacing: -0.01em; }
 }
 .hint { color: var(--text-faint); font-size: 0.78rem; line-height: 1.5; }
 
-/* ---- Carte "hero" de la vue d'ensemble ---- */
-.hero-card {
+/* ---- Carte "hero" de la vue d'ensemble + résumé (digest) : les deux éléments phares de
+   l'Accueil partagent le même traitement "instrument" — coins en équerre façon viseur radar,
+   cohérent avec l'identité du site plutôt qu'une carte générique de plus. ---- */
+.hero-card, .digest-panel {
+  position: relative;
   background: linear-gradient(150deg, rgba(47,211,176,0.14), rgba(34,184,224,0.05) 60%, transparent);
   border: 1px solid var(--border);
   border-radius: 22px;
   padding: 22px;
   margin-bottom: 18px;
+}
+.hero-card::before, .hero-card::after,
+.digest-panel::before, .digest-panel::after {
+  content: "";
+  position: absolute;
+  width: 18px; height: 18px;
+  border: 2px solid var(--accent);
+  opacity: 0.5;
+  pointer-events: none;
+}
+.hero-card::before, .digest-panel::before {
+  top: -1px; left: -1px;
+  border-right: none; border-bottom: none;
+  border-top-left-radius: 8px;
+}
+.hero-card::after, .digest-panel::after {
+  bottom: -1px; right: -1px;
+  border-left: none; border-top: none;
+  border-bottom-right-radius: 8px;
 }
 .hero-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 14px; margin-top: 16px; }
 .hero-stat-value { font-family: var(--font-mono); font-size: 1.4rem; font-weight: 700; }
@@ -468,12 +490,10 @@ footer.site-footer {
 }
 .push-error { color: var(--loss); }
 
-/* ---- Résumé périodique (digest) ---- */
+/* ---- Résumé périodique (digest) : élément le plus important de l'Accueil, en tête de
+   page — traitement "hero" (voir .hero-card ci-dessus), typographie plus affirmée que le
+   reste des cartes pour bien marquer que c'est le point d'entrée prioritaire. ---- */
 .digest-panel:empty { display: none; }
-.digest-panel {
-  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 18px; margin-bottom: 18px;
-}
 .digest-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
 .digest-tone {
   font-size: 0.68rem; font-weight: 800; letter-spacing: 0.06em; padding: 3px 9px; border-radius: 999px;
@@ -481,9 +501,9 @@ footer.site-footer {
 .digest-tone--haussier { background: rgba(52, 211, 153, 0.15); color: var(--gain); }
 .digest-tone--neutre { background: rgba(229, 169, 59, 0.15); color: var(--warning); }
 .digest-tone--baissier { background: rgba(241, 85, 76, 0.15); color: var(--loss); }
-.digest-headline { margin: 0 0 8px; font-size: 1.05rem; }
-.digest-summary { margin: 0 0 10px; color: var(--text-dim); font-size: 0.9rem; line-height: 1.6; }
-.digest-tips { margin: 0; padding-left: 18px; color: var(--text); font-size: 0.86rem; line-height: 1.7; }
+.digest-headline { margin: 0 0 10px; font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.25; }
+.digest-summary { margin: 0 0 10px; color: var(--text-dim); font-size: 0.94rem; line-height: 1.6; }
+.digest-tips { margin: 0; padding-left: 18px; color: var(--text); font-size: 0.88rem; line-height: 1.7; }
 
 /* ---- Avertissement ---- */
 .disclaimer-box {
@@ -572,6 +592,21 @@ details.accueil-section summary::-webkit-details-marker { display: none; }
 details.accueil-section summary::after { content: "▾"; color: var(--text-faint); transition: transform 0.2s ease; }
 details.accueil-section[open] summary::after { transform: rotate(180deg); }
 details.accueil-section .accueil-section-body { padding: 0 16px 16px; }
+
+/* ---- "Voir plus d'analyse" : regroupe les sections secondaires derrière un seul repli
+   supplémentaire (rien n'est supprimé, juste compacté) — les cartes imbriquées perdent leur
+   propre fond/bordure pour ne pas empiler des boîtes dans une boîte, juste un séparateur. ---- */
+details.accueil-section.accueil-more > summary { color: var(--accent); }
+.accueil-more .accueil-section-body details.accueil-section {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+}
+.accueil-more .accueil-section-body details.accueil-section:first-child { border-top: none; margin-top: 0; }
+.accueil-more .accueil-section-body details.accueil-section summary { padding: 14px 2px; }
+.accueil-more .accueil-section-body details.accueil-section .accueil-section-body { padding: 0 2px 16px; }
 
 /* ---- Bascule discrete pour le texte d'explication sous un sous-titre h3 :
    evite d'empiler un paragraphe toujours visible sous chaque section (surtout
