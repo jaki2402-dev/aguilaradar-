@@ -1,0 +1,14 @@
+{
+  "name": "aguilaradar-tests",
+  "private": true,
+  "type": "module",
+  "description": "Test suite for the aguilaradar static front-end. The site itself ships with no build step (plain <script> tags, GitHub Pages) — this package only exists to run tests in CI/locally, it is not part of the deployed site.",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "jsdom": "^25.0.1",
+    "vitest": "^2.1.9"
+  }
+}

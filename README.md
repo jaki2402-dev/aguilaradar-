@@ -53,6 +53,12 @@ Déclenchées par le pouls rapide (RSI, cassure de support/résistance, imbalanc
 
 Une seule valeur (`THRESHOLDS.directionalMovePct` dans `config.js`) sert de seuil dans tout le site — jamais deux seuils différents selon le tableau (défaut observé chez Macroscope : ±3 % sur la matrice de confusion, ±10 % sur le tableau "réussite par verdict", ce qui sème la confusion).
 
+## Tests
+
+`npm install && npm test` (Vitest + jsdom, en devDependency uniquement — le site déployé reste des fichiers statiques sans aucune étape de build). Les fichiers `js/*.js` n'étant pas des modules, les tests chargent les vrais fichiers dans une page JSDOM isolée via `test/helpers/loadPage.js`, qui reproduit fidèlement le chargement `<script>` classique (portée lexicale globale partagée entre fichiers, une page fraîche par test). CI : `.github/workflows/tests.yml` sur chaque push/PR.
+
+Couvre la logique pure (calculs RSI/MM/corrélation/matrice de confusion, échappement HTML, dédoublonnage des notifications, correspondance de tickers) et fixe par des tests de régression plusieurs bugs déjà corrigés une fois (indicateur de fraîcheur, alarme prématurée du moteur, accumulation d'écouteurs, stats Opportunités post-migration, faux positifs de tickers courts) pour qu'ils ne puissent pas revenir silencieusement. Volontairement hors périmètre : `background-fx.js` (décoratif) et les appels réseau eux-mêmes.
+
 ## État actuel / prochaines étapes
 
 1. Scaffold local (ce commit) — fait.
