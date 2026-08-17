@@ -5,6 +5,12 @@
 
 const CLASSES = ["ACHAT", "ATTENTE", "VENTE"];
 
+// Sous ce nombre de verdicts vérifiés, l'écart vs référence peut sauter à ±100 points sur un
+// seul cas juste/faux (ex. 1 vérifié = 0 % ou 100 % d'exactitude) sans rien dire de la vraie
+// performance du moteur. Même seuil que paper_portfolio_stats.min_resolved_required côté serveur,
+// pour rester cohérent avec la seule autre section du site qui gate déjà un jugement global.
+const MIN_RESOLVED_FOR_SELF_ASSESSMENT = 10;
+
 function classifyActualMove(pctChange, thresholdPct) {
   if (pctChange === null || pctChange === undefined) return null;
   if (pctChange > thresholdPct) return "ACHAT";
@@ -239,10 +245,13 @@ function renderEnginePin(stats) {
     return;
   }
   const edge = stats.accuracyPct - stats.baselineMajorityPct;
+  const enoughForEdge = stats.total >= MIN_RESOLVED_FOR_SELF_ASSESSMENT;
+  const edgeVal = enoughForEdge ? `${edge >= 0 ? "+" : ""}${edge.toFixed(0)} pts` : "—";
+  const edgeCls = enoughForEdge ? (edge >= 0 ? "positive" : "negative") : "";
   el.innerHTML = `
     <div class="pin-card"><span class="pin-val">${stats.accuracyPct.toFixed(0)} %</span><span class="pin-label">Exactitude</span></div>
     <div class="pin-card"><span class="pin-val">${stats.coveragePct.toFixed(0)} %</span><span class="pin-label">Couverture</span></div>
-    <div class="pin-card"><span class="pin-val ${edge >= 0 ? "positive" : "negative"}">${edge >= 0 ? "+" : ""}${edge.toFixed(0)} pts</span><span class="pin-label">Vs référence</span></div>`;
+    <div class="pin-card"><span class="pin-val ${edgeCls}">${edgeVal}</span><span class="pin-label">Vs référence${enoughForEdge ? "" : ` (min. ${MIN_RESOLVED_FOR_SELF_ASSESSMENT})`}</span></div>`;
 }
 
 function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGroup) {
@@ -264,19 +273,24 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGrou
   } else {
     const buyHoldBtc = engineHistory && engineHistory.global_stats && engineHistory.global_stats.baseline_buy_hold_btc_pct;
     const edge = stats.accuracyPct - stats.baselineMajorityPct;
-    const selfAssessment =
-      edge > 15
+    const enoughForVerdict = stats.total >= MIN_RESOLVED_FOR_SELF_ASSESSMENT;
+    const selfAssessment = !enoughForVerdict
+      ? `Encore trop peu de verdicts vérifiés (${stats.total} sur un minimum de ${MIN_RESOLVED_FOR_SELF_ASSESSMENT} recommandé) pour juger la performance du moteur. Avec un échantillon aussi petit, un seul verdict faux ou juste fait basculer l'exactitude entre 0 % et 100 % sans que ça reflète une vraie tendance — les chiffres bruts ci-dessous restent exacts et affichés en toute transparence, mais aucun jugement global ("bat la référence", "pire que le hasard"...) n'est fiable avant ce seuil.`
+      : edge > 15
         ? `Le moteur bat nettement la référence (${edge.toFixed(0)} points d'avance) — avantage réel sur cet échantillon, à confirmer dans la durée.`
         : edge > 3
         ? `Le moteur bat la référence de ${edge.toFixed(0)} points — un avantage réel mais modeste, qui se joue sur la répétition, jamais sur un seul verdict.`
         : edge > -3
         ? `Le moteur ne fait pas mieux qu'une supposition naïve pour l'instant (écart de ${edge.toFixed(0)} points). Ses verdicts ne doivent pas être suivis mécaniquement tant que ça reste vrai.`
         : `Le moteur fait actuellement moins bien que le hasard (${edge.toFixed(0)} points) — un vrai problème que la correction automatique doit adresser en priorité, pas un détail.`;
-    matrixEl.innerHTML = `
-      <div class="detail-opinion" style="margin-bottom:16px;">
+    const selfAssessmentBlock = !enoughForVerdict
+      ? `<p class="empty-state">${selfAssessment}</p>`
+      : `<div class="detail-opinion" style="margin-bottom:16px;">
         <strong>Verdict du moteur sur lui-même</strong>
         <p>${selfAssessment}</p>
-      </div>
+      </div>`;
+    matrixEl.innerHTML = `
+      ${selfAssessmentBlock}
       <div class="stat-row">
         <div class="stat-card accent-teal"><div class="stat-label">Exactitude stricte</div><div class="stat-value">${stats.accuracyPct.toFixed(0)} %</div></div>
         <div class="stat-card accent-gray"><div class="stat-label">Baseline "classe majoritaire"</div><div class="stat-value">${stats.baselineMajorityPct.toFixed(0)} %</div></div>
