@@ -1,6 +1,6 @@
 // Orchestration : navigation par onglets, chargement des données JSON, rendu.
 
-const TABS = ["overview", "favoris", "opportunities", "journal", "engine", "notifications"];
+const TABS = ["overview", "favoris", "opportunities", "journal", "engine", "notifications", "assistant"];
 let pricesIntervalStarted = false;
 let latestFavorisContext = null;
 
@@ -318,6 +318,9 @@ async function loadAllData() {
     loadJson(DATA_URLS.digest),
   ]);
   latestFavorisContext = favorisContext;
+  // Expose les données déjà chargées pour que d'autres fonctionnalités (l'Assistant) les
+  // réutilisent sans refaire les mêmes fetch — toujours les données du dernier rafraîchissement.
+  window.aguilaradarData = { verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest };
   if (window.renderDigestPanel) renderDigestPanel(digest);
 
   renderEngineTab(verdicts || [], engineHistory, opportunities, controlGroup);
@@ -444,6 +447,7 @@ async function initApp() {
   if (bellBtn) bellBtn.addEventListener("click", () => switchTab("notifications"));
   initPullToRefresh();
   initSearch();
+  if (window.initAssistant) initAssistant();
 
   if (window.initCardTilt) initCardTilt();
   if (window.registerConstellation) {
