@@ -27,8 +27,10 @@ const ACCESS_HASH = "0a23403368cf9a89e31f7d79caef03b54333541471de0488745eb26f20b
 
 // Les 15 favoris. IDs CoinGecko vérifiés via /api/v3/search (règle : ne jamais deviner).
 // Symboles TradingView = meilleure estimation d'exchange liquide ; un symbole invalide
-// affiche une erreur visible dans le widget (jamais une fausse donnée) — à corriger au
-// premier lancement visuel si besoin.
+// affiche une erreur visible dans le widget (jamais une fausse donnée). Vérifié le
+// 2026-08-17 : les 15 paires existent et sont liquides sur leur exchange (Binance pour
+// la majorité, MEXC pour PEAQ, Gate.io pour AIOZ) — à revérifier seulement si un widget
+// affiche un jour une erreur (nouveau listing renommé, paire délistée, etc.).
 const FAVORIS = [
   { ticker: "BTC",  name: "Bitcoin",                          cgId: "bitcoin",                              tvSymbol: "BINANCE:BTCUSDT" },
   { ticker: "ETH",  name: "Ethereum",                         cgId: "ethereum",                             tvSymbol: "BINANCE:ETHUSDT" },
