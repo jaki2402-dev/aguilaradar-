@@ -176,11 +176,16 @@ async function fetchMarketChartData(cgId, days) {
   };
 }
 
-// Volume Profile : où le volume s'est concentré par NIVEAU DE PRIX (pas dans le temps comme
-// un histogramme de volume classique) — construit à partir des clôtures/volumes quotidiens
-// déjà récupérés pour RSI/MM (aucun appel réseau de plus). Version quotidienne, pas
-// intra-journalière : moins fine qu'un vrai profil tick par tick, mais réelle, pas inventée,
-// et suffisante pour repérer le point de contrôle et la zone de valeur sur la fenêtre récente.
+// Profil de volume, gamme fixe (l'indicateur TradingView du même nom) : où le volume s'est
+// concentré par NIVEAU DE PRIX sur une periode fixe et explicite (pas un histogramme dans le
+// temps, pas une fenetre qui suit le defilement du graphique) — construit a partir des
+// clotures/volumes quotidiens deja recuperes pour RSI/MM (aucun appel reseau de plus).
+// Gamme fixe = les VOLUME_PROFILE_DAYS derniers jours, toujours la meme regle a chaque
+// calcul. Version quotidienne, pas intra-journaliere : moins fine qu'un vrai profil tick par
+// tick, mais reelle, pas inventee, et suffisante pour reperer le point de controle et la
+// zone de valeur sur cette gamme.
+const VOLUME_PROFILE_DAYS = 60;
+
 function computeVolumeProfile(closes, volumes, binCount) {
   if (!closes || !volumes || closes.length < 10 || closes.length !== volumes.length) return null;
   const min = Math.min(...closes);
@@ -225,21 +230,22 @@ function volumeProfileSignal(price, vp) {
   const vahText = formatPrice(vp.vah, "EUR");
   const inValueArea = price >= vp.val && price <= vp.vah;
 
+  const prefix = `Profil de volume, gamme fixe (${VOLUME_PROFILE_DAYS}j)`;
   if (inValueArea) {
     const nearPoc = Math.abs(price - vp.poc) <= (vp.vah - vp.val) * 0.15;
     return {
-      label: nearPoc ? `Volume Profile : proche du point de contrôle (${pocText})` : `Volume Profile : dans la zone de valeur (${valText} – ${vahText})`,
+      label: nearPoc ? `${prefix} : proche du point de contrôle (${pocText})` : `${prefix} : dans la zone de valeur (${valText} – ${vahText})`,
       text: nearPoc
-        ? "C'est le niveau de prix où s'est échangé le plus de volume récemment — zone d'équilibre entre acheteurs et vendeurs, souvent peu directionnelle tant que le prix y reste."
-        : "Le prix évolue dans la zone où s'est concentré l'essentiel du volume récent (~70%) — terrain plutôt équilibré, sans forte pression dans un sens.",
+        ? `C'est le niveau de prix où s'est échangé le plus de volume sur les ${VOLUME_PROFILE_DAYS} derniers jours — zone d'équilibre entre acheteurs et vendeurs, souvent peu directionnelle tant que le prix y reste.`
+        : `Le prix évolue dans la zone où s'est concentré l'essentiel du volume (~70%) sur les ${VOLUME_PROFILE_DAYS} derniers jours — terrain plutôt équilibré, sans forte pression dans un sens.`,
     };
   }
   const above = price > vp.vah;
   return {
-    label: above ? `Volume Profile : au-dessus de la zone de valeur (> ${vahText})` : `Volume Profile : en dessous de la zone de valeur (< ${valText})`,
+    label: above ? `${prefix} : au-dessus de la zone de valeur (> ${vahText})` : `${prefix} : en dessous de la zone de valeur (< ${valText})`,
     text: above
-      ? `Le prix s'est éloigné vers le haut de la zone où s'est concentré le volume récent (point de contrôle à ${pocText}) — soit un vrai mouvement en cours, soit une extension qui peut revenir se combler vers ce niveau.`
-      : `Le prix s'est éloigné vers le bas de la zone où s'est concentré le volume récent (point de contrôle à ${pocText}) — soit une vraie pression vendeuse, soit une extension qui peut revenir se combler vers ce niveau.`,
+      ? `Le prix s'est éloigné vers le haut de la zone où s'est concentré le volume sur les ${VOLUME_PROFILE_DAYS} derniers jours (point de contrôle à ${pocText}) — soit un vrai mouvement en cours, soit une extension qui peut revenir se combler vers ce niveau.`
+      : `Le prix s'est éloigné vers le bas de la zone où s'est concentré le volume sur les ${VOLUME_PROFILE_DAYS} derniers jours (point de contrôle à ${pocText}) — soit une vraie pression vendeuse, soit une extension qui peut revenir se combler vers ce niveau.`,
   };
 }
 
@@ -250,7 +256,7 @@ function volumeProfileSignal(price, vp) {
 async function renderTechnicalSection(asset) {
   const isBtc = asset.cgId === "bitcoin";
   const [assetChart, btcCloses] = await Promise.all([
-    fetchMarketChartData(asset.cgId, 60),
+    fetchMarketChartData(asset.cgId, VOLUME_PROFILE_DAYS),
     isBtc ? Promise.resolve(null) : fetchHistoricalCloses("bitcoin", 60).catch(() => null),
   ]);
   const closes = assetChart.closes;
