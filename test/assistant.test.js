@@ -119,6 +119,34 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
     expect(answer).toContain("Cassure haussière confirmée.");
   });
 
+  it("recognizes a favori by its popular alias, not just its official name (régression réelle : 'fetch.ai' pour FET, dont le nom officiel a changé en 'Artificial Superintelligence Alliance')", async () => {
+    const answer = await dom.window.answerQuestion("Est ce que fetch.ai va continuer de corriger ?");
+    expect(answer).toContain("FET");
+    expect(answer).not.toContain("Essaie par exemple"); // ne doit plus tomber sur le message générique
+  });
+
+  it("recognizes the FLUX alias 'zelcash' (piège de nommage documenté dans CLAUDE.md)", async () => {
+    const answer = await dom.window.answerQuestion("Que penses-tu de zelcash ?");
+    expect(answer).toContain("FLUX");
+  });
+
+  it("appends the correction_log status when the question asks about the engine's self-correction for a named tracked asset (même régression que 'fetch.ai' ci-dessus : la question portait aussi sur la correction)", async () => {
+    const answer = await dom.window.answerQuestion("Est-ce que Chainlink va continuer d'être corrigé par le moteur ?");
+    expect(answer).toContain("Aucune auto-correction tentée");
+  });
+
+  it("reports a real correction_log entry's fields (version/attempted_at/status/change_description/note) when present", async () => {
+    dom.window.aguilaradarData.engineHistory.correction_log = [
+      { version: "v1", attempted_at: "2026-08-10T00:00:00Z", status: "rejetée", change_description: "Test ancien", note: "" },
+      { version: "v2", attempted_at: "2026-08-21T02:30:00Z", status: "appliquée", change_description: "Seuil de confiance relevé pour les verdicts ATTENTE", note: "Amélioration mesurée du F1 macro." },
+    ];
+    const answer = await dom.window.answerQuestion("Le moteur s'améliore-t-il tout seul ?");
+    expect(answer).toContain("2 tentative(s)");
+    expect(answer).toContain("appliquée");
+    expect(answer).toContain("Seuil de confiance relevé pour les verdicts ATTENTE");
+    expect(answer).not.toContain("Test ancien"); // seule la DERNIERE tentative est resumee
+  });
+
   it("falls back silently to the routine verdict alone when the live price-history fetch is unavailable (no network fetch defined in this test environment, by design)", async () => {
     // Aucun dom.window.fetch defini ici : fetchMarketChartData leve, fetchLiveTechnicalSummary
     // rattrape et renvoie null - la reponse existante ne doit ni planter ni changer de forme.

@@ -54,7 +54,15 @@ function wordBoundaryMatch(haystack, needle) {
 
 function findAssetMention(text) {
   const norm = text.toLowerCase();
-  const fav = FAVORIS.find((f) => wordBoundaryMatch(norm, f.ticker.toLowerCase()) || wordBoundaryMatch(norm, f.name.toLowerCase()));
+  // aliases (config.js) : couvre un nom populaire/historique différent du nom officiel actuel
+  // (ex. FET toujours largement appelé "Fetch.ai" alors que le nom officiel a changé pour
+  // "Artificial Superintelligence Alliance" ; FLUX/zelcash, piège déjà documenté dans CLAUDE.md).
+  const fav = FAVORIS.find(
+    (f) =>
+      wordBoundaryMatch(norm, f.ticker.toLowerCase()) ||
+      wordBoundaryMatch(norm, f.name.toLowerCase()) ||
+      (f.aliases || []).some((a) => wordBoundaryMatch(norm, a.toLowerCase()))
+  );
   if (fav) return { cgId: fav.cgId, ticker: fav.ticker, name: fav.name, tracked: "favori" };
   const opp = ((chatData.opportunities && chatData.opportunities.opportunities) || []).find(
     (o) => wordBoundaryMatch(norm, o.ticker.toLowerCase()) || wordBoundaryMatch(norm, o.name.toLowerCase())
@@ -195,24 +203,55 @@ async function fetchLiveTechnicalSummary(cgId) {
   }
 }
 
-async function answerAboutAsset(mention) {
+// Reconnaît une question sur l'auto-correction du moteur lui-même (mécanisme, pas juste
+// "est-ce fiable") — distinct des mots-clés "performance/moteur" existants qui pointent déjà
+// vers answerEngine, pour rester utilisable aussi bien seul ("le moteur se corrige-t-il ?")
+// qu'à côté d'un actif nommé ("est-ce que fetch.ai va continuer de corriger ?").
+// Racines, pas des formes conjuguées exactes : "corrig" seul couvre corrige/corrigé/corriger/
+// corrigera (bug réel constaté en écrivant les tests ci-dessous : lister "corrige"/"corriger"
+// sans le tronc commun ratait "corrigé", l'accent aigu n'étant pas la même lettre que "e" nu).
+const CORRECTION_KEYWORDS = /\b(corrig|amélior|amelior|apprend|apprentissage|ajuste|auto-correct)/i;
+
+// Résumé du journal des auto-corrections (correction_log, engine-history.json) — même schéma
+// que celui déjà rendu dans l'onglet Moteur (engine.js) : version/attempted_at/status/
+// change_description/note. Volontairement séparé de answerEngine pour être réutilisable aussi
+// depuis answerAboutAsset (question sur un actif nommé ET sur la correction en même temps).
+function correctionLogSummary() {
+  const log = (chatData.engineHistory && chatData.engineHistory.correction_log) || [];
+  if (log.length === 0) {
+    return "Aucune auto-correction tentée pour l'instant — le moteur a besoin de plusieurs verdicts vérifiés avant de juger si un ajustement est justifié (rythme volontairement mesuré, pas un réglage permanent toutes les quelques minutes).";
+  }
+  const last = log[log.length - 1];
+  return `${log.length} tentative(s) d'auto-correction enregistrée(s) à ce jour. La dernière (${last.attempted_at}, statut "${last.status}") : ${last.change_description}${last.note ? ` — ${last.note}` : ""}`;
+}
+
+async function answerAboutAsset(mention, question) {
   const technical = await fetchLiveTechnicalSummary(mention.cgId);
-  const withTechnical = (text) => (technical ? `${text}\n\n${technical}` : text);
+  const askedAboutCorrection = CORRECTION_KEYWORDS.test(question || "");
+  const withExtras = (text) => {
+    let out = text;
+    if (technical) out += `\n\n${technical}`;
+    // La correction (correction_log) est une propriété du MOTEUR dans son ensemble, jamais
+    // par actif individuel — même mention quel que soit l'actif demandé, pas une donnée
+    // spécifique à mention.cgId qui n'existe pas.
+    if (askedAboutCorrection) out += `\n\n${correctionLogSummary()}`;
+    return out;
+  };
 
   if (mention.tracked === "favori") {
     const verdict = (chatData.verdicts || [])
       .filter((v) => v.asset === mention.cgId)
       .sort((a, b) => new Date(b.issued_at) - new Date(a.issued_at))[0];
     if (!verdict) {
-      return withTechnical(`${mention.name} (${mention.ticker}) fait partie des 15 favoris suivis, mais aucun verdict n'a encore été émis.`);
+      return withExtras(`${mention.name} (${mention.ticker}) fait partie des 15 favoris suivis, mais aucun verdict n'a encore été émis.`);
     }
-    return withTechnical(
+    return withExtras(
       `Sur ${mention.name} (${mention.ticker}), le dernier verdict est ${verdict.verdict} (confiance ${verdict.confidence_pct ?? "—"} %, horizon ${verdict.horizon_days} j, émis le ${new Date(verdict.issued_at).toLocaleDateString("fr-FR")}).\n\n${verdict.reasoning || ""}\n\nDétail complet dans l'onglet Favoris.`
     );
   }
   const opp = ((chatData.opportunities && chatData.opportunities.opportunities) || []).find((o) => o.cgId === mention.cgId);
   if (!opp) return `${mention.name} (${mention.ticker}) n'est pas suivi par le moteur pour l'instant — utilise la recherche de l'onglet Favoris pour un prix et une fiche d'identité en direct.`;
-  return withTechnical(
+  return withExtras(
     `${mention.name} (${mention.ticker}) fait partie des opportunités suivies (criblage Top 300) : ${opp.reason || "pas de détail disponible"}\n\nPrix actuel ${formatPrice(opp.price_eur, "EUR")}, ${formatChangePct(opp.change_7d_pct)} sur 7 jours. Détail complet dans l'onglet Opportunités.`
   );
 }
@@ -256,11 +295,11 @@ function answerAlerts() {
 
 function answerEngine() {
   const stats = chatData.engineHistory && chatData.engineHistory.global_stats;
-  if (!stats) return "Pas encore de statistiques du moteur disponibles.";
+  if (!stats) return `Pas encore de statistiques du moteur disponibles.\n\n${correctionLogSummary()}`;
   if (stats.accuracy_strict_pct === null || stats.accuracy_strict_pct === undefined) {
-    return `Le moteur a émis ${stats.total_verdicts_issued} verdict(s) au total, mais aucun n'a encore atteint son échéance — impossible de mesurer un vrai taux de réussite avant ça (rien n'est inventé entre-temps). Détail dans l'onglet Moteur.`;
+    return `Le moteur a émis ${stats.total_verdicts_issued} verdict(s) au total, mais aucun n'a encore atteint son échéance — impossible de mesurer un vrai taux de réussite avant ça (rien n'est inventé entre-temps).\n\n${correctionLogSummary()}\n\nDétail dans l'onglet Moteur.`;
   }
-  return `Le moteur a émis ${stats.total_verdicts_issued} verdicts, dont ${stats.total_verdicts_resolved} vérifiés, avec une exactitude de ${stats.accuracy_strict_pct.toFixed(1)} %. Détail complet dans l'onglet Moteur.`;
+  return `Le moteur a émis ${stats.total_verdicts_issued} verdicts, dont ${stats.total_verdicts_resolved} vérifiés, avec une exactitude de ${stats.accuracy_strict_pct.toFixed(1)} %.\n\n${correctionLogSummary()}\n\nDétail complet dans l'onglet Moteur.`;
 }
 
 function answerGenericInvesting() {
@@ -271,7 +310,7 @@ const CHAT_INTENTS = [
   { keywords: ["résume", "resume", "résumé", "briefing", "synthèse", "synthese", "récap", "recap"], handler: answerDigest },
   { keywords: ["opportunité", "opportunites", "opportunités", "pépite", "pepite", "meilleur", "prometteur", "bon plan", "bons plans"], handler: answerOpportunities },
   { keywords: ["alerte", "actualité", "actualites", "actualités", "news", "quoi de neuf", "du nouveau", "s'est-il passé", "sest il passe"], handler: answerAlerts },
-  { keywords: ["performance", "taux de réussite", "taux de reussite", "précision", "precision", "moteur", "backtest", "rétrotest", "retrotest", "fiable", "se trompe"], handler: answerEngine },
+  { keywords: ["performance", "taux de réussite", "taux de reussite", "précision", "precision", "moteur", "backtest", "rétrotest", "retrotest", "fiable", "se trompe", "corrig", "amélior", "amelior", "apprend", "apprentissage"], handler: answerEngine },
   { keywords: ["pourquoi", "hausse", "baisse", "monte", "descend", "chute", "analyse du marché", "analyse le marché", "analyse-moi le marché", "état du marché", "etat du marche", "comment va le marché", "comment va le marche", "où va le marché", "ou va le marche", "régime", "regime", "tendance", "sentiment"], handler: answerMarketWhy },
   { keywords: ["investir", "acheter", "vendre", "placer", "position", "que penses-tu", "quel est ton avis", "ton avis", "conseil", "conseilles"], handler: answerGenericInvesting },
 ];
@@ -281,7 +320,7 @@ async function answerQuestion(question) {
   const norm = question.toLowerCase();
 
   const mention = findAssetMention(question);
-  if (mention) return await answerAboutAsset(mention);
+  if (mention) return await answerAboutAsset(mention, question);
 
   const glossaryHit = findGlossaryTerm(question);
   if (glossaryHit) return `${glossaryHit.term} : ${glossaryHit.definition}`;
