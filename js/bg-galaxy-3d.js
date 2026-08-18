@@ -114,7 +114,12 @@ function createScene(canvas) {
     console.error("Fond Galaxie 3D indisponible (WebGL) :", err);
     return null;
   }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  // Plafonné à 1.5 plutôt que 2 : sur un écran haute densité réel (ex. 3x sur iPhone), le
+  // coût est au nombre de PIXELS ombrés (fill-rate), pas au nombre de sommets — c'est là que
+  // le rendu logiciel utilisé pour tester ce fichier dans cet environnement s'est révélé lent
+  // (mesuré : réduire les étoiles/segments de sphère n'a presque rien changé, réduire la
+  // résolution effective si). Différence invisible à l'oeil pour un fond, gain réel de fill-rate.
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
   renderer.setSize(window.innerWidth, window.innerHeight, false);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -130,12 +135,17 @@ function createScene(canvas) {
   const camera = new THREE.PerspectiveCamera(52, window.innerWidth / window.innerHeight, 1, 4000);
   camera.position.set(0, 40, 620);
 
+  // Nombre d'étoiles volontairement modéré : mesuré à ~12 FPS sous SwiftShader (rendu logiciel
+  // pur, seulement utilisé pour tester ce fichier dans cet environnement bac à sable, sans
+  // vrai GPU) contre ~60 FPS attendus sur n'importe quel GPU réel pour une scène aussi légère
+  // (~10k triangles, 2 lumières) — cette marge existe quand même par prudence, faute de pouvoir
+  // mesurer sur un vrai appareil depuis ici.
   const starsFar = new THREE.Points(
-    buildStarfield(5000, 1400, 0x22b8e0),
+    buildStarfield(3200, 1400, 0x22b8e0),
     new THREE.PointsMaterial({ size: 1.5, sizeAttenuation: true, vertexColors: true, transparent: true, opacity: 0.85, depthWrite: false })
   );
   const starsNear = new THREE.Points(
-    buildStarfield(1200, 700, 0x2fd3b0),
+    buildStarfield(800, 700, 0x2fd3b0),
     new THREE.PointsMaterial({ size: 2.3, sizeAttenuation: true, vertexColors: true, transparent: true, opacity: 0.95, depthWrite: false })
   );
   scene.add(starsFar, starsNear);
@@ -164,8 +174,11 @@ function createScene(canvas) {
   const planets = PLANET_COLORS.map((hex, i) => {
     const radius = 3.6 + i * 1.15 + (i === 0 ? 2 : 0);
     const mesh = new THREE.Mesh(
-      new THREE.SphereGeometry(radius, 32, 32),
-      new THREE.MeshStandardMaterial({ map: makePlanetTexture(hex), roughness: 0.85, metalness: 0.05 })
+      new THREE.SphereGeometry(radius, 22, 22),
+      // Lambert plutôt que Standard (PBR) : éclairage par sommet, beaucoup moins coûteux par
+      // pixel — à la taille où ces planètes s'affichent (voir le cadrage caméra plus haut), la
+      // nuance PBR roughness/metalness ne se voyait de toute façon pas.
+      new THREE.MeshLambertMaterial({ map: makePlanetTexture(hex) })
     );
     scene.add(mesh);
     if (i === 0) {
@@ -249,6 +262,13 @@ function createScene(canvas) {
           });
         }
       });
+      // Volontairement PAS de WEBGL_lose_context.loseContext() ici : testé (24 allers-retours
+      // rapides via Playwright), et forcer la perte de contexte cassait le remontage suivant
+      // sur le même <canvas> (le navigateur ne restaure pas le contexte assez vite pour un
+      // nouveau WebGLRenderer immédiat, qui plante alors en lisant .precision sur un contexte
+      // encore perdu). renderer.dispose() seul, laissant le ramasse-miettes reprendre le
+      // reste, s'est révélé fiable même sur 24 allers-retours en quelques secondes — un usage
+      // réel (clics humains) ne s'en approche jamais.
       renderer.dispose();
     },
   };
