@@ -487,6 +487,7 @@ async function initApp() {
     btn.addEventListener("click", () => switchTab(btn.dataset.tab));
   });
   initExclusiveAccordion(document.getElementById("engine-accordion"));
+  if (window.initThemeSwitcher) initThemeSwitcher();
   if (window.renderNotifPermissionCard) renderNotifPermissionCard();
 
   const refreshBtn = document.getElementById("refresh-btn");
