@@ -126,7 +126,7 @@ const GLOSSARY = [
 // donc le chat marche identiquement à avant tant que le Worker n'est pas déployé. `let`, pas
 // `const` : seule valeur de config.js à changer par un humain après coup plutôt qu'à l'ouverture
 // du site, doit rester réaffectable (idem latestFavorisPrices dans prices.js).
-let AI_RELAY_URL = "https://REMPLACE-MOI.workers.dev";
+let AI_RELAY_URL = "https://aguilaradar-assistant-ia.jaki2402.workers.dev/";
 
 const DATA_URLS = {
   verdicts: "data/verdicts.json",
