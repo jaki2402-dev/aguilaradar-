@@ -34,7 +34,7 @@ const ACCESS_HASH = "0a23403368cf9a89e31f7d79caef03b54333541471de0488745eb26f20b
 const FAVORIS = [
   { ticker: "BTC",  name: "Bitcoin",                          cgId: "bitcoin",                              tvSymbol: "BINANCE:BTCUSDT" },
   { ticker: "ETH",  name: "Ethereum",                         cgId: "ethereum",                             tvSymbol: "BINANCE:ETHUSDT" },
-  { ticker: "FET",  name: "Artificial Superintelligence Alliance", cgId: "fetch-ai",                              tvSymbol: "BINANCE:FETUSDT" },
+  { ticker: "FET",  name: "Artificial Superintelligence Alliance", cgId: "fetch-ai",                              tvSymbol: "BINANCE:FETUSDT", aliases: ["fetch.ai", "fetch ai", "fetchai", "fetch"] },
   { ticker: "GRT",  name: "The Graph",                        cgId: "the-graph",                            tvSymbol: "BINANCE:GRTUSDT" },
   { ticker: "TIA",  name: "Celestia",                         cgId: "celestia",                             tvSymbol: "BINANCE:TIAUSDT" },
   { ticker: "CTSI", name: "Cartesi",                          cgId: "cartesi",                              tvSymbol: "BINANCE:CTSIUSDT" },
@@ -44,7 +44,7 @@ const FAVORIS = [
   { ticker: "JUP",  name: "Jupiter",                          cgId: "jupiter-exchange-solana",              tvSymbol: "BINANCE:JUPUSDT" },
   { ticker: "LPT",  name: "Livepeer",                         cgId: "livepeer",                             tvSymbol: "BINANCE:LPTUSDT" },
   { ticker: "AIOZ", name: "AIOZ Network",                     cgId: "aioz-network",                         tvSymbol: "GATEIO:AIOZUSDT" },
-  { ticker: "FLUX", name: "Flux",                             cgId: "zelcash",                              tvSymbol: "BINANCE:FLUXUSDT" },
+  { ticker: "FLUX", name: "Flux",                             cgId: "zelcash",                              tvSymbol: "BINANCE:FLUXUSDT", aliases: ["zelcash"] },
   { ticker: "ARB",  name: "Arbitrum",                         cgId: "arbitrum",                             tvSymbol: "BINANCE:ARBUSDT" },
   { ticker: "INJ",  name: "Injective",                        cgId: "injective-protocol",                   tvSymbol: "BINANCE:INJUSDT" },
 ];
@@ -100,6 +100,25 @@ const REFRESH = {
 const THRESHOLDS = {
   directionalMovePct: 5,
 };
+
+// Glossaire débutant — même texte que la section repliable "Glossaire débutant" de index.html
+// (accueil), dupliqué ici intentionnellement pour que l'Assistant (assistant.js) puisse
+// répondre aux questions de définition ("c'est quoi le RSI ?") sans dépendre du DOM de
+// l'accueil. Les deux copies doivent rester synchronisées à la main si un terme change.
+const GLOSSARY = [
+  { term: "Verdict (ACHAT / ATTENTE / VENTE)", definition: "La lecture du moteur sur un actif à un horizon donné — pas un ordre à exécuter, une probabilité." },
+  { term: "Confiance", definition: "À quel point le moteur est sûr de son verdict. 70 % de confiance doit être correct environ 70 % du temps sur la durée — voir l'onglet Moteur." },
+  { term: "Horizon", definition: "Le délai (en jours) avant qu'un verdict soit vérifié par rapport au prix réel. Avant cette échéance, il reste \"en attente\"." },
+  { term: "Seuil directionnel", definition: "Le mouvement de prix minimum (5 % par défaut) pour qu'on considère qu'un actif est vraiment parti dans un sens plutôt que du simple bruit." },
+  { term: "RSI", definition: "Indicateur technique (0-100) qui repère un actif \"suracheté\" (proche de 100, risque de reprise de souffle) ou \"survendu\" (proche de 0, rebond possible)." },
+  { term: "MM20 / MM50", definition: "Prix moyen des 20 / 50 derniers jours — sert à voir si le prix actuel est au-dessus ou en dessous de sa tendance récente." },
+  { term: "ATH", definition: "All-Time High — le plus haut prix historique jamais atteint par l'actif." },
+  { term: "Dominance BTC", definition: "La part de Bitcoin dans la capitalisation totale du marché crypto — en hausse, ça signale souvent une préférence pour la sécurité plutôt que la prise de risque." },
+  { term: "Indice de peur et de cupidité", definition: "Indicateur de sentiment de marché (0 = peur extrême, 100 = cupidité extrême) — utile pour repérer les excès, pas pour prédire." },
+  { term: "Régime de marché", definition: "La tendance de fond actuelle : \"risk-on\" (appétit pour le risque), \"neutre\", ou \"risk-off\" (aversion au risque)." },
+  { term: "Signal précoce", definition: "Un mouvement de prix qui va déjà à l'encontre d'un verdict avant même son échéance — un avertissement, pas un résultat final." },
+  { term: "Backtest", definition: "La vérification honnête des performances passées du moteur — la matrice de confusion et le taux de réussite dans l'onglet Moteur." },
+];
 
 const DATA_URLS = {
   verdicts: "data/verdicts.json",

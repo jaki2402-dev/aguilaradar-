@@ -50,13 +50,41 @@ describe("assistant.js — looksLikeUnknownAssetMention", () => {
   });
 });
 
+describe("assistant.js — extractAssetQuery", () => {
+  const dom = loadPage(["assistant.js"]);
+  const { extractAssetQuery } = dom.window;
+
+  it("isole un ticker en capitales, à n'importe quelle position", () => {
+    expect(extractAssetQuery("c'est quoi XRPZZZ")).toBe("XRPZZZ");
+  });
+
+  it("isole un nom propre capitalisé au milieu de la phrase", () => {
+    expect(extractAssetQuery("Tu connais Worldcoin ?")).toBe("Worldcoin");
+  });
+
+  it("ignore un mot capitalisé isolé en tête de phrase (majuscule de ponctuation française, pas un nom d'actif)", () => {
+    expect(extractAssetQuery("Résume-moi la semaine")).toBeNull();
+    expect(extractAssetQuery("Pourquoi le marché est-il neutre ?")).toBeNull();
+    expect(extractAssetQuery("Quelles sont les meilleures opportunités ?")).toBeNull();
+  });
+
+  it("accepte un groupe de plusieurs mots capitalisés même en tête de phrase (signal trop fort pour être du bruit)", () => {
+    expect(extractAssetQuery("The Sandbox va bien ?")).toBe("The Sandbox");
+  });
+
+  it("renvoie null sur une phrase sans ticker ni nom propre", () => {
+    expect(extractAssetQuery("bonjour comment ça va")).toBeNull();
+  });
+});
+
 describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", () => {
-  // FAVORIS (config.js), computeConfidence (cards.js, utilisé par answerOpportunities) et les
-  // fonctions d'indicateurs techniques (detail.js, utilisées par fetchLiveTechnicalSummary)
-  // sont des dépendances réelles de assistant.js — même ordre que index.html.
+  // FAVORIS (config.js), computeConfidence (cards.js, utilisé par answerOpportunities), les
+  // fonctions d'indicateurs techniques (detail.js, utilisées par fetchLiveTechnicalSummary) et
+  // searchCoinByName/fetchCoinDetail (search.js, utilisées par fetchLiveSearchAnswer) sont des
+  // dépendances réelles de assistant.js — même ordre que index.html.
   let dom;
   beforeEach(() => {
-    dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "assistant.js"]);
+    dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "search.js", "assistant.js"]);
     dom.window.aguilaradarData = {
       verdicts: [
         {
@@ -91,6 +119,34 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
     expect(answer).toContain("Cassure haussière confirmée.");
   });
 
+  it("recognizes a favori by its popular alias, not just its official name (régression réelle : 'fetch.ai' pour FET, dont le nom officiel a changé en 'Artificial Superintelligence Alliance')", async () => {
+    const answer = await dom.window.answerQuestion("Est ce que fetch.ai va continuer de corriger ?");
+    expect(answer).toContain("FET");
+    expect(answer).not.toContain("Essaie par exemple"); // ne doit plus tomber sur le message générique
+  });
+
+  it("recognizes the FLUX alias 'zelcash' (piège de nommage documenté dans CLAUDE.md)", async () => {
+    const answer = await dom.window.answerQuestion("Que penses-tu de zelcash ?");
+    expect(answer).toContain("FLUX");
+  });
+
+  it("appends the correction_log status when the question asks about the engine's self-correction for a named tracked asset (même régression que 'fetch.ai' ci-dessus : la question portait aussi sur la correction)", async () => {
+    const answer = await dom.window.answerQuestion("Est-ce que Chainlink va continuer d'être corrigé par le moteur ?");
+    expect(answer).toContain("Aucune auto-correction tentée");
+  });
+
+  it("reports a real correction_log entry's fields (version/attempted_at/status/change_description/note) when present", async () => {
+    dom.window.aguilaradarData.engineHistory.correction_log = [
+      { version: "v1", attempted_at: "2026-08-10T00:00:00Z", status: "rejetée", change_description: "Test ancien", note: "" },
+      { version: "v2", attempted_at: "2026-08-21T02:30:00Z", status: "appliquée", change_description: "Seuil de confiance relevé pour les verdicts ATTENTE", note: "Amélioration mesurée du F1 macro." },
+    ];
+    const answer = await dom.window.answerQuestion("Le moteur s'améliore-t-il tout seul ?");
+    expect(answer).toContain("2 tentative(s)");
+    expect(answer).toContain("appliquée");
+    expect(answer).toContain("Seuil de confiance relevé pour les verdicts ATTENTE");
+    expect(answer).not.toContain("Test ancien"); // seule la DERNIERE tentative est resumee
+  });
+
   it("falls back silently to the routine verdict alone when the live price-history fetch is unavailable (no network fetch defined in this test environment, by design)", async () => {
     // Aucun dom.window.fetch defini ici : fetchMarketChartData leve, fetchLiveTechnicalSummary
     // rattrape et renvoie null - la reponse existante ne doit ni planter ni changer de forme.
@@ -119,6 +175,69 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
   it("answers with the tracked opportunity when the asset is only in the screening list, not the favoris", async () => {
     const answer = await dom.window.answerQuestion("Parle-moi de Cardano");
     expect(answer).toContain("Momentum fort");
+  });
+
+  it("searches CoinGecko live for a specific but untracked asset name, and returns real public data instead of a dead end", async () => {
+    dom.window.fetch = async (url) => {
+      if (url.includes("/search?")) {
+        return { ok: true, json: async () => ({ coins: [{ id: "worldcoin-wld", name: "Worldcoin", symbol: "wld" }] }) };
+      }
+      return {
+        ok: true,
+        json: async () => [
+          {
+            name: "Worldcoin",
+            symbol: "wld",
+            current_price: 1.23,
+            price_change_percentage_24h_in_currency: 5.5,
+            price_change_percentage_7d_in_currency: -2.1,
+            market_cap_rank: 45,
+          },
+        ],
+      };
+    };
+    const answer = await dom.window.answerQuestion("Tu connais Worldcoin ?");
+    expect(answer).toContain("Worldcoin");
+    expect(answer).toContain("WLD");
+    expect(answer).toContain("ne fait pas partie des 15 favoris");
+    expect(answer).not.toContain("Je ne trouve pas cet actif");
+  });
+
+  it("falls back to the same 'not tracked' message when the live CoinGecko search itself finds nothing", async () => {
+    dom.window.fetch = async () => ({ ok: true, json: async () => ({ coins: [] }) });
+    const answer = await dom.window.answerQuestion("Tu connais Zorbaxqq ?");
+    expect(answer).toContain("Je ne trouve pas cet actif");
+  });
+
+  it("answers a definition question from the glossary instead of misreading the term as a ticker to search (régression : 'c'est quoi le RSI' déclenchait une recherche CoinGecko sur 'RSI')", async () => {
+    const answer = await dom.window.answerQuestion("c'est quoi le RSI ?");
+    expect(answer).toContain("RSI :");
+    expect(answer).toContain("suracheté");
+    expect(answer).not.toContain("Je ne trouve pas cet actif");
+  });
+
+  it("recognizes another glossary-style phrasing ('explique-moi X')", async () => {
+    const answer = await dom.window.answerQuestion("explique-moi l'ATH");
+    expect(answer).toContain("ATH :");
+    expect(answer).toContain("All-Time High");
+  });
+
+  it("gives priority to a tracked asset's real analysis over a glossary definition when both are named", async () => {
+    const answer = await dom.window.answerQuestion("Chainlink, c'est quoi son horizon ?");
+    expect(answer).toContain("ACHAT");
+    expect(answer).not.toContain("Horizon :");
+  });
+
+  it("prioritizes a live search over the generic investing disclaimer when a specific untracked asset is named", async () => {
+    // "que penses-tu" est aussi un mot-clé de answerGenericInvesting (CHAT_INTENTS) - un nom
+    // d'actif explicite doit gagner sur ce disclaimer générique, pas l'inverse.
+    dom.window.fetch = async (url) => {
+      if (url.includes("/search?")) return { ok: true, json: async () => ({ coins: [{ id: "render-token", name: "Render", symbol: "rndr" }] }) };
+      return { ok: true, json: async () => [{ name: "Render", symbol: "rndr", current_price: 5, market_cap_rank: 30 }] };
+    };
+    const answer = await dom.window.answerQuestion("Que penses-tu de Render ?");
+    expect(answer).toContain("Render");
+    expect(answer).not.toContain("Aguilaradar ne donne pas de conseil");
   });
 
   it("routes a digest-shaped question to the periodic summary", async () => {
