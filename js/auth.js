@@ -27,7 +27,11 @@ function showApp() {
 }
 
 function initGate() {
-  if (window.initRadarBackground) initRadarBackground();
+  // Le fond animé (voir theme.js) doit être "toujours présent, portail comme app" — même
+  // logique qu'avant l'ajout du système de thèmes. Repli sur l'ancien appel direct si jamais
+  // theme.js n'a pas pu se charger, pour ne jamais perdre le fond entièrement.
+  if (window.mountActiveBackground) mountActiveBackground();
+  else if (window.initRadarBackground) initRadarBackground();
 
   if (isUnlocked()) {
     showApp();

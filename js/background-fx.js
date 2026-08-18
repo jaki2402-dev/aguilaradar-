@@ -25,9 +25,11 @@ function setupHiDPICanvas(canvas, widthPx, heightPx) {
 
 // ---- Piste A + B : icônes des favoris qui dérivent sur tout l'écran + balayage radar
 // ambiant dans un coin — un seul canvas plein écran, toujours présent (gate comme app). ----
+// Renvoie { stop() } pour permettre un démontage propre (voir theme.js, qui bascule entre ce
+// fond et bg-galaxy-3d.js) — la boucle de dessin elle-même est inchangée.
 function initRadarBackground() {
   const canvas = document.getElementById("bg-radar-canvas");
-  if (!canvas || prefersReducedMotion()) return;
+  if (!canvas || prefersReducedMotion()) return { stop() {} };
   // Ne jamais faire confiance à window.innerWidth/innerHeight au moment de l'appel : au
   // DOMContentLoaded, la mise en page (et parfois même le CSS, retardé par l'@import Google
   // Fonts) n'est pas forcément terminée, ce qui a déjà produit un canvas figé à 1x1px en
@@ -74,11 +76,14 @@ function initRadarBackground() {
   }));
 
   let frameCount = 0;
+  let rafId = null;
+  let stopped = false;
   function draw(t) {
+    if (stopped) return;
     ensureSize();
     frameCount++;
     if (!ctx || frameCount % 2 === 0 || document.hidden) {
-      requestAnimationFrame(draw);
+      rafId = requestAnimationFrame(draw);
       return;
     }
     const w = lastW, h = lastH;
@@ -139,9 +144,15 @@ function initRadarBackground() {
       ctx.fillStyle = lit ? "rgba(240, 180, 41, 0.4)" : "rgba(147, 160, 180, 0.12)";
       ctx.fill();
     });
-    requestAnimationFrame(draw);
+    rafId = requestAnimationFrame(draw);
   }
-  requestAnimationFrame(draw);
+  rafId = requestAnimationFrame(draw);
+  return {
+    stop() {
+      stopped = true;
+      if (rafId) cancelAnimationFrame(rafId);
+    },
+  };
 }
 
 // ---- Piste C : réseau de tickers en fond, seulement pendant que son onglet est actif ----

@@ -11,11 +11,12 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 <link rel="manifest" href="manifest.json" />
-<link rel="stylesheet" href="css/style.css?v=20260818b" />
+<link rel="stylesheet" href="css/style.css?v=20260818c" />
 </head>
 <body>
 
 <canvas id="bg-radar-canvas" aria-hidden="true"></canvas>
+<canvas id="bg-galaxy-canvas" aria-hidden="true" hidden></canvas>
 
 <div id="access-gate">
   <div class="gate-card">
@@ -46,6 +47,9 @@
       <div id="last-deep-cycle">Analyse profonde : chargement…</div>
     </div>
     <div class="header-actions">
+      <button id="design-settings-btn" class="design-settings-btn" aria-label="Réglages design" title="Réglages design">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>
+      </button>
       <button id="notif-bell-btn" class="notif-bell-btn" aria-label="Notifications" title="Notifications">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
         <span id="notif-bell-badge" class="notif-bell-badge" hidden>0</span>
@@ -55,6 +59,18 @@
       </button>
     </div>
   </header>
+
+  <div id="design-settings-panel" class="design-settings-panel" hidden>
+    <div class="design-settings-backdrop"></div>
+    <div class="design-settings-card" role="dialog" aria-modal="true" aria-label="Réglages design">
+      <div class="design-settings-head">
+        <h3>Réglages design</h3>
+        <button type="button" id="design-settings-close" aria-label="Fermer">✕</button>
+      </div>
+      <p class="section-sub">Choisis le fond animé du site. Le design d'origine reste toujours disponible ici, en un clic.</p>
+      <div class="design-theme-list" id="design-theme-list"></div>
+    </div>
+  </div>
 
   <div id="pull-indicator" class="pull-indicator">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6"/><path d="M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
@@ -432,18 +448,24 @@
      cache: "no-store", donc toujours frais) - bug réel constaté le 18/08 : la correction de
      l'Assistant était bien en ligne, mais assistant.js restait servi en cache. Bump la date à
      CHAQUE modification d'un fichier js/*.js ou css/*.css, pas seulement pour ce correctif-ci. -->
-<script src="js/config.js?v=20260818b"></script>
-<script src="js/prices.js?v=20260818b"></script>
-<script src="js/charts.js?v=20260818b"></script>
-<script src="js/engine.js?v=20260818b"></script>
-<script src="js/cards.js?v=20260818b"></script>
-<script src="js/detail.js?v=20260818b"></script>
-<script src="js/insights.js?v=20260818b"></script>
-<script src="js/background-fx.js?v=20260818b"></script>
-<script src="js/search.js?v=20260818b"></script>
-<script src="js/app.js?v=20260818b"></script>
-<script src="js/notify.js?v=20260818b"></script>
-<script src="js/assistant.js?v=20260818b"></script>
-<script src="js/auth.js?v=20260818b"></script>
+<script src="js/config.js?v=20260818c"></script>
+<script src="js/prices.js?v=20260818c"></script>
+<script src="js/charts.js?v=20260818c"></script>
+<script src="js/engine.js?v=20260818c"></script>
+<script src="js/cards.js?v=20260818c"></script>
+<script src="js/detail.js?v=20260818c"></script>
+<script src="js/insights.js?v=20260818c"></script>
+<script src="js/background-fx.js?v=20260818c"></script>
+<!-- Module (pas un script classique) : import ES natif depuis js/vendor/three.module.min.js
+     (Three.js vendorisé en local, jamais un CDN externe — voir le commentaire en tête du
+     fichier). S'exécute après tous les scripts classiques mais toujours avant
+     DOMContentLoaded (spec HTML), donc déjà prêt quand auth.js appelle mountActiveBackground(). -->
+<script type="module" src="js/bg-galaxy-3d.js?v=20260818c"></script>
+<script src="js/theme.js?v=20260818c"></script>
+<script src="js/search.js?v=20260818c"></script>
+<script src="js/app.js?v=20260818c"></script>
+<script src="js/notify.js?v=20260818c"></script>
+<script src="js/assistant.js?v=20260818c"></script>
+<script src="js/auth.js?v=20260818c"></script>
 </body>
 </html>
