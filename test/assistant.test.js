@@ -277,7 +277,10 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
     expect(answer).toContain("Essaie par exemple");
   });
 
-  it("never attempts the AI relay while AI_RELAY_URL is still the unconfigured placeholder (real config.js default) — no fetch call at all", async () => {
+  it("never attempts the AI relay while AI_RELAY_URL is still an unconfigured placeholder — no fetch call at all", async () => {
+    // AI_RELAY_URL vaut désormais la vraie URL déployée (config.js) - ce test vérifie
+    // explicitement le comportement placeholder plutôt que de dépendre de la config de prod.
+    runScript(dom, 'AI_RELAY_URL = "https://REMPLACE-MOI.workers.dev";', "reset AI_RELAY_URL to placeholder");
     let fetchCalled = false;
     dom.window.fetch = async () => {
       fetchCalled = true;
