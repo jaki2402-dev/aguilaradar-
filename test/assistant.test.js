@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { loadPage } from "./helpers/loadPage.js";
+import { loadPage, runScript } from "./helpers/loadPage.js";
 
 describe("assistant.js — wordBoundaryMatch", () => {
   const dom = loadPage(["assistant.js"]);
@@ -275,5 +275,55 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
   it("falls back to the generic help message for unrelated prose", async () => {
     const answer = await dom.window.answerQuestion("bonjour comment ça va");
     expect(answer).toContain("Essaie par exemple");
+  });
+
+  it("never attempts the AI relay while AI_RELAY_URL is still the unconfigured placeholder (real config.js default) — no fetch call at all", async () => {
+    let fetchCalled = false;
+    dom.window.fetch = async () => {
+      fetchCalled = true;
+      throw new Error("ne devrait jamais être appelé");
+    };
+    const answer = await dom.window.answerQuestion("raconte-moi une blague de pêcheur");
+    expect(fetchCalled).toBe(false);
+    expect(answer).toContain("Essaie par exemple");
+  });
+
+  it("uses the AI relay as a genuine last resort once AI_RELAY_URL is configured, for a question nothing else could answer", async () => {
+    runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
+    dom.window.fetch = async (url, opts) => {
+      expect(url).toBe("https://test-relay.workers.dev");
+      const sent = JSON.parse(opts.body);
+      expect(sent.question).toBe("raconte-moi une blague de pêcheur");
+      expect(sent.context).toContain("neutre"); // vraies données du site incluses (macro_regime)
+      return { ok: true, json: async () => ({ answer: "Pourquoi le bitcoin ne se fâche jamais ? Il reste toujours volatil, mais jamais énervé." }) };
+    };
+    const answer = await dom.window.answerQuestion("raconte-moi une blague de pêcheur");
+    expect(answer).toContain("Pourquoi le bitcoin ne se fâche jamais");
+    expect(answer).toContain("Réponse générée par IA");
+  });
+
+  it("still falls back to the generic message when the AI relay is configured but fails (network error, timeout, bad response)", async () => {
+    runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
+    dom.window.fetch = async () => {
+      throw new Error("panne réseau simulée");
+    };
+    const answer = await dom.window.answerQuestion("raconte-moi une blague de pêcheur");
+    expect(answer).toContain("Essaie par exemple");
+  });
+
+  it("NEVER lets the AI relay override an already-working answer, even when configured and reachable (zero-regression guarantee)", async () => {
+    runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
+    let fetchCalled = false;
+    dom.window.fetch = async (url) => {
+      // Le seul fetch legitime ici est fetchLiveTechnicalSummary (marche chart) pour Chainlink,
+      // jamais un appel au relais IA - une question sur un actif suivi repond avant d'y arriver.
+      fetchCalled = true;
+      if (url.includes("test-relay.workers.dev")) throw new Error("le relais IA n'aurait jamais du etre appele ici");
+      throw new Error("indisponible (comportement normal pour ce test)");
+    };
+    const answer = await dom.window.answerQuestion("Que penses-tu de Chainlink ?");
+    expect(answer).toContain("ACHAT");
+    expect(answer).not.toContain("Réponse générée par IA");
+    expect(fetchCalled).toBe(true); // confirme que fetchLiveTechnicalSummary a bien tente son appel
   });
 });

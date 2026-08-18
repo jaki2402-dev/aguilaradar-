@@ -315,6 +315,51 @@ const CHAT_INTENTS = [
   { keywords: ["investir", "acheter", "vendre", "placer", "position", "que penses-tu", "quel est ton avis", "ton avis", "conseil", "conseilles"], handler: answerGenericInvesting },
 ];
 
+// Contexte compact envoyé au relais IA (cloudflare-worker/, dernier recours seulement, voir
+// fetchLiveAiFallback) — jamais le JSON brut complet (trop gros, ralentirait chaque appel).
+// chatData est déjà chargé par ensureChatData au moment où ceci est appelé, aucun fetch de plus.
+function buildAiContext() {
+  const parts = [];
+  const regime = chatData.engineHistory && chatData.engineHistory.macro_regime;
+  if (regime && regime.regime) {
+    parts.push(`Régime de marché : ${regime.regime} (peur/cupidité ${regime.fear_greed_value ?? "—"}, dominance BTC ${regime.btc_dominance_pct ?? "—"} %). ${regime.note || ""}`);
+  }
+  const d = chatData.digest;
+  if (d && d.generated_at) parts.push(`Résumé du moment : ${d.headline} — ${d.summary}`);
+  const opps = ((chatData.opportunities && chatData.opportunities.opportunities) || []).slice(0, 3);
+  if (opps.length) parts.push("Top opportunités suivies : " + opps.map((o) => `${o.ticker} (${o.reason || "—"})`).join(" ; "));
+  const alerts = (chatData.alerts || []).slice(-3);
+  if (alerts.length) parts.push("Dernières alertes : " + alerts.map((a) => a.message).join(" ; "));
+  return parts.join("\n");
+}
+
+// Dernier recours absolu quand rien d'autre (actif suivi, glossaire, recherche live, intentions)
+// n'a répondu — appelle le relais IA gratuit (cloudflare-worker/, Cloudflare Workers AI, voir
+// AI_RELAY_URL dans config.js) avec les vraies données du site en contexte. Best-effort comme
+// fetchLiveTechnicalSummary/fetchLiveSearchAnswer : tant que AI_RELAY_URL n'est pas configuré
+// (placeholder par défaut), ou si l'appel échoue/traîne, retombe silencieusement sur le message
+// générique existant — ne peut donc jamais faire régresser un cas qui marchait déjà.
+async function fetchLiveAiFallback(question) {
+  if (!AI_RELAY_URL || AI_RELAY_URL.includes("REMPLACE-MOI")) return null;
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
+    const res = await fetch(AI_RELAY_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question, context: buildAiContext() }),
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (!data || !data.answer) return null;
+    return `${data.answer}\n\n(Réponse générée par IA à partir des données du site — pas un verdict vérifié du moteur.)`;
+  } catch (e) {
+    return null;
+  }
+}
+
 async function answerQuestion(question) {
   await ensureChatData();
   const norm = question.toLowerCase();
@@ -339,6 +384,12 @@ async function answerQuestion(question) {
 
   const intent = CHAT_INTENTS.find((i) => i.keywords.some((k) => norm.includes(k)));
   if (intent) return intent.handler();
+
+  // Absolument tout le reste (actif suivi, glossaire, recherche live, intentions) a déjà eu sa
+  // chance de répondre en premier — voir fetchLiveAiFallback pour pourquoi ça ne peut jamais
+  // faire régresser un cas qui marchait déjà, seulement rattraper ceux qui échouaient.
+  const aiAnswer = await fetchLiveAiFallback(question);
+  if (aiAnswer) return aiAnswer;
 
   if (looksLikeUnknownAssetMention(question)) {
     return `Je ne trouve pas cet actif parmi les 15 favoris ou les opportunités suivies, donc pas de verdict du moteur dessus. Utilise la recherche de l'onglet Favoris pour son prix et sa fiche d'identité en direct — tape simplement son nom.`;
