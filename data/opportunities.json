@@ -1,8 +1,8 @@
 {
-    "last_scan_at": "2026-08-07T00:20:00Z",
-    "scanned_count": 300,
+    "last_scan_at": "2026-08-18T09:44:50Z",
+    "scanned_count": 20,
     "excluded_meme_count": 22,
-    "methodology": "Criblage quantitatif Top 300 CoinGecko (categorie Meme exclue), score = momentum 7j pondere + 24h + ratio volume/capitalisation plafonne. Candidats avec ratio volume/capitalisation > 25% exclus (marche trop fin/suspect). Rang de capitalisation incoherent exclu. Confiance = evaluation independante (rang de capitalisation, notoriete du projet, caractere extreme ou non du mouvement) - distincte du score de momentum. Chaque pepite est verifiee a 5 horizons independants (1 jour, 3 jours, 7 jours, 14 jours, 6 mois) pour voir comment le signal se comporte a differentes echeances plutot qu'un seul verdict final. Routine passee d'hebdomadaire a quotidienne le 17/08, cible desormais Top 150 via un unique appel /api/v3/coins/markets. Tentative de cycle du 18/08 04h10 UTC : appel CoinGecko et tous les fallbacks testes (CoinMarketCap, TradingView, Coinbase, Binance, Kraken, Messari, CryptoCompare) renvoient EGRESS_BLOCKED depuis cet environnement - blocage reseau total, pas un rate-limit. Nouvelle tentative de cycle du 18/08 09h38 UTC : appel CoinGecko et fallbacks directs retestes (CoinMarketCap, Binance, Kraken, Coinbase, page web coingecko.com) renvoient de nouveau tous EGRESS_BLOCKED depuis cet environnement - meme blocage reseau total persistant, pas un rate-limit. Aucune donnee de marche fiable obtenue lors des deux tentatives, donc 0 candidat evalue et aucun ajout ce cycle ; last_scan_at/scanned_count/excluded_meme_count volontairement laisses inchanges (dernier scan reel reussi : 07/08) pour ne pas afficher une fausse fraicheur alors qu'aucune verification reelle n'a eu lieu.",
+    "methodology": "Cycle du 18/08/2026 : deux tentatives precedentes (04h10 et 09h38 UTC) avaient echoue avec EGRESS_BLOCKED total sur les appels HTTP directs (CoinGecko et tous les fallbacks). Blocage resolu a partir de 09h44 UTC via le connecteur MCP CoinGecko attache a cette session persistante (au lieu de l'ancien mode session-fraiche + appels HTTP directs). Limite connue de ce connecteur : get-coin-markets plafonne a 20 coins (topN max), pas de parametre de devise (USD natif), pas de variation 7j/30j ni d'ATH natifs. En consequence ce cycle a criblé le Top 20 par capitalisation (et non 300 comme les cycles precedents) : prix EUR obtenu par conversion via taux de change USD/EUR reel (Alpha Vantage, temps reel), variation 7j calculee depuis le sparkline 7 jours reel (169h, pas d'estimation), variation 30j calculee depuis un prix historique reel a J-30 (get-coin-history, EUR natif). Donnee ATH non disponible via ce connecteur : champ ath_change_pct omis (null) plutot qu'invente, pour les nouvelles entrees de ce cycle uniquement. Score = 0.5*variation_7j + 0.3*variation_24h + bonus fixe si rang<=100. Exclusion memecoins (nom/categorie), stablecoins, actifs de dette tokenises (ex: figure-heloc), et candidats ratio volume/capitalisation > 25%. Portee reduite assumee : un vrai criblage Top 150-300 necessitera soit une pagination CoinGecko plus large sur ce connecteur MCP, soit le retour d'un acces reseau direct.",
     "opportunities": [
         {
             "id": "opp-20260807-ada",
@@ -1017,6 +1017,218 @@
                         "validated": null,
                         "checked_at": null
                     }
+                }
+            }
+        },
+        {
+            "id": "opp-20260818-hype",
+            "ticker": "HYPE",
+            "name": "Hyperliquid",
+            "cgId": "hyperliquid",
+            "image": "https://coin-images.coingecko.com/coins/images/50882/large/hyperliquid.jpg?1729431300",
+            "price_eur": 51.344013,
+            "market_cap": 11418801818,
+            "market_cap_rank": 9,
+            "change_24h_pct": 0.1,
+            "change_7d_pct": 8.16,
+            "change_30d_pct": -2.44,
+            "ath_change_pct": null,
+            "opportunity_score": 6.1,
+            "recognized": true,
+            "sparkline": [],
+            "tags": [
+                "Momentum confirmé",
+                "Infrastructure DeFi (perp DEX)"
+            ],
+            "reason": "Plateforme de perpetuals/DEX on-chain, rang 9, forte hausse 7j. Variation 7j 8.2%, 24h 0.1%. Donnee ATH indisponible via le connecteur MCP actuel (omise, non estimee).",
+            "flagged_at": "2026-08-18T09:44:50Z",
+            "price_at_flag": 51.344013,
+            "threshold_pct": 5,
+            "price_refreshed_at": "2026-08-18T09:44:50Z",
+            "horizons": {
+                "j1": {
+                    "check_at": "2026-08-19T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                },
+                "j3": {
+                    "check_at": "2026-08-21T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                },
+                "j7": {
+                    "check_at": "2026-08-25T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                },
+                "j14": {
+                    "check_at": "2026-09-01T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                },
+                "m6": {
+                    "check_at": "2027-02-16T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                }
+            }
+        },
+        {
+            "id": "opp-20260818-xmr",
+            "ticker": "XMR",
+            "name": "Monero",
+            "cgId": "monero",
+            "image": "https://coin-images.coingecko.com/coins/images/69/large/monero_logo.png?1696501460",
+            "price_eur": 355.970183,
+            "market_cap": 6689247452,
+            "market_cap_rank": 15,
+            "change_24h_pct": 0.0,
+            "change_7d_pct": 5.91,
+            "change_30d_pct": 21.26,
+            "ath_change_pct": null,
+            "opportunity_score": 5.0,
+            "recognized": true,
+            "sparkline": [],
+            "tags": [
+                "Projet établi",
+                "Coin de confidentialité"
+            ],
+            "reason": "Projet de confidentialité historique (2014), rang 15, momentum 7j positif. Variation 7j 5.9%, 24h 0.0%. Donnee ATH indisponible via le connecteur MCP actuel (omise, non estimee).",
+            "flagged_at": "2026-08-18T09:44:50Z",
+            "price_at_flag": 355.970183,
+            "threshold_pct": 5,
+            "price_refreshed_at": "2026-08-18T09:44:50Z",
+            "horizons": {
+                "j1": {
+                    "check_at": "2026-08-19T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                },
+                "j3": {
+                    "check_at": "2026-08-21T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                },
+                "j7": {
+                    "check_at": "2026-08-25T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                },
+                "j14": {
+                    "check_at": "2026-09-01T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                },
+                "m6": {
+                    "check_at": "2027-02-16T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                }
+            }
+        },
+        {
+            "id": "opp-20260818-zec",
+            "ticker": "ZEC",
+            "name": "Zcash",
+            "cgId": "zcash",
+            "image": "https://coin-images.coingecko.com/coins/images/486/large/Brandmark-Yellow_%281%29.png?1785810558",
+            "price_eur": 436.760989,
+            "market_cap": 7372956340,
+            "market_cap_rank": 14,
+            "change_24h_pct": -1.4,
+            "change_7d_pct": 4.15,
+            "change_30d_pct": -10.55,
+            "ath_change_pct": null,
+            "opportunity_score": 3.7,
+            "recognized": true,
+            "sparkline": [],
+            "tags": [
+                "Projet établi",
+                "Coin de confidentialité"
+            ],
+            "reason": "Projet de confidentialité établi, rang 14, momentum 7j positif malgré repli 24h. Variation 7j 4.2%, 24h -1.4%. Donnee ATH indisponible via le connecteur MCP actuel (omise, non estimee).",
+            "flagged_at": "2026-08-18T09:44:50Z",
+            "price_at_flag": 436.760989,
+            "threshold_pct": 5,
+            "price_refreshed_at": "2026-08-18T09:44:50Z",
+            "horizons": {
+                "j1": {
+                    "check_at": "2026-08-19T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                },
+                "j3": {
+                    "check_at": "2026-08-21T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                },
+                "j7": {
+                    "check_at": "2026-08-25T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                },
+                "j14": {
+                    "check_at": "2026-09-01T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                },
+                "m6": {
+                    "check_at": "2027-02-16T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                }
+            }
+        },
+        {
+            "id": "opp-20260818-rain",
+            "ticker": "RAIN",
+            "name": "Rain",
+            "cgId": "rain",
+            "image": "https://coin-images.coingecko.com/coins/images/69134/large/Rain_logo_1_.png?1762952191",
+            "price_eur": 0.011296,
+            "market_cap": 8094876200,
+            "market_cap_rank": 12,
+            "change_24h_pct": 1.0,
+            "change_7d_pct": 2.12,
+            "change_30d_pct": -11.67,
+            "ath_change_pct": null,
+            "opportunity_score": 3.4,
+            "recognized": false,
+            "sparkline": [],
+            "tags": [
+                "Projet récent",
+                "DeFi / Options / Prediction markets (Arbitrum)"
+            ],
+            "reason": "Protocole d'options/marches de prediction decentralise sur Arbitrum, rang 12. Variation 7j 2.1%, 24h 1.0%. Donnee ATH indisponible via le connecteur MCP actuel (omise, non estimee).",
+            "flagged_at": "2026-08-18T09:44:50Z",
+            "price_at_flag": 0.011296,
+            "threshold_pct": 5,
+            "price_refreshed_at": "2026-08-18T09:44:50Z",
+            "horizons": {
+                "j1": {
+                    "check_at": "2026-08-19T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                },
+                "j3": {
+                    "check_at": "2026-08-21T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                },
+                "j7": {
+                    "check_at": "2026-08-25T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                },
+                "j14": {
+                    "check_at": "2026-09-01T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
+                },
+                "m6": {
+                    "check_at": "2027-02-16T09:44:50Z",
+                    "status": "pending",
+                    "outcome": null
                 }
             }
         }
