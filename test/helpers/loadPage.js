@@ -69,6 +69,15 @@ function runAsScriptTag(dom, code, label) {
   }
 }
 
+// Exécute du code arbitraire dans le contexte partagé de `dom`, avec la même sémantique de
+// vraie balise <script> que loadScripts (voir note en tête de fichier) — utile pour remplacer
+// une FONCTION top-level par un stub (ex: sha256Hex dans auth.test.js), ce que setGlobal ne
+// permet pas (limité aux valeurs sérialisables en JSON). Préférer setGlobal quand la valeur à
+// injecter est sérialisable ; réservé aux cas qui ont vraiment besoin d'exécuter du code.
+export function runScript(dom, code, label = "runScript") {
+  runAsScriptTag(dom, code, label);
+}
+
 // Charge une liste de fichiers js/*.js (relatifs à js/), dans l'ordre donné, dans le
 // contexte global partagé de `dom`. L'ordre doit refléter celui d'index.html quand les
 // fichiers chargés dépendent les uns des autres (ex: engine.js utilise escapeHtml de

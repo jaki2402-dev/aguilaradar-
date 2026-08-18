@@ -62,6 +62,55 @@ describe("notify.js — checkForNewOpportunities (dedup + suppression de baselin
   });
 });
 
+describe("notify.js — checkDigest (même forme de dédup que checkForNewOpportunities, jamais testée)", () => {
+  let dom, FakeNotification;
+
+  beforeEach(() => {
+    // config.js pour DATA_URLS.digest (lu par checkDigest) - pas app.js, dont checkDigest n'a
+    // besoin que de loadJson : on le stub directement plutôt que de charger tout app.js pour ça.
+    dom = loadPage(["config.js", "notify.js"]);
+    FakeNotification = installFakeNotification(dom);
+  });
+
+  function stubDigest(digest) {
+    dom.window.loadJson = async () => digest;
+  }
+
+  it("never notifies on the very first digest ever seen — only records it (même garde-fou anti-avalanche que checkForNewOpportunities)", async () => {
+    stubDigest({ generated_at: "2026-08-17T06:00:00Z", headline: "Marché stable", summary: "RAS.", tips: [] });
+    await dom.window.checkDigest();
+    expect(FakeNotification.calls).toHaveLength(0);
+  });
+
+  it("does not re-notify when checked again with the exact same generated_at", async () => {
+    const digest = { generated_at: "2026-08-17T06:00:00Z", headline: "Marché stable", summary: "RAS.", tips: [] };
+    stubDigest(digest);
+    await dom.window.checkDigest();
+    await dom.window.checkDigest();
+    expect(FakeNotification.calls).toHaveLength(0);
+  });
+
+  it("notifies exactly once when a genuinely new digest (later generated_at) appears", async () => {
+    stubDigest({ generated_at: "2026-08-17T06:00:00Z", headline: "Marché stable", summary: "RAS.", tips: [] });
+    await dom.window.checkDigest();
+    stubDigest({ generated_at: "2026-08-17T12:00:00Z", headline: "Rotation sectorielle", summary: "Du mouvement.", tips: [] });
+    await dom.window.checkDigest();
+    expect(FakeNotification.calls).toHaveLength(1);
+    expect(FakeNotification.calls[0].title).toBe("Rotation sectorielle");
+    expect(FakeNotification.calls[0].opts.body).toBe("Du mouvement.");
+  });
+
+  it("does nothing and never throws when there is no digest yet (null or missing generated_at)", async () => {
+    stubDigest(null);
+    await dom.window.checkDigest(); // rejetterait et ferait échouer le test s'il levait
+    expect(FakeNotification.calls).toHaveLength(0);
+
+    stubDigest({});
+    await dom.window.checkDigest();
+    expect(FakeNotification.calls).toHaveLength(0);
+  });
+});
+
 describe("notify.js — urlBase64ToUint8Array", () => {
   const dom = loadPage(["notify.js"]);
 

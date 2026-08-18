@@ -11,6 +11,13 @@
 // divergent), sur le même historique de prix déjà chargé côté navigateur. Best-effort : un
 // échec réseau (limite API, hors-ligne) fait juste disparaître ce bloc, jamais toute la
 // réponse — voir fetchLiveTechnicalSummary.
+//
+// Deuxième exception, même logique, pour un actif qui N'EST NI favori NI opportunité : plutôt
+// que de simplement renvoyer vers l'onglet Recherche, la question déclenche une VRAIE recherche
+// CoinGecko en direct (mêmes fonctions que search.js : searchCoinByName/fetchCoinDetail) sur le
+// terme repéré dans la question — voir extractAssetQuery/fetchLiveSearchAnswer. Toujours des
+// données publiques factuelles, jamais un verdict inventé sur un actif que le moteur ne suit
+// pas (même règle que renderUntrackedResult dans search.js).
 
 let chatData = null;
 let chatDataLoading = null;
@@ -61,6 +68,97 @@ function findAssetMention(text) {
 // tomber sur le message générique quand la question visait clairement un actif précis.
 function looksLikeUnknownAssetMention(text) {
   return /\b[A-Z]{2,6}\b/.test(text) || /\b(bitcoin|coin|token|crypto|monnaie|actif|projet)\b/i.test(text);
+}
+
+// Mots qui ressemblent à un ticker/nom propre mais n'en sont jamais un dans une question en
+// français — sans cette liste, un ticker tapé en capitales (ex. "QUE") ou un nom propre isolé
+// resterait un faux positif malgré le filtre de position ci-dessous. rsi/ath/atl : sigles
+// techniques en capitales (matchent la regex de ticker) mais jamais des actifs à chercher —
+// bug réel constaté avant ce correctif : "c'est quoi le RSI" déclenchait une recherche
+// CoinGecko sur "RSI" au lieu de répondre depuis le glossaire (voir findGlossaryTerm).
+const ASSET_QUERY_STOPWORDS = new Set([
+  "que", "qui", "quoi", "comment", "pourquoi", "quel", "quelle", "quels", "quelles", "résume", "resume",
+  "rsi", "ath", "atl",
+]);
+
+// Sous-ensemble du glossaire (GLOSSARY, config.js) utile en question directe dans le chat —
+// "Backtest" et "Régime de marché" sont volontairement exclus : le moteur a déjà une réponse
+// dynamique bien plus riche pour ces deux-là (answerEngine/answerMarketWhy dans CHAT_INTENTS),
+// la définition statique du glossaire serait un appauvrissement, pas une aide.
+const GLOSSARY_CHAT_KEYS = [
+  ["rsi", "RSI"],
+  ["mm20", "MM20 / MM50"],
+  ["mm50", "MM20 / MM50"],
+  ["moyenne mobile", "MM20 / MM50"],
+  ["ath", "ATH"],
+  ["all-time high", "ATH"],
+  ["confiance", "Confiance"],
+  ["horizon", "Horizon"],
+  ["seuil directionnel", "Seuil directionnel"],
+  ["dominance", "Dominance BTC"],
+  ["peur et de cupidité", "Indice de peur et de cupidité"],
+  ["peur et cupidité", "Indice de peur et de cupidité"],
+  ["signal précoce", "Signal précoce"],
+  ["verdict", "Verdict (ACHAT / ATTENTE / VENTE)"],
+];
+
+const GLOSSARY_DEFINITION_PATTERNS = [/c'est quoi/i, /qu'est-ce que/i, /que veut dire/i, /\bexplique/i, /à quoi sert/i, /ça veut dire/i, /\bdéfini/i];
+
+// Répond aux questions de définition ("c'est quoi le RSI ?", "explique-moi l'ATH") avec le
+// même texte que le glossaire débutant de l'accueil — seulement si la question a la forme
+// d'une définition ET matche un terme connu, jamais un faux positif sur une mention normale
+// du mot (ex. "le RSI de Bitcoin est haut" ne doit pas partir sur cette branche).
+function findGlossaryTerm(text) {
+  if (!GLOSSARY_DEFINITION_PATTERNS.some((re) => re.test(text))) return null;
+  const norm = text.toLowerCase();
+  const hit = GLOSSARY_CHAT_KEYS.find(([key]) => wordBoundaryMatch(norm, key) || norm.includes(key));
+  if (!hit) return null;
+  return GLOSSARY.find((g) => g.term === hit[1]) || null;
+}
+
+// Best-effort pour isoler QUOI chercher en direct sur CoinGecko dans une question libre — pas
+// une vraie compréhension du langage. Deux signaux, par ordre de fiabilité :
+//  1. un ticker en capitales (ex. "XRPZZZ") — fiable à n'importe quelle position ;
+//  2. un Nom Propre capitalisé (1 à 3 mots), à condition de ne PAS être le premier mot isolé de
+//     la phrase — en français une phrase commence presque toujours par une majuscule
+//     ("Résume-moi...", "Pourquoi...", "Quelles..."), donc un seul mot capitalisé en tête de
+//     phrase est du bruit grammatical, pas un nom d'actif. Un groupe de plusieurs mots
+//     capitalisés reste accepté même en tête ("The Sandbox va bien ?").
+function extractAssetQuery(text) {
+  const trimmed = text.trim();
+  const ticker = trimmed.match(/\b[A-Z]{2,6}\b/);
+  if (ticker && !ASSET_QUERY_STOPWORDS.has(ticker[0].toLowerCase())) return ticker[0];
+
+  const properNouns = trimmed.match(/\b[A-ZÀ-Ý][a-zà-ÿ']{2,}(?:\s+[A-ZÀ-Ý][a-zà-ÿ']{2,}){0,2}\b/g) || [];
+  for (const candidate of properNouns) {
+    if (ASSET_QUERY_STOPWORDS.has(candidate.toLowerCase())) continue;
+    const isMultiWord = candidate.includes(" ");
+    if (!isMultiWord && trimmed.startsWith(candidate)) continue;
+    return candidate;
+  }
+  return null;
+}
+
+// Isolée de answerQuestion pour la même raison que fetchLiveTechnicalSummary : un échec réseau
+// (limite CoinGecko, hors-ligne) doit juste faire retomber sur le message "pas suivi" existant,
+// jamais planter toute la réponse. Réutilise les fonctions réseau de search.js telles quelles —
+// aucune requête CoinGecko divergente propre à l'assistant.
+async function fetchLiveSearchAnswer(query) {
+  try {
+    const matches = await searchCoinByName(query);
+    if (!matches || matches.length === 0) return null;
+    const coin = await fetchCoinDetail(matches[0].id);
+    if (!coin) return null;
+    const name = coin.name || matches[0].name;
+    const ticker = (coin.symbol || matches[0].symbol || "").toUpperCase();
+    return (
+      `${name} (${ticker}) ne fait pas partie des 15 favoris ni des opportunités suivies par le moteur — pas de verdict ni de raisonnement dessus, mais voici ses données publiques en direct (CoinGecko) :\n\n` +
+      `Prix ${formatPrice(coin.current_price, "EUR")}, ${formatChangePct(coin.price_change_percentage_24h_in_currency)} sur 24h, ${formatChangePct(coin.price_change_percentage_7d_in_currency)} sur 7 jours. Rang capitalisation #${coin.market_cap_rank ?? "—"}.\n\n` +
+      `Fiche complète et graphique dans l'onglet Recherche.`
+    );
+  } catch (e) {
+    return null;
+  }
 }
 
 // Isolée de answerAboutAsset comme detail.js isole renderTechnicalSection de renderDetailPanel,
@@ -171,10 +269,10 @@ function answerGenericInvesting() {
 
 const CHAT_INTENTS = [
   { keywords: ["résume", "resume", "résumé", "briefing", "synthèse", "synthese", "récap", "recap"], handler: answerDigest },
-  { keywords: ["opportunité", "opportunites", "opportunités", "pépite", "pepite", "meilleur", "prometteur"], handler: answerOpportunities },
+  { keywords: ["opportunité", "opportunites", "opportunités", "pépite", "pepite", "meilleur", "prometteur", "bon plan", "bons plans"], handler: answerOpportunities },
   { keywords: ["alerte", "actualité", "actualites", "actualités", "news", "quoi de neuf", "du nouveau", "s'est-il passé", "sest il passe"], handler: answerAlerts },
   { keywords: ["performance", "taux de réussite", "taux de reussite", "précision", "precision", "moteur", "backtest", "rétrotest", "retrotest", "fiable", "se trompe"], handler: answerEngine },
-  { keywords: ["pourquoi", "hausse", "baisse", "monte", "descend", "chute", "analyse du marché", "analyse le marché", "analyse-moi le marché", "état du marché", "etat du marche", "régime", "regime", "tendance", "sentiment"], handler: answerMarketWhy },
+  { keywords: ["pourquoi", "hausse", "baisse", "monte", "descend", "chute", "analyse du marché", "analyse le marché", "analyse-moi le marché", "état du marché", "etat du marche", "comment va le marché", "comment va le marche", "où va le marché", "ou va le marche", "régime", "regime", "tendance", "sentiment"], handler: answerMarketWhy },
   { keywords: ["investir", "acheter", "vendre", "placer", "position", "que penses-tu", "quel est ton avis", "ton avis", "conseil", "conseilles"], handler: answerGenericInvesting },
 ];
 
@@ -184,6 +282,21 @@ async function answerQuestion(question) {
 
   const mention = findAssetMention(question);
   if (mention) return await answerAboutAsset(mention);
+
+  const glossaryHit = findGlossaryTerm(question);
+  if (glossaryHit) return `${glossaryHit.term} : ${glossaryHit.definition}`;
+
+  // Un nom/ticker précis a été repéré : priorité à une vraie recherche en direct sur cet actif
+  // (voir fetchLiveSearchAnswer), avant même les intentions génériques — "que penses-tu de
+  // Worldcoin ?" doit chercher Worldcoin, pas tomber sur le disclaimer générique investissement
+  // à cause du mot "penses-tu". Que la recherche trouve ou non, cette branche répond seule :
+  // jamais de repli silencieux vers une intention sans rapport avec l'actif nommé.
+  const assetQuery = extractAssetQuery(question);
+  if (assetQuery) {
+    const live = await fetchLiveSearchAnswer(assetQuery);
+    if (live) return live;
+    return `Je ne trouve pas cet actif parmi les 15 favoris ou les opportunités suivies, donc pas de verdict du moteur dessus. Utilise la recherche de l'onglet Favoris pour son prix et sa fiche d'identité en direct — tape simplement son nom.`;
+  }
 
   const intent = CHAT_INTENTS.find((i) => i.keywords.some((k) => norm.includes(k)));
   if (intent) return intent.handler();
@@ -214,6 +327,7 @@ const CHAT_SUGGESTIONS = [
   "Quelles sont les meilleures opportunités ?",
   "Que penses-tu de Bitcoin ?",
   "Quelles sont les dernières alertes ?",
+  "Tu connais Worldcoin ?",
 ];
 
 function renderChatSuggestions() {
@@ -256,7 +370,7 @@ function initAssistant() {
   renderChatSuggestions();
   appendChatMessage(
     "assistant",
-    "Salut ! Je réponds à partir des dernières analyses calculées par le radar (mises à jour toutes les 2h) — pose une question sur le marché, un actif suivi, les opportunités ou les dernières alertes. Sur un actif précis, j'ajoute aussi des indicateurs techniques (RSI, tendance, volume) calculés en direct, pas seulement le dernier verdict."
+    "Salut ! Je réponds à partir des dernières analyses calculées par le radar (mises à jour toutes les 2h) — pose une question sur le marché, un actif suivi, les opportunités ou les dernières alertes. Sur un actif précis, j'ajoute aussi des indicateurs techniques (RSI, tendance, volume) calculés en direct, pas seulement le dernier verdict. Et si tu nommes un actif que je ne suis pas, je vais quand même chercher son prix en direct sur CoinGecko plutôt que de te renvoyer vers la recherche."
   );
   form.addEventListener("submit", (e) => {
     e.preventDefault();
