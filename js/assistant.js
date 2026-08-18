@@ -3,6 +3,14 @@
 // donc aucun coût ni configuration supplémentaire, mais les réponses ne couvrent que ce
 // que le site a déjà analysé. Dit toujours clairement quand une question sort de ce cadre,
 // plutôt que d'inventer une analyse qui n'existe pas.
+//
+// Exception volontaire pour un actif suivi nommément (favori ou opportunité) : en plus du
+// verdict/raisonnement déjà calculé par le cycle profond, la réponse inclut aussi un bloc
+// d'indicateurs techniques calculés EN DIRECT (RSI, tendance des moyennes mobiles, profil de
+// volume) — mêmes fonctions pures que la fiche détaillée de detail.js (aucun second calcul
+// divergent), sur le même historique de prix déjà chargé côté navigateur. Best-effort : un
+// échec réseau (limite API, hors-ligne) fait juste disparaître ce bloc, jamais toute la
+// réponse — voir fetchLiveTechnicalSummary.
 
 let chatData = null;
 let chatDataLoading = null;
@@ -55,19 +63,60 @@ function looksLikeUnknownAssetMention(text) {
   return /\b[A-Z]{2,6}\b/.test(text) || /\b(bitcoin|coin|token|crypto|monnaie|actif|projet)\b/i.test(text);
 }
 
-function answerAboutAsset(mention) {
+// Isolée de answerAboutAsset comme detail.js isole renderTechnicalSection de renderDetailPanel,
+// et pour la même raison : un échec réseau ici ne doit jamais faire échouer toute la réponse.
+async function fetchLiveTechnicalSummary(cgId) {
+  try {
+    const { closes, volumes } = await fetchMarketChartData(cgId, VOLUME_PROFILE_DAYS);
+    if (!closes || closes.length < 15) return null;
+    const price = closes[closes.length - 1];
+    const rsi = computeRSI(closes, 14);
+    const sma20 = computeSMA(closes, 20);
+    const sma50 = computeSMA(closes, Math.min(50, closes.length));
+    const signals = technicalSignalSentences(price, sma20, sma50, rsi, null);
+
+    const volumeProfile = computeVolumeProfile(closes, volumes, 24);
+    const vpSignal = volumeProfileSignal(price, volumeProfile);
+    if (vpSignal) signals.push(vpSignal);
+
+    const divergence = detectDivergence(closes);
+    if (divergence) {
+      signals.push({
+        label: "Divergence baissière prix/RSI",
+        text: `RSI en baisse (${divergence.rsiNow.toFixed(0)} contre ${divergence.rsiPast.toFixed(0)} il y a ~3 semaines) alors que le prix reste proche de son plus haut récent — signal classique d'essoufflement, pas une certitude.`,
+      });
+    }
+
+    if (signals.length === 0) return null;
+    return (
+      "Indicateurs techniques en direct (calculés à l'instant, indépendamment du dernier verdict) :\n" +
+      signals.map((s) => `• ${s.label} : ${s.text}`).join("\n")
+    );
+  } catch (e) {
+    return null;
+  }
+}
+
+async function answerAboutAsset(mention) {
+  const technical = await fetchLiveTechnicalSummary(mention.cgId);
+  const withTechnical = (text) => (technical ? `${text}\n\n${technical}` : text);
+
   if (mention.tracked === "favori") {
     const verdict = (chatData.verdicts || [])
       .filter((v) => v.asset === mention.cgId)
       .sort((a, b) => new Date(b.issued_at) - new Date(a.issued_at))[0];
     if (!verdict) {
-      return `${mention.name} (${mention.ticker}) fait partie des 15 favoris suivis, mais aucun verdict n'a encore été émis.`;
+      return withTechnical(`${mention.name} (${mention.ticker}) fait partie des 15 favoris suivis, mais aucun verdict n'a encore été émis.`);
     }
-    return `Sur ${mention.name} (${mention.ticker}), le dernier verdict est ${verdict.verdict} (confiance ${verdict.confidence_pct ?? "—"} %, horizon ${verdict.horizon_days} j, émis le ${new Date(verdict.issued_at).toLocaleDateString("fr-FR")}).\n\n${verdict.reasoning || ""}\n\nDétail complet dans l'onglet Favoris.`;
+    return withTechnical(
+      `Sur ${mention.name} (${mention.ticker}), le dernier verdict est ${verdict.verdict} (confiance ${verdict.confidence_pct ?? "—"} %, horizon ${verdict.horizon_days} j, émis le ${new Date(verdict.issued_at).toLocaleDateString("fr-FR")}).\n\n${verdict.reasoning || ""}\n\nDétail complet dans l'onglet Favoris.`
+    );
   }
   const opp = ((chatData.opportunities && chatData.opportunities.opportunities) || []).find((o) => o.cgId === mention.cgId);
   if (!opp) return `${mention.name} (${mention.ticker}) n'est pas suivi par le moteur pour l'instant — utilise la recherche de l'onglet Favoris pour un prix et une fiche d'identité en direct.`;
-  return `${mention.name} (${mention.ticker}) fait partie des opportunités suivies (criblage Top 300) : ${opp.reason || "pas de détail disponible"}\n\nPrix actuel ${formatPrice(opp.price_eur, "EUR")}, ${formatChangePct(opp.change_7d_pct)} sur 7 jours. Détail complet dans l'onglet Opportunités.`;
+  return withTechnical(
+    `${mention.name} (${mention.ticker}) fait partie des opportunités suivies (criblage Top 300) : ${opp.reason || "pas de détail disponible"}\n\nPrix actuel ${formatPrice(opp.price_eur, "EUR")}, ${formatChangePct(opp.change_7d_pct)} sur 7 jours. Détail complet dans l'onglet Opportunités.`
+  );
 }
 
 function answerDigest() {
@@ -134,7 +183,7 @@ async function answerQuestion(question) {
   const norm = question.toLowerCase();
 
   const mention = findAssetMention(question);
-  if (mention) return answerAboutAsset(mention);
+  if (mention) return await answerAboutAsset(mention);
 
   const intent = CHAT_INTENTS.find((i) => i.keywords.some((k) => norm.includes(k)));
   if (intent) return intent.handler();
@@ -207,7 +256,7 @@ function initAssistant() {
   renderChatSuggestions();
   appendChatMessage(
     "assistant",
-    "Salut ! Je réponds à partir des dernières analyses calculées par le radar (mises à jour toutes les 2h) — pose une question sur le marché, un actif suivi, les opportunités ou les dernières alertes."
+    "Salut ! Je réponds à partir des dernières analyses calculées par le radar (mises à jour toutes les 2h) — pose une question sur le marché, un actif suivi, les opportunités ou les dernières alertes. Sur un actif précis, j'ajoute aussi des indicateurs techniques (RSI, tendance, volume) calculés en direct, pas seulement le dernier verdict."
   );
   form.addEventListener("submit", (e) => {
     e.preventDefault();

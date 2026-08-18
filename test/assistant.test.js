@@ -51,11 +51,12 @@ describe("assistant.js — looksLikeUnknownAssetMention", () => {
 });
 
 describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", () => {
-  // FAVORIS (config.js) et computeConfidence (cards.js, utilisé par answerOpportunities)
+  // FAVORIS (config.js), computeConfidence (cards.js, utilisé par answerOpportunities) et les
+  // fonctions d'indicateurs techniques (detail.js, utilisées par fetchLiveTechnicalSummary)
   // sont des dépendances réelles de assistant.js — même ordre que index.html.
   let dom;
   beforeEach(() => {
-    dom = loadPage(["config.js", "prices.js", "cards.js", "assistant.js"]);
+    dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "assistant.js"]);
     dom.window.aguilaradarData = {
       verdicts: [
         {
@@ -88,6 +89,31 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
     const answer = await dom.window.answerQuestion("Que penses-tu de Chainlink ?");
     expect(answer).toContain("ACHAT");
     expect(answer).toContain("Cassure haussière confirmée.");
+  });
+
+  it("falls back silently to the routine verdict alone when the live price-history fetch is unavailable (no network fetch defined in this test environment, by design)", async () => {
+    // Aucun dom.window.fetch defini ici : fetchMarketChartData leve, fetchLiveTechnicalSummary
+    // rattrape et renvoie null - la reponse existante ne doit ni planter ni changer de forme.
+    expect(dom.window.fetch).toBeUndefined();
+    const answer = await dom.window.answerQuestion("Que penses-tu de Chainlink ?");
+    expect(answer).toContain("ACHAT");
+    expect(answer).not.toContain("Indicateurs techniques en direct");
+  });
+
+  it("adds a live technical-indicators block (RSI/tendance/volume) for a tracked asset when the price-history fetch succeeds", async () => {
+    const closes = Array.from({ length: 60 }, (_, i) => 100 + i * 0.5); // hausse reguliere -> tendance haussiere et RSI eleve sans ambiguite
+    const volumes = Array.from({ length: 60 }, () => 1000);
+    dom.window.fetch = async () => ({
+      ok: true,
+      json: async () => ({
+        prices: closes.map((c, i) => [i, c]),
+        total_volumes: volumes.map((v, i) => [i, v]),
+      }),
+    });
+    const answer = await dom.window.answerQuestion("Que penses-tu de Chainlink ?");
+    expect(answer).toContain("Indicateurs techniques en direct");
+    expect(answer).toContain("RSI");
+    expect(answer).toContain("Alignement haussier des moyennes");
   });
 
   it("answers with the tracked opportunity when the asset is only in the screening list, not the favoris", async () => {
