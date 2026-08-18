@@ -50,6 +50,10 @@ News summaries, AI-generated text, and the public CoinGecko API are all treated 
 
 `js/auth.js` + `ACCESS_HASH` in `config.js` gate the UI behind a SHA-256-hashed code. The repo is **public** (required for free GitHub Pages hosting and for cloud routines to commit directly to it), so the hash is visible in source and every file under `data/` is fetchable directly via the raw GitHub URL regardless of the portal. It only filters a visitor who stumbles on the link, not a determined one — don't treat it as an access-control boundary when making changes.
 
+### Optional free AI relay for the Assistant (`cloudflare-worker/`)
+
+The Assistant (`js/assistant.js`) is rule-based by default (no AI call, see its own header comment) — but has one **optional, opt-in** last-resort fallback: `fetchLiveAiFallback()` calls a small Cloudflare Worker (`cloudflare-worker/worker.js`, deploy steps in that folder's `README.md`) that uses Workers AI (Cloudflare's own free-tier model hosting — no separate API key, no recurring cost within free-tier limits) to answer questions nothing else could handle, grounded in real site data (`buildAiContext()`), never invented. This does **not** change the "no server required" baseline: `AI_RELAY_URL` (`config.js`) defaults to an unconfigured placeholder, in which case `fetchLiveAiFallback` never makes a network call and the site behaves exactly as if this didn't exist. It is also never allowed to override an already-working rule-based answer (tracked asset, glossary, live search, known intent) — it only fires after every one of those has already failed, so it can only add coverage, never regress it.
+
 ### Data files (`data/*.json`)
 
 Written by the scheduled routines, not by the frontend. Two files are **append-only** and must never be overwritten/reset by code that touches them:

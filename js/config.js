@@ -120,6 +120,14 @@ const GLOSSARY = [
   { term: "Backtest", definition: "La vérification honnête des performances passées du moteur — la matrice de confusion et le taux de réussite dans l'onglet Moteur." },
 ];
 
+// URL du relais IA gratuit (Cloudflare Worker + Workers AI, voir cloudflare-worker/worker.js)
+// utilisé par l'Assistant en tout dernier recours, jamais en premier (voir assistant.js). Vide/
+// placeholder par défaut : fetchLiveAiFallback le détecte et ne fait alors aucun appel réseau,
+// donc le chat marche identiquement à avant tant que le Worker n'est pas déployé. `let`, pas
+// `const` : seule valeur de config.js à changer par un humain après coup plutôt qu'à l'ouverture
+// du site, doit rester réaffectable (idem latestFavorisPrices dans prices.js).
+let AI_RELAY_URL = "https://REMPLACE-MOI.workers.dev";
+
 const DATA_URLS = {
   verdicts: "data/verdicts.json",
   engineHistory: "data/engine-history.json",
