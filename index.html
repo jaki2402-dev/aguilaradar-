@@ -11,7 +11,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 <link rel="manifest" href="manifest.json" />
-<link rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" href="css/style.css?v=20260818a" />
 </head>
 <body>
 
@@ -426,18 +426,24 @@
 </div>
 
 <script src="https://s3.tradingview.com/tv.js"></script>
-<script src="js/config.js"></script>
-<script src="js/prices.js"></script>
-<script src="js/charts.js"></script>
-<script src="js/engine.js"></script>
-<script src="js/cards.js"></script>
-<script src="js/detail.js"></script>
-<script src="js/insights.js"></script>
-<script src="js/background-fx.js"></script>
-<script src="js/search.js"></script>
-<script src="js/app.js"></script>
-<script src="js/notify.js"></script>
-<script src="js/assistant.js"></script>
-<script src="js/auth.js"></script>
+<!-- ?v=... sur chaque fichier local (JS/CSS) : casse le cache navigateur/CDN de GitHub Pages à
+     chaque changement de code. Sans ça, un correctif poussé sur main peut rester invisible pour
+     un visiteur pendant des heures/jours malgré des data/*.json à jour (eux, fetchés en JS avec
+     cache: "no-store", donc toujours frais) - bug réel constaté le 18/08 : la correction de
+     l'Assistant était bien en ligne, mais assistant.js restait servi en cache. Bump la date à
+     CHAQUE modification d'un fichier js/*.js ou css/*.css, pas seulement pour ce correctif-ci. -->
+<script src="js/config.js?v=20260818a"></script>
+<script src="js/prices.js?v=20260818a"></script>
+<script src="js/charts.js?v=20260818a"></script>
+<script src="js/engine.js?v=20260818a"></script>
+<script src="js/cards.js?v=20260818a"></script>
+<script src="js/detail.js?v=20260818a"></script>
+<script src="js/insights.js?v=20260818a"></script>
+<script src="js/background-fx.js?v=20260818a"></script>
+<script src="js/search.js?v=20260818a"></script>
+<script src="js/app.js?v=20260818a"></script>
+<script src="js/notify.js?v=20260818a"></script>
+<script src="js/assistant.js?v=20260818a"></script>
+<script src="js/auth.js?v=20260818a"></script>
 </body>
 </html>
