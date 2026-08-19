@@ -191,7 +191,10 @@ async function checkDigest() {
 // d'iOS/Safari, pas un service payant). Ce site est statique (GitHub Pages, sans serveur) :
 // personne ne peut recevoir automatiquement l'abonnement créé par le navigateur. Étape unique
 // à faire une fois : copier le code affiché après activation et l'envoyer dans la conversation.
-const PUSH_VAPID_PUBLIC_KEY = "BDsCZF1Anw1tk3xJ0b1DlC3tdBx_tFf0NqOKX8w3A3qnx2gvJCLwTLZEkYrwjDHj1dQLTjdF1vaHWw-XaiELEfY";
+// Clé PUBLIQUE uniquement (sans danger dans le code, elle sert juste à identifier l'expéditeur
+// autorisé) — la clé privée correspondante ne vit jamais ici ni ailleurs dans ce dépôt public.
+// Régénérée le 19/08 (l'ancienne n'avait plus sa clé privée associée nulle part de disponible).
+const PUSH_VAPID_PUBLIC_KEY = "BFwuh-Ao68LmidWIrLvpZ4R0MoB7D9g6h-hnIdE75c9YVgcgSDgMRaE4Ctvn8Tg66MxIa_6lCpgbx3smkKhwI-Y";
 
 function urlBase64ToUint8Array(base64String) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
