@@ -149,7 +149,7 @@ header.site-header h1 { margin: 0; font-family: var(--font-mono); letter-spacing
   width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
   background: var(--card); border: 1px solid var(--border); color: var(--accent);
   display: flex; align-items: center; justify-content: center; cursor: pointer;
-  transition: background 0.15s ease, transform 0.15s ease;
+  transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
   position: relative;
 }
 .refresh-btn svg, .notif-bell-btn svg { width: 18px; height: 18px; }
@@ -160,10 +160,20 @@ header.site-header h1 { margin: 0; font-family: var(--font-mono); letter-spacing
   width: 38px; height: 38px; border-radius: 50%;
   background: var(--card); border: 1px solid var(--border); color: var(--accent-2);
   display: flex; align-items: center; justify-content: center; cursor: pointer;
-  transition: transform 0.15s;
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
 }
 .design-settings-btn svg { width: 18px; height: 18px; }
 .design-settings-btn:active { transform: scale(0.92); }
+
+/* Anneau lumineux au survol (desktop) sur les trois boutons ronds du header — currentColor
+   reprend la couleur déjà propre à chacun (accent pour actualiser/notif, accent-2 pour
+   réglages) sans dupliquer de règle. */
+@media (hover: hover) {
+  .refresh-btn:hover, .notif-bell-btn:hover, .design-settings-btn:hover {
+    border-color: currentColor;
+    box-shadow: 0 0 14px -3px currentColor;
+  }
+}
 
 /* ---- Panneau "Réglages design" ---- */
 .design-settings-panel { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 20px; }
@@ -239,6 +249,9 @@ nav.tabs button {
 nav.tabs button svg { width: 20px; height: 20px; }
 nav.tabs button .tab-label { font-size: 0.62rem; margin-top: 3px; font-weight: 600; letter-spacing: 0.01em; }
 nav.tabs button.active { color: var(--accent); }
+/* currentColor : chaque onglet fixe déjà sa propre teinte active (voir plus bas, un par
+   data-tab) — la lueur suit automatiquement sans règle dédiée par onglet. */
+nav.tabs button.active svg { filter: drop-shadow(0 0 6px currentColor); }
 
 @media (max-width: 767px) {
   nav.tabs {
@@ -314,8 +327,13 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
   padding: 22px;
   margin-bottom: 18px;
 }
+/* Même traitement "coins en équerre" étendu au portail d'accès et au panneau de réglages
+   (voir .gate-card et .design-settings-card, tous deux déjà position:relative) — l'identité
+   "instrument" ne devrait pas s'arrêter à l'Accueil. */
 .hero-card::before, .hero-card::after,
-.digest-panel::before, .digest-panel::after {
+.digest-panel::before, .digest-panel::after,
+.gate-card::before, .gate-card::after,
+.design-settings-card::before, .design-settings-card::after {
   content: "";
   position: absolute;
   width: 18px; height: 18px;
@@ -323,12 +341,14 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
   opacity: 0.5;
   pointer-events: none;
 }
-.hero-card::before, .digest-panel::before {
+.hero-card::before, .digest-panel::before,
+.gate-card::before, .design-settings-card::before {
   top: -1px; left: -1px;
   border-right: none; border-bottom: none;
   border-top-left-radius: 8px;
 }
-.hero-card::after, .digest-panel::after {
+.hero-card::after, .digest-panel::after,
+.gate-card::after, .design-settings-card::after {
   bottom: -1px; right: -1px;
   border-left: none; border-top: none;
   border-bottom-right-radius: 8px;
@@ -495,8 +515,10 @@ th { color: var(--text-dim); font-weight: 600; font-size: 0.76rem; text-transfor
 
 .stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 16px; }
 .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 14px; box-shadow: var(--shadow); }
-.stat-label { color: var(--text-dim); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.04em; }
-.stat-value { font-family: var(--font-mono); font-size: 1.3rem; font-weight: 700; margin-top: 4px; }
+.stat-label { color: var(--text-dim); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; }
+/* Même lueur discrète que .hero-stat-value : un chiffre-clé de lecture instrument, pas un
+   chiffre de tableau ordinaire. */
+.stat-value { font-family: var(--font-mono); font-size: 1.3rem; font-weight: 700; margin-top: 4px; text-shadow: 0 0 14px var(--accent-dim); }
 
 /* ---- Journal / log entries ---- */
 .journal-entry, .log-entry, .alert-entry {
@@ -817,6 +839,9 @@ details.info-toggle .section-sub { margin: 8px 0 0; }
   width: 38px; height: 38px; border-radius: 12px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
   border: 1px solid var(--border);
+  /* currentColor : chaque variante --teal/--gold/... fixe déjà sa propre couleur ci-dessous,
+     la lueur suit automatiquement sans règle par variante. */
+  box-shadow: 0 0 14px -4px currentColor;
 }
 .section-icon svg { width: 19px; height: 19px; }
 .section-icon--teal   { background: radial-gradient(circle at 50% 40%, rgba(47,211,176,0.32), rgba(47,211,176,0.04)); color: var(--accent); }
@@ -879,12 +904,13 @@ nav.tabs button[data-tab="assistant"].active { background: rgba(242,119,179,0.13
 
 /* ---- Interactivité : légère élévation au survol (desktop uniquement) ---- */
 @media (hover: hover) {
-  .favori-card, .favori-tile, .stat-card, .journal-entry, .log-entry, .alert-entry, .hero-card, .opp-card, .gate-card {
+  .favori-card, .favori-tile, .opp-tile, .stat-card, .journal-entry, .log-entry, .alert-entry, .hero-card, .opp-card, .gate-card {
     transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, border-color 0.15s ease-out;
   }
-  .favori-card:hover, .favori-tile:hover, .stat-card:hover, .journal-entry:hover, .log-entry:hover, .alert-entry:hover, .opp-card:hover {
+  /* Lueur fine en plus de l'ombre : un survol qui "s'illumine" plutôt qu'un simple décalage. */
+  .favori-card:hover, .favori-tile:hover, .opp-tile:hover, .stat-card:hover, .journal-entry:hover, .log-entry:hover, .alert-entry:hover, .opp-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 14px 32px rgba(0,0,0,0.4);
+    box-shadow: 0 14px 32px rgba(0,0,0,0.4), 0 0 22px -8px var(--accent);
     border-color: rgba(47,211,176,0.35);
   }
   .gate-card:hover {
