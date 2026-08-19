@@ -185,3 +185,74 @@ describe("notify.js — updateNotifBellBadge / renderDigestPanel / clearNotifBel
     expect(dom.window.document.getElementById("notif-bell-badge").hidden).toBe(true);
   });
 });
+
+// Régression du 19/08 : une fois un abonnement existant, il n'y avait AUCUN moyen d'en forcer
+// un nouveau (le navigateur renvoie toujours le même abonnement tant que la permission reste
+// accordée, même si la clé publique du site change entre-temps côté serveur) — l'utilisateur
+// se retrouvait bloqué sur l'ancien code sans le savoir. Le bouton "Régénérer le code" corrige
+// ça via unsubscribe() + un nouvel appel à subscribeToPush().
+describe("notify.js — renderPushSection (bouton \"Régénérer le code\")", () => {
+  let dom;
+  const FIXTURE_HTML = `<!doctype html><html><body><div id="push-section"></div></body></html>`;
+
+  function stubPushSupport(dom) {
+    dom.window.PushManager = function () {};
+    dom.window.navigator.serviceWorker = {};
+  }
+
+  function fakeSubscription(overrides = {}) {
+    return {
+      toJSON: () => ({ endpoint: "https://push.example/abc", keys: { p256dh: "x", auth: "y" } }),
+      unsubscribe: async () => true,
+      ...overrides,
+    };
+  }
+
+  beforeEach(() => {
+    dom = loadPage(["notify.js"], { html: FIXTURE_HTML });
+    stubPushSupport(dom);
+  });
+
+  it("shows only the activation button (no reset button, no code) when there is no existing subscription", () => {
+    dom.window.renderPushSection(null);
+    const el = dom.window.document.getElementById("push-section");
+    expect(el.querySelector("#push-enable-btn")).not.toBeNull();
+    expect(el.querySelector("#push-reset-btn")).toBeNull();
+  });
+
+  it("shows the code, a copy button, and a reset button once a subscription exists", () => {
+    dom.window.renderPushSection(fakeSubscription());
+    const el = dom.window.document.getElementById("push-section");
+    expect(el.querySelector("#push-sub-text").value).toContain("https://push.example/abc");
+    expect(el.querySelector("#push-copy-btn")).not.toBeNull();
+    expect(el.querySelector("#push-reset-btn")).not.toBeNull();
+  });
+
+  it("clicking 'Régénérer le code' unsubscribes the stale one and re-renders with a genuinely fresh subscription", async () => {
+    let unsubscribeCalls = 0;
+    const staleSub = fakeSubscription({ unsubscribe: async () => { unsubscribeCalls++; return true; } });
+    const freshSub = fakeSubscription({
+      toJSON: () => ({ endpoint: "https://push.example/FRESH", keys: { p256dh: "new-x", auth: "new-y" } }),
+    });
+    dom.window.subscribeToPush = async () => freshSub;
+
+    dom.window.renderPushSection(staleSub);
+    dom.window.document.getElementById("push-reset-btn").click();
+    await new Promise((r) => setTimeout(r, 0));
+
+    expect(unsubscribeCalls).toBe(1);
+    const el = dom.window.document.getElementById("push-section");
+    expect(el.querySelector("#push-sub-text").value).toContain("https://push.example/FRESH");
+  });
+
+  it("re-enables the reset button with its original label if regenerating fails, instead of leaving it stuck", async () => {
+    const staleSub = fakeSubscription({ unsubscribe: async () => { throw new Error("offline"); } });
+    dom.window.renderPushSection(staleSub);
+    const resetBtn = dom.window.document.getElementById("push-reset-btn");
+    resetBtn.click();
+    await new Promise((r) => setTimeout(r, 0));
+
+    expect(resetBtn.disabled).toBe(false);
+    expect(resetBtn.textContent).toBe("Régénérer le code");
+  });
+});
