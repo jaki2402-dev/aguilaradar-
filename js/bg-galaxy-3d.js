@@ -126,33 +126,58 @@ function createScene(canvas) {
   renderer.toneMappingExposure = 1.15;
 
   const scene = new THREE.Scene();
-  // Caméra volontairement distante (620 unités) avec des orbites resserrées (voir plus bas) :
-  // un premier essai avec la caméra plus proche laissait les planètes traverser le champ tout
-  // près de la caméra à certaines phases d'orbite, les faisant passer pour d'énormes boules
-  // envahissant l'écran plutôt qu'un fond discret derrière les données — vérifié par capture
-  // d'écran réelle, pas supposé. Cadrage recalculé pour garantir une distance minimale
-  // confortable à toutes les phases (voir les rayons d'orbite plus bas).
+  // Caméra distante (520 unités, resserrée depuis les 620 initiaux — voir la formule des
+  // rayons de planète juste plus bas pour la nouvelle marge de sécurité) avec des orbites
+  // resserrées : un tout premier essai avec la caméra plus proche ET des planètes plus
+  // grandes laissait les planètes traverser le champ tout près de la caméra à certaines
+  // phases d'orbite, les faisant passer pour d'énormes boules envahissant l'écran plutôt
+  // qu'un fond discret derrière les données — vérifié par capture d'écran réelle, pas
+  // supposé. Le cadrage ci-dessous a été recalculé pour garantir la même marge de sécurité
+  // (distance minimale ~375 unités au pire moment de l'orbite, pour un rayon de planète
+  // maximal ~11.4 → taille apparente encore modeste, mais nettement plus présente qu'avant).
   const camera = new THREE.PerspectiveCamera(52, window.innerWidth / window.innerHeight, 1, 4000);
-  camera.position.set(0, 40, 620);
+  camera.position.set(0, 45, 520);
 
-  // Nombre d'étoiles volontairement modéré : mesuré à ~12 FPS sous SwiftShader (rendu logiciel
-  // pur, seulement utilisé pour tester ce fichier dans cet environnement bac à sable, sans
-  // vrai GPU) contre ~60 FPS attendus sur n'importe quel GPU réel pour une scène aussi légère
-  // (~10k triangles, 2 lumières) — cette marge existe quand même par prudence, faute de pouvoir
-  // mesurer sur un vrai appareil depuis ici.
+  // Nombre d'étoiles généreux : la mesure faite lors du réglage précédent (~12 FPS sous
+  // SwiftShader, rendu logiciel pur sans vrai GPU, seul WebGL disponible dans cet
+  // environnement bac à sable de test) a montré qu'ajuster le nombre d'étoiles ne changeait
+  // presque rien au FPS mesuré — le plafond venait d'ailleurs (fill-rate du rendu logiciel),
+  // pas du nombre de points. Sur un vrai GPU, quelques milliers de points supplémentaires
+  // sont gratuits ; pas de raison de rester chiche ici pour le rendu visuel.
   const starsFar = new THREE.Points(
-    buildStarfield(3200, 1400, 0x22b8e0),
-    new THREE.PointsMaterial({ size: 1.5, sizeAttenuation: true, vertexColors: true, transparent: true, opacity: 0.85, depthWrite: false })
+    buildStarfield(6000, 1600, 0x22b8e0),
+    new THREE.PointsMaterial({ size: 1.6, sizeAttenuation: true, vertexColors: true, transparent: true, opacity: 0.85, depthWrite: false })
   );
   const starsNear = new THREE.Points(
-    buildStarfield(800, 700, 0x2fd3b0),
-    new THREE.PointsMaterial({ size: 2.3, sizeAttenuation: true, vertexColors: true, transparent: true, opacity: 0.95, depthWrite: false })
+    buildStarfield(1600, 750, 0x2fd3b0),
+    new THREE.PointsMaterial({ size: 2.4, sizeAttenuation: true, vertexColors: true, transparent: true, opacity: 0.95, depthWrite: false })
   );
   scene.add(starsFar, starsNear);
 
+  // Étoiles "vedettes" : contrairement aux deux nuages de points ci-dessus (un seul matériau
+  // partagé, ne peut pas scintiller individuellement sans shader personnalisé), ce sont de
+  // vrais sprites indépendants — peu nombreux, donc bon marché même sur un GPU modeste — dont
+  // la taille/opacité respire à son propre rythme déphasé pour un vrai scintillement étoile
+  // par étoile, l'un des signes visuels les plus reconnaissables d'un ciel étoilé réaliste.
+  const heroStars = [];
+  for (let i = 0; i < 50; i++) {
+    const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: makeGlowTexture(i % 7 === 0 ? 0xf0b429 : 0xffffff, 1),
+      transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending, depthWrite: false,
+    }));
+    const dist = 260 + Math.random() * 900;
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(Math.random() * 2 - 1);
+    sprite.position.set(dist * Math.sin(phi) * Math.cos(theta), dist * Math.sin(phi) * Math.sin(theta), dist * Math.cos(phi));
+    const baseScale = 4 + Math.random() * 5;
+    sprite.scale.set(baseScale, baseScale, 1);
+    scene.add(sprite);
+    heroStars.push({ sprite, baseScale, phase: Math.random() * Math.PI * 2, speed: 0.0016 + Math.random() * 0.0022 });
+  }
+
   const nebulae = [0x2fd3b0, 0x7c9eff, 0xb48cf2].map((hex, i) => {
-    const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: makeGlowTexture(hex, 0.9), transparent: true, opacity: 0.14, blending: THREE.AdditiveBlending, depthWrite: false }));
-    const scale = 900 + i * 220;
+    const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: makeGlowTexture(hex, 0.9), transparent: true, opacity: 0.24, blending: THREE.AdditiveBlending, depthWrite: false }));
+    const scale = 950 + i * 240;
     sprite.scale.set(scale, scale, 1);
     sprite.position.set(Math.cos(i * 2.4) * 500, Math.sin(i * 1.7) * 250, -800 - i * 150);
     scene.add(sprite);
@@ -160,27 +185,56 @@ function createScene(canvas) {
   });
 
   scene.add(new THREE.AmbientLight(0x8899bb, 1.1));
-  const sun = new THREE.PointLight(0xfff2d6, 900, 3000, 1.4);
-  sun.position.set(380, 220, 260);
+  // Position vérifiée pour tomber DANS le champ de la caméra (52° de champ vertical, visée
+  // vers l'origine depuis (0,45,520)) — un premier essai à (380,220,260) était à ~60° de
+  // l'axe de vue, donc en dehors du cône visible malgré le calcul d'intensité correct : la
+  // lumière existait bien mais son sprite ne s'affichait tout simplement jamais à l'écran.
+  // Vérifié par capture d'écran réelle après correction, pas seulement recalculé sur papier.
+  const sun = new THREE.PointLight(0xfff2d6, 480, 3000, 1.4);
+  // Décalé vers le bord du champ plutôt que le centre : à (160,110,-180) le halo tombait
+  // presque pile derrière un chiffre-clé de l'onglet Accueil (dominance BTC) — repoussé vers
+  // la périphérie pour ne jamais gêner la lecture, vérifié à l'écran après coup.
+  sun.position.set(300, 150, -160);
   scene.add(sun);
   const fill = new THREE.PointLight(0x2fd3b0, 260, 3000, 1.4);
   fill.position.set(-300, -150, -200);
   scene.add(fill);
 
-  // Rayons de sphère et d'orbite volontairement petits par rapport à la distance caméra
-  // (620, voir plus haut) : au pire moment de leur orbite (phase la plus proche de la caméra),
-  // la distance réelle reste d'au moins ~470 unités pour une planète de rayon max ~8 — donc
-  // une taille apparente toujours discrète, jamais envahissante.
+  // Le soleil : un vrai objet VISIBLE à la position de la lumière chaude ci-dessus. Une
+  // lumière seule éclaire les planètes mais ne se voit elle-même nulle part — l'erreur
+  // classique d'une scène spatiale qui du coup ne ressemble pas vraiment à de l'espace.
+  // Deux sprites superposés (halo large + coeur petit et dense) pour un effet crédible sans
+  // shader personnalisé : le coeur donne le point brillant, le halo donne le rayonnement.
+  const sunHalo = new THREE.Sprite(new THREE.SpriteMaterial({ map: makeGlowTexture(0xfff2d6, 1), transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending, depthWrite: false }));
+  sunHalo.scale.set(150, 150, 1);
+  sunHalo.position.copy(sun.position);
+  scene.add(sunHalo);
+  const sunCore = new THREE.Sprite(new THREE.SpriteMaterial({ map: makeGlowTexture(0xffffff, 1), transparent: true, opacity: 1, blending: THREE.AdditiveBlending, depthWrite: false }));
+  sunCore.scale.set(40, 40, 1);
+  sunCore.position.copy(sun.position);
+  scene.add(sunCore);
+
+  // Rayons de sphère et d'orbite calculés pour rester sous la marge de sécurité expliquée au
+  // niveau de la caméra plus haut (distance minimale ~375 unités au pire moment de l'orbite
+  // pour un rayon max ~11.4) — plus présentes qu'avant, mais toujours loin de la taille qui
+  // avait posé problème lors du tout premier réglage.
   const planets = PLANET_COLORS.map((hex, i) => {
-    const radius = 3.6 + i * 1.15 + (i === 0 ? 2 : 0);
+    const radius = 5 + i * 1.6 + (i === 0 ? 2.5 : 0);
     const mesh = new THREE.Mesh(
-      new THREE.SphereGeometry(radius, 22, 22),
+      new THREE.SphereGeometry(radius, 24, 24),
       // Lambert plutôt que Standard (PBR) : éclairage par sommet, beaucoup moins coûteux par
       // pixel — à la taille où ces planètes s'affichent (voir le cadrage caméra plus haut), la
       // nuance PBR roughness/metalness ne se voyait de toute façon pas.
       new THREE.MeshLambertMaterial({ map: makePlanetTexture(hex) })
     );
     scene.add(mesh);
+    // Halo d'atmosphère : un sprite enfant (toujours face caméra, suit la planète
+    // automatiquement) légèrement plus grand que la sphère, dans sa propre couleur — donne
+    // une impression de luminosité/atmosphère plutôt qu'une simple bille texturée mate.
+    const atmosphere = new THREE.Sprite(new THREE.SpriteMaterial({ map: makeGlowTexture(hex, 0.7), transparent: true, opacity: 0.5, blending: THREE.AdditiveBlending, depthWrite: false }));
+    const glowScale = radius * 4.4;
+    atmosphere.scale.set(glowScale, glowScale, 1);
+    mesh.add(atmosphere);
     if (i === 0) {
       const ring = new THREE.Mesh(
         new THREE.RingGeometry(radius * 1.7, radius * 2.8, 64),
@@ -233,6 +287,11 @@ function createScene(canvas) {
       });
       starsFar.rotation.y += 0.00002;
       starsNear.rotation.y -= 0.00003;
+      heroStars.forEach((h) => {
+        const s = h.baseScale * (0.75 + 0.35 * Math.sin(t * h.speed + h.phase));
+        h.sprite.scale.set(s, s, 1);
+        h.sprite.material.opacity = 0.5 + 0.5 * Math.sin(t * h.speed * 1.3 + h.phase);
+      });
       if (wantsParallax) {
         camera.position.x += (mouseX * 35 - camera.position.x) * 0.01;
         camera.position.y += (30 - mouseY * 22 - camera.position.y) * 0.01;
