@@ -196,6 +196,10 @@ header.site-header h1 { margin: 0; font-family: var(--font-mono); letter-spacing
 .design-theme-name { font-weight: 700; }
 .design-theme-desc { font-size: 0.82rem; color: var(--text-dim); }
 .design-theme-check { font-size: 0.78rem; color: var(--accent); font-weight: 600; min-height: 1em; }
+/* Sous-section "Disposition des favoris" du même panneau — voir layout.js. Réutilise
+   volontairement les classes .design-theme-* ci-dessus (mêmes cartes cliquables, même look),
+   .design-layout-list/.design-layout-card ne servent qu'à cibler cette liste précisément. */
+.design-settings-subhead { margin: 20px 0 0; padding-top: 16px; border-top: 1px solid var(--border); font-size: 0.92rem; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .notif-bell-badge {
   position: absolute; top: -2px; right: -2px;
@@ -404,6 +408,37 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
 .favori-tile.heat-neg-1 { background: linear-gradient(165deg, rgba(241,85,76,0.10), var(--card)); }
 .favori-tile.heat-neg-2 { background: linear-gradient(165deg, rgba(241,85,76,0.20), var(--card)); }
 .favori-tile.heat-neg-3 { background: linear-gradient(165deg, rgba(241,85,76,0.32), var(--card)); }
+
+/* ---- Dispositions alternatives de .favoris-grid (voir layout.js) — la classe layout-* se pose
+   sur .favoris-grid lui-même (jamais réinitialisée par les re-rendus, voir applyFavorisLayout).
+   Le markup des tuiles est strictement identique dans les trois cas : seule la mise en page
+   change, jamais le contenu ni la logique de teinte/dépliage. Pas de règle .layout-dense : la
+   disposition par défaut ci-dessus EST la grille dense, rien à surcharger. ---- */
+
+/* "Liste compacte" : une ligne par crypto, tout aligné horizontalement — pour scanner vite. */
+.favoris-grid.layout-list { grid-template-columns: 1fr; gap: 6px; }
+.favoris-grid.layout-list .favori-tile {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px;
+  padding: 9px 14px;
+  border-top: 1px solid var(--border);
+  border-left: 3px solid var(--sector-color, var(--border));
+}
+.favoris-grid.layout-list .favori-tile-head { flex: 1 1 110px; }
+.favoris-grid.layout-list .favori-tile-price { margin-top: 0; flex: 0 0 auto; }
+.favoris-grid.layout-list .favori-tile-change { margin-top: 0; flex: 0 0 auto; }
+.favoris-grid.layout-list .favori-tile .expand-hint { margin-top: 0; padding-top: 0; border-top: none; flex: 0 0 auto; }
+.favoris-grid.layout-list .favori-tile.expanded { flex-direction: column; align-items: stretch; grid-column: 1 / -1; }
+
+/* "Cartes confort" : tuiles plus grandes et plus espacées, texte agrandi. */
+.favoris-grid.layout-comfort { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; }
+@media (min-width: 640px) {
+  .favoris-grid.layout-comfort { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+}
+.favoris-grid.layout-comfort .favori-tile { padding: 18px 18px 14px; }
+.favoris-grid.layout-comfort .favori-tile-tick { font-size: 1.05rem; }
+.favoris-grid.layout-comfort .favori-tile-price { font-size: 1.12rem; margin-top: 10px; }
+.favoris-grid.layout-comfort .favori-tile-change { font-size: 0.78rem; padding: 3px 9px; margin-top: 7px; }
+.favoris-grid.layout-comfort .favori-tile .expand-hint { margin-top: 12px; padding-top: 8px; font-size: 0.74rem; }
 
 /* ---- .favori-card : fiche complète, utilisée par la recherche libre (search.js) pour un
    résultat isolé — jamais dans la grille Favoris (voir .favori-tile ci-dessus, volontairement
