@@ -206,36 +206,76 @@ describe("app.js — renderFavorisGrid", () => {
     dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "app.js"], { html: APP_FIXTURE_HTML });
   });
 
-  it("renders exactly one card per tracked favori", () => {
+  it("renders exactly one tile per tracked favori", () => {
     dom.window.renderFavorisGrid();
     const FAVORIS = getGlobal(dom, "FAVORIS");
-    expect(dom.window.document.querySelectorAll("#favoris-grid .favori-card")).toHaveLength(FAVORIS.length);
+    expect(dom.window.document.querySelectorAll("#favoris-grid .favori-tile")).toHaveLength(FAVORIS.length);
   });
 
-  it("renders ticker, name and sector for each favori, in FAVORIS order", () => {
+  it("renders the ticker on the tile, and the full name/sector in its title tooltip (dense grid: kept out of the tile itself)", () => {
     dom.window.renderFavorisGrid();
-    const cards = dom.window.document.querySelectorAll("#favoris-grid .favori-card");
+    const tiles = dom.window.document.querySelectorAll("#favoris-grid .favori-tile");
     const FAVORIS = getGlobal(dom, "FAVORIS");
     const SECTORS = getGlobal(dom, "SECTORS");
     FAVORIS.forEach((f, i) => {
-      expect(cards[i].querySelector(".favori-row-tick").textContent).toBe(f.ticker);
-      expect(cards[i].querySelector(".favori-row-name").textContent).toBe(f.name);
-      expect(cards[i].querySelector(".favori-row-sector").textContent).toBe(SECTORS[f.cgId] || "");
+      expect(tiles[i].querySelector(".favori-tile-tick").textContent).toBe(f.ticker);
+      expect(tiles[i].getAttribute("title")).toBe(`${f.name} — ${SECTORS[f.cgId] || ""}`);
     });
   });
 
-  it("makes every card keyboard-clickable via attachDetailToggle (tabindex + role=button)", () => {
+  it("makes every tile keyboard-clickable via attachDetailToggle (tabindex + role=button)", () => {
     dom.window.renderFavorisGrid();
-    const first = dom.window.document.querySelector("#favoris-grid .favori-card");
+    const first = dom.window.document.querySelector("#favoris-grid .favori-tile");
     expect(first.getAttribute("tabindex")).toBe("0");
     expect(first.getAttribute("role")).toBe("button");
   });
 
-  it("gives every card its own detail panel id — no collision between favoris", () => {
+  it("gives every tile its own detail panel id — no collision between favoris", () => {
     dom.window.renderFavorisGrid();
     const ids = Array.from(dom.window.document.querySelectorAll("#favoris-grid .detail-panel")).map((p) => p.id);
     expect(new Set(ids).size).toBe(getGlobal(dom, "FAVORIS").length);
     expect(ids).toContain("detail-fav-BTC");
+  });
+});
+
+describe("app.js — applyHeatTint (teinte de fond des tuiles Favoris selon la variation 24h)", () => {
+  let dom, tile;
+
+  beforeEach(() => {
+    dom = loadPage(["config.js", "app.js"], { html: `<!doctype html><html><body><div class="favori-tile"></div></body></html>` });
+    tile = dom.window.document.querySelector(".favori-tile");
+  });
+
+  it("does nothing (no throw) when given a null element", () => {
+    expect(() => dom.window.applyHeatTint(null, 3)).not.toThrow();
+  });
+
+  it("uses THRESHOLDS.directionalMovePct (5%) as the tier boundary, not a separate hardcoded value", () => {
+    dom.window.applyHeatTint(tile, 5);
+    expect(tile.classList.contains("heat-pos-3")).toBe(true);
+    dom.window.applyHeatTint(tile, 4.99);
+    expect(tile.classList.contains("heat-pos-2")).toBe(true);
+  });
+
+  it.each([
+    [1, "heat-pos-1"],
+    [2.5, "heat-pos-2"],
+    [7, "heat-pos-3"],
+    [-1, "heat-neg-1"],
+    [-2.5, "heat-neg-2"],
+    [-7, "heat-neg-3"],
+  ])("tags a %s%% change as %s", (pct, expectedClass) => {
+    dom.window.applyHeatTint(tile, pct);
+    expect(tile.className).toBe(`favori-tile ${expectedClass}`);
+  });
+
+  it("removes the previous tier before applying a new one, never stacking classes across refreshes", () => {
+    dom.window.applyHeatTint(tile, 7);
+    expect(tile.classList.contains("heat-pos-3")).toBe(true);
+    dom.window.applyHeatTint(tile, -1);
+    expect(tile.classList.contains("heat-pos-3")).toBe(false);
+    expect(tile.classList.contains("heat-neg-1")).toBe(true);
+    expect(tile.className).toBe("favori-tile heat-neg-1");
   });
 });
 
@@ -254,7 +294,7 @@ describe("app.js — updateFavorisVerdicts", () => {
     const badge = dom.window.document.getElementById("verdict-BTC");
     expect(badge.querySelector(".badge").textContent).toBe("ACHAT");
     expect(badge.querySelector(".badge").className).toBe("badge badge-achat");
-    const card = badge.closest(".favori-card");
+    const card = badge.closest(".favori-tile");
     expect(card.dataset.verdict).toBe("ACHAT");
     expect(card.dataset.reasoning).toBe("RSI bas, MM20 > MM50");
   });
@@ -271,7 +311,7 @@ describe("app.js — updateFavorisVerdicts", () => {
     ]);
     const badge = dom.window.document.getElementById("verdict-BTC");
     expect(badge.querySelector(".badge").textContent).toBe("ACHAT");
-    expect(badge.closest(".favori-card").dataset.reasoning).toBe("récent");
+    expect(badge.closest(".favori-tile").dataset.reasoning).toBe("récent");
   });
 
   it("handles an empty verdicts array without throwing", () => {
