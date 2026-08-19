@@ -357,15 +357,57 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
 .constellation-host > canvas { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .constellation-host > *:not(canvas) { position: relative; z-index: 1; }
 
-/* ---- Favoris ---- */
+/* ---- Favoris : grille dense (esprit Coin360 — l'essentiel, peu de défilement). auto-fill
+   plutôt qu'un nombre de colonnes fixe : autant de tuiles que la largeur le permet, à
+   n'importe quelle taille d'écran, sans média-requête à ajuster à la main. ---- */
 .favoris-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
   gap: 8px;
 }
-@media (min-width: 900px) {
-  .favoris-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+@media (min-width: 640px) {
+  .favoris-grid { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }
 }
+.favori-tile {
+  background: linear-gradient(165deg, var(--card-2), var(--card));
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--sector-color, var(--border));
+  border-radius: var(--radius-sm);
+  padding: 10px 10px 8px;
+  box-shadow: var(--shadow);
+  transform-style: preserve-3d;
+  will-change: transform;
+  min-width: 0;
+  transition: background 0.4s ease;
+}
+/* Une tuile ouverte prend toute la largeur de la grille (le graphique + l'analyse détaillée
+   ont besoin de place — voir .detail-grid, minmax(220px,...) ne tiendrait jamais dans une
+   tuile de ~100px) plutôt que de rester coincée dans sa propre colonne étroite. */
+.favori-tile.expanded { grid-column: 1 / -1; }
+.favori-tile-head { display: flex; justify-content: space-between; align-items: center; gap: 4px; }
+.favori-tile-tick { font-weight: 800; font-size: 0.86rem; letter-spacing: 0.01em; }
+.favori-tile-badge:empty { display: none; }
+.favori-tile-badge .badge { font-size: 0.58rem; padding: 2px 6px; white-space: nowrap; }
+.favori-tile-price { font-family: var(--font-mono); font-size: 0.84rem; font-weight: 600; margin-top: 7px; }
+.favori-tile-change {
+  display: inline-flex; align-items: center; width: fit-content;
+  padding: 2px 7px; border-radius: 999px;
+  font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; margin-top: 4px;
+}
+.favori-tile .expand-hint { margin-top: 8px; padding-top: 6px; font-size: 0.68rem; }
+/* Teinte de fond selon l'intensité de la variation 24h — voir applyHeatTint (app.js) et
+   THRESHOLDS.directionalMovePct (config.js) pour les paliers. Mêmes couleurs que --gain/--loss,
+   en rgba() ici car un dégradé CSS ne peut pas moduler l'opacité d'une simple var() de couleur. */
+.favori-tile.heat-pos-1 { background: linear-gradient(165deg, rgba(52,211,153,0.10), var(--card)); }
+.favori-tile.heat-pos-2 { background: linear-gradient(165deg, rgba(52,211,153,0.20), var(--card)); }
+.favori-tile.heat-pos-3 { background: linear-gradient(165deg, rgba(52,211,153,0.32), var(--card)); }
+.favori-tile.heat-neg-1 { background: linear-gradient(165deg, rgba(241,85,76,0.10), var(--card)); }
+.favori-tile.heat-neg-2 { background: linear-gradient(165deg, rgba(241,85,76,0.20), var(--card)); }
+.favori-tile.heat-neg-3 { background: linear-gradient(165deg, rgba(241,85,76,0.32), var(--card)); }
+
+/* ---- .favori-card : fiche complète, utilisée par la recherche libre (search.js) pour un
+   résultat isolé — jamais dans la grille Favoris (voir .favori-tile ci-dessus, volontairement
+   une classe distincte pour ne rien partager entre les deux). ---- */
 .favori-card {
   background: linear-gradient(165deg, var(--card-2), var(--card));
   border: 1px solid var(--border);
@@ -389,23 +431,6 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
 .chip.negative { background: rgba(241, 85, 76, 0.14); color: var(--loss); }
 .tv-chart { height: 260px; border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 10px; border: 1px solid var(--border); }
 
-/* ---- Favoris : ligne compacte (piste "densité") — le detail-panel ci-dessous porte
-   maintenant le graphique + l'analyse complète, chargés au tap plutôt qu'empilés d'office. ---- */
-.favori-row { display: flex; align-items: center; gap: 10px; }
-.favori-row-tick {
-  width: 40px; height: 40px; border-radius: 11px; flex-shrink: 0;
-  background: var(--bg-elevated); border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.62rem; font-weight: 800; letter-spacing: 0.01em;
-}
-.favori-row-mid { flex: 1; min-width: 0; }
-.favori-row-name { font-size: 0.88rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.favori-row-sector { font-size: 0.68rem; color: var(--text-faint); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.favori-row-badge:empty { display: none; }
-.favori-row-badge .badge { font-size: 0.62rem; padding: 3px 8px; }
-.favori-row-right { text-align: right; flex-shrink: 0; }
-.favori-row-right .favori-price { font-size: 0.88rem; }
-.favori-row-right .chip { margin: 3px 0 0; font-size: 0.68rem; padding: 2px 7px; }
 .favori-card .expand-hint { margin-top: 10px; padding-top: 8px; font-size: 0.72rem; }
 
 /* ---- Tables ---- */
@@ -789,10 +814,10 @@ nav.tabs button[data-tab="assistant"].active { background: rgba(242,119,179,0.13
 
 /* ---- Interactivité : légère élévation au survol (desktop uniquement) ---- */
 @media (hover: hover) {
-  .favori-card, .stat-card, .journal-entry, .log-entry, .alert-entry, .hero-card, .opp-card, .gate-card {
+  .favori-card, .favori-tile, .stat-card, .journal-entry, .log-entry, .alert-entry, .hero-card, .opp-card, .gate-card {
     transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, border-color 0.15s ease-out;
   }
-  .favori-card:hover, .stat-card:hover, .journal-entry:hover, .log-entry:hover, .alert-entry:hover, .opp-card:hover {
+  .favori-card:hover, .favori-tile:hover, .stat-card:hover, .journal-entry:hover, .log-entry:hover, .alert-entry:hover, .opp-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 14px 32px rgba(0,0,0,0.4);
     border-color: rgba(47,211,176,0.35);

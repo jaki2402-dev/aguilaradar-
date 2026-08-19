@@ -37,24 +37,23 @@ function makeKeyboardClickable(el) {
   });
 }
 
+// Grille dense (esprit Coin360 : l'essentiel, peu de défilement) — nom/secteur complets
+// disponibles au survol (title) et dans la fiche détaillée au clic, pas sur la tuile elle-même
+// pour rester épuré. Classe .favori-tile volontairement DISTINCTE de .favori-card (toujours
+// utilisée telle quelle par search.js pour un résultat de recherche isolé, hors grille) — pas
+// de dépendance partagée entre les deux, un changement ici ne peut pas casser l'autre.
 function renderFavorisGrid() {
   const grid = document.getElementById("favoris-grid");
   grid.innerHTML = FAVORIS.map(
     (f) => `
-    <div class="favori-card clickable" data-detail-target="detail-fav-${f.ticker}" style="--sector-color:${SECTOR_COLORS[f.cgId] || "var(--border)"}">
-      <div class="favori-row">
-        <div class="favori-row-tick">${f.ticker}</div>
-        <div class="favori-row-mid">
-          <div class="favori-row-name">${f.name}</div>
-          <div class="favori-row-sector">${SECTORS[f.cgId] || ""}</div>
-        </div>
-        <span class="favori-row-badge" id="verdict-${f.ticker}"></span>
-        <div class="favori-row-right">
-          <div class="favori-price skeleton" id="price-${f.ticker}">0 000,00 €</div>
-          <div class="chip skeleton" id="change-${f.ticker}">▲ +0,00 %</div>
-        </div>
+    <div class="favori-tile clickable" data-detail-target="detail-fav-${f.ticker}" style="--sector-color:${SECTOR_COLORS[f.cgId] || "var(--border)"}" title="${escapeHtml(f.name)} — ${escapeHtml(SECTORS[f.cgId] || "")}">
+      <div class="favori-tile-head">
+        <span class="favori-tile-tick">${f.ticker}</span>
+        <span class="favori-tile-badge" id="verdict-${f.ticker}"></span>
       </div>
-      <div class="expand-hint">Voir le graphique et l'analyse détaillée <span class="chevron">▾</span></div>
+      <div class="favori-tile-price skeleton" id="price-${f.ticker}">0 000 €</div>
+      <div class="favori-tile-change chip skeleton" id="change-${f.ticker}">▲ 0,00 %</div>
+      <div class="expand-hint">Détail <span class="chevron">▾</span></div>
       <div class="detail-panel" id="detail-fav-${f.ticker}"></div>
     </div>`
   ).join("");
@@ -62,7 +61,7 @@ function renderFavorisGrid() {
   // Graphique TradingView chargé au tap (dans le panneau de détail), plus au chargement de
   // la page : 15 widgets simultanés étaient la principale cause du défilement lourd de cet
   // onglet — voir renderDetailPanel (detail.js) pour le montage effectif.
-  document.querySelectorAll("#favoris-grid .favori-card.clickable").forEach((cardEl, i) => {
+  document.querySelectorAll("#favoris-grid .favori-tile.clickable").forEach((cardEl, i) => {
     const f = FAVORIS[i];
     attachDetailToggle(cardEl, `detail-fav-${f.ticker}`, {
       cgId: f.cgId,
@@ -84,12 +83,27 @@ function updateFavorisVerdicts(verdicts) {
       .sort((a, b) => new Date(b.issued_at) - new Date(a.issued_at))[0];
     if (!latest) return;
     chipEl.innerHTML = `<span class="badge badge-${latest.verdict.toLowerCase()}">${latest.verdict}</span>`;
-    const cardEl = chipEl.closest(".favori-card");
+    const cardEl = chipEl.closest(".favori-tile");
     if (cardEl) {
       cardEl.dataset.reasoning = latest.reasoning;
       cardEl.dataset.verdict = latest.verdict;
     }
   });
+}
+
+const HEAT_TIER_CLASSES = ["heat-pos-1", "heat-pos-2", "heat-pos-3", "heat-neg-1", "heat-neg-2", "heat-neg-3"];
+
+// Fond légèrement teinté vert/rouge selon l'intensité de la variation 24h (esprit Coin360 :
+// la couleur porte l'essentiel de l'information avant même de lire le chiffre). Paliers basés
+// sur THRESHOLDS.directionalMovePct (config.js) — le même seuil "mouvement significatif" que
+// le reste du site, pas un nombre réinventé ici.
+function applyHeatTint(tileEl, changePct) {
+  if (!tileEl) return;
+  tileEl.classList.remove(...HEAT_TIER_CLASSES);
+  const half = THRESHOLDS.directionalMovePct / 2;
+  const mag = Math.abs(changePct);
+  const tier = mag >= THRESHOLDS.directionalMovePct ? 3 : mag >= half ? 2 : 1;
+  tileEl.classList.add(changePct >= 0 ? `heat-pos-${tier}` : `heat-neg-${tier}`);
 }
 
 async function refreshPrices() {
@@ -107,6 +121,7 @@ async function refreshPrices() {
       changeEl.textContent = formatChangePct(change);
       changeEl.className = "chip skeleton-off " + (change >= 0 ? "positive" : "negative");
       changeEl.classList.remove("skeleton");
+      applyHeatTint(changeEl.closest(".favori-tile"), change);
     });
     document.getElementById("last-price-update").textContent =
       "Prix à l'instant : " + new Date().toLocaleTimeString("fr-FR");
