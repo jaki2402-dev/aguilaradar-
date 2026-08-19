@@ -1,5 +1,5 @@
 {
-  "last_computed_at": "2026-08-18T08:24:00Z",
+  "last_computed_at": "2026-08-19T08:23:00Z",
   "assets": {
     "BTC": {
       "last_computed_at": "2026-08-18T08:24:00Z",
@@ -33,23 +33,23 @@
       }
     },
     "ETH": {
-      "last_computed_at": "2026-08-11T08:35:00Z",
+      "last_computed_at": "2026-08-19T08:23:00Z",
       "competitor": {
         "ticker": "SOL",
         "name": "Solana",
-        "comparison_note": "Ethereum reste la première plateforme de contrats intelligents par capitalisation (environ 230,6 milliards de dollars au 4 août 2026) contre environ 43,1 milliards pour Solana, soit un rapport d'environ 5,4x en faveur d'Ethereum. Les deux actifs cotent bien en dessous de leur sommet historique (ETH à environ 38,5 % de son ATH, SOL à environ 25,2 %). Solana conserve un avantage de débit brut (capacité théorique élevée, volume quotidien de transactions environ 70 fois supérieur à celui d'Ethereum), tandis qu'Ethereum s'appuie sur un écosystème de couches 2 plus mature et une décentralisation plus poussée."
+        "comparison_note": "Ethereum reste la deuxième plus grande capitalisation crypto et la première plateforme de contrats intelligents, avec un prix d'environ 1 900-1 913 dollars, une capitalisation d'environ 227,8 à 231,4 milliards de dollars (rang #2) et une variation sur 7 jours d'environ +2,0 % (18 août 2026). Solana cote autour de 76,91 dollars pour une capitalisation d'environ 44,03 milliards de dollars (rang #7), soit un rapport d'environ 5,2x en faveur d'Ethereum. La performance 7 jours de Solana est rapportée de façon contradictoire selon la source (+0,90 % ou -0,90 %), le marché crypto global affichant environ +1,30 % sur la même période, ce qui suggère dans les deux cas une sous-performance relative de Solana face au marché."
       },
       "long_term_thesis": {
-        "bull": "Ethereum consolide son rôle d'infrastructure de règlement pour la finance tokenisée (RWA) et la DeFi institutionnelle, porté par l'adoption croissante des rollups L2, une demande ETF spot américaine positive (quatrième jour consécutif d'entrées nettes début août) et un cadre réglementaire américain qui progresse. Une clarification favorable du statut des stablecoins et des RWA pourrait accélérer l'usage on-chain et soutenir une revalorisation durable.",
-        "base": "Ethereum navigue une phase de consolidation autour de 1 900-1 950 dollars, concurrencé sur le narratif haute performance par Solana et d'autres L1, mais conservant son avantage de sécurité, de décentralisation et d'écosystème développeur, avec des flux ETF globalement positifs mais modestes.",
-        "bear": "La concurrence des L1 haute performance (Solana notamment) et la fragmentation de la liquidité entre rollups L2 pourraient continuer de peser sur la part de marché d'Ethereum et sur les frais captés par la couche de base, dans un contexte où un choc macro général affecterait l'ensemble des actifs à risque, Ethereum étant historiquement plus volatil que Bitcoin.",
-        "assumptions_note": "Scénarios fondés sur : (1) poursuite de l'adoption des rollups L2 sans fragmentation excessive de la liquidité, (2) maintien d'un accès ETF spot américain fonctionnel, (3) absence de migration massive de développeurs ou de capitaux vers des L1 concurrentes. Aucun multiplicateur chiffré n'est avancé."
+        "bull": "Les flux ETF spot américains sur Ethereum sont repartis positivement (quatre jours consécutifs d'entrées nettes jusqu'au 7 août, dont environ 49,6 millions de dollars ce jour-là pour l'ETHA de BlackRock ; plusieurs semaines consécutives d'entrées nettes rapportées jusqu'au 18 août). Le 17 mars 2026, la SEC et la CFTC ont classifié conjointement 16 actifs numériques dont ETH comme « digital commodities » hors du champ des valeurs mobilières, et la SEC a approuvé des normes de cotation génériques réduisant le délai d'approbation des ETP crypto (jusqu'à 240 jours auparavant, contre aussi peu que 75 jours désormais). En janvier 2026, un ETF spot ETH américain a distribué pour la première fois des revenus de staking à ses actionnaires. Les rollups L2 (Arbitrum, Optimism, zkSync) continuent d'absorber l'activité DeFi/RWA institutionnelle, avec plus de 12 milliards de dollars de RWA tokenisés déjà émis sur Ethereum selon une source.",
+        "base": "Malgré des flux ETF orientés positivement, le prix reste cantonné sous 1 900-1 950 dollars, signe que ces flux ne se traduisent pas encore en dynamique de prix. Le projet de loi américain sur la structure de marché crypto, fusionné en juillet 2026 au Sénat, est resté bloqué avant la pause d'août sur des points de friction (récompenses liées aux stablecoins, protection des développeurs).",
+        "bear": "La classification SEC/CFTC de mars 2026 relève d'une position d'agence et non d'une loi votée, donc potentiellement révocable ; une source relève d'ailleurs qu'Ethereum pourrait encore être requalifié en valeur mobilière dans certains scénarios, signe d'une ambiguïté juridique residuelle. La fragmentation de la liquidité entre rollups L2 et la concurrence des L1 haute performance restent des risques structurels pour la part de marché et les frais captés par la couche de base.",
+        "assumptions_note": "Ces scénarios supposent : (1) la classification digital commodity de mars 2026 n'est pas révoquée ou contestée avec succès, (2) les flux ETF spot et le mécanisme de distribution de rewards de staking se maintiennent, (3) l'adoption L2/RWA institutionnelle se poursuit sans fragmentation excessive de la liquidité. Aucun multiplicateur chiffré n'est avancé. Note de fiabilité : un chiffre d'encours cumulé ETHA d'environ 116,5 milliards de dollars trouvé dans une source parait disproportionné par rapport à la capitalisation totale d'ETH et n'est pas retenu comme fiable."
       },
       "open_interest": {
-        "value_usd": 25480000000,
+        "value_usd": 25000000000,
         "funding_rate_pct": null,
-        "source": "CoinGlass / The Block (résultats indexés via WebSearch)",
-        "note": "Open interest agrégé toutes plateformes estimé à environ 25,48 milliards de dollars selon une donnée indexée datée du 10-11 août 2026 (en baisse depuis environ 35 milliards en mai 2026). Funding rate Binance non trouvé avec une valeur chiffrée fiable et datée ce cycle, laissé à null. Accès direct aux endpoints Binance/CoinGlass bloqué par le proxy réseau."
+        "source": "CoinGlass (résultats indexés via WebSearch, datés du 19 août 2026)",
+        "note": "Deux valeurs trouvées sur la même source pour le même jour sont incohérentes entre elles (environ 25,56 milliards de dollars contre environ 24,45 milliards, avec un volume futures 24h d'environ 27,33 milliards) : retenu un ordre de grandeur médian d'environ 25 milliards de dollars plutôt qu'un chiffre unique. Funding rate non trouvé sous forme chiffrée ce cycle, laissé à null. Accès direct aux endpoints Binance bloqué par le proxy réseau de cet environnement."
       },
       "defi_tvl": {
         "value_usd": null,
@@ -58,29 +58,29 @@
         "note": "Non applicable dans le périmètre restreint de ce champ (usage réservé aux protocoles RWA et TVL de chaîne explicitement ciblés par le correctif : ONDO/ARB/INJ)"
       },
       "onchain_signal": {
-        "available": false,
-        "note": "Aucun mouvement whale significatif et récent (moins de 48h) trouvé via recherche ce cycle ; seule une transaction test de 0,1 ETH vers Coinbase a été repérée le 9 août, non significative.",
-        "source_url": null
+        "available": true,
+        "note": "Le 17 août 2026 (moins de 48h avant ce cycle), un whale a déposé 32 400 ETH (environ 61,46 millions de dollars) dans le contrat de dépôt de staking d'Ethereum. D'autres mouvements identifiés (2 680 ETH le 11 août, 2 000 ETH le 8 août) sont hors de la fenêtre de fraîcheur de 48h et non retenus.",
+        "source_url": "https://www.kucoin.com/news/flash/whale-deposits-32-400-eth-worth-61-46m-into-ethereum-staking-contract"
       }
     },
     "FET": {
-      "last_computed_at": "2026-08-11T08:35:00Z",
+      "last_computed_at": "2026-08-19T08:23:00Z",
       "competitor": {
         "ticker": "RENDER",
         "name": "Render Network",
-        "comparison_note": "FET (token de l'ASI Alliance, née de la fusion Fetch.ai / SingularityNET / Ocean Protocol) affichait une capitalisation d'environ 309 millions de dollars début août 2026 pour un prix proche de 0,14 dollar. Les données de classement et de capitalisation précises pour Render (RENDER) n'ont pas pu être confirmées via recherche ce cycle avec un niveau de fiabilité suffisant, donc aucun ratio chiffré n'est avancé. Les deux tokens restent positionnés dans le segment IA-crypto de taille moyenne (hors top 50), FET misant sur les agents autonomes et le calcul décentralisé, Render sur le rendu GPU décentralisé : deux approches complémentaires plutôt que directement substituables, mais régulièrement comparées par les investisseurs du secteur IA-crypto."
+        "comparison_note": "Les données de capitalisation pour FET (token de l'ASI Alliance) divergent fortement selon la source : entre environ 270 et 510 millions de dollars, avec un rang situé entre #109 et #130 selon la plateforme. Performance 7 jours nettement baissière et plus cohérente entre sources : environ -8 % à -10 %. Render (RENDER) affiche une capitalisation estimée entre environ 654 et 719 millions de dollars (rang entre #86 et #102), soit un écart d'environ 2 à 2,5 fois en faveur de Render selon la fourchette retenue, avec une performance 7 jours quasi stable (environ +0,10 %). Les deux tokens restent positionnés dans le segment IA-crypto de taille moyenne (hors top 50), FET misant sur les agents autonomes, Render sur le rendu GPU décentralisé."
       },
       "long_term_thesis": {
-        "bull": "FET / ASI Alliance se positionne comme l'un des principaux paris crypto sur l'intersection IA-blockchain (agents autonomes, marketplace de services IA décentralisés), porté par un narratif IA toujours porteur en 2026 et une accumulation nette de whales rapportée fin mars 2026. Une adoption réelle d'agents autonomes on-chain à grande échelle pourrait démarquer FET dans un secteur encore largement spéculatif.",
-        "base": "FET reste un actif de petite capitalisation (environ 300-360 millions de dollars) très corrélé au narratif IA-crypto global plutôt qu'à des fondamentaux propres mesurables (usage réel encore limité à ce stade), avec une volatilité élevée et une forte sensibilité aux flux spéculatifs sectoriels.",
-        "bear": "Le secteur IA-crypto reste largement porté par la narrative plutôt que par une traction on-chain mesurable ; un désintérêt du marché pour le thème IA, une concurrence accrue (TAO/Bittensor, RENDER) ou des ventes de whales (un précédent de sortie d'environ 263 millions de FET vers des exchanges via OTC a déjà été documenté) pourraient peser durablement sur le cours.",
-        "assumptions_note": "Scénarios fondés sur : (1) le narratif IA-crypto reste un moteur de flux spéculatifs en 2026, (2) aucune donnée d'usage réel (nombre d'agents actifs, volume de transactions économiques on-chain) suffisamment robuste n'est disponible pour asseoir une thèse fondamentale forte à ce stade, (3) le risque de vente par les gros détenteurs reste élevé sur ce segment. Aucun multiplicateur chiffré n'est avancé."
+        "bull": "L'ASI Alliance a bâti en 2026 une pile produit plus étoffée : ASI:One (plateforme agentique), la famille de modèles ASI-1 (LLM natif Web3), ASI:Cloud (calcul décentralisé) et ASI:Chain, une nouvelle blockchain L1 dédiée visant un mainnet fin 2026 ou début 2027. Le volet agents autonomes est décrit par une source comme la brique la plus mature de l'écosystème, la plus proche d'un produit réel avec des utilisateurs entreprise payants.",
+        "base": "FET évolue courant août 2026 dans un marché crypto global en repli marqué (indice peur/cupidite a 30, soit « peur », semaine du 10 au 16 août ; BTC en baisse d'environ 49 % depuis son pic d'octobre 2025 ; capitalisation crypto totale passée d'un pic de 4,27 trillions de dollars a environ 2,29 trillions), une correction attribuée en partie a un dégonflement de la « bulle IA » et au resserrement monétaire de la BCE et de la Banque d'Angleterre. FET est decrit comme « en territoire de marché baissier profond », bien en dessous de ses sommets d'euphorie IA passés.",
+        "bear": "La concurrence intra-sectorielle s'intensifie : une source désigne Bittensor (TAO), et non FET, comme « le réseau IA décentralisé de référence », signe d'une concurrence narrative réelle au sein même du secteur IA-crypto. Une mention isolée et non recoupée indique qu'Ocean Protocol aurait de nouveau quitté l'ASI Alliance ; donnée non confirmée par une deuxième source, à traiter avec prudence.",
+        "assumptions_note": "Ces scénarios supposent : (1) le narratif IA-crypto reste un moteur de flux spéculatifs malgré la correction 2026, (2) ASI:Chain atteint effectivement son mainnet visé fin 2026/début 2027 sans retard majeur, (3) aucune donnée d'usage réel (agents actifs, transactions économiques on-chain) suffisamment robuste n'a été trouvée pour asseoir une thèse fondamentale forte à ce stade. Aucun multiplicateur chiffré n'est avancé. La sortie annoncée d'Ocean Protocol de l'Alliance n'est pas retenue comme fait établi faute de confirmation par une deuxième source."
       },
       "open_interest": {
-        "value_usd": 67720000,
+        "value_usd": 70000000,
         "funding_rate_pct": null,
-        "source": "CoinGlass (résultat indexé via WebSearch)",
-        "note": "Contrat FETUSDT actif sur Binance Futures depuis janvier 2023. Open interest estimé à environ 67,72 millions de dollars selon une donnée CoinGlass indexée datée d'août 2026 ; funding rate non trouvé avec une valeur chiffrée fiable ce cycle, laissé à null."
+        "source": "CoinGlass (résultats indexés via WebSearch)",
+        "note": "Deux valeurs trouvées sont incohérentes entre elles (environ 67,8 millions de dollars contre environ 73,2 millions selon l'instant de capture) : retenu un ordre de grandeur médian d'environ 70 millions de dollars plutôt qu'un chiffre unique. Funding rate non trouvé sous forme chiffrée ce cycle (accès direct à coinglass.com bloqué par le proxy réseau), laissé à null. À titre de comparaison, TAO et NEAR afficheraient un open interest de plusieurs centaines de millions de dollars, nettement supérieur à celui de FET."
       },
       "defi_tvl": {
         "value_usd": null,
@@ -90,28 +90,28 @@
       },
       "onchain_signal": {
         "available": false,
-        "note": "Aucun mouvement whale significatif et récent (moins de 48h) trouvé via recherche ce cycle ; les mouvements identifiés (accumulation de 100 millions de FET fin mars 2026, sortie d'environ 263 millions de FET vers des exchanges liée à la fusion Ocean Protocol) sont anciens et hors fenêtre de fraîcheur retenue.",
+        "note": "Aucun mouvement whale significatif et récent (moins de 48h) trouvé via recherche ciblée ce cycle ; seuls des éléments anciens (dépôts vers exchanges mi-2024) ou non datés (hausse de 56 % des transactions importantes sur 24h selon IntoTheBlock, sans date précise) sont ressortis, non retenus.",
         "source_url": null
       }
     },
     "GRT": {
-      "last_computed_at": "2026-08-12T08:25:00Z",
+      "last_computed_at": "2026-08-19T08:23:00Z",
       "competitor": {
         "ticker": "SQD",
         "name": "Subsquid",
-        "comparison_note": "The Graph reste la plus grande capitalisation du secteur de l'indexation décentralisée de données blockchain, avec une capitalisation estimée entre 150 et 155 millions de dollars et un rang situé entre #140 et #198 selon la source (CoinMarketCap, CoinGecko). Le concurrent le plus proche techniquement est Subsquid (SQD), un indexeur de subgraphs/EVM positionné sur le même segment, mais nettement plus petit : capitalisation estimée entre 34 et 42 millions de dollars, rang entre #263 et #491, avec une tendance haussière sur 7 jours (+8 à +17 % selon la source). Les performances 7 jours et 30 jours de GRT n'ont pas pu être confirmées avec un chiffre USD fiable et cohérent entre sources ce cycle. Pocket Network (POKT), autre acteur du secteur data/RPC décentralisé, a été écarté comme comparateur principal car ses données de marché sont trop dispersées entre sources pour une comparaison fiable."
+        "comparison_note": "The Graph reste la plus grande capitalisation du secteur de l'indexation décentralisée de données blockchain, avec une capitalisation estimée entre environ 145 et 155 millions de dollars et un rang situé entre #135 et #190 selon la source (une source isolée et probablement obsolète évoque un rang #186 avec seulement 17,9 millions de dollars, écartée comme non fiable). Performance 7 jours rapportée à environ +2,97 %, bien que la structure technique reste baissière (prix sous les moyennes mobiles 7j/30j/200j). Subsquid (SQD) affiche une capitalisation d'environ 35,4 millions de dollars (rang #438), soit un écart d'environ 4 fois en faveur de The Graph ; sa performance 7 jours est fortement contradictoire selon la source (de -1 % à +31,6 %), non retenue avec confiance."
       },
       "long_term_thesis": {
-        "bull": "The Graph amorce un pivot stratégique vers l'infrastructure de données pour agents IA, avec le lancement en juin 2026 de serveurs MCP et de compétences permettant l'interrogation en langage naturel des données on-chain via des outils comme Claude, Cursor ou ChatGPT, avec paiement en USDC via le protocole x402. Combiné à la montée en charge du réseau (pic de 6,49 milliards de requêtes au deuxième trimestre 2025, plus de 40 chaînes indexées) et à l'intégration Chainlink CCIP de mai 2025 pour les transferts cross-chain de GRT, ce pivot pourrait positionner The Graph comme brique de données de référence pour l'écosystème IA-crypto naissant.",
-        "base": "The Graph conserve sa position de plus grande capitalisation du secteur de l'indexation décentralisée, mais évolue dans un marché où plusieurs solutions concurrentes, y compris centralisées (Dune Analytics, SubQuery, Chainbase), occupent des niches complémentaires plutôt que directement substituables. Selon une analyse relayée par CoinMarketCap en août 2026, les gains récents du token seraient davantage portés par des flux de capitaux sectoriels liés au narratif IA/data que par un catalyseur fondamental propre au projet.",
-        "bear": "Le token reste en tendance baissière technique marquée, avec un nouveau plus bas historique atteint lors du krach de fin 2025 et un prix sous ses moyennes mobiles clés début août 2026. Une concurrence croissante de solutions de requêtage plus rapides ou plus accessibles (Dune, Subsquid, Chainbase) pourrait continuer d'éroder la position de The Graph si le pivot vers l'infrastructure IA ne se traduit pas par une adoption mesurable et une demande réelle de GRT comme moyen de paiement du réseau.",
-        "assumptions_note": "Ces trois scénarios supposent : (1) le pivot 2026 vers une infrastructure de données pour agents IA (serveurs MCP, paiement x402) rencontre une adoption réelle et mesurable, (2) aucune migration massive des développeurs vers des solutions concurrentes centralisées ou décentralisées, (3) le narratif sectoriel IA-crypto continue d'attirer des flux vers les tokens d'infrastructure de données. Aucun multiplicateur chiffré n'est avancé, faute de données de performance 7 jours/30 jours suffisamment fiables et cohérentes entre sources pour ce cycle."
+        "bull": "The Graph poursuit son pivot vers l'infrastructure de données pour agents IA : lancement en juin 2026 de serveurs MCP et de compétences pour les Subgraphs, permettant l'interrogation en langage naturel via Claude, Cursor ou ChatGPT, et d'une passerelle de paiement x402 en USDC (mai 2026) permettant aux agents IA de payer à la requête sans configuration de clé API. Une source indique qu'environ 37 % des nouveaux utilisateurs de la Token API seraient des agents IA plutôt que des développeurs humains. Le protocole soutient également le standard ERC-8004 pour l'économie des agents IA. Plus de 1,27 trillion de requêtes cumulées auraient été servies à plus de 75 000 projets, avec un nombre de subgraphs actifs à un plus haut historique d'environ 15 500 (+3,0 % sur le trimestre) et des frais de service de données en hausse de 376 % sur un an.",
+        "base": "Le volume de requêtes montre des signes de ralentissement (4,97 milliards au quatrième trimestre 2025, en baisse de 8,9 % par rapport au trimestre precedent, contre un pic de 6,49 milliards au deuxième trimestre 2025). The Graph se repositionne progressivement d'un protocole d'indexation vers une place de marché de données pour le Web3 et les agents IA, sans qu'une comparaison directe 2026 face à des concurrents comme Dune, SubQuery ou Chainbase n'ait été trouvée via recherche ce cycle.",
+        "bear": "La structure technique reste baissière, le prix évoluant sous ses moyennes mobiles 7 jours, 30 jours et 200 jours, avec un plus bas d'août 2026 à environ 0,0141 dollar. Si le pivot vers l'infrastructure de données IA ne se traduit pas par une demande réelle et croissante de GRT comme moyen de paiement du réseau au-delà des annonces, la valorisation pourrait rester sous pression malgré la croissance de l'usage rapportée.",
+        "assumptions_note": "Ces trois scénarios supposent : (1) le pivot vers l'infrastructure de données pour agents IA (serveurs MCP, paiement x402, ERC-8004) se traduit par une adoption réelle et mesurable au-delà des chiffres d'usage déjà rapportés, (2) le ralentissement du volume de requêtes observé fin 2025 ne s'aggrave pas, (3) aucune comparaison fiable face aux concurrents centralisés (Dune, SubQuery, Chainbase) n'a pu être établie ce cycle. Aucun multiplicateur chiffré n'est avancé. Les chiffres de capitalisation et de performance restent incohérents entre sources et à traiter avec prudence."
       },
       "open_interest": {
         "value_usd": 19489245,
         "funding_rate_pct": null,
         "source": "CoinGlass (résultat indexé via WebSearch, agrégé toutes plateformes)",
-        "note": "Open interest agrégé toutes bourses estimé à environ 19,49 millions de dollars et volume futures 24h à environ 24,67 millions de dollars, selon une donnée CoinGlass indexée dont l'horodatage exact n'a pas pu être confirmé ce cycle. Funding rate non trouvé avec une valeur chiffrée fiable via WebSearch ce cycle, laissé à null. Accès direct aux endpoints Binance/CoinGlass bloqué par le proxy réseau de cet environnement."
+        "note": "Open interest agrégé toutes bourses estimé à environ 19,49 millions de dollars et volume futures 24h à environ 24,67 millions de dollars ; ce chiffre est identique à celui retenu lors du cycle précédent (12 août 2026) et pourrait provenir d'une page indexée en cache plutôt que d'une capture réellement rafraîchie ce cycle, à traiter avec prudence. Funding rate non trouvé avec une valeur chiffrée fiable via WebSearch ce cycle, laissé à null. Accès direct aux endpoints Binance/CoinGlass bloqué par le proxy réseau de cet environnement."
       },
       "defi_tvl": {
         "value_usd": null,
@@ -121,28 +121,28 @@
       },
       "onchain_signal": {
         "available": false,
-        "note": "Aucun mouvement whale significatif et récent (moins de 48h) trouvé via recherche ce cycle ; les seules alertes identifiées pour GRT datent d'octobre-novembre 2023 et sont hors fenêtre de fraîcheur retenue.",
+        "note": "Aucun mouvement whale significatif et récent (moins de 48h) trouvé via recherche ciblée ce cycle ; seules des pages génériques sur les services de suivi des whales (Whale Alert, CoinGlass, Arkham) sont ressorties, sans transaction GRT datée et chiffrée.",
         "source_url": null
       }
     },
     "TIA": {
-      "last_computed_at": "2026-08-11T08:35:00Z",
+      "last_computed_at": "2026-08-19T08:23:00Z",
       "competitor": {
         "ticker": "AVAIL",
         "name": "Avail",
-        "comparison_note": "Celestia (TIA) domine largement le secteur de la disponibilité des données modulaire par capitalisation : environ 313 millions de dollars et un rang autour de #124 (fourchette #108-#129 selon les sources), contre environ 8,2 millions de dollars et un rang autour de #984 pour Avail (AVAIL), soit un écart d'environ 15 à 40 fois en faveur de Celestia selon la source. Celestia revendiquerait environ 50 % de part de marché de la disponibilité de données pour les rollups. EigenDA, concurrent technique majeur, n'a pas de token coté indépendant permettant une comparaison de capitalisation directe et n'a donc pas été retenu comme comparateur ici."
+        "comparison_note": "Celestia (TIA) cote autour de 0,31 dollar pour une capitalisation d'environ 296,8 millions de dollars, avec un rang très dispersé selon la source (entre #112 et #156) et une performance 7 jours d'environ -5,70 % (contre environ -2,10 % pour le marché global). Avail (AVAIL) cote autour de 0,00175 dollar pour une capitalisation d'environ 6,95 millions de dollars (rang autour de #1316), en forte baisse sur toutes les fenêtres (7 jours entre -8,5 % et -15,2 % selon la source, -22,5 % sur 30 jours, -89,9 % sur un an). L'écart de capitalisation entre les deux (environ 43 fois en faveur de Celestia) s'est donc nettement creusé par rapport aux cycles précédents. Celestia revendiquerait toujours environ 50 % de part de marché de la disponibilité de données pour les rollups. EigenDA reste écarté comme comparateur faute de token coté indépendant."
       },
       "long_term_thesis": {
-        "bull": "Celestia s'impose comme infrastructure de disponibilité des données de référence pour l'écosystème modulaire (rollups), avec une part de marché revendiquée d'environ 50 % et un narratif porteur autour de la scalabilité modulaire de la blockchain. Une adoption croissante de rollups s'appuyant sur Celestia plutôt que sur les blobs natifs d'Ethereum ou sur EigenDA pourrait soutenir une revalorisation, notamment si le volume de données postées continue de croître.",
-        "base": "TIA évolue dans un marché de niche encore en construction (l'architecture modulaire n'a pas encore démontré une adoption de masse comparable aux L1 monolithiques), avec une valorisation qui reste très sensible aux cycles de déblocage de tokens et à la rotation narrative au sein du secteur crypto plus large.",
-        "bear": "La concurrence s'intensifie avec l'arrivée des blobs natifs d'Ethereum, d'EigenDA (adossé à la sécurité économique d'Ethereum) et d'Avail ; TIA a aussi été exposé à des événements de déblocage de tokens significatifs qui peuvent créer une pression de vente récurrente.",
-        "assumptions_note": "Scénarios fondés sur : (1) la thèse modulaire (séparation exécution / disponibilité des données) continue de gagner du terrain face à l'approche monolithique, (2) aucune migration massive des rollups existants vers des alternatives (blobs Ethereum natifs, EigenDA) n'est supposée à court terme, (3) le calendrier de déblocage de tokens TIA reste un facteur de pression baissière récurrent et documenté plutôt qu'hypothétique. Aucun multiplicateur chiffré n'est avancé."
+        "bull": "Celestia continue d'afficher une part de marché revendiquée d'environ 50 % du secteur de la disponibilité de données, avec des frais de blob en hausse d'environ 10 fois depuis fin 2024. La mise à niveau « Matcha » (premier trimestre 2026) vise un doublement de la taille de bloc à 128 Mo, et un protocole expérimental « Fibre Blockspace » viserait à terme 1 Tbps de débit. Une mise à niveau V8 (messagerie ZK, transferts cross-chain) a été déployée sur le testnet Mocha.",
+        "base": "TIA reste exposé à un calendrier de déblocage de tokens régulier (environ 10,7 millions de TIA débloqués le 31 juillet 2026, soit environ 1,1 % de l'offre ; 15 déblocages à venir totalisant environ 9,9 % de l'offre, vesting complet prévu pour septembre 2027). Sur le plan des coûts, une comparaison relayée par une source situe l'affichage de données sur Celestia à environ 12 775 dollars par an pour 100 Mo/jour, contre environ 730 dollars par an pour EigenDA sur le même volume, un écart de coût potentiellement défavorable à Celestia si cette comparaison se confirme.",
+        "bear": "La mise à niveau Ethereum « Fusaka » pourrait rendre les blobs natifs d'Ethereum encore moins chers, rendant Celestia et Avail « redondants » selon une source. Une autre source interroge la capacité de TIA à démontrer une demande réelle au-delà d'un engouement spéculatif de détail. La pression de déblocage de tokens régulière (voir base) s'ajoute à ces risques concurrentiels.",
+        "assumptions_note": "Ces scénarios supposent : (1) la thèse modulaire continue de gagner du terrain malgré la pression concurrentielle d'EigenDA et des blobs natifs Ethereum, (2) le calendrier de déblocage de tokens TIA se poursuit tel qu'annoncé sans accélération, (3) la comparaison de coût Celestia/EigenDA (environ 12 775 $ contre 730 $ par an) provient d'une seule source et n'a pas été recoupée de façon indépendante, à traiter avec prudence. Aucun multiplicateur chiffré n'est avancé."
       },
       "open_interest": {
-        "value_usd": 57138088,
-        "funding_rate_pct": 0.0049,
-        "source": "PrimeXBT / AMBCrypto (résultats indexés via WebSearch)",
-        "note": "Open interest et funding rate signalés lors d'un pic d'activité (hausse de 23 % de l'OI, dans le contexte d'un déblocage de tokens) daté d'environ deux semaines avant ce cycle selon les articles trouvés — donnée non reconfirmée comme étant celle du 11 août 2026, à traiter comme indicative plutôt que comme un instantané temps réel."
+        "value_usd": 57140000,
+        "funding_rate_pct": null,
+        "source": "CoinGlass (résultat indexé via WebSearch)",
+        "note": "Valeur d'environ 57,14 millions de dollars trouvée via recherche mais sans horodatage précis attaché, à ne pas considérer comme un instantané confirmé du 19 août 2026 ; un chiffre plus ancien et clairement daté (environ 77,39 millions de dollars au 27 mai 2026) montre que ce marché est sujet à de fortes variations dans le temps. Funding rate non retrouvé ce cycle avec une valeur fiable et datée, laissé à null (le funding rate de 0,0049 % retenu au cycle précédent n'a pas pu être reconfirmé et n'est donc pas reconduit). Accès direct aux endpoints Binance bloqué par le proxy réseau de cet environnement."
       },
       "defi_tvl": {
         "value_usd": null,
@@ -152,7 +152,7 @@
       },
       "onchain_signal": {
         "available": false,
-        "note": "Aucun mouvement whale significatif et récent (moins de 48h) trouvé via recherche ce cycle ; une hausse de 12 % en 24h de l'OI/prix identifiée dans les résultats de recherche date de mai 2026, hors fenêtre de fraîcheur retenue.",
+        "note": "Aucun mouvement whale individuel chiffré et daté de moins de 48h trouvé via recherche ciblée ce cycle ; une page Whale Alert mentionnant TIA (+12 % en 24h, volume futures supérieur à 300 millions de dollars, OI en hausse de plus de 20 %) a été repérée mais sa date n'a pas pu être confirmée (accès à la page bloqué), donc non retenue comme récente.",
         "source_url": null
       }
     },
