@@ -258,7 +258,7 @@ function notifyTabActive(tabId) {
 // ---- Relief 3D au survol, délégué (fonctionne aussi sur les cartes réaffichées) ----
 function initCardTilt() {
   if (!canHoverPrecisely() || prefersReducedMotion()) return;
-  const selector = ".favori-card.clickable, .favori-tile.clickable, .opp-card.clickable, .journal-entry.clickable, .gate-card";
+  const selector = ".favori-card.clickable, .favori-tile.clickable, .opp-card.clickable, .opp-tile.clickable, .journal-entry.clickable, .gate-card";
   const maxTilt = 6;
   let activeCard = null;
 

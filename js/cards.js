@@ -19,11 +19,15 @@ function computeConfidence(o) {
   return Math.min(c, 95);
 }
 
+function confidenceColor(value) {
+  return value >= 75 ? "var(--gain)" : value >= 55 ? "var(--accent)" : "var(--warning)";
+}
+
 function gaugeSvg(value) {
   const r = 24;
   const circumference = 2 * Math.PI * r;
   const offset = circumference * (1 - value / 100);
-  const color = value >= 75 ? "var(--gain)" : value >= 55 ? "var(--accent)" : "var(--warning)";
+  const color = confidenceColor(value);
   return `
     <svg viewBox="0 0 60 60" class="gauge">
       <circle cx="30" cy="30" r="${r}" class="gauge-bg" />
@@ -102,5 +106,75 @@ function renderOpportunityCards(containerId, opportunities, limit) {
     const reason = cardEl.dataset.reason || "";
     const opp = shown.find((o) => (o.id || o.ticker) === cardEl.dataset.oppId);
     attachDetailToggle(cardEl, panelId, { cgId, athChangePct: ath, reasoning: reason, tvSymbol: null, horizons: opp && opp.horizons });
+  });
+}
+
+// Grille dense pour l'onglet Opportunités (esprit Coin360, même logique que .favori-tile) :
+// ticker/confiance/prix/variation seulement au premier coup d'oeil, teintée selon la variation
+// 24h. Le reste (nom, rang, jauge, mini-graphique, tags, 7j/30j/cap) — jusque-là toujours
+// visible dans .opp-card, la vraie cause de la longueur de cet onglet — vit désormais dans
+// .opp-tile-body, révélé par pure CSS sur la classe .expanded déjà posée par
+// attachDetailToggle (aucun changement necessaire cote detail.js). Les indicateurs vivants
+// (chart, RSI...) restent dans .detail-panel comme avant, chargés au clic uniquement.
+// renderOpportunityCards/.opp-card ci-dessus reste intact et sert toujours le résumé "Meilleures
+// analyses" de l'Accueil (3 éléments seulement — la densité n'y a pas la même urgence).
+function renderOpportunityTile(o, idx, containerId) {
+  const conf = computeConfidence(o);
+  const trendUp = o.sparkline && o.sparkline.length > 1 && o.sparkline[o.sparkline.length - 1] >= o.sparkline[0];
+  const points = sparklinePoints(o.sparkline, 100, 32);
+  const panelId = `detail-opptile-${containerId}-${o.id || idx}`;
+  return `
+    <div class="opp-tile clickable" data-detail-target="${panelId}" data-cgid="${o.cgId}" data-ath="${o.ath_change_pct ?? ""}" data-reason="${escapeHtml(o.reason || "")}" data-opp-id="${o.id || o.ticker}" title="${escapeHtml(o.name)} — Rang capitalisation #${o.market_cap_rank ?? "—"}">
+      <div class="favori-tile-head">
+        <span class="favori-tile-tick">${escapeHtml(o.ticker)}</span>
+        <span class="opp-tile-conf" style="color:${confidenceColor(conf)}">${conf}%</span>
+      </div>
+      <div class="favori-tile-price">${formatPrice(o.price_eur, "EUR")}</div>
+      <div class="favori-tile-change chip ${o.change_24h_pct >= 0 ? "positive" : "negative"}">${formatChangePct(o.change_24h_pct)}</div>
+      <div class="expand-hint">Détail <span class="chevron">▾</span></div>
+
+      <div class="opp-tile-body">
+        <div class="opp-card-top">
+          <img src="${safeUrl(o.image) || ""}" alt="" class="opp-logo" loading="lazy" onerror="this.style.visibility='hidden'" />
+          <div class="opp-title">
+            <div><span class="opp-name">${escapeHtml(o.name)}</span> <span class="opp-ticker-tag">${escapeHtml(o.ticker)}</span></div>
+            <span class="hint">Rang capitalisation #${o.market_cap_rank ?? "—"}</span>
+          </div>
+          ${gaugeSvg(conf)}
+        </div>
+        ${points ? `<svg class="opp-spark" viewBox="0 0 100 32" preserveAspectRatio="none"><polyline points="${points}" class="spark-line ${trendUp ? "positive" : "negative"}" /></svg>` : ""}
+        <div class="opp-tags">
+          ${(o.tags || []).map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join("")}
+          <span class="tag tag-confidence">Confiance ${conf}%</span>
+        </div>
+        <div class="opp-footer">
+          <span>7j <strong class="${o.change_7d_pct >= 0 ? "positive" : "negative"}">${formatChangePct(o.change_7d_pct)}</strong></span>
+          <span>30j <strong class="${o.change_30d_pct >= 0 ? "positive" : "negative"}">${formatChangePct(o.change_30d_pct)}</strong></span>
+          <span>Cap. <strong>${formatMarketCap(o.market_cap)}</strong></span>
+        </div>
+      </div>
+
+      <div class="detail-panel" id="${panelId}"></div>
+    </div>`;
+}
+
+function renderOpportunityTiles(containerId, opportunities) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const items = (opportunities || []).slice().sort((a, b) => computeConfidence(b) - computeConfidence(a));
+  if (items.length === 0) {
+    el.innerHTML = `<p class="empty-state">Aucun screening réalisé pour l'instant — le Top 300 (memecoins exclus) sera analysé au premier cycle profond de la routine programmée.</p>`;
+    return;
+  }
+  el.innerHTML = `<div class="opp-tile-grid">${items.map((o, i) => renderOpportunityTile(o, i, containerId)).join("")}</div>`;
+
+  el.querySelectorAll(".opp-tile.clickable").forEach((tileEl) => {
+    const opp = items.find((o) => (o.id || o.ticker) === tileEl.dataset.oppId);
+    if (opp && window.applyHeatTint) applyHeatTint(tileEl, opp.change_24h_pct);
+    const panelId = tileEl.dataset.detailTarget;
+    const cgId = tileEl.dataset.cgid;
+    const ath = tileEl.dataset.ath ? parseFloat(tileEl.dataset.ath) : null;
+    const reason = tileEl.dataset.reason || "";
+    attachDetailToggle(tileEl, panelId, { cgId, athChangePct: ath, reasoning: reason, tvSymbol: null, horizons: opp && opp.horizons });
   });
 }

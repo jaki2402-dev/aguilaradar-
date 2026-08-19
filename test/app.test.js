@@ -346,14 +346,14 @@ describe("app.js — renderOpportunities", () => {
 
   it("renders every opportunity into #opportunities-body", () => {
     dom.window.renderOpportunities({ opportunities: [opp("AAA"), opp("BBB"), opp("CCC")] });
-    expect(dom.window.document.querySelectorAll("#opportunities-body .opp-card")).toHaveLength(3);
+    expect(dom.window.document.querySelectorAll("#opportunities-body .opp-tile")).toHaveLength(3);
   });
 
-  it("mirrors only the top 3 (by confidence) into #accueil-highlights while the full list stays in #opportunities-body", () => {
+  it("mirrors only the top 3 (by confidence) into #accueil-highlights (full .opp-card) while the full list stays in #opportunities-body (dense .opp-tile)", () => {
     const items = [opp("AAA"), opp("BBB"), opp("CCC"), opp("DDD"), opp("EEE")];
     dom.window.renderOpportunities({ opportunities: items });
     expect(dom.window.document.querySelectorAll("#accueil-highlights .opp-card")).toHaveLength(3);
-    expect(dom.window.document.querySelectorAll("#opportunities-body .opp-card")).toHaveLength(5);
+    expect(dom.window.document.querySelectorAll("#opportunities-body .opp-tile")).toHaveLength(5);
   });
 
   it("records the rendered tickers, in input order, for the opportunities constellation", () => {
@@ -368,6 +368,68 @@ describe("app.js — renderOpportunities", () => {
 
   it("does not throw when the data itself is null (not loaded yet)", () => {
     expect(() => dom.window.renderOpportunities(null)).not.toThrow();
+  });
+});
+
+describe("app.js — renderOpportunityTiles (grille dense #opportunities-body, esprit Coin360)", () => {
+  let dom;
+
+  function opp(ticker, overrides = {}) {
+    return {
+      id: ticker,
+      ticker,
+      name: ticker,
+      cgId: ticker.toLowerCase(),
+      price_eur: 1,
+      change_24h_pct: 1,
+      change_7d_pct: 1,
+      change_30d_pct: 1,
+      market_cap: 1e9,
+      ...overrides,
+    };
+  }
+
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "app.js"], { html: APP_FIXTURE_HTML });
+    runScript(dom, "var constellationControllers = {};", "stub constellationControllers");
+  });
+
+  it("collapsed tile shows only ticker/confidence/price/change — the rich content (name, gauge, tags, footer) lives in .opp-tile-body, not directly in the tile", () => {
+    dom.window.renderOpportunities({ opportunities: [opp("AAA", { tags: ["Un tag"] })] });
+    const tile = dom.window.document.querySelector("#opportunities-body .opp-tile");
+    expect(tile.querySelector(".favori-tile-tick").textContent).toBe("AAA");
+    expect(tile.querySelector(".favori-tile-price")).not.toBeNull();
+    const body = tile.querySelector(".opp-tile-body");
+    expect(body).not.toBeNull();
+    expect(body.querySelector(".opp-name").textContent).toBe("AAA");
+    expect(body.querySelector(".tag").textContent).toBe("Un tag");
+  });
+
+  it("applies a heat-tint class from the 24h change, same tiers as Favoris", () => {
+    dom.window.renderOpportunities({ opportunities: [opp("UP", { change_24h_pct: 12 }), opp("DOWN", { change_24h_pct: -12 })] });
+    const tiles = dom.window.document.querySelectorAll("#opportunities-body .opp-tile");
+    expect(tiles[0].classList.contains("heat-pos-3")).toBe(true);
+    expect(tiles[1].classList.contains("heat-neg-3")).toBe(true);
+  });
+
+  it("wires each tile to attachDetailToggle (keyboard-clickable, expands to reveal .opp-tile-body via CSS)", () => {
+    dom.window.renderOpportunities({ opportunities: [opp("AAA")] });
+    const tile = dom.window.document.querySelector("#opportunities-body .opp-tile");
+    expect(tile.getAttribute("role")).toBe("button");
+    tile.click();
+    expect(tile.classList.contains("expanded")).toBe(true);
+  });
+
+  it("colors the confidence badge using the same thresholds as the full gauge (confidenceColor)", () => {
+    // market_cap_rank <= 100 (+30) + recognized (+20) + mouvement 7j sous 30% (+10) = 100 -> plafonné a 95, >=75 -> --gain
+    dom.window.renderOpportunities({ opportunities: [opp("HI", { market_cap_rank: 10, recognized: true })] });
+    const conf = dom.window.document.querySelector("#opportunities-body .opp-tile-conf");
+    expect(conf.getAttribute("style")).toContain("var(--gain)");
+  });
+
+  it("shows the same empty state as the Overview teaser when there are no opportunities", () => {
+    dom.window.renderOpportunities({ opportunities: [] });
+    expect(dom.window.document.getElementById("opportunities-body").textContent).toContain("Aucun screening");
   });
 });
 
@@ -523,6 +585,75 @@ describe("app.js — renderNotifications / renderNotificationsPage", () => {
     expect(dom.window.document.querySelectorAll("#notifications-body .alert-entry")).toHaveLength(17);
     expect(dom.window.document.getElementById("notifications-load-more")).toBeNull();
     expect(dom.window.document.getElementById("notifications-body").textContent).toContain("17 alerte(s) au total");
+  });
+});
+
+describe("app.js — couleur repère (verdict/type) et aperçu tronqué (renderClampableText)", () => {
+  let dom;
+  const LONG_TEXT = "Analyse détaillée du mouvement observé sur cet actif. ".repeat(6); // > 200 caractères
+
+  function verdict(overrides = {}) {
+    return {
+      id: "v0", asset: "bitcoin", ticker: "BTC", verdict: "ACHAT", reasoning: "Raisonnement court",
+      confidence_pct: 70, horizon_days: 7, status: "resolved", issued_at: "2026-08-01T00:00:00Z",
+      ...overrides,
+    };
+  }
+  function alertItem(overrides = {}) {
+    return {
+      id: "a0", type: "seuil_technique", ticker_ou_theme: "BTC", message: "Message court",
+      triggered_at: "2026-08-01T00:00:00Z", ...overrides,
+    };
+  }
+
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "insights.js", "app.js"], { html: APP_FIXTURE_HTML });
+  });
+
+  it("colors each journal entry by its verdict (achat/vente/attente)", () => {
+    dom.window.renderJournal([verdict({ id: "a", verdict: "ACHAT" }), verdict({ id: "b", verdict: "VENTE" }), verdict({ id: "c", verdict: "ATTENTE" })]);
+    const entries = dom.window.document.querySelectorAll("#journal-body .journal-entry");
+    expect([...entries].some((e) => e.classList.contains("verdict-achat"))).toBe(true);
+    expect([...entries].some((e) => e.classList.contains("verdict-vente"))).toBe(true);
+    expect([...entries].some((e) => e.classList.contains("verdict-attente"))).toBe(true);
+  });
+
+  it("colors each alert entry by its type", () => {
+    dom.window.renderNotifications([alertItem({ id: "a", type: "actualite_macro" })]);
+    const entry = dom.window.document.querySelector("#notifications-body .alert-entry");
+    expect(entry.classList.contains("type-actualite_macro")).toBe(true);
+  });
+
+  it("renders a short reasoning/message as a plain <p>, with no 'Lire plus' toggle", () => {
+    dom.window.renderJournal([verdict({ reasoning: "Court" })]);
+    expect(dom.window.document.querySelector("#journal-body .clamp-text")).toBeNull();
+    expect(dom.window.document.querySelector("#journal-body [data-clamp-target]")).toBeNull();
+  });
+
+  it("clamps a long reasoning and reveals it via a 'Lire plus' toggle, without also opening the entry's own detail panel", () => {
+    dom.window.renderJournal([verdict({ reasoning: LONG_TEXT })]);
+    const entry = dom.window.document.querySelector("#journal-body .journal-entry");
+    const clamped = entry.querySelector(".clamp-text");
+    const toggle = entry.querySelector("[data-clamp-target]");
+    expect(clamped).not.toBeNull();
+    expect(toggle).not.toBeNull();
+
+    toggle.click();
+    expect(clamped.classList.contains("clamp-open")).toBe(true);
+    expect(toggle.classList.contains("expanded")).toBe(true);
+    // Le clic sur "Lire plus" ne doit pas aussi déclencher le clic de la carte englobante
+    // (attachDetailToggle, voir detail.js) — sinon un seul clic ouvrirait deux choses à la fois.
+    expect(entry.classList.contains("expanded")).toBe(false);
+
+    toggle.click();
+    expect(clamped.classList.contains("clamp-open")).toBe(false);
+  });
+
+  it("clamps a long alert message the same way", () => {
+    dom.window.renderNotifications([alertItem({ message: LONG_TEXT })]);
+    const entry = dom.window.document.querySelector("#notifications-body .alert-entry");
+    expect(entry.querySelector(".clamp-text")).not.toBeNull();
+    expect(entry.querySelector("[data-clamp-target]")).not.toBeNull();
   });
 });
 
