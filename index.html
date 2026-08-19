@@ -11,7 +11,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 <link rel="manifest" href="manifest.json" />
-<link rel="stylesheet" href="css/style.css?v=20260819d" />
+<link rel="stylesheet" href="css/style.css?v=20260819e" />
 </head>
 <body>
 
@@ -69,6 +69,10 @@
       </div>
       <p class="section-sub">Choisis le fond animé du site. Le design d'origine reste toujours disponible ici, en un clic.</p>
       <div class="design-theme-list" id="design-theme-list"></div>
+
+      <h4 class="design-settings-subhead">Disposition des favoris</h4>
+      <p class="section-sub">Choisis comment les cryptos s'affichent dans l'onglet Favoris. Change à tout moment, sans toucher au fond animé.</p>
+      <div class="design-theme-list design-layout-list" id="design-layout-list"></div>
     </div>
   </div>
 
@@ -448,24 +452,25 @@
      cache: "no-store", donc toujours frais) - bug réel constaté le 18/08 : la correction de
      l'Assistant était bien en ligne, mais assistant.js restait servi en cache. Bump la date à
      CHAQUE modification d'un fichier js/*.js ou css/*.css, pas seulement pour ce correctif-ci. -->
-<script src="js/config.js?v=20260819d"></script>
-<script src="js/prices.js?v=20260819d"></script>
-<script src="js/charts.js?v=20260819d"></script>
-<script src="js/engine.js?v=20260819d"></script>
-<script src="js/cards.js?v=20260819d"></script>
-<script src="js/detail.js?v=20260819d"></script>
-<script src="js/insights.js?v=20260819d"></script>
-<script src="js/background-fx.js?v=20260819d"></script>
+<script src="js/config.js?v=20260819e"></script>
+<script src="js/prices.js?v=20260819e"></script>
+<script src="js/charts.js?v=20260819e"></script>
+<script src="js/engine.js?v=20260819e"></script>
+<script src="js/cards.js?v=20260819e"></script>
+<script src="js/detail.js?v=20260819e"></script>
+<script src="js/insights.js?v=20260819e"></script>
+<script src="js/background-fx.js?v=20260819e"></script>
 <!-- Module (pas un script classique) : import ES natif depuis js/vendor/three.module.min.js
      (Three.js vendorisé en local, jamais un CDN externe — voir le commentaire en tête du
      fichier). S'exécute après tous les scripts classiques mais toujours avant
      DOMContentLoaded (spec HTML), donc déjà prêt quand auth.js appelle mountActiveBackground(). -->
-<script type="module" src="js/bg-galaxy-3d.js?v=20260819d"></script>
-<script src="js/theme.js?v=20260819d"></script>
-<script src="js/search.js?v=20260819d"></script>
-<script src="js/app.js?v=20260819d"></script>
-<script src="js/notify.js?v=20260819d"></script>
-<script src="js/assistant.js?v=20260819d"></script>
-<script src="js/auth.js?v=20260819d"></script>
+<script type="module" src="js/bg-galaxy-3d.js?v=20260819e"></script>
+<script src="js/theme.js?v=20260819e"></script>
+<script src="js/layout.js?v=20260819e"></script>
+<script src="js/search.js?v=20260819e"></script>
+<script src="js/app.js?v=20260819e"></script>
+<script src="js/notify.js?v=20260819e"></script>
+<script src="js/assistant.js?v=20260819e"></script>
+<script src="js/auth.js?v=20260819e"></script>
 </body>
 </html>
