@@ -111,6 +111,7 @@ header.site-header {
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
   gap: 10px;
@@ -528,6 +529,9 @@ footer.site-footer {
   color: #06110d; border: none; border-radius: var(--radius-sm);
   padding: 12px 18px; font-weight: 700; font-size: 0.88rem; cursor: pointer; font-family: inherit;
 }
+/* Action secondaire et rare (régénérer un abonnement existant) : volontairement plus discret
+   que le bouton principal, pour ne pas laisser croire que c'est une étape habituelle. */
+.notif-reset-btn { background: transparent; border: 1px solid var(--border); color: var(--text-dim); margin-left: 8px; }
 .notif-status { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .push-sub-text {
   width: 100%; box-sizing: border-box; margin: 10px 0; resize: vertical;

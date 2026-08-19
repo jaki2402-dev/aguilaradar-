@@ -272,6 +272,8 @@ function renderPushSection(subscription) {
     <div class="notif-status"><span class="badge badge-success">APP FERMÉE ACTIVÉE</span><span class="hint">Dernière étape (une seule fois) : copie ce code et envoie-le moi dans la conversation pour terminer la liaison. Déjà fait ? Rien d'autre à faire.</span></div>
     <textarea id="push-sub-text" class="push-sub-text" readonly rows="3">${subText}</textarea>
     <button type="button" id="push-copy-btn" class="notif-enable-btn">Copier le code</button>
+    <button type="button" id="push-reset-btn" class="notif-enable-btn notif-reset-btn">Régénérer le code</button>
+    <p class="hint" style="margin-top:6px;">"Régénérer" seulement si on te le demande explicitement (ex: après une mise à jour technique) — sinon inutile, le code déjà envoyé reste valable.</p>
   `;
   const copyBtn = document.getElementById("push-copy-btn");
   if (copyBtn) {
@@ -288,6 +290,27 @@ function renderPushSection(subscription) {
           ta.focus();
           ta.select();
         }
+      }
+    });
+  }
+  const resetBtn = document.getElementById("push-reset-btn");
+  if (resetBtn) {
+    // Sans ce bouton, il n'existait aucun moyen de forcer un nouvel abonnement : une fois la
+    // permission accordée, le navigateur renvoie toujours le MÊME abonnement existant (lié à
+    // la clé publique utilisée lors de la toute première activation) — même si la clé publique
+    // du site change depuis (ex: régénération de clé). unsubscribe() puis un nouvel appel à
+    // subscribeToPush() force un abonnement réellement neuf, lié à la clé actuelle.
+    resetBtn.addEventListener("click", async () => {
+      resetBtn.disabled = true;
+      resetBtn.textContent = "Régénération…";
+      try {
+        await subscription.unsubscribe();
+        const fresh = await subscribeToPush();
+        renderPushSection(fresh);
+      } catch (e) {
+        console.error("Régénération de l'abonnement push impossible :", e);
+        resetBtn.disabled = false;
+        resetBtn.textContent = "Régénérer le code";
       }
     });
   }
