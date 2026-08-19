@@ -137,9 +137,39 @@ let latestOpportunityTickers = [];
 function renderOpportunities(data) {
   const items = (data && data.opportunities) || [];
   latestOpportunityTickers = items.map((o) => o.ticker).filter(Boolean);
-  renderOpportunityCards("opportunities-body", items);
+  renderOpportunityTiles("opportunities-body", items);
   renderOpportunityCards("accueil-highlights", items, 3);
   if (constellationControllers.opportunities) constellationControllers.opportunities.refresh();
+}
+
+// Aperçu tronqué (3 lignes) + "Lire plus" pour un texte long — Journal (raisonnement) et
+// Alertes (message) partagent ce motif : sans lui, un texte de 500+ caractères (fréquent côté
+// alertes) rendait ces deux onglets illisibles au scroll. Sous le seuil, retourne un <p> nu —
+// forme strictement identique à l'ancien rendu, donc aucun texte court n'est jamais affecté.
+const CLAMP_TEXT_THRESHOLD = 200;
+let clampTextUid = 0;
+
+function renderClampableText(text) {
+  const safe = escapeHtml(text || "");
+  if (!text || text.length <= CLAMP_TEXT_THRESHOLD) return `<p>${safe}</p>`;
+  const id = `clamp-text-${++clampTextUid}`;
+  return `<p class="clamp-text" id="${id}">${safe}</p><span class="expand-hint expand-hint-inline clickable" data-clamp-target="${id}">Lire plus <span class="chevron">▾</span></span>`;
+}
+
+// stopPropagation : le "Lire plus" vit à l'intérieur d'une .journal-entry.clickable qui a son
+// propre clic (attachDetailToggle, voir detail.js) — sans ça, déplier le texte ouvrirait aussi
+// la grosse fiche d'analyse en dessous, deux actions pour un seul clic.
+function wireClampToggles(root) {
+  root.querySelectorAll("[data-clamp-target]").forEach((btn) => {
+    makeKeyboardClickable(btn);
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const p = document.getElementById(btn.dataset.clampTarget);
+      if (!p) return;
+      const isOpen = p.classList.toggle("clamp-open");
+      btn.classList.toggle("expanded", isOpen);
+    });
+  });
 }
 
 const JOURNAL_PAGE_SIZE = 15;
@@ -167,12 +197,12 @@ function renderJournalPage() {
     visible
       .map(
         (v, i) => `
-      <div class="journal-entry clickable" data-detail-target="detail-journal-${v.id || i}" data-cgid="${v.asset}">
+      <div class="journal-entry clickable verdict-${(v.verdict || "").toLowerCase()}" data-detail-target="detail-journal-${v.id || i}" data-cgid="${v.asset}">
         <div class="log-header">
           <span><strong>${v.ticker || v.asset}</strong> · ${v.issued_at}</span>
           <span class="badge badge-${(v.verdict || "").toLowerCase()}">${v.verdict}</span>
         </div>
-        <p>${escapeHtml(v.reasoning || "")}</p>
+        ${renderClampableText(v.reasoning)}
         <p class="hint">Confiance ${v.confidence_pct ?? "—"} % · horizon ${v.horizon_days} j · statut ${v.status}</p>
         ${v.status === "pending" ? renderProvisionalBadge(v) : ""}
         <div class="expand-hint">Voir l'analyse détaillée <span class="chevron">▾</span></div>
@@ -184,6 +214,7 @@ function renderJournalPage() {
       ? `<div class="expand-hint clickable" id="journal-load-more">Voir ${Math.min(remaining, JOURNAL_PAGE_SIZE)} verdict(s) de plus (${remaining} restant${remaining > 1 ? "s" : ""}) <span class="chevron">▾</span></div>`
       : "");
 
+  wireClampToggles(el);
   const byPanelId = {};
   visible.forEach((v, i) => (byPanelId[`detail-journal-${v.id || i}`] = v));
   el.querySelectorAll(".journal-entry.clickable").forEach((entryEl) => {
@@ -244,12 +275,12 @@ function renderNotificationsPage() {
     visible
       .map(
         (a) => `
-      <div class="alert-entry">
+      <div class="alert-entry type-${a.type || ""}">
         <div class="log-header">
           <span><strong>${a.ticker_ou_theme || a.ticker || ""}</strong> · ${a.triggered_at}</span>
           <span class="badge badge-warning">${ALERT_TYPE_LABELS[a.type] || a.type}</span>
         </div>
-        <p>${escapeHtml(a.message)}</p>
+        ${renderClampableText(a.message)}
         ${a.source ? `<p class="hint">Source : ${escapeHtml(a.source)}</p>` : ""}
       </div>`
       )
@@ -258,6 +289,7 @@ function renderNotificationsPage() {
       ? `<div class="expand-hint clickable" id="notifications-load-more">Voir ${Math.min(remaining, NOTIFICATIONS_PAGE_SIZE)} alerte(s) de plus (${remaining} restante${remaining > 1 ? "s" : ""}) <span class="chevron">▾</span></div>`
       : `<p class="hint" style="text-align:center; margin-top:12px;">${notificationsSorted.length} alerte(s) au total, historique permanent.</p>`);
 
+  wireClampToggles(el);
   const loadMoreBtn = document.getElementById("notifications-load-more");
   if (loadMoreBtn) {
     makeKeyboardClickable(loadMoreBtn);

@@ -361,18 +361,20 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
 .constellation-host > canvas { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .constellation-host > *:not(canvas) { position: relative; z-index: 1; }
 
-/* ---- Favoris : grille dense (esprit Coin360 — l'essentiel, peu de défilement). auto-fill
-   plutôt qu'un nombre de colonnes fixe : autant de tuiles que la largeur le permet, à
-   n'importe quelle taille d'écran, sans média-requête à ajuster à la main. ---- */
-.favoris-grid {
+/* ---- Favoris ET Opportunités : grille dense (esprit Coin360 — l'essentiel, peu de
+   défilement). auto-fill plutôt qu'un nombre de colonnes fixe : autant de tuiles que la
+   largeur le permet, à n'importe quelle taille d'écran, sans média-requête à ajuster à la
+   main. .opp-tile-grid partage cette règle (voir renderOpportunityTiles, cards.js) — même
+   esprit, classe distincte pour ne rien coupler entre les deux onglets. ---- */
+.favoris-grid, .opp-tile-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
   gap: 8px;
 }
 @media (min-width: 640px) {
-  .favoris-grid { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }
+  .favoris-grid, .opp-tile-grid { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }
 }
-.favori-tile {
+.favori-tile, .opp-tile {
   background: linear-gradient(165deg, var(--card-2), var(--card));
   border: 1px solid var(--border);
   border-top: 3px solid var(--sector-color, var(--border));
@@ -387,7 +389,7 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
 /* Une tuile ouverte prend toute la largeur de la grille (le graphique + l'analyse détaillée
    ont besoin de place — voir .detail-grid, minmax(220px,...) ne tiendrait jamais dans une
    tuile de ~100px) plutôt que de rester coincée dans sa propre colonne étroite. */
-.favori-tile.expanded { grid-column: 1 / -1; }
+.favori-tile.expanded, .opp-tile.expanded { grid-column: 1 / -1; }
 .favori-tile-head { display: flex; justify-content: space-between; align-items: center; gap: 4px; }
 .favori-tile-tick { font-weight: 800; font-size: 0.86rem; letter-spacing: 0.01em; }
 .favori-tile-badge:empty { display: none; }
@@ -398,16 +400,25 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
   padding: 2px 7px; border-radius: 999px;
   font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; margin-top: 4px;
 }
-.favori-tile .expand-hint { margin-top: 8px; padding-top: 6px; font-size: 0.68rem; }
+.favori-tile .expand-hint, .opp-tile .expand-hint { margin-top: 8px; padding-top: 6px; font-size: 0.68rem; }
+/* Confiance de l'opportunité (voir confidenceColor, cards.js) — même code couleur que la jauge
+   circulaire affichée une fois la tuile dépliée, juste plus compact pour la vue repliée. */
+.opp-tile-conf { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; }
+/* Nom, rang, jauge, mini-graphique, tags, 7j/30j/cap — masqués tant que la tuile n'est pas
+   dépliée (voir renderOpportunityTile, cards.js). Pur CSS sur la classe .expanded déjà posée
+   par attachDetailToggle (detail.js) : aucune logique JS supplémentaire n'était nécessaire. */
+.opp-tile-body { display: none; margin-top: 10px; }
+.opp-tile.expanded .opp-tile-body { display: block; }
 /* Teinte de fond selon l'intensité de la variation 24h — voir applyHeatTint (app.js) et
    THRESHOLDS.directionalMovePct (config.js) pour les paliers. Mêmes couleurs que --gain/--loss,
-   en rgba() ici car un dégradé CSS ne peut pas moduler l'opacité d'une simple var() de couleur. */
-.favori-tile.heat-pos-1 { background: linear-gradient(165deg, rgba(52,211,153,0.10), var(--card)); }
-.favori-tile.heat-pos-2 { background: linear-gradient(165deg, rgba(52,211,153,0.20), var(--card)); }
-.favori-tile.heat-pos-3 { background: linear-gradient(165deg, rgba(52,211,153,0.32), var(--card)); }
-.favori-tile.heat-neg-1 { background: linear-gradient(165deg, rgba(241,85,76,0.10), var(--card)); }
-.favori-tile.heat-neg-2 { background: linear-gradient(165deg, rgba(241,85,76,0.20), var(--card)); }
-.favori-tile.heat-neg-3 { background: linear-gradient(165deg, rgba(241,85,76,0.32), var(--card)); }
+   en rgba() ici car un dégradé CSS ne peut pas moduler l'opacité d'une simple var() de couleur.
+   Partagée avec .opp-tile (Opportunités) — même signal, même seuil, même lecture immédiate. */
+.favori-tile.heat-pos-1, .opp-tile.heat-pos-1 { background: linear-gradient(165deg, rgba(52,211,153,0.10), var(--card)); }
+.favori-tile.heat-pos-2, .opp-tile.heat-pos-2 { background: linear-gradient(165deg, rgba(52,211,153,0.20), var(--card)); }
+.favori-tile.heat-pos-3, .opp-tile.heat-pos-3 { background: linear-gradient(165deg, rgba(52,211,153,0.32), var(--card)); }
+.favori-tile.heat-neg-1, .opp-tile.heat-neg-1 { background: linear-gradient(165deg, rgba(241,85,76,0.10), var(--card)); }
+.favori-tile.heat-neg-2, .opp-tile.heat-neg-2 { background: linear-gradient(165deg, rgba(241,85,76,0.20), var(--card)); }
+.favori-tile.heat-neg-3, .opp-tile.heat-neg-3 { background: linear-gradient(165deg, rgba(241,85,76,0.32), var(--card)); }
 
 /* ---- Dispositions alternatives de .favoris-grid (voir layout.js) — la classe layout-* se pose
    sur .favoris-grid lui-même (jamais réinitialisée par les re-rendus, voir applyFavorisLayout).
@@ -491,13 +502,32 @@ th { color: var(--text-dim); font-weight: 600; font-size: 0.76rem; text-transfor
 .journal-entry, .log-entry, .alert-entry {
   background: var(--card);
   border: 1px solid var(--border);
+  border-left: 3px solid var(--entry-color, var(--border));
   border-radius: var(--radius);
-  padding: 14px 16px;
-  margin-bottom: 10px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
   transform-style: preserve-3d;
   will-change: transform;
 }
+/* Couleur repère au premier coup d'oeil, sans lire le badge — même esprit que la teinte des
+   tuiles Favoris/Opportunités : la couleur porte l'essentiel avant le texte. Classes posées
+   par renderJournalPage/renderNotificationsPage (app.js) sur le verdict / le type d'alerte. */
+.journal-entry.verdict-achat { --entry-color: var(--gain); }
+.journal-entry.verdict-vente { --entry-color: var(--loss); }
+.journal-entry.verdict-attente { --entry-color: var(--warning); }
+.alert-entry.type-seuil_technique { --entry-color: var(--accent-2); }
+.alert-entry.type-actualite_macro { --entry-color: var(--warning); }
+.alert-entry.type-actualite_favori { --entry-color: var(--accent); }
 .log-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 0.82rem; color: var(--text-dim); margin-bottom: 6px; }
+
+/* ---- Aperçu tronqué + "Lire plus" pour un texte long (voir renderClampableText, app.js) —
+   Journal (raisonnement) et Alertes (message) partagent ce motif. ---- */
+.clamp-text { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.clamp-text.clamp-open { display: block; -webkit-line-clamp: unset; overflow: visible; }
+.expand-hint-inline {
+  display: inline-flex; text-align: left; border-top: none; margin-top: 2px; padding-top: 0;
+  font-size: 0.76rem;
+}
 
 .badge {
   padding: 3px 10px;
