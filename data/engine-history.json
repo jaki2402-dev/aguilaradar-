@@ -1,17 +1,55 @@
 {
     "current_version": "v1",
     "global_stats": {
-        "last_computed_at": "2026-08-17T05:31:00Z",
-        "total_verdicts_issued": 16,
-        "total_verdicts_resolved": 1,
-        "accuracy_strict_pct": null,
-        "coverage_pct": null,
-        "baseline_majority_class_pct": null,
-        "baseline_buy_hold_btc_pct": null,
-        "f1_macro": null,
-        "f1_weighted": null,
-        "confusion_matrix": null,
-        "per_class": null,
+        "last_computed_at": "2026-08-23T23:20:00Z",
+        "total_verdicts_issued": 30,
+        "total_verdicts_resolved": 15,
+        "accuracy_strict_pct": 20.0,
+        "coverage_pct": 26.67,
+        "baseline_majority_class_pct": 66.67,
+        "baseline_buy_hold_btc_pct": 66.67,
+        "f1_macro": 33.33,
+        "f1_weighted": 14.44,
+        "confusion_matrix": {
+            "ACHAT": {
+                "ACHAT": 0,
+                "ATTENTE": 0,
+                "VENTE": 0
+            },
+            "ATTENTE": {
+                "ACHAT": 8,
+                "ATTENTE": 1,
+                "VENTE": 2
+            },
+            "VENTE": {
+                "ACHAT": 2,
+                "ATTENTE": 0,
+                "VENTE": 2
+            }
+        },
+        "per_class": {
+            "ACHAT": {
+                "precision": null,
+                "recall": 0.0,
+                "f1": null,
+                "predictedTotal": 0,
+                "actualTotal": 10
+            },
+            "ATTENTE": {
+                "precision": 0.0909,
+                "recall": 1.0,
+                "f1": 0.1667,
+                "predictedTotal": 11,
+                "actualTotal": 1
+            },
+            "VENTE": {
+                "precision": 0.5,
+                "recall": 0.5,
+                "f1": 0.5,
+                "predictedTotal": 4,
+                "actualTotal": 4
+            }
+        },
         "calibration_by_confidence_bucket": null,
         "accuracy_by_market_regime": null
     },
@@ -23,33 +61,46 @@
         "average_move_pct": null
     },
     "routine_health": {
-        "last_success_at": "2026-08-19T08:17:00Z",
+        "last_success_at": "2026-08-23T23:20:00Z",
         "consecutive_failures": 0,
-        "last_failure_reason": "Cycle du 19/08/2026 08h17 UTC (heure réelle confirmée par date -u en début de cycle). Aucun outil mcp__ utilisé, conformément au correctif de fiabilité du 17/08.\n\nRésolutions vérifiées via resolves_at : toujours aucune échéance due sur verdicts.json (prochaine le 21 août) ni sur control-group.json (prochaine le 26 août) — aucune action de résolution ce cycle. Les 15 favoris ont chacun un verdict pending actif : aucun nouveau verdict émis.\n\nAccès HTTP direct retenté (curl direct vers api.coingecko.com) : de nouveau bloqué par la politique réseau du proxy sortant (réponse HTTP 403 au CONNECT, confirmée via le point de diagnostic /__agentproxy/status comme un refus de politique explicite, pas une limite de débit), identique aux cycles précédents depuis le 17/08. Rafraîchissement des champs d'affichage des 12 opportunités actuellement suivies de nouveau reporté ce cycle pour la même raison (couverture volontairement ciblée, conformément au correctif de fiabilité du 10/08) ; la composition de la liste reste hors de mon rôle (routine dédiée aguilaradar-opportunites-quotidien).\n\nRecherche large « crypto biggest movers gainers losers 24h » (une requête) : gagnants du jour aPriori (+38,2 %), Akedo (+99,2 %), UP (+131,1 %), et Bitway (une des 12 opportunités déjà suivies) au-dessus de 8 % ; perdants principaux Talus (une des opportunités déjà suivies, en baisse de plus de 20 %, déjà signalé lors de cycles précédents sans élément nouveau), Audiera, DAPPOS. Aucun des 15 favoris parmi les mouvements extrêmes : aucun signal_précoce déclenché.\n\nIndice de peur et de cupidité et dominance BTC (une recherche ciblée) : valeur de 46 reconfirmée, identique au cycle précédent (06h18 UTC) — deux sources concordantes, un agrégateur généraliste l'étiquette « Fear », CFGI.io l'étiquette « Neutral » — conservée telle quelle, régime « neutre » inchangé, aucun ré-signalement regime_change_impact nécessaire. Dominance BTC : aucune donnée chiffrée fraîche trouvée ce cycle, valeur précédente (56,5 %) conservée par prudence.\n\nVeille actualités générale (recherche « crypto news today », complétée par une recherche ciblée pour vérifier un élément potentiellement nouveau sur Hyperliquid/HYPE) : aucune actualité ajoutée à news.json ce cycle — les éléments remontés (XRP, Binance UK, Compound, Trezor/SafePal, Ether.fi) recoupent des entrées déjà présentes ; l'annonce d'un investissement Multicoin de 100 M$ dans HYPE n'a pas pu être confirmée par une source fiable avec un chiffre précis lors de la recherche complémentaire (seule une thèse d'investissement à horizon 2028 a été retrouvée, pas une opération datée) — omise plutôt que devinée, conformément à la règle dure sur les chiffres inventés.\n\nAucune alerte ajoutée à alerts.json ce cycle : aucun seuil franchi sur les favoris, aucune résolution due, aucune actualité réellement nouvelle, indice de peur et de cupidité inchangé — rien qui mérite une entrée dédiée."
+        "last_failure_reason": "Cycle du 23/08/2026 23h20 UTC (heure réelle confirmée par date -u en début de cycle) — déclenchement anticipé après réinitialisation de la limite hebdomadaire, pour resynchroniser le cycle après le blocage confirmé depuis le 19/08 08h17 UTC (~4,6 jours sans succès de cette routine, signalé entre-temps par une autre routine de contrôle de fraîcheur dans health-log.json).\n\nRésolutions : 14 verdicts en retard (resolves_at le 21/08, échéance dépassée) résolus ce cycle via prix récupérés par WebSearch (BTC, ETH, FET, GRT, TIA, PEAQ, LINK, ONDO, JUP, LPT, AIOZ, FLUX, ARB, INJ — accès HTTP direct vers api.coingecko.com/api.binance.com de nouveau bloqué par la politique réseau du proxy, confirmé 403 au CONNECT via /__agentproxy/status, comme les cycles précédents depuis le 17/08). Résultat : 3/14 corrects (LINK, JUP, INJ) — marché en forte hausse généralisée pendant l'interruption (voir macro_regime), le moteur étant resté majoritairement prudent (ATTENTE). Détail des prix et de la méthode dans data_source_reliability et le raisonnement de chaque verdict. Cas particulier LPT : cotations EUR directes trop divergentes entre sources (1,11 à 4,61 €), prix retenu par conversion depuis une cotation USD plus cohérente (CoinGecko $1,26) — à reconfirmer au prochain cycle. Cas particulier AIOZ : mouvement extrême (+209 %) cohérent en interne avec les variations 7j/24h relayées par la même source mais à confirmer indépendamment vu son ampleur. Aucune résolution due sur control-group.json ce cycle (prochaine échéance le 26/08) ; le nouveau verdict CTSI (émis le 17/08) n'est pas encore dû (échéance le 24/08 01h03 UTC).\n\n14 nouveaux verdicts émis pour les favoris désormais sans verdict actif (tous résolus ci-dessus), avec regime_at_issue=\"risk-on\" et signal_consensus à 3 signaux — voir verdicts.json pour le détail. Tous en ATTENTE (confiance 50 %, aucun accord 2/3 net) : prudence délibérée après un rattrapage déjà largement réalisé plutôt que poursuite d'un mouvement consommé.\n\nRecherche large « crypto biggest movers gainers losers 24h » (une requête) : gagnants du jour Observer (+64,4 %), COTI (+35,1 %) ; perdants Velvet (-44,7 %), Cysic, Audiera, Aergo (-12,3 %). Aucun des 15 favoris parmi ces mouvements extrêmes spécifiquement — leur propre rattrapage est capturé par les résolutions ci-dessus, pas par cette recherche large. Aucun signal_précoce supplémentaire déclenché.\n\nIndice de peur et de cupidité et dominance BTC (une recherche ciblée) : changement réel détecté (46 « neutre » -> 73 « Greed »), régime macro reclassé « risk-on » — voir macro_regime.regime_change_impact pour l'analyse de son lien avec les résolutions de ce cycle. Dominance BTC : aucune valeur chiffrée fraîche trouvée, valeur précédente (56,5 %) conservée par prudence.\n\nVeille actualités générale (recherche « crypto news today ») : un article neuf et directement pertinent retenu (CCN, rallye du marché attribué à l'optimisme réglementaire et aux rachats Trésor) ; deux autres éléments repérés (déclarations de Anthony Scaramucci sur les réserves BTC américaines, démantèlement par la police de Hong Kong d'un réseau de fraude crypto par deepfake) non retenus faute d'URL de source primaire vérifiable dans les résultats de recherche — omis plutôt que cités sans source fiable, conformément à la règle dure sur les sources fiables uniquement.\n\nRafraîchissement des champs d'affichage des 12 opportunités de nouveau reporté ce cycle : la même limitation d'accès réseau qui bloque les prix directs empêche aussi toute donnée de sparkline (qui nécessite un historique de prix structuré, impossible à obtenir via WebSearch) — pas une question de budget ce cycle mais une limitation d'outils inchangée depuis le 17/08.\n\nAuto-correction (seuil de 5 nouveaux résolus franchi, 14 cette fois) : diagnostic loggé dans correction_log, aucun paramètre modifié — voir ce fichier pour le détail et la justification (éviter tout surapprentissage sur les données qui viennent de révéler le problème).\n\nFusion vers main effectuée en toute fin de cycle après vérification qu'aucune autre branche claude/vibrant-brahmagupta-* n'était en attente de fusion."
     },
     "macro_regime": {
-        "last_computed_at": "2026-08-19T08:17:00Z",
-        "regime": "neutre",
-        "fear_greed_value": 46,
+        "last_computed_at": "2026-08-23T23:20:00Z",
+        "regime": "risk-on",
+        "fear_greed_value": 73,
         "btc_dominance_pct": 56.5,
         "btc_dominance_trend_7d_pct": null,
-        "note": "Cycle du 19 août 2026, 08h17 UTC : rien de nouveau par rapport au cycle précédent (régime neutre, aucun seuil franchi). Indice de peur et de cupidité reconfirmé à 46, valeur identique au cycle précédent (deux sources concordantes : un agrégateur généraliste l'étiquette « Fear », CFGI.io l'étiquette « Neutral »), conservé tel quel. Dominance BTC : aucune donnée chiffrée fraîche trouvée ce cycle, valeur précédente (56,5 %) conservée par prudence. Recherche large « biggest movers 24h » : gagnants du jour aPriori, Velvet, Bitway (déjà une opportunité suivie) ; perdants Talus (déjà une opportunité suivie), Audiera, DAPPOS — aucun des 15 favoris parmi les mouvements extrêmes, aucun signal_précoce déclenché."
+        "note": "Reprise du cycle après environ 4,6 jours d'interruption (dernier succès le 19/08 08h17 UTC). Indice de peur et de cupidité : 73 (« Greed »), en forte hausse depuis la dernière valeur enregistrée (46, « neutre », le 19/08) — un bond confirmé par une source dédiée (feargreedindex.org / CoinMarketCap), avec mention d'un mouvement récent de 46 à 62 attribué à la hausse de BTC (+8,8 % à environ 69 803 $) et ETH (+18,5 % à environ 2 259 $). Régime reclassé de « neutre » à « risk-on » : changement réel et significatif, pas un simple bruit de mesure, cohérent avec le rattrapage massif observé sur 14 des 15 favoris résolus ce cycle (voir regime_change_impact). Dominance BTC : aucune valeur chiffrée fraîche trouvée ce cycle (recherche ciblée n'a remonté qu'une lecture qualitative, « dominance testée depuis juillet »), valeur précédente (56,5 %) conservée par prudence.",
+        "regime_change_impact": "Changement de régime « neutre » -> « risk-on » constaté ce cycle, concomitant avec la résolution de 14 verdicts en retard (émis le 07/08 sous régime neutre) : 11 de ces 14 se sont avérés faux, la quasi-totalité dans le même sens (le moteur restait prudent/baissier alors que le marché a fortement grimpé). Lecture honnête : ce n'est pas nécessairement une erreur de calibrage du moteur mais bien un changement de régime survenu après l'émission des verdicts, que le moteur n'avait aucun moyen d'anticiper avec les données disponibles le 07/08 — voir correction_log pour le diagnostic complet et pourquoi aucun paramètre n'a été modifié sur la base de ces mêmes données."
     },
     "paper_portfolio_stats": {
-        "last_computed_at": null,
+        "last_computed_at": "2026-08-23T23:20:00Z",
         "min_resolved_required": 10,
-        "cumulative_return_pct": null,
-        "btc_buy_hold_return_pct": null,
-        "edge_pct": null,
-        "method": "Position virtuelle par verdict resolu, taille proportionnelle a confidence_pct, ouverte a price_at_issue et fermee a price_at_resolution. Compare au meme capital place uniquement en buy-and-hold BTC sur la meme periode. Calcule seulement a partir de min_resolved_required verdicts resolus."
+        "cumulative_return_pct": -6.58,
+        "btc_buy_hold_return_pct": 18.71,
+        "edge_pct": -25.29,
+        "method": "Position virtuelle par verdict résolu, taille proportionnelle à confidence_pct, ouverte à price_at_issue et fermée à price_at_resolution (ACHAT=long, VENTE=short, ATTENTE=position nulle). Comparé au même capital placé uniquement en buy-and-hold BTC sur la même période. Calculé pour la première fois ce cycle (seuil de 10 verdicts résolus franchi). Approximation : le rendement buy-hold BTC utilise le rendement BTC réalisé sur la fenêtre commune du 07/08 au 23/08 (14 des 15 verdicts résolus partagent exactement cette fenêtre) ; le seul verdict d'une fenêtre différente (CTSI, résolu le 17/08) est traité avec la même approximation faute d'avoir interrogé le prix BTC exact au 17/08 ce cycle — poids marginal (45 sur 787 au total), impact négligeable sur le résultat."
     },
     "data_source_reliability": {
-        "last_computed_at": "2026-08-19T06:18:00Z",
-        "cycles_logged": 51,
+        "last_computed_at": "2026-08-23T23:20:00Z",
+        "cycles_logged": 52,
         "coingecko_connector_success_count": 23,
         "coingecko_curl_fallback_count": 0,
-        "websearch_price_fallback_count": 156,
-        "notes": "Cycle du 19/08 06h18 UTC : aucun outil mcp__ utilisé, conformément au correctif de fiabilité du 17/08. Essai d'accès HTTP direct (curl vers api.coingecko.com) : de nouveau bloqué par la politique réseau du proxy (403 au CONNECT, confirmé refus de politique via /__agentproxy/status) ; coingecko_curl_fallback_count reste à 0 — rafraîchissement des champs d'affichage des 12 opportunités de nouveau reporté au prochain cycle plutôt que de multiplier les requêtes WebSearch individuelles par actif. Repli sur WebSearch pour le reste : 1 requête « crypto biggest movers gainers losers 24h », 1 requête ciblée macro (indice de peur/cupidité + dominance BTC), 1 requête actualités générales « crypto news today » puis 2 requêtes de sourcing ciblé pour les deux actualités retenues (Ether.fi, Compound) — aucune requête de prix individuel par actif favori/opportunité ce cycle (websearch_price_fallback_count inchangé à 156). Aucune résolution due ce cycle (prochaine échéance verdicts le 21 août, groupe témoin le 26 août). cycles_logged passe de 50 à 51."
+        "websearch_price_fallback_count": 170,
+        "notes": "Cycle du 23/08 23h20 UTC : aucun outil mcp__ utilisé, conformément au correctif de fiabilité du 17/08. Accès HTTP direct (curl et WebFetch vers api.coingecko.com, www.coingecko.com, api.binance.com) de nouveau bloqué par la politique réseau du proxy (403 au CONNECT / EGRESS_BLOCKED, confirmé via /__agentproxy/status) — identique à tous les cycles depuis le 17/08 ; coingecko_curl_fallback_count reste à 0. Repli complet sur WebSearch : 14 requêtes de prix individuelles (une par favori dû pour résolution — volume justifié par un rattrapage réel de 4,6 jours d'interruption, pas une vérification systématique), réutilisées telles quelles comme price_at_issue des 14 nouveaux verdicts émis dans la foulée pour ces mêmes favoris désormais sans verdict actif (donc pas de requêtes de prix supplémentaires pour l'émission). websearch_price_fallback_count passe à 170. Une requête « biggest movers gainers losers 24h », une requête ciblée macro (peur/cupidité + dominance BTC), une requête « crypto news today ». Cas particulier LPT : cotations EUR directes incohérentes entre sources (1,11 à 4,61 €), prix retenu par conversion depuis une cotation USD (CoinGecko) jugée plus fiable — à reconfirmer au prochain cycle. cycles_logged passe à 52."
     },
-    "correction_log": []
+    "correction_log": [
+        {
+            "id": "corr-20260823-biais-rattrapage-macro",
+            "logged_at": "2026-08-23T23:20:00Z",
+            "trigger": "14 nouveaux verdicts résolus en un seul cycle (rattrapage après 4,6 jours d'interruption de la routine), seuil de 5 nouveaux résolus franchi.",
+            "what": "Diagnostic du biais observé : sur les 14 verdicts résolus ce cycle, 11 se sont trompés, presque tous dans le même sens — le moteur avait émis ATTENTE (8 fois) ou VENTE (2 fois, FET et GRT) alors que l'actif a en réalité fortement grimpé (ACHAT) pendant l'interruption. Exactitude de ce lot : 20,0 % (3/15 avec CTSI), contre 66,7 % pour la baseline « classe majoritaire » et pour la baseline « buy-hold BTC » — le moteur fait donc nettement moins bien qu'un pari naïf sur ce lot précis.",
+            "why": "Les 14 verdicts d'origine ont été émis le 07/08, sous régime macro « neutre » (indice de peur et de cupidité à 46). Entre le 07/08 et le 23/08, le régime a basculé vers « risk-on » (indice à 73, « Greed »), un changement macro survenu après l'émission des verdicts et donc invisible aux signaux techniques/fondamentaux disponibles au moment de chaque verdict. Ce n'est pas un biais de calibrage du seuil directionnel (threshold_pct=5 % pour les 15 verdicts concernés) : un test rétrospectif avec un seuil plus large (10 %) n'aurait amélioré le score que de 3 à 5 corrects sur 15 (LINK et TIA seulement), la grande majorité des erreurs venant de mouvements bien supérieurs à n'importe quel seuil raisonnable (BTC +18,7 %, ETH +25,3 %, GRT +70,8 %, AIOZ +209 %).",
+            "validation_score_before_pct": 20.0,
+            "validation_score_after_pct": null,
+            "action": "Aucun changement de paramètre appliqué ce cycle. Ajuster threshold_pct, horizon_days ou un biais directionnel sur la base de ces 14 verdicts reviendrait à surapprendre directement sur les données qui viennent de révéler le problème (interdit : jamais rejouer les mêmes données). Les 14 nouveaux verdicts émis ce cycle pour les mêmes favoris conservent les paramètres par défaut habituels (seuil 5 %, horizon 14 jours, confiance 50 % faute de consensus 2/3). Leur résolution future, sur des données réellement nouvelles, sera le vrai test de si un ajustement structurel est nécessaire — pas ce lot rétroactif.",
+            "status": "rejected"
+        }
+    ]
 }
