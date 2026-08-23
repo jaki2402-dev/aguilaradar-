@@ -106,15 +106,28 @@ function applyHeatTint(tileEl, changePct) {
   tileEl.classList.add(changePct >= 0 ? `heat-pos-${tier}` : `heat-neg-${tier}`);
 }
 
+// Flash bref vert/rouge sur le prix qui vient de bouger — reflow forcé (offsetWidth) pour que
+// l'animation puisse rejouer sur des tics consécutifs, pas seulement le premier (sans ça,
+// réappliquer la même classe sans reflow ne relance pas une animation CSS déjà terminée).
+function flashPriceUpdate(el, direction) {
+  if (!el) return;
+  if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  el.classList.remove("price-flash-up", "price-flash-down");
+  void el.offsetWidth;
+  el.classList.add(direction === "up" ? "price-flash-up" : "price-flash-down");
+}
+
 async function refreshPrices() {
   try {
     const prices = await fetchFavorisPrices();
+    const previousPrices = latestFavorisPrices;
     latestFavorisPrices = prices;
     FAVORIS.forEach((f) => {
       const p = prices[f.cgId];
       const priceEl = document.getElementById(`price-${f.ticker}`);
       const changeEl = document.getElementById(`change-${f.ticker}`);
       if (!p || !priceEl || !changeEl) return;
+      const previous = previousPrices[f.cgId];
       priceEl.textContent = formatPrice(p.eur, "EUR");
       priceEl.classList.remove("skeleton");
       const change = p.eur_24h_change;
@@ -122,6 +135,11 @@ async function refreshPrices() {
       changeEl.className = "chip skeleton-off " + (change >= 0 ? "positive" : "negative");
       changeEl.classList.remove("skeleton");
       applyHeatTint(changeEl.closest(".favori-tile"), change);
+      // Jamais au tout premier affichage (previous absent) : le passage hors-skeleton suffit
+      // déjà comme repère visuel, un flash n'aurait rien de "ça vient de changer" à montrer.
+      if (previous && previous.eur !== undefined && previous.eur !== p.eur) {
+        flashPriceUpdate(priceEl, p.eur > previous.eur ? "up" : "down");
+      }
     });
     document.getElementById("last-price-update").textContent =
       "Prix à l'instant : " + new Date().toLocaleTimeString("fr-FR");
@@ -344,11 +362,36 @@ function renderNews(newsData) {
     .join("");
 }
 
+// Anime un chiffre de sa valeur affichée actuelle vers sa nouvelle valeur, plutôt qu'un
+// remplacement sec — repli immédiat sur la valeur finale sans animation si requestAnimationFrame
+// est absent (jsdom en test) ou si l'utilisateur préfère moins de mouvement.
+function animateCountUp(el, target, duration = 700) {
+  if (!el) return;
+  const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!window.requestAnimationFrame || prefersReduced) {
+    el.textContent = target;
+    return;
+  }
+  const start = parseInt(el.textContent, 10) || 0;
+  if (start === target) {
+    el.textContent = target;
+    return;
+  }
+  const startTime = performance.now();
+  function tick(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(start + (target - start) * eased);
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+
 function updateHeroStats(verdicts, alerts) {
   const verdictsEl = document.getElementById("hero-verdicts");
   const alertsEl = document.getElementById("hero-alerts");
-  if (verdictsEl) verdictsEl.textContent = verdicts.length;
-  if (alertsEl) alertsEl.textContent = (alerts || []).length;
+  if (verdictsEl) animateCountUp(verdictsEl, verdicts.length);
+  if (alertsEl) animateCountUp(alertsEl, (alerts || []).length);
 }
 
 async function loadAllData() {
