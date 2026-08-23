@@ -360,6 +360,29 @@ async function fetchLiveAiFallback(question) {
   }
 }
 
+// Regroupe les heuristiques approximatives (nom d'actif isolé, mots-clés d'intention) —
+// "approximatives" au sens propre : un nom propre capitalisé ou un mot-clé isolé peuvent
+// apparaître dans une phrase sans rapport (ex. "Twitter" cité en passant, "monte" dans une
+// vraie question nuancée) aussi bien que dans une vraie question ciblée. Cas réels ayant motivé
+// ce découpage (voir answerQuestion) : "J'ai vu sur Twitter que le marché va chuter, tu en
+// penses quoi ?" partait chercher un actif "Twitter" inexistant et s'arrêtait là ; "Je ne
+// comprends pas pourquoi ça monte alors que tout semble aller mal" matchait le mot-clé "monte"
+// et recevait un résumé de régime générique, sans jamais lire la vraie nuance de la question.
+async function tryHeuristicAnswer(question, norm, rememberAssetCandidate) {
+  const assetQuery = extractAssetQuery(question);
+  if (assetQuery) {
+    rememberAssetCandidate(assetQuery);
+    const live = await fetchLiveSearchAnswer(assetQuery);
+    if (live) return live;
+    // Rien trouvé sur CoinGecko : ce n'était peut-être pas un actif après tout — pas de repli
+    // immédiat ici, on tente encore une intention connue puis l'IA (voir answerQuestion) avant
+    // de conclure "pas suivi", au lieu de s'arrêter net sur un nom propre mentionné en passant.
+  }
+  const intent = CHAT_INTENTS.find((i) => i.keywords.some((k) => norm.includes(k)));
+  if (intent) return intent.handler();
+  return null;
+}
+
 async function answerQuestion(question) {
   await ensureChatData();
   const norm = question.toLowerCase();
@@ -370,28 +393,37 @@ async function answerQuestion(question) {
   const glossaryHit = findGlossaryTerm(question);
   if (glossaryHit) return `${glossaryHit.term} : ${glossaryHit.definition}`;
 
-  // Un nom/ticker précis a été repéré : priorité à une vraie recherche en direct sur cet actif
-  // (voir fetchLiveSearchAnswer), avant même les intentions génériques — "que penses-tu de
-  // Worldcoin ?" doit chercher Worldcoin, pas tomber sur le disclaimer générique investissement
-  // à cause du mot "penses-tu". Que la recherche trouve ou non, cette branche répond seule :
-  // jamais de repli silencieux vers une intention sans rapport avec l'actif nommé.
-  const assetQuery = extractAssetQuery(question);
-  if (assetQuery) {
-    const live = await fetchLiveSearchAnswer(assetQuery);
-    if (live) return live;
-    return `Je ne trouve pas cet actif parmi les 15 favoris ou les opportunités suivies, donc pas de verdict du moteur dessus. Utilise la recherche de l'onglet Favoris pour son prix et sa fiche d'identité en direct — tape simplement son nom.`;
+  let assetCandidate = null;
+  const heuristics = () => tryHeuristicAnswer(question, norm, (q) => { assetCandidate = q; });
+
+  // Une phrase longue ou construite (plusieurs propositions) a plus de chances d'être mal
+  // comprise par les heuristiques ci-dessus qu'une vraie lecture du texte — les deux exemples
+  // en tête de commentaire de tryHeuristicAnswer tiennent respectivement 13 et 13 mots. Les
+  // puces de suggestion (CHAT_SUGGESTIONS) tiennent toutes en 8 mots ou moins : ce seuil les
+  // laisse fonctionner exactement comme avant, sans jamais passer par l'IA pour elles.
+  const isLongOrNuanced = question.trim().split(/\s+/).filter(Boolean).length > 8;
+
+  if (!isLongOrNuanced) {
+    const heuristicAnswer = await heuristics();
+    if (heuristicAnswer) return heuristicAnswer;
   }
 
-  const intent = CHAT_INTENTS.find((i) => i.keywords.some((k) => norm.includes(k)));
-  if (intent) return intent.handler();
-
-  // Absolument tout le reste (actif suivi, glossaire, recherche live, intentions) a déjà eu sa
-  // chance de répondre en premier — voir fetchLiveAiFallback pour pourquoi ça ne peut jamais
-  // faire régresser un cas qui marchait déjà, seulement rattraper ceux qui échouaient.
+  // Pour une phrase longue/nuancée, l'IA (si configurée) passe AVANT les heuristiques
+  // approximatives ci-dessus plutôt qu'après — sans quoi ce genre de phrase tombe
+  // systématiquement sur une intention mal ciblée sans jamais avoir la chance d'être vraiment
+  // comprise. Pour une phrase courte, l'ordre reste inchangé (heuristiques d'abord, fiables sur
+  // ce genre de texte, voir tests existants) — l'IA ne peut donc jamais faire régresser un cas
+  // qui marchait déjà, seulement rattraper ceux qui échouaient (même garantie que documentée
+  // sur fetchLiveAiFallback).
   const aiAnswer = await fetchLiveAiFallback(question);
   if (aiAnswer) return aiAnswer;
 
-  if (looksLikeUnknownAssetMention(question)) {
+  if (isLongOrNuanced) {
+    const heuristicAnswer = await heuristics();
+    if (heuristicAnswer) return heuristicAnswer;
+  }
+
+  if (assetCandidate || looksLikeUnknownAssetMention(question)) {
     return `Je ne trouve pas cet actif parmi les 15 favoris ou les opportunités suivies, donc pas de verdict du moteur dessus. Utilise la recherche de l'onglet Favoris pour son prix et sa fiche d'identité en direct — tape simplement son nom.`;
   }
 
@@ -406,6 +438,21 @@ function appendChatMessage(role, text) {
   const p = document.createElement("p");
   p.textContent = text;
   el.appendChild(p);
+  log.appendChild(el);
+  log.scrollTop = log.scrollHeight;
+  return el;
+}
+
+// Trois points qui pulsent l'un après l'autre plutôt qu'un simple "…" statique — l'assistant
+// peut vraiment prendre plusieurs secondes le temps d'un appel IA (voir fetchLiveAiFallback),
+// un indicateur immobile donnait l'impression d'une réponse instantanée toute faite même quand
+// ce n'était pas le cas.
+function appendTypingIndicator() {
+  const log = document.getElementById("chat-log");
+  if (!log) return null;
+  const el = document.createElement("div");
+  el.className = "chat-msg chat-msg--assistant chat-msg--typing";
+  el.innerHTML = `<p><span class="chat-typing-dots"><span></span><span></span><span></span></span></p>`;
   log.appendChild(el);
   log.scrollTop = log.scrollHeight;
   return el;
@@ -436,8 +483,7 @@ async function submitChatQuestion(question) {
   appendChatMessage("user", question);
   const input = document.getElementById("chat-input");
   if (input) input.value = "";
-  const typingEl = appendChatMessage("assistant", "…");
-  if (typingEl) typingEl.classList.add("chat-msg--typing");
+  const typingEl = appendTypingIndicator();
   try {
     const answer = await answerQuestion(question);
     if (typingEl) typingEl.remove();
