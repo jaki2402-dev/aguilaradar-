@@ -529,5 +529,14 @@
         "sentiment": "négatif",
         "message": "Nouvelle dégradation des anticipations de marché sur le CLARITY Act (Digital Asset Market Clarity Act) : Galaxy Research a abaissé sa probabilité d'adoption du texte à 10 % (contre 30 % au 10 août), selon un récapitulatif Cointelegraph daté de ce jour. Le calendrier procédural reste inchangé (motion de clôture déposée le 8 août, vote de procédure fixé au 15 septembre, voir alertes précédentes), mais cet indicateur confirme une dégradation continue du sentiment de marché sur ce dossier réglementaire, dans la continuité de la chute déjà notée sur Polymarket (sous 20 % au 17 août). Recherche large « biggest gainers losers 24h » effectuée en complément : aucun des 15 favoris ne figure parmi les mouvements extrêmes confirmés ce cycle (Talus, une des 8 opportunités déjà suivies, reste en forte baisse mais sans élément nouveau par rapport aux cycles précédents) — aucun nouveau signal précoce déclenché sur les verdicts en cours. Indice de peur et de cupidité reconfirmé à 45 (« neutre »), inchangé par rapport au cycle précédent. Dominance BTC : sources consultées ce cycle trop divergentes (56,2 % à 60,66 % selon la plateforme) pour retenir une nouvelle valeur fiable ; conservée à 56,14 % par prudence.",
         "source": "https://cointelegraph.com/news/what-happened-in-crypto-today"
+    },
+    {
+        "id": "alert-20260823-2320-reprise-rattrapage",
+        "ticker_ou_theme": "MACRO",
+        "type": "actualite_macro",
+        "triggered_at": "2026-08-23T23:20:00Z",
+        "sentiment": "positif",
+        "message": "Reprise de la routine après 4,6 jours d'interruption (dernier succès le 19/08 08h17 UTC). 14 verdicts en retard résolus ce cycle : le marché a fortement grimpé pendant l'interruption (BTC +18,7 %, ETH +25,3 %, la plupart des favoris entre +9 % et +71 %), et l'indice de peur et de cupidité est passé de 46 (« neutre ») à 73 (« Greed »), un vrai changement de régime macro reclassé « risk-on ». Le moteur, resté majoritairement prudent (ATTENTE) sur ce lot, n'a validé que 3 des 14 verdicts (LINK, JUP, INJ) — voir l'onglet Moteur pour le détail complet et le diagnostic loggé dans le journal de correction. 14 nouveaux verdicts émis pour les favoris concernés, tous en attente prudente vu le rattrapage déjà largement réalisé.",
+        "source": "agrégat WebSearch (14 requêtes de prix individuelles pour la résolution, + recherche large « biggest movers » + indice de peur et de cupidité + « crypto news today »)"
     }
 ]
