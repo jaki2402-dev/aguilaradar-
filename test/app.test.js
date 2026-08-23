@@ -132,6 +132,7 @@ describe("app.js — updateFreshnessIndicator (régression 4d520ad, puis régres
 // ensemble fidèle de index.html (mêmes ids/classes), pour que attachDetailToggle/insights.js/
 // cards.js s'y comportent exactement comme sur la vraie page.
 const APP_FIXTURE_HTML = `<!doctype html><html><body>
+  <span id="last-price-update"></span>
   <nav class="tabs">
     <button data-tab="overview" class="active"><span class="tab-label">Accueil</span></button>
     <button data-tab="favoris"><span class="tab-label">Favoris</span></button>
@@ -235,6 +236,57 @@ describe("app.js — renderFavorisGrid", () => {
     const ids = Array.from(dom.window.document.querySelectorAll("#favoris-grid .detail-panel")).map((p) => p.id);
     expect(new Set(ids).size).toBe(getGlobal(dom, "FAVORIS").length);
     expect(ids).toContain("detail-fav-BTC");
+  });
+});
+
+describe("app.js — refreshPrices (flash de prix quand le prix vient réellement de bouger)", () => {
+  let dom;
+
+  function stubPrices(eur, eur_24h_change = 1) {
+    dom.window.fetch = async () => ({ ok: true, json: async () => ({ bitcoin: { eur, eur_24h_change } }) });
+  }
+
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "app.js"], { html: APP_FIXTURE_HTML });
+    dom.window.renderFavorisGrid();
+  });
+
+  it("does not flash on the very first refresh (nothing to compare against yet)", async () => {
+    stubPrices(50000);
+    await dom.window.refreshPrices();
+    const priceEl = dom.window.document.getElementById("price-BTC");
+    expect(priceEl.classList.contains("price-flash-up")).toBe(false);
+    expect(priceEl.classList.contains("price-flash-down")).toBe(false);
+  });
+
+  it("flashes up when the price rises between two refreshes", async () => {
+    stubPrices(50000);
+    await dom.window.refreshPrices();
+    stubPrices(51000);
+    await dom.window.refreshPrices();
+    const priceEl = dom.window.document.getElementById("price-BTC");
+    expect(priceEl.classList.contains("price-flash-up")).toBe(true);
+    expect(priceEl.classList.contains("price-flash-down")).toBe(false);
+  });
+
+  it("flashes down when the price falls between two refreshes", async () => {
+    stubPrices(50000);
+    await dom.window.refreshPrices();
+    stubPrices(49000);
+    await dom.window.refreshPrices();
+    const priceEl = dom.window.document.getElementById("price-BTC");
+    expect(priceEl.classList.contains("price-flash-down")).toBe(true);
+    expect(priceEl.classList.contains("price-flash-up")).toBe(false);
+  });
+
+  it("does not flash when the price is unchanged between two refreshes", async () => {
+    stubPrices(50000);
+    await dom.window.refreshPrices();
+    stubPrices(50000);
+    await dom.window.refreshPrices();
+    const priceEl = dom.window.document.getElementById("price-BTC");
+    expect(priceEl.classList.contains("price-flash-up")).toBe(false);
+    expect(priceEl.classList.contains("price-flash-down")).toBe(false);
   });
 });
 
