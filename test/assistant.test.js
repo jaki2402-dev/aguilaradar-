@@ -329,4 +329,49 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
     expect(answer).not.toContain("Réponse générée par IA");
     expect(fetchCalled).toBe(true); // confirme que fetchLiveTechnicalSummary a bien tente son appel
   });
+
+  // Bugs réels remontés par l'utilisateur : l'assistant "ne comprend pas le texte" et renvoie
+  // une réponse automatique/générique. Cause réelle : un mot-clé isolé ("monte") ou un nom
+  // propre cité en passant ("Twitter") interceptaient une phrase longue et nuancée avant que
+  // l'IA n'ait la moindre chance de vraiment la lire — voir tryHeuristicAnswer/answerQuestion.
+  describe("phrases longues/nuancées : priorité à l'IA plutôt qu'à une heuristique approximative", () => {
+    it("routes a long, nuanced question to the AI relay instead of the shallow 'monte' keyword match (régression réelle)", async () => {
+      runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
+      dom.window.fetch = async (url) => {
+        expect(url).toBe("https://test-relay.workers.dev"); // jamais une recherche CoinGecko ici
+        return { ok: true, json: async () => ({ answer: "La hausse reflète surtout un rebond technique après la panique de la semaine dernière, pas un vrai changement de fond." }) };
+      };
+      const answer = await dom.window.answerQuestion("Je ne comprends pas pourquoi ça monte alors que tout semble aller mal");
+      expect(answer).toContain("rebond technique");
+      expect(answer).not.toContain("régime de marché actuel est classé"); // pas le résumé générique answerMarketWhy
+    });
+
+    it("routes a long question mentioning an incidental capitalized word to the AI relay instead of dead-ending on a failed asset search (régression réelle : 'Twitter')", async () => {
+      runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
+      dom.window.fetch = async (url) => {
+        if (url.includes("/search?")) return { ok: true, json: async () => ({ coins: [] }) }; // "Twitter" n'est pas un actif
+        return { ok: true, json: async () => ({ answer: "Une rumeur sur un réseau social ne suffit pas à confirmer une vraie tendance de marché." }) };
+      };
+      const answer = await dom.window.answerQuestion("J'ai vu sur Twitter que le marché va chuter, tu en penses quoi ?");
+      expect(answer).toContain("Une rumeur sur un réseau social");
+      expect(answer).not.toContain("Je ne trouve pas cet actif");
+    });
+
+    it("still falls back to the shallow keyword-matched answer when the AI relay fails on a long question, rather than jumping straight to the fully generic message", async () => {
+      runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
+      dom.window.fetch = async () => { throw new Error("panne réseau simulée"); };
+      const answer = await dom.window.answerQuestion("Je ne comprends pas pourquoi ça monte alors que tout semble aller mal");
+      expect(answer).toContain("régime de marché actuel est classé"); // answerMarketWhy, meilleur que rien
+      expect(answer).not.toContain("Essaie par exemple"); // pas le message totalement générique
+    });
+
+    it("never calls the AI relay for a short question a heuristic already answers confidently (no wasted round-trip)", async () => {
+      runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
+      let fetchCalled = false;
+      dom.window.fetch = async () => { fetchCalled = true; throw new Error("ne devrait jamais être appelé"); };
+      const answer = await dom.window.answerQuestion("Pourquoi ça monte ?"); // court : 3 mots
+      expect(fetchCalled).toBe(false);
+      expect(answer).toContain("régime de marché actuel est classé");
+    });
+  });
 });
