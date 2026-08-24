@@ -245,6 +245,23 @@ function correctionLogSummary() {
   return `${log.length} tentative(s) d'auto-correction enregistrée(s) à ce jour. La dernière (${dateLabel}, ${statusLabel}) : ${last.what || ""} ${last.action || ""}`.trim();
 }
 
+// Commentaire IA optionnel ajouté PAR-DESSUS une réponse factuelle déjà correcte sur un actif
+// suivi, jamais à la place (voir answerAboutAsset) — répond au reproche réel remonté par
+// l'utilisateur : une question formulée comme une demande d'avis ("va monter ? donne-moi ton
+// avis") recevait la même réponse figée qu'une simple consultation de verdict, identique au mot
+// près à chaque fois puisque cette réponse est une lecture déterministe de verdicts.json, jamais
+// un vrai appel IA qui varierait un minimum. Le relais reçoit la réponse factuelle déjà bâtie EN
+// CONTEXTE, donc il ne peut que commenter des chiffres déjà vérifiés — jamais en inventer un
+// nouveau ni glisser vers un conseil d'achat/vente (même system prompt strict que le relais
+// général, voir cloudflare-worker/worker.js). Best-effort comme fetchLiveAiFallback : silencieux
+// et sans effet si indisponible/échoue après le réessai — ne fait donc jamais régresser la
+// réponse factuelle déjà correcte, systématiquement affichée intégralement avant cet ajout.
+async function fetchAssetAiOpinion(question, factualAnswer) {
+  if (!AI_RELAY_URL || AI_RELAY_URL.includes("REMPLACE-MOI")) return null;
+  const context = `${factualAnswer}\n\n${buildAiContext()}`;
+  return (await requestAiRelayOnce(question, context)) || (await requestAiRelayOnce(question, context));
+}
+
 async function answerAboutAsset(mention, question) {
   const technical = await fetchLiveTechnicalSummary(mention.cgId);
   const askedAboutCorrection = CORRECTION_KEYWORDS.test(question || "");
@@ -257,6 +274,13 @@ async function answerAboutAsset(mention, question) {
     if (askedAboutCorrection) out += `\n\n${correctionLogSummary()}`;
     return out;
   };
+  // La partie factuelle (verdict/prix/raisonnement déjà sourcés) est TOUJOURS retournée
+  // intégralement et en premier, que cet appel réussisse, échoue, ou ne soit jamais tenté — voir
+  // fetchAssetAiOpinion.
+  const withAiTake = async (factual) => {
+    const take = await fetchAssetAiOpinion(question, factual);
+    return take ? `${factual}\n\n${take}` : factual;
+  };
 
   if (mention.tracked === "favori") {
     const verdict = (chatData.verdicts || [])
@@ -265,14 +289,18 @@ async function answerAboutAsset(mention, question) {
     if (!verdict) {
       return withExtras(`${mention.name} (${mention.ticker}) fait partie des 15 favoris suivis, mais aucun verdict n'a encore été émis.`);
     }
-    return withExtras(
-      `Sur ${mention.name} (${mention.ticker}), le dernier verdict est ${verdict.verdict} (confiance ${verdict.confidence_pct ?? "—"} %, horizon ${verdict.horizon_days} j, émis le ${new Date(verdict.issued_at).toLocaleDateString("fr-FR")}).\n\n${verdict.reasoning || ""}\n\nDétail complet dans l'onglet Favoris.`
+    return withAiTake(
+      withExtras(
+        `Sur ${mention.name} (${mention.ticker}), le dernier verdict est ${verdict.verdict} (confiance ${verdict.confidence_pct ?? "—"} %, horizon ${verdict.horizon_days} j, émis le ${new Date(verdict.issued_at).toLocaleDateString("fr-FR")}).\n\n${verdict.reasoning || ""}\n\nDétail complet dans l'onglet Favoris.`
+      )
     );
   }
   const opp = ((chatData.opportunities && chatData.opportunities.opportunities) || []).find((o) => o.cgId === mention.cgId);
   if (!opp) return `${mention.name} (${mention.ticker}) n'est pas suivi par le moteur pour l'instant — utilise la recherche de l'onglet Favoris pour un prix et une fiche d'identité en direct.`;
-  return withExtras(
-    `${mention.name} (${mention.ticker}) fait partie des opportunités suivies (criblage Top 300) : ${opp.reason || "pas de détail disponible"}\n\nPrix actuel ${formatPrice(opp.price_eur, "EUR")}, ${formatChangePct(opp.change_7d_pct)} sur 7 jours. Détail complet dans l'onglet Opportunités.`
+  return withAiTake(
+    withExtras(
+      `${mention.name} (${mention.ticker}) fait partie des opportunités suivies (criblage Top 300) : ${opp.reason || "pas de détail disponible"}\n\nPrix actuel ${formatPrice(opp.price_eur, "EUR")}, ${formatChangePct(opp.change_7d_pct)} sur 7 jours. Détail complet dans l'onglet Opportunités.`
+    )
   );
 }
 
