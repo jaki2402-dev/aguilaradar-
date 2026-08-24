@@ -162,5 +162,28 @@ function initThemeSwitcher() {
   });
 }
 
+// Bouton "Vider le cache" du panneau Réglages design : un location.reload() seul ne suffit pas
+// toujours (le document HTML lui-même peut rester servi depuis le cache HTTP du navigateur,
+// surtout sur Safari iOS, ce qui fait charger les <script>/<link> avec un ancien ?v=). On force
+// une vraie requête réseau en changeant l'URL via un paramètre inédit à chaque clic. Isolée dans
+// sa propre fonction (plutôt qu'inline dans le handler) pour rester remplaçable par un stub en
+// test, jsdom ne sachant pas simuler une vraie navigation.
+function reloadWithCacheBust() {
+  const url = new URL(location.href);
+  url.searchParams.set("cachebust", Date.now().toString());
+  location.replace(url.toString());
+}
+
+function initCacheClearButton() {
+  const btn = document.getElementById("clear-cache-btn");
+  if (!btn) return;
+  btn.addEventListener("click", () => {
+    btn.disabled = true;
+    btn.textContent = "Rechargement…";
+    reloadWithCacheBust();
+  });
+}
+
 window.mountActiveBackground = mountActiveBackground;
 window.initThemeSwitcher = initThemeSwitcher;
+window.initCacheClearButton = initCacheClearButton;

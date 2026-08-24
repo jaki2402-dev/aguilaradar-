@@ -241,6 +241,20 @@ header.site-header h1 { margin: 0; font-family: var(--font-mono); letter-spacing
    volontairement les classes .design-theme-* ci-dessus (mêmes cartes cliquables, même look),
    .design-layout-list/.design-layout-card ne servent qu'à cibler cette liste précisément. */
 .design-settings-subhead { margin: 20px 0 0; padding-top: 16px; border-top: 1px solid var(--border); font-size: 0.92rem; }
+.clear-cache-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #06110d;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+.clear-cache-btn:active { transform: scale(0.98); }
+.clear-cache-btn:disabled { opacity: 0.6; cursor: default; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .notif-bell-badge {
   position: absolute; top: -2px; right: -2px;
