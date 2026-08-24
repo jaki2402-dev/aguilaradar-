@@ -1,23 +1,26 @@
 // Assistant : répond aux questions à partir des données déjà calculées par les routines
-// (résumé, verdicts, opportunités, alertes, contexte marché) — aucun appel IA en direct,
-// donc aucun coût ni configuration supplémentaire, mais les réponses ne couvrent que ce
-// que le site a déjà analysé. Dit toujours clairement quand une question sort de ce cadre,
-// plutôt que d'inventer une analyse qui n'existe pas.
+// (résumé, verdicts, opportunités, alertes, contexte marché).
 //
-// Exception volontaire pour un actif suivi nommément (favori ou opportunité) : en plus du
-// verdict/raisonnement déjà calculé par le cycle profond, la réponse inclut aussi un bloc
-// d'indicateurs techniques calculés EN DIRECT (RSI, tendance des moyennes mobiles, profil de
-// volume) — mêmes fonctions pures que la fiche détaillée de detail.js (aucun second calcul
-// divergent), sur le même historique de prix déjà chargé côté navigateur. Best-effort : un
-// échec réseau (limite API, hors-ligne) fait juste disparaître ce bloc, jamais toute la
-// réponse — voir fetchLiveTechnicalSummary.
+// Deux familles de réponses, dans cet ordre de priorité :
 //
-// Deuxième exception, même logique, pour un actif qui N'EST NI favori NI opportunité : plutôt
-// que de simplement renvoyer vers l'onglet Recherche, la question déclenche une VRAIE recherche
-// CoinGecko en direct (mêmes fonctions que search.js : searchCoinByName/fetchCoinDetail) sur le
-// terme repéré dans la question — voir extractAssetQuery/fetchLiveSearchAnswer. Toujours des
-// données publiques factuelles, jamais un verdict inventé sur un actif que le moteur ne suit
-// pas (même règle que renderUntrackedResult dans search.js).
+// 1. Données FACTUELLES SOURCÉES — toujours vérifiées avant tout le reste, jamais remplacées
+//    par une reformulation IA qui pourrait déformer un chiffre : un actif suivi nommément
+//    (favori ou opportunité, verdict + raisonnement du cycle profond), une définition de
+//    glossaire, ou une recherche CoinGecko EN DIRECT pour un actif nommé mais non suivi (voir
+//    extractAssetQuery/fetchLiveSearchAnswer — mêmes fonctions que search.js). Pour un actif
+//    suivi, la réponse ajoute aussi un bloc d'indicateurs techniques calculés EN DIRECT (RSI,
+//    tendance, volume — mêmes fonctions pures que detail.js) ; best-effort, un échec réseau
+//    fait juste disparaître ce bloc plutôt que toute la réponse (fetchLiveTechnicalSummary).
+//
+// 2. Tout le reste (question générale, analytique, conversationnelle) — passe par le relais IA
+//    (fetchLiveAiFallback, cloudflare-worker/) EN PREMIER, quelle que soit la longueur de la
+//    question. Bug réel corrigé ici : un mot-clé isolé (CHAT_INTENTS) répondait "automatiquement"
+//    à la place d'une vraie lecture de la question — ex. "bullrun" ne matchait aucun mot-clé et
+//    tombait sur le message générique, ou pire, un mot-clé approximatif matchait AVANT que l'IA
+//    ait la moindre chance de vraiment lire une phrase nuancée. Le mot-clé (CHAT_INTENTS) ne
+//    sert plus que de filet de secours si l'IA est indisponible (AI_RELAY_URL non configuré,
+//    placeholder par défaut — voir fetchLiveAiFallback) ou échoue (réseau, timeout) : dans ce
+//    cas seulement, le site retombe sur une réponse plus fruste plutôt que rien.
 
 let chatData = null;
 let chatDataLoading = null;
@@ -360,33 +363,39 @@ async function fetchLiveAiFallback(question) {
   }
 }
 
-// Regroupe les heuristiques approximatives (nom d'actif isolé, mots-clés d'intention) —
-// "approximatives" au sens propre : un nom propre capitalisé ou un mot-clé isolé peuvent
-// apparaître dans une phrase sans rapport (ex. "Twitter" cité en passant, "monte" dans une
-// vraie question nuancée) aussi bien que dans une vraie question ciblée. Cas réels ayant motivé
-// ce découpage (voir answerQuestion) : "J'ai vu sur Twitter que le marché va chuter, tu en
-// penses quoi ?" partait chercher un actif "Twitter" inexistant et s'arrêtait là ; "Je ne
-// comprends pas pourquoi ça monte alors que tout semble aller mal" matchait le mot-clé "monte"
-// et recevait un résumé de régime générique, sans jamais lire la vraie nuance de la question.
-async function tryHeuristicAnswer(question, norm, rememberAssetCandidate) {
+// Recherche en direct d'un actif nommé mais non suivi (ni favori ni opportunité) — une donnée
+// factuelle sourcée (CoinGecko), jamais une supposition. Reste prioritaire sur l'IA générale
+// pour la même raison qu'un actif suivi ou une définition de glossaire : buildAiContext() ne
+// contient PAS cette donnée, donc l'IA ne pourrait que deviner ou refuser de répondre, alors
+// qu'une vraie recherche CoinGecko donne un chiffre exact. "approximatif" au sens propre : un
+// nom propre capitalisé peut apparaître dans une phrase sans rapport (ex. "Twitter" cité en
+// passant) — d'où rememberAssetCandidate, réutilisé par answerQuestion pour le message final
+// "pas suivi" seulement si rien d'autre (y compris l'IA) n'a pu répondre.
+async function tryLiveAssetSearch(question, rememberAssetCandidate) {
   const assetQuery = extractAssetQuery(question);
-  if (assetQuery) {
-    rememberAssetCandidate(assetQuery);
-    const live = await fetchLiveSearchAnswer(assetQuery);
-    if (live) return live;
-    // Rien trouvé sur CoinGecko : ce n'était peut-être pas un actif après tout — pas de repli
-    // immédiat ici, on tente encore une intention connue puis l'IA (voir answerQuestion) avant
-    // de conclure "pas suivi", au lieu de s'arrêter net sur un nom propre mentionné en passant.
-  }
+  if (!assetQuery) return null;
+  rememberAssetCandidate(assetQuery);
+  return await fetchLiveSearchAnswer(assetQuery);
+}
+
+// Dernier filet, seulement si l'IA est indisponible (AI_RELAY_URL non configuré) ou échoue
+// (réseau, timeout) — voir answerQuestion. Un mot-clé isolé reste préférable à rien, mais ne
+// doit JAMAIS passer avant une vraie lecture par l'IA : c'est exactement le bug remonté par
+// l'utilisateur ("il répond automatiquement sans rien analyser") — un mot-clé matchait (ou,
+// pire, aucun ne matchait, ex. "bullrun") avant que la question ait la moindre chance d'être
+// vraiment comprise.
+function tryKeywordFallback(norm) {
   const intent = CHAT_INTENTS.find((i) => i.keywords.some((k) => norm.includes(k)));
-  if (intent) return intent.handler();
-  return null;
+  return intent ? intent.handler() : null;
 }
 
 async function answerQuestion(question) {
   await ensureChatData();
   const norm = question.toLowerCase();
 
+  // Actif suivi nommément, définition de glossaire, ou recherche CoinGecko en direct sur un nom
+  // d'actif repéré : trois cas où une vraie donnée sourcée existe, à privilégier sur une réponse
+  // IA générale qui n'y a pas accès (voir buildAiContext). Inchangé par la réorganisation ci-dessous.
   const mention = findAssetMention(question);
   if (mention) return await answerAboutAsset(mention, question);
 
@@ -394,34 +403,20 @@ async function answerQuestion(question) {
   if (glossaryHit) return `${glossaryHit.term} : ${glossaryHit.definition}`;
 
   let assetCandidate = null;
-  const heuristics = () => tryHeuristicAnswer(question, norm, (q) => { assetCandidate = q; });
+  const liveSearch = await tryLiveAssetSearch(question, (q) => { assetCandidate = q; });
+  if (liveSearch) return liveSearch;
 
-  // Une phrase longue ou construite (plusieurs propositions) a plus de chances d'être mal
-  // comprise par les heuristiques ci-dessus qu'une vraie lecture du texte — les deux exemples
-  // en tête de commentaire de tryHeuristicAnswer tiennent respectivement 13 et 13 mots. Les
-  // puces de suggestion (CHAT_SUGGESTIONS) tiennent toutes en 8 mots ou moins : ce seuil les
-  // laisse fonctionner exactement comme avant, sans jamais passer par l'IA pour elles.
-  const isLongOrNuanced = question.trim().split(/\s+/).filter(Boolean).length > 8;
-
-  if (!isLongOrNuanced) {
-    const heuristicAnswer = await heuristics();
-    if (heuristicAnswer) return heuristicAnswer;
-  }
-
-  // Pour une phrase longue/nuancée, l'IA (si configurée) passe AVANT les heuristiques
-  // approximatives ci-dessus plutôt qu'après — sans quoi ce genre de phrase tombe
-  // systématiquement sur une intention mal ciblée sans jamais avoir la chance d'être vraiment
-  // comprise. Pour une phrase courte, l'ordre reste inchangé (heuristiques d'abord, fiables sur
-  // ce genre de texte, voir tests existants) — l'IA ne peut donc jamais faire régresser un cas
-  // qui marchait déjà, seulement rattraper ceux qui échouaient (même garantie que documentée
-  // sur fetchLiveAiFallback).
+  // Pour tout le reste — question générale, analytique, conversationnelle ("on est en bullrun ?",
+  // "pourquoi ça monte", une phrase longue et nuancée... ) — l'IA passe TOUJOURS en premier,
+  // quelle que soit la longueur de la question : un texte court mérite une vraie lecture autant
+  // qu'un texte long. Le mot-clé (CHAT_INTENTS) ne sert plus que de filet si l'IA est
+  // indisponible ou échoue (voir fetchLiveAiFallback, qui reste silencieux et sans coût tant
+  // qu'AI_RELAY_URL n'est pas configuré — aucune régression du comportement "site autonome").
   const aiAnswer = await fetchLiveAiFallback(question);
   if (aiAnswer) return aiAnswer;
 
-  if (isLongOrNuanced) {
-    const heuristicAnswer = await heuristics();
-    if (heuristicAnswer) return heuristicAnswer;
-  }
+  const keywordAnswer = tryKeywordFallback(norm);
+  if (keywordAnswer) return keywordAnswer;
 
   if (assetCandidate || looksLikeUnknownAssetMention(question)) {
     return `Je ne trouve pas cet actif parmi les 15 favoris ou les opportunités suivies, donc pas de verdict du moteur dessus. Utilise la recherche de l'onglet Favoris pour son prix et sa fiche d'identité en direct — tape simplement son nom.`;
