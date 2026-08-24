@@ -342,6 +342,31 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
     expect(answer).toContain("Essaie par exemple");
   });
 
+  it("retries once and recovers when only the first attempt fails (cold start / rate-limit ponctuel sur l'offre gratuite Workers AI)", async () => {
+    runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
+    let calls = 0;
+    dom.window.fetch = async () => {
+      calls++;
+      if (calls === 1) throw new Error("panne réseau simulée, ponctuelle");
+      return { ok: true, json: async () => ({ answer: "Réponse obtenue au second essai." }) };
+    };
+    const answer = await dom.window.answerQuestion("raconte-moi une blague de pêcheur");
+    expect(calls).toBe(2);
+    expect(answer).toContain("Réponse obtenue au second essai");
+  });
+
+  it("gives up after exactly two failed attempts, not an unbounded retry loop", async () => {
+    runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
+    let calls = 0;
+    dom.window.fetch = async () => {
+      calls++;
+      throw new Error("panne réseau simulée, persistante");
+    };
+    const answer = await dom.window.answerQuestion("raconte-moi une blague de pêcheur");
+    expect(calls).toBe(2);
+    expect(answer).toContain("Essaie par exemple");
+  });
+
   it("NEVER lets the AI relay override an already-working answer, even when configured and reachable (zero-regression guarantee)", async () => {
     runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
     let fetchCalled = false;
