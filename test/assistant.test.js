@@ -143,14 +143,21 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
     expect(answer).toContain("Aucune auto-correction tentée");
   });
 
-  it("reports a real correction_log entry's fields (version/attempted_at/status/change_description/note) when present", async () => {
+  it("reports a real correction_log entry's fields (id/logged_at/status/what/why/action/validation_score_*_pct) when present", async () => {
+    // Vrai schéma écrit par la routine (voir CLAUDE.md) : id/logged_at/trigger/what/why/action/
+    // status ("accepted"/"rejected")/validation_score_before_pct/validation_score_after_pct — PAS
+    // version/attempted_at/change_description/note, qui n'ont jamais existé côté données (régression
+    // réelle trouvée et corrigée : correctionLogSummary() lisait ces faux champs et produisait
+    // littéralement "undefined" dans la réponse de l'assistant).
     dom.window.aguilaradarData.engineHistory.correction_log = [
-      { version: "v1", attempted_at: "2026-08-10T00:00:00Z", status: "rejetée", change_description: "Test ancien", note: "" },
-      { version: "v2", attempted_at: "2026-08-21T02:30:00Z", status: "appliquée", change_description: "Seuil de confiance relevé pour les verdicts ATTENTE", note: "Amélioration mesurée du F1 macro." },
+      { id: "corr-1", logged_at: "2026-08-10T00:00:00Z", trigger: "5 résolus", status: "rejected", what: "Test ancien", why: "", action: "Aucun changement", validation_score_before_pct: 40, validation_score_after_pct: null },
+      { id: "corr-2", logged_at: "2026-08-21T02:30:00Z", trigger: "6 résolus", status: "accepted", what: "Biais détecté sur les verdicts ATTENTE", why: "Confiance mal calibrée", action: "Seuil de confiance relevé pour les verdicts ATTENTE", validation_score_before_pct: 40, validation_score_after_pct: 58 },
     ];
     const answer = await dom.window.answerQuestion("Le moteur s'améliore-t-il tout seul ?");
     expect(answer).toContain("2 tentative(s)");
     expect(answer).toContain("appliquée");
+    expect(answer).not.toContain("undefined");
+    expect(answer).toContain("Biais détecté sur les verdicts ATTENTE");
     expect(answer).toContain("Seuil de confiance relevé pour les verdicts ATTENTE");
     expect(answer).not.toContain("Test ancien"); // seule la DERNIERE tentative est resumee
   });
