@@ -22,6 +22,26 @@ import * as THREE from "./vendor/three.module.min.js";
 // avec le reste de la page.
 const PLANET_COLORS = [0xf0b429, 0x7c9eff, 0x22b8e0, 0xb48cf2, 0xfb8362];
 
+// Palette + disposition des nébuleuses, inspirées des photos JWST "Piliers de la Création"
+// envoyées par l'utilisateur : une brume bleue profonde et étendue en arrière-plan, puis des
+// piliers de gaz plus chauds (or/rouille, rose/crème, cyan) devant — même composition que la
+// vraie nébuleuse de l'Aigle. `core`/`mid`/`edge` sont les 3 arrêts de couleur (RGB 0-255) du
+// dégradé procédural de chaque nuage, voir makeNebulaTexture.
+// Échelles volontairement contenues malgré l'envie de "grand fond spatial" : le fill-rate (le
+// nombre de pixels à ombrer) dépend de la surface écran des sprites, pas du détail de leur
+// texture (celui-ci est déjà cuit une fois pour toutes dans le <canvas> procédural, gratuit au
+// rendu) — mesuré ici avant/après via un vrai test de FPS, pas supposé : une première version
+// avec un halo de fond à l'échelle 2000 faisait chuter le FPS SwiftShader de ~12 à ~5.5.
+// `pillar: true` étire le sprite verticalement (voir `aspect` plus bas) et le garde debout —
+// contrairement à une brume ronde, une pointe pivotée à l'horizontale ne ressemblerait plus à
+// une colonne de gaz, donc ces deux-là dérivent en position mais ne tournent pas sur eux-mêmes.
+const NEBULA_CONFIGS = [
+  { core: [110, 150, 235], mid: [46, 58, 130], edge: [8, 11, 34], scale: 1500, pos: [-80, 30, -1150], opacity: 0.3 },
+  { core: [255, 178, 96], mid: [205, 92, 56], edge: [36, 24, 56], scale: 1050, pos: [230, -60, -820], opacity: 0.52, pillar: true, aspect: 0.58 },
+  { core: [255, 214, 176], mid: [198, 110, 150], edge: [28, 22, 66], scale: 1100, pos: [-260, 120, -960], opacity: 0.44, pillar: true, aspect: 0.62 },
+  { core: [190, 255, 232], mid: [70, 170, 190], edge: [10, 38, 52], scale: 900, pos: [70, -190, -700], opacity: 0.4 },
+];
+
 function prefersReducedMotion() {
   return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
@@ -73,6 +93,164 @@ function makeGlowTexture(hexColor, opacity) {
   grad.addColorStop(1, `rgba(${rgb},0)`);
   ctx.fillStyle = grad;
   ctx.fillRect(0, 0, size, size);
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+
+// Bruit de valeur 2D (grille aléatoire + interpolation smoothstep) — la brique de base pour des
+// textures de nébuleuse qui ont une vraie structure interne (colonnes de gaz, filaments) plutôt
+// qu'un simple dégradé plat. Fait main (quelques dizaines de lignes) plutôt qu'une dépendance
+// externe : cohérent avec le reste du fichier, tout y est procédural/local.
+function makeValueNoise2D(gridSize) {
+  const g = gridSize;
+  const cells = new Float32Array((g + 1) * (g + 1));
+  for (let i = 0; i < cells.length; i++) cells[i] = Math.random();
+  const smooth = (t) => t * t * (3 - 2 * t);
+  return function (x, y) {
+    const fx = (((x % 1) + 1) % 1) * g;
+    const fy = (((y % 1) + 1) % 1) * g;
+    const x0 = Math.floor(fx), y0 = Math.floor(fy);
+    const x1 = Math.min(x0 + 1, g), y1 = Math.min(y0 + 1, g);
+    const tx = smooth(fx - x0), ty = smooth(fy - y0);
+    const v00 = cells[y0 * (g + 1) + x0];
+    const v10 = cells[y0 * (g + 1) + x1];
+    const v01 = cells[y1 * (g + 1) + x0];
+    const v11 = cells[y1 * (g + 1) + x1];
+    const a = v00 + (v10 - v00) * tx;
+    const b = v01 + (v11 - v01) * tx;
+    return a + (b - a) * ty;
+  };
+}
+
+// Bruit fractal (somme de plusieurs octaves de bruit de valeur, amplitude décroissante) : donne
+// l'aspect "nuage de gaz" avec du détail à plusieurs échelles au lieu d'un bruit uniforme.
+function makeFbm(baseGrid, octaves) {
+  const layers = [];
+  let amp = 1, ampSum = 0;
+  for (let i = 0; i < octaves; i++) {
+    layers.push({ noise: makeValueNoise2D(Math.round(baseGrid * 2 ** i)), amp });
+    ampSum += amp;
+    amp *= 0.5;
+  }
+  return function (x, y) {
+    let sum = 0;
+    for (const l of layers) sum += l.noise(x, y) * l.amp;
+    return sum / ampSum;
+  };
+}
+
+function mixRgb(c1, c2, t) {
+  return [c1[0] + (c2[0] - c1[0]) * t, c1[1] + (c2[1] - c1[1]) * t, c1[2] + (c2[2] - c1[2]) * t];
+}
+
+// Texture de nébuleuse procédurale : dégradé radial doux (pour rester un nuage isolé, pas un
+// pavage) modulé par du bruit fractal à deux échelles (grandes colonnes de gaz + filaments fins
+// et lumineux) et coloré par un dégradé à 3 arrêts (bord froid → milieu → coeur chaud) — comme
+// les photos JWST envoyées par l'utilisateur. Toujours un <canvas> local, jamais une image.
+function makeNebulaTexture(config, size = 384) {
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d");
+  const img = ctx.createImageData(size, size);
+  // La structure (grandes colonnes) domine largement la couleur/densité ; le filament n'est
+  // qu'un accent clairsemé (seuil élevé) — les faire contribuer à parts égales donnait deux
+  // motifs de bruit concurrents, un aspect "statique TV" plutôt qu'un vrai nuage de gaz cohérent.
+  const fbmStructure = makeFbm(4, 4);
+  const fbmFilament = makeFbm(16, 2);
+  const cx = size / 2, cy = size / 2, maxR = size / 2;
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++) {
+      const nx = x / size, ny = y / size;
+      const dx = (x - cx) / maxR, dy = (y - cy) / maxR;
+      const falloff = Math.max(0, 1 - Math.sqrt(dx * dx + dy * dy));
+      const structure = fbmStructure(nx, ny);
+      const filament = Math.max(0, fbmFilament(nx * 2.2, ny * 2.2) - 0.66) / 0.34;
+      const heat = Math.min(1, structure * 0.9 + filament * 0.35);
+      const rgb = heat < 0.5
+        ? mixRgb(config.edge, config.mid, heat / 0.5)
+        : mixRgb(config.mid, config.core, (heat - 0.5) / 0.5);
+      const density = Math.pow(falloff, 1.5) * (0.32 + 0.68 * structure);
+      const alpha = Math.min(1, density + filament * 0.3 * falloff);
+      const idx = (y * size + x) * 4;
+      img.data[idx] = rgb[0];
+      img.data[idx + 1] = rgb[1];
+      img.data[idx + 2] = rgb[2];
+      img.data[idx + 3] = Math.round(alpha * 255);
+    }
+  }
+  // Lissage (moyenne 3x3) : le bruit de valeur brut donne des blocs assez nets vus de près —
+  // ce flou léger les fond en volutes plus organiques, comme un vrai nuage plutôt qu'un motif
+  // de bruit reconnaissable comme tel.
+  const src = img.data.slice();
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++) {
+      let r = 0, g = 0, b = 0, a = 0, n = 0;
+      for (let oy = -1; oy <= 1; oy++) {
+        const sy = y + oy;
+        if (sy < 0 || sy >= size) continue;
+        for (let ox = -1; ox <= 1; ox++) {
+          const sx = x + ox;
+          if (sx < 0 || sx >= size) continue;
+          const i = (sy * size + sx) * 4;
+          r += src[i]; g += src[i + 1]; b += src[i + 2]; a += src[i + 3];
+          n++;
+        }
+      }
+      const idx = (y * size + x) * 4;
+      img.data[idx] = r / n;
+      img.data[idx + 1] = g / n;
+      img.data[idx + 2] = b / n;
+      img.data[idx + 3] = a / n;
+    }
+  }
+  ctx.putImageData(img, 0, 0);
+  const tex = new THREE.CanvasTexture(canvas);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  return tex;
+}
+
+// Texture d'étoile à pointes de diffraction (croix à 8 branches façon JWST, miroir segmenté) :
+// 4 grandes pointes + 4 plus courtes en diagonale, coeur brillant par-dessus. Réservée à une
+// poignée d'étoiles seulement (voir heroStars) — sur les photos de référence, seules les étoiles
+// les plus brillantes montrent cet effet, pas le ciel entier.
+function makeStarSpikeTexture(hexColor) {
+  const size = 200;
+  const canvas = document.createElement("canvas");
+  canvas.width = size;
+  canvas.height = size;
+  const ctx = canvas.getContext("2d");
+  const c = new THREE.Color(hexColor);
+  const rgb = `${Math.round(c.r * 255)},${Math.round(c.g * 255)},${Math.round(c.b * 255)}`;
+  const cx = size / 2, cy = size / 2;
+  ctx.globalCompositeOperation = "lighter";
+  function spike(len, width, angle, alpha) {
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(angle);
+    const grad = ctx.createLinearGradient(0, 0, len, 0);
+    grad.addColorStop(0, `rgba(${rgb},${alpha})`);
+    grad.addColorStop(1, `rgba(${rgb},0)`);
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.moveTo(0, -width / 2);
+    ctx.lineTo(len, 0);
+    ctx.lineTo(0, width / 2);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+  for (let i = 0; i < 4; i++) spike(size * 0.5, 3.2, (Math.PI / 2) * i, 0.85);
+  for (let i = 0; i < 4; i++) spike(size * 0.28, 1.6, (Math.PI / 2) * i + Math.PI / 4, 0.45);
+  const core = ctx.createRadialGradient(cx, cy, 0, cx, cy, size * 0.16);
+  core.addColorStop(0, "rgba(255,255,255,1)");
+  core.addColorStop(0.4, `rgba(${rgb},0.9)`);
+  core.addColorStop(1, `rgba(${rgb},0)`);
+  ctx.fillStyle = core;
+  ctx.beginPath();
+  ctx.arc(cx, cy, size * 0.16, 0, Math.PI * 2);
+  ctx.fill();
   const tex = new THREE.CanvasTexture(canvas);
   tex.colorSpace = THREE.SRGBColorSpace;
   return tex;
@@ -159,29 +337,60 @@ function createScene(canvas) {
   // vrais sprites indépendants — peu nombreux, donc bon marché même sur un GPU modeste — dont
   // la taille/opacité respire à son propre rythme déphasé pour un vrai scintillement étoile
   // par étoile, l'un des signes visuels les plus reconnaissables d'un ciel étoilé réaliste.
+  // Trois textures à pointes partagées (pas une par étoile) pour ne pas alourdir le coût déjà
+  // présent ci-dessous (une texture par étoile pour le halo simple, voir makeGlowTexture).
+  const spikeTexWhite = makeStarSpikeTexture(0xffffff);
+  const spikeTexGold = makeStarSpikeTexture(0xf0b429);
+  const spikeTexCyan = makeStarSpikeTexture(0x8ad9ff);
   const heroStars = [];
   for (let i = 0; i < 50; i++) {
+    // Une étoile sur 6 a des pointes de diffraction façon JWST — comme sur les photos de
+    // référence, seules les plus brillantes montrent cet effet, pas le ciel entier.
+    const isSpike = i % 6 === 0;
+    const spikeTex = i % 18 === 0 ? spikeTexGold : i % 12 === 0 ? spikeTexCyan : spikeTexWhite;
     const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
-      map: makeGlowTexture(i % 7 === 0 ? 0xf0b429 : 0xffffff, 1),
+      map: isSpike ? spikeTex : makeGlowTexture(i % 7 === 0 ? 0xf0b429 : 0xffffff, 1),
       transparent: true, opacity: 0.8, blending: THREE.AdditiveBlending, depthWrite: false,
     }));
     const dist = 260 + Math.random() * 900;
     const theta = Math.random() * Math.PI * 2;
     const phi = Math.acos(Math.random() * 2 - 1);
     sprite.position.set(dist * Math.sin(phi) * Math.cos(theta), dist * Math.sin(phi) * Math.sin(theta), dist * Math.cos(phi));
-    const baseScale = 4 + Math.random() * 5;
+    const baseScale = (isSpike ? 6 : 4) + Math.random() * (isSpike ? 4 : 5);
     sprite.scale.set(baseScale, baseScale, 1);
     scene.add(sprite);
-    heroStars.push({ sprite, baseScale, phase: Math.random() * Math.PI * 2, speed: 0.0016 + Math.random() * 0.0022 });
+    heroStars.push({ sprite, baseScale, phase: Math.random() * Math.PI * 2, speed: 0.0016 + Math.random() * 0.0022, isSpike });
   }
 
-  const nebulae = [0x2fd3b0, 0x7c9eff, 0xb48cf2].map((hex, i) => {
-    const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: makeGlowTexture(hex, 0.9), transparent: true, opacity: 0.24, blending: THREE.AdditiveBlending, depthWrite: false }));
-    const scale = 950 + i * 240;
-    sprite.scale.set(scale, scale, 1);
-    sprite.position.set(Math.cos(i * 2.4) * 500, Math.sin(i * 1.7) * 250, -800 - i * 150);
+  // Nuages de gaz nébuleux : texture procédurale bruitée (voir makeNebulaTexture) au lieu d'un
+  // simple halo radial — donne des colonnes/filaments qui se distinguent, comme les piliers de
+  // gaz des photos JWST. Chaque nuage tourne lentement sur lui-même et dérive doucement (voir
+  // tick ci-dessous) : animé et en mouvement en continu, pas un décor figé.
+  const nebulae = NEBULA_CONFIGS.map((config) => {
+    const sprite = new THREE.Sprite(new THREE.SpriteMaterial({
+      map: makeNebulaTexture(config),
+      transparent: true,
+      opacity: config.opacity,
+      // Fondu alpha normal, PAS additif : contrairement aux halos/étoiles ailleurs dans ce
+      // fichier (qui doivent rayonner), un pilier de gaz doit pouvoir en RECOUVRIR un autre —
+      // avec un mélange additif les nuages qui se chevauchent ne faisaient que s'éclaircir en
+      // une bouillie brune/violette au lieu de se superposer comme des formes distinctes (photos
+      // JWST : la brume bleue de fond, les piliers chauds nettement détachés devant).
+      blending: THREE.NormalBlending,
+      depthWrite: false,
+    }));
+    sprite.scale.set(config.scale * (config.aspect || 1), config.scale, 1);
+    sprite.position.set(config.pos[0], config.pos[1], config.pos[2]);
+    sprite.material.rotation = config.pillar ? (Math.random() - 0.5) * 0.3 : Math.random() * Math.PI * 2;
     scene.add(sprite);
-    return sprite;
+    return {
+      sprite,
+      baseX: config.pos[0],
+      baseY: config.pos[1],
+      driftPhase: Math.random() * Math.PI * 2,
+      driftSpeed: 0.00002 + Math.random() * 0.00003,
+      rotSpeed: config.pillar ? 0 : (Math.random() < 0.5 ? -1 : 1) * (0.000012 + Math.random() * 0.00002),
+    };
   });
 
   scene.add(new THREE.AmbientLight(0x8899bb, 1.1));
@@ -287,10 +496,16 @@ function createScene(canvas) {
       });
       starsFar.rotation.y += 0.00002;
       starsNear.rotation.y -= 0.00003;
+      nebulae.forEach((n) => {
+        n.sprite.material.rotation += n.rotSpeed;
+        n.sprite.position.x = n.baseX + Math.sin(t * n.driftSpeed + n.driftPhase) * 50;
+        n.sprite.position.y = n.baseY + Math.cos(t * n.driftSpeed * 0.8 + n.driftPhase) * 32;
+      });
       heroStars.forEach((h) => {
         const s = h.baseScale * (0.75 + 0.35 * Math.sin(t * h.speed + h.phase));
         h.sprite.scale.set(s, s, 1);
         h.sprite.material.opacity = 0.5 + 0.5 * Math.sin(t * h.speed * 1.3 + h.phase);
+        if (h.isSpike) h.sprite.material.rotation += 0.00003;
       });
       if (wantsParallax) {
         camera.position.x += (mouseX * 35 - camera.position.x) * 0.01;
