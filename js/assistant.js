@@ -391,31 +391,44 @@ function buildAiContext() {
   return parts.join("\n");
 }
 
+// Un seul essai d'appel au relais IA — voir fetchLiveAiFallback pour pourquoi ça vaut la peine
+// de réessayer une fois avant d'abandonner (Workers AI gratuit : cold start / rate-limit ponctuel
+// bien plus fréquents qu'une vraie panne durable).
+async function requestAiRelayOnce(question, context) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 12000);
+  try {
+    const res = await fetch(AI_RELAY_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question, context }),
+      signal: controller.signal,
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return (data && data.answer) || null;
+  } catch (e) {
+    return null;
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
 // Dernier recours absolu quand rien d'autre (actif suivi, glossaire, recherche live, intentions)
 // n'a répondu — appelle le relais IA gratuit (cloudflare-worker/, Cloudflare Workers AI, voir
 // AI_RELAY_URL dans config.js) avec les vraies données du site en contexte. Best-effort comme
 // fetchLiveTechnicalSummary/fetchLiveSearchAnswer : tant que AI_RELAY_URL n'est pas configuré
-// (placeholder par défaut), ou si l'appel échoue/traîne, retombe silencieusement sur le message
-// générique existant — ne peut donc jamais faire régresser un cas qui marchait déjà.
+// (placeholder par défaut), ou si les deux essais échouent/traînent, retombe silencieusement sur
+// le message générique existant — ne peut donc jamais faire régresser un cas qui marchait déjà.
+// Un seul réessai (pas de boucle) : Workers AI en offre gratuite peut ponctuellement rejeter ou
+// traîner (limite de requêtes, cold start) sans que le service soit réellement en panne — un
+// deuxième essai immédiat rattrape ce cas fréquent sans faire attendre indéfiniment pour autant.
 async function fetchLiveAiFallback(question) {
   if (!AI_RELAY_URL || AI_RELAY_URL.includes("REMPLACE-MOI")) return null;
-  try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 12000);
-    const res = await fetch(AI_RELAY_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question, context: buildAiContext() }),
-      signal: controller.signal,
-    });
-    clearTimeout(timeoutId);
-    if (!res.ok) return null;
-    const data = await res.json();
-    if (!data || !data.answer) return null;
-    return `${data.answer}\n\n(Réponse générée par IA à partir des données du site — pas un verdict vérifié du moteur.)`;
-  } catch (e) {
-    return null;
-  }
+  const context = buildAiContext();
+  const answer = (await requestAiRelayOnce(question, context)) || (await requestAiRelayOnce(question, context));
+  if (!answer) return null;
+  return `${answer}\n\n(Réponse générée par IA à partir des données du site — pas un verdict vérifié du moteur.)`;
 }
 
 // Recherche en direct d'un actif nommé mais non suivi (ni favori ni opportunité) — une donnée
