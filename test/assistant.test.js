@@ -367,20 +367,36 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
     expect(answer).toContain("Essaie par exemple");
   });
 
-  it("NEVER lets the AI relay override an already-working answer, even when configured and reachable (zero-regression guarantee)", async () => {
+  it("keeps the factual verdict fully intact when the AI relay is configured but unreachable (zero-regression guarantee)", async () => {
+    // Changement de comportement demandé par l'utilisateur (voir fetchAssetAiOpinion) : le relais
+    // IA EST désormais tenté aussi pour une question sur un actif suivi, pour ajouter un vrai
+    // commentaire par-dessus le verdict — mais seulement PAR-DESSUS, jamais à sa place. Ce test
+    // vérifie donc la garantie qui compte réellement : même si l'appel échoue, le verdict sourcé
+    // (ACHAT, raisonnement...) reste intégralement affiché, sans "undefined" ni trou.
     runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
-    let fetchCalled = false;
-    dom.window.fetch = async (url) => {
-      // Le seul fetch legitime ici est fetchLiveTechnicalSummary (marche chart) pour Chainlink,
-      // jamais un appel au relais IA - une question sur un actif suivi repond avant d'y arriver.
-      fetchCalled = true;
-      if (url.includes("test-relay.workers.dev")) throw new Error("le relais IA n'aurait jamais du etre appele ici");
+    dom.window.fetch = async () => {
       throw new Error("indisponible (comportement normal pour ce test)");
     };
     const answer = await dom.window.answerQuestion("Que penses-tu de Chainlink ?");
     expect(answer).toContain("ACHAT");
     expect(answer).not.toContain("Réponse générée par IA");
-    expect(fetchCalled).toBe(true); // confirme que fetchLiveTechnicalSummary a bien tente son appel
+    expect(answer).not.toContain("undefined");
+  });
+
+  it("adds a real AI-generated take on top of the factual verdict when asked for an opinion, grounded in that same verdict (régression réelle : 'Fetch.ai va monter ? Donne moi ton avis' recevait la même réponse figée à chaque fois, mot pour mot, preuve que rien n'était réellement lu)", async () => {
+    runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
+    dom.window.fetch = async (url, opts) => {
+      if (url.includes("test-relay.workers.dev")) {
+        const sent = JSON.parse(opts.body);
+        expect(sent.question).toBe("Chainlink va monter ? Donne moi ton avis");
+        expect(sent.context).toContain("ACHAT"); // le verdict deja construit est bien passe en contexte
+        return { ok: true, json: async () => ({ answer: "Le verdict ACHAT s'appuie sur un signal technique net, mais reste à confirmer sur l'horizon annoncé." }) };
+      }
+      throw new Error("chart indisponible (comportement normal pour ce test)");
+    };
+    const answer = await dom.window.answerQuestion("Chainlink va monter ? Donne moi ton avis");
+    expect(answer).toContain("ACHAT"); // le verdict sourcé reste present
+    expect(answer).toContain("Le verdict ACHAT s'appuie sur un signal technique net");
   });
 
   // Bugs réels remontés par l'utilisateur : l'assistant "ne comprend pas le texte" et renvoie
