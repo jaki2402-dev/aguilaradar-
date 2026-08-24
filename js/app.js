@@ -579,6 +579,7 @@ async function initApp() {
   initExclusiveAccordion(document.getElementById("engine-accordion"));
   if (window.initThemeSwitcher) initThemeSwitcher();
   if (window.initLayoutSwitcher) initLayoutSwitcher();
+  if (window.initCacheClearButton) initCacheClearButton();
   if (window.renderNotifPermissionCard) renderNotifPermissionCard();
 
   const refreshBtn = document.getElementById("refresh-btn");

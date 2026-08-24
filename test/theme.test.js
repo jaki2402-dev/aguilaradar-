@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { loadPage, getGlobal } from "./helpers/loadPage.js";
+import { loadPage, getGlobal, runScript } from "./helpers/loadPage.js";
 
 const FIXTURE_HTML = `<!doctype html><html><body>
   <canvas id="bg-radar-canvas"></canvas>
@@ -13,6 +13,7 @@ const FIXTURE_HTML = `<!doctype html><html><body>
     <div class="design-settings-card">
       <button id="design-settings-close"></button>
       <div class="design-theme-list" id="design-theme-list"></div>
+      <button id="clear-cache-btn"></button>
     </div>
   </div>
 </body></html>`;
@@ -286,5 +287,37 @@ describe("theme.js — initThemeSwitcher (ouverture/fermeture du panneau)", () =
     dom.window.document.getElementById("design-settings-btn").click();
     dom.window.document.dispatchEvent(escEvent());
     expect(dom.window.document.getElementById("design-settings-panel").hidden).toBe(true);
+  });
+});
+
+// reloadWithCacheBust() elle-meme (vraie navigation) n'est pas testable sous jsdom (verifie
+// empiriquement : location.replace() y leve "Not implemented: navigation", meme quand on essaie
+// de la remplacer — jsdom n'expose pas location.replace comme reassignable). On la stubbe donc
+// via runScript, exactement comme sha256Hex dans auth.test.js (fonction top-level, pas une
+// valeur JSON) pour ne verifier que le CABLAGE du bouton ; la vraie navigation est du ressort de
+// Playwright, pas de vitest — meme logique que les fonds decoratifs de background-fx.js.
+describe("theme.js — initCacheClearButton", () => {
+  let dom;
+  beforeEach(() => {
+    dom = loadPage(["config.js", "theme.js"], { html: FIXTURE_HTML });
+    runScript(dom, "reloadWithCacheBust = () => { window.__reloadCalls = (window.__reloadCalls || 0) + 1; };", "stub reloadWithCacheBust");
+    dom.window.initCacheClearButton();
+  });
+
+  it("calls reloadWithCacheBust exactly once when clicked", () => {
+    dom.window.document.getElementById("clear-cache-btn").click();
+    expect(dom.window.__reloadCalls).toBe(1);
+  });
+
+  it("disables the button and updates its label immediately on click", () => {
+    const btn = dom.window.document.getElementById("clear-cache-btn");
+    btn.click();
+    expect(btn.disabled).toBe(true);
+    expect(btn.textContent).toContain("Rechargement");
+  });
+
+  it("does not throw when the button is missing from the page", () => {
+    const bareDom = loadPage(["config.js", "theme.js"], { html: "<!doctype html><html><body></body></html>" });
+    expect(() => bareDom.window.initCacheClearButton()).not.toThrow();
   });
 });
