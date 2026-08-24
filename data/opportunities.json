@@ -640,133 +640,6 @@
             }
         },
         {
-            "id": "opp-20260807-us",
-            "ticker": "US",
-            "name": "Talus",
-            "cgId": "talus",
-            "image": "https://coin-images.coingecko.com/coins/images/70693/large/us-icon.png?1763129786",
-            "price_eur": 0.01765,
-            "market_cap": 99843960,
-            "market_cap_rank": 255,
-            "change_24h_pct": -41.4,
-            "change_7d_pct": -36.0,
-            "change_30d_pct": 37.6,
-            "ath_change_pct": -11.9,
-            "opportunity_score": 16.1,
-            "recognized": false,
-            "sparkline": [
-                0.05394410926073976,
-                0.05436250582173934,
-                0.05410851929791831,
-                0.05309958690443226,
-                0.05320408801169201,
-                0.05520770079025157,
-                0.05553370397291935,
-                0.05518155431142023,
-                0.05559008996689642,
-                0.057338781469156726,
-                0.05702505204670814,
-                0.05428165787886464,
-                0.05333381183721724,
-                0.05576547374234309,
-                0.05426783985043287,
-                0.05133897857555278,
-                0.051287704355986244,
-                0.05148282761801672,
-                0.046177943857711984,
-                0.04258100812834132,
-                0.04857273053131253,
-                0.04614076101539305,
-                0.04617946540826112,
-                0.04919795008736147,
-                0.05096574024818158,
-                0.04953400318448799,
-                0.049722629134956814,
-                0.04797244853549513,
-                0.048136968809988745,
-                0.04326749660869716,
-                0.04468560002734105,
-                0.04401077566792233,
-                0.04404292092643051,
-                0.045243893808134227,
-                0.041795748547250385,
-                0.042095847138296116,
-                0.03974786922548605,
-                0.04178608289806224,
-                0.04110916683617636,
-                0.03938165868186316,
-                0.03829451047274662,
-                0.041160523170721844,
-                0.036531431277867336,
-                0.036265293091343985,
-                0.036008717958839316,
-                0.0357946226521983,
-                0.03362195285575438,
-                0.034506742779362824
-            ],
-            "tags": [
-                "Projet peu connu",
-                "Non vérifié fondamentalement"
-            ],
-            "reason": "Signal purement quantitatif, aucune vérification fondamentale effectuée. Prudence recommandée. Mise à jour du 17/08 : chute marquée détectée lors de la recherche large « biggest movers » de ce cycle, Talus figurant parmi les plus fortes baisses du jour (mouvement macro généralisé de repli sur le marché plutôt qu'un développement propre au projet, selon les sources consultées). Prix rafraîchi via recherche web (accès API direct bloqué ce cycle) ; sources partiellement divergentes sur l'ampleur exacte du mouvement sur 24h, valeur la plus détaillée retenue. Rang de capitalisation, variations 7j/30j et sparkline non rafraîchis ce cycle faute de source fiable pour ces champs sans accès direct — laissés inchangés plutôt que devinés.",
-            "flagged_at": "2026-08-07T00:20:00Z",
-            "price_at_flag": 0.04601519,
-            "threshold_pct": 5,
-            "price_refreshed_at": "2026-08-17T06:35:00Z",
-            "horizons": {
-                "j1": {
-                    "check_at": "2026-08-08T00:20:00Z",
-                    "status": "resolved",
-                    "outcome": {
-                        "price_at_check": 0.04453120437041116,
-                        "move_pct": -3.22,
-                        "validated": false,
-                        "checked_at": "2026-08-12T13:22:43Z"
-                    }
-                },
-                "j3": {
-                    "check_at": "2026-08-10T00:20:00Z",
-                    "status": "pending",
-                    "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
-                    }
-                },
-                "j7": {
-                    "check_at": "2026-08-14T00:20:00Z",
-                    "status": "pending",
-                    "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
-                    }
-                },
-                "j14": {
-                    "check_at": "2026-08-21T00:20:00Z",
-                    "status": "pending",
-                    "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
-                    }
-                },
-                "m6": {
-                    "check_at": "2027-02-05T00:20:00Z",
-                    "status": "pending",
-                    "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
-                    }
-                }
-            }
-        },
-        {
             "id": "opp-20260807-ub",
             "ticker": "UB",
             "name": "Unibase",
@@ -1337,6 +1210,137 @@
                     "outcome": null
                 }
             }
+        }
+    ],
+    "archived_opportunities": [
+        {
+            "id": "opp-20260807-us",
+            "ticker": "US",
+            "name": "Talus",
+            "cgId": "talus",
+            "image": "https://coin-images.coingecko.com/coins/images/70693/large/us-icon.png?1763129786",
+            "price_eur": 0.01765,
+            "market_cap": 99843960,
+            "market_cap_rank": 255,
+            "change_24h_pct": -41.4,
+            "change_7d_pct": -36.0,
+            "change_30d_pct": 37.6,
+            "ath_change_pct": -11.9,
+            "opportunity_score": 16.1,
+            "recognized": false,
+            "sparkline": [
+                0.05394410926073976,
+                0.05436250582173934,
+                0.05410851929791831,
+                0.05309958690443226,
+                0.05320408801169201,
+                0.05520770079025157,
+                0.05553370397291935,
+                0.05518155431142023,
+                0.05559008996689642,
+                0.057338781469156726,
+                0.05702505204670814,
+                0.05428165787886464,
+                0.05333381183721724,
+                0.05576547374234309,
+                0.05426783985043287,
+                0.05133897857555278,
+                0.051287704355986244,
+                0.05148282761801672,
+                0.046177943857711984,
+                0.04258100812834132,
+                0.04857273053131253,
+                0.04614076101539305,
+                0.04617946540826112,
+                0.04919795008736147,
+                0.05096574024818158,
+                0.04953400318448799,
+                0.049722629134956814,
+                0.04797244853549513,
+                0.048136968809988745,
+                0.04326749660869716,
+                0.04468560002734105,
+                0.04401077566792233,
+                0.04404292092643051,
+                0.045243893808134227,
+                0.041795748547250385,
+                0.042095847138296116,
+                0.03974786922548605,
+                0.04178608289806224,
+                0.04110916683617636,
+                0.03938165868186316,
+                0.03829451047274662,
+                0.041160523170721844,
+                0.036531431277867336,
+                0.036265293091343985,
+                0.036008717958839316,
+                0.0357946226521983,
+                0.03362195285575438,
+                0.034506742779362824
+            ],
+            "tags": [
+                "Projet peu connu",
+                "Non vérifié fondamentalement"
+            ],
+            "reason": "Signal purement quantitatif, aucune vérification fondamentale effectuée. Prudence recommandée. Mise à jour du 17/08 : chute marquée détectée lors de la recherche large « biggest movers » de ce cycle, Talus figurant parmi les plus fortes baisses du jour (mouvement macro généralisé de repli sur le marché plutôt qu'un développement propre au projet, selon les sources consultées). Prix rafraîchi via recherche web (accès API direct bloqué ce cycle) ; sources partiellement divergentes sur l'ampleur exacte du mouvement sur 24h, valeur la plus détaillée retenue. Rang de capitalisation, variations 7j/30j et sparkline non rafraîchis ce cycle faute de source fiable pour ces champs sans accès direct — laissés inchangés plutôt que devinés.",
+            "flagged_at": "2026-08-07T00:20:00Z",
+            "price_at_flag": 0.04601519,
+            "threshold_pct": 5,
+            "price_refreshed_at": "2026-08-17T06:35:00Z",
+            "horizons": {
+                "j1": {
+                    "check_at": "2026-08-08T00:20:00Z",
+                    "status": "resolved",
+                    "outcome": {
+                        "price_at_check": 0.04453120437041116,
+                        "move_pct": -3.22,
+                        "validated": false,
+                        "checked_at": "2026-08-12T13:22:43Z"
+                    }
+                },
+                "j3": {
+                    "check_at": "2026-08-10T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j7": {
+                    "check_at": "2026-08-14T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j14": {
+                    "check_at": "2026-08-21T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "m6": {
+                    "check_at": "2027-02-05T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                }
+            },
+            "archived_at": "2026-08-24T04:03:59Z",
+            "archived_reason": "Score de momentum recalcule au 24/08 tres degrade (16.1 -> -10.5 : -19.4% sur 24h et -13.4% sur 7j malgre un marche global en net regime risk-on) : signal initial invalide, retire du suivi actif."
         }
     ]
 }
