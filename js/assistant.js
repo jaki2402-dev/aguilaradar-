@@ -87,9 +87,17 @@ function looksLikeUnknownAssetMention(text) {
 // techniques en capitales (matchent la regex de ticker) mais jamais des actifs à chercher —
 // bug réel constaté avant ce correctif : "c'est quoi le RSI" déclenchait une recherche
 // CoinGecko sur "RSI" au lieu de répondre depuis le glossaire (voir findGlossaryTerm).
+// ia/ok/nft/dex/... : mêmes piège que rsi/ath/atl mais pour des sigles crypto/macro/tech
+// courants dans une phrase française normale — bug réel confirmé (recherche CoinGecko réelle) :
+// "IA" renvoie "World Liberty Financial" en tête de liste, "OK" renvoie "LEO Token", "NFT"
+// renvoie "AINFT" — donc "L'IA peut-elle analyser le marché ?", "OK, et les perspectives
+// macro ?" ou "c'est quoi un NFT ?" partaient sur une recherche CoinGecko live sans rapport
+// AVANT même que le relais IA ait la moindre chance de lire la question.
 const ASSET_QUERY_STOPWORDS = new Set([
   "que", "qui", "quoi", "comment", "pourquoi", "quel", "quelle", "quels", "quelles", "résume", "resume",
   "rsi", "ath", "atl",
+  "ia", "ok", "nft", "dex", "dao", "roi", "apy", "apr", "tvl", "ico", "ido", "etf", "usd", "eur",
+  "fed", "bce", "pib", "ue", "usa", "api", "faq", "url", "pdf", "sms", "ceo", "cto", "gpu", "cpu",
 ]);
 
 // Sous-ensemble du glossaire (GLOSSARY, config.js) utile en question directe dans le chat —
@@ -158,6 +166,11 @@ async function fetchLiveSearchAnswer(query) {
   try {
     const matches = await searchCoinByName(query);
     if (!matches || matches.length === 0) return null;
+    // La recherche CoinGecko est floue : pour une requête courte (<=3 caractères, donc pas déjà
+    // écartée par ASSET_QUERY_STOPWORDS), le premier résultat peut n'avoir aucun rapport avec le
+    // texte tapé (constaté : "OK" renvoie "LEO Token" en tête, dont le ticker n'est même pas
+    // "OK"). N'accepte un match aussi court que s'il correspond EXACTEMENT au ticker cherché.
+    if (query.length <= 3 && (matches[0].symbol || "").toLowerCase() !== query.toLowerCase()) return null;
     const coin = await fetchCoinDetail(matches[0].id);
     if (!coin) return null;
     const name = coin.name || matches[0].name;
@@ -329,6 +342,44 @@ function buildAiContext() {
   }
   const d = chatData.digest;
   if (d && d.generated_at) parts.push(`Résumé du moment : ${d.headline} — ${d.summary}`);
+
+  // Contexte macro élargi (data/market-context.json) — champs numériques compacts seulement,
+  // jamais les champs "note" (paragraphes entiers) pour ne pas saturer les 6000 caractères de
+  // contexte acceptés par le relais IA (voir worker.js) au détriment du reste (opportunités,
+  // alertes). Sans ça, une question macro ("la Fed a annoncé quoi ?", "les ETF sont haussiers ?")
+  // n'avait aucune vraie donnée à citer alors que le site les calcule déjà.
+  const ctx = chatData.marketContext;
+  if (ctx && ctx.stablecoins && ctx.stablecoins.dominance_pct != null) {
+    parts.push(`Dominance stablecoins : ${ctx.stablecoins.dominance_pct} % de la capitalisation totale du marché crypto.`);
+  }
+  if (ctx && ctx.employment_us && ctx.employment_us.unemployment_rate_pct != null) {
+    parts.push(`Emploi US : chômage ${ctx.employment_us.unemployment_rate_pct} %, variation non-agricole ${ctx.employment_us.nonfarm_payrolls_change_k ?? "—"}k (rapport du ${ctx.employment_us.last_report_date || "—"}).`);
+  }
+  if (ctx && ctx.etf_flows && ctx.etf_flows.btc_etf_net_flow_usd != null) {
+    const flowM = ctx.etf_flows.btc_etf_net_flow_usd / 1e6;
+    parts.push(`ETF Bitcoin spot : flux net ${flowM >= 0 ? "+" : ""}${flowM.toFixed(1)} M$ (${ctx.etf_flows.period || "période récente"}).`);
+  }
+
+  // Répartition des verdicts actifs sur les 15 favoris — signal d'ensemble utile pour une
+  // question générale ("le marché est-il plutôt à l'achat en ce moment ?") sans devoir lister
+  // les 15 verdicts un par un (voir la même logique de dernier-verdict-par-actif que answerEngine).
+  const verdicts = chatData.verdicts || [];
+  if (verdicts.length) {
+    const latestByAsset = new Map();
+    verdicts.forEach((v) => {
+      const prev = latestByAsset.get(v.asset);
+      if (!prev || new Date(v.issued_at) > new Date(prev.issued_at)) latestByAsset.set(v.asset, v);
+    });
+    const counts = { ACHAT: 0, ATTENTE: 0, VENTE: 0 };
+    latestByAsset.forEach((v) => { if (counts[v.verdict] !== undefined) counts[v.verdict]++; });
+    parts.push(`Répartition des verdicts actifs sur les 15 favoris : ${counts.ACHAT} ACHAT, ${counts.ATTENTE} ATTENTE, ${counts.VENTE} VENTE.`);
+  }
+
+  const stats = chatData.engineHistory && chatData.engineHistory.global_stats;
+  if (stats && stats.accuracy_strict_pct != null) {
+    parts.push(`Fiabilité mesurée du moteur : ${stats.accuracy_strict_pct.toFixed(1)} % d'exactitude sur ${stats.total_verdicts_resolved} verdicts vérifiés.`);
+  }
+
   const opps = ((chatData.opportunities && chatData.opportunities.opportunities) || []).slice(0, 3);
   if (opps.length) parts.push("Top opportunités suivies : " + opps.map((o) => `${o.ticker} (${o.reason || "—"})`).join(" ; "));
   const alerts = (chatData.alerts || []).slice(-3);

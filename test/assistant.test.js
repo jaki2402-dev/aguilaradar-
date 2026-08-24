@@ -75,6 +75,14 @@ describe("assistant.js — extractAssetQuery", () => {
   it("renvoie null sur une phrase sans ticker ni nom propre", () => {
     expect(extractAssetQuery("bonjour comment ça va")).toBeNull();
   });
+
+  it("ignore les sigles crypto/macro/tech courants même en capitales (régression réelle : CoinGecko renvoie de vrais résultats sans rapport pour IA/OK/NFT/DEX/DAO/ETF)", () => {
+    expect(extractAssetQuery("L'IA peut-elle vraiment analyser le marché ?")).toBeNull();
+    expect(extractAssetQuery("OK, et sinon quelles sont les perspectives macro ?")).toBeNull();
+    expect(extractAssetQuery("C'est quoi un NFT et pourquoi tout le monde en parle ?")).toBeNull();
+    expect(extractAssetQuery("On est plutôt dans un marché DAO ou centralisé ?")).toBeNull();
+    expect(extractAssetQuery("Est-ce que le marché est haussier selon les ETF ?")).toBeNull();
+  });
 });
 
 describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", () => {
@@ -399,6 +407,66 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
       dom.window.fetch = async () => { throw new Error("panne réseau simulée"); };
       const answer = await dom.window.answerQuestion("Pourquoi ça monte ?");
       expect(answer).toContain("régime de marché actuel est classé");
+    });
+
+    it("routes a question mentioning 'IA' to the AI relay instead of a live CoinGecko search on an unrelated coin (régression réelle : la recherche CoinGecko renvoie 'World Liberty Financial' pour la requête 'IA')", async () => {
+      runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
+      dom.window.fetch = async (url) => {
+        if (url.includes("/search?")) throw new Error("ne devrait jamais chercher 'IA' comme un actif");
+        expect(url).toBe("https://test-relay.workers.dev");
+        return { ok: true, json: async () => ({ answer: "Je peux lire l'ensemble de la question et croiser les données du site, pas juste réagir à un mot isolé." }) };
+      };
+      const answer = await dom.window.answerQuestion("Comment fonctionne ton IA exactement, tu comprends vraiment mes questions ?");
+      expect(answer).toContain("Je peux lire l'ensemble de la question");
+      expect(answer).not.toContain("Je ne trouve pas cet actif");
+    });
+  });
+
+  describe("garde-fou de pertinence sur la recherche CoinGecko live (fetchLiveSearchAnswer)", () => {
+    it("n'accepte pas un premier résultat CoinGecko qui ne correspond même pas au ticker cherché, pour une requête courte (régression réelle : 'OK' renvoie 'LEO Token' en tête)", async () => {
+      runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
+      dom.window.fetch = async (url) => {
+        if (url.includes("/search?")) return { ok: true, json: async () => ({ coins: [{ id: "leo-token", name: "LEO Token", symbol: "leo" }] }) };
+        return { ok: true, json: async () => ({ answer: "Réponse IA de repli, la recherche live n'a rien renvoyé de pertinent." }) };
+      };
+      const answer = await dom.window.answerQuestion("WXY, tu en penses quoi ?");
+      expect(answer).not.toContain("LEO Token");
+      expect(answer).toContain("Réponse IA de repli");
+    });
+
+    it("accepte un match court quand le ticker renvoyé correspond exactement à la requête", async () => {
+      dom.window.fetch = async (url) => {
+        if (url.includes("/search?")) return { ok: true, json: async () => ({ coins: [{ id: "okb", name: "OKB", symbol: "okb" }] }) };
+        return { ok: true, json: async () => [{ name: "OKB", symbol: "okb", current_price: 40, market_cap_rank: 41 }] };
+      };
+      const answer = await dom.window.answerQuestion("Tu connais OKB ?");
+      expect(answer).toContain("OKB");
+      expect(answer).toContain("ne fait pas partie des 15 favoris");
+    });
+  });
+
+  describe("buildAiContext — enrichissement macro/verdicts envoyé au relais IA", () => {
+    it("inclut le contexte macro (data/market-context.json) et la répartition des verdicts quand disponibles", async () => {
+      runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
+      dom.window.aguilaradarData.marketContext = {
+        stablecoins: { dominance_pct: 13.5 },
+        employment_us: { unemployment_rate_pct: 4.1, nonfarm_payrolls_change_k: -23, last_report_date: "2026-08-07" },
+        etf_flows: { btc_etf_net_flow_usd: 137300000, period: "17 août 2026" },
+      };
+      dom.window.aguilaradarData.verdicts = [
+        { asset: "chainlink", verdict: "ACHAT", issued_at: "2026-08-20T00:00:00Z" },
+        { asset: "cardano", verdict: "ATTENTE", issued_at: "2026-08-21T00:00:00Z" },
+      ];
+      let sentContext = null;
+      dom.window.fetch = async (url, opts) => {
+        sentContext = JSON.parse(opts.body).context;
+        return { ok: true, json: async () => ({ answer: "Réponse IA." }) };
+      };
+      await dom.window.answerQuestion("Quelle est ta lecture globale du marché en ce moment ?");
+      expect(sentContext).toContain("Dominance stablecoins : 13.5 %");
+      expect(sentContext).toContain("chômage 4.1 %");
+      expect(sentContext).toContain("flux net +137.3 M$");
+      expect(sentContext).toContain("1 ACHAT, 1 ATTENTE, 0 VENTE");
     });
   });
 });
