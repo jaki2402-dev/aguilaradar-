@@ -91,32 +91,32 @@
                 },
                 "j3": {
                     "check_at": "2026-08-10T00:20:00Z",
-                    "status": "pending",
+                    "status": "resolved",
                     "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
+                        "price_at_check": 0.16796452061412842,
+                        "move_pct": -3.32,
+                        "validated": false,
+                        "checked_at": "2026-08-24T22:17:58Z"
                     }
                 },
                 "j7": {
                     "check_at": "2026-08-14T00:20:00Z",
-                    "status": "pending",
+                    "status": "resolved",
                     "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
+                        "price_at_check": 0.15818908850121055,
+                        "move_pct": -8.95,
+                        "validated": false,
+                        "checked_at": "2026-08-24T22:17:58Z"
                     }
                 },
                 "j14": {
                     "check_at": "2026-08-21T00:20:00Z",
-                    "status": "pending",
+                    "status": "resolved",
                     "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
+                        "price_at_check": 0.17031951095621709,
+                        "move_pct": -1.97,
+                        "validated": false,
+                        "checked_at": "2026-08-24T22:17:58Z"
                     }
                 },
                 "m6": {
@@ -218,32 +218,32 @@
                 },
                 "j3": {
                     "check_at": "2026-08-10T00:20:00Z",
-                    "status": "pending",
+                    "status": "resolved",
                     "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
+                        "price_at_check": 0.07481643196855743,
+                        "move_pct": -7.3,
+                        "validated": false,
+                        "checked_at": "2026-08-24T22:17:58Z"
                     }
                 },
                 "j7": {
                     "check_at": "2026-08-14T00:20:00Z",
-                    "status": "pending",
+                    "status": "resolved",
                     "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
+                        "price_at_check": 0.07450143678345816,
+                        "move_pct": -7.69,
+                        "validated": false,
+                        "checked_at": "2026-08-24T22:17:58Z"
                     }
                 },
                 "j14": {
                     "check_at": "2026-08-21T00:20:00Z",
-                    "status": "pending",
+                    "status": "resolved",
                     "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
+                        "price_at_check": 0.10055308137786753,
+                        "move_pct": 24.58,
+                        "validated": true,
+                        "checked_at": "2026-08-24T22:17:58Z"
                     }
                 },
                 "m6": {
