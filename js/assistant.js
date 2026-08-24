@@ -392,9 +392,10 @@ function buildAiContext() {
     parts.push(`ETF Bitcoin spot : flux net ${flowM >= 0 ? "+" : ""}${flowM.toFixed(1)} M$ (${ctx.etf_flows.period || "période récente"}).`);
   }
 
-  // Répartition des verdicts actifs sur les 15 favoris — signal d'ensemble utile pour une
-  // question générale ("le marché est-il plutôt à l'achat en ce moment ?") sans devoir lister
-  // les 15 verdicts un par un (voir la même logique de dernier-verdict-par-actif que answerEngine).
+  // Dernier verdict de CHACUN des 15 favoris, nommément — pas juste une répartition agrégée
+  // (ancien comportement) — pour qu'une question générale ("quels favoris sont à l'achat en ce
+  // moment ?") puisse vraiment les citer un par un, jamais deviner lesquels. Changement demandé
+  // explicitement par l'utilisateur : "tout aguilaradar à disposition" pour limiter les hallucinations.
   const verdicts = chatData.verdicts || [];
   if (verdicts.length) {
     const latestByAsset = new Map();
@@ -402,9 +403,8 @@ function buildAiContext() {
       const prev = latestByAsset.get(v.asset);
       if (!prev || new Date(v.issued_at) > new Date(prev.issued_at)) latestByAsset.set(v.asset, v);
     });
-    const counts = { ACHAT: 0, ATTENTE: 0, VENTE: 0 };
-    latestByAsset.forEach((v) => { if (counts[v.verdict] !== undefined) counts[v.verdict]++; });
-    parts.push(`Répartition des verdicts actifs sur les 15 favoris : ${counts.ACHAT} ACHAT, ${counts.ATTENTE} ATTENTE, ${counts.VENTE} VENTE.`);
+    const lines = Array.from(latestByAsset.values()).map((v) => `${v.ticker} ${v.verdict} (${v.confidence_pct ?? "—"} %)`);
+    parts.push(`Verdicts actifs sur les 15 favoris : ${lines.join(", ")}.`);
   }
 
   const stats = chatData.engineHistory && chatData.engineHistory.global_stats;
@@ -412,10 +412,14 @@ function buildAiContext() {
     parts.push(`Fiabilité mesurée du moteur : ${stats.accuracy_strict_pct.toFixed(1)} % d'exactitude sur ${stats.total_verdicts_resolved} verdicts vérifiés.`);
   }
 
-  const opps = ((chatData.opportunities && chatData.opportunities.opportunities) || []).slice(0, 3);
-  if (opps.length) parts.push("Top opportunités suivies : " + opps.map((o) => `${o.ticker} (${o.reason || "—"})`).join(" ; "));
-  const alerts = (chatData.alerts || []).slice(-3);
+  // Liste complète des opportunités suivies (pas seulement les 3 meilleures, ancien comportement)
+  // et davantage d'alertes/actualités — même logique de contexte complet ci-dessus.
+  const opps = (chatData.opportunities && chatData.opportunities.opportunities) || [];
+  if (opps.length) parts.push("Opportunités suivies (criblage Top 300) : " + opps.map((o) => `${o.ticker} (${o.reason || "—"})`).join(" ; "));
+  const alerts = (chatData.alerts || []).slice(-8);
   if (alerts.length) parts.push("Dernières alertes : " + alerts.map((a) => a.message).join(" ; "));
+  const news = (chatData.news && chatData.news.items) || [];
+  if (news.length) parts.push("Actualités récentes : " + news.slice(-8).map((n) => n.title).join(" ; "));
   return parts.join("\n");
 }
 

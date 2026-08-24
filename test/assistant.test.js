@@ -494,7 +494,7 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
   });
 
   describe("buildAiContext — enrichissement macro/verdicts envoyé au relais IA", () => {
-    it("inclut le contexte macro (data/market-context.json) et la répartition des verdicts quand disponibles", async () => {
+    it("inclut le contexte macro (data/market-context.json) et le détail des verdicts quand disponibles", async () => {
       runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
       dom.window.aguilaradarData.marketContext = {
         stablecoins: { dominance_pct: 13.5 },
@@ -502,8 +502,8 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
         etf_flows: { btc_etf_net_flow_usd: 137300000, period: "17 août 2026" },
       };
       dom.window.aguilaradarData.verdicts = [
-        { asset: "chainlink", verdict: "ACHAT", issued_at: "2026-08-20T00:00:00Z" },
-        { asset: "cardano", verdict: "ATTENTE", issued_at: "2026-08-21T00:00:00Z" },
+        { asset: "chainlink", ticker: "LINK", verdict: "ACHAT", confidence_pct: 65, issued_at: "2026-08-20T00:00:00Z" },
+        { asset: "cardano", ticker: "ADA", verdict: "ATTENTE", confidence_pct: 50, issued_at: "2026-08-21T00:00:00Z" },
       ];
       let sentContext = null;
       dom.window.fetch = async (url, opts) => {
@@ -514,7 +514,41 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
       expect(sentContext).toContain("Dominance stablecoins : 13.5 %");
       expect(sentContext).toContain("chômage 4.1 %");
       expect(sentContext).toContain("flux net +137.3 M$");
-      expect(sentContext).toContain("1 ACHAT, 1 ATTENTE, 0 VENTE");
+      // Chaque favori cité nommément (ticker + verdict + confiance), plus une simple répartition
+      // agrégée qui empêchait l'IA de répondre sur un favori précis (régression réelle corrigée,
+      // voir buildAiContext : "tout aguilaradar à disposition" demandé explicitement).
+      expect(sentContext).toContain("LINK ACHAT (65 %)");
+      expect(sentContext).toContain("ADA ATTENTE (50 %)");
+    });
+
+    it("inclut TOUTES les opportunités suivies (pas seulement les 3 meilleures), plus alertes et actualités récentes", async () => {
+      runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
+      dom.window.aguilaradarData.opportunities = {
+        opportunities: [
+          { cgId: "a", ticker: "AAA", name: "Asset A", reason: "Raison A" },
+          { cgId: "b", ticker: "BBB", name: "Asset B", reason: "Raison B" },
+          { cgId: "c", ticker: "CCC", name: "Asset C", reason: "Raison C" },
+          { cgId: "d", ticker: "DDD", name: "Asset D", reason: "Raison D" },
+        ],
+      };
+      dom.window.aguilaradarData.alerts = [
+        { triggered_at: "2026-08-10T00:00:00Z", message: "Alerte 1" },
+        { triggered_at: "2026-08-11T00:00:00Z", message: "Alerte 2" },
+        { triggered_at: "2026-08-12T00:00:00Z", message: "Alerte 3" },
+        { triggered_at: "2026-08-13T00:00:00Z", message: "Alerte 4" },
+      ];
+      dom.window.aguilaradarData.news = { items: [{ title: "Titre actu récente" }] };
+      let sentContext = null;
+      dom.window.fetch = async (url, opts) => {
+        sentContext = JSON.parse(opts.body).context;
+        return { ok: true, json: async () => ({ answer: "Réponse IA." }) };
+      };
+      await dom.window.answerQuestion("Quelle est ta lecture globale du marché en ce moment ?");
+      expect(sentContext).toContain("AAA");
+      expect(sentContext).toContain("DDD"); // la 4e opportunité n'est plus coupée (ancienne limite : 3)
+      expect(sentContext).toContain("Alerte 1");
+      expect(sentContext).toContain("Alerte 4"); // la 4e alerte n'est plus coupée (ancienne limite : 3)
+      expect(sentContext).toContain("Titre actu récente"); // les actualités n'étaient jamais incluses avant
     });
   });
 });
