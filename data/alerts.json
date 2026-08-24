@@ -538,5 +538,14 @@
         "sentiment": "positif",
         "message": "Reprise de la routine après 4,6 jours d'interruption (dernier succès le 19/08 08h17 UTC). 14 verdicts en retard résolus ce cycle : le marché a fortement grimpé pendant l'interruption (BTC +18,7 %, ETH +25,3 %, la plupart des favoris entre +9 % et +71 %), et l'indice de peur et de cupidité est passé de 46 (« neutre ») à 73 (« Greed »), un vrai changement de régime macro reclassé « risk-on ». Le moteur, resté majoritairement prudent (ATTENTE) sur ce lot, n'a validé que 3 des 14 verdicts (LINK, JUP, INJ) — voir l'onglet Moteur pour le détail complet et le diagnostic loggé dans le journal de correction. 14 nouveaux verdicts émis pour les favoris concernés, tous en attente prudente vu le rattrapage déjà largement réalisé.",
         "source": "agrégat WebSearch (14 requêtes de prix individuelles pour la résolution, + recherche large « biggest movers » + indice de peur et de cupidité + « crypto news today »)"
+    },
+    {
+        "id": "alert-20260824-1421-btc-78k-rsi",
+        "ticker_ou_theme": "BTC",
+        "type": "actualite_favori",
+        "triggered_at": "2026-08-24T14:21:00Z",
+        "sentiment": "neutre",
+        "message": "Bitcoin poursuit sa progression et évolue autour de 78-79 k$ ce lundi 24 août (ouverture à 77 727 $, +0,8 % sur la séance précédente, selon Yahoo Finance), pendant que plusieurs analyses techniques relayées ce jour signalent un RSI en zone de surachat, c'est-à-dire un risque de reprise de souffle après la hausse. L'indice de peur et de cupidité confirme cette lecture à 73-74 (« Greed »), un niveau élevé qui invite à la prudence sur les entrées tardives plutôt qu'à l'euphorie. Aucun seuil de vigilance franchi sur les 15 favoris, aucun signal précoce déclenché sur les verdicts en cours.",
+        "source": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-monday-august-24-2026-prices-rising-as-investors-look-for-more-fed-clues-this-week-130538704.html"
     }
 ]
