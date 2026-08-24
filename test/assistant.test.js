@@ -256,6 +256,19 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
     expect(answer).toContain("56.3");
   });
 
+  it("recognizes 'bullrun' as a market-regime question instead of falling through to the generic message (régression réelle rapportée par l'utilisateur)", async () => {
+    const answer = await dom.window.answerQuestion("Est ce qu'on est en bullrun ?");
+    expect(answer).toContain("régime de marché actuel est classé");
+    expect(answer).not.toContain("Essaie par exemple");
+  });
+
+  it("recognizes other bull/bear market phrasings ('bull market', 'haussier', 'baissier', 'bearish')", async () => {
+    for (const q of ["On est en bull market ?", "Le marché est haussier ou baissier ?", "C'est bearish en ce moment ?"]) {
+      const answer = await dom.window.answerQuestion(q);
+      expect(answer).toContain("régime de marché actuel est classé");
+    }
+  });
+
   it("routes an alerts-shaped question to the recent alerts list", async () => {
     const answer = await dom.window.answerQuestion("Quelles sont les dernières alertes ?");
     expect(answer).toContain("Seuil RSI franchi");
