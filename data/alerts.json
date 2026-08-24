@@ -547,5 +547,13 @@
         "sentiment": "neutre",
         "message": "Bitcoin poursuit sa progression et évolue autour de 78-79 k$ ce lundi 24 août (ouverture à 77 727 $, +0,8 % sur la séance précédente, selon Yahoo Finance), pendant que plusieurs analyses techniques relayées ce jour signalent un RSI en zone de surachat, c'est-à-dire un risque de reprise de souffle après la hausse. L'indice de peur et de cupidité confirme cette lecture à 73-74 (« Greed »), un niveau élevé qui invite à la prudence sur les entrées tardives plutôt qu'à l'euphorie. Aucun seuil de vigilance franchi sur les 15 favoris, aucun signal précoce déclenché sur les verdicts en cours.",
         "source": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-monday-august-24-2026-prices-rising-as-investors-look-for-more-fed-clues-this-week-130538704.html"
+    },
+    {
+        "id": "alert-20260824-2220-macro-stable",
+        "ticker_ou_theme": "MACRO",
+        "type": "actualite_macro",
+        "triggered_at": "2026-08-24T22:20:00Z",
+        "message": "Cycle du 24 août 2026, 22h20 UTC : rien de nouveau par rapport au cycle précédent (régime « risk-on », aucun seuil franchi). Recherche large « biggest movers 24h » : aucun des 15 favoris, des 13 opportunités ni des 8 items du groupe témoin ne figure parmi les mouvements extrêmes du jour. Indice de peur et de cupidité relevé entre 73 et 80 selon la source (« Greed »/« Extreme Greed »), quasi identique à la valeur déjà retenue (74), conservée telle quelle conformément au correctif du 10/08. Dominance BTC reconfirmée à 56,6 %.",
+        "source": "agrégat WebSearch (recherche large « biggest movers » + indice de peur et de cupidité + dominance BTC + veille actualités générale)"
     }
 ]
