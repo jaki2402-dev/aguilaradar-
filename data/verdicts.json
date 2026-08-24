@@ -492,13 +492,13 @@
         "reasoning": "Consolidation après une semaine volatile : +17,4 % sur 7 jours mais repli de -5,2 % sur les dernières 24h, plutôt un essoufflement du rebond qu'une tendance nette dans un sens ou l'autre. Aucun nouveau catalyseur fondamental identifié ce cycle (le jalon de décentralisation Stage 2 sur L2BEAT du 10 août reste d'actualité mais n'est pas un développement neuf). Régime macro neutre, sans influence directionnelle particulière. Consensus à trois signaux unanimement prudent (3/3 attente) : le précédent verdict ATTENTE sur cet actif vient d'être invalidé par un mouvement de -6,33 % à son échéance, ce qui incite à une lecture encore plus prudente sur un actif historiquement très volatil.",
         "price_at_issue": 0.02508,
         "resolves_at": "2026-08-24T01:03:00Z",
-        "status": "pending",
+        "status": "resolved",
         "outcome": {
-            "price_at_resolution": null,
-            "actual_move_pct": null,
-            "actual_direction": null,
-            "verdict_correct": null,
-            "resolved_at": null
+            "price_at_resolution": 0.02487,
+            "actual_move_pct": -0.84,
+            "actual_direction": "ATTENTE",
+            "verdict_correct": true,
+            "resolved_at": "2026-08-24T04:21:00Z"
         },
         "threshold_pct": 5,
         "signal_consensus": {
@@ -951,5 +951,37 @@
             "verdict_correct": null,
             "resolved_at": null
         }
+    },
+    {
+        "id": "v-20260824-ctsi",
+        "issued_at": "2026-08-24T04:21:00Z",
+        "asset": "cartesi",
+        "ticker": "CTSI",
+        "verdict": "ATTENTE",
+        "horizon_days": 7,
+        "confidence_pct": 50,
+        "signals_used": [
+            "24h -4.6%",
+            "7j +16.0%"
+        ],
+        "signal_consensus": {
+            "technique": "mixte",
+            "fondamental": "neutre",
+            "macro": "haussier",
+            "accord_count": 1
+        },
+        "reasoning": "Le verdict ATTENTE précédent sur Cartesi vient d'être validé (mouvement de -0,84 % à l'échéance, sous le seuil directionnel). Lecture technique mixte pour ce nouveau cycle : repli de -4,6 % sur les dernières 24h après un rebond de +16,0 % sur 7 jours, plutôt une consolidation post-rebond qu'un signal directionnel net. Aucun nouveau catalyseur fondamental identifié ce cycle sur l'infrastructure modulaire (le jalon de décentralisation Stage 2 sur L2BEAT, déjà noté le 10 août, reste d'actualité mais n'est pas un développement neuf). Contexte macro toujours risk-on (indice de peur et de cupidité en zone Greed, stable par rapport au cycle précédent). Un seul signal sur trois converge nettement (macro) : confiance insuffisante pour un appel directionnel, horizon volontairement raccourci à 7 jours vu la volatilité historique de cet actif.",
+        "price_at_issue": 0.02487,
+        "resolves_at": "2026-08-31T04:21:00Z",
+        "status": "pending",
+        "outcome": {
+            "price_at_resolution": null,
+            "actual_move_pct": null,
+            "actual_direction": null,
+            "verdict_correct": null,
+            "resolved_at": null
+        },
+        "threshold_pct": 5,
+        "regime_at_issue": "risk-on"
     }
 ]
