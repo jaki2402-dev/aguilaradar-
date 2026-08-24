@@ -344,10 +344,13 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
   });
 
   // Bugs réels remontés par l'utilisateur : l'assistant "ne comprend pas le texte" et renvoie
-  // une réponse automatique/générique. Cause réelle : un mot-clé isolé ("monte") ou un nom
-  // propre cité en passant ("Twitter") interceptaient une phrase longue et nuancée avant que
-  // l'IA n'ait la moindre chance de vraiment la lire — voir tryHeuristicAnswer/answerQuestion.
-  describe("phrases longues/nuancées : priorité à l'IA plutôt qu'à une heuristique approximative", () => {
+  // une réponse automatique/générique — répétée même après un premier correctif ciblé sur les
+  // phrases longues, l'utilisateur a explicitement demandé que TOUTE question passe par une
+  // vraie lecture IA, pas seulement les longues ("je ne veux pas que tu mets juste des mots
+  // clé... je veux que ça analyse"). Cause réelle des cas ci-dessous : un mot-clé isolé
+  // ("monte") ou un nom propre cité en passant ("Twitter") interceptaient la question avant que
+  // l'IA n'ait la moindre chance de la lire — voir tryKeywordFallback/answerQuestion.
+  describe("priorité systématique à l'IA sur le mot-clé, courte ou longue phrase (comportement demandé par l'utilisateur)", () => {
     it("routes a long, nuanced question to the AI relay instead of the shallow 'monte' keyword match (régression réelle)", async () => {
       runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
       dom.window.fetch = async (url) => {
@@ -378,12 +381,23 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
       expect(answer).not.toContain("Essaie par exemple"); // pas le message totalement générique
     });
 
-    it("never calls the AI relay for a short question a heuristic already answers confidently (no wasted round-trip)", async () => {
+    it("calls the AI relay even for a short question — a short question deserves a real reading too, not just a keyword match (changement de comportement demandé explicitement par l'utilisateur)", async () => {
       runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
       let fetchCalled = false;
-      dom.window.fetch = async () => { fetchCalled = true; throw new Error("ne devrait jamais être appelé"); };
+      dom.window.fetch = async () => {
+        fetchCalled = true;
+        return { ok: true, json: async () => ({ answer: "Le marché grimpe surtout porté par le rebond post-emploi US, pas un simple mot-clé." }) };
+      };
       const answer = await dom.window.answerQuestion("Pourquoi ça monte ?"); // court : 3 mots
-      expect(fetchCalled).toBe(false);
+      expect(fetchCalled).toBe(true);
+      expect(answer).toContain("Le marché grimpe surtout porté par le rebond post-emploi US");
+      expect(answer).not.toContain("régime de marché actuel est classé"); // pas le résumé générique answerMarketWhy
+    });
+
+    it("still falls back to the keyword-matched answer for a short question when the AI relay itself is unreachable (filet de secours, pas le chemin par défaut)", async () => {
+      runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
+      dom.window.fetch = async () => { throw new Error("panne réseau simulée"); };
+      const answer = await dom.window.answerQuestion("Pourquoi ça monte ?");
       expect(answer).toContain("régime de marché actuel est classé");
     });
   });
