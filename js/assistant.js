@@ -229,16 +229,20 @@ async function fetchLiveTechnicalSummary(cgId) {
 const CORRECTION_KEYWORDS = /\b(corrig|amélior|amelior|apprend|apprentissage|ajuste|auto-correct)/i;
 
 // Résumé du journal des auto-corrections (correction_log, engine-history.json) — même schéma
-// que celui déjà rendu dans l'onglet Moteur (engine.js) : version/attempted_at/status/
-// change_description/note. Volontairement séparé de answerEngine pour être réutilisable aussi
-// depuis answerAboutAsset (question sur un actif nommé ET sur la correction en même temps).
+// réel que celui rendu dans l'onglet Moteur (engine.js) depuis son correctif : id/logged_at/
+// trigger/what/why/action/status ("accepted"/"rejected")/validation_score_before_pct/
+// validation_score_after_pct (voir CLAUDE.md). Volontairement séparé de answerEngine pour être
+// réutilisable aussi depuis answerAboutAsset (question sur un actif nommé ET sur la correction
+// en même temps).
 function correctionLogSummary() {
   const log = (chatData.engineHistory && chatData.engineHistory.correction_log) || [];
   if (log.length === 0) {
     return "Aucune auto-correction tentée pour l'instant — le moteur a besoin de plusieurs verdicts vérifiés avant de juger si un ajustement est justifié (rythme volontairement mesuré, pas un réglage permanent toutes les quelques minutes).";
   }
   const last = log[log.length - 1];
-  return `${log.length} tentative(s) d'auto-correction enregistrée(s) à ce jour. La dernière (${last.attempted_at}, statut "${last.status}") : ${last.change_description}${last.note ? ` — ${last.note}` : ""}`;
+  const statusLabel = last.status === "accepted" ? "appliquée" : "rejetée";
+  const dateLabel = last.logged_at ? new Date(last.logged_at).toLocaleDateString("fr-FR") : "date inconnue";
+  return `${log.length} tentative(s) d'auto-correction enregistrée(s) à ce jour. La dernière (${dateLabel}, ${statusLabel}) : ${last.what || ""} ${last.action || ""}`.trim();
 }
 
 async function answerAboutAsset(mention, question) {
