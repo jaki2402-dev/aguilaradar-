@@ -25,9 +25,11 @@
 
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
 
-/* ---- Fond animé (site entier, gate + app) — Classique (2D) ou Galaxie 3D, voir theme.js ---- */
-#bg-radar-canvas, #bg-galaxy-canvas { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
-@media (prefers-reduced-motion: reduce) { #bg-radar-canvas, #bg-galaxy-canvas { display: none; } }
+/* ---- Fond animé (site entier, gate + app) — voir js/theme.js pour la liste des thèmes ---- */
+#bg-radar-canvas, #bg-galaxy-canvas, #bg-aurora-canvas, #bg-cyber-canvas, #bg-minimal-canvas { position: fixed; inset: 0; z-index: -1; pointer-events: none; }
+/* #bg-minimal-canvas exclu : ce thème reste actif même mouvement réduit demandé (voir
+   bg-themes-extra.js), son animation est déjà assez subtile pour ne rien devoir couper. */
+@media (prefers-reduced-motion: reduce) { #bg-radar-canvas, #bg-galaxy-canvas, #bg-aurora-canvas, #bg-cyber-canvas { display: none; } }
 
 html { -webkit-text-size-adjust: 100%; }
 
@@ -221,6 +223,17 @@ header.site-header h1 { margin: 0; font-family: var(--font-mono); letter-spacing
 }
 .design-theme-card:hover { border-color: var(--accent-2); }
 .design-theme-card.active { border-color: var(--accent); background: var(--accent-dim); }
+/* Bandeau de couleurs en tête de carte (voir THEMES[].swatch, theme.js) : identifie chaque
+   thème d'un coup d'œil, utile maintenant qu'il y en a 5 et pas seulement 2 à comparer par le
+   seul texte. Marges négatives = déborde jusqu'aux bords de la carte malgré son padding, rayon
+   réduit de 1px pour s'aligner avec la bordure de la carte elle-même plutôt que la dépasser. */
+.design-theme-swatch {
+  display: block;
+  height: 30px;
+  margin: -14px -16px 8px;
+  border-radius: calc(var(--radius-sm) - 1px) calc(var(--radius-sm) - 1px) 0 0;
+  border-bottom: 1px solid var(--border);
+}
 .design-theme-name { font-weight: 700; }
 .design-theme-desc { font-size: 0.82rem; color: var(--text-dim); }
 .design-theme-check { font-size: 0.78rem; color: var(--accent); font-weight: 600; min-height: 1em; }
@@ -271,13 +284,27 @@ nav.tabs button.active { color: var(--accent); }
    data-tab) — la lueur suit automatiquement sans règle dédiée par onglet. */
 nav.tabs button.active svg { filter: drop-shadow(0 0 6px currentColor); }
 
-@media (max-width: 767px) {
+/* Barre du bas (tactile) : largeur < 768px (téléphone en portrait), OU hauteur disponible
+   courte en paysage (< 501px). Un vrai téléphone reste un téléphone une fois tourné — la
+   largeur seule ne suffit pas à distinguer "portable en paysage" de "bureau" : les iPhone à
+   grand écran (Pro Max, Plus, XR...) dépassent 768px de large une fois couchés et basculaient
+   donc sur la barre du haut pensée pour un écran de bureau piloté à la souris, sans rapport
+   avec un doigt sur un écran tactile — bug réel constaté : la nav "disparaissait" (mauvaise
+   disposition, jamais pensée pour cette taille) dès qu'on passait en paysage sur ces modèles.
+   Aucun téléphone, même le plus grand, ne dépasse ~430px de hauteur en paysage ; aucune vraie
+   tablette/bureau ne descend sous 501px de hauteur à une largeur >= 768px — seuil sûr dans les
+   deux sens. */
+@media (max-width: 767px), (max-height: 500px) and (orientation: landscape) {
   nav.tabs {
     position: fixed; left: 0; right: 0; bottom: 0;
     background: rgba(13, 18, 25, 0.92);
     backdrop-filter: blur(16px);
     border-top: 1px solid var(--border);
-    padding: 8px 4px calc(8px + env(safe-area-inset-bottom));
+    /* max(…, env(...)) plutôt qu'un padding fixe : en paysage sur un iPhone à encoche/Dynamic
+       Island, l'encoche se retrouve sur un des côtés (gauche/droite) et pas seulement en bas —
+       sans ça, les onglets extrêmes ("Accueil", "Assistant") se retrouvent sous l'encoche ou le
+       coin arrondi de l'écran, difficiles à voir/toucher. */
+    padding: 8px max(4px, env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(4px, env(safe-area-inset-left));
     justify-content: space-between;
   }
   nav.tabs button {
@@ -289,7 +316,7 @@ nav.tabs button.active svg { filter: drop-shadow(0 0 6px currentColor); }
   nav.tabs button.active { background: var(--accent-dim); }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (min-height: 501px) {
   nav.tabs {
     padding: 10px 20px;
     border-bottom: 1px solid var(--border);
@@ -306,10 +333,11 @@ nav.tabs button.active svg { filter: drop-shadow(0 0 6px currentColor); }
 }
 
 main { padding: 20px 20px 40px; max-width: 1100px; margin: 0 auto; }
-/* Doit rester apres la regle "main" ci-dessus (meme specificite) : sur mobile la nav est
-   fixed en bas de l'ecran, sans cette regle en dernier le shorthand ci-dessus ecrase le
-   padding-bottom et masque en permanence le bas de chaque onglet derriere la nav. */
-@media (max-width: 767px) {
+/* Doit rester apres la regle "main" ci-dessus (meme specificite) : quand la nav est fixed en
+   bas de l'ecran (voir le meme seuil composite sur nav.tabs plus haut), sans cette regle en
+   dernier le shorthand ci-dessus ecrase le padding-bottom et masque en permanence le bas de
+   chaque onglet derriere la nav. */
+@media (max-width: 767px), (max-height: 500px) and (orientation: landscape) {
   main { padding-bottom: 96px; }
 }
 section.tab-panel { display: none; animation: fadein 0.2s ease; }
@@ -608,7 +636,7 @@ footer.site-footer {
   margin: 0 auto;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767px), (max-height: 500px) and (orientation: landscape) {
   footer.site-footer { padding-bottom: 100px; }
 }
 

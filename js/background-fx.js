@@ -255,6 +255,29 @@ function notifyTabActive(tabId) {
   });
 }
 
+// ---- Enregistrement dans le même système que les autres thèmes (voir js/theme.js et
+// js/bg-galaxy-3d.js pour le modèle d'API : mount/unmount/isActive) — le fond "Classique"
+// existait avant ce système et gardait un cas particulier codé en dur dans theme.js ; cet
+// adaptateur l'aligne sur les autres sans toucher à initRadarBackground() elle-même (déjà
+// utilisée telle quelle, hors du périmètre des tests par choix, voir CLAUDE.md). ----
+let classicHandle = null;
+window.AguilaBackgrounds = window.AguilaBackgrounds || {};
+window.AguilaBackgrounds.classic = {
+  mount() {
+    if (classicHandle) return;
+    classicHandle = initRadarBackground();
+  },
+  unmount() {
+    if (classicHandle) {
+      classicHandle.stop();
+      classicHandle = null;
+    }
+  },
+  isActive() {
+    return classicHandle !== null;
+  },
+};
+
 // ---- Relief 3D au survol, délégué (fonctionne aussi sur les cartes réaffichées) ----
 function initCardTilt() {
   if (!canHoverPrecisely() || prefersReducedMotion()) return;
