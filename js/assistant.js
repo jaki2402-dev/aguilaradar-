@@ -311,7 +311,7 @@ const CHAT_INTENTS = [
   { keywords: ["opportunité", "opportunites", "opportunités", "pépite", "pepite", "meilleur", "prometteur", "bon plan", "bons plans"], handler: answerOpportunities },
   { keywords: ["alerte", "actualité", "actualites", "actualités", "news", "quoi de neuf", "du nouveau", "s'est-il passé", "sest il passe"], handler: answerAlerts },
   { keywords: ["performance", "taux de réussite", "taux de reussite", "précision", "precision", "moteur", "backtest", "rétrotest", "retrotest", "fiable", "se trompe", "corrig", "amélior", "amelior", "apprend", "apprentissage"], handler: answerEngine },
-  { keywords: ["pourquoi", "hausse", "baisse", "monte", "descend", "chute", "analyse du marché", "analyse le marché", "analyse-moi le marché", "état du marché", "etat du marche", "comment va le marché", "comment va le marche", "où va le marché", "ou va le marche", "régime", "regime", "tendance", "sentiment"], handler: answerMarketWhy },
+  { keywords: ["pourquoi", "hausse", "baisse", "monte", "descend", "chute", "analyse du marché", "analyse le marché", "analyse-moi le marché", "état du marché", "etat du marche", "comment va le marché", "comment va le marche", "où va le marché", "ou va le marche", "régime", "regime", "tendance", "sentiment", "bullrun", "bull run", "bull market", "bear market", "haussier", "baissier", "bullish", "bearish"], handler: answerMarketWhy },
   { keywords: ["investir", "acheter", "vendre", "placer", "position", "que penses-tu", "quel est ton avis", "ton avis", "conseil", "conseilles"], handler: answerGenericInvesting },
 ];
 
