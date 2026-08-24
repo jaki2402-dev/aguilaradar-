@@ -229,3 +229,83 @@ describe("engine.js — renderEngineTab / renderEnginePin (régression 062374d :
     expect(matrixHtml).not.toContain("trop peu de verdicts vérifiés");
   });
 });
+
+// Régression : le rendu lisait autrefois entry.version/attempted_at/change_description/note et
+// comparait entry.status à "appliquée" — aucun de ces champs n'a jamais existé côté données
+// réelles (voir CLAUDE.md : id, logged_at, trigger, what, why, action, status
+// "accepted"/"rejected", validation_score_before_pct/after_pct), donc chaque entrée s'affichait
+// vide (juste un séparateur "· " et un badge) malgré un raisonnement réel derrière.
+describe("engine.js — renderEngineTab (journal des corrections)", () => {
+  const CONTAINER_HTML = `<!doctype html><html><body>
+    <div id="engine-pin"></div>
+    <div id="engine-summary"></div>
+    <div id="engine-matrix"></div>
+    <div id="engine-classes"></div>
+    <div id="engine-log"></div>
+    <div id="engine-calibration"></div>
+    <div id="engine-regime-accuracy"></div>
+    <div id="engine-opportunities"></div>
+    <div id="engine-paper-portfolio"></div>
+    <div id="engine-control-group"></div>
+  </body></html>`;
+
+  it("shows the empty-state message when correction_log is empty or absent", () => {
+    const dom = loadPage(["config.js", "engine.js"], { html: CONTAINER_HTML });
+    dom.window.renderEngineTab([], {}, null, null);
+    expect(dom.window.document.getElementById("engine-log").textContent).toContain("Aucune correction tentée");
+  });
+
+  it("renders the real fields of a rejected attempt (what/why/action/trigger), not blank", () => {
+    const dom = loadPage(["config.js", "engine.js"], { html: CONTAINER_HTML });
+    const engineHistory = {
+      correction_log: [
+        {
+          id: "corr-20260823-biais-rattrapage-macro",
+          logged_at: "2026-08-23T23:20:00Z",
+          trigger: "14 nouveaux verdicts résolus en un seul cycle",
+          what: "Diagnostic du biais observé sur ce lot",
+          why: "Changement de régime macro survenu après l'émission",
+          action: "Aucun changement de paramètre appliqué ce cycle",
+          status: "rejected",
+          validation_score_before_pct: 20,
+          validation_score_after_pct: null,
+        },
+      ],
+    };
+    dom.window.renderEngineTab([], engineHistory, null, null);
+    const html = dom.window.document.getElementById("engine-log").innerHTML;
+    expect(html).toContain("Diagnostic du biais observé sur ce lot");
+    expect(html).toContain("Changement de régime macro survenu après l'émission");
+    expect(html).toContain("Aucun changement de paramètre appliqué ce cycle");
+    expect(html).toContain("14 nouveaux verdicts résolus en un seul cycle");
+    expect(html).toContain("Rejetée");
+    expect(html).toContain("badge-neutral");
+    expect(html).toContain("20 %");
+    expect(html).toContain("aucun changement appliqué");
+  });
+
+  it("renders an accepted attempt with the success badge and a before → after score", () => {
+    const dom = loadPage(["config.js", "engine.js"], { html: CONTAINER_HTML });
+    const engineHistory = {
+      correction_log: [
+        {
+          id: "corr-test-accepted",
+          logged_at: "2026-09-01T10:00:00Z",
+          trigger: "5 nouveaux verdicts résolus",
+          what: "Test",
+          why: "Test",
+          action: "threshold_pct ajusté de 5 à 7 pour FET",
+          status: "accepted",
+          validation_score_before_pct: 40,
+          validation_score_after_pct: 55,
+        },
+      ],
+    };
+    dom.window.renderEngineTab([], engineHistory, null, null);
+    const html = dom.window.document.getElementById("engine-log").innerHTML;
+    expect(html).toContain("Appliquée");
+    expect(html).toContain("badge-success");
+    expect(html).toContain("40 %");
+    expect(html).toContain("55 %");
+  });
+});

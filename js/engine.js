@@ -334,6 +334,10 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGrou
       <p class="hint">Précision = fiabilité d'un verdict quand il est émis. Rappel = capacité à ne pas rater les vrais mouvements. F1 = équilibre entre les deux (0 à 100).</p>`;
   }
 
+  // Champs réels écrits par la routine (voir CLAUDE.md sur engine-history.json) : id, logged_at,
+  // trigger, what, why, action, status ("accepted"/"rejected"), validation_score_before_pct,
+  // validation_score_after_pct — pas version/attempted_at/change_description/note, qui n'ont
+  // jamais existé côté données et laissaient donc chaque entrée s'afficher vide.
   const log = (engineHistory && engineHistory.correction_log) || [];
   if (log.length === 0) {
     logEl.innerHTML = `<p class="empty-state">Aucune correction tentée pour l'instant — le moteur a besoin de plusieurs verdicts vérifiés avant sa première auto-évaluation.</p>`;
@@ -341,17 +345,28 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGrou
     logEl.innerHTML = log
       .slice()
       .reverse()
-      .map(
-        (entry) => `
+      .map((entry) => {
+        const before = entry.validation_score_before_pct;
+        const after = entry.validation_score_after_pct;
+        const scoreLine =
+          before === undefined || before === null
+            ? ""
+            : `<p class="hint">Score de validation : ${before} %${
+                after === undefined || after === null ? " (aucun changement appliqué)" : ` → ${after} %`
+              }</p>`;
+        return `
         <div class="log-entry">
           <div class="log-header">
-            <span>${escapeHtml(entry.version)} · ${escapeHtml(entry.attempted_at)}</span>
-            <span class="badge ${entry.status === "appliquée" ? "badge-success" : "badge-neutral"}">${escapeHtml(entry.status)}</span>
+            <span>${escapeHtml(entry.logged_at ? new Date(entry.logged_at).toLocaleString("fr-FR") : "")}</span>
+            <span class="badge ${entry.status === "accepted" ? "badge-success" : "badge-neutral"}">${entry.status === "accepted" ? "Appliquée" : "Rejetée"}</span>
           </div>
-          <p>${escapeHtml(entry.change_description)}</p>
-          <p class="hint">${escapeHtml(entry.note || "")}</p>
-        </div>`
-      )
+          <p class="hint">${escapeHtml(entry.trigger || "")}</p>
+          <p><strong>Diagnostic —</strong> ${escapeHtml(entry.what || "")}</p>
+          <p><strong>Pourquoi —</strong> ${escapeHtml(entry.why || "")}</p>
+          <p><strong>Décision —</strong> ${escapeHtml(entry.action || "")}</p>
+          ${scoreLine}
+        </div>`;
+      })
       .join("");
   }
 
