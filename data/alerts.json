@@ -564,5 +564,85 @@
         "sentiment": "positif",
         "message": "Bitcoin a franchi le seuil des 80 000 $ ce mardi 25 août, un plus haut de trois mois porté par une septième semaine de hausse (+22 à 23 % sur sept jours, la plus forte progression hebdomadaire depuis environ trois ans) et une vague de liquidations de positions courtes dépassant 220 millions de dollars sur 24 heures. Ethereum accompagne le mouvement, au-dessus de 2 500 $. Le verdict ATTENTE actif sur BTC (émis le 23/08 à 66 240, threshold_pct 5 %) est désormais très largement dépassé par ce mouvement directionnel — signal précoce noté, sans réémission de verdict avant l'échéance du 06/09 conformément à la règle d'un seul verdict actif par favori. Indice de peur et de cupidité toujours en zone « Greed » (72-77), régime macro inchangé (risk-on).",
         "source": "https://www.bloomberg.com/news/articles/2026-08-25/bitcoin-reaches-three-month-high-of-80-000-as-momentum-returns"
+    },
+    {
+        "id": "alert-20260825-2040-macro-api-directe",
+        "ticker_ou_theme": "MACRO",
+        "type": "actualite_macro",
+        "triggered_at": "2026-08-25T20:40:00Z",
+        "message": "Cycle du 25 août 2026, 20h40 UTC : accès HTTP direct à api.coingecko.com de nouveau fonctionnel ce cycle (contrairement aux cycles récents bloqués par le proxy réseau, 403/EGRESS_BLOCKED) — prix vérifiés par appel direct pour les 15 favoris et les 13 opportunités suivies en une seule requête groupée, plutôt que par WebSearch. Indice de peur et de cupidité toujours dispersé entre 44 et 77 selon la source (majorité en zone « Greed »), fourchette incluant la valeur déjà retenue (74) : conservée telle quelle conformément au correctif du 10/08. Dominance BTC à 59,1 % (donnée API CoinGecko précise, contre 58,1 % arrondi au cycle précédent) — évolution modeste, régime macro inchangé (risk-on). Capitalisation totale du marché en repli de -2,5 % sur 24h selon l'API CoinGecko (/global), à mettre en regard d'une actualité générale évoquant plutôt une hausse de 2 % sur une fenêtre différente : lectures divergentes selon l'horodatage exact des sources, rien d'anormal ni d'actionnable en soi. Aucune nouvelle actualité générale suffisamment marquante trouvée par rapport aux 8 titres déjà publiés dans news.json.",
+        "source": "agrégat API CoinGecko directe (api.coingecko.com/api/v3/simple/price, /api/v3/global) + WebSearch (indice de peur et de cupidité, actualités générales)"
+    },
+    {
+        "id": "alert-20260825-2040-grt-baisse",
+        "ticker_ou_theme": "GRT",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-25T20:40:00Z",
+        "message": "The Graph (GRT) : seuil de mouvement directionnel (5 %) franchi à la baisse, en sens opposé au verdict ATTENTE du 23 août. Prix vérifié par appel direct à l'API CoinGecko : 0,017792 dollar contre un prix d'émission de 0,02148 dollar, soit -17,2 %. Aucune actualité spécifique identifiée pour l'expliquer. Signal précoce enregistré sur le verdict correspondant, ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+        "source": "API CoinGecko directe (api.coingecko.com/api/v3/simple/price)"
+    },
+    {
+        "id": "alert-20260825-2040-tia-hausse",
+        "ticker_ou_theme": "TIA",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-25T20:40:00Z",
+        "message": "Celestia (TIA) : seuil de mouvement directionnel (5 %) franchi à la hausse. Prix vérifié par appel direct à l'API CoinGecko : 0,360265 dollar contre un prix d'émission de 0,306677 dollar (verdict ATTENTE du 23 août), soit +17,5 %. Aucune actualité spécifique identifiée pour l'expliquer. Signal précoce enregistré sur le verdict correspondant.",
+        "source": "API CoinGecko directe (api.coingecko.com/api/v3/simple/price)"
+    },
+    {
+        "id": "alert-20260825-2040-peaq-hausse-extreme",
+        "ticker_ou_theme": "PEAQ",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-25T20:40:00Z",
+        "message": "Peaq (PEAQ) : mouvement extrême vérifié par appel direct à l'API CoinGecko, +65,8 % depuis le prix d'émission du verdict ATTENTE du 23 août (0,01355 dollar contre 0,022460 dollar aujourd'hui) — retournement complet par rapport au recul de -12,5 % noté à l'émission. Aucun catalyseur fondamental identifié à ce stade. Signal précoce enregistré sur le verdict correspondant.",
+        "source": "API CoinGecko directe (api.coingecko.com/api/v3/simple/price)"
+    },
+    {
+        "id": "alert-20260825-2040-link-hausse",
+        "ticker_ou_theme": "LINK",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-25T20:40:00Z",
+        "message": "Chainlink (LINK) : mouvement marqué vérifié par appel direct à l'API CoinGecko, +53,9 % depuis le prix d'émission du verdict ATTENTE du 23 août (7,42 dollars contre 11,42 dollars aujourd'hui). Aucune actualité spécifique nouvelle identifiée ce cycle pour l'expliquer. Signal précoce enregistré sur le verdict correspondant.",
+        "source": "API CoinGecko directe (api.coingecko.com/api/v3/simple/price)"
+    },
+    {
+        "id": "alert-20260825-2040-jup-hausse",
+        "ticker_ou_theme": "JUP",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-25T20:40:00Z",
+        "message": "Jupiter (JUP) : mouvement marqué vérifié par appel direct à l'API CoinGecko, +52,3 % depuis le prix d'émission du verdict ATTENTE du 23 août (0,138 dollar contre 0,210247 dollar aujourd'hui) — retournement complet par rapport au recul de -11,7 % noté à l'émission. Aucune actualité spécifique identifiée pour expliquer ce rebond. Signal précoce enregistré sur le verdict correspondant.",
+        "source": "API CoinGecko directe (api.coingecko.com/api/v3/simple/price)"
+    },
+    {
+        "id": "alert-20260825-2040-lpt-hausse",
+        "ticker_ou_theme": "LPT",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-25T20:40:00Z",
+        "message": "Livepeer (LPT) : seuil de mouvement directionnel (5 %) franchi à la hausse. Prix vérifié par appel direct à l'API CoinGecko : 1,41 dollar contre un prix d'émission de 1,21 dollar (verdict ATTENTE du 23 août, lui-même obtenu par conversion incertaine à l'époque faute de cotation EUR fiable), soit +16,5 %. Aucune actualité spécifique identifiée. Signal précoce enregistré sur le verdict correspondant.",
+        "source": "API CoinGecko directe (api.coingecko.com/api/v3/simple/price)"
+    },
+    {
+        "id": "alert-20260825-2040-aioz-baisse-extreme-anomalie",
+        "ticker_ou_theme": "AIOZ",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-25T20:40:00Z",
+        "message": "AIOZ Network (AIOZ) : mouvement extrême vérifié par appel direct à l'API CoinGecko, -57,1 % depuis le prix d'émission du verdict ATTENTE du 23 août (0,1252 dollar contre 0,05374 dollar aujourd'hui). Prudence de lecture : le prix d'émission de ce verdict reposait sur un bond de +209 % explicitement signalé comme non confirmé indépendamment au moment de l'émission — ce recul pourrait donc en partie ou en totalité refléter la correction d'un prix d'émission initialement erroné plutôt qu'un mouvement de marché réel, à l'image de l'anomalie déjà documentée sur BTC/ETH le 10 août. Signal précoce enregistré à titre de signalement.",
+        "source": "API CoinGecko directe (api.coingecko.com/api/v3/simple/price)"
+    },
+    {
+        "id": "alert-20260825-2040-arb-hausse",
+        "ticker_ou_theme": "ARB",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-25T20:40:00Z",
+        "message": "Arbitrum (ARB) : seuil de mouvement directionnel (5 %) tout juste franchi à la hausse. Prix vérifié par appel direct à l'API CoinGecko : 0,093328 dollar contre un prix d'émission de 0,08838 dollar (verdict ATTENTE du 23 août), soit +5,6 % — mouvement modeste comparé aux autres favoris ce cycle. Signal précoce enregistré sur le verdict correspondant.",
+        "source": "API CoinGecko directe (api.coingecko.com/api/v3/simple/price)"
+    },
+    {
+        "id": "alert-20260825-2040-inj-hausse",
+        "ticker_ou_theme": "INJ",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-25T20:40:00Z",
+        "message": "Injective (INJ) : mouvement marqué vérifié par appel direct à l'API CoinGecko, +55,7 % depuis le prix d'émission du verdict ATTENTE du 23 août (3,59 dollars contre 5,59 dollars aujourd'hui) — retournement complet par rapport au recul de -9,1 % noté à l'émission, qui faisait pourtant suite à la validation d'un verdict VENTE. Signal précoce enregistré sur le verdict correspondant.",
+        "source": "API CoinGecko directe (api.coingecko.com/api/v3/simple/price)"
     }
 ]
