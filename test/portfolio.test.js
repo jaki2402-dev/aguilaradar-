@@ -134,6 +134,15 @@ describe("portfolio.js — renderPortfolio", () => {
     dom.window.renderPortfolio();
     expect(dom.window.document.getElementById("portfolio-body").textContent).toContain("400,00");
   });
+
+  it("shows Perf. globale as plain +/- text, without the ▲/▼ glyph (régression : rendu en icône emoji colorée à la taille hero-stat-value sur iOS)", () => {
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 50 } });
+    dom.window.renderPortfolio({ positions: [pos({ qty: 1, invested: 100 })] }, []);
+    const totalsText = dom.window.document.getElementById("portfolio-totals").textContent;
+    expect(totalsText).toContain("-50.00 %");
+    expect(totalsText).not.toContain("▲");
+    expect(totalsText).not.toContain("▼");
+  });
 });
 
 describe("portfolio.js — computePortfolioSummary (calcul pur, réutilisé par l'Assistant)", () => {
@@ -213,6 +222,21 @@ describe("portfolio.js — grille de tuiles et repli/dépli", () => {
     const bodyEl = dom.window.document.getElementById("portfolio-body");
     expect(bodyEl.querySelector(".portfolio-tile.clickable")).toBeNull();
     expect(bodyEl.textContent).toContain("En attente");
+  });
+
+  it("garde une tuile dépliée ouverte à travers un re-rendu déclenché par le tick de prix (régression : le innerHTML complet refermait tout au bout de 60s)", () => {
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    dom.window.renderPortfolio({ positions: [pos()] }, []);
+    const tile = () => dom.window.document.querySelector(".portfolio-tile.clickable");
+    tile().click();
+    expect(tile().classList.contains("expanded")).toBe(true);
+
+    // Simule le tick de 60s : renderPortfolio() rappelé sans argument, comme le fait refreshPrices().
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 150 } });
+    dom.window.renderPortfolio();
+
+    expect(tile().classList.contains("expanded")).toBe(true);
+    expect(tile().getAttribute("aria-expanded")).toBe("true");
   });
 });
 

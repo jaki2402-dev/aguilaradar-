@@ -81,7 +81,7 @@ function renderPortfolioTile(p, idx) {
   const adviceHtml = p.verdict ? `<span class="badge badge-${p.verdict.toLowerCase()}">${escapeHtml(p.verdict)}</span>` : "";
 
   return `
-    <div class="favori-tile portfolio-tile clickable" data-detail-target="${panelId}" style="--sector-color:${p.sectorColor || "var(--border)"}" title="${escapeHtml(p.name)}">
+    <div class="favori-tile portfolio-tile clickable" data-detail-target="${panelId}" data-cgid="${escapeHtml(p.cgId)}" style="--sector-color:${p.sectorColor || "var(--border)"}" title="${escapeHtml(p.name)}">
       <div class="favori-tile-head">
         <span class="favori-tile-tick">${escapeHtml(p.ticker)}</span>
         <span class="favori-tile-badge">${adviceHtml}</span>
@@ -122,6 +122,11 @@ function attachPortfolioToggle(tileEl) {
 
 // Même traitement "instrument" que le hero-card de l'Accueil (voir style.css) — cohérent avec
 // le reste du site plutôt qu'un bloc de texte nu, seul l'onglet Portefeuille en était dépourvu.
+// Perf. globale n'utilise PAS formatChangePct ici : sa flèche ▲/▼, sans lien de rendu établi
+// avec .hero-stat-value (1.65rem, jamais utilisé ailleurs pour un pourcentage — Accueil n'y met
+// que des compteurs entiers), s'est affichée en glyphe emoji coloré sur iOS à cette taille au
+// lieu du triangle attendu (signalé par l'utilisateur, capture à l'appui). Le signe +/- déjà
+// affiché à côté suffit à indiquer le sens, comme pour Latent juste au-dessus.
 function renderPortfolioTotals(totalValue, totalInvested) {
   const el = document.getElementById("portfolio-totals");
   if (!el) return;
@@ -129,6 +134,7 @@ function renderPortfolioTotals(totalValue, totalInvested) {
   const totalPnlPct = totalInvested ? (totalPnl / totalInvested) * 100 : null;
   const pnlClass = totalPnl >= 0 ? "positive" : "negative";
   const pnlSign = totalPnl >= 0 ? "+" : "-";
+  const pnlPctText = totalPnlPct !== null ? `${totalPnlPct >= 0 ? "+" : ""}${totalPnlPct.toFixed(2)} %` : "—";
   el.innerHTML = `
     <div class="hero-card">
       <div class="hint">Vue d'ensemble</div>
@@ -136,7 +142,7 @@ function renderPortfolioTotals(totalValue, totalInvested) {
         <div><div class="hero-stat-value">${formatPrice(totalValue, "EUR")}</div><div class="hero-stat-label">Valeur totale</div></div>
         <div><div class="hero-stat-value">${formatPrice(totalInvested, "EUR")}</div><div class="hero-stat-label">Investi</div></div>
         <div><div class="hero-stat-value ${pnlClass}">${pnlSign}${formatPrice(Math.abs(totalPnl), "EUR")}</div><div class="hero-stat-label">Latent</div></div>
-        <div><div class="hero-stat-value ${pnlClass}">${totalPnlPct !== null ? formatChangePct(totalPnlPct) : "—"}</div><div class="hero-stat-label">Perf. globale</div></div>
+        <div><div class="hero-stat-value ${pnlClass}">${pnlPctText}</div><div class="hero-stat-label">Perf. globale</div></div>
       </div>
     </div>`;
 }
@@ -157,11 +163,23 @@ function renderPortfolio(portfolio, verdicts) {
     return;
   }
 
+  // Préserve les tuiles dépliées à travers le tick de prix (60s, refreshPrices) : sans ça, le
+  // innerHTML complet ci-dessous perd .expanded à chaque rafraîchissement et une position qu'on
+  // est en train de consulter se referme toute seule — donne l'impression que "ça ne bouge pas
+  // vraiment en direct" plutôt qu'une vraie mise à jour fluide (signalé par l'utilisateur).
+  const expandedIds = new Set(Array.from(el.querySelectorAll(".portfolio-tile.expanded")).map((t) => t.dataset.cgid));
+
   const prices = typeof latestFavorisPrices !== "undefined" ? latestFavorisPrices : {};
   const summary = computePortfolioSummary(latestPortfolio, prices, latestPortfolioVerdicts);
 
   el.innerHTML = `<div class="favoris-grid portfolio-tile-grid">${summary.positions.map((p, i) => renderPortfolioTile(p, i)).join("")}</div>`;
-  el.querySelectorAll(".portfolio-tile.clickable").forEach((tileEl) => attachPortfolioToggle(tileEl));
+  el.querySelectorAll(".portfolio-tile.clickable").forEach((tileEl) => {
+    attachPortfolioToggle(tileEl);
+    if (expandedIds.has(tileEl.dataset.cgid)) {
+      tileEl.classList.add("expanded");
+      tileEl.setAttribute("aria-expanded", "true");
+    }
+  });
 
   renderPortfolioTotals(summary.totalValue, summary.totalInvested);
 }
