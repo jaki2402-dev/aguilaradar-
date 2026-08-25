@@ -564,5 +564,14 @@
         "sentiment": "positif",
         "message": "Bitcoin a franchi le seuil des 80 000 $ ce mardi 25 août, un plus haut de trois mois porté par une septième semaine de hausse (+22 à 23 % sur sept jours, la plus forte progression hebdomadaire depuis environ trois ans) et une vague de liquidations de positions courtes dépassant 220 millions de dollars sur 24 heures. Ethereum accompagne le mouvement, au-dessus de 2 500 $. Le verdict ATTENTE actif sur BTC (émis le 23/08 à 66 240, threshold_pct 5 %) est désormais très largement dépassé par ce mouvement directionnel — signal précoce noté, sans réémission de verdict avant l'échéance du 06/09 conformément à la règle d'un seul verdict actif par favori. Indice de peur et de cupidité toujours en zone « Greed » (72-77), régime macro inchangé (risk-on).",
         "source": "https://www.bloomberg.com/news/articles/2026-08-25/bitcoin-reaches-three-month-high-of-80-000-as-momentum-returns"
+    },
+    {
+        "id": "alert-20260825-2016-peaq-rally-layerzero",
+        "ticker_ou_theme": "PEAQ",
+        "type": "actualite_favori",
+        "triggered_at": "2026-08-25T20:16:00Z",
+        "sentiment": "positif",
+        "message": "Peaq (PEAQ) bondit de +15,7 % sur 24h et +25,4 % sur 7 jours (source : API CoinGecko, appel HTTP direct), portant le mouvement à +41,4 % depuis l'émission du verdict ATTENTE du 23 août (0,01355 euro), très largement au-delà du seuil de vigilance de 5 % — signal précoce enregistré sur le verdict en cours (échéance inchangée au 6 septembre). Catalyseur identifié : succès du pilote retail d'Auki et lancement d'un système d'entiercement omnichaîne propulsé par LayerZero pour les transactions de robots dans l'écosystème « Machine Economy » de peaq, en plus du contexte général haussier du marché (indice de peur et de cupidité toujours en zone « Greed », dominance BTC 58,1 % inchangée). Recherche large « biggest movers 24h » par ailleurs sans autre franchissement notable parmi les 14 autres favoris.",
+        "source": "https://www.coingecko.com/en/coins/peaq"
     }
 ]

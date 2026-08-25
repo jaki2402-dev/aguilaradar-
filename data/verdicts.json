@@ -715,6 +715,14 @@
             "actual_direction": null,
             "verdict_correct": null,
             "resolved_at": null
+        },
+        "signal_precoce": {
+            "detected_at": "2026-08-25T20:16:00Z",
+            "price_at_signal_eur": 0.01915914,
+            "move_pct_since_issue": 41.4,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Peaq (PEAQ) : franchissement très largement dépassé du seuil de mouvement directionnel (5 %) sur le verdict ATTENTE émis le 23 août (prix d'émission 0,01355 euro). Prix confirmé ce cycle en HTTP direct sur l'API CoinGecko (source unique mais fiable et nommée) : 0,01915914 euro, soit +41,4 % depuis l'émission — hausse de +15,7 % sur 24h et +25,4 % sur 7 jours selon la même source. Catalyseur identifié par recherche ciblée : succès du pilote retail d'Auki et lancement d'un système d'entiercement (escrow) omnichaîne propulsé par LayerZero pour les transactions de robots, dans l'écosystème « Machine Economy » de peaq, en plus du contexte haussier général du marché. Signal précoce enregistré à titre indicatif, ne préjuge pas de l'issue à l'échéance du 6 septembre : un seul verdict actif par favori, pas de réémission avant l'échéance."
         }
     },
     {
