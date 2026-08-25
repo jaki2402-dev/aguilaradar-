@@ -538,6 +538,14 @@
             "actual_direction": null,
             "verdict_correct": null,
             "resolved_at": null
+        },
+        "signal_precoce": {
+            "detected_at": "2026-08-25T08:16:00Z",
+            "price_at_signal_eur": 79674,
+            "move_pct_since_issue": 20.3,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Bitcoin (BTC) : franchissement déjà largement engagé du seuil de mouvement directionnel (5 %) sur le verdict ATTENTE émis le 23 août (prix d'émission 66 240 dollars). Deux sources convergentes ce cycle (CoinGabbar/Bitdegree 79 674 dollars, InvestingNews 80 227 dollars) situent Bitcoin entre +20,3 % et +21,1 % depuis l'émission, dans la continuité directe du franchissement des 80 000 dollars déjà signalé au cycle précédent (25/08, 04h16 UTC). Catalyseur nouveau relevé ce cycle : plusieurs sources évoquent un rôle de l'expansion des rachats obligataires du Trésor américain dans cette septième semaine consécutive de hausse (+22 à 25 % sur 7 jours), en complément du contexte déjà noté (liquidations de positions courtes, indice de peur et de cupidité en zone Greed). Signal précoce enregistré à titre indicatif, ne préjuge pas de l'issue à l'échéance du 6 septembre : un seul verdict actif par favori, pas de réémission avant l'échéance."
         }
     },
     {
@@ -570,6 +578,14 @@
             "actual_direction": null,
             "verdict_correct": null,
             "resolved_at": null
+        },
+        "signal_precoce": {
+            "detected_at": "2026-08-25T08:16:00Z",
+            "price_at_signal_eur": 2500,
+            "move_pct_since_issue": 21.0,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Ethereum (ETH) : même dynamique que Bitcoin ce cycle. Prix repassé au-dessus des 2 500 dollars selon deux sources concordantes (Bloomberg, InvestingNews), soit une progression d'au moins +21,0 % par rapport au prix d'émission du verdict ATTENTE du 23 août (2 066,96 dollars) — seuil de mouvement directionnel de 5 % largement franchi, dans la continuité du rattrapage déjà observé lors de l'émission de ce même verdict. Contexte partagé avec Bitcoin : rôle possible de l'expansion des rachats obligataires du Trésor américain dans le rallye en cours, indice de peur et de cupidité toujours en zone Greed. Signal précoce enregistré à titre indicatif, ne préjuge pas de l'issue à l'échéance du 6 septembre."
         }
     },
     {
