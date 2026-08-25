@@ -555,5 +555,14 @@
         "triggered_at": "2026-08-24T22:20:00Z",
         "message": "Cycle du 24 août 2026, 22h20 UTC : rien de nouveau par rapport au cycle précédent (régime « risk-on », aucun seuil franchi). Recherche large « biggest movers 24h » : aucun des 15 favoris, des 13 opportunités ni des 8 items du groupe témoin ne figure parmi les mouvements extrêmes du jour. Indice de peur et de cupidité relevé entre 73 et 80 selon la source (« Greed »/« Extreme Greed »), quasi identique à la valeur déjà retenue (74), conservée telle quelle conformément au correctif du 10/08. Dominance BTC reconfirmée à 56,6 %.",
         "source": "agrégat WebSearch (recherche large « biggest movers » + indice de peur et de cupidité + dominance BTC + veille actualités générale)"
+    },
+    {
+        "id": "alert-20260825-0416-btc-80k-record-3mois",
+        "ticker_ou_theme": "BTC",
+        "type": "actualite_favori",
+        "triggered_at": "2026-08-25T04:16:00Z",
+        "sentiment": "positif",
+        "message": "Bitcoin a franchi le seuil des 80 000 $ ce mardi 25 août, un plus haut de trois mois porté par une septième semaine de hausse (+22 à 23 % sur sept jours, la plus forte progression hebdomadaire depuis environ trois ans) et une vague de liquidations de positions courtes dépassant 220 millions de dollars sur 24 heures. Ethereum accompagne le mouvement, au-dessus de 2 500 $. Le verdict ATTENTE actif sur BTC (émis le 23/08 à 66 240, threshold_pct 5 %) est désormais très largement dépassé par ce mouvement directionnel — signal précoce noté, sans réémission de verdict avant l'échéance du 06/09 conformément à la règle d'un seul verdict actif par favori. Indice de peur et de cupidité toujours en zone « Greed » (72-77), régime macro inchangé (risk-on).",
+        "source": "https://www.bloomberg.com/news/articles/2026-08-25/bitcoin-reaches-three-month-high-of-80-000-as-momentum-returns"
     }
 ]
