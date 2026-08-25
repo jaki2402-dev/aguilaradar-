@@ -453,15 +453,15 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
    largeur le permet, à n'importe quelle taille d'écran, sans média-requête à ajuster à la
    main. .opp-tile-grid partage cette règle (voir renderOpportunityTiles, cards.js) — même
    esprit, classe distincte pour ne rien coupler entre les deux onglets. ---- */
-.favoris-grid, .opp-tile-grid {
+.favoris-grid, .opp-tile-grid, .portfolio-tile-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
   gap: 8px;
 }
 @media (min-width: 640px) {
-  .favoris-grid, .opp-tile-grid { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }
+  .favoris-grid, .opp-tile-grid, .portfolio-tile-grid { grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 10px; }
 }
-.favori-tile, .opp-tile {
+.favori-tile, .opp-tile, .portfolio-tile {
   background: linear-gradient(165deg, var(--card-2), var(--card));
   border: 1px solid var(--border);
   border-top: 3px solid var(--sector-color, var(--border));
@@ -476,7 +476,7 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
 /* Une tuile ouverte prend toute la largeur de la grille (le graphique + l'analyse détaillée
    ont besoin de place — voir .detail-grid, minmax(220px,...) ne tiendrait jamais dans une
    tuile de ~100px) plutôt que de rester coincée dans sa propre colonne étroite. */
-.favori-tile.expanded, .opp-tile.expanded { grid-column: 1 / -1; }
+.favori-tile.expanded, .opp-tile.expanded, .portfolio-tile.expanded { grid-column: 1 / -1; }
 .favori-tile-head { display: flex; justify-content: space-between; align-items: center; gap: 4px; }
 .favori-tile-tick { font-weight: 800; font-size: 0.86rem; letter-spacing: 0.01em; }
 .favori-tile-badge:empty { display: none; }
@@ -493,7 +493,12 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
   padding: 2px 7px; border-radius: 999px;
   font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; margin-top: 4px;
 }
-.favori-tile .expand-hint, .opp-tile .expand-hint { margin-top: 8px; padding-top: 6px; font-size: 0.68rem; }
+.favori-tile .expand-hint, .opp-tile .expand-hint, .portfolio-tile .expand-hint { margin-top: 8px; padding-top: 6px; font-size: 0.68rem; }
+/* Détail replié d'une position (investi/P&L/coût moyen/raisonnement) — même mécanique que
+   .opp-tile-body (classe distincte, voir renderPortfolioTile/attachPortfolioToggle, portfolio.js) :
+   tout est déjà calculé en mémoire, un simple bascule de classe .expanded suffit, pas de fetch. */
+.portfolio-tile-body { display: none; margin-top: 10px; }
+.portfolio-tile.expanded .portfolio-tile-body { display: block; }
 /* Confiance de l'opportunité (voir confidenceColor, cards.js) — même code couleur que la jauge
    circulaire affichée une fois la tuile dépliée, juste plus compact pour la vue repliée. */
 .opp-tile-conf { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; }
@@ -1000,11 +1005,11 @@ nav.tabs button[data-tab="assistant"].active { background: rgba(242,119,179,0.13
 
 /* ---- Interactivité : légère élévation au survol (desktop uniquement) ---- */
 @media (hover: hover) {
-  .favori-card, .favori-tile, .opp-tile, .stat-card, .journal-entry, .log-entry, .alert-entry, .hero-card, .opp-card, .gate-card {
+  .favori-card, .favori-tile, .opp-tile, .portfolio-tile, .stat-card, .journal-entry, .log-entry, .alert-entry, .hero-card, .opp-card, .gate-card {
     transition: transform 0.15s ease-out, box-shadow 0.15s ease-out, border-color 0.15s ease-out;
   }
   /* Lueur fine en plus de l'ombre : un survol qui "s'illumine" plutôt qu'un simple décalage. */
-  .favori-card:hover, .favori-tile:hover, .opp-tile:hover, .stat-card:hover, .journal-entry:hover, .log-entry:hover, .alert-entry:hover, .opp-card:hover {
+  .favori-card:hover, .favori-tile:hover, .opp-tile:hover, .portfolio-tile:hover, .stat-card:hover, .journal-entry:hover, .log-entry:hover, .alert-entry:hover, .opp-card:hover {
     transform: translateY(-3px);
     box-shadow: 0 14px 32px rgba(0,0,0,0.4), 0 0 22px -8px var(--accent);
     border-color: rgba(47,211,176,0.35);

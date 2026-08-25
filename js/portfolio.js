@@ -14,55 +14,114 @@ function latestVerdictFor(cgId, verdicts) {
     .sort((a, b) => new Date(b.issued_at) - new Date(a.issued_at))[0];
 }
 
-// value/invested à null quand la position est "pending" (chiffres pas encore fournis, ex.
-// FLUX au 25/08) plutôt que d'inventer un chiffre — cohérent avec le "jamais halluciner" déjà
-// appliqué partout ailleurs sur le site (verdicts "pending", digest.json non rafraîchi, etc.).
-function renderPortfolioRow(pos) {
-  const fav = FAVORIS.find((f) => f.cgId === pos.cgId);
-  const ticker = fav ? fav.ticker : pos.cgId;
-  const name = fav ? fav.name : pos.cgId;
+// Calcul pur, sans DOM : réutilisé à la fois par le rendu de l'onglet (ci-dessous) et par
+// l'Assistant (assistant.js, buildAiContext/answerPortfolio) pour ne jamais dupliquer la
+// méthode de calcul à deux endroits. value/invested à null quand la position est "pending"
+// (chiffres pas encore fournis) plutôt que d'inventer un chiffre — cohérent avec le "jamais
+// halluciner" déjà appliqué partout ailleurs sur le site (verdicts "pending", etc.).
+function computePortfolioSummary(portfolio, prices, verdicts) {
+  const positions = (portfolio && portfolio.positions) || [];
 
-  if (pos.pending || pos.qty === null || pos.qty === undefined || pos.invested === null || pos.invested === undefined) {
-    return {
-      html: `<tr>
-        <td>${escapeHtml(ticker)}<div class="hint">${escapeHtml(name)}</div></td>
-        <td colspan="4" class="hint">En attente des chiffres réels (qty / capital investi) — voir data/portfolio.json</td>
-        <td>—</td>
-      </tr>`,
-      value: 0,
-      invested: 0,
-      counted: false,
-    };
-  }
+  const rows = positions.map((pos) => {
+    const fav = FAVORIS.find((f) => f.cgId === pos.cgId);
+    const ticker = fav ? fav.ticker : pos.cgId;
+    const name = fav ? fav.name : pos.cgId;
+    const sectorColor = fav && typeof SECTOR_COLORS !== "undefined" ? SECTOR_COLORS[fav.cgId] : null;
+    const latest = latestVerdictFor(pos.cgId, verdicts);
+    const verdict = latest ? latest.verdict : null;
+    const reasoning = latest ? latest.reasoning : null;
 
-  const priceInfo = latestFavorisPrices[pos.cgId];
-  const price = priceInfo ? priceInfo.eur : null;
-  const value = price !== null && price !== undefined ? pos.qty * price : null;
-  const pnl = value !== null ? value - pos.invested : null;
-  const pnlPct = value !== null && pos.invested ? (pnl / pos.invested) * 100 : null;
-  const pnlClass = pnl === null ? "" : pnl >= 0 ? "positive" : "negative";
-  const pnlSign = pnl === null ? "" : pnl >= 0 ? "+" : "-";
+    const pending = !!pos.pending || pos.qty === null || pos.qty === undefined || pos.invested === null || pos.invested === undefined;
+    if (pending) {
+      return { cgId: pos.cgId, ticker, name, sectorColor, pending: true, qty: null, invested: null, value: null, pnl: null, pnlPct: null, costPerUnit: null, verdict, reasoning };
+    }
 
-  const latest = latestVerdictFor(pos.cgId, latestPortfolioVerdicts);
-  const adviceHtml = latest
-    ? `<span class="badge badge-${latest.verdict.toLowerCase()}" title="${escapeHtml(latest.reasoning || "")}">${escapeHtml(latest.verdict)}</span>`
-    : `<span class="hint">—</span>`;
+    const priceInfo = prices && prices[pos.cgId];
+    const price = priceInfo ? priceInfo.eur : null;
+    const value = price !== null && price !== undefined ? pos.qty * price : null;
+    const pnl = value !== null ? value - pos.invested : null;
+    const pnlPct = value !== null && pos.invested ? (pnl / pos.invested) * 100 : null;
+    const costPerUnit = pos.qty ? pos.invested / pos.qty : null;
 
-  return {
-    html: `<tr>
-        <td>${escapeHtml(ticker)}<div class="hint">${escapeHtml(name)}</div></td>
-        <td>${value !== null ? formatPrice(value, "EUR") : "—"}</td>
-        <td>${formatPrice(pos.invested, "EUR")}</td>
-        <td class="${pnlClass}">${pnl !== null ? pnlSign + formatPrice(Math.abs(pnl), "EUR") : "—"}</td>
-        <td class="${pnlClass}">${pnlPct !== null ? formatChangePct(pnlPct) : "—"}</td>
-        <td>${adviceHtml}</td>
-      </tr>`,
-    value: value || 0,
-    invested: pos.invested,
-    counted: value !== null,
-  };
+    return { cgId: pos.cgId, ticker, name, sectorColor, pending: false, qty: pos.qty, invested: pos.invested, value, pnl, pnlPct, costPerUnit, verdict, reasoning };
+  });
+
+  let totalValue = 0;
+  let totalInvested = 0;
+  rows.forEach((r) => {
+    if (r.value !== null) {
+      totalValue += r.value;
+      totalInvested += r.invested;
+    }
+  });
+  const totalPnl = totalValue - totalInvested;
+  const totalPnlPct = totalInvested ? (totalPnl / totalInvested) * 100 : null;
+
+  return { positions: rows, totalValue, totalInvested, totalPnl, totalPnlPct };
 }
 
+// Tuile dense (même esprit que .favori-tile/.opp-tile — voir CLAUDE.md/style.css : "Coin360,
+// l'essentiel, peu de défilement") plutôt qu'une ligne de tableau pleine largeur — l'ancien
+// rendu en <table> était la seule vue du site à ne pas suivre cette grille, d'où le défilement
+// remarqué par l'utilisateur sur 15 positions. Détail (investi/P&L€/coût moyen/raisonnement)
+// replié dans .portfolio-tile-body, révélé par attachPortfolioToggle au clic — pas de fetch
+// supplémentaire nécessaire ici, tout est déjà calculé par computePortfolioSummary.
+function renderPortfolioTile(p, idx) {
+  if (p.pending) {
+    return `
+      <div class="favori-tile portfolio-tile" style="--sector-color:${p.sectorColor || "var(--border)"}" title="${escapeHtml(p.name)}">
+        <div class="favori-tile-head"><span class="favori-tile-tick">${escapeHtml(p.ticker)}</span></div>
+        <div class="favori-tile-price hint" style="margin-top:7px;">En attente</div>
+      </div>`;
+  }
+
+  const panelId = `portfolio-detail-${idx}`;
+  const pnlClass = p.pnl === null ? "" : p.pnl >= 0 ? "positive" : "negative";
+  const pnlSign = p.pnl === null ? "" : p.pnl >= 0 ? "+" : "-";
+  const adviceHtml = p.verdict ? `<span class="badge badge-${p.verdict.toLowerCase()}">${escapeHtml(p.verdict)}</span>` : "";
+
+  return `
+    <div class="favori-tile portfolio-tile clickable" data-detail-target="${panelId}" style="--sector-color:${p.sectorColor || "var(--border)"}" title="${escapeHtml(p.name)}">
+      <div class="favori-tile-head">
+        <span class="favori-tile-tick">${escapeHtml(p.ticker)}</span>
+        <span class="favori-tile-badge">${adviceHtml}</span>
+      </div>
+      <div class="favori-tile-price">${p.value !== null ? formatPrice(p.value, "EUR") : "—"}</div>
+      <div class="favori-tile-change chip ${pnlClass}">${p.pnlPct !== null ? formatChangePct(p.pnlPct) : "—"}</div>
+      <div class="expand-hint">Détail <span class="chevron">▾</span></div>
+      <div class="portfolio-tile-body" id="${panelId}">
+        <div class="detail-stats">
+          <div class="detail-stat"><span class="hint">Investi</span><strong>${formatPrice(p.invested, "EUR")}</strong></div>
+          <div class="detail-stat"><span class="hint">P&amp;L</span><strong class="${pnlClass}">${p.pnl !== null ? pnlSign + formatPrice(Math.abs(p.pnl), "EUR") : "—"}</strong></div>
+          <div class="detail-stat"><span class="hint">Quantité</span><strong>${p.qty}</strong></div>
+          <div class="detail-stat"><span class="hint">Coût moyen</span><strong>${p.costPerUnit !== null ? formatPrice(p.costPerUnit, "EUR") : "—"}</strong></div>
+        </div>
+        ${p.reasoning ? `<p class="hint" style="margin-top:10px;">${escapeHtml(p.reasoning)}</p>` : ""}
+      </div>
+    </div>`;
+}
+
+// Toggle dédié (pas attachDetailToggle de detail.js) : ce dernier suppose un chargement
+// asynchrone (graphique TradingView, indicateurs) inexistant ici — tout est déjà calculé en
+// mémoire par computePortfolioSummary, un simple bascule de classe suffit.
+function attachPortfolioToggle(tileEl) {
+  tileEl.setAttribute("tabindex", "0");
+  tileEl.setAttribute("role", "button");
+  tileEl.setAttribute("aria-expanded", "false");
+  function toggle() {
+    const isOpen = tileEl.classList.toggle("expanded");
+    tileEl.setAttribute("aria-expanded", String(isOpen));
+  }
+  tileEl.addEventListener("click", toggle);
+  tileEl.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    e.preventDefault();
+    toggle();
+  });
+}
+
+// Même traitement "instrument" que le hero-card de l'Accueil (voir style.css) — cohérent avec
+// le reste du site plutôt qu'un bloc de texte nu, seul l'onglet Portefeuille en était dépourvu.
 function renderPortfolioTotals(totalValue, totalInvested) {
   const el = document.getElementById("portfolio-totals");
   if (!el) return;
@@ -71,11 +130,14 @@ function renderPortfolioTotals(totalValue, totalInvested) {
   const pnlClass = totalPnl >= 0 ? "positive" : "negative";
   const pnlSign = totalPnl >= 0 ? "+" : "-";
   el.innerHTML = `
-    <div class="hero-stats">
-      <div><div class="hero-stat-value">${formatPrice(totalValue, "EUR")}</div><div class="hero-stat-label">Valeur totale</div></div>
-      <div><div class="hero-stat-value">${formatPrice(totalInvested, "EUR")}</div><div class="hero-stat-label">Investi</div></div>
-      <div><div class="hero-stat-value ${pnlClass}">${pnlSign}${formatPrice(Math.abs(totalPnl), "EUR")}</div><div class="hero-stat-label">Latent</div></div>
-      <div><div class="hero-stat-value ${pnlClass}">${totalPnlPct !== null ? formatChangePct(totalPnlPct) : "—"}</div><div class="hero-stat-label">Perf. globale</div></div>
+    <div class="hero-card">
+      <div class="hint">Vue d'ensemble</div>
+      <div class="hero-stats">
+        <div><div class="hero-stat-value">${formatPrice(totalValue, "EUR")}</div><div class="hero-stat-label">Valeur totale</div></div>
+        <div><div class="hero-stat-value">${formatPrice(totalInvested, "EUR")}</div><div class="hero-stat-label">Investi</div></div>
+        <div><div class="hero-stat-value ${pnlClass}">${pnlSign}${formatPrice(Math.abs(totalPnl), "EUR")}</div><div class="hero-stat-label">Latent</div></div>
+        <div><div class="hero-stat-value ${pnlClass}">${totalPnlPct !== null ? formatChangePct(totalPnlPct) : "—"}</div><div class="hero-stat-label">Perf. globale</div></div>
+      </div>
     </div>`;
 }
 
@@ -95,23 +157,13 @@ function renderPortfolio(portfolio, verdicts) {
     return;
   }
 
-  let totalValue = 0;
-  let totalInvested = 0;
-  const rows = positions.map((pos) => {
-    const r = renderPortfolioRow(pos);
-    if (r.counted) {
-      totalValue += r.value;
-      totalInvested += r.invested;
-    }
-    return r.html;
-  });
+  const prices = typeof latestFavorisPrices !== "undefined" ? latestFavorisPrices : {};
+  const summary = computePortfolioSummary(latestPortfolio, prices, latestPortfolioVerdicts);
 
-  el.innerHTML = `<table class="data-table portfolio-table">
-      <thead><tr><th>Actif</th><th>Valeur</th><th>Investi</th><th>P&amp;L</th><th>P&amp;L %</th><th>Conseil</th></tr></thead>
-      <tbody>${rows.join("")}</tbody>
-    </table>`;
+  el.innerHTML = `<div class="favoris-grid portfolio-tile-grid">${summary.positions.map((p, i) => renderPortfolioTile(p, i)).join("")}</div>`;
+  el.querySelectorAll(".portfolio-tile.clickable").forEach((tileEl) => attachPortfolioToggle(tileEl));
 
-  renderPortfolioTotals(totalValue, totalInvested);
+  renderPortfolioTotals(summary.totalValue, summary.totalInvested);
 }
 
 // Calculette achat/vente — coût moyen pondéré (même méthode que "coût net moyen" affiché par

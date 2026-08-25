@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { loadPage, runScript } from "./helpers/loadPage.js";
+import { loadPage, runScript, setGlobal } from "./helpers/loadPage.js";
 
 describe("assistant.js — wordBoundaryMatch", () => {
   const dom = loadPage(["assistant.js"]);
@@ -550,5 +550,83 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
       expect(sentContext).toContain("Alerte 4"); // la 4e alerte n'est plus coupée (ancienne limite : 3)
       expect(sentContext).toContain("Titre actu récente"); // les actualités n'étaient jamais incluses avant
     });
+  });
+});
+
+describe("assistant.js — intégration du portefeuille personnel", () => {
+  let dom;
+
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "portfolio.js", "search.js", "assistant.js"]);
+    dom.window.aguilaradarData = {
+      verdicts: [
+        {
+          asset: "chainlink",
+          ticker: "LINK",
+          verdict: "ACHAT",
+          confidence_pct: 70,
+          horizon_days: 14,
+          issued_at: "2026-08-10T00:00:00Z",
+          reasoning: "Cassure haussière confirmée.",
+        },
+      ],
+      opportunities: { opportunities: [] },
+      alerts: [],
+      news: [],
+      engineHistory: {
+        global_stats: { total_verdicts_issued: 1, total_verdicts_resolved: 0, accuracy_strict_pct: null },
+        macro_regime: { regime: "neutre", fear_greed_value: 50, btc_dominance_pct: 55, note: "" },
+      },
+      marketContext: {},
+      digest: {},
+      portfolio: {
+        positions: [
+          { cgId: "chainlink", qty: 10, invested: 100 },
+          { cgId: "bitcoin", qty: 1, invested: 1000 },
+          { cgId: "zelcash", qty: null, invested: null, pending: true },
+        ],
+      },
+    };
+  });
+
+  it("inclut les vrais chiffres du portefeuille dans buildAiContext, pour que le relais IA soit toujours sourcé", async () => {
+    await dom.window.ensureChatData();
+    setGlobal(dom, "latestFavorisPrices", { chainlink: { eur: 20 }, bitcoin: { eur: 2000 } });
+    const context = dom.window.buildAiContext();
+    expect(context).toContain("Portefeuille personnel");
+    expect(context).toContain("LINK");
+    expect(context).toContain("BTC");
+  });
+
+  it("personnalise la réponse factuelle sur un favori suivi avec la position réellement détenue par l'utilisateur", async () => {
+    setGlobal(dom, "latestFavorisPrices", { chainlink: { eur: 20 } });
+    const answer = await dom.window.answerQuestion("Que penses-tu de Chainlink ?");
+    expect(answer).toContain("ACHAT");
+    expect(answer).toContain("Ta position");
+    expect(answer).toContain("10 LINK");
+  });
+
+  it("ne mentionne aucune position personnelle pour un favori suivi que l'utilisateur ne détient pas", async () => {
+    dom.window.aguilaradarData.verdicts.push({
+      asset: "arbitrum",
+      ticker: "ARB",
+      verdict: "ATTENTE",
+      confidence_pct: 50,
+      horizon_days: 7,
+      issued_at: "2026-08-10T00:00:00Z",
+      reasoning: "Neutre.",
+    });
+    const answer = await dom.window.answerQuestion("Que penses-tu d'Arbitrum ?");
+    expect(answer).not.toContain("Ta position");
+  });
+
+  it("répond à une question générale sur le portefeuille via le filet de mots-clés (relais IA indisponible dans cet environnement de test)", async () => {
+    setGlobal(dom, "latestFavorisPrices", { chainlink: { eur: 20 }, bitcoin: { eur: 2000 } });
+    const answer = await dom.window.answerQuestion("Comment va mon portefeuille ?");
+    expect(answer).toContain("Valeur totale");
+    expect(answer).toContain("LINK");
+    expect(answer).toContain("BTC");
+    expect(answer).toContain("En attente de chiffres");
+    expect(answer).toContain("FLUX");
   });
 });

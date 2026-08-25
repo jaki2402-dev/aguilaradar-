@@ -105,16 +105,14 @@ describe("portfolio.js — renderPortfolio", () => {
     expect(bodyEl.querySelector(".badge-achat, .badge-vente, .badge-attente")).toBeNull();
   });
 
-  it("escapes verdict reasoning before using it as the advice tooltip (no attribute breakout)", () => {
+  it("escapes verdict reasoning before displaying it in the expanded detail (no HTML injection)", () => {
     setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
-    // Tente de casser l'attribut title="..." (guillemet fermant) pour injecter un vrai <img> —
-    // seul un escapeHtml correct sur le guillemet neutralise ça.
-    const payload = '"><img src=x onerror=alert(1)>';
+    const payload = "<img src=x onerror=alert(1)>";
     const verdicts = [{ asset: "bitcoin", verdict: "ACHAT", issued_at: "2026-08-20T00:00:00Z", reasoning: payload }];
     dom.window.renderPortfolio({ positions: [pos({ qty: 1, invested: 50 })] }, verdicts);
     const bodyEl = dom.window.document.getElementById("portfolio-body");
     expect(bodyEl.querySelector("img")).toBeNull();
-    expect(bodyEl.querySelector(".badge-achat").getAttribute("title")).toBe(payload);
+    expect(bodyEl.textContent).toContain(payload);
   });
 
   it("shows an empty-state message when there are no positions", () => {
@@ -135,6 +133,86 @@ describe("portfolio.js — renderPortfolio", () => {
     setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 200 } });
     dom.window.renderPortfolio();
     expect(dom.window.document.getElementById("portfolio-body").textContent).toContain("400,00");
+  });
+});
+
+describe("portfolio.js — computePortfolioSummary (calcul pur, réutilisé par l'Assistant)", () => {
+  const dom = loadPage(["config.js", "prices.js", "portfolio.js"]);
+  const { computePortfolioSummary } = dom.window;
+
+  it("calcule valeur/P&L/P&L% pour une position normale et l'inclut dans les totaux", () => {
+    const summary = computePortfolioSummary({ positions: [pos({ qty: 2, invested: 100 })] }, { bitcoin: { eur: 100 } }, []);
+    expect(summary.positions[0]).toMatchObject({ ticker: "BTC", value: 200, pnl: 100, pnlPct: 100 });
+    expect(summary.totalValue).toBe(200);
+    expect(summary.totalInvested).toBe(100);
+  });
+
+  it("marque une position pending quand qty/invested sont null, sans l'inclure dans les totaux", () => {
+    const summary = computePortfolioSummary({ positions: [{ cgId: "zelcash", qty: null, invested: null, pending: true }] }, {}, []);
+    expect(summary.positions[0].pending).toBe(true);
+    expect(summary.positions[0].value).toBeNull();
+    expect(summary.totalValue).toBe(0);
+  });
+
+  it("exclut une position sans prix live des totaux, sans la faire disparaître de la liste", () => {
+    const summary = computePortfolioSummary({ positions: [pos({ qty: 2, invested: 100 })] }, {}, []);
+    expect(summary.positions).toHaveLength(1);
+    expect(summary.positions[0].value).toBeNull();
+    expect(summary.totalValue).toBe(0);
+    expect(summary.totalInvested).toBe(0);
+  });
+
+  it("attache le dernier verdict (verdict + raisonnement) de cet actif à sa position", () => {
+    const verdicts = [
+      { asset: "bitcoin", verdict: "ACHAT", issued_at: "2026-08-01T00:00:00Z", reasoning: "ancien" },
+      { asset: "bitcoin", verdict: "VENTE", issued_at: "2026-08-20T00:00:00Z", reasoning: "récent" },
+    ];
+    const summary = computePortfolioSummary({ positions: [pos()] }, { bitcoin: { eur: 100 } }, verdicts);
+    expect(summary.positions[0].verdict).toBe("VENTE");
+    expect(summary.positions[0].reasoning).toBe("récent");
+  });
+
+  it("retombe sur le cgId comme ticker/nom quand l'actif n'est pas dans FAVORIS", () => {
+    const summary = computePortfolioSummary({ positions: [{ cgId: "un-token-inconnu", qty: 1, invested: 10 }] }, {}, []);
+    expect(summary.positions[0].ticker).toBe("un-token-inconnu");
+  });
+});
+
+describe("portfolio.js — grille de tuiles et repli/dépli", () => {
+  let dom;
+
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "portfolio.js"], { html: PORTFOLIO_FIXTURE_HTML });
+  });
+
+  it("rend une tuile .portfolio-tile par position, dans une grille .portfolio-tile-grid", () => {
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 }, ethereum: { eur: 100 } });
+    dom.window.renderPortfolio(
+      { positions: [pos({ cgId: "bitcoin" }), pos({ cgId: "ethereum" })] },
+      []
+    );
+    const bodyEl = dom.window.document.getElementById("portfolio-body");
+    expect(bodyEl.querySelector(".portfolio-tile-grid")).not.toBeNull();
+    expect(bodyEl.querySelectorAll(".portfolio-tile").length).toBe(2);
+  });
+
+  it("bascule la classe expanded (et aria-expanded) au clic sur une tuile", () => {
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    dom.window.renderPortfolio({ positions: [pos()] }, []);
+    const tile = dom.window.document.querySelector(".portfolio-tile.clickable");
+    expect(tile.classList.contains("expanded")).toBe(false);
+    tile.click();
+    expect(tile.classList.contains("expanded")).toBe(true);
+    expect(tile.getAttribute("aria-expanded")).toBe("true");
+    tile.click();
+    expect(tile.classList.contains("expanded")).toBe(false);
+  });
+
+  it("une tuile en attente n'est pas cliquable", () => {
+    dom.window.renderPortfolio({ positions: [{ cgId: "zelcash", qty: null, invested: null, pending: true }] }, []);
+    const bodyEl = dom.window.document.getElementById("portfolio-body");
+    expect(bodyEl.querySelector(".portfolio-tile.clickable")).toBeNull();
+    expect(bodyEl.textContent).toContain("En attente");
   });
 });
 

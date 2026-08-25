@@ -39,8 +39,9 @@ async function ensureChatData() {
     loadJson(DATA_URLS.engineHistory),
     loadJson(DATA_URLS.marketContext),
     loadJson(DATA_URLS.digest),
-  ]).then(([verdicts, opportunities, alerts, news, engineHistory, marketContext, digest]) => {
-    chatData = { verdicts, opportunities, alerts, news, engineHistory, marketContext, digest };
+    loadJson(DATA_URLS.portfolio),
+  ]).then(([verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio]) => {
+    chatData = { verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio };
     return chatData;
   });
   return chatDataLoading;
@@ -262,11 +263,25 @@ async function fetchAssetAiOpinion(question, factualAnswer) {
   return (await requestAiRelayOnce(question, context)) || (await requestAiRelayOnce(question, context));
 }
 
+// Position personnelle de l'utilisateur sur cet actif (data/portfolio.json), si tenue — rend la
+// réponse factuelle sur un favori suivi concrète ("TA position"), pas seulement le verdict
+// générique du moteur. Même calcul que computePortfolioSummary (portfolio.js), jamais dupliqué.
+function personalPositionLine(cgId) {
+  if (!chatData.portfolio || typeof computePortfolioSummary !== "function") return null;
+  const prices = typeof latestFavorisPrices !== "undefined" ? latestFavorisPrices : {};
+  const summary = computePortfolioSummary(chatData.portfolio, prices, chatData.verdicts || []);
+  const p = summary.positions.find((pos) => pos.cgId === cgId && !pos.pending);
+  if (!p) return null;
+  return `Ta position : ${p.qty} ${p.ticker}, ${formatPrice(p.invested, "EUR")} investis, valeur actuelle ${p.value !== null ? formatPrice(p.value, "EUR") : "—"} (${p.pnlPct !== null ? formatChangePct(p.pnlPct) : "—"}).`;
+}
+
 async function answerAboutAsset(mention, question) {
   const technical = await fetchLiveTechnicalSummary(mention.cgId);
   const askedAboutCorrection = CORRECTION_KEYWORDS.test(question || "");
   const withExtras = (text) => {
     let out = text;
+    const position = personalPositionLine(mention.cgId);
+    if (position) out += `\n\n${position}`;
     if (technical) out += `\n\n${technical}`;
     // La correction (correction_log) est une propriété du MOTEUR dans son ensemble, jamais
     // par actif individuel — même mention quel que soit l'actif demandé, pas une donnée
@@ -350,6 +365,33 @@ function answerEngine() {
   return `Le moteur a émis ${stats.total_verdicts_issued} verdicts, dont ${stats.total_verdicts_resolved} vérifiés, avec une exactitude de ${stats.accuracy_strict_pct.toFixed(1)} %.\n\n${correctionLogSummary()}\n\nDétail complet dans l'onglet Moteur.`;
 }
 
+// Filet de secours (CHAT_INTENTS) pour une question générale sur LE portefeuille de l'utilisateur
+// quand l'IA (qui a déjà ce même résumé via buildAiContext) est indisponible ou échoue. Même
+// calcul que computePortfolioSummary (portfolio.js) — jamais de chiffre recalculé différemment.
+function answerPortfolio() {
+  if (!chatData.portfolio || typeof computePortfolioSummary !== "function") {
+    return "Aucun portefeuille configuré pour l'instant.";
+  }
+  const prices = typeof latestFavorisPrices !== "undefined" ? latestFavorisPrices : {};
+  const summary = computePortfolioSummary(chatData.portfolio, prices, chatData.verdicts || []);
+  const active = summary.positions.filter((p) => !p.pending);
+  if (active.length === 0) return "Aucune position avec des chiffres renseignés pour l'instant dans le portefeuille.";
+
+  const lines = active
+    .slice()
+    .sort((a, b) => (b.pnlPct ?? -Infinity) - (a.pnlPct ?? -Infinity))
+    .map((p) => `• ${p.ticker} : ${p.value !== null ? formatPrice(p.value, "EUR") : "—"} (${p.pnlPct !== null ? formatChangePct(p.pnlPct) : "—"})${p.verdict ? `, verdict ${p.verdict}` : ""}`);
+  const totalPnlSign = summary.totalPnl >= 0 ? "+" : "-";
+  const totalLine = `Valeur totale ${formatPrice(summary.totalValue, "EUR")} pour ${formatPrice(summary.totalInvested, "EUR")} investis, soit ${totalPnlSign}${formatPrice(Math.abs(summary.totalPnl), "EUR")} (${summary.totalPnlPct !== null ? formatChangePct(summary.totalPnlPct) : "—"}).`;
+  const pending = summary.positions.filter((p) => p.pending).map((p) => p.ticker);
+
+  return (
+    `${totalLine}\n\n${lines.join("\n")}` +
+    (pending.length ? `\n\nEn attente de chiffres : ${pending.join(", ")}.` : "") +
+    `\n\nPortefeuille fictif (simulation) — détail complet et calculette achat/vente dans l'onglet Portefeuille.`
+  );
+}
+
 function answerGenericInvesting() {
   return `Aguilaradar ne donne pas de conseil en investissement réglementé — seulement de l'analyse informative. Pour un actif précis, demande-moi directement par son nom ou son ticker (ex. "que penses-tu de Chainlink ?") : s'il fait partie des 15 favoris ou des opportunités suivies, je te donne le vrai verdict du moteur avec son raisonnement. Sinon, utilise la recherche de l'onglet Favoris pour un prix et une fiche d'identité en direct.`;
 }
@@ -360,6 +402,7 @@ const CHAT_INTENTS = [
   { keywords: ["alerte", "actualité", "actualites", "actualités", "news", "quoi de neuf", "du nouveau", "s'est-il passé", "sest il passe"], handler: answerAlerts },
   { keywords: ["performance", "taux de réussite", "taux de reussite", "précision", "precision", "moteur", "backtest", "rétrotest", "retrotest", "fiable", "se trompe", "corrig", "amélior", "amelior", "apprend", "apprentissage"], handler: answerEngine },
   { keywords: ["pourquoi", "hausse", "baisse", "monte", "descend", "chute", "analyse du marché", "analyse le marché", "analyse-moi le marché", "état du marché", "etat du marche", "comment va le marché", "comment va le marche", "où va le marché", "ou va le marche", "régime", "regime", "tendance", "sentiment", "bullrun", "bull run", "bull market", "bear market", "haussier", "baissier", "bullish", "bearish"], handler: answerMarketWhy },
+  { keywords: ["mon portefeuille", "mes positions", "mon p&l", "mon pnl", "mes gains", "mes pertes", "je suis en perte", "je suis en gain", "combien j'ai investi", "combien j'ai perdu", "combien j'ai gagné"], handler: answerPortfolio },
   { keywords: ["investir", "acheter", "vendre", "placer", "position", "que penses-tu", "quel est ton avis", "ton avis", "conseil", "conseilles"], handler: answerGenericInvesting },
 ];
 
@@ -420,6 +463,29 @@ function buildAiContext() {
   if (alerts.length) parts.push("Dernières alertes : " + alerts.map((a) => a.message).join(" ; "));
   const news = (chatData.news && chatData.news.items) || [];
   if (news.length) parts.push("Actualités récentes : " + news.slice(-8).map((n) => n.title).join(" ; "));
+
+  // Portefeuille personnel de l'utilisateur (data/portfolio.json, saisi manuellement) —
+  // computePortfolioSummary (portfolio.js) est la SEULE source de cette méthode de calcul,
+  // jamais dupliquée ici, pour que l'onglet Portefeuille et l'Assistant restent toujours
+  // d'accord sur les mêmes chiffres. Ajouté à la demande explicite de l'utilisateur : l'IA doit
+  // pouvoir vraiment analyser/donner un avis dessus plutôt que de deviner.
+  if (chatData.portfolio && typeof computePortfolioSummary === "function") {
+    const prices = typeof latestFavorisPrices !== "undefined" ? latestFavorisPrices : {};
+    const summary = computePortfolioSummary(chatData.portfolio, prices, chatData.verdicts || []);
+    const lines = summary.positions
+      .filter((p) => !p.pending)
+      .map(
+        (p) =>
+          `${p.ticker} : valeur ${p.value !== null ? formatPrice(p.value, "EUR") : "—"}, investi ${formatPrice(p.invested, "EUR")}, P&L ${p.pnlPct !== null ? formatChangePct(p.pnlPct) : "—"}${p.verdict ? `, verdict moteur ${p.verdict}` : ""}`
+      );
+    const pendingTickers = summary.positions.filter((p) => p.pending).map((p) => p.ticker);
+    parts.push(
+      `Portefeuille personnel de l'utilisateur (déclaré manuellement, simulation) : ${lines.join(" ; ")}. ` +
+        `Total : valeur ${formatPrice(summary.totalValue, "EUR")}, investi ${formatPrice(summary.totalInvested, "EUR")}, P&L ${summary.totalPnlPct !== null ? formatChangePct(summary.totalPnlPct) : "—"}.` +
+        (pendingTickers.length ? ` Positions pas encore configurées : ${pendingTickers.join(", ")}.` : "")
+    );
+  }
+
   return parts.join("\n");
 }
 
@@ -558,6 +624,7 @@ const CHAT_SUGGESTIONS = [
   "Pourquoi le marché est-il neutre en ce moment ?",
   "Quelles sont les meilleures opportunités ?",
   "Que penses-tu de Bitcoin ?",
+  "Comment va mon portefeuille ?",
   "Quelles sont les dernières alertes ?",
   "Tu connais Worldcoin ?",
 ];
@@ -601,7 +668,7 @@ function initAssistant() {
   renderChatSuggestions();
   appendChatMessage(
     "assistant",
-    "Salut ! Je réponds à partir des dernières analyses calculées par le radar (mises à jour toutes les 2h) — pose une question sur le marché, un actif suivi, les opportunités ou les dernières alertes. Sur un actif précis, j'ajoute aussi des indicateurs techniques (RSI, tendance, volume) calculés en direct, pas seulement le dernier verdict. Et si tu nommes un actif que je ne suis pas, je vais quand même chercher son prix en direct sur CoinGecko plutôt que de te renvoyer vers la recherche."
+    "Salut ! Je réponds à partir des dernières analyses calculées par le radar (mises à jour toutes les 2h) — pose une question sur le marché, un actif suivi, les opportunités ou les dernières alertes. Sur un actif précis, j'ajoute aussi des indicateurs techniques (RSI, tendance, volume) calculés en direct, pas seulement le dernier verdict. Et si tu nommes un actif que je ne suis pas, je vais quand même chercher son prix en direct sur CoinGecko plutôt que de te renvoyer vers la recherche. Je peux aussi analyser ton portefeuille (valeur, P&L, avis par position) — demande-moi \"comment va mon portefeuille ?\"."
   );
   form.addEventListener("submit", (e) => {
     e.preventDefault();
