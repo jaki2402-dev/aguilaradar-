@@ -139,4 +139,5 @@ const DATA_URLS = {
   favorisContext: "data/favoris-context.json",
   healthLog: "data/health-log.json",
   digest: "data/digest.json",
+  portfolio: "data/portfolio.json",
 };

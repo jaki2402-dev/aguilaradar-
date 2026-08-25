@@ -92,6 +92,10 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>
       <span class="tab-label">Accueil</span>
     </button>
+    <button data-tab="portfolio">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+      <span class="tab-label">Portefeuille</span>
+    </button>
     <button data-tab="favoris">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
       <span class="tab-label">Favoris</span>
@@ -236,6 +240,17 @@
 
         </div>
       </details>
+    </section>
+
+    <section id="tab-portfolio" class="tab-panel">
+      <div class="section-head">
+        <div class="section-icon section-icon--teal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg></div>
+        <h2>Mon portefeuille</h2>
+      </div>
+      <p class="section-sub">Quantités et capital investi saisis manuellement (data/portfolio.json) — valeur, latent et P&amp;L recalculés en direct depuis les prix live, jamais stockés. Le conseil par actif reprend le dernier verdict du moteur pour cet actif, pas un avis distinct.</p>
+      <div id="portfolio-totals"></div>
+      <div id="portfolio-body" style="margin-top: 20px;"></div>
+      <p class="disclaimer-box" style="margin-top: 16px;">Simulation informative, pas un conseil en investissement réglementé. Le dépôt étant public, ces chiffres sont exposés comme le reste des données du site (voir README, section "Portail d'accès").</p>
     </section>
 
     <section id="tab-favoris" class="tab-panel">
@@ -447,7 +462,8 @@
 
   <footer class="site-footer">
     Analyse automatisée à titre informatif — ne constitue pas un conseil en investissement réglementé.
-    Aucune donnée personnelle, aucune exécution d'ordre réelle, uniquement des simulations. Aucun memecoin recommandé.
+    Le portefeuille affiché est déclaré manuellement par l'utilisateur (aucune connexion à un compte ou un wallet réel).
+    Aucune exécution d'ordre réelle, uniquement des simulations. Aucun memecoin recommandé.
   </footer>
 
 </div>
@@ -459,13 +475,14 @@
      cache: "no-store", donc toujours frais) - bug réel constaté le 18/08 : la correction de
      l'Assistant était bien en ligne, mais assistant.js restait servi en cache. Bump la date à
      CHAQUE modification d'un fichier js/*.js ou css/*.css, pas seulement pour ce correctif-ci. -->
-<script src="js/config.js?v=20260824i"></script>
+<script src="js/config.js?v=20260825a"></script>
 <script src="js/prices.js?v=20260824i"></script>
 <script src="js/charts.js?v=20260824i"></script>
 <script src="js/engine.js?v=20260824i"></script>
 <script src="js/cards.js?v=20260824i"></script>
 <script src="js/detail.js?v=20260824i"></script>
 <script src="js/insights.js?v=20260824i"></script>
+<script src="js/portfolio.js?v=20260825a"></script>
 <script src="js/background-fx.js?v=20260824i"></script>
 <script src="js/bg-themes-extra.js?v=20260824i"></script>
 <!-- Module (pas un script classique) : import ES natif depuis js/vendor/three.module.min.js
@@ -476,7 +493,7 @@
 <script src="js/theme.js?v=20260824i"></script>
 <script src="js/layout.js?v=20260824i"></script>
 <script src="js/search.js?v=20260824i"></script>
-<script src="js/app.js?v=20260824i"></script>
+<script src="js/app.js?v=20260825a"></script>
 <script src="js/notify.js?v=20260824i"></script>
 <script src="js/assistant.js?v=20260824i"></script>
 <script src="js/auth.js?v=20260824i"></script>

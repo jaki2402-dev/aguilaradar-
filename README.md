@@ -1,6 +1,8 @@
 # aguilaradar
 
-Radar de marché crypto autonome — analyse en continu, verdicts horodatés, moteur qui s'auto-évalue et s'auto-corrige. Séparé d'Horizon (le tableau de bord de portefeuille personnel) : aguilaradar ne contient aucun montant € personnel, uniquement de l'analyse de marché générale.
+Radar de marché crypto autonome — analyse en continu, verdicts horodatés, moteur qui s'auto-évalue et s'auto-corrige, et (depuis le 25/08/2026) le portefeuille personnel de l'utilisateur avec valeur/latent/P&L en direct et conseils par position.
+
+Construit à l'origine séparé d'Horizon (le tableau de bord de portefeuille personnel — pas un dépôt, un fichier `portefeuille-dashboard-v10.jsx` local déployé à la main sur Netlify) sur le principe qu'aguilaradar ne contenait aucun montant € personnel. L'utilisateur a explicitement choisi d'abandonner ce principe pour l'onglet Portefeuille : la précision des prix sur Horizon n'était pas satisfaisante, et il préfère un seul endroit avec son gain/perte latent en direct plutôt que deux tableaux de bord à maintenir. Le reste de la séparation reste vrai (aguilaradar ne reprend ni le briefing macro d'Horizon ni son déploiement Netlify) — seul le modèle de données qty/investi par position a été repris, saisi manuellement (jamais déduit, jamais connecté à un vrai compte/wallet). Le dépôt étant public, ces chiffres sont exposés comme le reste des fichiers `data/*.json` (voir "Portail d'accès" ci-dessous) — un choix assumé par l'utilisateur, pas un oubli.
 
 ## Pourquoi ce projet existe
 
@@ -44,6 +46,12 @@ Généré par cycle profond : filtre CoinGecko catégorie "Meme" exclue, score d
 ### `alerts.json` — alertes de seuil
 
 Déclenchées par le pouls rapide (RSI, cassure de support/résistance, imbalance de carnet d'ordres) — pas besoin d'un cycle d'analyse complet pour ces alertes.
+
+### `portfolio.json` — portefeuille personnel de l'utilisateur
+
+Seul fichier `data/` **édité à la main** (par l'utilisateur, ou par Claude à sa demande explicite après partage de captures à jour) plutôt que par une routine programmée. Contient uniquement `qty` et `invested` (capital réellement engagé) par position — jamais un prix, une valeur ou un P&L, toujours recalculés en direct côté client (`js/portfolio.js`) à partir du prix live, jamais stockés. Une position avec `qty`/`invested` à `null` et `pending: true` signifie que les vrais chiffres n'ont pas encore été fournis — l'interface l'affiche comme "en attente", n'invente jamais un nombre à la place.
+
+Les deux routines qui envoient le portefeuille par mail (`briefing-crypto-hebdo-cloud`, hebdomadaire, et `alerte-crypto-quotidienne-cloud`, toutes les 4h) lisent ce fichier en lecture seule via l'URL brute GitHub — jamais elles ne le modifient ni ne recalculent `qty`/`invested`.
 
 ## Correction connue : ID CoinGecko du FLUX
 
