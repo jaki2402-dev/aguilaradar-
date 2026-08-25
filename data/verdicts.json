@@ -650,6 +650,14 @@
             "actual_direction": null,
             "verdict_correct": null,
             "resolved_at": null
+        },
+        "signal_precoce": {
+            "detected_at": "2026-08-25T20:40:00Z",
+            "price_at_signal_eur": 0.01779183,
+            "move_pct_since_issue": -17.17,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "The Graph (GRT) : franchissement du seuil de mouvement directionnel (5 %) à la baisse, en sens opposé à la lecture initiale, sur données vérifiées ce cycle par appel direct à l'API CoinGecko (accès HTTP fonctionnel ce cycle, contrairement aux cycles récents bloqués par le proxy réseau). Prix confirmé à 0,017792 dollar contre un prix d'émission de 0,02148 dollar (verdict ATTENTE du 23 août), soit -17,2 %. Aucune actualité spécifique identifiée pour l'expliquer : lecture purement technique. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 6 septembre."
         }
     },
     {
@@ -683,6 +691,14 @@
             "actual_direction": null,
             "verdict_correct": null,
             "resolved_at": null
+        },
+        "signal_precoce": {
+            "detected_at": "2026-08-25T20:40:00Z",
+            "price_at_signal_eur": 0.360265,
+            "move_pct_since_issue": 17.47,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Celestia (TIA) : seuil de mouvement directionnel (5 %) franchi à la hausse, données vérifiées par appel direct à l'API CoinGecko (0,360265 dollar contre un prix d'émission de 0,306677 dollar, verdict ATTENTE du 23 août, soit +17,5 %). Aucune actualité spécifique identifiée pour l'expliquer. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 6 septembre."
         }
     },
     {
@@ -715,6 +731,14 @@
             "actual_direction": null,
             "verdict_correct": null,
             "resolved_at": null
+        },
+        "signal_precoce": {
+            "detected_at": "2026-08-25T20:40:00Z",
+            "price_at_signal_eur": 0.02245998,
+            "move_pct_since_issue": 65.76,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Peaq (PEAQ) : mouvement extrême vérifié par appel direct à l'API CoinGecko, +65,8 % depuis le prix d'émission du verdict ATTENTE du 23 août (0,01355 dollar contre 0,022460 dollar aujourd'hui). Le raisonnement initial notait déjà un recul de -12,5 % à contre-courant du marché pendant l'interruption du cycle précédent : ce rebond marque un retournement complet, sans catalyseur fondamental identifié à ce stade. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 6 septembre."
         }
     },
     {
@@ -747,6 +771,14 @@
             "actual_direction": null,
             "verdict_correct": null,
             "resolved_at": null
+        },
+        "signal_precoce": {
+            "detected_at": "2026-08-25T20:40:00Z",
+            "price_at_signal_eur": 11.42,
+            "move_pct_since_issue": 53.91,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Chainlink (LINK) : mouvement marqué vérifié par appel direct à l'API CoinGecko, +53,9 % depuis le prix d'émission du verdict ATTENTE du 23 août (7,42 dollars contre 11,42 dollars aujourd'hui). Aucune actualité spécifique nouvelle identifiée ce cycle pour l'expliquer (le développement institutionnel de Hong Kong déjà noté le 10 août reste d'actualité mais n'est pas un développement neuf). Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 6 septembre."
         }
     },
     {
@@ -810,6 +842,14 @@
             "actual_direction": null,
             "verdict_correct": null,
             "resolved_at": null
+        },
+        "signal_precoce": {
+            "detected_at": "2026-08-25T20:40:00Z",
+            "price_at_signal_eur": 0.210247,
+            "move_pct_since_issue": 52.35,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Jupiter (JUP) : mouvement marqué vérifié par appel direct à l'API CoinGecko, +52,3 % depuis le prix d'émission du verdict ATTENTE du 23 août (0,138 dollar contre 0,210247 dollar aujourd'hui) — retournement complet par rapport au recul de -11,7 % noté dans le raisonnement initial. Aucune actualité spécifique identifiée pour expliquer ce rebond. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 6 septembre."
         }
     },
     {
@@ -839,6 +879,14 @@
             "actual_direction": null,
             "verdict_correct": null,
             "resolved_at": null
+        },
+        "signal_precoce": {
+            "detected_at": "2026-08-25T20:40:00Z",
+            "price_at_signal_eur": 1.41,
+            "move_pct_since_issue": 16.53,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Livepeer (LPT) : seuil de mouvement directionnel (5 %) franchi à la hausse, données vérifiées par appel direct à l'API CoinGecko (1,21 dollar contre 1,41 dollar aujourd'hui, soit +16,5 %) — le prix d'émission du verdict ATTENTE du 23 août avait lui-même été obtenu par conversion incertaine faute de cotation EUR fiable ce jour-là (voir le raisonnement initial du verdict), donnée désormais confirmée directement. Aucune actualité spécifique identifiée. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 6 septembre."
         }
     },
     {
@@ -871,6 +919,14 @@
             "actual_direction": null,
             "verdict_correct": null,
             "resolved_at": null
+        },
+        "signal_precoce": {
+            "detected_at": "2026-08-25T20:40:00Z",
+            "price_at_signal_eur": 0.05374,
+            "move_pct_since_issue": -57.08,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "AIOZ Network (AIOZ) : mouvement extrême vérifié par appel direct à l'API CoinGecko, -57,1 % depuis le prix d'émission du verdict ATTENTE du 23 août (0,1252 dollar contre 0,05374 dollar aujourd'hui). Prudence de lecture nécessaire : le raisonnement initial de ce même verdict signalait déjà que ce prix d'émission (basé sur un bond de +209 % non confirmé indépendamment) restait à vérifier par une source indépendante vu son ampleur inhabituelle — ce recul pourrait donc en partie ou en totalité refléter la correction d'un prix d'émission initialement erroné plutôt qu'un mouvement de marché réel, à l'image de l'anomalie déjà documentée sur BTC/ETH le 10 août. Signal précoce enregistré à titre de signalement, ne préjuge pas de l'issue à l'échéance du 6 septembre."
         }
     },
     {
@@ -935,6 +991,14 @@
             "actual_direction": null,
             "verdict_correct": null,
             "resolved_at": null
+        },
+        "signal_precoce": {
+            "detected_at": "2026-08-25T20:40:00Z",
+            "price_at_signal_eur": 0.093328,
+            "move_pct_since_issue": 5.6,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Arbitrum (ARB) : seuil de mouvement directionnel (5 %) tout juste franchi à la hausse, données vérifiées par appel direct à l'API CoinGecko (0,08838 dollar contre 0,093328 dollar aujourd'hui, soit +5,6 %). Mouvement modeste comparé aux autres favoris ce cycle. Aucune actualité spécifique identifiée. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 6 septembre."
         }
     },
     {
@@ -966,6 +1030,14 @@
             "actual_direction": null,
             "verdict_correct": null,
             "resolved_at": null
+        },
+        "signal_precoce": {
+            "detected_at": "2026-08-25T20:40:00Z",
+            "price_at_signal_eur": 5.59,
+            "move_pct_since_issue": 55.71,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Injective (INJ) : mouvement marqué vérifié par appel direct à l'API CoinGecko, +55,7 % depuis le prix d'émission du verdict ATTENTE du 23 août (3,59 dollars contre 5,59 dollars aujourd'hui) — retournement complet par rapport au recul de -9,1 % noté dans le raisonnement initial, qui faisait pourtant suite à la validation d'un verdict VENTE. Les signaux d'adoption institutionnelle déjà notés le 10 août (Bitwise, Four Pillars, POSCO/LG CNS) restent d'actualité mais ne constituent pas un développement neuf. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 6 septembre."
         }
     },
     {
