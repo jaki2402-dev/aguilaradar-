@@ -59,6 +59,25 @@ describe("app.js — updateFreshnessIndicator (régression 4d520ad, puis régres
     expect(el.textContent).toContain("⚠");
   });
 
+  it("prefers news.last_checked_at over last_updated_at — une veille qui n'a rien trouvé de nouveau ne doit pas être signalée bloquée", () => {
+    // Cas réel du 25/08 : le cycle profond refait sa veille actualités à chaque passage mais
+    // n'ajoute une entrée que si c'est réellement nouveau (correctif concision du 17/08) —
+    // last_updated_at peut donc rester ancien plusieurs cycles de suite sans que ce soit un
+    // échec. last_checked_at, lui, avance à chaque veille effectuée, qu'une entrée soit
+    // ajoutée ou non ; c'est donc lui qui doit determiner la fraîcheur affichée.
+    dom.window.updateFreshnessIndicator(
+      {},
+      {},
+      { last_updated_at: "2026-08-17T02:00:00Z", last_checked_at: "2026-08-17T11:00:00Z" } // updated_at 10h (obsolète seul), checked_at 1h
+    );
+    expect(el.classList.contains("freshness-ok")).toBe(true);
+  });
+
+  it("retombe sur last_updated_at si last_checked_at est absent (compatibilité avec les cycles avant le 25/08)", () => {
+    dom.window.updateFreshnessIndicator({}, {}, { last_updated_at: "2026-08-17T04:00:00Z" }); // 8h, pas de last_checked_at
+    expect(el.classList.contains("freshness-stale")).toBe(true);
+  });
+
   it("régression du 17/08 — un routine_health frais ne doit plus masquer un criblage d'opportunités obsolète sur son propre rythme hebdomadaire", () => {
     // Cas réel du 17/08 : opportunities.last_scan_at figé depuis le 07/08 (criblage repris
     // par une routine hebdomadaire dédiée) pendant que routine_health continuait de tourner

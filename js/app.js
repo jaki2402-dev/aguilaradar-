@@ -453,7 +453,7 @@ const FRESHNESS_SOURCES = [
 function updateFreshnessIndicator(engineHistory, opportunities, news) {
   const timestampsByKey = {
     routine: engineHistory && engineHistory.routine_health && engineHistory.routine_health.last_success_at,
-    news: news && news.last_updated_at,
+    news: news && (news.last_checked_at || news.last_updated_at),
     opportunities: opportunities && opportunities.last_scan_at,
   };
 
