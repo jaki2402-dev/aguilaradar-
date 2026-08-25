@@ -1,0 +1,22 @@
+{
+  "updated_at": "2026-08-25",
+  "source": "Saisie manuelle par l'utilisateur (capture d'écran de son app de suivi de portefeuille), pas une automatisation.",
+  "note": "qty et invested sont figés (capital réellement engagé par position) — jamais recalculés automatiquement, jamais déduits d'un prix. Valeur, P&L et P&L% ne sont JAMAIS stockés ici : toujours recalculés en direct à partir du prix live (voir js/portfolio.js). invested dérivé de valeur-P&L affichés par l'app source pour la plupart des lignes (précision à quelques euros près, l'app source arrondit ses propres champs indépendamment) ; FET utilise le champ 'coût total' exact de sa fiche détail, plus fiable.",
+  "positions": [
+    { "cgId": "bitcoin", "qty": 0.0200363, "invested": 1229.36 },
+    { "cgId": "ethereum", "qty": 0.621512, "invested": 953.50 },
+    { "cgId": "fetch-ai", "qty": 7316.84127307, "invested": 2826.86 },
+    { "cgId": "celestia", "qty": 1212.18, "invested": 1184.66 },
+    { "cgId": "chainlink", "qty": 25.823, "invested": 234.70 },
+    { "cgId": "the-graph", "qty": 13821.07, "invested": 651.00 },
+    { "cgId": "peaq-2", "qty": 10213.24, "invested": 484.67 },
+    { "cgId": "livepeer", "qty": 136.662, "invested": 213.38 },
+    { "cgId": "injective-protocol", "qty": 33.548, "invested": 116.81 },
+    { "cgId": "cartesi", "qty": 5440.18, "invested": 213.90 },
+    { "cgId": "jupiter-exchange-solana", "qty": 627.376, "invested": 263.26 },
+    { "cgId": "arbitrum", "qty": 1281.25, "invested": 98.65 },
+    { "cgId": "ondo-finance", "qty": 298.185, "invested": 40.95 },
+    { "cgId": "aioz-network", "qty": 2007.43, "invested": 291.00 },
+    { "cgId": "zelcash", "qty": null, "invested": null, "pending": true }
+  ]
+}

@@ -154,6 +154,7 @@ const APP_FIXTURE_HTML = `<!doctype html><html><body>
   <span id="last-price-update"></span>
   <nav class="tabs">
     <button data-tab="overview" class="active"><span class="tab-label">Accueil</span></button>
+    <button data-tab="portfolio"><span class="tab-label">Portefeuille</span></button>
     <button data-tab="favoris"><span class="tab-label">Favoris</span></button>
     <button data-tab="opportunities"><span class="tab-label">Opportunités</span></button>
     <button data-tab="journal"><span class="tab-label">Journal</span></button>
@@ -168,6 +169,7 @@ const APP_FIXTURE_HTML = `<!doctype html><html><body>
     <div id="news-body"></div>
     <div id="accueil-highlights"></div>
   </section>
+  <section id="tab-portfolio" class="tab-panel"><div id="portfolio-totals"></div><div id="portfolio-body"></div></section>
   <section id="tab-favoris" class="tab-panel"><div id="favoris-grid"></div></section>
   <section id="tab-opportunities" class="tab-panel"><div id="opportunities-body"></div></section>
   <section id="tab-journal" class="tab-panel"><div id="journal-body"></div></section>
