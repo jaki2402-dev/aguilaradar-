@@ -555,5 +555,13 @@
         "triggered_at": "2026-08-24T22:20:00Z",
         "message": "Cycle du 24 août 2026, 22h20 UTC : rien de nouveau par rapport au cycle précédent (régime « risk-on », aucun seuil franchi). Recherche large « biggest movers 24h » : aucun des 15 favoris, des 13 opportunités ni des 8 items du groupe témoin ne figure parmi les mouvements extrêmes du jour. Indice de peur et de cupidité relevé entre 73 et 80 selon la source (« Greed »/« Extreme Greed »), quasi identique à la valeur déjà retenue (74), conservée telle quelle conformément au correctif du 10/08. Dominance BTC reconfirmée à 56,6 %.",
         "source": "agrégat WebSearch (recherche large « biggest movers » + indice de peur et de cupidité + dominance BTC + veille actualités générale)"
+    },
+    {
+        "id": "alert-20260825-0019-btc-eth-signal-precoce",
+        "ticker_ou_theme": "BTC/ETH",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-25T00:19:35Z",
+        "message": "Bitcoin et Ethereum franchissent nettement le seuil de mouvement directionnel (5 %) par rapport au prix d'émission de leur verdict ATTENTE du 23 août : BTC à 78 872,75 dollars (+19,07 % depuis 66 240 dollars, fourchette 78 700-79 463 dollars selon les sources), ETH à 2 470,76 dollars (+19,54 % depuis 2 066,96 dollars, fourchette 2 449-2 506 dollars). Rallye porté par des achats renouvelés via les ETF Bitcoin au comptant américains, une vague de liquidations de positions courtes et l'annonce du Trésor américain d'étendre son programme de rachat d'obligations à long terme. Signaux précoces enregistrés sur les deux verdicts correspondants, ne préjugent pas de l'issue à l'échéance du 6 septembre.",
+        "source": "https://sundayguardianlive.com/business/bitcoin-price-today-25-august-why-is-bitcoin-up-today-btc-holds-near-79000-after-22-weekly-rally-check-latest-prices-in-usd-inr-gbp-euro-jpy-269246/"
     }
 ]

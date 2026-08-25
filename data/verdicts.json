@@ -538,6 +538,14 @@
             "actual_direction": null,
             "verdict_correct": null,
             "resolved_at": null
+        },
+        "signal_precoce": {
+            "detected_at": "2026-08-25T00:19:35Z",
+            "price_at_signal_eur": 78872.75,
+            "move_pct_since_issue": 19.07,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Bitcoin (BTC) : rallye marqué détecté dès le lendemain de l'émission du verdict ATTENTE (23 août, 66 240 dollars). Prix confirmé ce cycle par recherche dédiée (Coinbase, 78 872,75 dollars, cohérent avec une fourchette large de 78 700 à 79 463 dollars selon les sources consultées) : mouvement de +19,07 % par rapport au prix d'émission, largement au-delà du seuil de mouvement directionnel de 5 %. Catalyseurs cités par plusieurs sources : achats renouvelés via les ETF Bitcoin au comptant américains, vague de liquidations de positions courtes, et annonce du Trésor américain d'étendre son programme de rachat d'obligations à long terme, interprétée comme favorable aux actifs à risque. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 6 septembre : le verdict ATTENTE reste en attente, à confirmer ou infirmer aux prochains cycles."
         }
     },
     {
@@ -570,6 +578,14 @@
             "actual_direction": null,
             "verdict_correct": null,
             "resolved_at": null
+        },
+        "signal_precoce": {
+            "detected_at": "2026-08-25T00:19:35Z",
+            "price_at_signal_eur": 2470.76,
+            "move_pct_since_issue": 19.54,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Ethereum (ETH) : même rallye que Bitcoin ce cycle, dès le lendemain de l'émission du verdict ATTENTE (23 août, 2 066,96 dollars). Prix confirmé ce cycle (MetaMask, 2 470,76 dollars, cohérent avec CoinDesk 2 479,37 dollars et une fourchette de 2 449 à 2 506 dollars selon les sources et l'heure de relevé) : mouvement de +19,54 % par rapport au prix d'émission, largement au-delà du seuil de mouvement directionnel de 5 %. Mouvement cohérent avec le rallye général du marché déjà noté sur Bitcoin ce cycle (voir signal précoce associé), sans catalyseur spécifique à Ethereum identifié en dehors du contexte macro général. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 6 septembre : le verdict ATTENTE reste en attente, à confirmer ou infirmer aux prochains cycles."
         }
     },
     {
