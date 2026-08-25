@@ -250,6 +250,25 @@
       <p class="section-sub">Quantités et capital investi saisis manuellement (data/portfolio.json) — valeur, latent et P&amp;L recalculés en direct depuis les prix live, jamais stockés. Le conseil par actif reprend le dernier verdict du moteur pour cet actif, pas un avis distinct.</p>
       <div id="portfolio-totals"></div>
       <div id="portfolio-body" style="margin-top: 20px;"></div>
+
+      <details class="accueil-section" style="margin-top: 20px;">
+        <summary>Ajouter un achat ou une vente</summary>
+        <div class="accueil-section-body">
+          <p class="section-sub">Calcule le nouveau qty / capital investi à partir d'une transaction (coût moyen pondéré) — n'enregistre rien automatiquement : tu copies le résultat toi-même dans data/portfolio.json sur GitHub.</p>
+          <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
+            <select id="tx-asset" style="background:var(--bg-elevated); border:1px solid var(--border); color:var(--text); border-radius:var(--radius-sm); padding:8px 10px; font-family:inherit;"></select>
+            <select id="tx-type" style="background:var(--bg-elevated); border:1px solid var(--border); color:var(--text); border-radius:var(--radius-sm); padding:8px 10px; font-family:inherit;">
+              <option value="achat">Achat</option>
+              <option value="vente">Vente</option>
+            </select>
+            <input id="tx-price" type="number" step="any" min="0" placeholder="Prix unitaire (€)" style="background:var(--bg-elevated); border:1px solid var(--border); color:var(--text); border-radius:var(--radius-sm); padding:8px 10px; font-family:inherit; width:150px;" />
+            <input id="tx-qty" type="number" step="any" min="0" placeholder="Quantité" style="background:var(--bg-elevated); border:1px solid var(--border); color:var(--text); border-radius:var(--radius-sm); padding:8px 10px; font-family:inherit; width:130px;" />
+            <button id="tx-calc-btn" type="button" style="background:var(--accent-dim); color:var(--accent); border:none; border-radius:8px; padding:8px 14px; font-weight:700; font-size:0.85rem; cursor:pointer; font-family:inherit;">Calculer</button>
+          </div>
+          <div id="tx-result" style="margin-top: 14px;"></div>
+        </div>
+      </details>
+
       <p class="disclaimer-box" style="margin-top: 16px;">Simulation informative, pas un conseil en investissement réglementé. Le dépôt étant public, ces chiffres sont exposés comme le reste des données du site (voir README, section "Portail d'accès").</p>
     </section>
 
@@ -482,7 +501,7 @@
 <script src="js/cards.js?v=20260824i"></script>
 <script src="js/detail.js?v=20260824i"></script>
 <script src="js/insights.js?v=20260824i"></script>
-<script src="js/portfolio.js?v=20260825a"></script>
+<script src="js/portfolio.js?v=20260825b"></script>
 <script src="js/background-fx.js?v=20260824i"></script>
 <script src="js/bg-themes-extra.js?v=20260824i"></script>
 <!-- Module (pas un script classique) : import ES natif depuis js/vendor/three.module.min.js
@@ -493,7 +512,7 @@
 <script src="js/theme.js?v=20260824i"></script>
 <script src="js/layout.js?v=20260824i"></script>
 <script src="js/search.js?v=20260824i"></script>
-<script src="js/app.js?v=20260825a"></script>
+<script src="js/app.js?v=20260825b"></script>
 <script src="js/notify.js?v=20260824i"></script>
 <script src="js/assistant.js?v=20260824i"></script>
 <script src="js/auth.js?v=20260824i"></script>

@@ -113,3 +113,73 @@ function renderPortfolio(portfolio, verdicts) {
 
   renderPortfolioTotals(totalValue, totalInvested);
 }
+
+// Calculette achat/vente — coût moyen pondéré (même méthode que "coût net moyen" affiché par
+// l'app de suivi de l'utilisateur, voir CLAUDE.md). N'écrit JAMAIS data/portfolio.json : une
+// vraie écriture publique demanderait sa propre protection dédiée (pas le portail cosmétique),
+// donc ceci reste un calcul affiché à copier soi-même — décision explicite de l'utilisateur.
+function computeTransactionResult(currentQty, currentInvested, type, price, qty) {
+  const curQty = currentQty || 0;
+  const curInvested = currentInvested || 0;
+  if (!(price > 0) || !(qty > 0)) {
+    return { error: "Indique un prix et une quantité strictement positifs." };
+  }
+  if (type === "achat") {
+    return { newQty: curQty + qty, newInvested: curInvested + qty * price };
+  }
+  if (curQty <= 0) {
+    return { error: "Aucune position actuelle pour cet actif — impossible de calculer une vente." };
+  }
+  if (qty > curQty) {
+    return { error: `Tu ne peux pas vendre plus que ta position actuelle (${curQty}).` };
+  }
+  const costPerUnit = curInvested / curQty;
+  return { newQty: curQty - qty, newInvested: curInvested - qty * costPerUnit };
+}
+
+function roundQty(n) {
+  return Math.round(n * 1e8) / 1e8;
+}
+function roundEuro(n) {
+  return Math.round(n * 100) / 100;
+}
+
+function renderTransactionCalculator() {
+  const select = document.getElementById("tx-asset");
+  const typeSelect = document.getElementById("tx-type");
+  const priceInput = document.getElementById("tx-price");
+  const qtyInput = document.getElementById("tx-qty");
+  const btn = document.getElementById("tx-calc-btn");
+  const resultEl = document.getElementById("tx-result");
+  if (!select || !typeSelect || !priceInput || !qtyInput || !btn || !resultEl) return;
+
+  select.innerHTML = FAVORIS.map((f) => `<option value="${f.cgId}">${escapeHtml(f.ticker)} — ${escapeHtml(f.name)}</option>`).join("");
+
+  btn.addEventListener("click", () => {
+    const cgId = select.value;
+    const type = typeSelect.value;
+    const price = parseFloat(priceInput.value);
+    const qty = parseFloat(qtyInput.value);
+
+    const positions = (latestPortfolio && latestPortfolio.positions) || [];
+    const pos = positions.find((p) => p.cgId === cgId);
+    const currentQty = pos && pos.qty !== null && pos.qty !== undefined ? pos.qty : 0;
+    const currentInvested = pos && pos.invested !== null && pos.invested !== undefined ? pos.invested : 0;
+
+    const result = computeTransactionResult(currentQty, currentInvested, type, price, qty);
+    if (result.error) {
+      resultEl.innerHTML = `<p class="hint" style="color:var(--loss)">${escapeHtml(result.error)}</p>`;
+      return;
+    }
+    const fav = FAVORIS.find((f) => f.cgId === cgId);
+    const ticker = fav ? fav.ticker : cgId;
+    const newQty = roundQty(result.newQty);
+    const newInvested = roundEuro(result.newInvested);
+    resultEl.innerHTML = `
+      <p class="hint">Actuel : ${currentQty} ${escapeHtml(ticker)} — ${formatPrice(currentInvested, "EUR")} investi</p>
+      <p><strong>Nouveau : ${newQty} ${escapeHtml(ticker)} — ${formatPrice(newInvested, "EUR")} investi</strong></p>
+      <p class="hint">À coller dans data/portfolio.json à la place de la ligne "${escapeHtml(cgId)}" :</p>
+      <pre style="background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text-dim); font-family:var(--font-mono); font-size:0.72rem; padding:10px 12px; white-space:pre-wrap; word-break:break-all;">{ "cgId": "${escapeHtml(cgId)}", "qty": ${newQty}, "invested": ${newInvested} }</pre>
+    `;
+  });
+}

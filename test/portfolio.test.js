@@ -4,6 +4,15 @@ import { loadPage, setGlobal } from "./helpers/loadPage.js";
 const PORTFOLIO_FIXTURE_HTML = `<!doctype html><html><body>
   <div id="portfolio-totals"></div>
   <div id="portfolio-body"></div>
+  <select id="tx-asset"></select>
+  <select id="tx-type">
+    <option value="achat">Achat</option>
+    <option value="vente">Vente</option>
+  </select>
+  <input id="tx-price" type="number" />
+  <input id="tx-qty" type="number" />
+  <button id="tx-calc-btn" type="button">Calculer</button>
+  <div id="tx-result"></div>
 </body></html>`;
 
 function pos(overrides) {
@@ -126,5 +135,106 @@ describe("portfolio.js — renderPortfolio", () => {
     setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 200 } });
     dom.window.renderPortfolio();
     expect(dom.window.document.getElementById("portfolio-body").textContent).toContain("400,00");
+  });
+});
+
+describe("portfolio.js — computeTransactionResult (calculette achat/vente, coût moyen pondéré)", () => {
+  const dom = loadPage(["config.js", "prices.js", "portfolio.js"]);
+  const { computeTransactionResult } = dom.window;
+
+  it("achat : ajoute la quantité et le coût à une position existante", () => {
+    expect(computeTransactionResult(2, 100, "achat", 60, 1)).toEqual({ newQty: 3, newInvested: 160 });
+  });
+
+  it("achat : fonctionne depuis zéro (premier achat sur une position)", () => {
+    expect(computeTransactionResult(0, 0, "achat", 50, 2)).toEqual({ newQty: 2, newInvested: 100 });
+  });
+
+  it("vente : retire le coût moyen (pas le prix de vente) de la part vendue", () => {
+    // coût moyen = 100/10 = 10 par unité ; vendre 4 -> investi -= 4*10 = 40
+    expect(computeTransactionResult(10, 100, "vente", 999, 4)).toEqual({ newQty: 6, newInvested: 60 });
+  });
+
+  it("vente : tout vendre ramène qty et investi à zéro", () => {
+    expect(computeTransactionResult(5, 250, "vente", 40, 5)).toEqual({ newQty: 0, newInvested: 0 });
+  });
+
+  it("vente : refuse de vendre plus que la position actuelle", () => {
+    const result = computeTransactionResult(3, 90, "vente", 40, 5);
+    expect(result.error).toMatch(/position actuelle/);
+    expect(result.newQty).toBeUndefined();
+  });
+
+  it("vente : refuse quand il n'y a aucune position actuelle", () => {
+    const result = computeTransactionResult(0, 0, "vente", 40, 1);
+    expect(result.error).toMatch(/Aucune position/);
+  });
+
+  it("refuse un prix non strictement positif", () => {
+    expect(computeTransactionResult(2, 100, "achat", 0, 1).error).toBeDefined();
+    expect(computeTransactionResult(2, 100, "achat", -5, 1).error).toBeDefined();
+  });
+
+  it("refuse une quantité non strictement positive", () => {
+    expect(computeTransactionResult(2, 100, "achat", 10, 0).error).toBeDefined();
+  });
+});
+
+describe("portfolio.js — renderTransactionCalculator", () => {
+  let dom;
+
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "portfolio.js"], { html: PORTFOLIO_FIXTURE_HTML });
+  });
+
+  it("peuple le menu déroulant avec les 15 favoris", () => {
+    dom.window.renderTransactionCalculator();
+    const options = dom.window.document.querySelectorAll("#tx-asset option");
+    expect(options.length).toBe(15);
+    expect(Array.from(options).some((o) => o.value === "bitcoin" && o.textContent.includes("BTC"))).toBe(true);
+  });
+
+  it("calcule et affiche le nouveau qty/investi pour un achat, à partir de la position déjà chargée", () => {
+    dom.window.renderPortfolio({ positions: [pos({ cgId: "bitcoin", qty: 2, invested: 200 })] }, []);
+    dom.window.renderTransactionCalculator();
+
+    dom.window.document.getElementById("tx-asset").value = "bitcoin";
+    dom.window.document.getElementById("tx-type").value = "achat";
+    dom.window.document.getElementById("tx-price").value = "100";
+    dom.window.document.getElementById("tx-qty").value = "1";
+    dom.window.document.getElementById("tx-calc-btn").click();
+
+    const text = dom.window.document.getElementById("tx-result").textContent;
+    expect(text).toContain("300,00");
+    expect(text).toContain('"qty": 3');
+    expect(text).toContain('"invested": 300');
+  });
+
+  it("calcule un premier achat quand l'actif n'a encore aucune position enregistrée", () => {
+    dom.window.renderPortfolio({ positions: [] }, []);
+    dom.window.renderTransactionCalculator();
+
+    dom.window.document.getElementById("tx-asset").value = "ethereum";
+    dom.window.document.getElementById("tx-type").value = "achat";
+    dom.window.document.getElementById("tx-price").value = "200";
+    dom.window.document.getElementById("tx-qty").value = "1";
+    dom.window.document.getElementById("tx-calc-btn").click();
+
+    expect(dom.window.document.getElementById("tx-result").textContent).toContain('"qty": 1');
+  });
+
+  it("affiche une erreur claire au lieu de calculer une vente impossible", () => {
+    dom.window.renderPortfolio({ positions: [pos({ cgId: "bitcoin", qty: 1, invested: 100 })] }, []);
+    dom.window.renderTransactionCalculator();
+
+    dom.window.document.getElementById("tx-asset").value = "bitcoin";
+    dom.window.document.getElementById("tx-type").value = "vente";
+    dom.window.document.getElementById("tx-price").value = "100";
+    dom.window.document.getElementById("tx-qty").value = "5";
+    dom.window.document.getElementById("tx-calc-btn").click();
+
+    const resultEl = dom.window.document.getElementById("tx-result");
+    expect(resultEl.textContent).toMatch(/position actuelle/);
+    expect(resultEl.querySelector("pre")).toBeNull();
   });
 });

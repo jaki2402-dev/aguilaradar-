@@ -604,6 +604,7 @@ async function initApp() {
   }
 
   renderFavorisGrid();
+  if (window.renderTransactionCalculator) renderTransactionCalculator();
   await refreshPrices();
   if (!pricesIntervalStarted) {
     setInterval(refreshPrices, 60000);
