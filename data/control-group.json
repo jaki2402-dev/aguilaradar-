@@ -9,12 +9,12 @@
       "sampled_at": "2026-08-12T10:45:00Z",
       "price_at_issue": 0.01291452,
       "resolves_at": "2026-08-26T10:45:00Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 0.01501156,
+        "move_pct": 16.24,
+        "validated": true,
+        "resolved_at": "2026-08-26T14:18:00Z"
       }
     },
     {
@@ -24,12 +24,12 @@
       "sampled_at": "2026-08-12T10:45:00Z",
       "price_at_issue": 0.33368,
       "resolves_at": "2026-08-26T10:45:00Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 0.336908,
+        "move_pct": 0.97,
+        "validated": false,
+        "resolved_at": "2026-08-26T14:18:00Z"
       }
     },
     {
@@ -39,12 +39,12 @@
       "sampled_at": "2026-08-12T10:45:00Z",
       "price_at_issue": 0.00463171,
       "resolves_at": "2026-08-26T10:45:00Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 0.0048508,
+        "move_pct": 4.73,
+        "validated": false,
+        "resolved_at": "2026-08-26T14:18:00Z"
       }
     },
     {
@@ -54,12 +54,12 @@
       "sampled_at": "2026-08-12T10:45:00Z",
       "price_at_issue": 0.04079438,
       "resolves_at": "2026-08-26T10:45:00Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 0.04404348,
+        "move_pct": 7.96,
+        "validated": true,
+        "resolved_at": "2026-08-26T14:18:00Z"
       }
     },
     {
@@ -69,12 +69,12 @@
       "sampled_at": "2026-08-12T10:45:00Z",
       "price_at_issue": 4.16,
       "resolves_at": "2026-08-26T10:45:00Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 4.91,
+        "move_pct": 18.03,
+        "validated": true,
+        "resolved_at": "2026-08-26T14:18:00Z"
       }
     },
     {
@@ -84,12 +84,12 @@
       "sampled_at": "2026-08-12T10:45:00Z",
       "price_at_issue": 0.065907,
       "resolves_at": "2026-08-26T10:45:00Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 0.062912,
+        "move_pct": -4.54,
+        "validated": false,
+        "resolved_at": "2026-08-26T14:18:00Z"
       }
     },
     {
@@ -99,12 +99,12 @@
       "sampled_at": "2026-08-12T10:45:00Z",
       "price_at_issue": 0.03978322,
       "resolves_at": "2026-08-26T10:45:00Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 0.03542826,
+        "move_pct": -10.95,
+        "validated": false,
+        "resolved_at": "2026-08-26T14:18:00Z"
       }
     },
     {
@@ -114,18 +114,18 @@
       "sampled_at": "2026-08-12T10:45:00Z",
       "price_at_issue": 0.00170881,
       "resolves_at": "2026-08-26T10:45:00Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 0.00152863,
+        "move_pct": -10.54,
+        "validated": false,
+        "resolved_at": "2026-08-26T14:18:00Z"
       }
     }
   ],
   "stats": {
-    "total_resolved": 0,
-    "validated_pct": null,
-    "note": "Échantillon aléatoire d'actifs du Top 300 NON choisis par le criblage — sert à vérifier honnêtement si le criblage d'opportunités choisit vraiment mieux qu'une sélection au hasard, pas seulement à se convaincre qu'il le fait."
+    "total_resolved": 8,
+    "validated_pct": 37.5,
+    "note": "Première résolution de l'échantillon du 12 août (8 actifs, échéance à 14 jours) : 3 des 8 actifs ont progressé de plus de 5 % (RAIN +16,2 %, PYTH +8,0 %, ENS +18,0 %), soit un taux de validation de 37,5 % pour une sélection au hasard dans le Top 300. Point de comparaison à suivre au fil des résolutions futures face au taux de validation du criblage d'opportunités."
   }
 }
