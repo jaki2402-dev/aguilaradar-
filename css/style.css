@@ -31,10 +31,15 @@
    bg-themes-extra.js), son animation est déjà assez subtile pour ne rien devoir couper. */
 @media (prefers-reduced-motion: reduce) { #bg-radar-canvas, #bg-galaxy-canvas, #bg-aurora-canvas, #bg-cyber-canvas { display: none; } }
 
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; overflow-x: hidden; }
 
+/* overflow-x: hidden (html + body) : filet de sécurité contre tout futur élément trop large sur
+   mobile (voir .detail-stats plus bas pour le cas réel qui a fait défiler toute la page
+   horizontalement) — un dépassement redevient un simple clip localisé, jamais un scroll de
+   toute la page qui décale même le header et la nav du bas. */
 body {
   margin: 0;
+  overflow-x: hidden;
   background:
     radial-gradient(1200px 500px at 50% -10%, rgba(47, 211, 176, 0.08), transparent 60%),
     var(--bg);
@@ -786,12 +791,21 @@ footer.site-footer {
   padding: 10px 12px;
 }
 .detail-signal strong { font-size: 0.85rem; }
-.detail-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
+/* 2 colonnes par défaut : sur un mobile étroit, un montant long ("Coût moyen" d'une position
+   BTC, ex. "61 356,64 €") en repeat(4,...) forçait la piste au-delà de l'écran et faisait
+   défiler toute la page horizontalement (repéré sur l'onglet Portefeuille, voir portfolio.js) —
+   repeat(2,...) laisse deux fois plus de place à chaque valeur ; 4 colonnes ne reviennent qu'à
+   partir de 640px, même seuil que .favoris-grid/.opp-tile-grid/.portfolio-tile-grid ci-dessus. */
+.detail-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 12px; }
+@media (min-width: 640px) {
+  .detail-stats { grid-template-columns: repeat(4, 1fr); }
+}
 .detail-stat {
   background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
   padding: 10px; text-align: center;
+  min-width: 0; /* item de grille : ne pas laisser le contenu forcer une largeur > la piste (même bug que .favori-card) */
 }
-.detail-stat strong { display: block; margin-top: 2px; font-family: var(--font-mono); font-size: 1rem; font-weight: 600; }
+.detail-stat strong { display: block; margin-top: 2px; font-family: var(--font-mono); font-size: 1rem; font-weight: 600; overflow-wrap: break-word; }
 .detail-orderbook { margin-top: 14px; }
 .orderbook-bar {
   height: 8px; border-radius: 999px; background: var(--loss); overflow: hidden; margin: 6px 0;
