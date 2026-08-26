@@ -811,6 +811,14 @@
             "actual_direction": null,
             "verdict_correct": null,
             "resolved_at": null
+        },
+        "signal_precoce": {
+            "detected_at": "2026-08-26T00:20:00Z",
+            "price_at_signal_eur": 0.361857,
+            "move_pct_since_issue": -5.69,
+            "threshold_pct": 5,
+            "threshold_crossed": true,
+            "note": "Ondo Finance (ONDO) : seuil de mouvement directionnel (5 %) franchi à la baisse, en sens opposé au consensus à l'émission (2 signaux sur 3 penchaient haussier, technique et macro). Prix vérifié par appel direct à l'API CoinGecko (0,361857 dollar contre un prix d'émission de 0,3837 dollar, verdict ATTENTE du 23 août), soit -5,69 %. Aucune actualité spécifique identifiée ce cycle pour l'expliquer (la crise de gouvernance déjà documentée le 7 août reste d'actualité mais n'est pas un développement neuf) : lecture purement technique. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 6 septembre."
         }
     },
     {
