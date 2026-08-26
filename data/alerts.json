@@ -666,5 +666,30 @@
     "type": "seuil_technique",
     "triggered_at": "2026-08-26T08:21:00Z",
     "message": "Arbitrum (ARB) : renversement de direction depuis la précédente alerte du 25 août (20h40 UTC, +5,6 % à la hausse) — le seuil de mouvement directionnel (5 %) est désormais franchi à la baisse. Prix vérifié par appel direct à l'API CoinGecko : 0,079958 € contre un prix d'émission de 0,08838 € (verdict ATTENTE du 23 août), soit -9,5 %. Signal précoce enregistré sur le verdict correspondant."
+  },
+  {
+    "id": "alert-20260826-1020-anomalie-devise-signal-precoce",
+    "ticker_ou_theme": "MACRO",
+    "type": "seuil_technique",
+    "triggered_at": "2026-08-26T10:20:00Z",
+    "message": "Anomalie de données transversale détectée et corrigée ce cycle : les champs signal_precoce enregistrés lors des cycles des 25 et 26 août (20h40, 00h20, 08h16, 08h21 UTC) portaient l'étiquette « price_at_signal_eur » mais contenaient en réalité, pour la quasi-totalité des favoris concernés (BTC, ETH, GRT, TIA, PEAQ, LINK, ONDO, JUP, LPT, AIOZ, INJ), une valeur en dollars et non en euros — un écart quasi uniforme de 13 à 17 % a été retrouvé entre ces valeurs et le prix en euros réellement vérifié ce cycle, bien trop régulier pour refléter des mouvements de marché indépendants sur des actifs sans corrélation directe de cette ampleur. Vérification croisée effectuée par deux méthodes indépendantes convergentes : appel direct à /api/v3/coins/markets (vs_currency=eur) et à /api/v3/simple/price (eur et usd simultanément, tous deux cohérents), plus une recherche web confirmant que Bitcoin a bien évolué entre environ 81 000 et 78 000 dollars ces dernières heures — et non 79 674 euros comme enregistré le 25 août, une valeur qui correspond en réalité de très près à une lecture en dollars mal étiquetée. Conséquence pratique : après recalcul avec des prix en euros correctement vérifiés, deux verdicts auparavant considérés comme ayant franchi le seuil de mouvement directionnel de 5 % (TIA, LPT) repassent en réalité sous ce seuil, et Bitcoin/Ethereum n'ont en réalité jamais franchi ce seuil (mouvement réel de respectivement +1,6 % et +1,7 % depuis l'émission du 23 août, contre +20,3 % et +21,0 % enregistrés à tort le 25 août). Les champs signal_precoce des verdicts concernés ont été mis à jour ce cycle avec les valeurs corrigées ; aucun historique de verdicts.json n'a été réécrit rétroactivement au-delà de ce champ de suivi en direct, conformément à la règle de non-réécriture. Recommandation pour les cycles suivants : toujours vérifier explicitement que le paramètre vs_currency utilisé correspond bien à « eur » avant d'enregistrer une valeur dans price_at_signal_eur, en particulier lors d'un appel groupé à l'API qui peut renvoyer usd et eur dans la même requête.",
+    "source": "criblage technique interne (API CoinGecko directe /coins/markets + /simple/price, recoupée par recherche web)"
+  },
+  {
+    "id": "alert-20260826-1020-fet-baisse",
+    "ticker_ou_theme": "FET",
+    "type": "seuil_technique",
+    "triggered_at": "2026-08-26T10:20:00Z",
+    "sentiment": "négatif",
+    "message": "Fetch.ai (FET) : seuil de mouvement directionnel (5 %) franchi à la baisse, première alerte de seuil sur le verdict ATTENTE du 23 août. Prix vérifié par appel direct à l'API CoinGecko : 0,139257 euro contre un prix d'émission de 0,1582 euro, soit -12,0 %. Cohérent avec une actualité relayée ce cycle notant un recul de FET d'environ -6,4 % sur 24h glissantes, dans un marché plus prudent après le rallye de la semaine passée (indice de peur et de cupidité en repli de 74 à 65). Signal précoce enregistré sur le verdict correspondant, ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko directe (api.coingecko.com/api/v3/coins/markets)"
+  },
+  {
+    "id": "alert-20260826-1020-ctsi-baisse",
+    "ticker_ou_theme": "CTSI",
+    "type": "seuil_technique",
+    "triggered_at": "2026-08-26T10:20:00Z",
+    "message": "Cartesi (CTSI) : seuil de mouvement directionnel (5 %) franchi à la baisse sur le nouveau verdict ATTENTE émis le 24 août. Prix vérifié par appel direct à l'API CoinGecko : 0,02211591 euro contre un prix d'émission de 0,02487 euro, soit -11,1 %. Aucune actualité spécifique identifiée pour l'expliquer ce cycle. Signal précoce enregistré sur le verdict correspondant, ne préjuge pas de l'issue à l'échéance du 31 août.",
+    "source": "API CoinGecko directe (api.coingecko.com/api/v3/coins/markets)"
   }
 ]
