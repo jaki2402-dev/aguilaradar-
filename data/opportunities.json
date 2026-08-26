@@ -513,133 +513,6 @@
             }
         },
         {
-            "id": "opp-20260807-btw",
-            "ticker": "BTW",
-            "name": "Bitway",
-            "cgId": "bitway",
-            "image": "https://coin-images.coingecko.com/coins/images/71205/large/BTW_Token_200x200.png?1786291907",
-            "price_eur": 0.346853,
-            "market_cap": 652790440,
-            "market_cap_rank": 88,
-            "change_24h_pct": -10.59,
-            "change_7d_pct": 75.3,
-            "change_30d_pct": 306.3,
-            "ath_change_pct": -0.24,
-            "opportunity_score": 69.3,
-            "recognized": false,
-            "sparkline": [
-                0.13681901663836538,
-                0.14617128465633952,
-                0.15252078959721735,
-                0.16221170420634679,
-                0.16325734057636954,
-                0.16855598339298195,
-                0.15713964842896946,
-                0.17653270761502357,
-                0.1780167428204385,
-                0.18450670178230996,
-                0.19369078825113298,
-                0.18804449186288422,
-                0.18978669352527883,
-                0.19084208148443346,
-                0.19496828808926414,
-                0.19876568475299194,
-                0.20448773337973075,
-                0.22076850409341117,
-                0.2021003678920648,
-                0.13099193246022492,
-                0.15811191173365977,
-                0.17355386305499657,
-                0.1900035250657496,
-                0.20136562024058316,
-                0.20558031772408802,
-                0.20351228207734712,
-                0.1673770219398948,
-                0.18109040451422537,
-                0.20137859954847223,
-                0.21084628442410125,
-                0.21969520276989654,
-                0.2135707347279096,
-                0.21329359757830763,
-                0.19698586850607466,
-                0.1756284733799649,
-                0.18367530245215558,
-                0.19722459885395607,
-                0.19425579504047788,
-                0.17378616083099696,
-                0.19414593496679905,
-                0.19205379863101418,
-                0.19495826017742796,
-                0.2015646086960636,
-                0.19793168706629383,
-                0.20577447378924632,
-                0.20857967907267833,
-                0.22154503006468534,
-                0.23983376967500666
-            ],
-            "tags": [
-                "Projet peu connu",
-                "Mouvement extrême"
-            ],
-            "reason": "Score le plus élevé du criblage, mais projet que je ne connais pas indépendamment. Mise à jour du 17/08 : accès direct à l'API bloqué par la politique réseau de cet environnement ce cycle (comme lors du cycle précédent) ; prix rafraîchi via recherche web sourcée (agrégat CryptoRank/CoinMarketCap) plutôt que connecteur direct, conversion EUR au taux du jour (1 EUR ≈ 1,1570 USD). Nouvelle hausse marquée de +34,75 % sur 24h, toujours sans catalyseur fondamental vérifié en dehors du lancement de contrats perpétuels chez l'exchange Gate en juin. Mouvement spéculatif prolongé sur un projet non reconnu indépendamment, à ne pas confondre avec une validation fondamentale. Rang de capitalisation, variations 7j/30j et sparkline non rafraîchis ce cycle faute de source fiable pour ces champs sans accès direct — laissés inchangés plutôt que devinés.",
-            "flagged_at": "2026-08-07T00:20:00Z",
-            "price_at_flag": 0.149438,
-            "threshold_pct": 5,
-            "price_refreshed_at": "2026-08-26T00:20:00Z",
-            "horizons": {
-                "j1": {
-                    "check_at": "2026-08-08T00:20:00Z",
-                    "status": "resolved",
-                    "outcome": {
-                        "price_at_check": 0.19095857452268605,
-                        "move_pct": 27.78,
-                        "validated": true,
-                        "checked_at": "2026-08-12T13:22:43Z"
-                    }
-                },
-                "j3": {
-                    "check_at": "2026-08-10T00:20:00Z",
-                    "status": "pending",
-                    "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
-                    }
-                },
-                "j7": {
-                    "check_at": "2026-08-14T00:20:00Z",
-                    "status": "pending",
-                    "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
-                    }
-                },
-                "j14": {
-                    "check_at": "2026-08-21T00:20:00Z",
-                    "status": "pending",
-                    "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
-                    }
-                },
-                "m6": {
-                    "check_at": "2027-02-05T00:20:00Z",
-                    "status": "pending",
-                    "outcome": {
-                        "price_at_check": null,
-                        "move_pct": null,
-                        "validated": null,
-                        "checked_at": null
-                    }
-                }
-            }
-        },
-        {
             "id": "opp-20260807-ub",
             "ticker": "UB",
             "name": "Unibase",
@@ -1341,6 +1214,135 @@
             },
             "archived_at": "2026-08-24T04:03:59Z",
             "archived_reason": "Score de momentum recalcule au 24/08 tres degrade (16.1 -> -10.5 : -19.4% sur 24h et -13.4% sur 7j malgre un marche global en net regime risk-on) : signal initial invalide, retire du suivi actif."
+        },
+        {
+            "id": "opp-20260807-btw",
+            "ticker": "BTW",
+            "name": "Bitway",
+            "cgId": "bitway",
+            "image": "https://coin-images.coingecko.com/coins/images/71205/large/BTW_Token_200x200.png?1786291907",
+            "price_eur": 0.346853,
+            "market_cap": 652790440,
+            "market_cap_rank": 88,
+            "change_24h_pct": -10.59,
+            "change_7d_pct": 75.3,
+            "change_30d_pct": 306.3,
+            "ath_change_pct": -0.24,
+            "opportunity_score": 69.3,
+            "recognized": false,
+            "sparkline": [
+                0.13681901663836538,
+                0.14617128465633952,
+                0.15252078959721735,
+                0.16221170420634679,
+                0.16325734057636954,
+                0.16855598339298195,
+                0.15713964842896946,
+                0.17653270761502357,
+                0.1780167428204385,
+                0.18450670178230996,
+                0.19369078825113298,
+                0.18804449186288422,
+                0.18978669352527883,
+                0.19084208148443346,
+                0.19496828808926414,
+                0.19876568475299194,
+                0.20448773337973075,
+                0.22076850409341117,
+                0.2021003678920648,
+                0.13099193246022492,
+                0.15811191173365977,
+                0.17355386305499657,
+                0.1900035250657496,
+                0.20136562024058316,
+                0.20558031772408802,
+                0.20351228207734712,
+                0.1673770219398948,
+                0.18109040451422537,
+                0.20137859954847223,
+                0.21084628442410125,
+                0.21969520276989654,
+                0.2135707347279096,
+                0.21329359757830763,
+                0.19698586850607466,
+                0.1756284733799649,
+                0.18367530245215558,
+                0.19722459885395607,
+                0.19425579504047788,
+                0.17378616083099696,
+                0.19414593496679905,
+                0.19205379863101418,
+                0.19495826017742796,
+                0.2015646086960636,
+                0.19793168706629383,
+                0.20577447378924632,
+                0.20857967907267833,
+                0.22154503006468534,
+                0.23983376967500666
+            ],
+            "tags": [
+                "Projet peu connu",
+                "Mouvement extrême"
+            ],
+            "reason": "Score le plus élevé du criblage, mais projet que je ne connais pas indépendamment. Mise à jour du 17/08 : accès direct à l'API bloqué par la politique réseau de cet environnement ce cycle (comme lors du cycle précédent) ; prix rafraîchi via recherche web sourcée (agrégat CryptoRank/CoinMarketCap) plutôt que connecteur direct, conversion EUR au taux du jour (1 EUR ≈ 1,1570 USD). Nouvelle hausse marquée de +34,75 % sur 24h, toujours sans catalyseur fondamental vérifié en dehors du lancement de contrats perpétuels chez l'exchange Gate en juin. Mouvement spéculatif prolongé sur un projet non reconnu indépendamment, à ne pas confondre avec une validation fondamentale. Rang de capitalisation, variations 7j/30j et sparkline non rafraîchis ce cycle faute de source fiable pour ces champs sans accès direct — laissés inchangés plutôt que devinés.",
+            "flagged_at": "2026-08-07T00:20:00Z",
+            "price_at_flag": 0.149438,
+            "threshold_pct": 5,
+            "price_refreshed_at": "2026-08-26T00:20:00Z",
+            "horizons": {
+                "j1": {
+                    "check_at": "2026-08-08T00:20:00Z",
+                    "status": "resolved",
+                    "outcome": {
+                        "price_at_check": 0.19095857452268605,
+                        "move_pct": 27.78,
+                        "validated": true,
+                        "checked_at": "2026-08-12T13:22:43Z"
+                    }
+                },
+                "j3": {
+                    "check_at": "2026-08-10T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j7": {
+                    "check_at": "2026-08-14T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "j14": {
+                    "check_at": "2026-08-21T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                },
+                "m6": {
+                    "check_at": "2027-02-05T00:20:00Z",
+                    "status": "pending",
+                    "outcome": {
+                        "price_at_check": null,
+                        "move_pct": null,
+                        "validated": null,
+                        "checked_at": null
+                    }
+                }
+            },
+            "archived_at": "2026-08-26T04:04:55Z",
+            "archived_reason": "Score de momentum recalcule au 26/08 tres degrade (69.3 -> -16.0 : -28.6% sur 7j et -12.5% sur 24h, apres un pic suivi d'un effondrement visible sur le sparkline) : signal initial invalide, retire du suivi actif."
         }
     ]
 }
