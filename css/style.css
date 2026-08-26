@@ -641,6 +641,13 @@ th { color: var(--text-dim); font-weight: 600; font-size: 0.76rem; text-transfor
 .badge-achat { background: rgba(52, 211, 153, 0.15); color: var(--gain); }
 .badge-vente { background: rgba(241, 85, 76, 0.15); color: var(--loss); }
 .badge-attente { background: rgba(229, 169, 59, 0.15); color: var(--warning); }
+/* Thèse hebdomadaire (portfolio-thesis.json) — mêmes 4 couleurs que le design déjà validé du
+   mail hebdo (vert=Renforcer, rouge=Réduire, jaune=Attendre, violet=Conserver), pour rester
+   cohérent entre le mail et le site plutôt que d'inventer un code couleur distinct. */
+.badge-renforcer { background: rgba(52, 211, 153, 0.15); color: var(--gain); }
+.badge-reduire { background: rgba(241, 85, 76, 0.15); color: var(--loss); }
+.badge-attendre { background: rgba(229, 169, 59, 0.15); color: var(--warning); }
+.badge-conserver { background: rgba(180, 140, 242, 0.15); color: var(--c-engine); }
 .badge-success { background: rgba(47, 211, 176, 0.15); color: var(--accent); }
 .badge-neutral { background: var(--bg-elevated); color: var(--text-dim); }
 .badge-warning { background: rgba(229, 169, 59, 0.15); color: var(--warning); }

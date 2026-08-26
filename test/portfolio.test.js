@@ -143,6 +143,15 @@ describe("portfolio.js — renderPortfolio", () => {
     expect(totalsText).not.toContain("▲");
     expect(totalsText).not.toContain("▼");
   });
+
+  it("shows the weekly thesis freshness date in the totals block when a thesis exists, and omits it otherwise", () => {
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    dom.window.renderPortfolio({ positions: [pos()] }, [], { generated_at: "2026-08-31T06:00:00Z", positions: {} });
+    expect(dom.window.document.getElementById("portfolio-totals").textContent).toContain("Thèse hebdo");
+
+    dom.window.renderPortfolio({ positions: [pos()] }, [], null);
+    expect(dom.window.document.getElementById("portfolio-totals").textContent).not.toContain("Thèse hebdo");
+  });
 });
 
 describe("portfolio.js — computePortfolioSummary (calcul pur, réutilisé par l'Assistant)", () => {
@@ -184,6 +193,47 @@ describe("portfolio.js — computePortfolioSummary (calcul pur, réutilisé par 
   it("retombe sur le cgId comme ticker/nom quand l'actif n'est pas dans FAVORIS", () => {
     const summary = computePortfolioSummary({ positions: [{ cgId: "un-token-inconnu", qty: 1, invested: 10 }] }, {}, []);
     expect(summary.positions[0].ticker).toBe("un-token-inconnu");
+  });
+
+  it("attache la thèse hebdo (recommandation normalisée + conviction + constat) quand elle existe pour l'actif", () => {
+    const thesis = {
+      generated_at: "2026-08-31T06:00:00Z",
+      positions: { bitcoin: { recommendation: "Renforcer", conviction: 8, constat: "Momentum institutionnel fort." } },
+    };
+    const summary = computePortfolioSummary({ positions: [pos()] }, { bitcoin: { eur: 100 } }, [], thesis);
+    expect(summary.positions[0].recommendation).toBe("renforcer");
+    expect(summary.positions[0].recommendationRaw).toBe("Renforcer");
+    expect(summary.positions[0].conviction).toBe(8);
+    expect(summary.positions[0].constat).toBe("Momentum institutionnel fort.");
+    expect(summary.thesisGeneratedAt).toBe("2026-08-31T06:00:00Z");
+  });
+
+  it("normalise une recommandation accentuée/mal casée vers un slug ASCII (classe CSS), sans toucher au texte affiché", () => {
+    const thesis = { positions: { bitcoin: { recommendation: " RÉDUIRE ", conviction: 3, constat: "x" } } };
+    const summary = computePortfolioSummary({ positions: [pos()] }, { bitcoin: { eur: 100 } }, [], thesis);
+    expect(summary.positions[0].recommendation).toBe("reduire");
+    expect(summary.positions[0].recommendationRaw).toBe(" RÉDUIRE ");
+  });
+
+  it("laisse recommendation à null pour une valeur non reconnue, sans perdre le texte brut ni planter", () => {
+    const thesis = { positions: { bitcoin: { recommendation: "Surpondérer fortement", conviction: 5, constat: "x" } } };
+    const summary = computePortfolioSummary({ positions: [pos()] }, { bitcoin: { eur: 100 } }, [], thesis);
+    expect(summary.positions[0].recommendation).toBeNull();
+    expect(summary.positions[0].recommendationRaw).toBe("Surpondérer fortement");
+  });
+
+  it("n'attache aucune thèse à une position que le fichier thesis ne couvre pas encore", () => {
+    const thesis = { positions: { ethereum: { recommendation: "Conserver", conviction: 6, constat: "x" } } };
+    const summary = computePortfolioSummary({ positions: [pos({ cgId: "bitcoin" })] }, { bitcoin: { eur: 100 } }, [], thesis);
+    expect(summary.positions[0].recommendation).toBeNull();
+    expect(summary.positions[0].constat).toBeNull();
+  });
+
+  it("fonctionne normalement quand aucun fichier thesis n'existe encore (undefined)", () => {
+    expect(() => computePortfolioSummary({ positions: [pos()] }, { bitcoin: { eur: 100 } }, [])).not.toThrow();
+    const summary = computePortfolioSummary({ positions: [pos()] }, { bitcoin: { eur: 100 } }, []);
+    expect(summary.positions[0].recommendation).toBeNull();
+    expect(summary.thesisGeneratedAt).toBeNull();
   });
 });
 
@@ -237,6 +287,24 @@ describe("portfolio.js — grille de tuiles et repli/dépli", () => {
 
     expect(tile().classList.contains("expanded")).toBe(true);
     expect(tile().getAttribute("aria-expanded")).toBe("true");
+  });
+
+  it("affiche la thèse hebdo (badge + conviction + constat) dans le détail déplié quand elle existe", () => {
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    const thesis = { generated_at: "2026-08-31T06:00:00Z", positions: { bitcoin: { recommendation: "Renforcer", conviction: 8, constat: "Momentum institutionnel fort." } } };
+    dom.window.renderPortfolio({ positions: [pos()] }, [], thesis);
+    const bodyEl = dom.window.document.getElementById("portfolio-body");
+    expect(bodyEl.querySelector(".badge-renforcer")).not.toBeNull();
+    expect(bodyEl.textContent).toContain("Conviction 8/10");
+    expect(bodyEl.textContent).toContain("Momentum institutionnel fort.");
+    expect(bodyEl.textContent).toContain("Thèse hebdo");
+  });
+
+  it("n'affiche aucun bloc thèse tant qu'aucune donnée n'existe pour cette position", () => {
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    dom.window.renderPortfolio({ positions: [pos()] }, [], null);
+    const bodyEl = dom.window.document.getElementById("portfolio-body");
+    expect(bodyEl.textContent).not.toContain("Thèse hebdo");
   });
 });
 

@@ -7,6 +7,7 @@
 
 let latestPortfolio = null;
 let latestPortfolioVerdicts = [];
+let latestPortfolioThesis = null;
 
 function latestVerdictFor(cgId, verdicts) {
   return (verdicts || [])
@@ -14,13 +15,36 @@ function latestVerdictFor(cgId, verdicts) {
     .sort((a, b) => new Date(b.issued_at) - new Date(a.issued_at))[0];
 }
 
+// Normalise "Renforcer"/"renforcer "/"Réduire"/etc. vers un slug ASCII pour la classe CSS
+// (badge-reduire, jamais badge-réduire — aucune autre classe du site n'a de caractère accentué,
+// et le texte affiché reste toujours recommendationRaw, jamais ce slug). La thèse est écrite par
+// un modèle via une routine (voir data/portfolio-thesis.json), donc la casse/les accents ne sont
+// pas garantis à 100%. Une valeur non reconnue reste affichée telle quelle (jamais masquée),
+// juste sans badge coloré dédié — jamais un badge trompeur plutôt que pas de badge.
+const THESIS_RECOMMENDATION_SLUGS = {
+  renforcer: "renforcer",
+  conserver: "conserver",
+  attendre: "attendre",
+  "réduire": "reduire",
+  reduire: "reduire",
+};
+function normalizeRecommendation(value) {
+  if (!value) return null;
+  const norm = value.trim().toLowerCase();
+  return THESIS_RECOMMENDATION_SLUGS[norm] || null;
+}
+
 // Calcul pur, sans DOM : réutilisé à la fois par le rendu de l'onglet (ci-dessous) et par
 // l'Assistant (assistant.js, buildAiContext/answerPortfolio) pour ne jamais dupliquer la
 // méthode de calcul à deux endroits. value/invested à null quand la position est "pending"
 // (chiffres pas encore fournis) plutôt que d'inventer un chiffre — cohérent avec le "jamais
-// halluciner" déjà appliqué partout ailleurs sur le site (verdicts "pending", etc.).
-function computePortfolioSummary(portfolio, prices, verdicts) {
+// halluciner" déjà appliqué partout ailleurs sur le site (verdicts "pending", etc.). thesis
+// (data/portfolio-thesis.json, optionnel — peut ne pas encore exister) apporte la vraie analyse
+// fondamentale hebdomadaire (recherche web réelle par la routine), distincte et complémentaire
+// du verdict technique à 14 jours du moteur — jamais générée ici, jamais par l'IA du chat.
+function computePortfolioSummary(portfolio, prices, verdicts, thesis) {
   const positions = (portfolio && portfolio.positions) || [];
+  const thesisByAsset = (thesis && thesis.positions) || {};
 
   const rows = positions.map((pos) => {
     const fav = FAVORIS.find((f) => f.cgId === pos.cgId);
@@ -31,9 +55,15 @@ function computePortfolioSummary(portfolio, prices, verdicts) {
     const verdict = latest ? latest.verdict : null;
     const reasoning = latest ? latest.reasoning : null;
 
+    const thesisEntry = thesisByAsset[pos.cgId] || null;
+    const recommendation = thesisEntry ? normalizeRecommendation(thesisEntry.recommendation) : null;
+    const recommendationRaw = thesisEntry ? thesisEntry.recommendation : null;
+    const conviction = thesisEntry && typeof thesisEntry.conviction === "number" ? thesisEntry.conviction : null;
+    const constat = thesisEntry ? thesisEntry.constat : null;
+
     const pending = !!pos.pending || pos.qty === null || pos.qty === undefined || pos.invested === null || pos.invested === undefined;
     if (pending) {
-      return { cgId: pos.cgId, ticker, name, sectorColor, pending: true, qty: null, invested: null, value: null, pnl: null, pnlPct: null, costPerUnit: null, verdict, reasoning };
+      return { cgId: pos.cgId, ticker, name, sectorColor, pending: true, qty: null, invested: null, value: null, pnl: null, pnlPct: null, costPerUnit: null, verdict, reasoning, recommendation, recommendationRaw, conviction, constat };
     }
 
     const priceInfo = prices && prices[pos.cgId];
@@ -43,7 +73,7 @@ function computePortfolioSummary(portfolio, prices, verdicts) {
     const pnlPct = value !== null && pos.invested ? (pnl / pos.invested) * 100 : null;
     const costPerUnit = pos.qty ? pos.invested / pos.qty : null;
 
-    return { cgId: pos.cgId, ticker, name, sectorColor, pending: false, qty: pos.qty, invested: pos.invested, value, pnl, pnlPct, costPerUnit, verdict, reasoning };
+    return { cgId: pos.cgId, ticker, name, sectorColor, pending: false, qty: pos.qty, invested: pos.invested, value, pnl, pnlPct, costPerUnit, verdict, reasoning, recommendation, recommendationRaw, conviction, constat };
   });
 
   let totalValue = 0;
@@ -56,8 +86,9 @@ function computePortfolioSummary(portfolio, prices, verdicts) {
   });
   const totalPnl = totalValue - totalInvested;
   const totalPnlPct = totalInvested ? (totalPnl / totalInvested) * 100 : null;
+  const thesisGeneratedAt = (thesis && thesis.generated_at) || null;
 
-  return { positions: rows, totalValue, totalInvested, totalPnl, totalPnlPct };
+  return { positions: rows, totalValue, totalInvested, totalPnl, totalPnlPct, thesisGeneratedAt };
 }
 
 // Tuile dense (même esprit que .favori-tile/.opp-tile — voir CLAUDE.md/style.css : "Coin360,
@@ -97,8 +128,30 @@ function renderPortfolioTile(p, idx) {
           <div class="detail-stat"><span class="hint">Coût moyen</span><strong>${p.costPerUnit !== null ? formatPrice(p.costPerUnit, "EUR") : "—"}</strong></div>
         </div>
         ${p.reasoning ? `<p class="hint" style="margin-top:10px;">${escapeHtml(p.reasoning)}</p>` : ""}
+        ${renderThesisBlock(p)}
       </div>
     </div>`;
+}
+
+// Thèse hebdomadaire (data/portfolio-thesis.json, recherche web réelle par la routine
+// hebdomadaire) — distincte du verdict technique du moteur juste au-dessus (horizon 14j) :
+// une vraie analyse fondamentale complémentaire, jamais générée par le chat/l'IA elle-même (voir
+// CLAUDE.md). Absente tant que la routine n'a pas encore tourné une première fois — pas de bloc
+// affiché plutôt qu'un vide trompeur.
+function renderThesisBlock(p) {
+  if (!p.recommendation && !p.recommendationRaw && !p.constat) return "";
+  const badgeHtml = p.recommendation
+    ? `<span class="badge badge-${p.recommendation}">${escapeHtml(p.recommendationRaw || p.recommendation)}</span>`
+    : p.recommendationRaw
+      ? `<span class="badge badge-neutral">${escapeHtml(p.recommendationRaw)}</span>`
+      : "";
+  const convictionHtml = p.conviction !== null ? `<span class="hint" style="margin-left:6px;">Conviction ${p.conviction}/10</span>` : "";
+  return `
+        <div style="margin-top:10px; padding-top:10px; border-top:1px solid var(--border);">
+          <span class="hint">Thèse hebdo (recherche réelle)</span>
+          <div style="margin-top:4px;">${badgeHtml}${convictionHtml}</div>
+          ${p.constat ? `<p class="hint" style="margin-top:6px;">${escapeHtml(p.constat)}</p>` : ""}
+        </div>`;
 }
 
 // Toggle dédié (pas attachDetailToggle de detail.js) : ce dernier suppose un chargement
@@ -127,7 +180,7 @@ function attachPortfolioToggle(tileEl) {
 // que des compteurs entiers), s'est affichée en glyphe emoji coloré sur iOS à cette taille au
 // lieu du triangle attendu (signalé par l'utilisateur, capture à l'appui). Le signe +/- déjà
 // affiché à côté suffit à indiquer le sens, comme pour Latent juste au-dessus.
-function renderPortfolioTotals(totalValue, totalInvested) {
+function renderPortfolioTotals(totalValue, totalInvested, thesisGeneratedAt) {
   const el = document.getElementById("portfolio-totals");
   if (!el) return;
   const totalPnl = totalValue - totalInvested;
@@ -135,6 +188,9 @@ function renderPortfolioTotals(totalValue, totalInvested) {
   const pnlClass = totalPnl >= 0 ? "positive" : "negative";
   const pnlSign = totalPnl >= 0 ? "+" : "-";
   const pnlPctText = totalPnlPct !== null ? `${totalPnlPct >= 0 ? "+" : ""}${totalPnlPct.toFixed(2)} %` : "—";
+  const thesisNote = thesisGeneratedAt
+    ? `<div class="hint" style="margin-top:8px;">Thèse hebdo (recherche réelle) mise à jour le ${new Date(thesisGeneratedAt).toLocaleDateString("fr-FR")}</div>`
+    : "";
   el.innerHTML = `
     <div class="hero-card">
       <div class="hint">Vue d'ensemble</div>
@@ -144,15 +200,16 @@ function renderPortfolioTotals(totalValue, totalInvested) {
         <div><div class="hero-stat-value ${pnlClass}">${pnlSign}${formatPrice(Math.abs(totalPnl), "EUR")}</div><div class="hero-stat-label">Latent</div></div>
         <div><div class="hero-stat-value ${pnlClass}">${pnlPctText}</div><div class="hero-stat-label">Perf. globale</div></div>
       </div>
-    </div>`;
+    </div>${thesisNote}`;
 }
 
-// portfolio/verdicts omis (appel sans argument) -> réutilise le dernier jeu déjà connu : c'est
-// ce que fait refreshPrices() à chaque tick (60s) pour ne recalculer que valeur/P&L depuis le
-// nouveau prix, sans avoir à repasser par loadAllData() qui re-fetch tout le reste du site.
-function renderPortfolio(portfolio, verdicts) {
+// portfolio/verdicts/thesis omis (appel sans argument) -> réutilise le dernier jeu déjà connu :
+// c'est ce que fait refreshPrices() à chaque tick (60s) pour ne recalculer que valeur/P&L depuis
+// le nouveau prix, sans avoir à repasser par loadAllData() qui re-fetch tout le reste du site.
+function renderPortfolio(portfolio, verdicts, thesis) {
   if (portfolio !== undefined) latestPortfolio = portfolio;
   if (verdicts !== undefined) latestPortfolioVerdicts = verdicts || [];
+  if (thesis !== undefined) latestPortfolioThesis = thesis;
 
   const el = document.getElementById("portfolio-body");
   if (!el) return;
@@ -170,7 +227,7 @@ function renderPortfolio(portfolio, verdicts) {
   const expandedIds = new Set(Array.from(el.querySelectorAll(".portfolio-tile.expanded")).map((t) => t.dataset.cgid));
 
   const prices = typeof latestFavorisPrices !== "undefined" ? latestFavorisPrices : {};
-  const summary = computePortfolioSummary(latestPortfolio, prices, latestPortfolioVerdicts);
+  const summary = computePortfolioSummary(latestPortfolio, prices, latestPortfolioVerdicts, latestPortfolioThesis);
 
   el.innerHTML = `<div class="favoris-grid portfolio-tile-grid">${summary.positions.map((p, i) => renderPortfolioTile(p, i)).join("")}</div>`;
   el.querySelectorAll(".portfolio-tile.clickable").forEach((tileEl) => {
@@ -181,7 +238,7 @@ function renderPortfolio(portfolio, verdicts) {
     }
   });
 
-  renderPortfolioTotals(summary.totalValue, summary.totalInvested);
+  renderPortfolioTotals(summary.totalValue, summary.totalInvested, summary.thesisGeneratedAt);
 }
 
 // Calculette achat/vente — coût moyen pondéré (même méthode que "coût net moyen" affiché par

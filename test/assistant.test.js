@@ -630,3 +630,71 @@ describe("assistant.js — intégration du portefeuille personnel", () => {
     expect(answer).toContain("FLUX");
   });
 });
+
+describe("assistant.js — thèse hebdomadaire (data/portfolio-thesis.json)", () => {
+  let dom;
+
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "portfolio.js", "search.js", "assistant.js"]);
+    dom.window.aguilaradarData = {
+      verdicts: [
+        {
+          asset: "chainlink",
+          ticker: "LINK",
+          verdict: "ACHAT",
+          confidence_pct: 70,
+          horizon_days: 14,
+          issued_at: "2026-08-10T00:00:00Z",
+          reasoning: "Cassure haussière confirmée.",
+        },
+      ],
+      opportunities: { opportunities: [] },
+      alerts: [],
+      news: [],
+      engineHistory: {
+        global_stats: { total_verdicts_issued: 1, total_verdicts_resolved: 0, accuracy_strict_pct: null },
+        macro_regime: { regime: "neutre", fear_greed_value: 50, btc_dominance_pct: 55, note: "" },
+      },
+      marketContext: {},
+      digest: {},
+      portfolio: { positions: [{ cgId: "chainlink", qty: 10, invested: 100 }] },
+      portfolioThesis: {
+        generated_at: "2026-08-31T06:00:00Z",
+        positions: { chainlink: { recommendation: "Conserver", conviction: 6, constat: "Adoption CCIP stable, pas de catalyseur imminent." } },
+      },
+    };
+  });
+
+  it("inclut la thèse hebdo réelle dans buildAiContext, distincte du verdict technique", async () => {
+    await dom.window.ensureChatData();
+    setGlobal(dom, "latestFavorisPrices", { chainlink: { eur: 20 } });
+    const context = dom.window.buildAiContext();
+    expect(context).toContain("thèse hebdo Conserver");
+    expect(context).toContain("Adoption CCIP stable");
+    expect(context).toContain("verdict moteur (14j) ACHAT");
+  });
+
+  it("dit explicitement qu'aucune thèse n'existe encore quand le fichier est absent, pour empêcher l'IA d'en inventer une", async () => {
+    dom.window.aguilaradarData.portfolioThesis = null;
+    await dom.window.ensureChatData();
+    setGlobal(dom, "latestFavorisPrices", { chainlink: { eur: 20 } });
+    const context = dom.window.buildAiContext();
+    expect(context).toContain("Aucune thèse hebdo générée pour l'instant");
+    expect(context).not.toContain("thèse hebdo Conserver");
+  });
+
+  it("ajoute la thèse hebdo à la position personnelle citée pour un favori détenu", async () => {
+    setGlobal(dom, "latestFavorisPrices", { chainlink: { eur: 20 } });
+    const answer = await dom.window.answerQuestion("Que penses-tu de Chainlink ?");
+    expect(answer).toContain("Ta position");
+    expect(answer).toContain("Thèse hebdo (Conserver");
+    expect(answer).toContain("Adoption CCIP stable");
+  });
+
+  it("inclut la thèse hebdo dans la réponse générale sur le portefeuille (filet de mots-clés)", async () => {
+    setGlobal(dom, "latestFavorisPrices", { chainlink: { eur: 20 } });
+    const answer = await dom.window.answerQuestion("Comment va mon portefeuille ?");
+    expect(answer).toContain("thèse hebdo Conserver");
+    expect(answer).toContain("Thèse hebdo (recherche réelle) du");
+  });
+});

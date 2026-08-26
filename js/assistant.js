@@ -40,8 +40,9 @@ async function ensureChatData() {
     loadJson(DATA_URLS.marketContext),
     loadJson(DATA_URLS.digest),
     loadJson(DATA_URLS.portfolio),
-  ]).then(([verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio]) => {
-    chatData = { verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio };
+    loadJson(DATA_URLS.portfolioThesis),
+  ]).then(([verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis]) => {
+    chatData = { verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis };
     return chatData;
   });
   return chatDataLoading;
@@ -269,10 +270,16 @@ async function fetchAssetAiOpinion(question, factualAnswer) {
 function personalPositionLine(cgId) {
   if (!chatData.portfolio || typeof computePortfolioSummary !== "function") return null;
   const prices = typeof latestFavorisPrices !== "undefined" ? latestFavorisPrices : {};
-  const summary = computePortfolioSummary(chatData.portfolio, prices, chatData.verdicts || []);
+  const summary = computePortfolioSummary(chatData.portfolio, prices, chatData.verdicts || [], chatData.portfolioThesis);
   const p = summary.positions.find((pos) => pos.cgId === cgId && !pos.pending);
   if (!p) return null;
-  return `Ta position : ${p.qty} ${p.ticker}, ${formatPrice(p.invested, "EUR")} investis, valeur actuelle ${p.value !== null ? formatPrice(p.value, "EUR") : "—"} (${p.pnlPct !== null ? formatChangePct(p.pnlPct) : "—"}).`;
+  let line = `Ta position : ${p.qty} ${p.ticker}, ${formatPrice(p.invested, "EUR")} investis, valeur actuelle ${p.value !== null ? formatPrice(p.value, "EUR") : "—"} (${p.pnlPct !== null ? formatChangePct(p.pnlPct) : "—"}).`;
+  // Thèse hebdo (data/portfolio-thesis.json, recherche web réelle) : distincte du verdict
+  // technique à 14 jours déjà cité au-dessus — jamais générée par le chat lui-même.
+  if (p.recommendationRaw || p.constat) {
+    line += ` Thèse hebdo${p.recommendationRaw ? ` (${p.recommendationRaw}${p.conviction !== null ? `, conviction ${p.conviction}/10` : ""})` : ""} : ${p.constat || "voir l'onglet Portefeuille"}.`;
+  }
+  return line;
 }
 
 async function answerAboutAsset(mention, question) {
@@ -373,21 +380,28 @@ function answerPortfolio() {
     return "Aucun portefeuille configuré pour l'instant.";
   }
   const prices = typeof latestFavorisPrices !== "undefined" ? latestFavorisPrices : {};
-  const summary = computePortfolioSummary(chatData.portfolio, prices, chatData.verdicts || []);
+  const summary = computePortfolioSummary(chatData.portfolio, prices, chatData.verdicts || [], chatData.portfolioThesis);
   const active = summary.positions.filter((p) => !p.pending);
   if (active.length === 0) return "Aucune position avec des chiffres renseignés pour l'instant dans le portefeuille.";
 
   const lines = active
     .slice()
     .sort((a, b) => (b.pnlPct ?? -Infinity) - (a.pnlPct ?? -Infinity))
-    .map((p) => `• ${p.ticker} : ${p.value !== null ? formatPrice(p.value, "EUR") : "—"} (${p.pnlPct !== null ? formatChangePct(p.pnlPct) : "—"})${p.verdict ? `, verdict ${p.verdict}` : ""}`);
+    .map(
+      (p) =>
+        `• ${p.ticker} : ${p.value !== null ? formatPrice(p.value, "EUR") : "—"} (${p.pnlPct !== null ? formatChangePct(p.pnlPct) : "—"})${p.verdict ? `, verdict technique (14j) ${p.verdict}` : ""}${p.recommendationRaw ? `, thèse hebdo ${p.recommendationRaw}${p.conviction !== null ? ` (${p.conviction}/10)` : ""}` : ""}`
+    );
   const totalPnlSign = summary.totalPnl >= 0 ? "+" : "-";
   const totalLine = `Valeur totale ${formatPrice(summary.totalValue, "EUR")} pour ${formatPrice(summary.totalInvested, "EUR")} investis, soit ${totalPnlSign}${formatPrice(Math.abs(summary.totalPnl), "EUR")} (${summary.totalPnlPct !== null ? formatChangePct(summary.totalPnlPct) : "—"}).`;
   const pending = summary.positions.filter((p) => p.pending).map((p) => p.ticker);
+  const thesisNote = summary.thesisGeneratedAt
+    ? `Thèse hebdo (recherche réelle) du ${new Date(summary.thesisGeneratedAt).toLocaleDateString("fr-FR")}.`
+    : "Pas encore de thèse hebdo générée — seul le verdict technique (14j) est disponible pour l'instant.";
 
   return (
     `${totalLine}\n\n${lines.join("\n")}` +
     (pending.length ? `\n\nEn attente de chiffres : ${pending.join(", ")}.` : "") +
+    `\n\n${thesisNote}` +
     `\n\nPortefeuille fictif (simulation) — détail complet et calculette achat/vente dans l'onglet Portefeuille.`
   );
 }
@@ -471,18 +485,19 @@ function buildAiContext() {
   // pouvoir vraiment analyser/donner un avis dessus plutôt que de deviner.
   if (chatData.portfolio && typeof computePortfolioSummary === "function") {
     const prices = typeof latestFavorisPrices !== "undefined" ? latestFavorisPrices : {};
-    const summary = computePortfolioSummary(chatData.portfolio, prices, chatData.verdicts || []);
+    const summary = computePortfolioSummary(chatData.portfolio, prices, chatData.verdicts || [], chatData.portfolioThesis);
     const lines = summary.positions
       .filter((p) => !p.pending)
       .map(
         (p) =>
-          `${p.ticker} : valeur ${p.value !== null ? formatPrice(p.value, "EUR") : "—"}, investi ${formatPrice(p.invested, "EUR")}, P&L ${p.pnlPct !== null ? formatChangePct(p.pnlPct) : "—"}${p.verdict ? `, verdict moteur ${p.verdict}` : ""}`
+          `${p.ticker} : valeur ${p.value !== null ? formatPrice(p.value, "EUR") : "—"}, investi ${formatPrice(p.invested, "EUR")}, P&L ${p.pnlPct !== null ? formatChangePct(p.pnlPct) : "—"}${p.verdict ? `, verdict moteur (14j) ${p.verdict}` : ""}${p.recommendationRaw ? `, thèse hebdo ${p.recommendationRaw}${p.conviction !== null ? ` conviction ${p.conviction}/10` : ""}${p.constat ? ` (${p.constat})` : ""}` : ""}`
       );
     const pendingTickers = summary.positions.filter((p) => p.pending).map((p) => p.ticker);
     parts.push(
       `Portefeuille personnel de l'utilisateur (déclaré manuellement, simulation) : ${lines.join(" ; ")}. ` +
         `Total : valeur ${formatPrice(summary.totalValue, "EUR")}, investi ${formatPrice(summary.totalInvested, "EUR")}, P&L ${summary.totalPnlPct !== null ? formatChangePct(summary.totalPnlPct) : "—"}.` +
-        (pendingTickers.length ? ` Positions pas encore configurées : ${pendingTickers.join(", ")}.` : "")
+        (pendingTickers.length ? ` Positions pas encore configurées : ${pendingTickers.join(", ")}.` : "") +
+        (summary.thesisGeneratedAt ? ` La thèse hebdo (recherche web réelle par la routine, distincte du verdict technique 14j) date du ${new Date(summary.thesisGeneratedAt).toLocaleDateString("fr-FR")}.` : " Aucune thèse hebdo générée pour l'instant — ne pas en inventer une, dire que cette analyse n'existe pas encore si demandée.")
     );
   }
 

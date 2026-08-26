@@ -140,4 +140,5 @@ const DATA_URLS = {
   healthLog: "data/health-log.json",
   digest: "data/digest.json",
   portfolio: "data/portfolio.json",
+  portfolioThesis: "data/portfolio-thesis.json",
 };

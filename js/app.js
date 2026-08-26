@@ -399,7 +399,7 @@ function updateHeroStats(verdicts, alerts) {
 }
 
 async function loadAllData() {
-  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio] = await Promise.all([
+  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis] = await Promise.all([
     loadJson(DATA_URLS.verdicts),
     loadJson(DATA_URLS.engineHistory),
     loadJson(DATA_URLS.opportunities),
@@ -411,11 +411,12 @@ async function loadAllData() {
     loadJson(DATA_URLS.healthLog),
     loadJson(DATA_URLS.digest),
     loadJson(DATA_URLS.portfolio),
+    loadJson(DATA_URLS.portfolioThesis),
   ]);
   latestFavorisContext = favorisContext;
   // Expose les données déjà chargées pour que d'autres fonctionnalités (l'Assistant) les
   // réutilisent sans refaire les mêmes fetch — toujours les données du dernier rafraîchissement.
-  window.aguilaradarData = { verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio };
+  window.aguilaradarData = { verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis };
   if (window.renderDigestPanel) renderDigestPanel(digest);
 
   renderEngineTab(verdicts || [], engineHistory, opportunities, controlGroup);
@@ -434,7 +435,7 @@ async function loadAllData() {
   initDayReplay({ verdicts: verdicts || [], opportunities, alerts: alerts || [] });
   updateHeroStats(verdicts || [], alerts);
   updateFavorisVerdicts(verdicts || []);
-  if (window.renderPortfolio) renderPortfolio(portfolio, verdicts || []);
+  if (window.renderPortfolio) renderPortfolio(portfolio, verdicts || [], portfolioThesis);
 
   updateFreshnessIndicator(engineHistory, opportunities, news);
 }
