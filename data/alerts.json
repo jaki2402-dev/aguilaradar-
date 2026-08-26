@@ -644,5 +644,13 @@
         "triggered_at": "2026-08-25T20:40:00Z",
         "message": "Injective (INJ) : mouvement marqué vérifié par appel direct à l'API CoinGecko, +55,7 % depuis le prix d'émission du verdict ATTENTE du 23 août (3,59 dollars contre 5,59 dollars aujourd'hui) — retournement complet par rapport au recul de -9,1 % noté à l'émission, qui faisait pourtant suite à la validation d'un verdict VENTE. Signal précoce enregistré sur le verdict correspondant.",
         "source": "API CoinGecko directe (api.coingecko.com/api/v3/simple/price)"
+    },
+    {
+        "id": "alert-20260826-0020-ondo-baisse",
+        "ticker_ou_theme": "ONDO",
+        "type": "seuil_technique",
+        "triggered_at": "2026-08-26T00:20:00Z",
+        "message": "Ondo Finance (ONDO) : seuil de mouvement directionnel (5 %) franchi à la baisse, à contre-courant du consensus haussier retenu à l'émission du verdict ATTENTE du 23 août. Prix vérifié par appel direct à l'API CoinGecko : 0,361857 dollar contre un prix d'émission de 0,3837 dollar, soit -5,69 %. Signal précoce enregistré sur le verdict correspondant.",
+        "source": "API CoinGecko directe (api.coingecko.com/api/v3/simple/price)"
     }
 ]
