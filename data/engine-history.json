@@ -1,105 +1,105 @@
 {
-    "current_version": "v1",
-    "global_stats": {
-        "last_computed_at": "2026-08-24T04:21:00Z",
-        "total_verdicts_issued": 31,
-        "total_verdicts_resolved": 16,
-        "accuracy_strict_pct": 25.0,
-        "coverage_pct": 25.0,
-        "baseline_majority_class_pct": 62.5,
-        "baseline_buy_hold_btc_pct": 62.5,
-        "f1_macro": 39.29,
-        "f1_weighted": 16.07,
-        "confusion_matrix": {
-            "ACHAT": {
-                "ACHAT": 0,
-                "ATTENTE": 0,
-                "VENTE": 0
-            },
-            "ATTENTE": {
-                "ACHAT": 8,
-                "ATTENTE": 2,
-                "VENTE": 2
-            },
-            "VENTE": {
-                "ACHAT": 2,
-                "ATTENTE": 0,
-                "VENTE": 2
-            }
-        },
-        "per_class": {
-            "ACHAT": {
-                "precision": null,
-                "recall": 0.0,
-                "f1": null,
-                "predictedTotal": 0,
-                "actualTotal": 10
-            },
-            "ATTENTE": {
-                "precision": 0.1667,
-                "recall": 1.0,
-                "f1": 0.2858,
-                "predictedTotal": 12,
-                "actualTotal": 2
-            },
-            "VENTE": {
-                "precision": 0.5,
-                "recall": 0.5,
-                "f1": 0.5,
-                "predictedTotal": 4,
-                "actualTotal": 4
-            }
-        },
-        "calibration_by_confidence_bucket": null,
-        "accuracy_by_market_regime": null
+  "current_version": "v1",
+  "global_stats": {
+    "last_computed_at": "2026-08-24T04:21:00Z",
+    "total_verdicts_issued": 31,
+    "total_verdicts_resolved": 16,
+    "accuracy_strict_pct": 25.0,
+    "coverage_pct": 25.0,
+    "baseline_majority_class_pct": 62.5,
+    "baseline_buy_hold_btc_pct": 62.5,
+    "f1_macro": 39.29,
+    "f1_weighted": 16.07,
+    "confusion_matrix": {
+      "ACHAT": {
+        "ACHAT": 0,
+        "ATTENTE": 0,
+        "VENTE": 0
+      },
+      "ATTENTE": {
+        "ACHAT": 8,
+        "ATTENTE": 2,
+        "VENTE": 2
+      },
+      "VENTE": {
+        "ACHAT": 2,
+        "ATTENTE": 0,
+        "VENTE": 2
+      }
     },
-    "opportunities_stats": {
-        "last_computed_at": "2026-08-12T12:32:00Z",
-        "total_flagged": 8,
-        "total_resolved": 0,
-        "validated_pct": null,
-        "average_move_pct": null
+    "per_class": {
+      "ACHAT": {
+        "precision": null,
+        "recall": 0.0,
+        "f1": null,
+        "predictedTotal": 0,
+        "actualTotal": 10
+      },
+      "ATTENTE": {
+        "precision": 0.1667,
+        "recall": 1.0,
+        "f1": 0.2858,
+        "predictedTotal": 12,
+        "actualTotal": 2
+      },
+      "VENTE": {
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5,
+        "predictedTotal": 4,
+        "actualTotal": 4
+      }
     },
-    "routine_health": {
-        "last_success_at": "2026-08-26T04:16:00Z",
-        "consecutive_failures": 0,
-        "last_failure_reason": "Cycle du 26/08/2026, 04h16 UTC (heure réelle confirmée par date -u en début de cycle). Conformément aux correctifs de fiabilité du 17/08 et du 24/08, aucun outil mcp__ n'a été appelé ce cycle, exclusivement Bash/Read/Write/Edit/WebSearch.\n\nRésolution : aucune échéance due (32 entrées de verdicts.json vérifiées — rien avant le 31/08 ; les 8 items du groupe témoin à échéance le 26/08 10h45 UTC, pas encore atteinte à 04h16 UTC). Aucune résolution effectuée, situation normale.\n\nNouveaux verdicts : les 15 favoris disposent chacun déjà d'un verdict actif en attente, aucune émission nécessaire.\n\nRecherche large (cas 2 du correctif du 10/08) : une requête WebSearch « crypto biggest movers 24h » n'a remonté aucun mouvement dépassant le seuil de vigilance de 15 % sur les favoris (BTC +2,2 %, ETH +1,4 % à +9,2 % selon la source, sous le seuil) ; confirmé par les données de marché directes des opportunités déjà suivies (mouvement 24h le plus marqué : ENA -8,6 %, toujours sous le seuil). Aucun nouveau signal_precoce déclenché ce cycle.\n\nRégime macro (Fear&Greed, dominance BTC) : indice toujours dispersé selon la source (44 à 77), fourchette quasi identique au cycle précédent — valeur retenue (74, risk-on) conservée telle quelle conformément au correctif du 10/08. Dominance BTC rafraîchie par appel direct à l'API CoinGecko (/api/v3/global) : 59,28 %, quasi stable par rapport aux 59,2 % du cycle précédent.\n\nVeille actualités générale (recherche « crypto news today ») : rien de suffisamment sourcé et réellement nouveau par rapport aux 8 titres déjà présents dans news.json — les éléments remontés (rachat/burn Aster, burn CAKE, commentaire Scaramucci sur les réserves BTC de l'État américain, démantèlement d'un réseau de fraude par deepfake à Hong Kong) n'étaient rattachés à aucune source unique vérifiable au format déjà utilisé dans ce fichier. Aucune entrée ajoutée ni retirée, conformément au correctif de concision du 17/08 ; last_checked_at mis à jour pour tracer la vérification.\n\nOpportunités : champs d'affichage (price_eur, market_cap, change_24h/7j/30j_pct, ath_change_pct, image, sparkline) rafraîchis pour les 12 opportunités déjà présentes via appel direct à l'API CoinGecko (/api/v3/coins/markets). Composition de la liste non modifiée (hors périmètre, rôle exclusif de aguilaradar-opportunites-quotidien).\n\nGroupe témoin : aucune résolution due, fichier non modifié.\n\nAucune entrée ajoutée à alerts.json ce cycle (rien d'actionnable de nouveau au-delà de ce qui est déjà signalé), conformément au correctif de concision du 17/08.\n\nFusion vers main prévue en toute fin de cycle après vérification qu'aucune autre branche n'est en attente de fusion."
-    },
-    "macro_regime": {
-        "last_computed_at": "2026-08-26T04:16:00Z",
-        "regime": "risk-on",
-        "fear_greed_value": 74,
-        "btc_dominance_pct": 59.28,
-        "btc_dominance_trend_7d_pct": null,
-        "note": "Cycle du 26/08, 04h16 UTC : indice de peur et de cupidité toujours dispersé selon la source (44 à 77, majorité en zone « Greed »), fourchette quasi identique à celle du cycle précédent (44-77) — valeur déjà retenue (74) conservée telle quelle, conformément au correctif du 10/08 (rien n'a changé). Dominance BTC à 59,28 % via appel direct à l'API CoinGecko (/api/v3/global), quasi stable par rapport aux 59,2 % du cycle précédent. Régime inchangé : « risk-on »."
-    },
-    "paper_portfolio_stats": {
-        "last_computed_at": "2026-08-24T04:21:00Z",
-        "min_resolved_required": 10,
-        "cumulative_return_pct": -6.11,
-        "btc_buy_hold_return_pct": 18.71,
-        "edge_pct": -24.82,
-        "method": "Position virtuelle par verdict résolu, taille proportionnelle à confidence_pct, ouverte à price_at_issue et fermée à price_at_resolution (ACHAT=long, VENTE=short, ATTENTE=position nulle). Comparé au même capital placé uniquement en buy-and-hold BTC sur la même période. Approximation inchangée : le rendement buy-hold BTC utilise le rendement BTC réalisé sur la fenêtre commune du 07/08 au 23/08 (14 des 15 verdicts de ce lot partagent exactement cette fenêtre) ; les deux verdicts d'une fenêtre différente (CTSI, résolus le 17/08 et le 24/08) sont traités avec la même approximation faute d'avoir interrogé le prix BTC exact sur leurs fenêtres propres — poids marginal (105 sur 847 au total à eux deux), impact négligeable sur le résultat. Nouveau résolu ce cycle : CTSI (v-20260817-ctsi, ATTENTE, position nulle, aucune contribution au rendement mais dilue légèrement la moyenne pondérée par confiance)."
-    },
-    "data_source_reliability": {
-        "last_computed_at": "2026-08-26T04:16:00Z",
-        "cycles_logged": 72,
-        "coingecko_connector_success_count": 23,
-        "coingecko_curl_fallback_count": 4,
-        "websearch_price_fallback_count": 218,
-        "notes": "Cycle du 26/08 04h16 UTC : aucun outil mcp__ utilisé, conformément aux correctifs de fiabilité du 17/08 et du 24/08. Accès HTTP direct à api.coingecko.com fonctionnel ce cycle (un appel /coins/markets initial a renvoyé « Throttled », résolu par une nouvelle tentative après 5 secondes — pas d'acharnement, conformément à la consigne). Deux appels groupés au total (/coins/markets EUR pour les 12 opportunités déjà présentes avec sparkline/variations 24h-7j-30j, /global pour la dominance BTC), comptabilisés comme deux fallbacks curl réussis. WebSearch limité à trois requêtes ciblées (biggest movers 24h, indice de peur et de cupidité, actualités générales), conformément aux correctifs du 10/08 et du 17/08 (soir)."
-    },
-    "correction_log": [
-        {
-            "id": "corr-20260823-biais-rattrapage-macro",
-            "logged_at": "2026-08-23T23:20:00Z",
-            "trigger": "14 nouveaux verdicts résolus en un seul cycle (rattrapage après 4,6 jours d'interruption de la routine), seuil de 5 nouveaux résolus franchi.",
-            "what": "Diagnostic du biais observé : sur les 14 verdicts résolus ce cycle, 11 se sont trompés, presque tous dans le même sens — le moteur avait émis ATTENTE (8 fois) ou VENTE (2 fois, FET et GRT) alors que l'actif a en réalité fortement grimpé (ACHAT) pendant l'interruption. Exactitude de ce lot : 20,0 % (3/15 avec CTSI), contre 66,7 % pour la baseline « classe majoritaire » et pour la baseline « buy-hold BTC » — le moteur fait donc nettement moins bien qu'un pari naïf sur ce lot précis.",
-            "why": "Les 14 verdicts d'origine ont été émis le 07/08, sous régime macro « neutre » (indice de peur et de cupidité à 46). Entre le 07/08 et le 23/08, le régime a basculé vers « risk-on » (indice à 73, « Greed »), un changement macro survenu après l'émission des verdicts et donc invisible aux signaux techniques/fondamentaux disponibles au moment de chaque verdict. Ce n'est pas un biais de calibrage du seuil directionnel (threshold_pct=5 % pour les 15 verdicts concernés) : un test rétrospectif avec un seuil plus large (10 %) n'aurait amélioré le score que de 3 à 5 corrects sur 15 (LINK et TIA seulement), la grande majorité des erreurs venant de mouvements bien supérieurs à n'importe quel seuil raisonnable (BTC +18,7 %, ETH +25,3 %, GRT +70,8 %, AIOZ +209 %).",
-            "validation_score_before_pct": 20.0,
-            "validation_score_after_pct": null,
-            "action": "Aucun changement de paramètre appliqué ce cycle. Ajuster threshold_pct, horizon_days ou un biais directionnel sur la base de ces 14 verdicts reviendrait à surapprendre directement sur les données qui viennent de révéler le problème (interdit : jamais rejouer les mêmes données). Les 14 nouveaux verdicts émis ce cycle pour les mêmes favoris conservent les paramètres par défaut habituels (seuil 5 %, horizon 14 jours, confiance 50 % faute de consensus 2/3). Leur résolution future, sur des données réellement nouvelles, sera le vrai test de si un ajustement structurel est nécessaire — pas ce lot rétroactif.",
-            "status": "rejected"
-        }
-    ]
+    "calibration_by_confidence_bucket": null,
+    "accuracy_by_market_regime": null
+  },
+  "opportunities_stats": {
+    "last_computed_at": "2026-08-12T12:32:00Z",
+    "total_flagged": 8,
+    "total_resolved": 0,
+    "validated_pct": null,
+    "average_move_pct": null
+  },
+  "routine_health": {
+    "last_success_at": "2026-08-26T06:27:00Z",
+    "consecutive_failures": 0,
+    "last_failure_reason": "Cycle du 26/08/2026, 06h27 UTC (heure réelle confirmée par date -u en début de cycle). Conformément aux correctifs de fiabilité du 17/08 et du 24/08, aucun outil mcp__ n'a été appelé ce cycle, exclusivement Bash/Read/Write/Edit/WebSearch.\n\nRésolution : aucune échéance due (31 entrées de verdicts.json vérifiées, 15 en attente, aucune avant le 31/08 ; les 8 items du groupe témoin à échéance le 26/08 10h45 UTC, pas encore atteinte à 06h27 UTC). Aucune résolution effectuée, situation normale.\n\nNouveaux verdicts : les 15 favoris disposent chacun déjà d'un verdict actif en attente, aucune émission nécessaire.\n\nRecherche large (cas 2 du correctif du 10/08) : appel direct groupé CoinGecko sur les 15 favoris et les 12 opportunités déjà suivies, aucun mouvement ne dépasse le seuil de vigilance de 15 % (mouvement le plus marqué : INJ -7,7 % sur les favoris, RAIN +20,1 % sur les opportunités). Aucun nouveau signal_precoce déclenché ce cycle.\n\nRégime macro (Fear&Greed, dominance BTC) : indice toujours dispersé selon la source (44 à 77), fourchette quasi identique aux cycles précédents — valeur retenue (74, risk-on) conservée telle quelle conformément au correctif du 10/08. Dominance BTC rafraîchie par appel direct à l'API CoinGecko (/api/v3/global) : 59,27 %, quasi stable par rapport aux 59,28 % du cycle précédent.\n\nOpportunités : rafraîchissement des champs d'affichage (price_eur, market_cap, rangs, variations 24h/7j/30j, ath_change_pct, image, sparkline) des 12 opportunités déjà présentes, via appel direct groupé CoinGecko /coins/markets. Aucun ajout ni retrait — hors périmètre de cette routine depuis le 17/08 (routine dédiée aguilaradar-opportunites-quotidien). Aucun horizon touché.\n\nActualités : recherche large « crypto news today » (1 requête) plus deux recherches ciblées de confirmation, deux entrées réellement nouvelles ajoutées à news.json (inflows ETF Bitcoin sur 6 séances consécutives, risque de dépendance de Strategy aux marchés de capitaux), en remplacement des deux entrées les plus datées désormais dépassées par une actualité plus récente sur le même sujet. Alertes : aucune entrée ajoutée à alerts.json ce cycle, aucun seuil franchi et aucun événement nouveau à signaler, conformément au correctif de concision du 17/08.\n\nFusion vers main : aucune branche claude/* en attente trouvée avant ce cycle ; fusion de ce cycle vers main effectuée en toute fin de cycle conformément au correctif du 17/08 (soir)."
+  },
+  "macro_regime": {
+    "last_computed_at": "2026-08-26T06:27:00Z",
+    "regime": "risk-on",
+    "fear_greed_value": 74,
+    "btc_dominance_pct": 59.27,
+    "btc_dominance_trend_7d_pct": null,
+    "note": "Cycle du 26/08, 06h27 UTC : indice de peur et de cupidité toujours dispersé selon la source (44 à 77 selon les agrégateurs consultés, une estimation composite à 65 également relevée), fourchette quasi identique à celle des cycles précédents — valeur déjà retenue (74) conservée telle quelle, conformément au correctif du 10/08 (rien n'a changé). Dominance BTC à 59,27 % via appel direct à l'API CoinGecko (/api/v3/global), quasi stable par rapport aux 59,28 % du cycle précédent. Recherche large sur les mouvements de marché (« crypto biggest movers 24h ») confirmée par appel direct groupé des 15 favoris et des 12 opportunités déjà suivies : mouvement le plus marqué INJ -7,7 % sur les favoris et RAIN +20,1 % sur les opportunités, tous les deux sous le seuil de vigilance de 15 %. Régime inchangé : « risk-on »."
+  },
+  "paper_portfolio_stats": {
+    "last_computed_at": "2026-08-24T04:21:00Z",
+    "min_resolved_required": 10,
+    "cumulative_return_pct": -6.11,
+    "btc_buy_hold_return_pct": 18.71,
+    "edge_pct": -24.82,
+    "method": "Position virtuelle par verdict résolu, taille proportionnelle à confidence_pct, ouverte à price_at_issue et fermée à price_at_resolution (ACHAT=long, VENTE=short, ATTENTE=position nulle). Comparé au même capital placé uniquement en buy-and-hold BTC sur la même période. Approximation inchangée : le rendement buy-hold BTC utilise le rendement BTC réalisé sur la fenêtre commune du 07/08 au 23/08 (14 des 15 verdicts de ce lot partagent exactement cette fenêtre) ; les deux verdicts d'une fenêtre différente (CTSI, résolus le 17/08 et le 24/08) sont traités avec la même approximation faute d'avoir interrogé le prix BTC exact sur leurs fenêtres propres — poids marginal (105 sur 847 au total à eux deux), impact négligeable sur le résultat. Nouveau résolu ce cycle : CTSI (v-20260817-ctsi, ATTENTE, position nulle, aucune contribution au rendement mais dilue légèrement la moyenne pondérée par confiance)."
+  },
+  "data_source_reliability": {
+    "last_computed_at": "2026-08-26T06:27:00Z",
+    "cycles_logged": 73,
+    "coingecko_connector_success_count": 23,
+    "coingecko_curl_fallback_count": 8,
+    "websearch_price_fallback_count": 222,
+    "notes": "Cycle du 26/08 06h27 UTC : aucun outil mcp__ utilisé, conformément aux correctifs de fiabilité du 17/08 et du 24/08. Quatre appels HTTP directs à api.coingecko.com réussis sans relance (simple/price groupé pour les 15 favoris, simple/price groupé pour les 12 opportunités, coins/markets groupé pour les 12 opportunités avec sparkline/variations 24h-7j-30j, et /global pour la dominance BTC). Quatre requêtes WebSearch ciblées (indice de peur et de cupidité, actualités générales, confirmation inflows ETF Bitcoin, confirmation risque capital markets Strategy) pour l'actualité et le macro, conformément aux correctifs du 10/08 et du 17/08 (soir)."
+  },
+  "correction_log": [
+    {
+      "id": "corr-20260823-biais-rattrapage-macro",
+      "logged_at": "2026-08-23T23:20:00Z",
+      "trigger": "14 nouveaux verdicts résolus en un seul cycle (rattrapage après 4,6 jours d'interruption de la routine), seuil de 5 nouveaux résolus franchi.",
+      "what": "Diagnostic du biais observé : sur les 14 verdicts résolus ce cycle, 11 se sont trompés, presque tous dans le même sens — le moteur avait émis ATTENTE (8 fois) ou VENTE (2 fois, FET et GRT) alors que l'actif a en réalité fortement grimpé (ACHAT) pendant l'interruption. Exactitude de ce lot : 20,0 % (3/15 avec CTSI), contre 66,7 % pour la baseline « classe majoritaire » et pour la baseline « buy-hold BTC » — le moteur fait donc nettement moins bien qu'un pari naïf sur ce lot précis.",
+      "why": "Les 14 verdicts d'origine ont été émis le 07/08, sous régime macro « neutre » (indice de peur et de cupidité à 46). Entre le 07/08 et le 23/08, le régime a basculé vers « risk-on » (indice à 73, « Greed »), un changement macro survenu après l'émission des verdicts et donc invisible aux signaux techniques/fondamentaux disponibles au moment de chaque verdict. Ce n'est pas un biais de calibrage du seuil directionnel (threshold_pct=5 % pour les 15 verdicts concernés) : un test rétrospectif avec un seuil plus large (10 %) n'aurait amélioré le score que de 3 à 5 corrects sur 15 (LINK et TIA seulement), la grande majorité des erreurs venant de mouvements bien supérieurs à n'importe quel seuil raisonnable (BTC +18,7 %, ETH +25,3 %, GRT +70,8 %, AIOZ +209 %).",
+      "validation_score_before_pct": 20.0,
+      "validation_score_after_pct": null,
+      "action": "Aucun changement de paramètre appliqué ce cycle. Ajuster threshold_pct, horizon_days ou un biais directionnel sur la base de ces 14 verdicts reviendrait à surapprendre directement sur les données qui viennent de révéler le problème (interdit : jamais rejouer les mêmes données). Les 14 nouveaux verdicts émis ce cycle pour les mêmes favoris conservent les paramètres par défaut habituels (seuil 5 %, horizon 14 jours, confiance 50 % faute de consensus 2/3). Leur résolution future, sur des données réellement nouvelles, sera le vrai test de si un ajustement structurel est nécessaire — pas ce lot rétroactif.",
+      "status": "rejected"
+    }
+  ]
 }
