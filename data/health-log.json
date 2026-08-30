@@ -106,6 +106,12 @@
       "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h55)", "data/news.json (last_updated_at, ~2h49)", "data/opportunities.json (last_scan_at, ~5h11)"],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h55, actualités il y a 2h49, opportunités il y a 5h11 - rien à signaler."
+    },
+    {
+      "checked_at": "2026-08-30T23:42:53Z",
+      "files_ok": [],
+      "files_broken": ["data/engine-history.json (routine_health.last_success_at figé depuis ~105h24, seuil de 8h dépassé)", "data/news.json (last_updated_at figé depuis ~109h22, seuil de 8h dépassé)", "data/opportunities.json (last_scan_at figé depuis ~115h37, seuil de 36h dépassé)"],
+      "note": "ATTENTION FRAICHEUR : nouvelle panne globale des TROIS sources surveillées, du même type que celle déjà signalée le 23/08 (puis résolue le 24-25/08). data/engine-history.json (routine_health.last_success_at = 2026-08-26T14:18:00Z) est figé depuis environ 105h24 (~4,4 jours), très au-delà du seuil de 8h. data/news.json (last_updated_at = 2026-08-26T10:20:00Z) est figé depuis environ 109h22 (~4,6 jours), également au-delà du seuil de 8h. data/opportunities.json (last_scan_at = 2026-08-26T04:04:55Z) est figé depuis environ 115h37 (~4,8 jours), au-delà du seuil de 36h. Les trois se sont arrêtées quasi simultanément autour du 26/08 (dans les heures qui ont suivi le dernier contrôle réussi de cette routine ce jour-là à 09h16 UTC), et aucune entrée n'a été ajoutée à health-log.json par la routine de santé générale du site depuis non plus - signe d'une panne d'infrastructure large plutôt que de trois incidents isolés, comme lors de l'épisode du 23/08. Cette routine n'a pas les outils pour investiguer ou corriger elle-même (pas d'accès réseau, pas d'accès aux outils de gestion des routines/triggers) ; une session humaine ou Claude Code avec les bons outils devra vérifier en priorité l'état des routines aguilaradar-cycle-2h, aguilaradar-opportunites-quotidien, aguilaradar-sante-quotidien et de leurs sessions persistantes associées."
     }
   ]
 }
