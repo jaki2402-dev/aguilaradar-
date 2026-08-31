@@ -268,6 +268,7 @@ const ALERT_TYPE_LABELS = {
   actualite_macro: "Actu macro",
   actualite_favori: "Actu favori",
   actualite_generale: "Actu crypto",
+  avis_du_jour: "Avis du jour",
   opportunite: "Opportunité",
   signal_precoce: "Signal précoce",
   regime_change_impact: "Changement de régime",
@@ -290,6 +291,33 @@ function sentimentBadgeHtml(sentiment) {
   const key = sentiment.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
   const b = SENTIMENT_BADGES[key];
   return b ? `<span class="badge ${b.cls}">${b.text}</span>` : "";
+}
+
+// Avis du jour : la synthèse la plus récente (type "avis_du_jour", data/alerts.json, écrite au
+// plus une fois par jour par la routine — voir son prompt) mise en avant tout en haut de
+// l'Accueil, plutôt que noyée dans la liste complète de l'onglet Alertes. Même contenu que la
+// notification push reçue au même moment (le Worker Cloudflare pousse déjà toute nouvelle
+// entrée d'alerts.json sans filtrer par type, voir cloudflare-worker/worker.js) : ce bloc est
+// simplement la version "je suis déjà dans l'app" de la même information.
+function renderAvisDuJour(alerts) {
+  const el = document.getElementById("avis-du-jour");
+  if (!el) return;
+  const avisEntries = (alerts || []).filter((a) => a.type === "avis_du_jour");
+  if (avisEntries.length === 0) {
+    el.innerHTML = "";
+    return;
+  }
+  const latest = avisEntries.slice().sort((a, b) => new Date(b.triggered_at) - new Date(a.triggered_at))[0];
+  const ageMs = Date.now() - new Date(latest.triggered_at).getTime();
+  // >30h plutôt que >24h : marge pour un cycle qui écrit un peu tard dans la journée sans
+  // déclencher un avertissement "pas d'aujourd'hui" trompeur pour un avis en réalité tout frais.
+  const staleHint = ageMs > 30 * 3600 * 1000 ? ` — dernière mise à jour il y a plus d'un jour, pas forcément celui d'aujourd'hui` : "";
+  el.innerHTML = `
+    <div class="hero-card avis-du-jour-card">
+      <div class="avis-du-jour-head"><span class="hint">Avis du jour</span>${sentimentBadgeHtml(latest.sentiment)}</div>
+      <p class="avis-du-jour-text">${escapeHtml(latest.message)}</p>
+      <div class="hint">${new Date(latest.triggered_at).toLocaleString("fr-FR")}${staleHint}</div>
+    </div>`;
 }
 
 const NOTIFICATIONS_PAGE_SIZE = 15;
@@ -467,6 +495,7 @@ async function loadAllData() {
   renderOpportunities(opportunities);
   renderJournal(verdicts || []);
   renderNotifications(alerts);
+  renderAvisDuJour(alerts);
   if (window.updateNotifBellFromAlerts) updateNotifBellFromAlerts(alerts);
   renderNews(news);
   renderMacroRegime(engineHistory);

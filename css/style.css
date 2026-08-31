@@ -641,6 +641,13 @@ th { color: var(--text-dim); font-weight: 600; font-size: 0.76rem; text-transfor
 .alert-entry.type-actualite_macro { --entry-color: var(--warning); }
 .alert-entry.type-actualite_favori { --entry-color: var(--accent); }
 .alert-entry.type-actualite_generale { --entry-color: var(--text-faint); }
+.alert-entry.type-avis_du_jour { --entry-color: var(--accent); }
+/* Carte "Avis du jour" (voir renderAvisDuJour, app.js) : même habillage que .hero-card
+   (dégradé + coins en équerre "instrument"), plus un liseré pour la distinguer visuellement de
+   la carte "État du radar" juste en dessous — sinon les deux se confondent en tête d'Accueil. */
+.avis-du-jour-card { border-left: 3px solid var(--accent); }
+.avis-du-jour-head { display: flex; align-items: center; gap: 8px; }
+.avis-du-jour-text { font-size: 1rem; font-weight: 600; line-height: 1.5; margin: 8px 0; }
 .log-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 0.82rem; color: var(--text-dim); margin-bottom: 6px; }
 /* Regroupe le badge de sentiment (bullish/bearish, voir sentimentBadgeHtml) et le badge de
    type sous UN SEUL enfant flex de .log-header — sinon un 3e enfant direct casse le

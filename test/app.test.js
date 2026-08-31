@@ -163,6 +163,7 @@ const APP_FIXTURE_HTML = `<!doctype html><html><body>
     <button data-tab="assistant"><span class="tab-label">Assistant</span></button>
   </nav>
   <section id="tab-overview" class="tab-panel active">
+    <div id="avis-du-jour"></div>
     <div id="macro-regime-banner"></div>
     <div class="hero-stat-value" id="hero-verdicts">0</div>
     <div class="hero-stat-value" id="hero-alerts">0</div>
@@ -681,6 +682,59 @@ describe("app.js — renderNotifications / renderNotificationsPage", () => {
     expect(dom.window.document.querySelectorAll("#notifications-body .alert-entry")).toHaveLength(17);
     expect(dom.window.document.getElementById("notifications-load-more")).toBeNull();
     expect(dom.window.document.getElementById("notifications-body").textContent).toContain("17 alerte(s) au total");
+  });
+});
+
+describe("app.js — renderAvisDuJour (synthèse quotidienne mise en avant + notification push)", () => {
+  let dom;
+
+  function avisItem(overrides = {}) {
+    return { id: "avis-jour-2026-08-31", type: "avis_du_jour", ticker_ou_theme: "PORTEFEUILLE", triggered_at: "2026-08-31T06:00:00Z", message: "BTC et ETH restent en ATTENTE, rien de nouveau à signaler.", ...overrides };
+  }
+
+  beforeEach(() => {
+    dom = loadPage(["config.js", "app.js"], { html: APP_FIXTURE_HTML });
+  });
+
+  it("renders nothing (not even an empty card) when no avis_du_jour entry exists yet", () => {
+    dom.window.renderAvisDuJour([{ id: "a", type: "seuil_technique", message: "Autre chose", triggered_at: "2026-08-31T00:00:00Z" }]);
+    expect(dom.window.document.getElementById("avis-du-jour").innerHTML).toBe("");
+    dom.window.renderAvisDuJour(null);
+    expect(dom.window.document.getElementById("avis-du-jour").innerHTML).toBe("");
+  });
+
+  it("shows the message of the most recent avis_du_jour entry when several exist (history, never overwritten)", () => {
+    dom.window.renderAvisDuJour([
+      avisItem({ id: "avis-jour-2026-08-30", triggered_at: "2026-08-30T06:00:00Z", message: "Message d'hier." }),
+      avisItem({ id: "avis-jour-2026-08-31", triggered_at: "2026-08-31T06:00:00Z", message: "Message d'aujourd'hui." }),
+    ]);
+    const text = dom.window.document.getElementById("avis-du-jour").textContent;
+    expect(text).toContain("Message d'aujourd'hui.");
+    expect(text).not.toContain("Message d'hier.");
+  });
+
+  it("shows a sentiment badge when the routine provided one, matching the same badge used on regular alerts", () => {
+    dom.window.renderAvisDuJour([avisItem({ sentiment: "positif" })]);
+    expect(dom.window.document.getElementById("avis-du-jour").textContent).toContain("Bullish");
+  });
+
+  it("escapes the message before inserting it (trust boundary, same rule as regular alerts)", () => {
+    dom.window.renderAvisDuJour([avisItem({ message: "<b>x</b>" })]);
+    const el = dom.window.document.getElementById("avis-du-jour");
+    expect(el.querySelector("b")).toBeNull();
+    expect(el.textContent).toContain("<b>x</b>");
+  });
+
+  it("does not warn about staleness for a fresh avis (well under 30h old)", () => {
+    dom.window.Date.now = () => new Date("2026-08-31T08:00:00Z").getTime(); // 2h apres triggered_at
+    dom.window.renderAvisDuJour([avisItem({ triggered_at: "2026-08-31T06:00:00Z" })]);
+    expect(dom.window.document.getElementById("avis-du-jour").textContent).not.toContain("plus d'un jour");
+  });
+
+  it("warns honestly when the latest avis is stale (well over 30h old) rather than presenting it as today's", () => {
+    dom.window.Date.now = () => new Date("2026-09-02T12:00:00Z").getTime(); // >48h apres triggered_at
+    dom.window.renderAvisDuJour([avisItem({ triggered_at: "2026-08-31T06:00:00Z" })]);
+    expect(dom.window.document.getElementById("avis-du-jour").textContent).toContain("plus d'un jour");
   });
 });
 
