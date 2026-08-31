@@ -735,5 +735,14 @@
     "sentiment": "négatif",
     "message": "Piratage majeur et toujours documenté du portefeuille matériel Coldcard (Coinkite) : environ 116 millions de dollars (1 816 BTC) dérobés depuis le 30 juillet 2026 sur plus de 5 200 adresses, en quatre vagues successives — 3e plus gros piratage crypto de 2026. Cause identifiée : une erreur d'intégration du micrologiciel datant de mars 2021 a orienté la génération de la phrase de récupération vers un générateur pseudo-aléatoire logiciel au lieu du générateur matériel du composant STM32, réduisant l'entropie effective à environ 40 bits sur le Mk3 et 72 bits sur les Mk4/Mk5/Q, contre 128 bits attendus pour une phrase BIP-39 de 12 mots — un attaquant peut donc reconstituer la phrase sans accéder à l'appareil physique. Toute phrase générée sur un Coldcard entre mars 2021 et le correctif doit être considérée comme compromise et migrée vers une nouvelle phrase ; une simple mise à jour du micrologiciel ne corrige pas les portefeuilles déjà générés. Confirmé par plusieurs sources indépendantes (TRM Labs, TechCrunch, Fortune, CBC News, The Hacker News). Concerne directement les détenteurs de Bitcoin en autogarde sur ce matériel, pertinence directe pour la position BTC du portefeuille suivi ici.",
     "source": "TRM Labs, TechCrunch, Fortune, CBC News, The Hacker News (recoupement multi-sources)"
+  },
+  {
+    "id": "alert-20260831-2020-cronos-tectonic",
+    "ticker_ou_theme": "CRONOS",
+    "type": "actualite_generale",
+    "triggered_at": "2026-08-31T20:20:00Z",
+    "sentiment": "négatif",
+    "message": "Cronos, la blockchain adossée à Crypto.com, a stoppé l'intégralité de son réseau le 31 août après avoir identifié un exploit visant le protocole de prêt Tectonic, estimé à environ 75 millions de dollars. L'attaquant a exploité un facteur de collatéral de 20 % et une liquidité insuffisante sur le jeton de gouvernance TONIC, dont le prix a été gonflé d'un facteur 100 en 20 minutes avant d'emprunter d'autres actifs (schéma comparable à l'attaque Mango Markets). La valeur totale verrouillée de Tectonic est passée d'environ 121,7 millions de dollars le 26 août à environ 3 millions le 31 août. Seuls environ 6 millions de dollars ont pu être pontés vers Ethereum avant l'arrêt du réseau : l'essentiel des fonds reste piégé sur Cronos. Aucune date de reprise du réseau annoncée à ce stade. Événement d'ampleur rare (arrêt complet d'une blockchain entière, pas seulement d'un protocole), confirmé par cinq sources indépendantes (Cointelegraph, The Block, CoinDesk, Decrypt, crypto.news).",
+    "source": "https://www.coindesk.com/tech/2026/08/31/cronos-halts-blockchain-after-usd75-million-lending-exploit-hits-lending-app-tectonic"
   }
 ]

@@ -1017,12 +1017,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-08-26T10:20:00Z",
-      "price_at_signal_eur": 0.079114,
-      "move_pct_since_issue": -10.48,
+      "detected_at": "2026-08-31T20:20:00Z",
+      "price_at_signal_eur": 0.084945,
+      "move_pct_since_issue": -3.89,
       "threshold_pct": 5,
-      "threshold_crossed": true,
-      "note": "Arbitrum (ARB) : seuil de mouvement directionnel (5 %) franchi à la baisse, conforme au renversement déjà signalé ce cycle (08h21 UTC), amplitude légèrement affinée par une nouvelle vérification directe à l'API CoinGecko : 0,079114 euro contre un prix d'émission de 0,08838 euro, soit -10,5 %. Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
+      "threshold_crossed": false,
+      "note": "Arbitrum (ARB) : retour sous le seuil de mouvement directionnel (5 %) ce cycle, après le franchissement à la baisse détecté précédemment (-10,5 %). Prix vérifié par appel direct à l'API CoinGecko (groupé, un seul appel pour les 15 favoris) : 0,084945 euro contre un prix d'émission de 0,08838 euro, soit -3,9 %. Aucune actualité spécifique identifiée pour expliquer ce rebond. Ne préjuge pas de l'issue à l'échéance du 6 septembre."
     }
   },
   {
