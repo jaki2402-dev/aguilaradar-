@@ -120,7 +120,7 @@ async function renderUntrackedResult(coin) {
     if (!ficheEl) return;
     ficheEl.innerHTML = `
       ${categories.length ? `<div class="opp-tags" style="margin-top:8px;">${categories.map((c) => `<span class="tag">${escapeHtml(c)}</span>`).join("")}</div>` : ""}
-      ${shortDesc ? `<p style="margin-top:8px;">${escapeHtml(shortDesc)}${desc.length > 400 ? "…" : ""}</p>` : ""}
+      ${shortDesc ? `<p style="margin-top:8px;">${highlightKeyInfo(shortDesc)}${desc.length > 400 ? "…" : ""}</p>` : ""}
       ${homepage ? `<p class="hint" style="margin-top:6px;"><a href="${escapeHtml(homepage)}" target="_blank" rel="noopener noreferrer">Site officiel</a></p>` : ""}
     `;
   } catch (err) {

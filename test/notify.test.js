@@ -184,6 +184,21 @@ describe("notify.js — updateNotifBellBadge / renderDigestPanel / clearNotifBel
     dom.window.clearNotifBellBadge();
     expect(dom.window.document.getElementById("notif-bell-badge").hidden).toBe(true);
   });
+
+  it("highlights key figures in the digest headline/summary/tips (the main long-form text block on Accueil)", () => {
+    dom.window.renderDigestPanel({
+      generated_at: "2026-08-17T05:00:00Z",
+      headline: "BTC franchit les 50 % de dominance",
+      summary: "Le marché a reculé de 8,2 % cette semaine, porté par une sortie de 12 775 dollars d'ETF.",
+      tips: ["Surveiller le seuil de 9,9 % sur ETH"],
+      market_tone: "neutre",
+    });
+    const html = dom.window.document.getElementById("digest-panel").innerHTML;
+    expect(html).toContain('<mark class="hl-stat">50 %</mark>');
+    expect(html).toContain('<mark class="hl-stat">8,2 %</mark>');
+    expect(html).toContain('<mark class="hl-stat">12 775 dollars</mark>');
+    expect(html).toContain('<mark class="hl-stat">9,9 %</mark>');
+  });
 });
 
 // Régression du 19/08 : une fois un abonnement existant, il n'y avait AUCUN moyen d'en forcer

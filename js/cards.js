@@ -77,7 +77,7 @@ function renderOpportunityCard(o, idx, containerId) {
         ${(o.tags || []).map((t) => `<span class="tag">${escapeHtml(t)}</span>`).join("")}
         <span class="tag tag-confidence">Confiance ${conf}%</span>
       </div>
-      <p class="hint" style="margin-top: 8px;">${escapeHtml(o.reason || "")}</p>
+      <p class="hint" style="margin-top: 8px;">${highlightKeyInfo(o.reason || "")}</p>
       <div class="opp-footer">
         <span>7j <strong class="${o.change_7d_pct >= 0 ? "positive" : "negative"}">${formatChangePct(o.change_7d_pct)}</strong></span>
         <span>30j <strong class="${o.change_30d_pct >= 0 ? "positive" : "negative"}">${formatChangePct(o.change_30d_pct)}</strong></span>

@@ -284,6 +284,29 @@ describe("engine.js — renderEngineTab (journal des corrections)", () => {
     expect(html).toContain("aucun changement appliqué");
   });
 
+  it("highlights key figures inside the diagnostic/why/decision/trigger text (long self-correction prose, hard to scan without it)", () => {
+    const dom = loadPage(["config.js", "engine.js"], { html: CONTAINER_HTML });
+    const engineHistory = {
+      correction_log: [
+        {
+          id: "corr-1",
+          logged_at: "2026-08-23T23:20:00Z",
+          trigger: "Biais détecté sur 9,9 % des verdicts ACHAT",
+          what: "Sur-confiance de 15 % sur le régime risk-on",
+          why: "Seuil non recalibré depuis le dernier cycle",
+          action: "Réduction du seuil de confiance",
+          status: "accepted",
+          validation_score_before_pct: 55,
+          validation_score_after_pct: 62,
+        },
+      ],
+    };
+    dom.window.renderEngineTab([], engineHistory, null, null);
+    const html = dom.window.document.getElementById("engine-log").innerHTML;
+    expect(html).toContain('<mark class="hl-stat">9,9 %</mark>');
+    expect(html).toContain('<mark class="hl-stat">15 %</mark>');
+  });
+
   it("renders an accepted attempt with the success badge and a before → after score", () => {
     const dom = loadPage(["config.js", "engine.js"], { html: CONTAINER_HTML });
     const engineHistory = {

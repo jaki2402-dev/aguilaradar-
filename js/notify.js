@@ -162,15 +162,15 @@ function renderDigestPanel(digest) {
   }
   const tone = digest.market_tone || "neutre";
   const tipsHtml = (digest.tips || [])
-    .map((t) => `<li>${escapeHtml(t)}</li>`)
+    .map((t) => `<li>${highlightKeyInfo(t)}</li>`)
     .join("");
   el.innerHTML = `
     <div class="digest-head">
       <span class="digest-tone digest-tone--${escapeHtml(tone)}">${escapeHtml(tone.toUpperCase())}</span>
       <span class="hint">Résumé généré le ${new Date(digest.generated_at).toLocaleString("fr-FR")}</span>
     </div>
-    <h3 class="digest-headline">${escapeHtml(digest.headline || "")}</h3>
-    <p class="digest-summary">${escapeHtml(digest.summary || "")}</p>
+    <h3 class="digest-headline">${highlightKeyInfo(digest.headline || "")}</h3>
+    <p class="digest-summary">${highlightKeyInfo(digest.summary || "")}</p>
     ${tipsHtml ? `<ul class="digest-tips">${tipsHtml}</ul>` : ""}
   `;
 }

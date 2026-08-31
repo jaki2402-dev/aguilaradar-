@@ -229,7 +229,7 @@ function renderControlGroupComparison(opportunitiesData, controlGroup) {
       <div class="stat-card accent-gray"><div class="stat-label">Échantillon aléatoire</div><div class="stat-value">${cgStats.validated_pct.toFixed(0)} %</div></div>
       <div class="stat-card ${edge >= 0 ? "accent-teal" : "accent-gray"}"><div class="stat-label">Écart réel</div><div class="stat-value ${edge >= 0 ? "positive" : "negative"}">${edge >= 0 ? "+" : ""}${edge.toFixed(0)} pts</div></div>
     </div>
-    <p class="hint">${escapeHtml(cgStats.note)}</p>`;
+    <p class="hint">${highlightKeyInfo(cgStats.note)}</p>`;
 }
 
 // Bandeau fixe (piste "priorité") : les 3 chiffres qui comptent le plus, visibles sans
@@ -360,10 +360,10 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGrou
             <span>${escapeHtml(entry.logged_at ? new Date(entry.logged_at).toLocaleString("fr-FR") : "")}</span>
             <span class="badge ${entry.status === "accepted" ? "badge-success" : "badge-neutral"}">${entry.status === "accepted" ? "Appliquée" : "Rejetée"}</span>
           </div>
-          <p class="hint">${escapeHtml(entry.trigger || "")}</p>
-          <p><strong>Diagnostic —</strong> ${escapeHtml(entry.what || "")}</p>
-          <p><strong>Pourquoi —</strong> ${escapeHtml(entry.why || "")}</p>
-          <p><strong>Décision —</strong> ${escapeHtml(entry.action || "")}</p>
+          <p class="hint">${highlightKeyInfo(entry.trigger || "")}</p>
+          <p><strong>Diagnostic —</strong> ${highlightKeyInfo(entry.what || "")}</p>
+          <p><strong>Pourquoi —</strong> ${highlightKeyInfo(entry.why || "")}</p>
+          <p><strong>Décision —</strong> ${highlightKeyInfo(entry.action || "")}</p>
           ${scoreLine}
         </div>`;
       })
@@ -392,5 +392,5 @@ function renderPaperPortfolio(stats) {
       <div class="stat-card accent-gold"><div class="stat-label">Juste garder du BTC</div><div class="stat-value">${stats.btc_buy_hold_return_pct >= 0 ? "+" : ""}${stats.btc_buy_hold_return_pct.toFixed(1)} %</div></div>
       <div class="stat-card ${edge >= 0 ? "accent-teal" : "accent-gray"}"><div class="stat-label">Écart</div><div class="stat-value ${edge >= 0 ? "positive" : "negative"}">${edge >= 0 ? "+" : ""}${edge.toFixed(1)} pts</div></div>
     </div>
-    <p class="hint">${escapeHtml(stats.method)}</p>`;
+    <p class="hint">${highlightKeyInfo(stats.method)}</p>`;
 }

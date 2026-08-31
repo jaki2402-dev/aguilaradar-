@@ -630,13 +630,22 @@ async function answerQuestion(question) {
   return `Je réponds à partir de ce que le radar a déjà analysé : le résumé du moment, un actif suivi (favori ou opportunité), les meilleures opportunités, les dernières alertes, ou la performance du moteur.\n\nEssaie par exemple : "résume-moi la semaine", "pourquoi le marché est neutre", ou "que penses-tu de Chainlink".`;
 }
 
+// role === "assistant" seulement : le message de l'utilisateur reste en textContent pur (jamais
+// interprété, jamais "amélioré") — highlightKeyInfo échappe toujours en premier (voir config.js),
+// donc appliquer le surlignage aux réponses de l'assistant (le résumé du site, un verdict, une
+// réponse de l'IA du relais — voir CLAUDE.md, toutes déjà traitées comme non fiables pour le
+// rendu) ne change rien à la sécurité, juste à la lisibilité des réponses longues.
 function appendChatMessage(role, text) {
   const log = document.getElementById("chat-log");
   if (!log) return null;
   const el = document.createElement("div");
   el.className = `chat-msg chat-msg--${role}`;
   const p = document.createElement("p");
-  p.textContent = text;
+  if (role === "assistant") {
+    p.innerHTML = highlightKeyInfo(text);
+  } else {
+    p.textContent = text;
+  }
   el.appendChild(p);
   log.appendChild(el);
   log.scrollTop = log.scrollHeight;
