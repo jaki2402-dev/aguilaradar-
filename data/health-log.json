@@ -106,6 +106,14 @@
       "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h55)", "data/news.json (last_updated_at, ~2h49)", "data/opportunities.json (last_scan_at, ~5h11)"],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h55, actualités il y a 2h49, opportunités il y a 5h11 - rien à signaler."
+    },
+    {
+      "checked_at": "2026-08-31T00:37:42Z",
+      "site_reachable": false,
+      "files_ok": ["data/alerts.json", "data/control-group.json", "data/digest.json", "data/engine-history.json", "data/favoris-context.json", "data/health-log.json", "data/market-context.json", "data/news.json", "data/opportunities.json", "data/portfolio.json", "data/verdicts.json", "index.html (18 scripts js/*.js tous présents et référencés correctement)"],
+      "files_broken": [],
+      "counts": {"verdicts": 31, "alerts": 85, "opportunities": 12, "news": 8, "favoris_context_populated": 15},
+      "note": "Site non vérifiable ce cycle : curl direct échoue avec un rejet CONNECT 403 (confirmé via /__agentproxy/status, host jaki2402-dev.github.io:443 explicitement bloqué par la politique réseau) — même limitation d'infrastructure que la quasi-totalité des cycles précédents, pas une indication que GitHub Pages est réellement hors ligne. site_reachable mis à false par prudence, à revérifier depuis une session avec un accès réseau moins restreint. Tous les fichiers data/*.json présents dans le dépôt (alerts, control-group, digest, engine-history, favoris-context, health-log, market-context, news, opportunities, portfolio, verdicts) ont été validés comme JSON syntaxiquement correct, non vides, non tronqués. index.html référence bien 18 scripts js/*.js, tous physiquement présents dans js/ — aucun script manquant ni orphelin. Comparaison de volume avec le dernier passage ayant un champ counts renseigné (26/08 08h52 UTC — l'entrée intermédiaire du 26/08 09h16 UTC, un simple contrôle de fraîcheur, n'avait pas ce champ et a donc été ignorée pour la comparaison) : verdicts 31→31 (stable), alerts 82→85 (+3, hausse normale d'un historique permanent qui s'accumule), opportunities 12→12 (stable), news 8→8 (stable), favoris_context_populated 15→15 (stable, les 15 favoris ont toujours un last_computed_at renseigné). Aucune chute suspecte détectée (aucun chiffre tombé à zéro ni en baisse de plus de 50 %), aucune anomalie de volume, aucune réparation nécessaire ce cycle. Conformément au correctif de fiabilité du 24/08, aucun outil mcp__CoinGecko-, mcp__Alpha-Vantage-MCP-Server ou mcp__Anthropic-Economic-Index n'a été appelé pour cette vérification (cette routine ne les utilise de toute façon jamais pour sa tâche)."
     }
   ]
 }
