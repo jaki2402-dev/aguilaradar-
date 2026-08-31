@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-08-31T06:15:00Z",
-  "headline": "Routines relancées, BTC recule après Jackson Hole",
-  "summary": "Les routines ont repris (dernier cycle le 31/08 à 04h25 UTC), après l'interruption signalée précédemment. Marché en repli d'environ 3,5 % sur 24h après le discours hawkish de Kevin Warsh (Fed) à Jackson Hole : première sortie nette des ETF BTC (-201,9 M$) le 28/08 après neuf jours d'entrées, tandis que les ETF ETH enchaînent une dixième journée d'entrées (+102 M$). Dominance BTC stable à 59,67 %, régime toujours risk-on. Exactitude du moteur inchangée à 25 % sur 16 verdicts résolus, sous les baselines (62,5 %).",
+  "generated_at": "2026-08-31T12:18:52Z",
+  "headline": "Verdict CTSI invalidé, précision moteur recule à 23,5%",
+  "summary": "Le verdict ATTENTE sur Cartesi (émis le 24/08) a été invalidé à l'échéance (-12,89%, au-delà du seuil de 5%), remplacé par un nouveau verdict ATTENTE le 31/08. Exactitude du moteur en léger recul à 23,53% sur 17 verdicts résolus, toujours bien sous les baselines (58,82%). Marché stable (dominance BTC 59,74%, régime risk-on, indice peur/cupidité à 67, aucun favori au-delà du seuil de vigilance 24h). Opportunités actualisées : LEO Token ajouté, quatre entrées retirées (ADA, ENA, AXS, XLM) sur affaiblissement 7 jours.",
   "tips": [
-    "Routines de nouveau actives : dernier cycle le 31/08 à 04h25 UTC, thèse hebdo publiée le même jour.",
-    "ETF BTC : première sortie nette (-201,9 M$) le 28/08 après 9 jours d'entrées consécutives.",
-    "Moteur toujours à 25 % de précision sur 16 verdicts résolus, sous les baselines (62,5 %)."
+    "CTSI : verdict ATTENTE invalidé (-12,89% vs seuil 5%), nouveau verdict émis le 31/08.",
+    "Moteur à 23,53% de précision sur 17 verdicts résolus, sous les baselines (58,82%).",
+    "Portefeuille papier du moteur sous-performe l'achat-conservation BTC de -24,5 points."
   ],
   "market_tone": "neutre"
 }
