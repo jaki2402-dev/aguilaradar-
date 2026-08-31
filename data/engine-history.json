@@ -1,15 +1,15 @@
 {
   "current_version": "v1",
   "global_stats": {
-    "last_computed_at": "2026-08-24T04:21:00Z",
-    "total_verdicts_issued": 31,
-    "total_verdicts_resolved": 16,
-    "accuracy_strict_pct": 25.0,
-    "coverage_pct": 25.0,
-    "baseline_majority_class_pct": 62.5,
-    "baseline_buy_hold_btc_pct": 62.5,
-    "f1_macro": 39.29,
-    "f1_weighted": 16.07,
+    "last_computed_at": "2026-08-31T06:30:00Z",
+    "total_verdicts_issued": 32,
+    "total_verdicts_resolved": 17,
+    "accuracy_strict_pct": 23.53,
+    "coverage_pct": 23.53,
+    "baseline_majority_class_pct": 58.82,
+    "baseline_buy_hold_btc_pct": 58.82,
+    "f1_macro": 35.56,
+    "f1_weighted": 16.21,
     "confusion_matrix": {
       "ACHAT": {
         "ACHAT": 0,
@@ -19,7 +19,7 @@
       "ATTENTE": {
         "ACHAT": 8,
         "ATTENTE": 2,
-        "VENTE": 2
+        "VENTE": 3
       },
       "VENTE": {
         "ACHAT": 2,
@@ -36,18 +36,18 @@
         "actualTotal": 10
       },
       "ATTENTE": {
-        "precision": 0.1667,
+        "precision": 0.1538,
         "recall": 1.0,
-        "f1": 0.2858,
-        "predictedTotal": 12,
+        "f1": 0.2667,
+        "predictedTotal": 13,
         "actualTotal": 2
       },
       "VENTE": {
         "precision": 0.5,
-        "recall": 0.5,
-        "f1": 0.5,
+        "recall": 0.4,
+        "f1": 0.4444,
         "predictedTotal": 4,
-        "actualTotal": 4
+        "actualTotal": 5
       }
     },
     "calibration_by_confidence_bucket": null,
@@ -61,33 +61,33 @@
     "average_move_pct": null
   },
   "routine_health": {
-    "last_success_at": "2026-08-31T04:25:00Z",
+    "last_success_at": "2026-08-31T06:32:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 31/08/2026, 04h25 UTC (heure réelle confirmée par `date -u` en début de cycle). Conformément aux correctifs de fiabilité du 17/08 et du 24/08, aucun outil mcp__ n'a été appelé ce cycle, exclusivement Bash/Read/Edit/Write/WebSearch.\n\nRésolution : aucun verdict dû ce cycle (prochaine échéance CTSI à 04h21 UTC, à 4 minutes près de l'heure de ce cycle mais pas encore atteinte au moment de la vérification — reporté au cycle suivant plutôt que devancé) ni item du groupe témoin (aucun item pending dans control-group.json). Les 15 favoris disposent chacun déjà d'un verdict actif en attente, aucune émission nécessaire.\n\nRecherche large (cas 2 du correctif du 10/08) : appel HTTP direct /coins/markets sur les 15 favoris (24h) — aucun mouvement ne dépasse le seuil de vigilance de 15 % (plus fort mouvement JUP -5,70 %, PEAQ -3,59 %, INJ -3,74 %, FLUX +4,40 %), aucun signal précoce nouveau à enregistrer.\n\nRégime macro (Fear&Greed, dominance BTC) : indice de peur et de cupidité toujours en zone « Greed » par recherche web indépendante, mais sources très divergentes ce cycle (61, 69, 73 selon la méthodologie) — valeur retenue inchangée à 67, cohérente avec la fourchette observée et le cycle précédent, aucun changement de catégorie. Dominance BTC rafraîchie par appel direct à l'API CoinGecko (/api/v3/global) : 59,67 %, quasi stable par rapport aux 59,66 % du cycle précédent. Contexte marché : capitalisation totale en baisse de -3,52 % sur 24h, attribuable au discours jugé hawkish du président de la Fed Kevin Warsh à Jackson Hole (repli déjà entamé fin de semaine dernière). Régime inchangé (« risk-on » / Greed), pas de ré-signalement regime_change_impact nécessaire.\n\nOpportunités : rafraîchissement complet des champs d'affichage (price_eur, market_cap, rang, variations 24h/7j/30j, ath_change_pct, sparkline 7j, image) des 9 opportunités actives, via un appel groupé CoinGecko /coins/markets avec sparkline=true. Aucun ajout ni retrait — hors périmètre de cette routine depuis le 17/08 (routine dédiée aguilaradar-opportunites-quotidien). Aucun horizon touché, aucun champ last_scan_at modifié.\n\nActualités : recherche générale « crypto news today » effectuée, complétée d'une recherche ciblée sur le discours de Kevin Warsh à Jackson Hole (repli marché du week-end dernier, absent de data/news.json jusqu'ici) — un titre réellement nouveau ajouté, le plus ancien retiré (prévisionnel Jackson Hole désormais périmé par l'événement réel) pour garder la liste à 8 entrées.\n\nAlertes : aucune entrée ajoutée à alerts.json ce cycle — aucun mouvement favori ne dépasse le seuil de vigilance de 15 % et aucune résolution due, conformément au correctif de concision du 17/08 (pas de vérification systématique du seuil individuel de 5 % par favori, réservée aux 3 cas précis du correctif du 10/08).\n\nFusion vers main : vérification des branches claude/* en attente avant ce cycle (aucune trouvée, ma branche déjà à jour avec main), fusion effectuée en toute fin de cycle conformément au correctif du 17/08 (soir)."
+    "last_failure_reason": "Cycle du 31/08/2026, 06h26 UTC (heure réelle confirmée par `date -u` en début de cycle). Conformément aux correctifs de fiabilité du 17/08 et du 24/08, aucun outil mcp__ n'a été appelé ce cycle, exclusivement Bash/Read/Edit/Write/WebSearch.\n\nRésolution : un verdict dû ce cycle — CTSI (v-20260824-ctsi, échéance 04h21 UTC), résolu par appel direct à l'API CoinGecko (/simple/price, throttlé une première fois puis réussi après un court délai) : prix de résolution 0,02166328 euro contre 0,02487 euro à l'émission, soit -12,89 %, au-delà du seuil de 5 % — verdict ATTENTE invalidé (direction réelle VENTE). Aucun item du groupe témoin dû (aucun item pending dans control-group.json, les 8 échantillons du 12/08 sont déjà tous résolus). CTSI se retrouvant sans verdict actif après cette résolution, un nouveau verdict a été émis (v-20260831-ctsi, ATTENTE, consensus 1/3, confiance 50 %, horizon 7 jours, regime_at_issue « risk-on »). Les 14 autres favoris disposent déjà chacun d'un verdict actif en attente, aucune autre émission nécessaire.\n\nRecherche large (cas 2 du correctif du 10/08) : appel HTTP direct /coins/markets groupé sur les 15 favoris (24h/7j) — aucun mouvement ne dépasse le seuil de vigilance de 15 % (plus fort mouvement PEAQ +19,8 % sur 7j mais +/-4 % en 24h, ARB -13,7 % sur 7j), aucun signal précoce nouveau à enregistrer.\n\nRégime macro (Fear&Greed, dominance BTC) : indice de peur et de cupidité toujours en zone « Greed » par recherche web indépendante, sources encore très divergentes ce cycle (31 à 73 selon la méthodologie et la date) — valeur retenue inchangée à 67, cohérente avec le cycle précédent, aucun changement de catégorie. Dominance BTC rafraîchie par appel direct à l'API CoinGecko (/api/v3/global) : 59,65 %, quasi stable par rapport aux 59,67 % du cycle précédent. Contexte marché : capitalisation totale en baisse de -2,95 % sur 24h, dans la continuité du repli lié au discours jugé hawkish du président de la Fed Kevin Warsh à Jackson Hole. Régime inchangé (« risk-on » / Greed), pas de ré-signalement regime_change_impact nécessaire.\n\nOpportunités : rafraîchissement complet des champs d'affichage (price_eur, market_cap, rang, variations 24h/7j/30j, ath_change_pct, sparkline 7j, image) des 9 opportunités actives, via un appel groupé CoinGecko /coins/markets avec sparkline=true. Aucun ajout ni retrait — hors périmètre de cette routine depuis le 17/08 (routine dédiée aguilaradar-opportunites-quotidien). Aucun horizon touché, aucun champ last_scan_at modifié.\n\nActualités : recherche générale « crypto news today » effectuée — les résultats (flip de l'indice de peur et de cupidité, roundup Cointelegraph incluant le bill californien sur les memecoins) recoupent des entrées déjà présentes dans data/news.json depuis le cycle précédent, aucune entrée réellement nouvelle identifiée, aucun ajout ce cycle pour éviter une redite (correctif de concision du 17/08).\n\nAlertes : aucune entrée ajoutée à alerts.json ce cycle — aucun mouvement favori ne dépasse le seuil de vigilance de 15 %, la résolution de CTSI est déjà reflétée dans verdicts.json, conformément au correctif de concision du 17/08.\n\nStatistiques du moteur : global_stats recalculé depuis les 17 verdicts désormais résolus (accuracy 23,53 %, baseline classe majoritaire et buy&hold BTC 58,82 %, f1_macro 35,56 %, f1_weighted 16,21 %, matrice de confusion et per_class mis à jour). paper_portfolio_stats recalculé (rendement cumulé -5,77 %, vs buy&hold BTC +18,71 %, écart -24,48 points) — le nouveau résolu CTSI est une position nulle (ATTENTE) sans contribution au rendement mais dilue légèrement la moyenne pondérée par confiance. Seuil de 5 nouveaux résolus non atteint (1 seul ce cycle) : aucune entrée correction_log ajoutée.\n\nFusion vers main : vérification des branches claude/* en attente avant ce cycle (aucune trouvée, ma branche déjà à jour avec main), fusion effectuée en toute fin de cycle conformément au correctif du 17/08 (soir)."
   },
   "macro_regime": {
-    "last_computed_at": "2026-08-31T04:25:00Z",
+    "last_computed_at": "2026-08-31T06:32:00Z",
     "regime": "risk-on",
     "fear_greed_value": 67,
-    "btc_dominance_pct": 59.67,
+    "btc_dominance_pct": 59.65,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Cycle du 31/08, 04h25 UTC : indice de peur et de cupidité toujours en zone « Greed », mais sources très divergentes ce cycle (61, 69, 73 selon la méthodologie) — valeur retenue conservée à 67 (inchangée par rapport au cycle précédent de 00h45 UTC), cohérente avec la fourchette observée. Dominance BTC rafraîchie par appel direct à l'API CoinGecko (/api/v3/global) : 59,67 %, quasi stable par rapport aux 59,66 % du cycle précédent. Recherche large sur les mouvements de marché (appel HTTP direct sur les 15 favoris) : aucun mouvement ne dépasse le seuil de vigilance de 15 % (plus fort mouvement JUP -5,70 %, INJ -3,74 %, PEAQ -3,59 %, FLUX +4,40 %). Capitalisation totale du marché en baisse de -3,52 % sur 24h, dans la continuité du repli déclenché par le discours hawkish du président de la Fed Kevin Warsh à Jackson Hole (28/08). Régime inchangé : « risk-on »."
+    "note": "Cycle du 31/08, 06h32 UTC : indice de peur et de cupidité toujours en zone « Greed », sources encore très divergentes ce cycle (31 à 73 selon la méthodologie et la date de publication) — valeur retenue conservée à 67, inchangée par rapport au cycle précédent de 04h25 UTC, cohérente avec la fourchette haute des lectures les plus récentes. Dominance BTC rafraîchie par appel direct à l'API CoinGecko (/api/v3/global) : 59,65 %, quasi stable par rapport aux 59,67 % du cycle précédent. Recherche large sur les mouvements de marché (appel HTTP direct groupé sur les 15 favoris) : aucun mouvement ne dépasse le seuil de vigilance de 15 % (plus fort mouvement PEAQ 7j +19,8 %, mais 24h contenu à -4,0 %). Capitalisation totale du marché toujours en repli sur 24h (-2,95 %), dans la continuité du discours hawkish du président de la Fed Kevin Warsh à Jackson Hole (28/08). Régime inchangé : « risk-on »."
   },
   "paper_portfolio_stats": {
-    "last_computed_at": "2026-08-24T04:21:00Z",
+    "last_computed_at": "2026-08-31T06:32:00Z",
     "min_resolved_required": 10,
-    "cumulative_return_pct": -6.11,
+    "cumulative_return_pct": -5.77,
     "btc_buy_hold_return_pct": 18.71,
-    "edge_pct": -24.82,
-    "method": "Position virtuelle par verdict résolu, taille proportionnelle à confidence_pct, ouverte à price_at_issue et fermée à price_at_resolution (ACHAT=long, VENTE=short, ATTENTE=position nulle). Comparé au même capital placé uniquement en buy-and-hold BTC sur la même période. Approximation inchangée : le rendement buy-hold BTC utilise le rendement BTC réalisé sur la fenêtre commune du 07/08 au 23/08 (14 des 15 verdicts de ce lot partagent exactement cette fenêtre) ; les deux verdicts d'une fenêtre différente (CTSI, résolus le 17/08 et le 24/08) sont traités avec la même approximation faute d'avoir interrogé le prix BTC exact sur leurs fenêtres propres — poids marginal (105 sur 847 au total à eux deux), impact négligeable sur le résultat. Nouveau résolu ce cycle : CTSI (v-20260817-ctsi, ATTENTE, position nulle, aucune contribution au rendement mais dilue légèrement la moyenne pondérée par confiance)."
+    "edge_pct": -24.48,
+    "method": "Position virtuelle par verdict résolu, taille proportionnelle à confidence_pct, ouverte à price_at_issue et fermée à price_at_resolution (ACHAT=long, VENTE=short, ATTENTE=position nulle). Comparé au même capital placé uniquement en buy-and-hold BTC sur la même période. Approximation inchangée : le rendement buy-hold BTC utilise le rendement BTC réalisé sur la fenêtre commune du 07/08 au 23/08 (14 des 15 verdicts de ce lot partagent exactement cette fenêtre) ; les trois verdicts d'une fenêtre différente (CTSI, résolus le 17/08, le 24/08 et le 31/08) sont traités avec la même approximation faute d'avoir interrogé le prix BTC exact sur leurs fenêtres propres — poids marginal (155 sur 897 au total à eux trois), impact négligeable sur le résultat. Nouveau résolu ce cycle : CTSI (v-20260824-ctsi, ATTENTE, position nulle, aucune contribution au rendement mais dilue légèrement la moyenne pondérée par confiance, d'où le léger recul du rendement cumulé affiché malgré une position neutre)."
   },
   "data_source_reliability": {
-    "last_computed_at": "2026-08-31T04:25:00Z",
-    "cycles_logged": 78,
+    "last_computed_at": "2026-08-31T06:32:00Z",
+    "cycles_logged": 79,
     "coingecko_connector_success_count": 23,
-    "coingecko_curl_fallback_count": 24,
+    "coingecko_curl_fallback_count": 28,
     "websearch_price_fallback_count": 225,
-    "notes": "Cycle du 31/08 04h25 UTC : aucun outil mcp__ utilisé, conformément aux correctifs de fiabilité du 17/08 et du 24/08. Quatre appels HTTP directs à api.coingecko.com (coins/markets groupé sur les 15 favoris, /global pour la dominance BTC, coins/markets groupé avec sparkline sur les 9 opportunités actives, appelé deux fois pour compléter les variations 7j/30j manquantes au premier appel), tous réussis sans throttling. Trois requêtes WebSearch (indice de peur et de cupidité, actualités générales « crypto news today », recherche ciblée pour sourcer le repli lié au discours de Kevin Warsh)."
+    "notes": "Cycle du 31/08 06h32 UTC : aucun outil mcp__ utilisé, conformément aux correctifs de fiabilité du 17/08 et du 24/08. Quatre appels HTTP directs à api.coingecko.com (un premier appel /simple/price sur cartesi throttlé puis réussi après un court délai, /coins/markets groupé sur les 15 favoris, /global pour la dominance BTC, /coins/markets groupé avec sparkline sur les 9 opportunités actives), tous finalement réussis. Deux requêtes WebSearch (indice de peur et de cupidité, actualités générales « crypto news today »)."
   },
   "correction_log": [
     {
