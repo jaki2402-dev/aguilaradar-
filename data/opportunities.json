@@ -1,8 +1,8 @@
 {
-  "last_scan_at": "2026-08-26T04:04:55Z",
+  "last_scan_at": "2026-08-31T04:04:07Z",
   "scanned_count": 20,
   "excluded_meme_count": 22,
-  "methodology": "Cycle du 26/08/2026 : Top 20 CoinGecko via le connecteur MCP CoinGecko (memes limites connues : plafond 20 coins, USD natif converti en EUR via taux de change reel Alpha Vantage, variation 7j calculee depuis le sparkline 7 jours reel, ATH indisponible -> omis). Exclusion memecoins, stablecoins, actifs de dette tokenises, mega-caps deja notoires (BTC/ETH/BNB/XRP/SOL/TRX) et positions deja suivies au Portefeuille (Chainlink). Marche en repli net aujourd'hui (BTC -1.8%, ADA -6.6%, ZEC -8.1%, XLM -6.9% sur 24h) apres le risk-on de la semaine passee. Sur les 20 coins evalues, 7 etaient deja des opportunites suivies (dedoublonnage), et le seul candidat restant hors exclusions (LEO Token, rang 16) etait quasiment plat (7j +0.5%, 24h -0.7%) : aucun nouveau candidat ne se distingue, 0 ajout. Revue optionnelle des 13 opportunites actives : Bitway (score initial 69.3) recalcule tres degrade (-16.0 : -28.6% sur 7j, -12.5% sur 24h, apres un pic suivi d'un effondrement visible sur son sparkline) -> retire vers archived_opportunities. Les 12 autres restent saines.",
+  "methodology": "Cycle du 31/08/2026 : Top 20 CoinGecko via le connecteur MCP CoinGecko (memes limites connues : plafond 20 coins, USD natif converti en EUR via taux de change reel Alpha Vantage, variation 7j calculee depuis le sparkline 7 jours reel, variation 30j calculee depuis un prix historique reel a J-30, ATH indisponible -> omis). Exclusion memecoins, stablecoins, actifs de dette tokenises, mega-caps deja notoires (BTC/ETH/BNB/XRP/SOL/TRX) et positions deja suivies au Portefeuille (Chainlink). Marche globalement en repli aujourd'hui (BTC -0.7%, ETH -1.6%, SOL -3.2% sur 24h). Sur les 20 coins evalues, 7 etaient deja des opportunites suivies. Le seul candidat restant hors exclusions, LEO Token (rang 15), affichait une resistance relative (7j +3.5% alors que le marche recule) : retenu, 1 nouvelle entree ce cycle. Revue optionnelle des 12 opportunites actives : 4 scores recalcules sont passes nettement negatifs sur des variations 7j soutenues (Cardano -11.8%, Ethena -10.3%, Axie Infinity -10.8%, Stellar -9.8%), contrastant avec les autres entrees restees positives (Monero +18.7%, Rain +22.5%, Convex +6.5%, Unibase +5.7%) -> ces 4 signaux invalides retires vers archived_opportunities.",
   "opportunities": [
     {
       "id": "opp-20260807-ada",
@@ -2888,6 +2888,59 @@
         },
         "m6": {
           "check_at": "2027-02-22T04:03:59Z",
+          "status": "pending",
+          "outcome": null
+        }
+      }
+    },
+    {
+      "id": "opp-20260831-leo",
+      "ticker": "LEO",
+      "name": "LEO Token",
+      "cgId": "leo-token",
+      "image": "https://coin-images.coingecko.com/coins/images/8418/large/leo-token.png?1696508607",
+      "price_eur": 8.322596,
+      "market_cap": 7657864895,
+      "market_cap_rank": 15,
+      "change_24h_pct": -0.5885,
+      "change_7d_pct": 3.54,
+      "change_30d_pct": -1.65,
+      "ath_change_pct": null,
+      "opportunity_score": 3.6,
+      "recognized": true,
+      "sparkline": [],
+      "tags": [
+        "Token d'exchange",
+        "Resiste au repli du marche"
+      ],
+      "reason": "Token d'exchange (Bitfinex), rang 15. Variation 7j +3.5% alors que le marche est en repli general (BTC -0.7%, ETH -1.6%, SOL -3.2% sur 24h) : signal de resistance relative plutot qu'un momentum explosif. Donnee ATH indisponible via le connecteur MCP actuel (omise, non estimee).",
+      "flagged_at": "2026-08-31T04:04:07Z",
+      "price_at_flag": 8.322596,
+      "threshold_pct": 5,
+      "price_refreshed_at": "2026-08-31T04:04:07Z",
+      "horizons": {
+        "j1": {
+          "check_at": "2026-09-01T04:04:07Z",
+          "status": "pending",
+          "outcome": null
+        },
+        "j3": {
+          "check_at": "2026-09-03T04:04:07Z",
+          "status": "pending",
+          "outcome": null
+        },
+        "j7": {
+          "check_at": "2026-09-07T04:04:07Z",
+          "status": "pending",
+          "outcome": null
+        },
+        "j14": {
+          "check_at": "2026-09-14T04:04:07Z",
+          "status": "pending",
+          "outcome": null
+        },
+        "m6": {
+          "check_at": "2027-03-01T04:04:07Z",
           "status": "pending",
           "outcome": null
         }
