@@ -31,22 +31,30 @@ const ACCESS_HASH = "0a23403368cf9a89e31f7d79caef03b54333541471de0488745eb26f20b
 // 2026-08-17 : les 15 paires existent et sont liquides sur leur exchange (Binance pour
 // la majorité, MEXC pour PEAQ, Gate.io pour AIOZ) — à revérifier seulement si un widget
 // affiche un jour une erreur (nouveau listing renommé, paire délistée, etc.).
+// utility : à quoi sert réellement le TOKEN (pas juste le projet) — rédigé à partir de
+// get-coin-info (CoinGecko, description officielle du projet) le 31/08/2026, complété par une
+// recherche web ciblée pour ARB/INJ (mécanique de tokenomics non couverte par la description
+// CoinGecko : ARB reste un jeton de gouvernance pur, le gas d'Arbitrum se paie en ETH — pas un
+// détail anecdotique, une confusion fréquente ; INJ finance une enchère de rachat/destruction
+// hebdomadaire, 60% des frais d'échange). Fait ponctuel et factuel (comment le jeton capture de
+// la valeur), pas une donnée de marché — n'a donc pas besoin d'être réactualisé par une routine,
+// contrairement à market-context.json plus haut. Jamais un avis d'investissement.
 const FAVORIS = [
-  { ticker: "BTC",  name: "Bitcoin",                          cgId: "bitcoin",                              tvSymbol: "BINANCE:BTCUSDT" },
-  { ticker: "ETH",  name: "Ethereum",                         cgId: "ethereum",                             tvSymbol: "BINANCE:ETHUSDT" },
-  { ticker: "FET",  name: "Artificial Superintelligence Alliance", cgId: "fetch-ai",                              tvSymbol: "BINANCE:FETUSDT", aliases: ["fetch.ai", "fetch ai", "fetchai", "fetch"] },
-  { ticker: "GRT",  name: "The Graph",                        cgId: "the-graph",                            tvSymbol: "BINANCE:GRTUSDT" },
-  { ticker: "TIA",  name: "Celestia",                         cgId: "celestia",                             tvSymbol: "BINANCE:TIAUSDT" },
-  { ticker: "CTSI", name: "Cartesi",                          cgId: "cartesi",                              tvSymbol: "BINANCE:CTSIUSDT" },
-  { ticker: "PEAQ", name: "Peaq",                             cgId: "peaq-2",                               tvSymbol: "MEXC:PEAQUSDT" },
-  { ticker: "LINK", name: "Chainlink",                        cgId: "chainlink",                            tvSymbol: "BINANCE:LINKUSDT" },
-  { ticker: "ONDO", name: "Ondo Finance",                     cgId: "ondo-finance",                         tvSymbol: "BINANCE:ONDOUSDT" },
-  { ticker: "JUP",  name: "Jupiter",                          cgId: "jupiter-exchange-solana",              tvSymbol: "BINANCE:JUPUSDT" },
-  { ticker: "LPT",  name: "Livepeer",                         cgId: "livepeer",                             tvSymbol: "BINANCE:LPTUSDT" },
-  { ticker: "AIOZ", name: "AIOZ Network",                     cgId: "aioz-network",                         tvSymbol: "GATEIO:AIOZUSDT" },
-  { ticker: "FLUX", name: "Flux",                             cgId: "zelcash",                              tvSymbol: "BINANCE:FLUXUSDT", aliases: ["zelcash"] },
-  { ticker: "ARB",  name: "Arbitrum",                         cgId: "arbitrum",                             tvSymbol: "BINANCE:ARBUSDT" },
-  { ticker: "INJ",  name: "Injective",                        cgId: "injective-protocol",                   tvSymbol: "BINANCE:INJUSDT" },
+  { ticker: "BTC",  name: "Bitcoin",                          cgId: "bitcoin",                              tvSymbol: "BINANCE:BTCUSDT", utility: "Monnaie numérique pair-à-pair à offre fixe (21 millions) : sert de réserve de valeur et de moyen de paiement décentralisé, sans smart contracts natifs ni autre utilité applicative." },
+  { ticker: "ETH",  name: "Ethereum",                         cgId: "ethereum",                             tvSymbol: "BINANCE:ETHUSDT", utility: "Carburant (gas) du plus grand réseau de smart contracts : chaque transaction ou interaction avec une dApp consomme de l'ETH, également mis en jeu (staking) par les validateurs pour sécuriser le réseau depuis le passage en Proof of Stake." },
+  { ticker: "FET",  name: "Artificial Superintelligence Alliance", cgId: "fetch-ai",                              tvSymbol: "BINANCE:FETUSDT", aliases: ["fetch.ai", "fetch ai", "fetchai", "fetch"], utility: "Jeton unique de l'alliance ASI (fusion de FET, AGIX et OCEAN) : paie les services d'agents IA autonomes et de calcul décentralisé sur le réseau, et sert de jeton de gouvernance de l'alliance." },
+  { ticker: "GRT",  name: "The Graph",                        cgId: "the-graph",                            tvSymbol: "BINANCE:GRTUSDT", utility: "Jeton d'un réseau d'indexation de données blockchain : les Indexers le mettent en jeu (stake) pour indexer et servir des requêtes GraphQL, les Curators le stakent pour signaler les sous-graphes utiles, et les requêtes API sont payées en GRT." },
+  { ticker: "TIA",  name: "Celestia",                         cgId: "celestia",                             tvSymbol: "BINANCE:TIAUSDT", utility: "Jeton de sécurité et de frais d'un réseau de disponibilité des données (data availability) : les validateurs le mettent en jeu pour sécuriser le réseau, et les rollups modulaires paient en TIA pour y publier leurs données." },
+  { ticker: "CTSI", name: "Cartesi",                          cgId: "cartesi",                              tvSymbol: "BINANCE:CTSIUSDT", utility: "Jeton de frais et de mise en jeu d'un réseau de rollups permettant d'exécuter du code standard (Linux) avec la sécurité d'Ethereum : rémunère le calcul off-chain fourni par les nœuds." },
+  { ticker: "PEAQ", name: "Peaq",                             cgId: "peaq-2",                               tvSymbol: "MEXC:PEAQUSDT", utility: "Jeton d'un réseau layer-1 pour machines et robots (DePIN) : sert à l'identité vérifiable et au paiement entre machines autonomes (véhicules, capteurs, robots), et à la sécurisation du réseau via staking." },
+  { ticker: "LINK", name: "Chainlink",                        cgId: "chainlink",                            tvSymbol: "BINANCE:LINKUSDT", utility: "Jeton du plus grand réseau d'oracles décentralisés : rémunère les nœuds qui livrent des données externes fiables aux smart contracts (prix, événements, calculs off-chain), et sert de collatéral de staking garantissant leur bon comportement." },
+  { ticker: "ONDO", name: "Ondo Finance",                     cgId: "ondo-finance",                         tvSymbol: "BINANCE:ONDOUSDT", utility: "Jeton de gouvernance de la fondation Ondo, qui tokenise des actifs financiers traditionnels (obligations d'État américaines, etc.) : donne un droit de vote sur le protocole, pas un droit sur les rendements des produits tokenisés eux-mêmes." },
+  { ticker: "JUP",  name: "Jupiter",                          cgId: "jupiter-exchange-solana",              tvSymbol: "BINANCE:JUPUSDT", utility: "Jeton de gouvernance et d'incitation du principal agrégateur d'échange (DEX) sur Solana : vote sur les paramètres du protocole et capture une partie de ses frais." },
+  { ticker: "LPT",  name: "Livepeer",                         cgId: "livepeer",                             tvSymbol: "BINANCE:LPTUSDT", utility: "Jeton de mise en jeu d'un réseau de streaming vidéo décentralisé : les orchestrateurs le stakent pour être sélectionnés et rémunérés en transcodant la vidéo, les délégateurs le stakent pour partager leurs gains." },
+  { ticker: "AIOZ", name: "AIOZ Network",                     cgId: "aioz-network",                         tvSymbol: "GATEIO:AIOZUSDT", utility: "Jeton d'un réseau DePIN de stockage, streaming et calcul IA décentralisé : rémunère les participants qui partagent bande passante, stockage et puissance de calcul, et sert de collatéral de staking pour les nœuds." },
+  { ticker: "FLUX", name: "Flux",                             cgId: "zelcash",                              tvSymbol: "BINANCE:FLUXUSDT", aliases: ["zelcash"], utility: "Jeton multi-usage d'un réseau d'infrastructure décentralisée (cloud Web3) : paie les ressources de calcul, collatéralise les nœuds (FluxNodes) et rémunère mineurs et opérateurs de nœuds." },
+  { ticker: "ARB",  name: "Arbitrum",                         cgId: "arbitrum",                             tvSymbol: "BINANCE:ARBUSDT", utility: "Jeton de gouvernance pur du plus grand rollup optimistic Ethereum (L2) : vote sur les paramètres du protocole et l'usage du trésor de la fondation — les frais de transaction restent payés en ETH, pas en ARB." },
+  { ticker: "INJ",  name: "Injective",                        cgId: "injective-protocol",                   tvSymbol: "BINANCE:INJUSDT", utility: "Jeton de sécurité (staking des validateurs), de gouvernance et de frais d'un layer-1 dédié à la finance décentralisée : 60% des frais d'échange du réseau servent chaque semaine à racheter et brûler de l'INJ." },
 ];
 
 // Secteurs des 15 favoris — classification publique factuelle, utilisée pour repérer une

@@ -338,7 +338,7 @@ describe("portfolio.js — signaux techniques d'une position (réutilise detail.
   }
 
   beforeEach(() => {
-    dom = loadPage(["config.js", "prices.js", "detail.js", "portfolio.js"], { html: PORTFOLIO_FIXTURE_HTML });
+    dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "portfolio.js"], { html: PORTFOLIO_FIXTURE_HTML });
   });
 
   it("calcule et affiche RSI/MM20/MM50 réels (même calcul que Favoris) une fois chargé", async () => {
@@ -353,6 +353,12 @@ describe("portfolio.js — signaux techniques d'une position (réutilise detail.
     expect(container.textContent).toContain("RSI (14)");
     expect(container.textContent).toContain("MM20");
     expect(container.textContent).not.toContain("Se charge à l'ouverture");
+    // Utilité du token (FAVORIS[].utility, config.js) et fenêtres de volume 24h/7j/14j/30j :
+    // mêmes ajouts que côté Favoris, doivent aussi apparaître ici (même renderTechnicalSection).
+    expect(container.textContent).toContain("Utilité du token");
+    expect(container.textContent).toContain("réserve de valeur");
+    expect(container.textContent).toContain("Volume (moyennes journalières)");
+    expect(container.textContent).toContain("Moy. 7j");
   });
 
   it("affiche un message d'indisponibilité (jamais une erreur brute ni un blocage) si le fetch échoue", async () => {

@@ -249,6 +249,61 @@ function volumeProfileSignal(price, vp) {
   };
 }
 
+// Utilité du token (FAVORIS[].utility, config.js — recherche factuelle ponctuelle, voir le
+// commentaire au-dessus de FAVORIS) : présentée comme un signal de plus dans la même grille,
+// pour situer tout de suite "à quoi sert ce jeton" à côté des lectures techniques du moment.
+// Aucun fetch ici (déjà en mémoire) — placé en premier dans la liste par renderTechnicalSection
+// pour donner ce contexte avant les signaux du jour.
+function utilitySignal(cgId) {
+  const fav = typeof FAVORIS !== "undefined" ? FAVORIS.find((f) => f.cgId === cgId) : null;
+  if (!fav || !fav.utility) return null;
+  return { label: "Utilité du token", text: fav.utility };
+}
+
+// Volume 24h/7j/14j/30j : moyennes journalières glissantes construites depuis les volumes déjà
+// récupérés pour le Profil de volume ci-dessus (aucun appel réseau de plus). Sert à distinguer
+// un mouvement de prix confirmé par une vraie hausse de participation d'un mouvement sur volume
+// faible, moins fiable — lecture classique d'analyse technique ("le volume confirme la
+// tendance"), demandée explicitement pour mieux juger la pression achat/vente de chaque actif.
+function computeVolumeWindows(volumes) {
+  if (!volumes || volumes.length === 0) return null;
+  const avgLastN = (n) => {
+    const slice = volumes.slice(Math.max(0, volumes.length - n));
+    return slice.reduce((a, b) => a + b, 0) / slice.length;
+  };
+  return {
+    vol24h: volumes[volumes.length - 1],
+    avg7d: volumes.length >= 7 ? avgLastN(7) : null,
+    avg14d: volumes.length >= 14 ? avgLastN(14) : null,
+    avg30d: volumes.length >= 30 ? avgLastN(30) : null,
+  };
+}
+
+// Combine le ratio volume 24h / moyenne 7j avec la position du prix par rapport à sa MM20
+// (déjà calculée juste au-dessus) : un volume en forte hausse confirme la direction du prix
+// (accumulation ou distribution réelle) ; un volume faible affaiblit la fiabilité d'un
+// mouvement de prix, quel que soit son sens. Toujours formulé en "cohérent avec"/"mérite
+// prudence", jamais en certitude — un pattern, pas une prédiction.
+function volumeTrendSignal(vw, price, sma20) {
+  if (!vw || !vw.avg7d) return null;
+  const ratio = vw.vol24h / vw.avg7d;
+  const trendUp = price !== null && sma20 !== null ? price > sma20 : null;
+  const ratioText = ratio >= 1 ? `×${ratio.toFixed(1)}` : `${(ratio * 100).toFixed(0)} %`;
+  let text;
+  if (ratio >= 1.5) {
+    text = trendUp === true
+      ? "Volume nettement au-dessus de sa moyenne des 7 derniers jours pendant que le prix évolue au-dessus de sa MM20 — cohérent avec de l'accumulation réelle plutôt que du bruit."
+      : trendUp === false
+        ? "Volume nettement au-dessus de sa moyenne des 7 derniers jours pendant que le prix évolue sous sa MM20 — cohérent avec une vraie pression vendeuse plutôt que du bruit."
+        : "Volume nettement au-dessus de sa moyenne des 7 derniers jours — intérêt inhabituel sur cet actif en ce moment, à confirmer par la direction du prix.";
+  } else if (ratio <= 0.5) {
+    text = "Volume nettement en dessous de sa moyenne des 7 derniers jours — peu de conviction actuellement, un mouvement de prix sur un volume aussi faible mérite d'être pris avec prudence.";
+  } else {
+    text = "Volume dans sa fourchette normale des 7 derniers jours — rien d'inhabituel côté participation en ce moment.";
+  }
+  return { label: `Volume 24h : ${ratioText} de la moyenne 7j`, text };
+}
+
 // Section "indicateurs techniques" : seule partie qui dépend d'un fetch réseau (historique
 // de prix pour RSI/MM/corrélation/Volume Profile + carnet d'ordres). Isolée dans sa propre
 // fonction pour qu'un échec réseau (limite API, hors-ligne) ne fasse jamais disparaître le
@@ -266,9 +321,16 @@ async function renderTechnicalSection(asset) {
   const price = closes[closes.length - 1];
   const signals = technicalSignalSentences(price, sma20, sma50, rsi, asset.athChangePct);
 
+  const utility = utilitySignal(asset.cgId);
+  if (utility) signals.unshift(utility);
+
   const volumeProfile = computeVolumeProfile(closes, assetChart.volumes, 24);
   const vpSignal = volumeProfileSignal(price, volumeProfile);
   if (vpSignal) signals.push(vpSignal);
+
+  const volumeWindows = computeVolumeWindows(assetChart.volumes);
+  const volSignal = volumeTrendSignal(volumeWindows, price, sma20);
+  if (volSignal) signals.push(volSignal);
 
   const correlation = btcCloses ? computeCorrelation(closes, btcCloses) : null;
   if (correlation !== null) {
@@ -310,6 +372,17 @@ async function renderTechnicalSection(asset) {
       <div class="detail-stat"><span class="hint">MM50</span><strong>${sma50 !== null ? formatPrice(sma50, "EUR") : "—"}</strong></div>
       <div class="detail-stat"><span class="hint">vs ATH</span><strong>${asset.athChangePct !== undefined && asset.athChangePct !== null ? asset.athChangePct.toFixed(1) + " %" : "—"}</strong></div>
     </div>
+    ${
+      volumeWindows
+        ? `<div class="detail-stats-label"><span class="hint">Volume (moyennes journalières)</span></div>
+    <div class="detail-stats">
+      <div class="detail-stat"><span class="hint">24h</span><strong>${formatMarketCap(volumeWindows.vol24h)}</strong></div>
+      <div class="detail-stat"><span class="hint">Moy. 7j</span><strong>${volumeWindows.avg7d !== null ? formatMarketCap(volumeWindows.avg7d) : "—"}</strong></div>
+      <div class="detail-stat"><span class="hint">Moy. 14j</span><strong>${volumeWindows.avg14d !== null ? formatMarketCap(volumeWindows.avg14d) : "—"}</strong></div>
+      <div class="detail-stat"><span class="hint">Moy. 30j</span><strong>${volumeWindows.avg30d !== null ? formatMarketCap(volumeWindows.avg30d) : "—"}</strong></div>
+    </div>`
+        : ""
+    }
     ${
       orderBook
         ? `<div class="detail-orderbook">

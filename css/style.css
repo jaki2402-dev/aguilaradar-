@@ -823,6 +823,10 @@ footer.site-footer {
   min-width: 0; /* item de grille : ne pas laisser le contenu forcer une largeur > la piste (même bug que .favori-card) */
 }
 .detail-stat strong { display: block; margin-top: 2px; font-family: var(--font-mono); font-size: 1rem; font-weight: 600; overflow-wrap: break-word; }
+/* Sépare visuellement un second .detail-stats (ex: volume) du premier (RSI/MM/vs ATH) — sans
+   ça les deux grilles s'enchaînaient sans repère, on ne savait plus quel label allait avec
+   quelles valeurs. */
+.detail-stats-label { margin-top: 14px; }
 .detail-orderbook { margin-top: 14px; }
 .orderbook-bar {
   height: 8px; border-radius: 999px; background: var(--loss); overflow: hidden; margin: 6px 0;
