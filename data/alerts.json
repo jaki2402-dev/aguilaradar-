@@ -691,5 +691,22 @@
     "triggered_at": "2026-08-26T10:20:00Z",
     "message": "Cartesi (CTSI) : seuil de mouvement directionnel (5 %) franchi à la baisse sur le nouveau verdict ATTENTE émis le 24 août. Prix vérifié par appel direct à l'API CoinGecko : 0,02211591 euro contre un prix d'émission de 0,02487 euro, soit -11,1 %. Aucune actualité spécifique identifiée pour l'expliquer ce cycle. Signal précoce enregistré sur le verdict correspondant, ne préjuge pas de l'issue à l'échéance du 31 août.",
     "source": "API CoinGecko directe (api.coingecko.com/api/v3/coins/markets)"
+  },
+  {
+    "id": "alert-20260831-1229-tia-baisse",
+    "ticker_ou_theme": "TIA",
+    "type": "seuil_technique",
+    "triggered_at": "2026-08-31T12:29:00Z",
+    "sentiment": "négatif",
+    "message": "Celestia (TIA) : seuil de mouvement directionnel (5 %) franchi à la baisse, première alerte de seuil active sur le verdict ATTENTE du 23 août (le mouvement était resté sous le seuil depuis la correction de l'anomalie de devise du 26 août). Prix vérifié par appel direct à l'API CoinGecko : 0,282418 euro contre un prix d'émission de 0,306677 euro, soit -7,9 %. Aucune actualité spécifique identifiée pour l'expliquer ce cycle. Signal précoce enregistré sur le verdict correspondant, ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko directe (api.coingecko.com/api/v3/coins/markets)"
+  },
+  {
+    "id": "avis-jour-2026-08-31",
+    "ticker_ou_theme": "PORTEFEUILLE",
+    "type": "avis_du_jour",
+    "triggered_at": "2026-08-31T12:29:00Z",
+    "sentiment": "neutre",
+    "message": "Toutes tes positions restent en ATTENTE technique cette semaine, mais la thèse hebdo diverge nettement sur LINK, ETH et INJ (Renforcer, conviction 7-8/10) : à surveiller, pas un ordre."
   }
 ]
