@@ -521,6 +521,52 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
 }
 .portfolio-thesis-meta { margin-top: 4px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
 .portfolio-thesis-constat { margin-top: 6px; }
+
+/* Bulle d'aide glossaire (glossaryTipHtml, config.js) — pur CSS, aucune logique JS : accessible
+   au clavier via :focus (tabindex="0" posé par le helper), pas seulement au survol souris —
+   un tap mobile déclenche aussi :focus sur un élément focusable. Source unique de vérité
+   (GLOSSARY), jamais un 3e texte dupliqué à la main sur le site. */
+.info-tip {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 15px; height: 15px; margin-left: 4px;
+  border-radius: 50%; background: var(--bg-elevated); border: 1px solid var(--border);
+  color: var(--text-faint); font-size: 0.62rem; font-weight: 700; line-height: 1;
+  cursor: help; position: relative; vertical-align: middle;
+}
+.info-tip:hover, .info-tip:focus { color: var(--accent); border-color: var(--accent); outline: none; }
+.info-tip::after {
+  content: attr(data-tip);
+  position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+  width: max-content; max-width: 220px;
+  background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--text); font-size: 0.72rem; font-weight: 400; line-height: 1.4;
+  padding: 7px 9px; box-shadow: var(--shadow);
+  opacity: 0; pointer-events: none; transition: opacity 0.15s ease;
+  z-index: 20;
+}
+.info-tip:hover::after, .info-tip:focus::after { opacity: 1; }
+
+/* Graphiques du Portefeuille (répartition + performance) — réutilise tel quel le composant
+   barres horizontales de renderSectorBreakdown (Accueil, insights.js : .sector-bars et
+   descendants) plutôt que d'inventer un 2e langage visuel pour la même idée (barre + %). */
+.portfolio-charts { display: grid; grid-template-columns: 1fr; gap: 14px; }
+@media (min-width: 780px) { .portfolio-charts { grid-template-columns: 1fr 1fr; } }
+.portfolio-chart-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 14px 14px 12px; margin-bottom: 14px;
+}
+.portfolio-chart-card .hint { display: block; margin-bottom: 10px; }
+.portfolio-chart-card .sector-pct { width: 100px; }
+/* Historique de valeur (data/portfolio-history.json, 1 point réel/jour — voir
+   renderPortfolioHistoryChart, portfolio.js). Même technique que sparklinePoints (cards.js)
+   mais en plus grand, avec des points survolables (contrairement au mini spark-line purement
+   décoratif des tuiles opportunités). */
+.portfolio-history-chart { width: 100%; height: 110px; margin-top: 4px; display: block; }
+.portfolio-history-chart .hist-area { fill: var(--accent); opacity: 0.08; stroke: none; }
+.portfolio-history-chart .hist-line { fill: none; stroke: var(--accent); stroke-width: 2; vector-effect: non-scaling-stroke; }
+.portfolio-history-chart .hist-point { fill: var(--bg); stroke: var(--accent); stroke-width: 1.6; vector-effect: non-scaling-stroke; cursor: pointer; }
+.portfolio-history-chart .hist-point:hover, .portfolio-history-chart .hist-point:focus { fill: var(--accent); outline: none; }
+.portfolio-history-range { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
 /* Confiance de l'opportunité (voir confidenceColor, cards.js) — même code couleur que la jauge
    circulaire affichée une fois la tuile dépliée, juste plus compact pour la vue repliée. */
 .opp-tile-conf { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; }

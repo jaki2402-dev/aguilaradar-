@@ -98,9 +98,12 @@ describe("insights.js — renderMarketContext (contexte macro : stablecoins/empl
     });
     const html = dom.window.document.getElementById("market-context-body").innerHTML;
     expect(html).toContain("11.1 %");
-    expect(html).toContain("Or (once, USD)</div><div class=\"stat-value\">—<");
-    expect(html).toContain("Taux Fed (cible)</div><div class=\"stat-value\">—<");
-    expect(html).toContain("Trésor US 10 ans</div><div class=\"stat-value\">—<");
+    // Le label porte désormais une bulle d'aide glossaire (info-tip) avant la fermeture du
+    // </div> — on vérifie label et valeur séparément plutôt qu'une sous-chaîne contiguë.
+    expect(html).toContain("Or (once, USD)");
+    expect(html).toContain("Taux Fed (cible)");
+    expect(html).toContain("Trésor US 10 ans");
+    expect(html.match(/stat-value">—</g).length).toBe(3);
   });
 });
 

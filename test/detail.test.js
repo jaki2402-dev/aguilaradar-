@@ -13,6 +13,11 @@ describe("detail.js — computeSMA", () => {
   it("returns null when there is not enough history", () => {
     expect(computeSMA([1, 2, 3, 4, 5], 6)).toBeNull();
   });
+
+  it("returns null instead of NaN on an empty history with a zero period (regression: Math.min(50, closes.length) used to divide 0/0)", () => {
+    expect(computeSMA([], 0)).toBeNull();
+    expect(computeSMA([], Math.min(50, 0))).toBeNull();
+  });
 });
 
 describe("detail.js — computeRSI / computeRSIAt", () => {

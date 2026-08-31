@@ -196,7 +196,9 @@ async function fetchLiveTechnicalSummary(cgId) {
     const price = closes[closes.length - 1];
     const rsi = computeRSI(closes, 14);
     const sma20 = computeSMA(closes, 20);
-    const sma50 = computeSMA(closes, Math.min(50, closes.length));
+    // Vrai MM50 (50 points exacts, voir detail.js/computeSMA) : Math.min(50, closes.length)
+    // affaiblissait silencieusement la periode et pouvait produire NaN sur un historique vide.
+    const sma50 = computeSMA(closes, 50);
     const signals = technicalSignalSentences(price, sma20, sma50, rsi, null);
 
     // Utilité du token (FAVORIS[].utility, config.js) en tête, même choix que

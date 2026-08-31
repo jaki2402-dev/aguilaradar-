@@ -125,3 +125,29 @@ describe("config.js — data contracts", () => {
     expect(THRESHOLDS.directionalMovePct).toBeGreaterThan(0);
   });
 });
+
+describe("config.js — glossaryTipHtml", () => {
+  const dom = loadPage(["config.js"]);
+  const { glossaryTipHtml } = dom.window;
+  const GLOSSARY = getGlobal(dom, "GLOSSARY");
+
+  it("returns an empty string for a term absent from GLOSSARY, never an invented definition", () => {
+    expect(glossaryTipHtml("Terme qui n'existe pas")).toBe("");
+  });
+
+  it("renders an accessible, keyboard-focusable info bubble carrying the real GLOSSARY definition", () => {
+    const html = glossaryTipHtml("RSI");
+    expect(html).toContain('class="info-tip"');
+    expect(html).toContain('tabindex="0"');
+    const rsiDef = GLOSSARY.find((g) => g.term === "RSI").definition;
+    // La définition contient des guillemets ("suracheté"/"survendu"), donc échappée en HTML
+    // (&quot;) dans l'attribut data-tip — comparaison via la même fonction d'échappement.
+    expect(html).toContain(dom.window.escapeHtml(rsiDef));
+  });
+
+  it("has the 3 macro terms added alongside the gold/Fed market-context fields", () => {
+    ["Or (once, USD)", "Taux Fed (cible)", "Trésor US 10 ans"].forEach((term) => {
+      expect(glossaryTipHtml(term), `glossaryTipHtml("${term}") ne doit pas être vide`).not.toBe("");
+    });
+  });
+});

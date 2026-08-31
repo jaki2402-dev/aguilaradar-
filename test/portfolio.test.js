@@ -3,6 +3,7 @@ import { loadPage, setGlobal } from "./helpers/loadPage.js";
 
 const PORTFOLIO_FIXTURE_HTML = `<!doctype html><html><body>
   <div id="portfolio-totals"></div>
+  <div id="portfolio-charts"></div>
   <div id="portfolio-body"></div>
   <select id="tx-asset"></select>
   <select id="tx-type">
@@ -523,5 +524,150 @@ describe("portfolio.js — renderTransactionCalculator", () => {
     const resultEl = dom.window.document.getElementById("tx-result");
     expect(resultEl.textContent).toMatch(/position actuelle/);
     expect(resultEl.querySelector("pre")).toBeNull();
+  });
+});
+
+function summaryPos(overrides) {
+  return { cgId: "bitcoin", ticker: "BTC", sectorColor: "#f7931a", pending: false, value: 1000, pnl: 200, pnlPct: 25, ...overrides };
+}
+
+describe("portfolio.js — renderPortfolioAllocationChart", () => {
+  let dom;
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js"]);
+  });
+
+  it("returns an empty string when no position has a usable value (all pending)", () => {
+    const html = dom.window.renderPortfolioAllocationChart([summaryPos({ pending: true, value: null })]);
+    expect(html).toBe("");
+  });
+
+  it("shows every valued position with its share of the total, sorted from largest to smallest", () => {
+    const positions = [summaryPos({ ticker: "BTC", value: 300 }), summaryPos({ ticker: "ETH", value: 700 })];
+    const html = dom.window.renderPortfolioAllocationChart(positions);
+    expect(html).toContain("BTC");
+    expect(html).toContain("ETH");
+    expect(html).toContain("70%");
+    expect(html).toContain("30%");
+    // ETH (la plus grosse part) doit apparaître avant BTC dans le HTML (tri décroissant).
+    expect(html.indexOf("ETH")).toBeLessThan(html.indexOf("BTC"));
+  });
+
+  it("uses the position's sector color to drive the bar fill", () => {
+    const html = dom.window.renderPortfolioAllocationChart([summaryPos({ sectorColor: "#123456" })]);
+    expect(html).toContain("--sector-color:#123456");
+  });
+});
+
+describe("portfolio.js — renderPortfolioPerformanceChart", () => {
+  let dom;
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js"]);
+  });
+
+  it("returns an empty string when no position has a computed P&L%", () => {
+    const html = dom.window.renderPortfolioPerformanceChart([summaryPos({ pending: true, pnlPct: null })]);
+    expect(html).toBe("");
+  });
+
+  it("sorts positions from best to worst performer and signs the percentage", () => {
+    const positions = [summaryPos({ ticker: "LOSER", pnlPct: -40 }), summaryPos({ ticker: "WINNER", pnlPct: 60 })];
+    const html = dom.window.renderPortfolioPerformanceChart(positions);
+    expect(html).toContain("+60.0%");
+    expect(html).toContain("-40.0%");
+    expect(html.indexOf("WINNER")).toBeLessThan(html.indexOf("LOSER"));
+  });
+
+  it("colors a losing position with the loss variable, not the gain one", () => {
+    const html = dom.window.renderPortfolioPerformanceChart([summaryPos({ pnlPct: -12 })]);
+    expect(html).toContain("--sector-color:var(--loss)");
+    expect(html).not.toContain("--sector-color:var(--gain)");
+  });
+});
+
+describe("portfolio.js — renderPortfolioHistoryChart", () => {
+  let dom;
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js"]);
+  });
+
+  it("shows a waiting message instead of a chart when fewer than 2 real snapshots exist", () => {
+    expect(dom.window.renderPortfolioHistoryChart(null)).toContain("en cours de constitution");
+    expect(dom.window.renderPortfolioHistoryChart({ snapshots: [] })).toContain("en cours de constitution");
+    expect(dom.window.renderPortfolioHistoryChart({ snapshots: [{ date: "2026-08-30", total_value_eur: 1000 }] })).toContain("en cours de constitution");
+  });
+
+  it("never fabricates a chart from a single point — no <svg> rendered below 2 snapshots", () => {
+    const html = dom.window.renderPortfolioHistoryChart({ snapshots: [{ date: "2026-08-30", total_value_eur: 1000 }] });
+    expect(html).not.toContain("<svg");
+  });
+
+  it("draws a real chart from 2+ genuine snapshots and reports the true evolution between first and last", () => {
+    const html = dom.window.renderPortfolioHistoryChart({
+      snapshots: [
+        { date: "2026-08-29", total_value_eur: 1000 },
+        { date: "2026-08-30", total_value_eur: 1100 },
+        { date: "2026-08-31", total_value_eur: 1200 },
+      ],
+    });
+    expect(html).toContain("<svg");
+    expect(html).toContain("3 points réels");
+    expect(html).toContain("+20.0 %"); // (1200-1000)/1000 * 100
+    expect(html).toContain("positive");
+  });
+
+  it("sorts out-of-order snapshots by date before computing the evolution", () => {
+    const html = dom.window.renderPortfolioHistoryChart({
+      snapshots: [
+        { date: "2026-08-31", total_value_eur: 900 },
+        { date: "2026-08-29", total_value_eur: 1000 },
+      ],
+    });
+    expect(html).toContain("-10.0 %");
+    expect(html).toContain("negative");
+  });
+});
+
+describe("portfolio.js — renderPortfolioCharts (assembly)", () => {
+  let dom;
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js"]);
+  });
+
+  it("always includes the history block (even as a waiting message) and wraps allocation+performance in .portfolio-charts", () => {
+    const html = dom.window.renderPortfolioCharts([summaryPos()], null);
+    expect(html).toContain("en cours de constitution");
+    expect(html).toContain('class="portfolio-charts"');
+  });
+
+  it("omits the .portfolio-charts grid entirely when there are no positions to chart", () => {
+    const html = dom.window.renderPortfolioCharts([], null);
+    expect(html).not.toContain('class="portfolio-charts"');
+  });
+});
+
+describe("portfolio.js — renderPortfolio wires the charts container", () => {
+  it("renders allocation/performance/history charts into #portfolio-charts", () => {
+    const dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js"], { html: PORTFOLIO_FIXTURE_HTML });
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 }, ethereum: { eur: 50 } });
+    dom.window.renderPortfolio(
+      { positions: [pos({ cgId: "bitcoin", qty: 2, invested: 100 }), pos({ cgId: "ethereum", qty: 1, invested: 100 })] },
+      [],
+      null,
+      { snapshots: [{ date: "2026-08-30", total_value_eur: 250 }, { date: "2026-08-31", total_value_eur: 250 }] }
+    );
+    const chartsHtml = dom.window.document.getElementById("portfolio-charts").innerHTML;
+    expect(chartsHtml).toContain("portfolio-chart-card");
+    expect(chartsHtml).toContain("<svg");
+  });
+
+  it("leaves the charts container untouched on a price-only refresh (no history arg) rather than wiping it", () => {
+    const dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js"], { html: PORTFOLIO_FIXTURE_HTML });
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    dom.window.renderPortfolio({ positions: [pos({ qty: 1, invested: 50 })] }, [], null, { snapshots: [{ date: "2026-08-30", total_value_eur: 100 }, { date: "2026-08-31", total_value_eur: 100 }] });
+    const beforeRefresh = dom.window.document.getElementById("portfolio-charts").innerHTML;
+    dom.window.renderPortfolio(); // tick de prix, comme refreshPrices() toutes les 60s
+    const afterRefresh = dom.window.document.getElementById("portfolio-charts").innerHTML;
+    expect(afterRefresh).toBe(beforeRefresh);
   });
 });
