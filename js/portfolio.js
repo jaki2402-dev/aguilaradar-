@@ -127,7 +127,7 @@ function renderPortfolioTile(p, idx) {
           <div class="detail-stat"><span class="hint">Quantité</span><strong>${p.qty}</strong></div>
           <div class="detail-stat"><span class="hint">Coût moyen</span><strong>${p.costPerUnit !== null ? formatPrice(p.costPerUnit, "EUR") : "—"}</strong></div>
         </div>
-        ${p.reasoning ? `<p class="hint" style="margin-top:10px;">${escapeHtml(p.reasoning)}</p>` : ""}
+        ${p.reasoning ? `<p class="hint portfolio-reasoning">${escapeHtml(p.reasoning)}</p>` : ""}
         ${renderThesisBlock(p)}
       </div>
     </div>`;
@@ -145,12 +145,12 @@ function renderThesisBlock(p) {
     : p.recommendationRaw
       ? `<span class="badge badge-neutral">${escapeHtml(p.recommendationRaw)}</span>`
       : "";
-  const convictionHtml = p.conviction !== null ? `<span class="hint" style="margin-left:6px;">Conviction ${p.conviction}/10</span>` : "";
+  const convictionHtml = p.conviction !== null ? `<span class="hint">Conviction ${p.conviction}/10</span>` : "";
   return `
-        <div style="margin-top:10px; padding-top:10px; border-top:1px solid var(--border);">
+        <div class="portfolio-thesis">
           <span class="hint">Thèse hebdo (recherche réelle)</span>
-          <div style="margin-top:4px;">${badgeHtml}${convictionHtml}</div>
-          ${p.constat ? `<p class="hint" style="margin-top:6px;">${escapeHtml(p.constat)}</p>` : ""}
+          <div class="portfolio-thesis-meta">${badgeHtml}${convictionHtml}</div>
+          ${p.constat ? `<p class="hint portfolio-thesis-constat">${escapeHtml(p.constat)}</p>` : ""}
         </div>`;
 }
 
