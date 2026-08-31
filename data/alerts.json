@@ -726,5 +726,14 @@
     "sentiment": "négatif",
     "message": "Flux/Zelcash (FLUX) : seuil de mouvement directionnel (5 %) de nouveau franchi à la baisse, après un retour temporaire sous le seuil au cycle précédent (-4,5 % à 12h29 UTC). Prix vérifié par appel direct à l'API CoinGecko : 0,04196278 euro contre un prix d'émission de 0,04491 euro, soit -6,6 %. Aucune actualité spécifique identifiée pour l'expliquer ce cycle. Signal précoce ré-enregistré sur le verdict correspondant, ne préjuge pas de l'issue à l'échéance du 6 septembre.",
     "source": "API CoinGecko directe (api.coingecko.com/api/v3/coins/markets)"
+  },
+  {
+    "id": "alert-20260831-1935-btc-coldcard-hack",
+    "ticker_ou_theme": "BTC",
+    "type": "actualite_generale",
+    "triggered_at": "2026-08-31T19:35:00Z",
+    "sentiment": "négatif",
+    "message": "Piratage majeur et toujours documenté du portefeuille matériel Coldcard (Coinkite) : environ 116 millions de dollars (1 816 BTC) dérobés depuis le 30 juillet 2026 sur plus de 5 200 adresses, en quatre vagues successives — 3e plus gros piratage crypto de 2026. Cause identifiée : une erreur d'intégration du micrologiciel datant de mars 2021 a orienté la génération de la phrase de récupération vers un générateur pseudo-aléatoire logiciel au lieu du générateur matériel du composant STM32, réduisant l'entropie effective à environ 40 bits sur le Mk3 et 72 bits sur les Mk4/Mk5/Q, contre 128 bits attendus pour une phrase BIP-39 de 12 mots — un attaquant peut donc reconstituer la phrase sans accéder à l'appareil physique. Toute phrase générée sur un Coldcard entre mars 2021 et le correctif doit être considérée comme compromise et migrée vers une nouvelle phrase ; une simple mise à jour du micrologiciel ne corrige pas les portefeuilles déjà générés. Confirmé par plusieurs sources indépendantes (TRM Labs, TechCrunch, Fortune, CBC News, The Hacker News). Concerne directement les détenteurs de Bitcoin en autogarde sur ce matériel, pertinence directe pour la position BTC du portefeuille suivi ici.",
+    "source": "TRM Labs, TechCrunch, Fortune, CBC News, The Hacker News (recoupement multi-sources)"
   }
 ]

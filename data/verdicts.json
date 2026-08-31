@@ -897,12 +897,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-08-31T14:18:00Z",
-      "price_at_signal_eur": 1.14,
-      "move_pct_since_issue": -5.79,
+      "detected_at": "2026-08-31T19:21:00Z",
+      "price_at_signal_eur": 1.16,
+      "move_pct_since_issue": -4.13,
       "threshold_pct": 5,
-      "threshold_crossed": true,
-      "note": "Livepeer (LPT) : seuil de mouvement directionnel (5 %) désormais franchi à la baisse, première alerte de seuil active sur le verdict ATTENTE du 23 août (le mouvement était resté sous le seuil au cycle précédent, -1,6 %). Prix vérifié par appel direct à l'API CoinGecko (groupé, un seul appel pour les 15 favoris) : 1,14 euro contre un prix d'émission de 1,21 euro, soit -5,8 %. Aucune actualité spécifique identifiée pour l'expliquer ce cycle. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 6 septembre."
+      "threshold_crossed": false,
+      "note": "Livepeer (LPT) : retour sous le seuil de mouvement directionnel (5 %) ce cycle, après le franchissement à la baisse détecté au cycle précédent (-5,8 % à 14h18 UTC). Prix vérifié par appel direct à l'API CoinGecko (groupé, un seul appel pour les 15 favoris) : 1,16 euro contre un prix d'émission de 1,21 euro, soit -4,1 %. Aucune actualité spécifique identifiée. Ne préjuge pas de l'issue à l'échéance du 6 septembre."
     }
   },
   {
