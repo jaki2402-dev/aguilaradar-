@@ -1436,8 +1436,13 @@
         },
         "j7": {
           "check_at": "2026-08-25T09:44:50Z",
-          "status": "pending",
-          "outcome": null
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 711.6269934190552,
+            "move_pct": 62.93,
+            "validated": true,
+            "checked_at": "2026-08-31T06:41:08Z"
+          }
         },
         "j14": {
           "check_at": "2026-09-01T09:44:50Z",
@@ -1905,8 +1910,13 @@
         },
         "j7": {
           "check_at": "2026-08-31T04:03:59Z",
-          "status": "pending",
-          "outcome": null
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 61.65046289115096,
+            "move_pct": 0.07,
+            "validated": false,
+            "checked_at": "2026-08-31T06:41:08Z"
+          }
         },
         "j14": {
           "check_at": "2026-09-07T04:03:59Z",
