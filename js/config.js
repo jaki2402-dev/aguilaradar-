@@ -9,6 +9,32 @@ function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, (c) => HTML_ESCAPE_MAP[c]);
 }
 
+// Met en évidence les chiffres-clés (%, $, €) et les repères de scénario Bull/Base/Bear dans un
+// texte d'analyse long (thèse hebdo de portfolio-thesis.json, raisonnement du moteur) — ces
+// paragraphes de plusieurs phrases noient l'info dense au milieu de la prose, ce qui les rend
+// difficiles à scanner d'un coup d'oeil sur mobile. Échappe toujours en premier via escapeHtml
+// ci-dessus puis n'ajoute que des balises fixes autour du texte déjà échappé (jamais de HTML
+// réinjecté depuis la donnée elle-même) : un remplacement direct de escapeHtml(x) par
+// highlightKeyInfo(x) sur un call site existant reste donc tout aussi sûr. <span> et jamais
+// <strong> pour le repère de scénario : plusieurs blocs du site (.detail-opinion strong,
+// .disclaimer-box strong...) stylent déjà TOUT <strong> en label de bloc (display:block) — un
+// <strong> ici serait coupé en pleine phrase au lieu de rester en ligne.
+// Motif numérique "à la française" : groupes de milliers séparés par une espace (12 775),
+// décimale en virgule ou point (1,1 / 10.7) — jamais un simple \d+ avec virgule/point/espace
+// en vrac, qui coupait un nombre décimal en deux (ex-bug vérifié ici : "1,1 %" ne surlignait
+// que "1 %" en traitant la virgule comme un séparateur de milliers exigeant 2-3 chiffres).
+const HIGHLIGHT_KEY_INFO_RE = /\b(Bull|Bear|Base)\s*:|[$€£]\s?\d{1,3}(?:\s\d{3})*(?:[.,]\d+)?|\d{1,3}(?:\s\d{3})*(?:[.,]\d+)?\s?(?:%|€|\$|dollars?\b|euros?\b)/g;
+function highlightKeyInfo(text) {
+  const safe = escapeHtml(text || "");
+  return safe.replace(HIGHLIGHT_KEY_INFO_RE, (match, scenarioWord) => {
+    if (scenarioWord) {
+      const cls = scenarioWord === "Bull" ? "hl-bull" : scenarioWord === "Bear" ? "hl-bear" : "hl-base";
+      return `<span class="hl-scenario ${cls}">${match}</span>`;
+    }
+    return `<mark class="hl-stat">${match}</mark>`;
+  });
+}
+
 // N'autorise que http(s) pour toute URL affichée en attribut href — bloque les schémas
 // javascript:/data: qu'un champ texte externe (actu, contexte favori) pourrait contenir.
 function safeUrl(url) {

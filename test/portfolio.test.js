@@ -381,6 +381,30 @@ describe("portfolio.js — signaux techniques d'une position (réutilise detail.
     expect(bodyEl.textContent).toContain("Adoption institutionnelle.");
   });
 
+  it("surligne les repères Bull/Base/Bear et les chiffres-clés dans le bloc Thèse long terme/Contexte élargi (regression : c'est ce bloc, pas portfolio-thesis.json, qui produit le texte 'Thèse long terme — Bull : ... Base : ... Bear : ...' signalé difficile à scanner)", () => {
+    mockTechnicalFetch(dom);
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    setGlobal(dom, "latestFavorisContext", {
+      assets: {
+        BTC: {
+          last_computed_at: "2026-08-18T08:24:00Z",
+          competitor: { ticker: "XAU", name: "Or", comparison_note: "Écart de coût de 12 775 dollars par an." },
+          long_term_thesis: { bull: "Part de marché de 50 %.", base: "Croissance modérée.", bear: "Risque de 9,9 % de dilution.", assumptions_note: "Hypothèses de la thèse." },
+        },
+      },
+    });
+    dom.window.renderPortfolio({ positions: [pos()] }, []);
+    const bodyEl = dom.window.document.getElementById("portfolio-body");
+    expect(bodyEl.innerHTML).toContain('<span class="hl-scenario hl-bull">Bull :</span>');
+    expect(bodyEl.innerHTML).toContain('<span class="hl-scenario hl-base">Base :</span>');
+    expect(bodyEl.innerHTML).toContain('<span class="hl-scenario hl-bear">Bear :</span>');
+    expect(bodyEl.innerHTML).toContain('<mark class="hl-stat">50 %</mark>');
+    expect(bodyEl.innerHTML).toContain('<mark class="hl-stat">12 775 dollars</mark>');
+    // Jamais de <strong> pour ces repères : .detail-opinion/.detail-context stylent déjà tout
+    // <strong> en label de bloc (display:block) ailleurs sur le site — voir highlightKeyInfo.
+    expect(bodyEl.innerHTML).not.toContain("<strong>Bull");
+  });
+
   it("montre un état honnête 'pas encore calculé' (jamais une section vide trompeuse) quand favoris-context.json n'a pas encore d'entrée pour cette position", () => {
     mockTechnicalFetch(dom);
     setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });

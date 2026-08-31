@@ -172,7 +172,7 @@ const CLAMP_TEXT_THRESHOLD = 200;
 let clampTextUid = 0;
 
 function renderClampableText(text) {
-  const safe = escapeHtml(text || "");
+  const safe = highlightKeyInfo(text || "");
   if (!text || text.length <= CLAMP_TEXT_THRESHOLD) return `<p>${safe}</p>`;
   const id = `clamp-text-${++clampTextUid}`;
   return `<p class="clamp-text" id="${id}">${safe}</p><span class="expand-hint expand-hint-inline clickable" data-clamp-target="${id}">Lire plus <span class="chevron">▾</span></span>`;
@@ -315,7 +315,7 @@ function renderAvisDuJour(alerts) {
   el.innerHTML = `
     <div class="hero-card avis-du-jour-card">
       <div class="avis-du-jour-head"><span class="hint">Avis du jour</span>${sentimentBadgeHtml(latest.sentiment)}</div>
-      <p class="avis-du-jour-text">${escapeHtml(latest.message)}</p>
+      <p class="avis-du-jour-text">${highlightKeyInfo(latest.message)}</p>
       <div class="hint">${new Date(latest.triggered_at).toLocaleString("fr-FR")}${staleHint}</div>
     </div>`;
 }
@@ -389,7 +389,7 @@ function renderMacroRegime(engineHistory) {
         <div><div class="hero-stat-value">${regime.fear_greed_value ?? "—"}</div><div class="hero-stat-label">Fear &amp; Greed${glossaryTipHtml("Indice de peur et de cupidité")}</div></div>
         <div><div class="hero-stat-value">${regime.btc_dominance_pct !== null && regime.btc_dominance_pct !== undefined ? regime.btc_dominance_pct.toFixed(1) + " %" : "—"}</div><div class="hero-stat-label">Dominance BTC${glossaryTipHtml("Dominance BTC")}</div></div>
       </div>
-      ${regime.note ? `<p class="hint" style="margin-top:10px;">${escapeHtml(regime.note)}</p>` : ""}
+      ${regime.note ? `<p class="hint" style="margin-top:10px;">${highlightKeyInfo(regime.note)}</p>` : ""}
     </div>`;
 }
 
@@ -426,7 +426,7 @@ function renderNews(newsData) {
   el.innerHTML = items
     .map((n) => {
       const url = safeUrl(n.url);
-      const title = escapeHtml(n.title);
+      const title = highlightKeyInfo(n.title);
       const important = isNewsImportant(n.title);
       return `
       <div class="news-item${important ? " important" : ""}">

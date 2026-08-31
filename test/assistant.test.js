@@ -708,3 +708,34 @@ describe("assistant.js — thèse hebdomadaire (data/portfolio-thesis.json)", ()
     expect(answer).toContain("Thèse hebdo (recherche réelle) du");
   });
 });
+
+describe("assistant.js — appendChatMessage (surlignage des chiffres-clés dans les réponses, jamais dans le message de l'utilisateur)", () => {
+  function chatDom() {
+    return loadPage(["config.js", "assistant.js"], { html: `<!doctype html><html><body><div id="chat-log"></div></body></html>` });
+  }
+
+  it("highlights key figures in an assistant message via innerHTML", () => {
+    const dom = chatDom();
+    dom.window.appendChatMessage("assistant", "Le marché a progressé de 50 % cette semaine.");
+    const p = dom.window.document.querySelector("#chat-log .chat-msg--assistant p");
+    expect(p.innerHTML).toContain('<mark class="hl-stat">50 %</mark>');
+  });
+
+  it("never interprets a user message as HTML — plain textContent, exactly as before, even if it looks like markup", () => {
+    const dom = chatDom();
+    dom.window.appendChatMessage("user", "Et si on a <b>50 %</b> de gain ?");
+    const p = dom.window.document.querySelector("#chat-log .chat-msg--user p");
+    expect(p.textContent).toBe("Et si on a <b>50 %</b> de gain ?");
+    expect(p.querySelector("b")).toBeNull();
+    expect(p.querySelector("mark")).toBeNull();
+  });
+
+  it("still neutralizes an HTML/script injection attempt inside an assistant message — escapeHtml runs first even through innerHTML", () => {
+    const dom = chatDom();
+    dom.window.appendChatMessage("assistant", `<img src=x onerror=alert(1)> 50%`);
+    const p = dom.window.document.querySelector("#chat-log .chat-msg--assistant p");
+    expect(p.querySelector("img")).toBeNull();
+    expect(p.textContent).toContain("<img src=x onerror=alert(1)>");
+    expect(p.innerHTML).toContain('<mark class="hl-stat">50%</mark>');
+  });
+});

@@ -381,6 +381,21 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
 }
 .hint { color: var(--text-faint); font-size: 0.78rem; line-height: 1.5; }
 
+/* Mise en évidence de l'info dense dans un texte d'analyse long (thèse hebdo/raisonnement moteur
+   — voir highlightKeyInfo, config.js) : chiffres-clés (%, $, €) en "surligneur" translucide au
+   lieu du jaune par défaut de <mark> (illisible sur fond sombre), repères de scénario Bull/Base/
+   Bear teintés avec les mêmes couleurs gain/loss déjà utilisées par les badges de verdict/thèse
+   plus bas (.badge-achat/.badge-renforcer etc.) plutôt qu'un 3e code couleur sur le site. */
+.hl-stat {
+  background: var(--accent-dim); color: var(--accent);
+  font-family: var(--font-mono); font-weight: 700;
+  padding: 0 4px; border-radius: 4px; white-space: nowrap;
+}
+.hl-scenario { font-weight: 700; padding: 0 4px; border-radius: 4px; white-space: nowrap; }
+.hl-scenario.hl-bull { background: rgba(52, 211, 153, 0.15); color: var(--gain); }
+.hl-scenario.hl-bear { background: rgba(241, 85, 76, 0.15); color: var(--loss); }
+.hl-scenario.hl-base { background: rgba(34, 184, 224, 0.15); color: var(--accent-2); }
+
 /* ---- Carte "hero" de la vue d'ensemble + résumé (digest) : les deux éléments phares de
    l'Accueil partagent le même traitement "instrument" — coins en équerre façon viseur radar,
    cohérent avec l'identité du site plutôt qu'une carte générique de plus. ---- */

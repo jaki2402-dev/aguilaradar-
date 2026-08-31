@@ -34,6 +34,75 @@ describe("config.js — escapeHtml", () => {
   });
 });
 
+describe("config.js — highlightKeyInfo", () => {
+  const dom = loadPage(["config.js"]);
+  const { highlightKeyInfo } = dom.window;
+
+  it("returns an empty string for null/undefined/empty, like escapeHtml", () => {
+    expect(highlightKeyInfo(null)).toBe("");
+    expect(highlightKeyInfo(undefined)).toBe("");
+    expect(highlightKeyInfo("")).toBe("");
+  });
+
+  it("leaves short plain text (no digits/scenario labels) identical to escapeHtml", () => {
+    const text = "Momentum institutionnel fort.";
+    expect(highlightKeyInfo(text)).toBe(dom.window.escapeHtml(text));
+  });
+
+  it("always escapes first — a script/img injection attempt is neutralized, never re-interpreted as HTML", () => {
+    const html = highlightKeyInfo(`<img src=x onerror=alert(1)> 50% <script>alert(2)</script>`);
+    expect(html).not.toContain("<img");
+    expect(html).not.toContain("<script>");
+    expect(html).toContain("&lt;img src=x onerror=alert(1)&gt;");
+  });
+
+  it("wraps a plain percentage in a .hl-stat mark", () => {
+    expect(highlightKeyInfo("part de marché de 50 % du secteur")).toBe(
+      'part de marché de <mark class="hl-stat">50 %</mark> du secteur'
+    );
+  });
+
+  it("wraps a French-decimal percentage whole, not split at the comma (regression: comma used to be treated as a thousands separator requiring 2-3 digits, cutting \"1,1 %\" into \"1,\" + \"1 %\")", () => {
+    expect(highlightKeyInfo("soit environ 1,1 % de l'offre")).toBe(
+      'soit environ <mark class="hl-stat">1,1 %</mark> de l&#39;offre'
+    );
+  });
+
+  it("wraps a space-grouped thousands figure followed by a spelled-out currency word", () => {
+    expect(highlightKeyInfo("environ 12 775 dollars par an")).toBe(
+      'environ <mark class="hl-stat">12 775 dollars</mark> par an'
+    );
+  });
+
+  it("wraps a currency-symbol-prefixed amount", () => {
+    expect(highlightKeyInfo("prix cible de $150 000")).toBe('prix cible de <mark class="hl-stat">$150 000</mark>');
+  });
+
+  it("wraps Bull/Base/Bear scenario labels in colored spans, keyed by word", () => {
+    const html = highlightKeyInfo("Bull : haussier. Base : neutre. Bear : baissier.");
+    expect(html).toContain('<span class="hl-scenario hl-bull">Bull :</span>');
+    expect(html).toContain('<span class="hl-scenario hl-base">Base :</span>');
+    expect(html).toContain('<span class="hl-scenario hl-bear">Bear :</span>');
+  });
+
+  it("never uses <strong> for the scenario span (several site blocks style every <strong> as a block-level label)", () => {
+    const html = highlightKeyInfo("Bull : haussier.");
+    expect(html).not.toContain("<strong");
+  });
+
+  it("does not treat the ordinary lowercase French word 'base' as a scenario label (false-positive guard)", () => {
+    const html = highlightKeyInfo("sur la base de plusieurs indicateurs techniques");
+    expect(html).not.toContain("hl-scenario");
+    expect(html).not.toContain("hl-base");
+  });
+
+  it("does not highlight a bare number with no percent/currency unit (dates, counts, versions stay plain)", () => {
+    expect(highlightKeyInfo("15 positions suivies depuis 2024")).toBe(
+      dom.window.escapeHtml("15 positions suivies depuis 2024")
+    );
+  });
+});
+
 describe("config.js — safeUrl", () => {
   const dom = loadPage(["config.js"], { url: "https://aguilaradar.test/" });
   const { safeUrl } = dom.window;

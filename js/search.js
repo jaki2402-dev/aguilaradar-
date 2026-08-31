@@ -55,7 +55,7 @@ function renderTrackedVerdictResult(coin, verdict) {
       <div class="favori-price">${formatPrice(coin.current_price, "EUR")}</div>
       <div class="chip ${change24h >= 0 ? "positive" : "negative"}">${formatChangePct(change24h)}</div>
       <p class="hint">7j : ${formatChangePct(coin.price_change_percentage_7d_in_currency)} · 30j : ${formatChangePct(coin.price_change_percentage_30d_in_currency)} · Rang capitalisation #${coin.market_cap_rank ?? "—"}</p>
-      <p style="margin-top:10px;">${escapeHtml(verdict.reasoning || "")}</p>
+      <p style="margin-top:10px;">${highlightKeyInfo(verdict.reasoning || "")}</p>
       <p class="hint">Confiance ${verdict.confidence_pct ?? "—"} % · horizon ${verdict.horizon_days} j · statut ${verdict.status}</p>
       <div class="tv-chart" id="tv-search-result"></div>
       <p class="hint">Fait partie des 15 favoris suivis — verdict du moteur d'analyse, mis à jour au fil des cycles.</p>
@@ -120,7 +120,7 @@ async function renderUntrackedResult(coin) {
     if (!ficheEl) return;
     ficheEl.innerHTML = `
       ${categories.length ? `<div class="opp-tags" style="margin-top:8px;">${categories.map((c) => `<span class="tag">${escapeHtml(c)}</span>`).join("")}</div>` : ""}
-      ${shortDesc ? `<p style="margin-top:8px;">${escapeHtml(shortDesc)}${desc.length > 400 ? "…" : ""}</p>` : ""}
+      ${shortDesc ? `<p style="margin-top:8px;">${highlightKeyInfo(shortDesc)}${desc.length > 400 ? "…" : ""}</p>` : ""}
       ${homepage ? `<p class="hint" style="margin-top:6px;"><a href="${escapeHtml(homepage)}" target="_blank" rel="noopener noreferrer">Site officiel</a></p>` : ""}
     `;
   } catch (err) {

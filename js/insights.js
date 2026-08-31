@@ -83,12 +83,12 @@ function renderMarketContext(ctx) {
       <div class="stat-card accent-violet"><div class="stat-label">Taux Fed (cible)${glossaryTipHtml("Taux Fed (cible)")}</div><div class="stat-value">${fed.funds_rate_range ? escapeHtml(fed.funds_rate_range) : "—"}</div></div>
       <div class="stat-card accent-indigo"><div class="stat-label">Trésor US 10 ans${glossaryTipHtml("Trésor US 10 ans")}</div><div class="stat-value">${fed.treasury_yield_10y_pct !== null && fed.treasury_yield_10y_pct !== undefined ? fed.treasury_yield_10y_pct.toFixed(2) + " %" : "—"}</div></div>
     </div>
-    ${sc.note ? `<p class="hint">Stablecoins : ${escapeHtml(sc.note)}</p>` : ""}
-    ${emp.market_reaction_note ? `<p class="hint">Emploi : ${escapeHtml(emp.market_reaction_note)}</p>` : ""}
-    ${etf.note ? `<p class="hint">ETF : ${escapeHtml(etf.note)}</p>` : ""}
-    ${gold.note ? `<p class="hint">Or : ${escapeHtml(gold.note)}</p>` : ""}
-    ${fed.note ? `<p class="hint">Fed (taux, bilan QE/QT, prochaine réunion) : ${escapeHtml(fed.note)}</p>` : ""}
-    ${conf.level ? `<p class="hint" style="margin-top:8px;"><strong>Confiance globale du site : ${escapeHtml(conf.level)}</strong> — ${escapeHtml(conf.note || "")}</p>` : ""}`;
+    ${sc.note ? `<p class="hint">Stablecoins : ${highlightKeyInfo(sc.note)}</p>` : ""}
+    ${emp.market_reaction_note ? `<p class="hint">Emploi : ${highlightKeyInfo(emp.market_reaction_note)}</p>` : ""}
+    ${etf.note ? `<p class="hint">ETF : ${highlightKeyInfo(etf.note)}</p>` : ""}
+    ${gold.note ? `<p class="hint">Or : ${highlightKeyInfo(gold.note)}</p>` : ""}
+    ${fed.note ? `<p class="hint">Fed (taux, bilan QE/QT, prochaine réunion) : ${highlightKeyInfo(fed.note)}</p>` : ""}
+    ${conf.level ? `<p class="hint" style="margin-top:8px;"><strong>Confiance globale du site : ${escapeHtml(conf.level)}</strong> — ${highlightKeyInfo(conf.note || "")}</p>` : ""}`;
 }
 
 function renderHealthStatus(healthLog) {
@@ -109,7 +109,7 @@ function renderHealthStatus(healthLog) {
       <div class="log-header"><span><strong>Dernière vérification</strong> · ${new Date(last.checked_at).toLocaleString("fr-FR")}</span><span class="badge badge-${ok ? "achat" : "vente"}">${ok ? "OK" : "Problème détecté"}</span></div>
       <p class="hint">Fichiers vérifiés : ${(last.files_ok || []).length}. ${last.files_broken && last.files_broken.length ? "Problèmes : " + escapeHtml(last.files_broken.join(", ")) : "Aucun problème."}</p>
       <p class="hint">Accessibilité du site depuis l'environnement de la routine : ${last.site_reachable ? "oui" : "non testable (restriction réseau de l'environnement d'exécution, pas un indicateur de panne réelle du site)"}.</p>
-      ${last.note ? `<p class="hint">${escapeHtml(last.note)}</p>` : ""}
+      ${last.note ? `<p class="hint">${highlightKeyInfo(last.note)}</p>` : ""}
     </div>
     <p class="hint" style="margin-top:8px;">${checks.length} vérification(s) enregistrée(s) au total, historique permanent.</p>`;
 }
