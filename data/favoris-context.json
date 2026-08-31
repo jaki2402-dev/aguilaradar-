@@ -1,5 +1,5 @@
 {
-  "last_computed_at": "2026-08-24T08:23:00Z",
+  "last_computed_at": "2026-08-31T00:40:00Z",
   "assets": {
     "BTC": {
       "last_computed_at": "2026-08-18T08:24:00Z",
@@ -281,127 +281,127 @@
       }
     },
     "JUP": {
-      "last_computed_at": "2026-08-17T16:55:00Z",
+      "last_computed_at": "2026-08-31T00:40:00Z",
       "competitor": {
-        "ticker": "RAY",
-        "name": "Raydium",
-        "comparison_note": "Jupiter, agrégateur dominant de DEX sur Solana (environ 93,6 % du volume routé par agrégateurs selon SolanaFloor), capitalise environ 3,4 fois plus que Raydium (RAY), le principal AMM natif de l'écosystème Solana : capitalisation de Raydium estimée à environ 167 millions de dollars (rang #126 selon CoinMarketCap, #172 selon CoinGecko, écart de méthodologie entre plateformes non résolu), contre 560,8 millions de dollars pour Jupiter. Performance 7 jours de Raydium estimée à environ -6,3 % ; performance 30 jours non trouvée avec fiabilité."
+        "ticker": "1INCH",
+        "name": "1inch",
+        "comparison_note": "Jupiter (JUP) cote autour de 0,208 dollar pour une capitalisation d'environ 691 millions de dollars (rang CoinGecko #87), tout en restant le premier agrégateur DEX sur Solana malgré une part de marché hebdomadaire tombée à environ 68 % début août 2026 (contre 88 % en avril), OKX et DFlow captant désormais respectivement environ 18 % et 10 % du volume d'agrégation hebdomadaire. 1INCH, agrégateur DEX multi-chaînes plus généraliste (Ethereum, BNB Chain, Polygon, etc.), cote autour de 0,088 dollar pour une capitalisation d'environ 124 millions de dollars (rang #230), soit un écart d'environ 5,6 fois en faveur de Jupiter. Jupiter a par ailleurs élargi son offre bien au-delà de l'agrégation (perpétuels, prêt via Jupiter Lend v2 lancé le 10 août 2026, DCA, ordres limites, stablecoin JupUSD, marchés de prédiction, application Gacha ayant capté plus de 27 millions de dollars de dépenses utilisateurs en trois semaines), un positionnement de superapp que 1INCH n'a pas répliqué à la même échelle."
       },
       "long_term_thesis": {
-        "bull": "Jupiter maintient une position dominante sur le routage des échanges décentralisés de l'écosystème Solana (environ 93,6 % du volume agrégateur selon SolanaFloor) et diversifie ses produits au-delà de l'agrégation : Jupiter Lend (lancé en août 2025, TVL en hausse vers environ 800 millions de dollars mi-2026) et Jupiter Perps, classé parmi les dix premiers DEX de produits perpétuels par volume au troisième trimestre 2025. Une reprise efficace du programme de rachat de tokens, financé par les frais de protocole, pourrait soutenir le cours une fois la pression des déblocages de tokens atténuée.",
-        "base": "Jupiter enregistre une croissance progressive mais non spectaculaire de ses frais et revenus d'agrégateur (environ 2,38 millions de dollars de frais sur 30 jours, environ 34,6 millions de dollars annualisés selon DeFiLlama), suivant globalement la dynamique de l'écosystème Solana sans gain ni perte de part de marché significatif. Le débat de gouvernance sur les rachats de tokens et leur efficacité se poursuit sans décision tranchée.",
-        "bear": "Le programme de rachat de tokens (environ 70 millions de dollars dépensés, financés par 50 % des frais de protocole) s'est révélé insuffisant face aux déblocages mensuels d'environ 53 millions de JUP, le cours ayant chuté d'environ 89 % depuis son sommet malgré ces rachats ; le programme a été suspendu début janvier 2026 sur proposition du fondateur. Une sortie massive de détenteurs importants du pool de liquidité des perpétuels (JLP) a été documentée début juin 2026, signe de nervosité ponctuelle chez les gros porteurs, dans un contexte de dépendance structurelle du token à la santé générale de l'écosystème Solana.",
-        "assumptions_note": "Ces trois scénarios supposent : (1) Jupiter conserve son avantage concurrentiel de part de marché sur le routage DEX Solana, (2) le calendrier de déblocage de tokens reste un facteur de pression structurelle sur l'offre circulante en 2026, avec des informations contradictoires entre sources sur sa date d'achèvement exacte, (3) l'écosystème Solana dans son ensemble continue de croître en volume d'échanges. Aucun multiplicateur de prix n'est avancé."
+        "bull": "Jupiter Lend v2, lancé le 10 août 2026, permet à un même dépôt ou prêt de servir simultanément de liquidité de trading active dans un nouvel AMM à liquidité concentrée ; Jupiter Lend afficherait environ 873 millions de dollars de TVL sur DefiLlama. L'application Gacha a capté plus de 27 millions de dollars de dépenses utilisateurs en trois semaines depuis son lancement, et le protocole de prêt gagne du terrain face à Kamino. Les agrégateurs dans leur ensemble continuent d'acheminer environ 56 % du volume hebdomadaire on-chain de Solana, ce qui maintient une base d'usage large pour la superapp.",
+        "base": "La part de Jupiter dans le volume d'agrégation DEX sur Solana continue de s'éroder progressivement (68 % début août 2026 contre 88 % en avril) au profit d'OKX et DFlow, sans effondrement brutal ni rebond net identifié ce cycle ; la diversification vers le prêt, les perpétuels et le stablecoin JupUSD compense partiellement la commoditisation du métier d'agrégation historique.",
+        "bear": "Les dix plus gros détenteurs contrôlent environ 66,38 % de l'offre suivie (environ 998 millions de dollars), dont les deux principaux portefeuilles sont le Jupiter Community Cold Wallet et le Jupiter Team Cold Wallet (environ 24,5 à 24,8 % chacun) : les rachats massifs de jetons observés fin août 2026 (environ 1,51 million de JUP rachetés en une journée vers le 26 août, contre environ 201 111 JUP le 26 juillet, soit une multiplication par 7,52) reflètent donc surtout une mécanique interne au protocole plutôt qu'une demande externe indépendante, un signal à interpréter avec prudence. La poursuite de la perte de part de marché face à OKX et DFlow reste un risque si elle s'accélère.",
+        "assumptions_note": "Ces trois scénarios supposent : (1) les chiffres de part de marché et de TVL Jupiter Lend proviennent de sources presse/analytics recoupées via recherche web (pas d'appel direct vérifié à l'API DefiLlama, bloquée par le proxy réseau de cet environnement) et méritent recoupement aux cycles suivants ; (2) les rachats de jetons se poursuivent au rythme observé fin août sans garantie de pérennité ; (3) aucun multiplicateur de prix n'est avancé, la trajectoire dépendant de l'exécution du virage superapp face à une concurrence multi-chaînes (1INCH) et Solana-native (OKX, DFlow) qui s'intensifie."
       },
       "open_interest": {
-        "value_usd": null,
+        "value_usd": 44112692,
         "funding_rate_pct": null,
-        "source": null,
-        "note": "Chiffres trouvés via recherche fortement contradictoires et non datés avec certitude au 17 août 2026 (fourchette indicative large de 44 à 115 millions de dollars selon la source et la période) ; accès direct à coinglass.com et coinalyze.net bloqué par le proxy réseau de cet environnement. Faute d'un chiffre daté et fiable, laissé à null plutôt qu'estimé. Funding rate non trouvé."
+        "source": "CoinGlass (résultat indexé via WebSearch)",
+        "note": "Open interest agrégé (Binance, OKX, Bybit, Bitget selon CoinGlass) autour de 44,1 millions de dollars. Funding rate affiché comme non défini/indisponible dans la source consultée, laissé à null plutôt que deviné. Volume spot 24h environ 8,6 millions de dollars, volume futures 24h environ 62,6 millions de dollars, liquidations 24h environ 24 516 dollars. Accès direct à fapi.binance.com et coinglass.com bloqué par le proxy réseau de cet environnement."
       },
       "defi_tvl": {
-        "value_usd": null,
+        "value_usd": 873000000,
         "change_7d_pct": null,
-        "source": null,
-        "note": "Non applicable pour l'agrégateur Jupiter lui-même (pas de TVL propre, la liquidité provient de DEX tiers). L'écosystème élargi Jupiter (Jupiter Lend environ 873 millions de dollars, JupSOL environ 800 millions, Jupiter Perpetual Exchange environ 689 millions selon des extraits DeFiLlama indexés, non vérifiés en direct) n'est pas retenu ici car hors du périmètre du token JUP proprement dit."
+        "source": "DefiLlama (résultat indexé via WebSearch)",
+        "note": "TVL cité pour Jupiter Lend seul (lancé août 2025) à environ 873 millions de dollars ; le produit d'agrégation Jupiter historique n'affiche pas de TVL propre car il source la liquidité de venues externes, et Jupiter apparaît sur DefiLlama scindé en plusieurs entités (Jupiter Lend, Jupiter Staked SOL, Jupiter Perpetual Exchange) sans total consolidé retrouvé ce cycle. Variation 7 jours non trouvée, laissée à null. Accès direct à api.llama.fi bloqué par le proxy réseau de cet environnement."
       },
       "onchain_signal": {
         "available": false,
-        "note": "Aucun mouvement whale significatif et récent (moins de 48h) trouvé via recherche ce cycle ; les événements identifiés (sortie du pool JLP début juin 2026, accumulation whale de mai 2026) sont anciens et hors fenêtre de fraîcheur retenue.",
-        "source_url": null
+        "note": "Recherche ciblée (\"whale alert\" Jupiter JUP) : le signal le plus notable trouvé (rachats de jetons du protocole d'environ 1,51 million de JUP autour du 26 août 2026) date de plus de 48h avant ce cycle et concerne des rachats internes au protocole plutôt qu'un mouvement de whale indépendant repéré par Whale Alert ; aucun mouvement whale indépendant récent (<48h) trouvé.",
+        "source_url": "https://coinmarketcap.com/top-stories/6a8ec8464396535213d89914/"
       }
     },
     "LPT": {
-      "last_computed_at": "2026-08-17T16:55:00Z",
+      "last_computed_at": "2026-08-31T00:40:00Z",
       "competitor": {
         "ticker": "RENDER",
         "name": "Render Network",
-        "comparison_note": "Livepeer et Render Network sont deux réseaux DePIN de calcul décentralisé (catégorie compute), Render historiquement axé sur le rendu 3D et l'inférence IA, Livepeer sur le transcodage vidéo et l'inférence IA vidéo. Render affiche une capitalisation estimée à environ 660,5 millions de dollars (rang approximatif #85), contre 58,67 millions de dollars pour Livepeer (rang #376), soit un écart d'environ 11 fois en faveur de Render (contre 14 à 20 fois selon des sources plus anciennes de mai 2026, l'écart s'étant réduit). Les chiffres de performance 7 jours et 30 jours trouvés pour Render sont des projections et non des variations réalisées confirmées, donc non retenus avec certitude."
+        "comparison_note": "Livepeer (LPT) cote environ 1,35 dollar pour une capitalisation d'environ 66,8 millions de dollars (rang #358), en baisse d'environ 7,9 % sur 7 jours. Render Network (RENDER), réseau décentralisé de calcul GPU pour le rendu 3D et l'inférence IA, cote environ 1,40 dollar pour une capitalisation d'environ 728 millions de dollars (rang #84), soit un écart d'environ 11 fois en faveur de Render. Les deux réseaux convergent désormais vers le calcul décentralisé pour l'IA : Livepeer a lancé Livepeer 2.0 le 7 août 2026, qui redéfinit l'unité de l'offre réseau du matériel GPU physique vers le « compute » abstrait, ouvrant la participation aux nœuds CPU seuls, tandis que Render reste centré sur le rendu GPU haut de gamme. L'écart de capitalisation reflète l'avance de Render en adoption côté GPU/IA générative visuelle, quand Livepeer part d'une base historique de transcodage vidéo en pleine réorientation."
       },
       "long_term_thesis": {
-        "bull": "Livepeer 2.0 a été lancé le 7 août 2026, avec un changement structurel majeur : l'unité de fourniture du réseau passe du matériel GPU dédié au calcul générique, permettant à des nœuds CPU seuls et des opérateurs spécialisés API de rejoindre le réseau, ce qui abaisse la barrière d'entrée des orchestrateurs. Le réseau élargit son positionnement au-delà du transcodage vidéo classique vers l'inférence IA vidéo en temps réel (agents vidéo, pipelines génératifs), avec pour hypothèse que la demande de calcul vidéo et IA croît plus vite que l'offre centralisée (AWS, GCP) et que Livepeer en capture une part croissante via son avantage de coût et de latence.",
-        "base": "Livepeer reste un acteur de niche mais établi du DePIN vidéo, avec une base d'orchestrateurs stable et une expansion progressive vers l'inférence IA vidéo sans rupture spectaculaire d'adoption. La migration vers Livepeer 2.0 se déroule sans accroc technique majeur, mais les nouveaux partenariats se matérialisent lentement, et la capitalisation reste proportionnée à son statut de petit projet DePIN hors du top 300.",
-        "bear": "Le marché de niche du transcodage décentralisé reste limité en taille comparé à la demande de calcul IA générale, largement captée par des concurrents mieux capitalisés (Render, Akash, io.net). Le 13 août 2026, la bourse turque CoinTR a annoncé le retrait de 33 actifs dont LPT (suppression des paires LPT/USDT et LPT/TRY, retraits possibles jusqu'au 30 septembre 2026), un signal de réduction de liquidité et d'accès au trading sur certains marchés régionaux. Si l'adoption de l'IA vidéo décentralisée ne s'accélère pas et si d'autres bourses suivent des mouvements de délisting similaires, la liquidité et l'attractivité spéculative du token pourraient continuer de s'éroder.",
-        "assumptions_note": "Ces trois scénarios supposent : (1) la migration technique vers Livepeer 2.0 (unité de calcul générique) se déroule sans incident majeur, (2) la demande de calcul vidéo et d'inférence IA continue de croître sur l'horizon 2026-2027, (3) aucune vague supplémentaire de retraits de bourses ne s'ajoute à celui de CoinTR d'août 2026. Aucun multiplicateur de prix n'est avancé."
+        "bull": "Livepeer 2.0, lancé le 7 août 2026, élargit la participation des opérateurs de nœuds aux machines CPU seules, ce qui pourrait renforcer la concurrence entre fournisseurs et améliorer coût/qualité pour les développeurs. La bascule stratégique vers un réseau de calcul IA décentralisé se confirme : l'usage aurait progressé de 72 % au premier trimestre 2026 et les frais liés à l'IA représenteraient désormais environ 60 % des revenus du réseau. Bitvavo propose depuis le 3 août 2026 un staking LPT à 21 % APY fixe (ou 7 % flexible), signe d'un intérêt renouvelé des plateformes de staking.",
+        "base": "LPT a reculé d'environ 7,9 % sur 7 jours fin août 2026, une performance mitigée malgré les annonces produit (Livepeer 2.0) ; le marché semble attendre une confirmation de la traction réelle du virage IA au-delà des chiffres de frais communiqués avant de réévaluer le token à la hausse.",
+        "bear": "L'exchange turc CoinTR a annoncé le retrait de 33 actifs dont LPT, effectif le 13 août 2026 (paires LPT/USDT et LPT/TRY supprimées, retraits possibles jusqu'au 30 septembre 2026), un signal de réduction de la liquidité disponible sur au moins une plateforme. La concurrence s'intensifie face à des réseaux de calcul décentralisé mieux capitalisés comme Render (capitalisation environ 11 fois supérieure), qui pourrait capter une part disproportionnée de la demande en calcul IA/GPU si Livepeer ne convertit pas sa bascule technique en adoption mesurable.",
+        "assumptions_note": "Ces trois scénarios supposent : (1) les chiffres de croissance d'usage (+72 % au T1 2026) et de part de revenus IA (~60 %) cités par des sources tierces se confirment dans les prochains rapports trimestriels du réseau ; (2) le retrait CoinTR reste un événement isolé sans effet d'entraînement sur d'autres plateformes ; (3) la transition vers le calcul CPU/GPU hybride de Livepeer 2.0 attire effectivement de nouveaux opérateurs sans dégrader la qualité de service. Aucun multiplicateur de prix n'est avancé."
       },
       "open_interest": {
-        "value_usd": null,
+        "value_usd": 14381706,
         "funding_rate_pct": null,
-        "source": null,
-        "note": "Chiffres trouvés via recherche contradictoires et non datés avec certitude (extraits indexés CoinGlass mentionnant tantôt environ 9,42 millions de dollars, tantôt 14,38 millions mais associés à un prix LPT incompatible avec le prix actuel, donc probablement en cache et obsolètes) ; accès direct à coinglass.com, coinalyze.net et binance.com bloqué par le proxy réseau de cet environnement. Faute d'un chiffre daté et fiable, laissé à null plutôt qu'estimé. Funding rate non trouvé."
+        "source": "CoinGlass (résultat indexé via WebSearch)",
+        "note": "Open interest agrégé autour de 14,4 millions de dollars. Funding rate non trouvé avec un chiffre daté et fiable ce cycle, laissé à null. Volume spot 24h environ 867 650 dollars, volume futures 24h environ 9,5 millions de dollars. Accès direct à fapi.binance.com et coinglass.com bloqué par le proxy réseau de cet environnement."
       },
       "defi_tvl": {
         "value_usd": null,
         "change_7d_pct": null,
         "source": null,
-        "note": "Non applicable : Livepeer n'est pas un protocole DeFi à valeur verrouillée (pas de lending, DEX ou staking-collatéral classique). DefiLlama référence Livepeer uniquement pour des métriques de frais et de revenus versés aux orchestrateurs et délégateurs, pas de TVL pertinente au sens DeFi traditionnel."
+        "note": "Non applicable : Livepeer est un réseau de calcul/transcodage vidéo décentralisé, pas un protocole DeFi avec TVL propre au sens DefiLlama."
       },
       "onchain_signal": {
         "available": false,
-        "note": "Aucun mouvement whale significatif et récent (moins de 48h) trouvé via recherche ce cycle ; les mouvements identifiés (redépôt de 526 000 LPT vers Binance le 5 juin 2025, dépôts antérieurs de 2023) sont anciens et hors fenêtre de fraîcheur retenue.",
-        "source_url": null
+        "note": "Recherche ciblée (\"whale alert\" Livepeer LPT) : aucun mouvement whale documenté et daté trouvé dans la fenêtre de 48h ; seules des discussions générales sur la transition IA du réseau et l'actualité produit (Livepeer 2.0, retrait CoinTR) sont ressorties.",
+        "source_url": "https://x.com/WhaleFactor/status/2081786895265103974"
       }
     },
     "AIOZ": {
-      "last_computed_at": "2026-08-17T16:55:00Z",
+      "last_computed_at": "2026-08-31T00:40:00Z",
       "competitor": {
-        "ticker": "FIL",
-        "name": "Filecoin",
-        "comparison_note": "AIOZ Network et Filecoin appartiennent tous deux au secteur DePIN du stockage et du streaming décentralisé. Filecoin affiche une capitalisation estimée à environ 557,8 millions de dollars (rang #70 selon CoinMarketCap, avec un écart selon la source), contre 61,15 millions de dollars pour AIOZ (rang #370), soit un écart d'environ 7 à 9 fois en faveur de Filecoin. Un autre concurrent proche, Akash Network (calcul GPU décentralisé), affiche une capitalisation estimée entre 153 et 216 millions de dollars selon la source, soit environ 2,5 à 3,5 fois la capitalisation d'AIOZ. Les chiffres de performance 7 jours et 30 jours des deux tokens varient fortement selon la source consultée et ne sont pas retenus avec certitude."
+        "ticker": "THETA",
+        "name": "Theta Network",
+        "comparison_note": "AIOZ Network (AIOZ) cote environ 0,059 dollar pour une capitalisation d'environ 75,3 millions de dollars (rang #322), en hausse d'environ 2,7 % sur 7 jours et 17,9 % sur 30 jours. Theta Network (THETA), réseau décentralisé de diffusion vidéo/CDN plus ancien et plus établi, cote environ 0,169 dollar pour une capitalisation d'environ 168,8 millions de dollars (rang #187), soit un écart d'environ 2,2 fois en faveur de Theta. AIOZ couvre un périmètre plus large que Theta (AIOZ AI pour le calcul/monétisation de modèles, AIOZ Stream pour le streaming CDN pair-à-pair, AIOZ Storage compatible S3, AIOZ Pin pour l'épinglage IPFS), avec un réseau revendiqué de plus de 326 000 appareils ayant livré plus de 26 000 téraoctets de données fin juin 2026, contre un positionnement de Theta plus concentré sur la diffusion vidéo et les relais Edge Node."
       },
       "long_term_thesis": {
-        "bull": "AIOZ Network a annoncé un partenariat avec Alibaba Cloud (Innovation Accelerator, intégration IA et infrastructure distribuée) et la formation d'une alliance DePIN en Asie du Sud-Est, ainsi qu'une extension d'écosystème avec Conflux et Neo. Une mise à niveau DePIN v5.0 est prévue en 2026 pour automatiser la gestion du stockage et améliorer le système de récompenses. Le réseau revendiquait plus de 326 000 appareils actifs et plus de 26 000 téraoctets de données livrées fin juin 2026. Si l'intégration Alibaba Cloud se traduit en usage réel de la puissance de streaming, stockage et calcul du réseau, cela pourrait renforcer la crédibilité technique d'AIOZ face à Filecoin et Akash.",
-        "base": "AIOZ continue d'exister comme acteur de niche du secteur DePIN, avec une croissance progressive du nombre d'appareils et de données stockées, mais sans décollage marqué de l'adoption commerciale à grande échelle. La capitalisation reste dans son ordre de grandeur actuel, fluctuant avec le sentiment général du marché crypto et du secteur IA/DePIN, sans rattraper significativement l'écart avec Filecoin.",
-        "bear": "La concurrence reste intense face à des acteurs mieux capitalisés et plus établis (Filecoin environ 7 à 9 fois plus gros, Akash, Render). Le marché du stockage et du streaming décentralisé demeure une niche comparée au cloud centralisé (AWS, Alibaba Cloud lui-même, Google Cloud). Le token reste à faible liquidité, ce qui le rend vulnérable à la volatilité si l'adoption réseau stagne malgré les annonces de partenariats.",
-        "assumptions_note": "Ces trois scénarios supposent : (1) le partenariat Alibaba Cloud et l'alliance DePIN en Asie du Sud-Est se traduisent en usage mesurable au-delà d'annonces, (2) la mise à niveau DePIN v5.0 se déploie sans incident technique majeur en 2026, (3) le narratif sectoriel DePIN et IA continue d'attirer des flux spéculatifs comme observé pour d'autres projets du secteur (Render, Akash). Aucun multiplicateur de prix n'est avancé ; les métriques d'adoption revendiquées par le projet (nombre d'appareils, données livrées) proviennent de communications propres au projet et ne sont pas vérifiées indépendamment."
+        "bull": "AIOZ a progressé d'environ 9,28 % en 24h au 21 août 2026, porté par un rallye plus large mené par Bitcoin (+7,89 %), une attention médiatique renouvelée sur son historique de succès de listing Upbit, et une mise à jour de sa pile technique IA. Le projet est cité dans une revue des principaux projets crypto IA de 2026 aux côtés de Bittensor et Render pour son positionnement DePIN durable (stockage, streaming, calcul IA).",
+        "base": "La progression sur 30 jours (+17,9 %) dépasse celle sur 7 jours (+2,7 %), suggérant un essoufflement récent après le pic du 21 août ; la capitalisation reste modeste (environ 75 millions de dollars, rang #322) comparée à Theta (environ 2,2 fois supérieure), sans catalyseur de rupture identifié ce cycle au-delà de la dynamique de marché générale.",
+        "bear": "AIOZ reste un token de petite capitalisation (rang #322) plus sensible à la volatilité du marché général que ses pairs plus établis comme Theta ou Render ; la dépendance à des annonces ponctuelles (mentions médiatiques, mises à jour de pile technique) plutôt qu'à des métriques d'adoption chiffrées et récurrentes rend la thèse plus difficile à valider sur la durée.",
+        "assumptions_note": "Ces trois scénarios supposent : (1) le chiffre de plus de 326 000 appareils connectés (arrêté fin juin 2026) reste représentatif de l'activité réseau actuelle, à confirmer par des données plus récentes aux prochains cycles ; (2) la corrélation forte observée le 21 août avec le rallye Bitcoin traduit une sensibilité bêta plutôt qu'un développement propre au projet ; (3) aucun multiplicateur de prix n'est avancé."
       },
       "open_interest": {
         "value_usd": null,
         "funding_rate_pct": null,
         "source": null,
-        "note": "Aucune preuve trouvée qu'un contrat AIOZUSDT soit listé sur Binance Futures. Un marché de futures existe sur des plateformes de second rang (CoinGlass référence des contrats), mais les extraits trouvés sont incohérents entre eux (open interest tantôt estimé à environ 1,63 million de dollars, tantôt 2,95 millions selon des captures associées à des prix différents et probablement obsolètes) et non datés avec fiabilité. Pas de contrat à terme liquide confirmé sur Binance ; laissé à null plutôt qu'estimé."
+        "note": "Aucun contrat perpétuel USDT-M liquide identifié pour AIOZ sur les sources consultées (endpoint direct fapi.binance.com bloqué par le proxy réseau de cet environnement, la recherche web n'a remonté aucune donnée d'open interest ou de funding rate spécifique à AIOZ pour août 2026) ; pas de contrat liquide connu ou endpoint inaccessible."
       },
       "defi_tvl": {
         "value_usd": null,
         "change_7d_pct": null,
         "source": null,
-        "note": "Non applicable : AIOZ Network n'est pas un protocole DeFi classique (lending, DEX natif ou staking à grande échelle) tracké comme tel par DefiLlama. Seule une liquidité DEX fragmentée du token (versions ERC-20 et BEP-20) a été identifiée, de l'ordre de 1 à 2 millions de dollars selon la source, sans rapport avec une TVL protocolaire."
+        "note": "Non applicable : AIOZ Network est un réseau DePIN de streaming/stockage/calcul IA, pas un protocole DeFi avec TVL propre au sens DefiLlama."
       },
       "onchain_signal": {
         "available": false,
-        "note": "Aucun mouvement whale significatif et récent (moins de 48h) trouvé via recherche ce cycle malgré une recherche ciblée ; aucune alerte Whale Alert spécifique et datée identifiée pour AIOZ.",
+        "note": "Recherche ciblée (\"whale alert\" AIOZ Network) : aucun mouvement whale spécifique à AIOZ trouvé dans la fenêtre de 48h ; les résultats renvoyés concernaient Whale Alert en général (dont un transfert de 1 790 BTC le 6 août 2026, sans lien avec AIOZ), non retenu.",
         "source_url": null
       }
     },
     "FLUX": {
-      "last_computed_at": "2026-08-18T08:24:00Z",
+      "last_computed_at": "2026-08-31T00:40:00Z",
       "competitor": {
         "ticker": "AKT",
         "name": "Akash Network",
-        "comparison_note": "Akash Network capitalise environ 9 a 10 fois plus que Flux (AKT autour de 153 millions de dollars contre FLUX autour de 16,6 a 16,65 millions de dollars selon deux sources convergentes, ecart negligeable). Flux met en avant un reseau de plus de 15 000 noeuds mondiaux avec des integrations Web3 gaming et IA, tandis qu'Akash reste davantage positionne sur le calcul GPU pour l'entrainement IA. Fait notable : les deux projets ont annonce un partenariat commun (InFlux Technologies x Akash Network) pour former un groupe de plaidoyer DePIN sur la regulation et l'adoption institutionnelle, ce qui en fait autant des partenaires que des concurrents. Aucune part de marche chiffree en pourcentage n'a ete trouvee pour l'un ou l'autre, donnee non inventee."
+        "comparison_note": "Flux (FLUX) cote environ 0,0497 dollar pour une capitalisation d'environ 20,8 millions de dollars (rang #796), en hausse d'environ 7,5 % sur 7 jours et 28 % sur 30 jours. Akash Network (AKT), marketplace décentralisé de calcul cloud et concurrent direct sur le segment infrastructure décentralisée face à AWS/Azure, cote environ 0,51 dollar pour une capitalisation d'environ 151,6 millions de dollars (rang #198), soit un écart d'environ 7,3 fois en faveur d'Akash. Flux opère des FluxNodes dans 67 pays sur 5 continents (chiffre de mai 2026) avec un positionnement d'infrastructure cloud décentralisée généraliste, quand Akash se concentre davantage sur la location de capacité de calcul (GPU/CPU) façon marketplace pour charges de travail IA et applications conteneurisées."
       },
       "long_term_thesis": {
-        "bull": "L'adoption du reseau de noeuds Flux (plus de 15 000 noeuds actifs) continue de croitre, portee par la demande d'infrastructure IA et cloud decentralisee ; le partenariat DePIN avec Akash Network renforce la legitimite reglementaire du secteur et pourrait accelerer l'adoption institutionnelle globale du DePIN.",
-        "base": "Flux reste un acteur DePIN de niche, tres loin derriere Akash en capitalisation boursiere, avec une croissance progressive mais sans catalyseur majeur isole, suivant globalement le cycle general du secteur DePIN plutot qu'une dynamique propre.",
-        "bear": "La capitalisation deja tres faible (environ 16,6 millions de dollars) signale une liquidite et un interet speculatif limites ; le risque de dilution via l'emission continue liee aux noeuds, combine a la concurrence de plateformes mieux capitalisees (Akash, Render, io.net), pourrait marginaliser davantage Flux.",
-        "assumptions_note": "Ces scenarios supposent : (1) que le partenariat Flux-Akash pour le plaidoyer DePIN se traduit reellement par une adoption reglementaire favorable, ce qui n'est pas garanti ; (2) que le chiffre de plus de 15 000 noeuds reflete une activite economique reelle et non de simples noeuds inactifs ou en pre-lancement ; (3) qu'aucune donnee de part de marche ou de revenus protocolaires n'a pu etre verifiee pour etayer un scenario chiffre precis - ces scenarios restent donc qualitatifs, sans aucun multiplicateur de prix avance."
+        "bull": "FLUX a progressé de 28 % sur 30 jours et 7,5 % sur 7 jours fin août 2026, une dynamique nettement supérieure à celle de son concurrent Akash (-10,9 % sur 7 jours sur la même fenêtre). La feuille de route du projet prévoit une unification de la plateforme et de nouveaux outils IA pour le quatrième trimestre 2026, dans un contexte où l'infrastructure cloud décentralisée continue de se positionner comme alternative à AWS/Azure avec des milliers de nœuds distribués opérés par des particuliers.",
+        "base": "La progression récente de FLUX (+7,5 % sur 7 jours, +28 % sur 30 jours) surpasse celle de la plupart de ses pairs DePIN infrastructure cette période, mais la capitalisation reste très faible (environ 20,8 millions de dollars, rang #796), ce qui rend le token sensible à de fortes variations sur de faibles volumes ; aucune annonce produit majeure n'est encore livrée avant le quatrième trimestre 2026 annoncé.",
+        "bear": "Avec une capitalisation d'environ 20,8 millions de dollars, FLUX reste très en retrait de son concurrent direct Akash (environ 7,3 fois inférieure) et encore plus des grands DePIN de calcul IA comme Render ; la promesse d'unification de plateforme et d'outils IA reste, à ce stade, une annonce de feuille de route pour le quatrième trimestre 2026 sans livraison confirmée ce cycle, un risque d'exécution classique pour les petites capitalisations infrastructure.",
+        "assumptions_note": "Ces trois scénarios supposent : (1) la comparaison de performance à 7/30 jours face à Akash reste représentative au-delà de ce seul cycle de mesure ; (2) les annonces de feuille de route (unification plateforme, outils IA au T4 2026) se concrétisent dans les délais annoncés ; (3) aucun multiplicateur de prix n'est avancé, la thèse dépendant de l'exécution produit sur un segment DePIN cloud très concurrentiel."
       },
       "open_interest": {
         "value_usd": null,
         "funding_rate_pct": null,
         "source": null,
-        "note": "Pas de contrat liquide connu ou endpoint inaccessible : l'API Binance Futures directe est bloquee par le proxy reseau de cet environnement, et la recherche web n'a retourne que des pages generiques sur le mecanisme du funding rate, sans donnee chiffree specifique a FLUXUSDT."
+        "note": "Aucun contrat perpétuel USDT-M liquide identifié pour FLUX (endpoint direct fapi.binance.com bloqué par le proxy réseau de cet environnement, la recherche web n'a remonté aucune donnée d'open interest ou de funding rate spécifique à FLUX pour août 2026) ; pas de contrat liquide connu ou endpoint inaccessible."
       },
       "defi_tvl": {
         "value_usd": null,
         "change_7d_pct": null,
         "source": null,
-        "note": "Non applicable : Flux (reseau zelcash) est un reseau de calcul decentralise, pas un protocole DeFi. DefiLlama reference des protocoles homonymes distincts (Flux Finance, environ 44,5 millions de dollars de TVL, lie a l'ecosysteme Ondo ; Flux Protocol, environ 72 dollars de TVL, ecosysteme NEAR) qui ne correspondent pas au token FLUX (zelcash) suivi ici."
+        "note": "Non applicable : Flux est un réseau d'infrastructure cloud décentralisée (calcul/hébergement), pas un protocole DeFi avec TVL propre au sens DefiLlama."
       },
       "onchain_signal": {
         "available": false,
-        "note": "Aucun mouvement whale specifique a FLUX de moins de 48h trouve via une recherche ciblee ; les resultats remontes concernaient des mouvements Bitcoin sans lien avec FLUX.",
-        "source_url": "https://whale-alert.io/alerts.html"
+        "note": "Recherche ciblée (\"whale alert\" Flux FLUX) : aucun mouvement whale spécifique à FLUX trouvé dans la fenêtre de 48h ; les résultats renvoyés concernaient Whale Alert en général ou d'autres actifs, sans lien avec FLUX.",
+        "source_url": null
       }
     },
     "ARB": {
