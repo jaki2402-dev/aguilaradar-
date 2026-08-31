@@ -897,12 +897,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-08-26T10:20:00Z",
-      "price_at_signal_eur": 1.19,
-      "move_pct_since_issue": -1.65,
+      "detected_at": "2026-08-31T14:18:00Z",
+      "price_at_signal_eur": 1.14,
+      "move_pct_since_issue": -5.79,
       "threshold_pct": 5,
-      "threshold_crossed": false,
-      "note": "Livepeer (LPT) : correction importante ce cycle (voir alerte transversale sur l'anomalie de devise) — le signal du 25 août (+16,5 %) reposait sur une valeur en dollars mal étiquetée en euros. Prix re-vérifié par appel direct à l'API CoinGecko (1,19 euro contre un prix d'émission de 1,21 euro, verdict ATTENTE du 23 août) : mouvement réel de -1,6 %, sous le seuil de mouvement directionnel de 5 %. Aucun signal précoce ne devrait donc être considéré comme actif sur ce verdict actuellement."
+      "threshold_crossed": true,
+      "note": "Livepeer (LPT) : seuil de mouvement directionnel (5 %) désormais franchi à la baisse, première alerte de seuil active sur le verdict ATTENTE du 23 août (le mouvement était resté sous le seuil au cycle précédent, -1,6 %). Prix vérifié par appel direct à l'API CoinGecko (groupé, un seul appel pour les 15 favoris) : 1,14 euro contre un prix d'émission de 1,21 euro, soit -5,8 %. Aucune actualité spécifique identifiée pour l'expliquer ce cycle. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 6 septembre."
     }
   },
   {
@@ -977,12 +977,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-08-31T12:29:00Z",
-      "price_at_signal_eur": 0.04291152,
-      "move_pct_since_issue": -4.45,
+      "detected_at": "2026-08-31T14:18:00Z",
+      "price_at_signal_eur": 0.04196278,
+      "move_pct_since_issue": -6.56,
       "threshold_pct": 5,
-      "threshold_crossed": false,
-      "note": "Flux/Zelcash (FLUX) : retour sous le seuil de mouvement directionnel (5 %), après avoir été franchi à la baisse lors des cycles précédents (jusqu'à -15,8 % le 26 août). Prix vérifié par appel direct à l'API CoinGecko (groupé) : 0,04291152 euro contre un prix d'émission de 0,04491 euro, soit -4,5 % — le prix s'est partiellement redressé. Aucun signal précoce ne devrait donc être considéré comme actif sur ce verdict actuellement."
+      "threshold_crossed": true,
+      "note": "Flux/Zelcash (FLUX) : seuil de mouvement directionnel (5 %) de nouveau franchi à la baisse, après un retour temporaire sous le seuil au cycle précédent (-4,5 % à 12h29 UTC). Prix vérifié par appel direct à l'API CoinGecko (groupé) : 0,04196278 euro contre un prix d'émission de 0,04491 euro, soit -6,6 %. Aucune actualité spécifique identifiée pour l'expliquer ce cycle. Signal précoce ré-enregistré, ne préjuge pas de l'issue à l'échéance du 6 septembre."
     }
   },
   {

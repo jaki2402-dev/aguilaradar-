@@ -708,5 +708,23 @@
     "triggered_at": "2026-08-31T12:29:00Z",
     "sentiment": "neutre",
     "message": "Toutes tes positions restent en ATTENTE technique cette semaine, mais la thèse hebdo diverge nettement sur LINK, ETH et INJ (Renforcer, conviction 7-8/10) : à surveiller, pas un ordre."
+  },
+  {
+    "id": "alert-20260831-1418-lpt-baisse",
+    "ticker_ou_theme": "LPT",
+    "type": "seuil_technique",
+    "triggered_at": "2026-08-31T14:18:00Z",
+    "sentiment": "négatif",
+    "message": "Livepeer (LPT) : seuil de mouvement directionnel (5 %) franchi à la baisse, première alerte de seuil active sur le verdict ATTENTE du 23 août (le mouvement était resté sous le seuil au cycle précédent, -1,6 %). Prix vérifié par appel direct à l'API CoinGecko : 1,14 euro contre un prix d'émission de 1,21 euro, soit -5,8 %. Aucune actualité spécifique identifiée pour l'expliquer ce cycle. Signal précoce enregistré sur le verdict correspondant, ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko directe (api.coingecko.com/api/v3/coins/markets)"
+  },
+  {
+    "id": "alert-20260831-1418-flux-baisse",
+    "ticker_ou_theme": "FLUX",
+    "type": "seuil_technique",
+    "triggered_at": "2026-08-31T14:18:00Z",
+    "sentiment": "négatif",
+    "message": "Flux/Zelcash (FLUX) : seuil de mouvement directionnel (5 %) de nouveau franchi à la baisse, après un retour temporaire sous le seuil au cycle précédent (-4,5 % à 12h29 UTC). Prix vérifié par appel direct à l'API CoinGecko : 0,04196278 euro contre un prix d'émission de 0,04491 euro, soit -6,6 %. Aucune actualité spécifique identifiée pour l'expliquer ce cycle. Signal précoce ré-enregistré sur le verdict correspondant, ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko directe (api.coingecko.com/api/v3/coins/markets)"
   }
 ]
