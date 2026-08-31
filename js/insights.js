@@ -79,9 +79,9 @@ function renderMarketContext(ctx) {
       <div class="stat-card accent-indigo"><div class="stat-label">Dominance stablecoins</div><div class="stat-value">${sc.dominance_pct !== null && sc.dominance_pct !== undefined ? sc.dominance_pct.toFixed(1) + " %" : "—"}</div></div>
       <div class="stat-card accent-gold"><div class="stat-label">Chômage US</div><div class="stat-value">${emp.unemployment_rate_pct !== null && emp.unemployment_rate_pct !== undefined ? emp.unemployment_rate_pct.toFixed(1) + " %" : "—"}</div></div>
       <div class="stat-card accent-teal"><div class="stat-label">Flux ETF BTC</div><div class="stat-value">${etf.btc_etf_net_flow_usd !== null && etf.btc_etf_net_flow_usd !== undefined ? formatMarketCap(etf.btc_etf_net_flow_usd) : "—"}</div></div>
-      <div class="stat-card accent-gray"><div class="stat-label">Or (once, USD)</div><div class="stat-value">${gold.spot_usd_per_oz !== null && gold.spot_usd_per_oz !== undefined ? "$" + Math.round(gold.spot_usd_per_oz).toLocaleString("fr-FR") : "—"}</div></div>
-      <div class="stat-card accent-violet"><div class="stat-label">Taux Fed (cible)</div><div class="stat-value">${fed.funds_rate_range ? escapeHtml(fed.funds_rate_range) : "—"}</div></div>
-      <div class="stat-card accent-indigo"><div class="stat-label">Trésor US 10 ans</div><div class="stat-value">${fed.treasury_yield_10y_pct !== null && fed.treasury_yield_10y_pct !== undefined ? fed.treasury_yield_10y_pct.toFixed(2) + " %" : "—"}</div></div>
+      <div class="stat-card accent-gray"><div class="stat-label">Or (once, USD)${glossaryTipHtml("Or (once, USD)")}</div><div class="stat-value">${gold.spot_usd_per_oz !== null && gold.spot_usd_per_oz !== undefined ? "$" + Math.round(gold.spot_usd_per_oz).toLocaleString("fr-FR") : "—"}</div></div>
+      <div class="stat-card accent-violet"><div class="stat-label">Taux Fed (cible)${glossaryTipHtml("Taux Fed (cible)")}</div><div class="stat-value">${fed.funds_rate_range ? escapeHtml(fed.funds_rate_range) : "—"}</div></div>
+      <div class="stat-card accent-indigo"><div class="stat-label">Trésor US 10 ans${glossaryTipHtml("Trésor US 10 ans")}</div><div class="stat-value">${fed.treasury_yield_10y_pct !== null && fed.treasury_yield_10y_pct !== undefined ? fed.treasury_yield_10y_pct.toFixed(2) + " %" : "—"}</div></div>
     </div>
     ${sc.note ? `<p class="hint">Stablecoins : ${escapeHtml(sc.note)}</p>` : ""}
     ${emp.market_reaction_note ? `<p class="hint">Emploi : ${escapeHtml(emp.market_reaction_note)}</p>` : ""}

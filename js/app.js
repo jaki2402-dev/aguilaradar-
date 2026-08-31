@@ -383,11 +383,11 @@ function renderMacroRegime(engineHistory) {
   const cls = regime.regime === "risk-on" ? "positive" : regime.regime === "risk-off" ? "negative" : "";
   el.innerHTML = `
     <div class="hero-card">
-      <div class="hint">Régime de marché actuel</div>
+      <div class="hint">Régime de marché actuel${glossaryTipHtml("Régime de marché")}</div>
       <div class="hero-stats">
         <div><div class="hero-stat-value ${cls}">${REGIME_LABELS[regime.regime] || regime.regime}</div><div class="hero-stat-label">Contexte macro</div></div>
-        <div><div class="hero-stat-value">${regime.fear_greed_value ?? "—"}</div><div class="hero-stat-label">Fear &amp; Greed</div></div>
-        <div><div class="hero-stat-value">${regime.btc_dominance_pct !== null && regime.btc_dominance_pct !== undefined ? regime.btc_dominance_pct.toFixed(1) + " %" : "—"}</div><div class="hero-stat-label">Dominance BTC</div></div>
+        <div><div class="hero-stat-value">${regime.fear_greed_value ?? "—"}</div><div class="hero-stat-label">Fear &amp; Greed${glossaryTipHtml("Indice de peur et de cupidité")}</div></div>
+        <div><div class="hero-stat-value">${regime.btc_dominance_pct !== null && regime.btc_dominance_pct !== undefined ? regime.btc_dominance_pct.toFixed(1) + " %" : "—"}</div><div class="hero-stat-label">Dominance BTC${glossaryTipHtml("Dominance BTC")}</div></div>
       </div>
       ${regime.note ? `<p class="hint" style="margin-top:10px;">${escapeHtml(regime.note)}</p>` : ""}
     </div>`;
@@ -471,7 +471,7 @@ function updateHeroStats(verdicts, alerts) {
 }
 
 async function loadAllData() {
-  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis] = await Promise.all([
+  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory] = await Promise.all([
     loadJson(DATA_URLS.verdicts),
     loadJson(DATA_URLS.engineHistory),
     loadJson(DATA_URLS.opportunities),
@@ -484,11 +484,12 @@ async function loadAllData() {
     loadJson(DATA_URLS.digest),
     loadJson(DATA_URLS.portfolio),
     loadJson(DATA_URLS.portfolioThesis),
+    loadJson(DATA_URLS.portfolioHistory),
   ]);
   latestFavorisContext = favorisContext;
   // Expose les données déjà chargées pour que d'autres fonctionnalités (l'Assistant) les
   // réutilisent sans refaire les mêmes fetch — toujours les données du dernier rafraîchissement.
-  window.aguilaradarData = { verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis };
+  window.aguilaradarData = { verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory };
   if (window.renderDigestPanel) renderDigestPanel(digest);
 
   renderEngineTab(verdicts || [], engineHistory, opportunities, controlGroup);
@@ -508,7 +509,7 @@ async function loadAllData() {
   initDayReplay({ verdicts: verdicts || [], opportunities, alerts: alerts || [] });
   updateHeroStats(verdicts || [], alerts);
   updateFavorisVerdicts(verdicts || []);
-  if (window.renderPortfolio) renderPortfolio(portfolio, verdicts || [], portfolioThesis);
+  if (window.renderPortfolio) renderPortfolio(portfolio, verdicts || [], portfolioThesis, portfolioHistory);
 
   updateFreshnessIndicator(engineHistory, opportunities, news);
 }

@@ -19,7 +19,10 @@ function computeRSI(closes, period) {
 }
 
 function computeSMA(closes, period) {
-  if (closes.length < period) return null;
+  // !period couvre period=0 (et NaN/undefined) : sans ce garde-fou, un appelant passant
+  // Math.min(50, closes.length) sur un historique vide finissait par diviser 0/0 -> NaN,
+  // qui passe le test "!== null" côté rendu et s'affichait littéralement "NaN €".
+  if (!period || closes.length < period) return null;
   const slice = closes.slice(closes.length - period);
   return slice.reduce((a, b) => a + b, 0) / period;
 }
@@ -322,7 +325,10 @@ async function renderTechnicalSection(asset) {
   const closes = assetChart.closes;
   const rsi = computeRSI(closes, 14);
   const sma20 = computeSMA(closes, 20);
-  const sma50 = computeSMA(closes, Math.min(50, closes.length));
+  // Vrai MM50 (50 points exacts, comme sma20 juste au-dessus) : Math.min(50, closes.length)
+  // affaiblissait silencieusement la periode a ce qui etait disponible et affichait le
+  // resultat sous l'etiquette trompeuse "MM50" au lieu d'un "-" honnete faute de donnees.
+  const sma50 = computeSMA(closes, 50);
   const price = closes[closes.length - 1];
   const signals = technicalSignalSentences(price, sma20, sma50, rsi, asset.athChangePct);
 
@@ -372,10 +378,10 @@ async function renderTechnicalSection(asset) {
         .join("")}
     </div>
     <div class="detail-stats">
-      <div class="detail-stat"><span class="hint">RSI (14)</span><strong>${rsi !== null ? rsi.toFixed(0) : "—"}</strong></div>
-      <div class="detail-stat"><span class="hint">MM20</span><strong>${sma20 !== null ? formatPrice(sma20, "EUR") : "—"}</strong></div>
-      <div class="detail-stat"><span class="hint">MM50</span><strong>${sma50 !== null ? formatPrice(sma50, "EUR") : "—"}</strong></div>
-      <div class="detail-stat"><span class="hint">vs ATH</span><strong>${asset.athChangePct !== undefined && asset.athChangePct !== null ? asset.athChangePct.toFixed(1) + " %" : "—"}</strong></div>
+      <div class="detail-stat"><span class="hint">RSI (14)${glossaryTipHtml("RSI")}</span><strong>${rsi !== null ? rsi.toFixed(0) : "—"}</strong></div>
+      <div class="detail-stat"><span class="hint">MM20${glossaryTipHtml("MM20 / MM50")}</span><strong>${sma20 !== null ? formatPrice(sma20, "EUR") : "—"}</strong></div>
+      <div class="detail-stat"><span class="hint">MM50${glossaryTipHtml("MM20 / MM50")}</span><strong>${sma50 !== null ? formatPrice(sma50, "EUR") : "—"}</strong></div>
+      <div class="detail-stat"><span class="hint">vs ATH${glossaryTipHtml("ATH")}</span><strong>${asset.athChangePct !== undefined && asset.athChangePct !== null ? asset.athChangePct.toFixed(1) + " %" : "—"}</strong></div>
     </div>
     ${
       volumeWindows

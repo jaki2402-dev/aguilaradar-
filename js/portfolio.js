@@ -8,6 +8,7 @@
 let latestPortfolio = null;
 let latestPortfolioVerdicts = [];
 let latestPortfolioThesis = null;
+let latestPortfolioHistory = null;
 
 function latestVerdictFor(cgId, verdicts) {
   return (verdicts || [])
@@ -91,6 +92,125 @@ function computePortfolioSummary(portfolio, prices, verdicts, thesis) {
   const thesisGeneratedAt = (thesis && thesis.generated_at) || null;
 
   return { positions: rows, totalValue, totalInvested, totalPnl, totalPnlPct, thesisGeneratedAt };
+}
+
+// Répartition par position (barres horizontales, valeur actuelle) — vue d'ensemble avant le
+// détail tuile par tuile plus bas. Réutilise le composant .sector-bars déjà utilisé par
+// renderSectorBreakdown (Accueil, insights.js) plutôt qu'un 2e langage visuel pour la même
+// idée. Purement dérivé de summary.positions, déjà calculé par computePortfolioSummary —
+// aucun fetch, aucune donnée inventée.
+function renderPortfolioAllocationChart(positions) {
+  const withValue = (positions || []).filter((p) => !p.pending && p.value !== null && p.value > 0);
+  if (withValue.length === 0) return "";
+  const total = withValue.reduce((sum, p) => sum + p.value, 0);
+  if (total <= 0) return "";
+  const sorted = withValue.slice().sort((a, b) => b.value - a.value);
+  return `
+    <div class="portfolio-chart-card">
+      <span class="hint">Répartition par position (valeur actuelle)</span>
+      <div class="sector-bars">
+        ${sorted
+          .map((p) => {
+            const pct = (p.value / total) * 100;
+            return `<div class="sector-row" style="--sector-color:${p.sectorColor || "var(--accent)"}">
+              <span class="sector-label">${escapeHtml(p.ticker)}</span>
+              <div class="sector-track"><div class="sector-fill" style="width:${pct.toFixed(1)}%"></div></div>
+              <span class="sector-pct">${formatPrice(p.value, "EUR")} · ${pct.toFixed(0)}%</span>
+            </div>`;
+          })
+          .join("")}
+      </div>
+    </div>`;
+}
+
+// Performance par position (P&L% latent, barres centrées sur la position la plus extrême) —
+// répond directement au "mieux voir le suivi" : quelles positions tirent le portefeuille vers
+// le haut ou le bas, en un coup d'œil, sans devoir déplier les 15 tuiles une à une.
+function renderPortfolioPerformanceChart(positions) {
+  const withPnl = (positions || []).filter((p) => !p.pending && p.pnlPct !== null && p.pnlPct !== undefined);
+  if (withPnl.length === 0) return "";
+  const sorted = withPnl.slice().sort((a, b) => b.pnlPct - a.pnlPct);
+  const maxAbs = Math.max(...sorted.map((p) => Math.abs(p.pnlPct)), 1);
+  return `
+    <div class="portfolio-chart-card">
+      <span class="hint">Performance par position (P&amp;L latent)</span>
+      <div class="sector-bars">
+        ${sorted
+          .map((p) => {
+            const widthPct = (Math.abs(p.pnlPct) / maxAbs) * 100;
+            const color = p.pnlPct >= 0 ? "var(--gain)" : "var(--loss)";
+            const sign = p.pnlPct >= 0 ? "+" : "";
+            return `<div class="sector-row" style="--sector-color:${color}">
+              <span class="sector-label">${escapeHtml(p.ticker)}</span>
+              <div class="sector-track"><div class="sector-fill" style="width:${widthPct.toFixed(1)}%"></div></div>
+              <span class="sector-pct">${sign}${p.pnlPct.toFixed(1)}%</span>
+            </div>`;
+          })
+          .join("")}
+      </div>
+    </div>`;
+}
+
+// Évolution réelle de la valeur totale (data/portfolio-history.json, 1 point réel par jour
+// écrit par aguilaradar-cycle-2h à partir de prix réellement récupérés ce cycle-là — jamais un
+// point interpolé, deviné ou rétro-daté ici, cohérent avec le "jamais halluciner" appliqué
+// partout ailleurs sur le site). Moins de 2 points : message d'attente plutôt qu'un graphique
+// vide ou trompeur (même discipline que renderConfidenceHistory, insights.js). Réutilise
+// sparklinePoints (cards.js, chargé avant portfolio.js) pour le tracé.
+function renderPortfolioHistoryChart(history) {
+  const snapshots = (history && history.snapshots) || [];
+  if (snapshots.length < 2) {
+    return `
+      <div class="portfolio-chart-card">
+        <span class="hint">Évolution de la valeur totale</span>
+        <p class="empty-state">Historique en cours de constitution (1 point réel ajouté par jour) — repasse dans quelques jours pour voir la courbe se dessiner.</p>
+      </div>`;
+  }
+  const sorted = snapshots.slice().sort((a, b) => new Date(a.date) - new Date(b.date));
+  const values = sorted.map((s) => s.total_value_eur);
+  const w = 100;
+  const h = 40;
+  const linePoints = sparklinePoints(values, w, h);
+  const min = Math.min(...values);
+  const max = Math.max(...values);
+  const range = max - min || 1;
+  const circles = sorted
+    .map((s, i) => {
+      const x = (i / (sorted.length - 1)) * w;
+      const y = h - ((s.total_value_eur - min) / range) * h;
+      const dateLabel = new Date(s.date).toLocaleDateString("fr-FR");
+      return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1.6" class="hist-point"><title>${escapeHtml(dateLabel)} : ${escapeHtml(formatPrice(s.total_value_eur, "EUR"))}</title></circle>`;
+    })
+    .join("");
+  const first = sorted[0];
+  const last = sorted[sorted.length - 1];
+  const evolution = first.total_value_eur ? ((last.total_value_eur - first.total_value_eur) / first.total_value_eur) * 100 : null;
+  const evoClass = evolution === null ? "" : evolution >= 0 ? "positive" : "negative";
+  const evoSign = evolution !== null && evolution >= 0 ? "+" : "";
+  return `
+    <div class="portfolio-chart-card">
+      <span class="hint">Évolution de la valeur totale (${sorted.length} points réels)</span>
+      <svg class="portfolio-history-chart" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+        <polyline points="${linePoints} ${w},${h} 0,${h}" class="hist-area" />
+        <polyline points="${linePoints}" class="hist-line" />
+        ${circles}
+      </svg>
+      <div class="portfolio-history-range">
+        <span class="hint">${new Date(first.date).toLocaleDateString("fr-FR")} · ${formatPrice(first.total_value_eur, "EUR")}</span>
+        ${evolution !== null ? `<span class="hint ${evoClass}">${evoSign}${evolution.toFixed(1)} %</span>` : ""}
+        <span class="hint">${new Date(last.date).toLocaleDateString("fr-FR")} · ${formatPrice(last.total_value_eur, "EUR")}</span>
+      </div>
+    </div>`;
+}
+
+// Assemble les 3 graphiques ci-dessus dans #portfolio-charts (historique en pleine largeur,
+// répartition + performance côte à côte en dessous — voir .portfolio-charts, style.css).
+function renderPortfolioCharts(positions, history) {
+  const historyHtml = renderPortfolioHistoryChart(history);
+  const allocHtml = renderPortfolioAllocationChart(positions);
+  const perfHtml = renderPortfolioPerformanceChart(positions);
+  const gridParts = [allocHtml, perfHtml].filter(Boolean);
+  return `${historyHtml}${gridParts.length ? `<div class="portfolio-charts">${gridParts.join("")}</div>` : ""}`;
 }
 
 // Tuile dense (même esprit que .favori-tile/.opp-tile — voir CLAUDE.md/style.css : "Coin360,
@@ -249,10 +369,11 @@ function renderPortfolioTotals(totalValue, totalInvested, thesisGeneratedAt) {
 // portfolio/verdicts/thesis omis (appel sans argument) -> réutilise le dernier jeu déjà connu :
 // c'est ce que fait refreshPrices() à chaque tick (60s) pour ne recalculer que valeur/P&L depuis
 // le nouveau prix, sans avoir à repasser par loadAllData() qui re-fetch tout le reste du site.
-function renderPortfolio(portfolio, verdicts, thesis) {
+function renderPortfolio(portfolio, verdicts, thesis, history) {
   if (portfolio !== undefined) latestPortfolio = portfolio;
   if (verdicts !== undefined) latestPortfolioVerdicts = verdicts || [];
   if (thesis !== undefined) latestPortfolioThesis = thesis;
+  if (history !== undefined) latestPortfolioHistory = history;
 
   const el = document.getElementById("portfolio-body");
   if (!el) return;
@@ -285,6 +406,9 @@ function renderPortfolio(portfolio, verdicts, thesis) {
   });
 
   renderPortfolioTotals(summary.totalValue, summary.totalInvested, summary.thesisGeneratedAt);
+
+  const chartsEl = document.getElementById("portfolio-charts");
+  if (chartsEl) chartsEl.innerHTML = renderPortfolioCharts(summary.positions, latestPortfolioHistory);
 }
 
 // Calculette achat/vente — coût moyen pondéré (même méthode que "coût net moyen" affiché par

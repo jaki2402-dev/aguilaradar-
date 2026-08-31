@@ -126,7 +126,20 @@ const GLOSSARY = [
   { term: "Régime de marché", definition: "La tendance de fond actuelle : \"risk-on\" (appétit pour le risque), \"neutre\", ou \"risk-off\" (aversion au risque)." },
   { term: "Signal précoce", definition: "Un mouvement de prix qui va déjà à l'encontre d'un verdict avant même son échéance — un avertissement, pas un résultat final." },
   { term: "Backtest", definition: "La vérification honnête des performances passées du moteur — la matrice de confusion et le taux de réussite dans l'onglet Moteur." },
+  { term: "Or (once, USD)", definition: "Le prix au comptant d'une once d'or — valeur refuge de référence, utile pour comparer l'appétit pour le risque entre l'or et le bitcoin." },
+  { term: "Taux Fed (cible)", definition: "La fourchette de taux directeur fixée par la banque centrale américaine — un taux qui monte renchérit le crédit et pèse en général sur les actifs risqués comme la crypto." },
+  { term: "Trésor US 10 ans", definition: "Le rendement de la dette américaine à 10 ans — une hausse traduit souvent des anticipations de taux plus élevés ou plus durables, un signal macro suivi par les marchés risqués." },
 ];
+
+// Petite bulle d'aide au survol/focus (accessible clavier, sans JS) réutilisant GLOSSARY comme
+// source unique — jamais un 3e texte dupliqué à la main (voir le commentaire au-dessus de
+// GLOSSARY sur les 2 copies déjà existantes à synchroniser). Retourne "" si le terme n'existe
+// pas dans GLOSSARY plutôt que d'afficher une bulle vide ou un texte inventé.
+function glossaryTipHtml(term) {
+  const entry = GLOSSARY.find((g) => g.term === term);
+  if (!entry) return "";
+  return `<span class="info-tip" tabindex="0" role="button" aria-label="Définition : ${escapeHtml(entry.definition)}" data-tip="${escapeHtml(entry.definition)}">?</span>`;
+}
 
 // URL du relais IA gratuit (Cloudflare Worker + Workers AI, voir cloudflare-worker/worker.js)
 // utilisé par l'Assistant en tout dernier recours, jamais en premier (voir assistant.js). Vide/
@@ -149,4 +162,5 @@ const DATA_URLS = {
   digest: "data/digest.json",
   portfolio: "data/portfolio.json",
   portfolioThesis: "data/portfolio-thesis.json",
+  portfolioHistory: "data/portfolio-history.json",
 };
