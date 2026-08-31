@@ -306,6 +306,81 @@ describe("portfolio.js — grille de tuiles et repli/dépli", () => {
     const bodyEl = dom.window.document.getElementById("portfolio-body");
     expect(bodyEl.textContent).not.toContain("Thèse hebdo");
   });
+
+  it("prévoit un conteneur de signaux techniques par tuile, avec un état de chargement avant tout dépli", () => {
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    dom.window.renderPortfolio({ positions: [pos()] }, []);
+    const container = dom.window.document.getElementById("portfolio-technical-0");
+    expect(container).not.toBeNull();
+    expect(container.textContent).toContain("Se charge à l'ouverture");
+  });
+});
+
+// Signaux techniques (RSI/MM/corrélation/carnet d'ordres) : réutilisation de
+// renderTechnicalSection (detail.js), donc detail.js chargé ici en plus — le describe
+// ci-dessus s'en passe volontairement pour rester focalisé sur le repli/dépli pur.
+describe("portfolio.js — signaux techniques d'une position (réutilise detail.js)", () => {
+  let dom;
+
+  function mockTechnicalFetch(dom, { coingeckoOk = true, binanceOk = true } = {}) {
+    dom.window.fetch = async (url) => {
+      if (url.includes("coingecko.com")) {
+        if (!coingeckoOk) return { ok: false, status: 429 };
+        const prices = Array.from({ length: 60 }, (_, i) => [1700000000000 + i * 86400000, 100 + i * 0.5]);
+        return { ok: true, json: async () => ({ prices, total_volumes: prices.map(([t]) => [t, 1000]) }) };
+      }
+      if (url.includes("binance.com")) {
+        if (!binanceOk) return { ok: false, status: 418 };
+        return { ok: true, json: async () => ({ bids: [["100", "5"]], asks: [["101", "3"]] }) };
+      }
+      throw new Error(`unexpected fetch: ${url}`);
+    };
+  }
+
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "detail.js", "portfolio.js"], { html: PORTFOLIO_FIXTURE_HTML });
+  });
+
+  it("calcule et affiche RSI/MM20/MM50 réels (même calcul que Favoris) une fois chargé", async () => {
+    mockTechnicalFetch(dom);
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    dom.window.renderPortfolio({ positions: [pos()] }, []);
+    const container = dom.window.document.getElementById("portfolio-technical-0");
+
+    const ok = await dom.window.loadPortfolioTechnical(container, { cgId: "bitcoin", ticker: "BTC", tvSymbol: "BINANCE:BTCUSDT" });
+
+    expect(ok).toBe(true);
+    expect(container.textContent).toContain("RSI (14)");
+    expect(container.textContent).toContain("MM20");
+    expect(container.textContent).not.toContain("Se charge à l'ouverture");
+  });
+
+  it("affiche un message d'indisponibilité (jamais une erreur brute ni un blocage) si le fetch échoue", async () => {
+    mockTechnicalFetch(dom, { coingeckoOk: false });
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    dom.window.renderPortfolio({ positions: [pos()] }, []);
+    const container = dom.window.document.getElementById("portfolio-technical-0");
+
+    const ok = await dom.window.loadPortfolioTechnical(container, { cgId: "bitcoin", ticker: "BTC", tvSymbol: "BINANCE:BTCUSDT" });
+
+    expect(ok).toBe(false);
+    expect(container.textContent).toContain("indisponibles");
+  });
+
+  it("déclenche le chargement des signaux techniques automatiquement au premier dépli de la tuile", async () => {
+    mockTechnicalFetch(dom);
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    dom.window.renderPortfolio({ positions: [pos()] }, []);
+    const tile = dom.window.document.querySelector(".portfolio-tile.clickable");
+    const container = dom.window.document.getElementById("portfolio-technical-0");
+
+    tile.click();
+    // Laisse la chaîne de promesses (fetch -> json -> calculs -> rendu) se résoudre.
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(container.textContent).not.toContain("Se charge à l'ouverture");
+    expect(container.textContent).toContain("RSI (14)");
+  });
 });
 
 describe("portfolio.js — computeTransactionResult (calculette achat/vente, coût moyen pondéré)", () => {

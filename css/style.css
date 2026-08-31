@@ -513,6 +513,7 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
    CLAUDE.md/portfolio-thesis.json) : la thèse reprend le traitement "sous-carte" de
    .detail-signal plus bas, pour se lire comme un module à part plutôt qu'un paragraphe de plus
    collé au raisonnement du moteur juste au-dessus. */
+.portfolio-technical-wrap { margin-top: 12px; }
 .portfolio-reasoning { margin-top: 10px; }
 .portfolio-thesis {
   margin-top: 12px; padding: 10px 12px;

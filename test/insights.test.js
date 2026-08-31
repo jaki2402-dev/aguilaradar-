@@ -62,6 +62,48 @@ describe("insights.js — renderWeeklyDigest (fenêtre glissante de 7 jours)", (
   });
 });
 
+describe("insights.js — renderMarketContext (contexte macro : stablecoins/emploi/ETF/or/Fed)", () => {
+  function pageWithContext() {
+    return loadPage(["config.js", "prices.js", "cards.js", "insights.js"], { html: `<!doctype html><html><body><div id="market-context-body"></div></body></html>` });
+  }
+
+  it("affiche les valeurs réelles (stablecoins/emploi/ETF/or/Fed) quand tous les champs sont renseignés", () => {
+    const dom = pageWithContext();
+    dom.window.renderMarketContext({
+      last_computed_at: "2026-08-31T00:38:00Z",
+      stablecoins: { dominance_pct: 11.11, note: "Note stablecoins." },
+      employment_us: { unemployment_rate_pct: 4.1, market_reaction_note: "Note emploi." },
+      etf_flows: { btc_etf_net_flow_usd: -201900000, note: "Note ETF." },
+      gold: { spot_usd_per_oz: 2415.3, note: "Note or." },
+      fed_policy: { funds_rate_range: "4.25%-4.50%", treasury_yield_10y_pct: 4.28, note: "Note Fed." },
+    });
+    const html = dom.window.document.getElementById("market-context-body").innerHTML;
+    expect(html).toContain("11.1 %"); // dominance stablecoins
+    expect(html).toContain("4.1 %"); // chômage
+    expect(html).toMatch(/\$2\s*415/); // or, arrondi (espace insécable via toLocaleString)
+    expect(html).toContain("4.25%-4.50%"); // taux Fed cible
+    expect(html).toContain("4.28 %"); // rendement Trésor 10 ans
+    expect(html).toContain("Note or.");
+    expect(html).toContain("Note Fed.");
+  });
+
+  it("affiche des tirets pour l'or et la Fed tant que la routine ne les a pas encore renseignés, sans casser le reste déjà présent", () => {
+    const dom = pageWithContext();
+    dom.window.renderMarketContext({
+      last_computed_at: "2026-08-31T00:38:00Z",
+      stablecoins: { dominance_pct: 11.11 },
+      employment_us: { unemployment_rate_pct: 4.1 },
+      etf_flows: { btc_etf_net_flow_usd: -201900000 },
+      // gold / fed_policy absents : jamais un chiffre inventé pour combler.
+    });
+    const html = dom.window.document.getElementById("market-context-body").innerHTML;
+    expect(html).toContain("11.1 %");
+    expect(html).toContain("Or (once, USD)</div><div class=\"stat-value\">—<");
+    expect(html).toContain("Taux Fed (cible)</div><div class=\"stat-value\">—<");
+    expect(html).toContain("Trésor US 10 ans</div><div class=\"stat-value\">—<");
+  });
+});
+
 describe("insights.js — initDayReplay (régression 3caff5e : accumulation d'écouteurs)", () => {
   it("only ever fires the render exactly once per change, no matter how many times initDayReplay was called before (e.g. across refreshes)", () => {
     const dom = loadPage(["insights.js"], {

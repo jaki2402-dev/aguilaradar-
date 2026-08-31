@@ -56,26 +56,38 @@ function renderProvisionalOverview(verdicts) {
       .join("")}`;
 }
 
+// gold/fed_policy (or spot, taux Fed cible, tendance bilan QE/QT, rendement Trésor 10 ans) :
+// mêmes règles que stablecoins/employment_us/etf_flows juste au-dessus — champs optionnels,
+// jamais inventés ici (rendu pur), alimentés par une routine qui les recherche pour de vrai
+// (WebSearch/HTTP direct) ou les laisse à null plutôt que de deviner. "—" tant qu'absents,
+// jamais un chiffre par défaut qui pourrait passer pour une vraie donnée.
 function renderMarketContext(ctx) {
   const el = document.getElementById("market-context-body");
   if (!el) return;
   if (!ctx || !ctx.last_computed_at) {
-    el.innerHTML = `<p class="empty-state">Pas encore calculé — stablecoins, emploi américain, flux ETF. Alimenté au premier cycle profond qui inclut ces signaux.</p>`;
+    el.innerHTML = `<p class="empty-state">Pas encore calculé — stablecoins, emploi américain, flux ETF, or, politique Fed. Alimenté au premier cycle profond qui inclut ces signaux.</p>`;
     return;
   }
   const sc = ctx.stablecoins || {};
   const emp = ctx.employment_us || {};
   const etf = ctx.etf_flows || {};
+  const gold = ctx.gold || {};
+  const fed = ctx.fed_policy || {};
   const conf = ctx.site_confidence || {};
   el.innerHTML = `
     <div class="stat-row">
       <div class="stat-card accent-indigo"><div class="stat-label">Dominance stablecoins</div><div class="stat-value">${sc.dominance_pct !== null && sc.dominance_pct !== undefined ? sc.dominance_pct.toFixed(1) + " %" : "—"}</div></div>
       <div class="stat-card accent-gold"><div class="stat-label">Chômage US</div><div class="stat-value">${emp.unemployment_rate_pct !== null && emp.unemployment_rate_pct !== undefined ? emp.unemployment_rate_pct.toFixed(1) + " %" : "—"}</div></div>
       <div class="stat-card accent-teal"><div class="stat-label">Flux ETF BTC</div><div class="stat-value">${etf.btc_etf_net_flow_usd !== null && etf.btc_etf_net_flow_usd !== undefined ? formatMarketCap(etf.btc_etf_net_flow_usd) : "—"}</div></div>
+      <div class="stat-card accent-gray"><div class="stat-label">Or (once, USD)</div><div class="stat-value">${gold.spot_usd_per_oz !== null && gold.spot_usd_per_oz !== undefined ? "$" + Math.round(gold.spot_usd_per_oz).toLocaleString("fr-FR") : "—"}</div></div>
+      <div class="stat-card accent-violet"><div class="stat-label">Taux Fed (cible)</div><div class="stat-value">${fed.funds_rate_range ? escapeHtml(fed.funds_rate_range) : "—"}</div></div>
+      <div class="stat-card accent-indigo"><div class="stat-label">Trésor US 10 ans</div><div class="stat-value">${fed.treasury_yield_10y_pct !== null && fed.treasury_yield_10y_pct !== undefined ? fed.treasury_yield_10y_pct.toFixed(2) + " %" : "—"}</div></div>
     </div>
     ${sc.note ? `<p class="hint">Stablecoins : ${escapeHtml(sc.note)}</p>` : ""}
     ${emp.market_reaction_note ? `<p class="hint">Emploi : ${escapeHtml(emp.market_reaction_note)}</p>` : ""}
     ${etf.note ? `<p class="hint">ETF : ${escapeHtml(etf.note)}</p>` : ""}
+    ${gold.note ? `<p class="hint">Or : ${escapeHtml(gold.note)}</p>` : ""}
+    ${fed.note ? `<p class="hint">Fed (taux, bilan QE/QT, prochaine réunion) : ${escapeHtml(fed.note)}</p>` : ""}
     ${conf.level ? `<p class="hint" style="margin-top:8px;"><strong>Confiance globale du site : ${escapeHtml(conf.level)}</strong> — ${escapeHtml(conf.note || "")}</p>` : ""}`;
 }
 
