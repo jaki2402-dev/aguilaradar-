@@ -448,7 +448,7 @@ function buildAiContext() {
   if (d && d.generated_at) parts.push(`Résumé du moment : ${d.headline} — ${d.summary}`);
 
   // Contexte macro élargi (data/market-context.json) — champs numériques compacts seulement,
-  // jamais les champs "note" (paragraphes entiers) pour ne pas saturer les 6000 caractères de
+  // jamais les champs "note" (paragraphes entiers) pour ne pas saturer les 20000 caractères de
   // contexte acceptés par le relais IA (voir worker.js) au détriment du reste (opportunités,
   // alertes). Sans ça, une question macro ("la Fed a annoncé quoi ?", "les ETF sont haussiers ?")
   // n'avait aucune vraie donnée à citer alors que le site les calcule déjà.
