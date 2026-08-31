@@ -502,8 +502,24 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
 /* Détail replié d'une position (investi/P&L/coût moyen/raisonnement) — même mécanique que
    .opp-tile-body (classe distincte, voir renderPortfolioTile/attachPortfolioToggle, portfolio.js) :
    tout est déjà calculé en mémoire, un simple bascule de classe .expanded suffit, pas de fetch. */
-.portfolio-tile-body { display: none; margin-top: 10px; }
-.portfolio-tile.expanded .portfolio-tile-body { display: block; }
+/* max-height (pas display:none/block) : même mécanique que .detail-panel plus bas — un vrai
+   dépli/repli animé au clic plutôt qu'un basculement sec, cohérent avec le reste du site. */
+.portfolio-tile-body {
+  max-height: 0; overflow: hidden; opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+}
+.portfolio-tile.expanded .portfolio-tile-body { max-height: 2400px; opacity: 1; margin-top: 10px; }
+/* Raisonnement technique (moteur) vs thèse hebdo (recherche web réelle, distincte — voir
+   CLAUDE.md/portfolio-thesis.json) : la thèse reprend le traitement "sous-carte" de
+   .detail-signal plus bas, pour se lire comme un module à part plutôt qu'un paragraphe de plus
+   collé au raisonnement du moteur juste au-dessus. */
+.portfolio-reasoning { margin-top: 10px; }
+.portfolio-thesis {
+  margin-top: 12px; padding: 10px 12px;
+  background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
+}
+.portfolio-thesis-meta { margin-top: 4px; display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
+.portfolio-thesis-constat { margin-top: 6px; }
 /* Confiance de l'opportunité (voir confidenceColor, cards.js) — même code couleur que la jauge
    circulaire affichée une fois la tuile dépliée, juste plus compact pour la vue repliée. */
 .opp-tile-conf { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; }
