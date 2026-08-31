@@ -429,7 +429,7 @@ async function renderDetailPanel(panelEl, asset) {
     ${technicalHtml}
     <div class="detail-opinion">
       <strong>Mon avis</strong>
-      <p>${escapeHtml(asset.reasoning || asset.reason || "Analyse pas encore disponible pour cet actif — en attente du prochain cycle.")}</p>
+      <p>${highlightKeyInfo(asset.reasoning || asset.reason || "Analyse pas encore disponible pour cet actif — en attente du prochain cycle.")}</p>
       ${asset.verdict ? `<p class="hint">Verdict actuel : <span class="badge badge-${asset.verdict.toLowerCase()}">${asset.verdict}</span> — vérifié automatiquement à son échéance, jamais avant.</p>` : ""}
     </div>
     ${asset.horizons ? renderOpportunityHorizonsSection(asset.horizons) : ""}

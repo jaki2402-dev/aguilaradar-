@@ -55,7 +55,7 @@ function renderTrackedVerdictResult(coin, verdict) {
       <div class="favori-price">${formatPrice(coin.current_price, "EUR")}</div>
       <div class="chip ${change24h >= 0 ? "positive" : "negative"}">${formatChangePct(change24h)}</div>
       <p class="hint">7j : ${formatChangePct(coin.price_change_percentage_7d_in_currency)} · 30j : ${formatChangePct(coin.price_change_percentage_30d_in_currency)} · Rang capitalisation #${coin.market_cap_rank ?? "—"}</p>
-      <p style="margin-top:10px;">${escapeHtml(verdict.reasoning || "")}</p>
+      <p style="margin-top:10px;">${highlightKeyInfo(verdict.reasoning || "")}</p>
       <p class="hint">Confiance ${verdict.confidence_pct ?? "—"} % · horizon ${verdict.horizon_days} j · statut ${verdict.status}</p>
       <div class="tv-chart" id="tv-search-result"></div>
       <p class="hint">Fait partie des 15 favoris suivis — verdict du moteur d'analyse, mis à jour au fil des cycles.</p>

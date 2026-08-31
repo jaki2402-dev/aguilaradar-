@@ -253,7 +253,7 @@ function renderPortfolioTile(p, idx) {
           <span class="hint">Signaux techniques (calculés en direct)</span>
           <div class="portfolio-technical" id="portfolio-technical-${idx}"><p class="empty-state">Se charge à l'ouverture…</p></div>
         </div>
-        ${p.reasoning ? `<p class="hint portfolio-reasoning">${escapeHtml(p.reasoning)}</p>` : ""}
+        ${p.reasoning ? `<p class="hint portfolio-reasoning">${highlightKeyInfo(p.reasoning)}</p>` : ""}
         ${renderThesisBlock(p)}
         ${typeof renderFavorisContextSection === "function" ? renderFavorisContextSection(p.ticker) : ""}
       </div>
@@ -277,7 +277,7 @@ function renderThesisBlock(p) {
         <div class="portfolio-thesis">
           <span class="hint">Thèse hebdo (recherche réelle)</span>
           <div class="portfolio-thesis-meta">${badgeHtml}${convictionHtml}</div>
-          ${p.constat ? `<p class="hint portfolio-thesis-constat">${escapeHtml(p.constat)}</p>` : ""}
+          ${p.constat ? `<p class="hint portfolio-thesis-constat">${highlightKeyInfo(p.constat)}</p>` : ""}
         </div>`;
 }
 

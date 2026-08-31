@@ -172,7 +172,7 @@ const CLAMP_TEXT_THRESHOLD = 200;
 let clampTextUid = 0;
 
 function renderClampableText(text) {
-  const safe = escapeHtml(text || "");
+  const safe = highlightKeyInfo(text || "");
   if (!text || text.length <= CLAMP_TEXT_THRESHOLD) return `<p>${safe}</p>`;
   const id = `clamp-text-${++clampTextUid}`;
   return `<p class="clamp-text" id="${id}">${safe}</p><span class="expand-hint expand-hint-inline clickable" data-clamp-target="${id}">Lire plus <span class="chevron">▾</span></span>`;
