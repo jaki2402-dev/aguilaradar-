@@ -199,9 +199,22 @@ async function fetchLiveTechnicalSummary(cgId) {
     const sma50 = computeSMA(closes, Math.min(50, closes.length));
     const signals = technicalSignalSentences(price, sma20, sma50, rsi, null);
 
+    // Utilité du token (FAVORIS[].utility, config.js) en tête, même choix que
+    // renderTechnicalSection (detail.js) : situer "à quoi sert ce jeton" avant les lectures du
+    // moment. Aucun fetch ici, déjà en mémoire.
+    const utility = utilitySignal(cgId);
+    if (utility) signals.unshift(utility);
+
     const volumeProfile = computeVolumeProfile(closes, volumes, 24);
     const vpSignal = volumeProfileSignal(price, volumeProfile);
     if (vpSignal) signals.push(vpSignal);
+
+    // Volume 24h vs moyenne 7j (computeVolumeWindows/volumeTrendSignal, detail.js) : ajouté ici
+    // le même jour que sur les tuiles Portefeuille/Favoris — même donnée déjà récupérée
+    // ci-dessus pour le Profil de volume, aucun appel réseau de plus.
+    const volumeWindows = computeVolumeWindows(volumes);
+    const volSignal = volumeTrendSignal(volumeWindows, price, sma20);
+    if (volSignal) signals.push(volSignal);
 
     const divergence = detectDivergence(closes);
     if (divergence) {
@@ -447,6 +460,15 @@ function buildAiContext() {
   if (ctx && ctx.etf_flows && ctx.etf_flows.btc_etf_net_flow_usd != null) {
     const flowM = ctx.etf_flows.btc_etf_net_flow_usd / 1e6;
     parts.push(`ETF Bitcoin spot : flux net ${flowM >= 0 ? "+" : ""}${flowM.toFixed(1)} M$ (${ctx.etf_flows.period || "période récente"}).`);
+  }
+  if (ctx && ctx.gold && ctx.gold.spot_usd_per_oz != null) {
+    parts.push(`Or : ${Math.round(ctx.gold.spot_usd_per_oz)} $/once.`);
+  }
+  if (ctx && ctx.fed_policy && ctx.fed_policy.funds_rate_range) {
+    parts.push(`Taux Fed cible : ${ctx.fed_policy.funds_rate_range}${ctx.fed_policy.stance ? ` (biais ${ctx.fed_policy.stance})` : ""}${ctx.fed_policy.balance_sheet_trend ? `, bilan en ${ctx.fed_policy.balance_sheet_trend}` : ""}.`);
+  }
+  if (ctx && ctx.fed_policy && ctx.fed_policy.treasury_yield_10y_pct != null) {
+    parts.push(`Rendement Trésor US 10 ans : ${ctx.fed_policy.treasury_yield_10y_pct} %.`);
   }
 
   // Dernier verdict de CHACUN des 15 favoris, nommément — pas juste une répartition agrégée

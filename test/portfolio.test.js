@@ -306,6 +306,123 @@ describe("portfolio.js — grille de tuiles et repli/dépli", () => {
     const bodyEl = dom.window.document.getElementById("portfolio-body");
     expect(bodyEl.textContent).not.toContain("Thèse hebdo");
   });
+
+  it("prévoit un conteneur de signaux techniques par tuile, avec un état de chargement avant tout dépli", () => {
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    dom.window.renderPortfolio({ positions: [pos()] }, []);
+    const container = dom.window.document.getElementById("portfolio-technical-0");
+    expect(container).not.toBeNull();
+    expect(container.textContent).toContain("Se charge à l'ouverture");
+  });
+});
+
+// Signaux techniques (RSI/MM/corrélation/carnet d'ordres) : réutilisation de
+// renderTechnicalSection (detail.js), donc detail.js chargé ici en plus — le describe
+// ci-dessus s'en passe volontairement pour rester focalisé sur le repli/dépli pur.
+describe("portfolio.js — signaux techniques d'une position (réutilise detail.js)", () => {
+  let dom;
+
+  function mockTechnicalFetch(dom, { coingeckoOk = true, binanceOk = true } = {}) {
+    dom.window.fetch = async (url) => {
+      if (url.includes("coingecko.com")) {
+        if (!coingeckoOk) return { ok: false, status: 429 };
+        const prices = Array.from({ length: 60 }, (_, i) => [1700000000000 + i * 86400000, 100 + i * 0.5]);
+        return { ok: true, json: async () => ({ prices, total_volumes: prices.map(([t]) => [t, 1000]) }) };
+      }
+      if (url.includes("binance.com")) {
+        if (!binanceOk) return { ok: false, status: 418 };
+        return { ok: true, json: async () => ({ bids: [["100", "5"]], asks: [["101", "3"]] }) };
+      }
+      throw new Error(`unexpected fetch: ${url}`);
+    };
+  }
+
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "portfolio.js"], { html: PORTFOLIO_FIXTURE_HTML });
+  });
+
+  it("calcule et affiche RSI/MM20/MM50 réels (même calcul que Favoris) une fois chargé", async () => {
+    mockTechnicalFetch(dom);
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    dom.window.renderPortfolio({ positions: [pos()] }, []);
+    const container = dom.window.document.getElementById("portfolio-technical-0");
+
+    const ok = await dom.window.loadPortfolioTechnical(container, { cgId: "bitcoin", ticker: "BTC", tvSymbol: "BINANCE:BTCUSDT" });
+
+    expect(ok).toBe(true);
+    expect(container.textContent).toContain("RSI (14)");
+    expect(container.textContent).toContain("MM20");
+    expect(container.textContent).not.toContain("Se charge à l'ouverture");
+    // Utilité du token (FAVORIS[].utility, config.js) et fenêtres de volume 24h/7j/14j/30j :
+    // mêmes ajouts que côté Favoris, doivent aussi apparaître ici (même renderTechnicalSection).
+    expect(container.textContent).toContain("Utilité du token");
+    expect(container.textContent).toContain("réserve de valeur");
+    expect(container.textContent).toContain("Volume (moyennes journalières)");
+    expect(container.textContent).toContain("Moy. 7j");
+  });
+
+  it("affiche aussi le contexte élargi (concurrent/thèse long terme/TVL/on-chain) déjà utilisé par Favoris, quand il existe", () => {
+    mockTechnicalFetch(dom);
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    setGlobal(dom, "latestFavorisContext", {
+      assets: {
+        BTC: {
+          last_computed_at: "2026-08-18T08:24:00Z",
+          competitor: { ticker: "XAU", name: "Or", comparison_note: "Comparaison BTC/or." },
+          long_term_thesis: { bull: "Adoption institutionnelle.", base: "Croissance modérée.", bear: "Risque réglementaire.", assumptions_note: "Hypothèses de la thèse." },
+        },
+      },
+    });
+    dom.window.renderPortfolio({ positions: [pos()] }, []);
+    const bodyEl = dom.window.document.getElementById("portfolio-body");
+    expect(bodyEl.textContent).toContain("Contexte élargi");
+    expect(bodyEl.textContent).toContain("Comparaison BTC/or.");
+    expect(bodyEl.textContent).toContain("Adoption institutionnelle.");
+  });
+
+  it("montre un état honnête 'pas encore calculé' (jamais une section vide trompeuse) quand favoris-context.json n'a pas encore d'entrée pour cette position", () => {
+    mockTechnicalFetch(dom);
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    setGlobal(dom, "latestFavorisContext", { assets: {} }); // fichier chargé, mais BTC pas encore couvert par la rotation
+    expect(() => dom.window.renderPortfolio({ positions: [pos()] }, [])).not.toThrow();
+    const bodyEl = dom.window.document.getElementById("portfolio-body");
+    expect(bodyEl.textContent).toContain("pas encore calculé");
+  });
+
+  it("ne casse rien et n'affiche rien de plus si latestFavorisContext n'existe même pas encore (app.js pas chargé dans cette page)", () => {
+    mockTechnicalFetch(dom);
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    expect(() => dom.window.renderPortfolio({ positions: [pos()] }, [])).not.toThrow();
+    const bodyEl = dom.window.document.getElementById("portfolio-body");
+    expect(bodyEl.textContent).not.toContain("Contexte élargi");
+  });
+
+  it("affiche un message d'indisponibilité (jamais une erreur brute ni un blocage) si le fetch échoue", async () => {
+    mockTechnicalFetch(dom, { coingeckoOk: false });
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    dom.window.renderPortfolio({ positions: [pos()] }, []);
+    const container = dom.window.document.getElementById("portfolio-technical-0");
+
+    const ok = await dom.window.loadPortfolioTechnical(container, { cgId: "bitcoin", ticker: "BTC", tvSymbol: "BINANCE:BTCUSDT" });
+
+    expect(ok).toBe(false);
+    expect(container.textContent).toContain("indisponibles");
+  });
+
+  it("déclenche le chargement des signaux techniques automatiquement au premier dépli de la tuile", async () => {
+    mockTechnicalFetch(dom);
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    dom.window.renderPortfolio({ positions: [pos()] }, []);
+    const tile = dom.window.document.querySelector(".portfolio-tile.clickable");
+    const container = dom.window.document.getElementById("portfolio-technical-0");
+
+    tile.click();
+    // Laisse la chaîne de promesses (fetch -> json -> calculs -> rendu) se résoudre.
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(container.textContent).not.toContain("Se charge à l'ouverture");
+    expect(container.textContent).toContain("RSI (14)");
+  });
 });
 
 describe("portfolio.js — computeTransactionResult (calculette achat/vente, coût moyen pondéré)", () => {

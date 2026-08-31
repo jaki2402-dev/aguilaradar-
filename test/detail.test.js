@@ -193,6 +193,74 @@ describe("detail.js — technicalSignalSentences", () => {
   });
 });
 
+describe("detail.js — computeVolumeWindows", () => {
+  const dom = loadPage(["prices.js", "detail.js"]);
+  const { computeVolumeWindows } = dom.window;
+
+  it("returns null on an empty/missing volume history", () => {
+    expect(computeVolumeWindows(null)).toBeNull();
+    expect(computeVolumeWindows([])).toBeNull();
+  });
+
+  it("computes vol24h and each average from the tail of the array, null below the window size", () => {
+    // 10 jours de volume constant à 100, sauf le dernier jour (24h) à 200.
+    const volumes = Array.from({ length: 10 }, () => 100);
+    volumes[volumes.length - 1] = 200;
+    const vw = computeVolumeWindows(volumes);
+    expect(vw.vol24h).toBe(200);
+    expect(vw.avg7d).toBeCloseTo((200 + 100 * 6) / 7, 6);
+    expect(vw.avg14d).toBeNull(); // seulement 10 points, pas assez pour 14j
+    expect(vw.avg30d).toBeNull();
+  });
+});
+
+describe("detail.js — volumeTrendSignal", () => {
+  const dom = loadPage(["prices.js", "detail.js"]);
+  const { volumeTrendSignal } = dom.window;
+
+  it("returns null without a usable 7d average", () => {
+    expect(volumeTrendSignal(null, 100, 90)).toBeNull();
+    expect(volumeTrendSignal({ vol24h: 100, avg7d: 0 }, 100, 90)).toBeNull();
+  });
+
+  it("reads a volume spike above an uptrending price as accumulation, not just noise", () => {
+    const signal = volumeTrendSignal({ vol24h: 300, avg7d: 100 }, 110, 100); // prix > MM20
+    expect(signal.label).toContain("×3.0");
+    expect(signal.text).toContain("accumulation réelle");
+  });
+
+  it("reads a volume spike below a downtrending price as real selling pressure", () => {
+    const signal = volumeTrendSignal({ vol24h: 300, avg7d: 100 }, 90, 100); // prix < MM20
+    expect(signal.text).toContain("pression vendeuse");
+  });
+
+  it("flags a low-volume move as low-conviction, whichever direction the price takes", () => {
+    const signal = volumeTrendSignal({ vol24h: 30, avg7d: 100 }, 110, 100);
+    expect(signal.label).toContain("30 %");
+    expect(signal.text).toContain("prudence");
+  });
+
+  it("treats volume within its normal range as unremarkable", () => {
+    const signal = volumeTrendSignal({ vol24h: 110, avg7d: 100 }, 110, 100);
+    expect(signal.text).toContain("fourchette normale");
+  });
+});
+
+describe("detail.js — utilitySignal (FAVORIS[].utility, config.js)", () => {
+  const dom = loadPage(["config.js", "prices.js", "detail.js"]);
+  const { utilitySignal } = dom.window;
+
+  it("returns the real, researched utility text for a tracked asset", () => {
+    const signal = utilitySignal("chainlink");
+    expect(signal.label).toBe("Utilité du token");
+    expect(signal.text).toContain("oracle");
+  });
+
+  it("returns null for an asset outside FAVORIS rather than guessing", () => {
+    expect(utilitySignal("some-untracked-coin")).toBeNull();
+  });
+});
+
 describe("detail.js — renderOpportunityHorizonsSection", () => {
   const dom = loadPage(["prices.js", "detail.js"]);
   const { renderOpportunityHorizonsSection } = dom.window;

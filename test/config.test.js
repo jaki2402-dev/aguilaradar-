@@ -113,6 +113,13 @@ describe("config.js — data contracts", () => {
     });
   });
 
+  it("every favori has a researched token utility description (assumed by detail.js utilitySignal)", () => {
+    FAVORIS.forEach((f) => {
+      expect(f.utility, `utility manquant pour ${f.ticker}`).toBeTruthy();
+      expect(f.utility.length, `utility trop courte pour ${f.ticker} pour être une vraie explication`).toBeGreaterThan(30);
+    });
+  });
+
   it("THRESHOLDS.directionalMovePct is a single positive number reused everywhere (README invariant)", () => {
     expect(typeof THRESHOLDS.directionalMovePct).toBe("number");
     expect(THRESHOLDS.directionalMovePct).toBeGreaterThan(0);

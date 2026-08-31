@@ -61,9 +61,11 @@ function computePortfolioSummary(portfolio, prices, verdicts, thesis) {
     const conviction = thesisEntry && typeof thesisEntry.conviction === "number" ? thesisEntry.conviction : null;
     const constat = thesisEntry ? thesisEntry.constat : null;
 
+    const tvSymbol = fav ? fav.tvSymbol : null;
+
     const pending = !!pos.pending || pos.qty === null || pos.qty === undefined || pos.invested === null || pos.invested === undefined;
     if (pending) {
-      return { cgId: pos.cgId, ticker, name, sectorColor, pending: true, qty: null, invested: null, value: null, pnl: null, pnlPct: null, costPerUnit: null, verdict, reasoning, recommendation, recommendationRaw, conviction, constat };
+      return { cgId: pos.cgId, ticker, name, sectorColor, tvSymbol, pending: true, qty: null, invested: null, value: null, pnl: null, pnlPct: null, costPerUnit: null, verdict, reasoning, recommendation, recommendationRaw, conviction, constat };
     }
 
     const priceInfo = prices && prices[pos.cgId];
@@ -73,7 +75,7 @@ function computePortfolioSummary(portfolio, prices, verdicts, thesis) {
     const pnlPct = value !== null && pos.invested ? (pnl / pos.invested) * 100 : null;
     const costPerUnit = pos.qty ? pos.invested / pos.qty : null;
 
-    return { cgId: pos.cgId, ticker, name, sectorColor, pending: false, qty: pos.qty, invested: pos.invested, value, pnl, pnlPct, costPerUnit, verdict, reasoning, recommendation, recommendationRaw, conviction, constat };
+    return { cgId: pos.cgId, ticker, name, sectorColor, tvSymbol, pending: false, qty: pos.qty, invested: pos.invested, value, pnl, pnlPct, costPerUnit, verdict, reasoning, recommendation, recommendationRaw, conviction, constat };
   });
 
   let totalValue = 0;
@@ -112,7 +114,7 @@ function renderPortfolioTile(p, idx) {
   const adviceHtml = p.verdict ? `<span class="badge badge-${p.verdict.toLowerCase()}">${escapeHtml(p.verdict)}</span>` : "";
 
   return `
-    <div class="favori-tile portfolio-tile clickable" data-detail-target="${panelId}" data-cgid="${escapeHtml(p.cgId)}" style="--sector-color:${p.sectorColor || "var(--border)"}" title="${escapeHtml(p.name)}">
+    <div class="favori-tile portfolio-tile clickable" id="portfolio-tile-${idx}" data-detail-target="${panelId}" data-cgid="${escapeHtml(p.cgId)}" style="--sector-color:${p.sectorColor || "var(--border)"}" title="${escapeHtml(p.name)}">
       <div class="favori-tile-head">
         <span class="favori-tile-tick">${escapeHtml(p.ticker)}</span>
         <span class="favori-tile-badge">${adviceHtml}</span>
@@ -127,8 +129,13 @@ function renderPortfolioTile(p, idx) {
           <div class="detail-stat"><span class="hint">Quantité</span><strong>${p.qty}</strong></div>
           <div class="detail-stat"><span class="hint">Coût moyen</span><strong>${p.costPerUnit !== null ? formatPrice(p.costPerUnit, "EUR") : "—"}</strong></div>
         </div>
+        <div class="portfolio-technical-wrap">
+          <span class="hint">Signaux techniques (calculés en direct)</span>
+          <div class="portfolio-technical" id="portfolio-technical-${idx}"><p class="empty-state">Se charge à l'ouverture…</p></div>
+        </div>
         ${p.reasoning ? `<p class="hint portfolio-reasoning">${escapeHtml(p.reasoning)}</p>` : ""}
         ${renderThesisBlock(p)}
+        ${typeof renderFavorisContextSection === "function" ? renderFavorisContextSection(p.ticker) : ""}
       </div>
     </div>`;
 }
@@ -154,16 +161,52 @@ function renderThesisBlock(p) {
         </div>`;
 }
 
-// Toggle dédié (pas attachDetailToggle de detail.js) : ce dernier suppose un chargement
-// asynchrone (graphique TradingView, indicateurs) inexistant ici — tout est déjà calculé en
-// mémoire par computePortfolioSummary, un simple bascule de classe suffit.
-function attachPortfolioToggle(tileEl) {
+// Signaux techniques (RSI/MM20/MM50/vs ATH/corrélation BTC/profil de volume/divergence/carnet
+// d'ordres) : même calcul déjà utilisé pour Favoris (renderTechnicalSection, detail.js — voir
+// son en-tête, "rien n'est précalculé ni inventé"), jamais dupliqué ici. Chargé au premier
+// dépli de CHAQUE tuile (comme attachDetailToggle), pas au rendu initial des 15 positions —
+// sinon ouvrir l'onglet Portefeuille déclencherait d'un coup jusqu'à 45 requêtes réseau
+// (marché + BTC + carnet, par position) pour un contenu que personne n'a encore demandé à voir.
+// tvSymbol réel transmis (contrairement aux tuiles Favoris qui passent null) : le carnet
+// d'ordres Binance est quasi gratuit une fois le fetch de marché déjà fait, et utile sur ses
+// propres positions. showChart volontairement omis : pas de graphique TradingView dans une
+// tuile dense, même choix que pour Favoris/Opportunités.
+async function loadPortfolioTechnical(containerEl, p) {
+  containerEl.innerHTML = `<p class="empty-state">Calcul des indicateurs en cours…</p>`;
+  try {
+    const asset = { cgId: p.cgId, ticker: p.ticker, athChangePct: null, tvSymbol: p.tvSymbol };
+    const result = await renderTechnicalSection(asset);
+    containerEl.innerHTML = result.html;
+    return true;
+  } catch (err) {
+    console.error("Erreur indicateurs techniques (portefeuille):", err);
+    containerEl.innerHTML = `<p class="empty-state">Indicateurs techniques indisponibles pour l'instant (limite API probable) — referme et rouvre la tuile pour réessayer.</p>`;
+    return false;
+  }
+}
+
+// Toggle du dépli, plus chargement paresseux des signaux techniques ci-dessus au premier dépli
+// (mécanique identique à attachDetailToggle de detail.js : loaded remis à false en cas d'échec
+// pour qu'une prochaine fermeture/réouverture retente réellement). Le reste du contenu du
+// panneau (investi/P&L/coût moyen/raisonnement/thèse) reste du basculement pur de classe : déjà
+// calculé en mémoire par computePortfolioSummary, aucun fetch requis pour cette partie-là.
+function attachPortfolioToggle(tileEl, p, idx) {
   tileEl.setAttribute("tabindex", "0");
   tileEl.setAttribute("role", "button");
   tileEl.setAttribute("aria-expanded", "false");
+  let loaded = false;
   function toggle() {
     const isOpen = tileEl.classList.toggle("expanded");
     tileEl.setAttribute("aria-expanded", String(isOpen));
+    if (isOpen && !loaded) {
+      loaded = true;
+      const techEl = document.getElementById(`portfolio-technical-${idx}`);
+      if (techEl) {
+        loadPortfolioTechnical(techEl, p).then((success) => {
+          if (!success) loaded = false;
+        });
+      }
+    }
   }
   tileEl.addEventListener("click", toggle);
   tileEl.addEventListener("keydown", (e) => {
@@ -230,8 +273,11 @@ function renderPortfolio(portfolio, verdicts, thesis) {
   const summary = computePortfolioSummary(latestPortfolio, prices, latestPortfolioVerdicts, latestPortfolioThesis);
 
   el.innerHTML = `<div class="favoris-grid portfolio-tile-grid">${summary.positions.map((p, i) => renderPortfolioTile(p, i)).join("")}</div>`;
-  el.querySelectorAll(".portfolio-tile.clickable").forEach((tileEl) => {
-    attachPortfolioToggle(tileEl);
+  summary.positions.forEach((p, i) => {
+    if (p.pending) return;
+    const tileEl = document.getElementById(`portfolio-tile-${i}`);
+    if (!tileEl) return;
+    attachPortfolioToggle(tileEl, p, i);
     if (expandedIds.has(tileEl.dataset.cgid)) {
       tileEl.classList.add("expanded");
       tileEl.setAttribute("aria-expanded", "true");

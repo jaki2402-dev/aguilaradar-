@@ -185,6 +185,11 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
     expect(answer).toContain("Indicateurs techniques en direct");
     expect(answer).toContain("RSI");
     expect(answer).toContain("Alignement haussier des moyennes");
+    // Ajoutés le même jour que sur les tuiles Portefeuille/Favoris (même fonctions, detail.js) :
+    // utilité du token (statique, FAVORIS[].utility) et lecture du volume 24h vs moyenne 7j.
+    expect(answer).toContain("Utilité du token");
+    expect(answer).toContain("oracle");
+    expect(answer).toContain("Volume 24h");
   });
 
   it("answers with the tracked opportunity when the asset is only in the screening list, not the favoris", async () => {
@@ -500,6 +505,8 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
         stablecoins: { dominance_pct: 13.5 },
         employment_us: { unemployment_rate_pct: 4.1, nonfarm_payrolls_change_k: -23, last_report_date: "2026-08-07" },
         etf_flows: { btc_etf_net_flow_usd: 137300000, period: "17 août 2026" },
+        gold: { spot_usd_per_oz: 2415.3 },
+        fed_policy: { funds_rate_range: "4.25%-4.50%", stance: "hawkish", balance_sheet_trend: "réduction (QT)", treasury_yield_10y_pct: 4.28 },
       };
       dom.window.aguilaradarData.verdicts = [
         { asset: "chainlink", ticker: "LINK", verdict: "ACHAT", confidence_pct: 65, issued_at: "2026-08-20T00:00:00Z" },
@@ -514,6 +521,9 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
       expect(sentContext).toContain("Dominance stablecoins : 13.5 %");
       expect(sentContext).toContain("chômage 4.1 %");
       expect(sentContext).toContain("flux net +137.3 M$");
+      expect(sentContext).toContain("Or : 2415 $/once");
+      expect(sentContext).toContain("Taux Fed cible : 4.25%-4.50% (biais hawkish), bilan en réduction (QT)");
+      expect(sentContext).toContain("Rendement Trésor US 10 ans : 4.28 %");
       // Chaque favori cité nommément (ticker + verdict + confiance), plus une simple répartition
       // agrégée qui empêchait l'IA de répondre sur un favori précis (régression réelle corrigée,
       // voir buildAiContext : "tout aguilaradar à disposition" demandé explicitement).

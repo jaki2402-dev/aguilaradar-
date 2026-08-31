@@ -267,10 +267,58 @@ const ALERT_TYPE_LABELS = {
   seuil_technique: "Seuil technique",
   actualite_macro: "Actu macro",
   actualite_favori: "Actu favori",
+  actualite_generale: "Actu crypto",
+  avis_du_jour: "Avis du jour",
   opportunite: "Opportunité",
   signal_precoce: "Signal précoce",
   regime_change_impact: "Changement de régime",
 };
+
+// Sentiment (positif/négatif/neutre) : déjà calculé par la routine sur une partie des alertes
+// (voir data/alerts.json) mais jamais affiché jusqu'ici — chaque alerte montrait le même badge
+// ambre générique quel que soit son sens. Badge dédié, coloré comme un verdict (vert/rouge),
+// pour qu'une actualité franchement bullish ou bearish saute aux yeux au lieu de se fondre
+// parmi les alertes purement factuelles. Normalise la casse/les accents (comme
+// normalizeRecommendation dans portfolio.js) : la valeur vient d'un modèle via une routine,
+// jamais garantie caractère pour caractère.
+const SENTIMENT_BADGES = {
+  positif: { cls: "badge-achat", text: "▲ Bullish" },
+  negatif: { cls: "badge-vente", text: "▼ Bearish" },
+  neutre: { cls: "badge-neutral", text: "Neutre" },
+};
+function sentimentBadgeHtml(sentiment) {
+  if (!sentiment) return "";
+  const key = sentiment.trim().toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "");
+  const b = SENTIMENT_BADGES[key];
+  return b ? `<span class="badge ${b.cls}">${b.text}</span>` : "";
+}
+
+// Avis du jour : la synthèse la plus récente (type "avis_du_jour", data/alerts.json, écrite au
+// plus une fois par jour par la routine — voir son prompt) mise en avant tout en haut de
+// l'Accueil, plutôt que noyée dans la liste complète de l'onglet Alertes. Même contenu que la
+// notification push reçue au même moment (le Worker Cloudflare pousse déjà toute nouvelle
+// entrée d'alerts.json sans filtrer par type, voir cloudflare-worker/worker.js) : ce bloc est
+// simplement la version "je suis déjà dans l'app" de la même information.
+function renderAvisDuJour(alerts) {
+  const el = document.getElementById("avis-du-jour");
+  if (!el) return;
+  const avisEntries = (alerts || []).filter((a) => a.type === "avis_du_jour");
+  if (avisEntries.length === 0) {
+    el.innerHTML = "";
+    return;
+  }
+  const latest = avisEntries.slice().sort((a, b) => new Date(b.triggered_at) - new Date(a.triggered_at))[0];
+  const ageMs = Date.now() - new Date(latest.triggered_at).getTime();
+  // >30h plutôt que >24h : marge pour un cycle qui écrit un peu tard dans la journée sans
+  // déclencher un avertissement "pas d'aujourd'hui" trompeur pour un avis en réalité tout frais.
+  const staleHint = ageMs > 30 * 3600 * 1000 ? ` — dernière mise à jour il y a plus d'un jour, pas forcément celui d'aujourd'hui` : "";
+  el.innerHTML = `
+    <div class="hero-card avis-du-jour-card">
+      <div class="avis-du-jour-head"><span class="hint">Avis du jour</span>${sentimentBadgeHtml(latest.sentiment)}</div>
+      <p class="avis-du-jour-text">${escapeHtml(latest.message)}</p>
+      <div class="hint">${new Date(latest.triggered_at).toLocaleString("fr-FR")}${staleHint}</div>
+    </div>`;
+}
 
 const NOTIFICATIONS_PAGE_SIZE = 15;
 let notificationsSorted = [];
@@ -300,7 +348,7 @@ function renderNotificationsPage() {
       <div class="alert-entry type-${a.type || ""}">
         <div class="log-header">
           <span><strong>${a.ticker_ou_theme || a.ticker || ""}</strong> · ${a.triggered_at}</span>
-          <span class="badge badge-warning">${ALERT_TYPE_LABELS[a.type] || a.type}</span>
+          <span class="alert-badges">${sentimentBadgeHtml(a.sentiment)}<span class="badge badge-warning">${ALERT_TYPE_LABELS[a.type] || a.type}</span></span>
         </div>
         ${renderClampableText(a.message)}
         ${a.source ? `<p class="hint">Source : ${escapeHtml(a.source)}</p>` : ""}
@@ -345,6 +393,28 @@ function renderMacroRegime(engineHistory) {
     </div>`;
 }
 
+// Repérage de mots-clés associés à une actualité potentiellement majeure (réglementation,
+// sécurité, macro/Fed, déblocages de jetons, mouvements de prix extrêmes...) — classification
+// MÉCANIQUE sur le texte réel du titre déjà collecté, jamais une évaluation de sens
+// (bullish/bearish) : un même mot ("hawkish", "crackdown") peut jouer différemment selon le
+// contexte complet de l'article, que seule la routine (qui lit au-delà du titre) peut vraiment
+// juger — voir le champ sentiment sur data/alerts.json pour ça. Sert seulement à faire
+// ressortir visuellement un titre qui mérite un coup d'œil plutôt que de laisser tout se noyer
+// dans la liste, demandé explicitement par l'utilisateur ("si il y'a une grosse annonce...").
+const NEWS_IMPORTANCE_KEYWORDS = [
+  "sec ", "lawsuit", " ban", "banned", "crackdown", "sanction", "indict", "settlement",
+  "approv", "reject", "etf ", "inflow", "outflow",
+  "hack", "exploit", "breach", "stolen", "drained",
+  "unlock", "airdrop", "halving",
+  "fed ", "fomc", "hawkish", "dovish", "rate cut", "rate hike", "interest rate",
+  "record high", "record low", "all-time high", "all-time low", " crash", "plunge", "surge",
+  "bankrupt", "insolven", "delist", "acquisition", "acquire",
+];
+function isNewsImportant(title) {
+  const t = ` ${(title || "").toLowerCase()} `;
+  return NEWS_IMPORTANCE_KEYWORDS.some((kw) => t.includes(kw));
+}
+
 function renderNews(newsData) {
   const el = document.getElementById("news-body");
   if (!el) return;
@@ -357,8 +427,10 @@ function renderNews(newsData) {
     .map((n) => {
       const url = safeUrl(n.url);
       const title = escapeHtml(n.title);
+      const important = isNewsImportant(n.title);
       return `
-      <div class="news-item">
+      <div class="news-item${important ? " important" : ""}">
+        ${important ? `<span class="news-important-flag" title="Contient un mot-clé associé à une actualité potentiellement majeure">⚡ À surveiller</span>` : ""}
         ${url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${title}</a>` : `<span>${title}</span>`}
         <span class="hint">${escapeHtml(n.source || "")}</span>
       </div>`;
@@ -423,6 +495,7 @@ async function loadAllData() {
   renderOpportunities(opportunities);
   renderJournal(verdicts || []);
   renderNotifications(alerts);
+  renderAvisDuJour(alerts);
   if (window.updateNotifBellFromAlerts) updateNotifBellFromAlerts(alerts);
   renderNews(news);
   renderMacroRegime(engineHistory);
