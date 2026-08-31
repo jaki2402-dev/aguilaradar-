@@ -101,7 +101,12 @@ async function fetchOrderBookImbalance(tvSymbol) {
 }
 
 function renderFavorisContextSection(ticker) {
-  if (!ticker || !latestFavorisContext || !latestFavorisContext.assets) return "";
+  // typeof ... "undefined" (pas juste !latestFavorisContext) : ce `let` est déclaré dans
+  // app.js, pas ici — le référencer avant que app.js ait chargé (ex: portfolio.js appelant
+  // cette fonction dans une page qui ne charge pas app.js) lèverait un ReferenceError plutôt
+  // que de simplement rendre "" comme prévu. Même précaution que typeof FAVORIS/SECTOR_COLORS
+  // ailleurs dans ce fichier.
+  if (!ticker || typeof latestFavorisContext === "undefined" || !latestFavorisContext || !latestFavorisContext.assets) return "";
   const ctx = latestFavorisContext.assets[ticker];
   if (!ctx || !ctx.last_computed_at) {
     return `<div class="detail-context"><p class="hint">Contexte élargi (concurrent, thèse long terme, dérivés, TVL) pas encore calculé pour ${ticker} — la routine couvre les favoris par rotation, quelques cycles à attendre.</p></div>`;

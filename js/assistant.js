@@ -199,9 +199,22 @@ async function fetchLiveTechnicalSummary(cgId) {
     const sma50 = computeSMA(closes, Math.min(50, closes.length));
     const signals = technicalSignalSentences(price, sma20, sma50, rsi, null);
 
+    // Utilité du token (FAVORIS[].utility, config.js) en tête, même choix que
+    // renderTechnicalSection (detail.js) : situer "à quoi sert ce jeton" avant les lectures du
+    // moment. Aucun fetch ici, déjà en mémoire.
+    const utility = utilitySignal(cgId);
+    if (utility) signals.unshift(utility);
+
     const volumeProfile = computeVolumeProfile(closes, volumes, 24);
     const vpSignal = volumeProfileSignal(price, volumeProfile);
     if (vpSignal) signals.push(vpSignal);
+
+    // Volume 24h vs moyenne 7j (computeVolumeWindows/volumeTrendSignal, detail.js) : ajouté ici
+    // le même jour que sur les tuiles Portefeuille/Favoris — même donnée déjà récupérée
+    // ci-dessus pour le Profil de volume, aucun appel réseau de plus.
+    const volumeWindows = computeVolumeWindows(volumes);
+    const volSignal = volumeTrendSignal(volumeWindows, price, sma20);
+    if (volSignal) signals.push(volSignal);
 
     const divergence = detectDivergence(closes);
     if (divergence) {

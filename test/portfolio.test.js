@@ -361,6 +361,42 @@ describe("portfolio.js — signaux techniques d'une position (réutilise detail.
     expect(container.textContent).toContain("Moy. 7j");
   });
 
+  it("affiche aussi le contexte élargi (concurrent/thèse long terme/TVL/on-chain) déjà utilisé par Favoris, quand il existe", () => {
+    mockTechnicalFetch(dom);
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    setGlobal(dom, "latestFavorisContext", {
+      assets: {
+        BTC: {
+          last_computed_at: "2026-08-18T08:24:00Z",
+          competitor: { ticker: "XAU", name: "Or", comparison_note: "Comparaison BTC/or." },
+          long_term_thesis: { bull: "Adoption institutionnelle.", base: "Croissance modérée.", bear: "Risque réglementaire.", assumptions_note: "Hypothèses de la thèse." },
+        },
+      },
+    });
+    dom.window.renderPortfolio({ positions: [pos()] }, []);
+    const bodyEl = dom.window.document.getElementById("portfolio-body");
+    expect(bodyEl.textContent).toContain("Contexte élargi");
+    expect(bodyEl.textContent).toContain("Comparaison BTC/or.");
+    expect(bodyEl.textContent).toContain("Adoption institutionnelle.");
+  });
+
+  it("montre un état honnête 'pas encore calculé' (jamais une section vide trompeuse) quand favoris-context.json n'a pas encore d'entrée pour cette position", () => {
+    mockTechnicalFetch(dom);
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    setGlobal(dom, "latestFavorisContext", { assets: {} }); // fichier chargé, mais BTC pas encore couvert par la rotation
+    expect(() => dom.window.renderPortfolio({ positions: [pos()] }, [])).not.toThrow();
+    const bodyEl = dom.window.document.getElementById("portfolio-body");
+    expect(bodyEl.textContent).toContain("pas encore calculé");
+  });
+
+  it("ne casse rien et n'affiche rien de plus si latestFavorisContext n'existe même pas encore (app.js pas chargé dans cette page)", () => {
+    mockTechnicalFetch(dom);
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
+    expect(() => dom.window.renderPortfolio({ positions: [pos()] }, [])).not.toThrow();
+    const bodyEl = dom.window.document.getElementById("portfolio-body");
+    expect(bodyEl.textContent).not.toContain("Contexte élargi");
+  });
+
   it("affiche un message d'indisponibilité (jamais une erreur brute ni un blocage) si le fetch échoue", async () => {
     mockTechnicalFetch(dom, { coingeckoOk: false });
     setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });

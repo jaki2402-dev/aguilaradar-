@@ -135,6 +135,7 @@ function renderPortfolioTile(p, idx) {
         </div>
         ${p.reasoning ? `<p class="hint portfolio-reasoning">${escapeHtml(p.reasoning)}</p>` : ""}
         ${renderThesisBlock(p)}
+        ${typeof renderFavorisContextSection === "function" ? renderFavorisContextSection(p.ticker) : ""}
       </div>
     </div>`;
 }

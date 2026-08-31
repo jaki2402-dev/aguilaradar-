@@ -185,6 +185,11 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
     expect(answer).toContain("Indicateurs techniques en direct");
     expect(answer).toContain("RSI");
     expect(answer).toContain("Alignement haussier des moyennes");
+    // Ajoutés le même jour que sur les tuiles Portefeuille/Favoris (même fonctions, detail.js) :
+    // utilité du token (statique, FAVORIS[].utility) et lecture du volume 24h vs moyenne 7j.
+    expect(answer).toContain("Utilité du token");
+    expect(answer).toContain("oracle");
+    expect(answer).toContain("Volume 24h");
   });
 
   it("answers with the tracked opportunity when the asset is only in the screening list, not the favoris", async () => {
