@@ -640,7 +640,13 @@ th { color: var(--text-dim); font-weight: 600; font-size: 0.76rem; text-transfor
 .alert-entry.type-seuil_technique { --entry-color: var(--accent-2); }
 .alert-entry.type-actualite_macro { --entry-color: var(--warning); }
 .alert-entry.type-actualite_favori { --entry-color: var(--accent); }
+.alert-entry.type-actualite_generale { --entry-color: var(--text-faint); }
 .log-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 0.82rem; color: var(--text-dim); margin-bottom: 6px; }
+/* Regroupe le badge de sentiment (bullish/bearish, voir sentimentBadgeHtml) et le badge de
+   type sous UN SEUL enfant flex de .log-header — sinon un 3e enfant direct casse le
+   space-between (label à gauche, un seul badge à droite) déjà utilisé par les autres usages
+   de .log-header (Journal, etc.). */
+.alert-badges { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 
 /* ---- Aperçu tronqué + "Lire plus" pour un texte long (voir renderClampableText, app.js) —
    Journal (raisonnement) et Alertes (message) partagent ce motif. ---- */
@@ -737,6 +743,11 @@ footer.site-footer {
 .news-item:last-child { border-bottom: none; }
 .news-item a { color: var(--text); text-decoration: none; font-size: 0.9rem; }
 .news-item a:hover { color: var(--accent); }
+/* "À surveiller" (voir isNewsImportant, app.js) : repérage par mot-clé, pas un avis
+   bullish/bearish — traitement neutre (ambre, pas vert/rouge) pour ne jamais laisser croire à
+   un sens directionnel que le titre seul ne permet pas de garantir. */
+.news-item.important { background: rgba(229, 169, 59, 0.07); border-left: 2px solid var(--warning); padding-left: 12px; }
+.news-important-flag { color: var(--warning); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.02em; }
 
 /* ---- Notifications navigateur (opportunites) ---- */
 .notif-permission-card {
