@@ -1,0 +1,80 @@
+{
+  "generated_at": "2026-08-31T05:08:20Z",
+  "positions": {
+    "bitcoin": {
+      "recommendation": "Conserver",
+      "conviction": 8,
+      "constat": "BTC a touché un plus haut de 3 mois vers 81 455 $ le 28 août avant de retomber sous 78 000 $ le 29, le Fed chair Kevin Warsh ayant douché l'optimisme à Jackson Hole en réaffirmant une inflation au-dessus de la cible. Les flux ETF spot restent solides (~2,26 Md$ nets sur 6 séances du 17 au 24 août) et le Clarity Act poussé par Trump reste un catalyseur réglementaire, mais sa probabilité d'adoption est jugée faible par les commentateurs. Position cœur du portefeuille, aucune raison technique ou fondamentale de bouger cette semaine."
+    },
+    "ethereum": {
+      "recommendation": "Renforcer",
+      "conviction": 7,
+      "constat": "Le hard fork Glamsterdam, présenté comme la plus grosse mise à niveau depuis The Merge (gas limit en hausse, frais réduits, PBS), arrive fin août et donne à ETH un catalyseur technique concret et daté, avec un premier testnet public Sepolia prévu le 28 septembre. BlackRock a capté 78% des entrées ETF ETH sur une seule journée le 25 août, signe d'un appétit institutionnel net. Le risque reste l'exécution : la date de mainnet du T4 2026 n'est pas encore fixée, donc une partie du catalyseur est déjà anticipée par le marché."
+    },
+    "fetch-ai": {
+      "recommendation": "Attendre",
+      "conviction": 4,
+      "constat": "FET/ASI reste à environ 95% sous son record de mars 2024 et a rechuté en août (de ~0,171$ à ~0,135$ après un pic à 0,153$), sans catalyseur de prix identifié cette semaine. Le rebranding complet vers ASI, annoncé de longue date, n'a toujours pas eu lieu sur les marchés spot/perp en date de fin mai 2026, ce qui entretient une confusion narrative sur le token. Le vrai catalyseur à moyen terme — ASI:Chain, la L1 dédiée visant un mainnet fin 2026 — reste non livré ; pas de raison de renforcer avant une preuve d'exécution concrète."
+    },
+    "celestia": {
+      "recommendation": "Conserver",
+      "conviction": 5,
+      "constat": "TIA a traversé un déblocage de tokens important en juillet, orienté vers la R&D, et le réseau continue son développement technique (upgrade post-V8, blocs de 3 secondes, capacité 32 MiB) sans catalyseur de prix identifiable pour la semaine du 24-31 août dans les sources consultées. Aucun signal négatif fort non plus. Position à conserver en l'état, sans conviction forte de renforcement tant qu'aucune traction narrative ne se manifeste sur le prix."
+    },
+    "chainlink": {
+      "recommendation": "Renforcer",
+      "conviction": 8,
+      "constat": "Coinbase a choisi Chainlink comme infrastructure d'oracle pour ses nouvelles actions tokenisées lancées sur Base (24 août), et l'État du Wyoming a migré son stablecoin FRNT vers Chainlink (18 août) — deux validations institutionnelles concrètes et vérifiables, pas de simples annonces marketing. Le setup technique est jugé bullish par plusieurs analystes (pattern en pennant, cible de cassure vers 9,75-10$). Catalyseurs réels et datés qui justifient un renforcement plutôt qu'une simple conservation."
+    },
+    "the-graph": {
+      "recommendation": "Attendre",
+      "conviction": 3,
+      "constat": "GRT évolue près de ses plus bas historiques (~0,018$, environ 99% sous son record de 2021), dans un contexte où plusieurs dizaines de microcaps ont touché de nouveaux plus bas fin juillet. L'upgrade Horizon et le virage vers les services de données IA (paiements x402 pour agents IA) sont un vrai catalyseur potentiel mais encore largement non matérialisé dans le prix. Position à haut risque, sans signal d'inversion de tendance confirmé cette semaine — pas de raison de renforcer tant que le marché ne valide pas ce narratif."
+    },
+    "peaq-2": {
+      "recommendation": "Conserver",
+      "conviction": 6,
+      "constat": "PEAQ surperforme nettement le marché sur 7 jours (+22,4% contre +7,9% pour le marché global), porté par le narratif Machine Economy (démo de robot livreur, Initial Machine Offerings avec CoinList pour tokeniser des robots). Un déblocage de 84,84M PEAQ (1,9% de l'offre) est prévu le 12 septembre, ce qui crée un risque de pression vendeuse à court terme. Conserver plutôt que renforcer juste avant cet unlock semble le choix le plus prudent."
+    },
+    "livepeer": {
+      "recommendation": "Conserver",
+      "conviction": 5,
+      "constat": "Livepeer 2.0 a été lancé le 7 août, un changement fondamental qui bascule l'unité de calcul du réseau du GPU vers le compute générique, ouvrant la participation aux nœuds CPU-only — un développement produit réel, pas cosmétique. À l'inverse, le token a touché un plus bas à 1,16$ le 16 août et une bourse turque mineure (CoinTR) a annoncé son retrait de cotation le 13 août. Signal mixte : amélioration produit réelle mais prix et liquidité encore sous pression."
+    },
+    "injective-protocol": {
+      "recommendation": "Renforcer",
+      "conviction": 7,
+      "constat": "INJ cumule plusieurs catalyseurs vérifiables en août : enregistrement d'Injective Institutional Services comme transfer agent SEC (19 août), dépôt d'un ETF Staked INJ par Canary (24 août, en attente d'approbation SEC), autorisation MiCA en UE et tokenisation d'actifs par LG. Le token a bondi de 39% sur une semaine au 25 août, ce qui signifie qu'une partie significative de ces bonnes nouvelles est déjà intégrée dans le prix. Conviction forte sur les fondamentaux mais renforcer après un tel pic à court terme comporte un risque de retracement — à doser plutôt qu'à charger d'un coup."
+    },
+    "cartesi": {
+      "recommendation": "Attendre",
+      "conviction": 3,
+      "constat": "CTSI reste une capitalisation très réduite (~24M$) avec une forte volatilité de prix sans catalyseur fondamental identifié en août dans les sources consultées (variations de +56% puis -1% en quelques jours, typiques d'un actif à faible liquidité). Aucune annonce produit ou partenariat majeur trouvée pour la période. Position à surveiller sans conviction d'achat supplémentaire tant qu'aucun développement concret n'émerge."
+    },
+    "jupiter-exchange-solana": {
+      "recommendation": "Conserver",
+      "conviction": 5,
+      "constat": "Jupiter voit sa part de marché sur l'agrégation DEX Solana reculer nettement (68% début août contre 88% en avril), avec OKX et DFlow qui captent désormais 18% et 10% du volume hebdomadaire — une érosion concurrentielle réelle et mesurable, pas un simple bruit de marché. En contrepartie, la diversification progresse : le protocole de prêt gagne du terrain face à Kamino et l'app de jeu Gacha a attiré plus de 27M$ de dépenses utilisateurs en trois semaines. Le risque concurrentiel sur le cœur de métier justifie de conserver sans renforcer pour l'instant."
+    },
+    "arbitrum": {
+      "recommendation": "Conserver",
+      "conviction": 6,
+      "constat": "L'upgrade ArbOS 61 Elara (tarification de gas multidimensionnelle, limites Stylus augmentées) a été activée le 20 août, et la DAO a validé le 19 août une stratégie de trésorerie basée sur du rendement et de l'emprunt plutôt que sur des ventes directes d'ARB — un signal positif pour la pression vendeuse structurelle. À l'inverse, un déblocage d'environ 92,65M ARB (1,6% de l'offre) est intervenu le 16 août et le prix reste comprimé autour de 0,075-0,09$. Développements produit et écosystème (Mastercard/BVNK, financement Robinhood Chain) encourageants mais pas encore reflétés dans le cours."
+    },
+    "ondo-finance": {
+      "recommendation": "Conserver",
+      "conviction": 6,
+      "constat": "Ondo Stocks a atteint 1,01 Md$ de TVL en seulement huit mois, dépassant la croissance des stablecoins et des bons du Trésor tokenisés sur la plateforme — une traction produit réelle et chiffrée. Le risque concurrentiel s'est toutefois nettement renforcé : Coinbase a lancé ses propres actions tokenisées sur Base en août, s'attaquant frontalement au cœur de métier d'Ondo, et le token a sous-performé le rallye du marché fin août (+18% sur 7 jours contre des gains bien plus marqués pour BTC et XRP sur la même période). Traction produit solide mais concurrence désormais sérieuse, à surveiller de près plutôt qu'à renforcer aveuglément."
+    },
+    "aioz-network": {
+      "recommendation": "Conserver",
+      "conviction": 6,
+      "constat": "Le hard fork Upgrade v1.8.2, apportant des correctifs de sécurité réseau, a été activé le 26 août au bloc 24 923 000. Le token avait déjà gagné 9,28% le 21 août dans le sillage du rallye de Bitcoin, et le projet pousse son Vision Paper V2 unifiant stockage (AIOZ Pin), streaming (AIOZ Stream) et calcul IA (AIOZ AI) dans une couche DePIN coordonnée. Développement technique réel mais le mouvement de prix récent semble davantage corrélé au marché global qu'à un catalyseur propre au projet."
+    },
+    "zelcash": {
+      "recommendation": "Attendre",
+      "conviction": 4,
+      "constat": "FLUX construit une base autour de 0,039-0,040$ tout en butant sous une résistance à 0,047-0,048$ (+8,2% sur 7 jours), une cassure confirmée par le volume pourrait viser 0,05-0,06$ selon l'analyse technique, mais rien n'est confirmé à ce stade. Aucun catalyseur fondamental majeur identifié pour la semaine du 24-31 août dans les sources consultées, la dernière annonce d'infrastructure notable datant de fin mai. Position à surveiller sur la cassure technique plutôt qu'à renforcer sans confirmation."
+    }
+  }
+}
