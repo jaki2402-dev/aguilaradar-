@@ -1,1107 +1,1139 @@
 [
-    {
-        "id": "v-20260807-btc",
-        "issued_at": "2026-08-07T00:20:00Z",
-        "asset": "bitcoin",
-        "ticker": "BTC",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h -0.4%",
-            "7j -0.8%",
-            "30j +1.2%"
-        ],
-        "reasoning": "Range quasi plat sur les trois horizons (24h -0.4%, 7j -0.8%, 30j +1.2%) : consolidation, aucun signal directionnel net.",
-        "price_at_issue": 55800,
-        "resolves_at": "2026-08-21T00:20:00Z",
-        "status": "resolved",
-        "outcome": {
-            "price_at_resolution": 66240.0,
-            "actual_move_pct": 18.71,
-            "actual_direction": "ACHAT",
-            "verdict_correct": false,
-            "resolved_at": "2026-08-23T23:20:00Z"
-        },
-        "threshold_pct": 5,
-        "signal_precoce": {
-            "detected_at": "2026-08-10T10:30:00Z",
-            "price_at_signal_eur": 65024.73,
-            "move_pct_since_issue": 16.5,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Bitcoin (BTC) : écart de +16,5 % à +17,0 % entre le prix d'émission enregistré du verdict (55 800 dollars, 7 août 2026) et le prix confirmé ce cycle par double vérification indépendante (65 024,73 à 65 300 dollars, cohérent avec tous les cycles précédents depuis le 7 août). Ce fossé n'a jamais été signalé jusqu'ici car les cycles précédents comparaient uniquement la stabilité d'un cycle à l'autre, sans revérifier par rapport au prix d'émission d'origine. Point important : une recherche dédiée sur le prix réel du Bitcoin le 7 août 2026 (date d'émission) converge sur environ 64 940 dollars (fourchette 64 100-65 300 dollars, Yahoo Finance/TheStreet), cohérent avec le niveau actuel — Bitcoin est donc resté globalement stable (mouvement réel estimé sous 1 %) depuis l'émission du verdict, et non en hausse de 16,5 %. Cela indique fortement que le champ price_at_issue de ce verdict (55 800 dollars) est erroné à la source (probable donnée corrompue ou périmée au moment de l'émission), plutôt qu'un mouvement de marché réel. Signal enregistré ici pour la première fois à titre de signalement d'anomalie de données, et non comme un signal de marché exploitable : recommandation de vérification manuelle du prix d'émission d'origine avant la résolution officielle du 21 août, qui serait sinon faussée."
-        }
+  {
+    "id": "v-20260807-btc",
+    "issued_at": "2026-08-07T00:20:00Z",
+    "asset": "bitcoin",
+    "ticker": "BTC",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -0.4%",
+      "7j -0.8%",
+      "30j +1.2%"
+    ],
+    "reasoning": "Range quasi plat sur les trois horizons (24h -0.4%, 7j -0.8%, 30j +1.2%) : consolidation, aucun signal directionnel net.",
+    "price_at_issue": 55800,
+    "resolves_at": "2026-08-21T00:20:00Z",
+    "status": "resolved",
+    "outcome": {
+      "price_at_resolution": 66240.0,
+      "actual_move_pct": 18.71,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-08-23T23:20:00Z"
     },
-    {
-        "id": "v-20260807-eth",
-        "issued_at": "2026-08-07T00:20:00Z",
-        "asset": "ethereum",
-        "ticker": "ETH",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h -0.1%",
-            "7j -1.1%",
-            "30j +7.2%"
-        ],
-        "reasoning": "Léger repli court terme (-1.1% sur 7j) mais tendance 30j toujours positive (+7.2%) : pas un signal de sortie, pas non plus un point d'entrée frais.",
-        "price_at_issue": 1649.89,
-        "resolves_at": "2026-08-21T00:20:00Z",
-        "status": "resolved",
-        "outcome": {
-            "price_at_resolution": 2066.96,
-            "actual_move_pct": 25.28,
-            "actual_direction": "ACHAT",
-            "verdict_correct": false,
-            "resolved_at": "2026-08-23T23:20:00Z"
-        },
-        "threshold_pct": 5,
-        "signal_precoce": {
-            "detected_at": "2026-08-10T10:30:00Z",
-            "price_at_signal_eur": 1914.37,
-            "move_pct_since_issue": 16.0,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Ethereum (ETH) : même anomalie que sur Bitcoin ce cycle. Écart de +16,0 % à +16,7 % entre le prix d'émission enregistré (1 649,89 dollars, 7 août 2026) et le prix confirmé ce cycle (1 914,37 à 1 925,02 dollars, double vérification indépendante, cohérent avec tous les cycles précédents). Une recherche dédiée sur le prix réel de l'Ethereum le 7 août 2026 converge sur environ 1 910 dollars (Yahoo Finance), cohérent avec le niveau actuel — Ethereum est donc resté globalement stable (mouvement réel estimé sous 1 %) depuis l'émission du verdict, comme Bitcoin. Le champ price_at_issue de ce verdict (1 649,89 dollars) semble donc également erroné à la source. Signal enregistré à titre de signalement d'anomalie de données, pas comme signal de marché exploitable : même recommandation de vérification manuelle avant la résolution du 21 août."
-        }
-    },
-    {
-        "id": "v-20260807-fet",
-        "issued_at": "2026-08-07T00:20:00Z",
-        "asset": "fetch-ai",
-        "ticker": "FET",
-        "verdict": "VENTE",
-        "horizon_days": 14,
-        "confidence_pct": 62,
-        "signals_used": [
-            "24h -4.9%",
-            "7j -6.0%",
-            "30j -17.4%"
-        ],
-        "reasoning": "Déclin cohérent et qui s'accélère sur les trois horizons (24h -4.9%, 7j -6.0%, 30j -17.4%). Lecture technique pure, aucune actualité vérifiée à ce stade sur la cause.",
-        "price_at_issue": 0.117162,
-        "resolves_at": "2026-08-21T00:20:00Z",
-        "status": "resolved",
-        "outcome": {
-            "price_at_resolution": 0.1582,
-            "actual_move_pct": 35.03,
-            "actual_direction": "ACHAT",
-            "verdict_correct": false,
-            "resolved_at": "2026-08-23T23:20:00Z"
-        },
-        "threshold_pct": 5,
-        "signal_precoce": {
-            "detected_at": "2026-08-10T06:30:00Z",
-            "price_at_signal_eur": 0.1356,
-            "move_pct_since_issue": 15.7,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Fetch.ai (FET) : contrairement à l'habitude sur les favoris de capitalisation moyenne, deux recherches indépendantes menées ce cycle convergent sur une fourchette resserrée, de 0,1356 dollar (CoinMarketCap) à 0,1600 dollar (Coinbase, Kraken), recoupée par six sources nommées au total. En retenant la valeur CoinMarketCap comme référence prudente (borne basse de la fourchette), le prix affiche +15,7 % par rapport au prix d'émission du verdict VENTE (0,117162 dollar), déjà bien au-delà du seuil de mouvement directionnel de 5 % — et jusqu'à +36,6 % si l'on retient la borne haute (Coinbase/Kraken, 0,16 dollar). Ce mouvement va dans le sens opposé au verdict initial. Contexte trouvé en recherche complémentaire : plusieurs sources évoquent un « rally de récupération » sur les tokens liés à l'intelligence artificielle (dont FET) malgré un momentum qualifié de baissier début août (RSI à 36,6, MACD négatif), avec une zone de rejet technique identifiée entre 0,15 et 0,16 dollar où les rallyes ont tendance à buter jusqu'ici. Signal précoce enregistré uniquement, ne préjuge pas de l'issue à l'échéance du 21 août : le verdict VENTE reste en attente, à confirmer ou infirmer au prochain cycle."
-        }
-    },
-    {
-        "id": "v-20260807-grt",
-        "issued_at": "2026-08-07T00:20:00Z",
-        "asset": "the-graph",
-        "ticker": "GRT",
-        "verdict": "VENTE",
-        "horizon_days": 14,
-        "confidence_pct": 60,
-        "signals_used": [
-            "24h -3.0%",
-            "7j -3.1%",
-            "30j -18.7%"
-        ],
-        "reasoning": "Baisse régulière et alignée sur les trois horizons (24h -3.0%, 7j -3.1%, 30j -18.7%), sans signe de stabilisation à ce stade.",
-        "price_at_issue": 0.01257596,
-        "resolves_at": "2026-08-21T00:20:00Z",
-        "status": "resolved",
-        "outcome": {
-            "price_at_resolution": 0.02148,
-            "actual_move_pct": 70.8,
-            "actual_direction": "ACHAT",
-            "verdict_correct": false,
-            "resolved_at": "2026-08-23T23:20:00Z"
-        },
-        "threshold_pct": 5,
-        "signal_precoce": {
-            "detected_at": "2026-08-10T10:30:00Z",
-            "price_at_signal_eur": 0.01459,
-            "move_pct_since_issue": 16.0,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "The Graph (GRT) : seuil de mouvement directionnel (5 %) franchi à la hausse, en sens opposé au verdict VENTE. Prix confirmé ce cycle (CoinGecko, 0,01459 dollar) cohérent avec au moins trois cycles précédents consécutifs (~0,0146 dollar, stable sur plusieurs jours malgré une source unique par cycle — la persistance sur un intervalle aussi long limite le risque de contenu indexé dupliqué). Par rapport au prix d'émission (0,01257596 dollar), le mouvement est de +16,0 %. Aucune actualité spécifique trouvée pour l'expliquer : lecture purement technique. Signal précoce enregistré avec la réserve habituelle (source unique par cycle, non recoupée par une seconde plateforme ce cycle) ; ne préjuge pas de l'issue à l'échéance du 21 août."
-        }
-    },
-    {
-        "id": "v-20260807-tia",
-        "issued_at": "2026-08-07T00:20:00Z",
-        "asset": "celestia",
-        "ticker": "TIA",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h +0.7%",
-            "7j +2.4%",
-            "30j -11.0%"
-        ],
-        "reasoning": "Léger mieux court terme (+2.4% sur 7j) après un mois négatif (-11.0%) : trop tôt pour parler de retournement, à surveiller si le 7j se confirme au prochain cycle.",
-        "price_at_issue": 0.291794,
-        "resolves_at": "2026-08-21T00:20:00Z",
-        "status": "resolved",
-        "outcome": {
-            "price_at_resolution": 0.306677,
-            "actual_move_pct": 5.1,
-            "actual_direction": "ACHAT",
-            "verdict_correct": false,
-            "resolved_at": "2026-08-23T23:20:00Z"
-        },
-        "threshold_pct": 5
-    },
-    {
-        "id": "v-20260807-ctsi",
-        "issued_at": "2026-08-07T00:20:00Z",
-        "asset": "cartesi",
-        "ticker": "CTSI",
-        "verdict": "ATTENTE",
-        "horizon_days": 7,
-        "confidence_pct": 45,
-        "signals_used": [
-            "24h +41.2%",
-            "7j +39.4%",
-            "30j +30.6%"
-        ],
-        "reasoning": "Mouvement extrême et inhabituel (+41.2% en 24h) sans catalyseur vérifié de mon côté (aucune recherche d'actualité confirmée à cette heure). Un tel pic est aussi souvent suivi d'une correction brutale qu'il ne se poursuit. Ne pas courir après ce mouvement sans confirmation — horizon volontairement raccourci à 7j vu la volatilité.",
-        "price_at_issue": 0.02677609,
-        "resolves_at": "2026-08-14T00:20:00Z",
-        "status": "resolved",
-        "outcome": {
-            "price_at_resolution": 0.02508,
-            "actual_move_pct": -6.33,
-            "actual_direction": "VENTE",
-            "verdict_correct": false,
-            "resolved_at": "2026-08-17T01:03:00Z"
-        },
-        "threshold_pct": 5,
-        "signal_precoce": {
-            "detected_at": "2026-08-07T14:30:00Z",
-            "price_at_signal_eur": 0.02318228,
-            "move_pct_since_issue": -13.4,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Le seuil de mouvement directionnel (5 %) est déjà franchi à la baisse, bien avant l'échéance officielle du 14 août. Le pic technique de ce matin (+41,2 % en 24h au moment du verdict) s'est complètement retourné : -25,6 % sur les dernières 24h désormais, et le prix est aujourd'hui environ 13,4 % sous le prix d'émission du verdict. Aucune actualité spécifique à Cartesi n'a été trouvée pour expliquer ce retournement (recherche d'actualités dédiées effectuée ce cycle, rien de récent) : lecture purement technique, cohérente avec la prudence déjà exprimée dans le raisonnement initial. Signal précoce uniquement, pas une résolution : le verdict ATTENTE reste en attente de son échéance officielle, aucun outcome n'est rempli."
-        }
-    },
-    {
-        "id": "v-20260807-peaq",
-        "issued_at": "2026-08-07T00:20:00Z",
-        "asset": "peaq-2",
-        "ticker": "PEAQ",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h +3.7%",
-            "7j +1.7%",
-            "30j -11.0%"
-        ],
-        "reasoning": "Stabilisation récente (+1.7% sur 7j) après un mois négatif (-11.0%) : signal insuffisant pour confirmer un retournement.",
-        "price_at_issue": 0.01549363,
-        "resolves_at": "2026-08-21T00:20:00Z",
-        "status": "resolved",
-        "outcome": {
-            "price_at_resolution": 0.01355,
-            "actual_move_pct": -12.54,
-            "actual_direction": "VENTE",
-            "verdict_correct": false,
-            "resolved_at": "2026-08-23T23:20:00Z"
-        },
-        "threshold_pct": 5,
-        "signal_precoce": {
-            "detected_at": "2026-08-10T10:30:00Z",
-            "price_at_signal_eur": 0.01762,
-            "move_pct_since_issue": 13.7,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Peaq (PEAQ) : seuil de mouvement directionnel (5 %) franchi à la hausse. Prix confirmé ce cycle par deux sources nommées et convergentes (CoinGecko 0,01762 dollar, CoinMarketCap 0,01788 dollar), après une lecture isolée et écartée au cycle précédent (~0,02184 dollar, non retenue). Par rapport au prix d'émission (0,01549363 dollar), le mouvement est de +13,7 % à +15,4 % selon la source retenue. Aucune actualité spécifique trouvée pour l'expliquer : lecture purement technique. Le verdict ATTENTE reste en attente de son échéance du 21 août, ce signal ne préjuge pas de l'issue."
-        }
-    },
-    {
-        "id": "v-20260807-link",
-        "issued_at": "2026-08-07T00:20:00Z",
-        "asset": "chainlink",
-        "ticker": "LINK",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h +0.6%",
-            "7j -3.3%",
-            "30j +4.1%"
-        ],
-        "reasoning": "Signaux contradictoires selon l'horizon (7j -3.3% vs 30j +4.1%) : pas de tendance nette actuellement.",
-        "price_at_issue": 7.12,
-        "resolves_at": "2026-08-21T00:20:00Z",
-        "status": "resolved",
-        "outcome": {
-            "price_at_resolution": 7.42,
-            "actual_move_pct": 4.21,
-            "actual_direction": "ATTENTE",
-            "verdict_correct": true,
-            "resolved_at": "2026-08-23T23:20:00Z"
-        },
-        "threshold_pct": 5,
-        "signal_precoce": {
-            "detected_at": "2026-08-11T16:20:00Z",
-            "price_at_signal_eur": 8.28,
-            "move_pct_since_issue": 16.3,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Chainlink (LINK) : seuil de mouvement directionnel (5 %) franchi à la hausse, repéré ce cycle via un article de marché (« Chainlink Tops Gains ») puis confirmé par trois sources nommées et convergentes (CoinMarketCap 8,28 dollars, CoinDesk 8,31 dollars, CoinGecko 8,50 dollars). Par rapport au prix d'émission du verdict ATTENTE (7,12 dollars), le mouvement est de +16,3 % à +19,4 % selon la source retenue. Catalyseur identifié et cohérent, contrairement à la plupart des signaux précédents sur les autres favoris : Standard Chartered a initié une couverture le 10 août avec un objectif de cours de 200 dollars à horizon 2030 (soit un potentiel de x25), et le volume total sécurisé par les oracles Chainlink a franchi les 33 430 milliards de dollars (contre 30 060 milliards en avril), plus de 3 000 milliards de dollars de transactions supplémentaires en quatre mois. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 21 août : le verdict ATTENTE reste en attente, à confirmer ou infirmer au prochain cycle."
-        }
-    },
-    {
-        "id": "v-20260807-ondo",
-        "issued_at": "2026-08-07T00:20:00Z",
-        "asset": "ondo-finance",
-        "ticker": "ONDO",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 52,
-        "signals_used": [
-            "24h -3.7%",
-            "7j -13.8%",
-            "30j +9.4%"
-        ],
-        "reasoning": "Faiblesse court terme marquée (-13.8% sur 7j) alors que le mois reste positif (+9.4%) : tendance de fond pas encore cassée, mais seuil de vigilance posé — si le 7j continue de se dégrader au prochain cycle, ce sera un signal de vente.",
-        "price_at_issue": 0.310451,
-        "resolves_at": "2026-08-21T00:20:00Z",
-        "status": "resolved",
-        "outcome": {
-            "price_at_resolution": 0.3837,
-            "actual_move_pct": 23.59,
-            "actual_direction": "ACHAT",
-            "verdict_correct": false,
-            "resolved_at": "2026-08-23T23:20:00Z"
-        },
-        "threshold_pct": 5,
-        "signal_precoce": {
-            "detected_at": "2026-08-10T10:30:00Z",
-            "price_at_signal_eur": 0.35,
-            "move_pct_since_issue": 12.7,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Ondo Finance (ONDO) : seuil de mouvement directionnel (5 %) franchi à la hausse, alors même que la crise de gouvernance (plainte de Kathleen Allman devant le tribunal du Delaware, déjà alertée le 7 août) constituait a priori un catalyseur négatif retenu dans le raisonnement initial du verdict. Prix confirmé ce cycle (MetaMask, 0,35 dollar) cohérent avec plusieurs cycles précédents consécutifs (~0,350-0,353 dollar). Par rapport au prix d'émission (0,310451 dollar), le mouvement est de +12,7 %. Le marché ne semble donc pas, à ce stade, avoir sanctionné le titre pour ce risque de gouvernance — à surveiller si le dossier judiciaire évolue. Le verdict ATTENTE reste en attente de son échéance du 21 août."
-        }
-    },
-    {
-        "id": "v-20260807-jup",
-        "issued_at": "2026-08-07T00:20:00Z",
-        "asset": "jupiter-exchange-solana",
-        "ticker": "JUP",
-        "verdict": "VENTE",
-        "horizon_days": 14,
-        "confidence_pct": 63,
-        "signals_used": [
-            "24h -3.9%",
-            "7j -7.8%",
-            "30j -23.9%"
-        ],
-        "reasoning": "Un des signaux les plus faibles des 15 favoris : déclin aligné sur les trois horizons (24h -3.9%, 7j -7.8%, 30j -23.9%).",
-        "price_at_issue": 0.156368,
-        "resolves_at": "2026-08-21T00:20:00Z",
-        "status": "resolved",
-        "outcome": {
-            "price_at_resolution": 0.138,
-            "actual_move_pct": -11.75,
-            "actual_direction": "VENTE",
-            "verdict_correct": true,
-            "resolved_at": "2026-08-23T23:20:00Z"
-        },
-        "threshold_pct": 5,
-        "signal_precoce": {
-            "detected_at": "2026-08-10T10:30:00Z",
-            "price_at_signal_eur": 0.1843,
-            "move_pct_since_issue": 17.9,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Jupiter (JUP) : seuil de mouvement directionnel (5 %) franchi à la hausse, en sens opposé au verdict VENTE. Deux recherches indépendantes menées ce cycle convergent (0,1843 dollar puis 0,1852 dollar, cette dernière explicitement sourcée CoinMarketCap), cohérent avec la fourchette déjà notée au cycle précédent (0,182-0,208 dollar). Par rapport au prix d'émission (0,156368 dollar), le mouvement est de +17,9 % à +18,4 %. Aucune actualité spécifique trouvée pour l'expliquer : lecture purement technique. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 21 août : le verdict VENTE reste en attente, à confirmer ou infirmer au prochain cycle."
-        }
-    },
-    {
-        "id": "v-20260807-lpt",
-        "issued_at": "2026-08-07T00:20:00Z",
-        "asset": "livepeer",
-        "ticker": "LPT",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h -0.4%",
-            "7j +0.7%",
-            "30j -18.8%"
-        ],
-        "reasoning": "Court terme plat (24h -0.4%, 7j +0.7%) malgré une faiblesse notable sur 30j (-18.8%) : pas de nouveau signal exploitable cette semaine.",
-        "price_at_issue": 1.11,
-        "resolves_at": "2026-08-21T00:20:00Z",
-        "status": "resolved",
-        "outcome": {
-            "price_at_resolution": 1.21,
-            "actual_move_pct": 9.01,
-            "actual_direction": "ACHAT",
-            "verdict_correct": false,
-            "resolved_at": "2026-08-23T23:20:00Z"
-        },
-        "threshold_pct": 5
-    },
-    {
-        "id": "v-20260807-aioz",
-        "issued_at": "2026-08-07T00:20:00Z",
-        "asset": "aioz-network",
-        "ticker": "AIOZ",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h -0.1%",
-            "7j -5.9%",
-            "30j -10.2%"
-        ],
-        "reasoning": "Faiblesse modérée et assez régulière (7j -5.9%, 30j -10.2%) mais pas assez marquée pour un signal de vente ferme.",
-        "price_at_issue": 0.04051463,
-        "resolves_at": "2026-08-21T00:20:00Z",
-        "status": "resolved",
-        "outcome": {
-            "price_at_resolution": 0.1252,
-            "actual_move_pct": 209.02,
-            "actual_direction": "ACHAT",
-            "verdict_correct": false,
-            "resolved_at": "2026-08-23T23:20:00Z"
-        },
-        "threshold_pct": 5
-    },
-    {
-        "id": "v-20260807-flux",
-        "issued_at": "2026-08-07T00:20:00Z",
-        "asset": "zelcash",
-        "ticker": "FLUX",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h +0.5%",
-            "7j +3.3%",
-            "30j -10.4%"
-        ],
-        "reasoning": "Léger rebond sur 7j (+3.3%) après un mois négatif (-10.4%) : même lecture que TIA/PEAQ, trop tôt pour confirmer un retournement.",
-        "price_at_issue": 0.03450754,
-        "resolves_at": "2026-08-21T00:20:00Z",
-        "status": "resolved",
-        "outcome": {
-            "price_at_resolution": 0.04491,
-            "actual_move_pct": 30.15,
-            "actual_direction": "ACHAT",
-            "verdict_correct": false,
-            "resolved_at": "2026-08-23T23:20:00Z"
-        },
-        "threshold_pct": 5
-    },
-    {
-        "id": "v-20260807-arb",
-        "issued_at": "2026-08-07T00:20:00Z",
-        "asset": "arbitrum",
-        "ticker": "ARB",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h -2.6%",
-            "7j +0.3%",
-            "30j +1.6%"
-        ],
-        "reasoning": "Consolidation quasi plate sur 7j et 30j : aucun signal directionnel net actuellement.",
-        "price_at_issue": 0.067826,
-        "resolves_at": "2026-08-21T00:20:00Z",
-        "status": "resolved",
-        "outcome": {
-            "price_at_resolution": 0.08838,
-            "actual_move_pct": 30.3,
-            "actual_direction": "ACHAT",
-            "verdict_correct": false,
-            "resolved_at": "2026-08-23T23:20:00Z"
-        },
-        "threshold_pct": 5,
-        "signal_precoce": {
-            "detected_at": "2026-08-10T10:30:00Z",
-            "price_at_signal_eur": 0.07785,
-            "move_pct_since_issue": 14.8,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Arbitrum (ARB) : seuil de mouvement directionnel (5 %) franchi à la hausse. Prix confirmé ce cycle par deux sources nommées et convergentes (CoinGecko 0,07785 dollar, CoinMarketCap 0,07978 dollar), ce qui résout la divergence extrême et isolée du cycle précédent (~0,2174 dollar, source unique non retenue, désormais considérée comme une erreur de source ou une confusion de méthodologie). Par rapport au prix d'émission (0,067826 dollar), le mouvement est de +14,8 % à +17,6 %. Aucune actualité spécifique trouvée pour l'expliquer : lecture purement technique. Le verdict ATTENTE reste en attente de son échéance du 21 août, ce signal ne préjuge pas de l'issue."
-        }
-    },
-    {
-        "id": "v-20260807-inj",
-        "issued_at": "2026-08-07T00:20:00Z",
-        "asset": "injective-protocol",
-        "ticker": "INJ",
-        "verdict": "VENTE",
-        "horizon_days": 14,
-        "confidence_pct": 55,
-        "signals_used": [
-            "24h -5.7%",
-            "7j -8.0%",
-            "30j -3.0%"
-        ],
-        "reasoning": "Court et moyen terme alignés à la baisse (24h -5.7%, 7j -8.0%), 30j moins marqué (-3.0%) : signal plus récent que sur FET/GRT/JUP, confiance modérée.",
-        "price_at_issue": 3.95,
-        "resolves_at": "2026-08-21T00:20:00Z",
-        "status": "resolved",
-        "outcome": {
-            "price_at_resolution": 3.59,
-            "actual_move_pct": -9.11,
-            "actual_direction": "VENTE",
-            "verdict_correct": true,
-            "resolved_at": "2026-08-23T23:20:00Z"
-        },
-        "threshold_pct": 5,
-        "signal_precoce": {
-            "detected_at": "2026-08-10T10:30:00Z",
-            "price_at_signal_eur": 4.34,
-            "move_pct_since_issue": 9.9,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Injective (INJ) : seuil de mouvement directionnel (5 %) franchi à la hausse, en sens opposé au verdict VENTE. Deux sources nommées et indépendantes convergent enfin ce cycle (CoinMarketCap 4,34 dollars, CoinGecko 4,64 dollars), après plusieurs cycles où la valeur restait identique d'une recherche à l'autre (probable contenu indexé dupliqué, non reconfirmé). Par rapport au prix d'émission (3,95 dollars), le mouvement est de +9,9 % à +17,5 % selon la source retenue. Aucune actualité spécifique trouvée pour l'expliquer ce cycle : lecture purement technique. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 21 août : le verdict VENTE reste en attente, à confirmer ou infirmer au prochain cycle."
-        }
-    },
-    {
-        "id": "v-20260817-ctsi",
-        "issued_at": "2026-08-17T01:03:00Z",
-        "asset": "cartesi",
-        "ticker": "CTSI",
-        "verdict": "ATTENTE",
-        "horizon_days": 7,
-        "confidence_pct": 60,
-        "signals_used": [
-            "24h -5.2%",
-            "7j +17.4%"
-        ],
-        "reasoning": "Consolidation après une semaine volatile : +17,4 % sur 7 jours mais repli de -5,2 % sur les dernières 24h, plutôt un essoufflement du rebond qu'une tendance nette dans un sens ou l'autre. Aucun nouveau catalyseur fondamental identifié ce cycle (le jalon de décentralisation Stage 2 sur L2BEAT du 10 août reste d'actualité mais n'est pas un développement neuf). Régime macro neutre, sans influence directionnelle particulière. Consensus à trois signaux unanimement prudent (3/3 attente) : le précédent verdict ATTENTE sur cet actif vient d'être invalidé par un mouvement de -6,33 % à son échéance, ce qui incite à une lecture encore plus prudente sur un actif historiquement très volatil.",
-        "price_at_issue": 0.02508,
-        "resolves_at": "2026-08-24T01:03:00Z",
-        "status": "resolved",
-        "outcome": {
-            "price_at_resolution": 0.02487,
-            "actual_move_pct": -0.84,
-            "actual_direction": "ATTENTE",
-            "verdict_correct": true,
-            "resolved_at": "2026-08-24T04:21:00Z"
-        },
-        "threshold_pct": 5,
-        "signal_consensus": {
-            "technique": "ATTENTE",
-            "fondamental": "ATTENTE",
-            "macro": "ATTENTE",
-            "accord_count": 3
-        },
-        "regime_at_issue": "neutre"
-    },
-    {
-        "id": "v-20260823-btc",
-        "issued_at": "2026-08-23T23:20:00Z",
-        "asset": "bitcoin",
-        "ticker": "BTC",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h -1.9%"
-        ],
-        "signal_consensus": {
-            "technique": "insuffisant",
-            "fondamental": "neutre",
-            "macro": "haussier",
-            "accord_count": 1
-        },
-        "reasoning": "Reprise du cycle après plusieurs jours d'interruption : BTC a bondi d'environ +18,7 % depuis le dernier verdict, porté par un basculement net de l'indice de peur et de cupidité (46 « neutre » -> 73 « avidité »), sur fond d'optimisme réglementaire (CLARITY Act, rachats Trésor) largement relayé. Signal technique jugé insuffisant faute d'historique 24h/7j/30j frais pour ce nouveau cycle ; signal fondamental neutre (statut de réserve de valeur inchangé) ; seul le signal macro est nettement haussier. Un seul signal sur trois converge : pas de conviction directionnelle suffisante pour courir après un mouvement déjà réalisé.",
-        "price_at_issue": 66240.0,
-        "resolves_at": "2026-09-06T23:20:00Z",
-        "status": "pending",
-        "threshold_pct": 5,
-        "regime_at_issue": "risk-on",
-        "outcome": {
-            "price_at_resolution": null,
-            "actual_move_pct": null,
-            "actual_direction": null,
-            "verdict_correct": null,
-            "resolved_at": null
-        },
-        "signal_precoce": {
-            "detected_at": "2026-08-26T10:20:00Z",
-            "price_at_signal_eur": 67304,
-            "move_pct_since_issue": 1.61,
-            "threshold_pct": 5,
-            "threshold_crossed": false,
-            "note": "Bitcoin (BTC) : re-vérification par appel direct à l'API CoinGecko (coins/markets et simple/price, cohérentes entre elles à 67 304-67 325 euros, 78 533 dollars), recoupée par une recherche web confirmant que Bitcoin a touché environ 81 000 dollars avant de retomber vers 78 000 dollars ce cycle. Le signal précédent (25 août, 79 674) était en réalité une valeur en dollars stockée par erreur dans le champ prix en euros — voir l'alerte transversale de ce cycle sur cette anomalie de méthodologie, retrouvée de façon quasi uniforme sur la plupart des favoris. Mouvement réel corrigé depuis le prix d'émission du 23 août (66 240 euros) : +1,6 %, sous le seuil de mouvement directionnel de 5 %."
-        }
-    },
-    {
-        "id": "v-20260823-eth",
-        "issued_at": "2026-08-23T23:20:00Z",
-        "asset": "ethereum",
-        "ticker": "ETH",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h -4.4%",
-            "7j +28.1%"
-        ],
-        "signal_consensus": {
-            "technique": "insuffisant",
-            "fondamental": "neutre",
-            "macro": "haussier",
-            "accord_count": 1
-        },
-        "reasoning": "Même contexte que BTC : ETH a progressé d'environ +25,3 % pendant l'interruption du cycle, dans le sillage du regain d'appétit pour le risque (indice de peur et de cupidité en forte hausse). Signal technique insuffisant (pas d'historique 24h/7j/30j frais disponible ce cycle), signal fondamental neutre (rôle de plateforme L1 inchangé), signal macro haussier. Un seul signal sur trois converge : prudence après un rattrapage déjà important plutôt que poursuite du mouvement.",
-        "price_at_issue": 2066.96,
-        "resolves_at": "2026-09-06T23:20:00Z",
-        "status": "pending",
-        "threshold_pct": 5,
-        "regime_at_issue": "risk-on",
-        "outcome": {
-            "price_at_resolution": null,
-            "actual_move_pct": null,
-            "actual_direction": null,
-            "verdict_correct": null,
-            "resolved_at": null
-        },
-        "signal_precoce": {
-            "detected_at": "2026-08-26T10:20:00Z",
-            "price_at_signal_eur": 2101.19,
-            "move_pct_since_issue": 1.66,
-            "threshold_pct": 5,
-            "threshold_crossed": false,
-            "note": "Ethereum (ETH) : même correction que Bitcoin ce cycle (voir alerte transversale). Prix vérifié par appel direct à l'API CoinGecko (2 101,19 euros, cohérent entre coins/markets et simple/price). Le signal précédent (25 août, 2 500) était une valeur en dollars mal étiquetée en euros. Mouvement réel corrigé depuis le prix d'émission du 23 août (2 066,96 euros) : +1,7 %, sous le seuil de mouvement directionnel de 5 %."
-        }
-    },
-    {
-        "id": "v-20260823-fet",
-        "issued_at": "2026-08-23T23:20:00Z",
-        "asset": "fetch-ai",
-        "ticker": "FET",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h -0.8%",
-            "7j -15.4%"
-        ],
-        "signal_consensus": {
-            "technique": "mixte",
-            "fondamental": "neutre",
-            "macro": "haussier",
-            "accord_count": 1
-        },
-        "reasoning": "FET a progressé d'environ +35 % pendant l'interruption, effaçant largement la faiblesse relative notée sur les 7 derniers jours (-15,4 % selon les dernières données disponibles) avant ce rebond. Signal technique mixte (rebond fort mais partant d'une base affaiblie), signal fondamental neutre (secteur IA sans catalyseur spécifique confirmé ce cycle), signal macro haussier. Un signal sur trois nettement favorable : pas assez pour reconduire un appel directionnel après le mouvement déjà réalisé.",
-        "price_at_issue": 0.1582,
-        "resolves_at": "2026-09-06T23:20:00Z",
-        "status": "pending",
-        "threshold_pct": 5,
-        "regime_at_issue": "risk-on",
-        "outcome": {
-            "price_at_resolution": null,
-            "actual_move_pct": null,
-            "actual_direction": null,
-            "verdict_correct": null,
-            "resolved_at": null
-        },
-        "signal_precoce": {
-            "detected_at": "2026-08-26T10:20:00Z",
-            "price_at_signal_eur": 0.139257,
-            "move_pct_since_issue": -11.97,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Fetch.ai (FET) : première alerte de seuil sur ce verdict. Seuil de mouvement directionnel (5 %) franchi à la baisse, prix vérifié par appel direct à l'API CoinGecko (0,139257 euro contre un prix d'émission de 0,1582 euro), soit -12,0 %. Cohérent avec une actualité relayée ce cycle notant un recul de FET d'environ -6,4 % sur 24h glissantes dans un marché plus prudent après le rallye de la semaine passée. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 6 septembre."
-        }
-    },
-    {
-        "id": "v-20260823-grt",
-        "issued_at": "2026-08-23T23:20:00Z",
-        "asset": "the-graph",
-        "ticker": "GRT",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h +2.1%",
-            "7j +4.7%"
-        ],
-        "signal_consensus": {
-            "technique": "a_risque_retournement",
-            "fondamental": "neutre",
-            "macro": "haussier",
-            "accord_count": 1
-        },
-        "reasoning": "GRT a bondi d'environ +71 % pendant l'interruption, un mouvement extrême qui dépasse largement le cadre d'un simple rattrapage macro. Signal technique jugé à haut risque de retournement (mouvement de cette ampleur rarement linéaire), signal fondamental neutre (secteur IA/indexation sans catalyseur spécifique confirmé), signal macro haussier. Un seul signal sur trois converge clairement : verdict prudent malgré le mouvement spectaculaire, cohérent avec la doctrine du moteur de ne pas courir après un pic déjà réalisé.",
-        "price_at_issue": 0.02148,
-        "resolves_at": "2026-09-06T23:20:00Z",
-        "status": "pending",
-        "threshold_pct": 5,
-        "regime_at_issue": "risk-on",
-        "outcome": {
-            "price_at_resolution": null,
-            "actual_move_pct": null,
-            "actual_direction": null,
-            "verdict_correct": null,
-            "resolved_at": null
-        },
-        "signal_precoce": {
-            "detected_at": "2026-08-26T10:20:00Z",
-            "price_at_signal_eur": 0.01498091,
-            "move_pct_since_issue": -30.26,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "The Graph (GRT) : seuil de mouvement directionnel (5 %) toujours franchi à la baisse, mais amplitude corrigée ce cycle (le signal du 25 août, -17,2 %, portait sur une base de comparaison affectée par l'anomalie de devise transversale décrite dans l'alerte de ce cycle). Prix vérifié par appel direct à l'API CoinGecko : 0,01498091 euro contre un prix d'émission de 0,02148 euro, soit -30,3 %. Aucune actualité spécifique identifiée pour l'expliquer. Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
-        }
-    },
-    {
-        "id": "v-20260823-tia",
-        "issued_at": "2026-08-23T23:20:00Z",
-        "asset": "celestia",
-        "ticker": "TIA",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h -3.3%",
-            "7j -13.0%",
-            "30j -9.0%"
-        ],
-        "signal_consensus": {
-            "technique": "neutre",
-            "fondamental": "neutre",
-            "macro": "haussier",
-            "accord_count": 1
-        },
-        "reasoning": "TIA a progressé d'environ +5,1 % depuis le dernier prix connu, un mouvement à la limite du seuil directionnel (5 %) et donc peu significatif en soi. Signal technique neutre (mouvement marginal), signal fondamental neutre (infra modulaire sans catalyseur spécifique confirmé), signal macro haussier. Un seul signal sur trois converge : attente justifiée par l'absence de conviction forte.",
-        "price_at_issue": 0.306677,
-        "resolves_at": "2026-09-06T23:20:00Z",
-        "status": "pending",
-        "threshold_pct": 5,
-        "regime_at_issue": "risk-on",
-        "outcome": {
-            "price_at_resolution": null,
-            "actual_move_pct": null,
-            "actual_direction": null,
-            "verdict_correct": null,
-            "resolved_at": null
-        },
-        "signal_precoce": {
-            "detected_at": "2026-08-26T10:20:00Z",
-            "price_at_signal_eur": 0.300001,
-            "move_pct_since_issue": -2.18,
-            "threshold_pct": 5,
-            "threshold_crossed": false,
-            "note": "Celestia (TIA) : correction importante ce cycle (voir alerte transversale sur l'anomalie de devise) — le signal du 25 août (+17,5 %) reposait sur une valeur en dollars mal étiquetée en euros. Prix re-vérifié par appel direct à l'API CoinGecko (0,300001 euro contre un prix d'émission de 0,306677 euro, verdict ATTENTE du 23 août) : mouvement réel de -2,2 %, sous le seuil de mouvement directionnel de 5 %. Aucun signal précoce ne devrait donc être considéré comme actif sur ce verdict actuellement."
-        }
-    },
-    {
-        "id": "v-20260823-peaq",
-        "issued_at": "2026-08-23T23:20:00Z",
-        "asset": "peaq-2",
-        "ticker": "PEAQ",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h -4.8%",
-            "7j +7.6%"
-        ],
-        "signal_consensus": {
-            "technique": "baissier",
-            "fondamental": "neutre",
-            "macro": "haussier",
-            "accord_count": 1
-        },
-        "reasoning": "PEAQ a reculé d'environ -12,5 % pendant l'interruption du cycle, à contre-courant du rebond général du marché — signal notable qui mérite une surveillance rapprochée au prochain cycle. Signal technique baissier, signal fondamental neutre (secteur DePIN sans catalyseur spécifique confirmé), signal macro haussier (contradictoire avec le technique). Un signal sur trois par direction : pas de consensus, attente en attendant confirmation.",
-        "price_at_issue": 0.01355,
-        "resolves_at": "2026-09-06T23:20:00Z",
-        "status": "pending",
-        "threshold_pct": 5,
-        "regime_at_issue": "risk-on",
-        "outcome": {
-            "price_at_resolution": null,
-            "actual_move_pct": null,
-            "actual_direction": null,
-            "verdict_correct": null,
-            "resolved_at": null
-        },
-        "signal_precoce": {
-            "detected_at": "2026-08-26T10:20:00Z",
-            "price_at_signal_eur": 0.0186511,
-            "move_pct_since_issue": 37.65,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Peaq (PEAQ) : seuil de mouvement directionnel (5 %) toujours franchi à la hausse, mais amplitude corrigée ce cycle (le signal du 25 août, +65,8 %, était affecté par l'anomalie de devise transversale décrite dans l'alerte de ce cycle). Prix vérifié par appel direct à l'API CoinGecko : 0,0186511 euro contre un prix d'émission de 0,01355 euro, soit +37,7 %. Aucune actualité spécifique identifiée pour l'expliquer. Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
-        }
-    },
-    {
-        "id": "v-20260823-link",
-        "issued_at": "2026-08-23T23:20:00Z",
-        "asset": "chainlink",
-        "ticker": "LINK",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h +2.5%",
-            "7j +11.3%"
-        ],
-        "signal_consensus": {
-            "technique": "neutre",
-            "fondamental": "neutre",
-            "macro": "haussier",
-            "accord_count": 1
-        },
-        "reasoning": "LINK a progressé d'environ +4,2 %, sous le seuil directionnel (5 %) malgré le contexte macro haussier — la hausse la plus modeste des favoris sur cette période, cohérent avec un profil plus établi et moins volatil. Signal technique neutre, signal fondamental neutre (rôle d'oracle inchangé), signal macro haussier. Un seul signal sur trois converge : attente.",
-        "price_at_issue": 7.42,
-        "resolves_at": "2026-09-06T23:20:00Z",
-        "status": "pending",
-        "threshold_pct": 5,
-        "regime_at_issue": "risk-on",
-        "outcome": {
-            "price_at_resolution": null,
-            "actual_move_pct": null,
-            "actual_direction": null,
-            "verdict_correct": null,
-            "resolved_at": null
-        },
-        "signal_precoce": {
-            "detected_at": "2026-08-26T10:20:00Z",
-            "price_at_signal_eur": 9.7,
-            "move_pct_since_issue": 30.73,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Chainlink (LINK) : seuil de mouvement directionnel (5 %) toujours franchi à la hausse, mais amplitude corrigée ce cycle (le signal du 25 août, +53,9 %, était affecté par l'anomalie de devise transversale décrite dans l'alerte de ce cycle). Prix vérifié par appel direct à l'API CoinGecko : 9,70 euros contre un prix d'émission de 7,42 euros, soit +30,7 %. Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
-        }
-    },
-    {
-        "id": "v-20260823-ondo",
-        "issued_at": "2026-08-23T23:20:00Z",
-        "asset": "ondo-finance",
-        "ticker": "ONDO",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h +7.7%",
-            "7j +21.5%"
-        ],
-        "signal_consensus": {
-            "technique": "haussier",
-            "fondamental": "neutre",
-            "macro": "haussier",
-            "accord_count": 2
-        },
-        "reasoning": "ONDO a progressé d'environ +23,6 % pendant l'interruption, dans la continuité du narratif RWA (actifs réels tokenisés) déjà porteur. Signal technique haussier mais mouvement déjà largement réalisé, signal fondamental neutre (pas de catalyseur RWA spécifique confirmé ce cycle), signal macro haussier. Deux signaux sur trois penchent haussier mais aucune confirmation fondamentale fraîche : attente plutôt que poursuite d'un mouvement déjà consommé.",
-        "price_at_issue": 0.3837,
-        "resolves_at": "2026-09-06T23:20:00Z",
-        "status": "pending",
-        "threshold_pct": 5,
-        "regime_at_issue": "risk-on",
-        "outcome": {
-            "price_at_resolution": null,
-            "actual_move_pct": null,
-            "actual_direction": null,
-            "verdict_correct": null,
-            "resolved_at": null
-        },
-        "signal_precoce": {
-            "detected_at": "2026-08-26T10:20:00Z",
-            "price_at_signal_eur": 0.312488,
-            "move_pct_since_issue": -18.56,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Ondo Finance (ONDO) : seuil de mouvement directionnel (5 %) toujours franchi à la baisse, amplitude corrigée et accentuée ce cycle (le signal du 26 août 00h20, -5,7 %, était partiellement affecté par l'anomalie de devise transversale décrite dans l'alerte de ce cycle). Prix vérifié par appel direct à l'API CoinGecko : 0,312488 euro contre un prix d'émission de 0,3837 euro, soit -18,6 %. Aucune actualité spécifique nouvelle identifiée ce cycle pour l'expliquer (la crise de gouvernance déjà documentée reste d'actualité). Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
-        }
-    },
-    {
-        "id": "v-20260823-jup",
-        "issued_at": "2026-08-23T23:20:00Z",
-        "asset": "jupiter-exchange-solana",
-        "ticker": "JUP",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h +0.3%"
-        ],
-        "signal_consensus": {
-            "technique": "baissier",
-            "fondamental": "legerement_positif",
-            "macro": "haussier",
-            "accord_count": 1
-        },
-        "reasoning": "JUP a reculé d'environ -11,7 % pendant l'interruption, à contre-courant du marché général — fait notable puisque le verdict précédent (VENTE) vient d'être validé sur ce même actif. Une actualité relayée mentionne toutefois un rebond récent de +3,7 % porté par les fondamentaux DeFi de Solana, signe d'une possible stabilisation. Signal technique baissier sur la période complète, signal fondamental légèrement positif (actualité DeFi Solana), signal macro haussier (contradictoire avec le technique). Aucun consensus net (1 sur 3 par direction) : attente en attendant confirmation.",
-        "price_at_issue": 0.138,
-        "resolves_at": "2026-09-06T23:20:00Z",
-        "status": "pending",
-        "threshold_pct": 5,
-        "regime_at_issue": "risk-on",
-        "outcome": {
-            "price_at_resolution": null,
-            "actual_move_pct": null,
-            "actual_direction": null,
-            "verdict_correct": null,
-            "resolved_at": null
-        },
-        "signal_precoce": {
-            "detected_at": "2026-08-26T10:20:00Z",
-            "price_at_signal_eur": 0.188793,
-            "move_pct_since_issue": 36.81,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Jupiter (JUP) : seuil de mouvement directionnel (5 %) toujours franchi à la hausse, mais amplitude corrigée ce cycle (le signal du 25 août, +52,3 %, était affecté par l'anomalie de devise transversale décrite dans l'alerte de ce cycle). Prix vérifié par appel direct à l'API CoinGecko : 0,188793 euro contre un prix d'émission de 0,138 euro, soit +36,8 %. Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
-        }
-    },
-    {
-        "id": "v-20260823-lpt",
-        "issued_at": "2026-08-23T23:20:00Z",
-        "asset": "livepeer",
-        "ticker": "LPT",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [],
-        "signal_consensus": {
-            "technique": "peu_fiable",
-            "fondamental": "neutre",
-            "macro": "haussier",
-            "accord_count": 1
-        },
-        "reasoning": "LPT a progressé d'environ +9 % pendant l'interruption, estimation obtenue par conversion USD->EUR (cotations EUR directes trop divergentes ce cycle entre sources pour être retenues telles quelles) — donnée à confirmer au prochain cycle. Signal technique jugé peu fiable vu l'incertitude de sourcing, signal fondamental neutre (secteur IA/infra vidéo sans catalyseur spécifique confirmé), signal macro haussier. Un seul signal sur trois solide : attente, avec vérification prioritaire du prix au prochain cycle.",
-        "price_at_issue": 1.21,
-        "resolves_at": "2026-09-06T23:20:00Z",
-        "status": "pending",
-        "threshold_pct": 5,
-        "regime_at_issue": "risk-on",
-        "outcome": {
-            "price_at_resolution": null,
-            "actual_move_pct": null,
-            "actual_direction": null,
-            "verdict_correct": null,
-            "resolved_at": null
-        },
-        "signal_precoce": {
-            "detected_at": "2026-08-26T10:20:00Z",
-            "price_at_signal_eur": 1.19,
-            "move_pct_since_issue": -1.65,
-            "threshold_pct": 5,
-            "threshold_crossed": false,
-            "note": "Livepeer (LPT) : correction importante ce cycle (voir alerte transversale sur l'anomalie de devise) — le signal du 25 août (+16,5 %) reposait sur une valeur en dollars mal étiquetée en euros. Prix re-vérifié par appel direct à l'API CoinGecko (1,19 euro contre un prix d'émission de 1,21 euro, verdict ATTENTE du 23 août) : mouvement réel de -1,6 %, sous le seuil de mouvement directionnel de 5 %. Aucun signal précoce ne devrait donc être considéré comme actif sur ce verdict actuellement."
-        }
-    },
-    {
-        "id": "v-20260823-aioz",
-        "issued_at": "2026-08-23T23:20:00Z",
-        "asset": "aioz-network",
-        "ticker": "AIOZ",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h -7.4%",
-            "7j -18.4%"
-        ],
-        "signal_consensus": {
-            "technique": "a_risque_retournement",
-            "fondamental": "neutre",
-            "macro": "haussier",
-            "accord_count": 1
-        },
-        "reasoning": "AIOZ affiche un mouvement extrême depuis le dernier prix connu (+209 %), bien au-delà du simple rattrapage macro général — donnée cohérente en interne (recoupée avec les variations 7j/24h relayées par la même source) mais à confirmer par une source indépendante au prochain cycle vu son ampleur inhabituelle. Signal technique jugé à très haut risque de retournement après un mouvement de cette taille, signal fondamental neutre (secteur DePIN/stockage sans catalyseur spécifique confirmé), signal macro haussier. Verdict volontairement prudent malgré l'ampleur du mouvement : ne pas courir après un pic aussi extrême sans confirmation supplémentaire.",
-        "price_at_issue": 0.1252,
-        "resolves_at": "2026-09-06T23:20:00Z",
-        "status": "pending",
-        "threshold_pct": 5,
-        "regime_at_issue": "risk-on",
-        "outcome": {
-            "price_at_resolution": null,
-            "actual_move_pct": null,
-            "actual_direction": null,
-            "verdict_correct": null,
-            "resolved_at": null
-        },
-        "signal_precoce": {
-            "detected_at": "2026-08-26T10:20:00Z",
-            "price_at_signal_eur": 0.04587471,
-            "move_pct_since_issue": -63.36,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "AIOZ Network (AIOZ) : seuil de mouvement directionnel (5 %) toujours franchi à la baisse, amplitude recalculée ce cycle (le signal du 25 août, -57,1 %, était affecté par l'anomalie de devise transversale décrite dans l'alerte de ce cycle). Prix vérifié par appel direct à l'API CoinGecko : 0,04587471 euro contre un prix d'émission de 0,1252 euro, soit -63,4 %. Prudence de lecture inchangée : ce prix d'émission lui-même reposait sur un bond de +209 % jamais confirmé indépendamment (voir le raisonnement du verdict) — ce recul pourrait en partie refléter la correction d'un prix d'émission déjà anormal plutôt qu'un mouvement de marché intégralement réel. Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
-        }
-    },
-    {
-        "id": "v-20260823-flux",
-        "issued_at": "2026-08-23T23:20:00Z",
-        "asset": "zelcash",
-        "ticker": "FLUX",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h +1.6%",
-            "7j -2.5%"
-        ],
-        "signal_consensus": {
-            "technique": "haussier",
-            "fondamental": "neutre",
-            "macro": "haussier",
-            "accord_count": 2
-        },
-        "reasoning": "FLUX (Zelcash) a progressé d'environ +30 % pendant l'interruption, dans la continuité du rebond général du marché. Signal technique haussier mais mouvement déjà largement réalisé, signal fondamental neutre (secteur DePIN/cloud sans catalyseur spécifique confirmé), signal macro haussier. Deux signaux sur trois penchent haussier sans confirmation fondamentale fraîche : attente plutôt que poursuite d'un mouvement déjà consommé.",
-        "price_at_issue": 0.04491,
-        "resolves_at": "2026-09-06T23:20:00Z",
-        "status": "pending",
-        "threshold_pct": 5,
-        "regime_at_issue": "risk-on",
-        "outcome": {
-            "price_at_resolution": null,
-            "actual_move_pct": null,
-            "actual_direction": null,
-            "verdict_correct": null,
-            "resolved_at": null
-        },
-        "signal_precoce": {
-            "detected_at": "2026-08-26T10:20:00Z",
-            "price_at_signal_eur": 0.03779309,
-            "move_pct_since_issue": -15.85,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Flux/Zelcash (FLUX) : seuil de mouvement directionnel (5 %) franchi à la baisse, conforme à l'alerte déjà émise ce cycle (08h21 UTC), amplitude légèrement affinée par une nouvelle vérification directe à l'API CoinGecko : 0,03779309 euro contre un prix d'émission de 0,04491 euro, soit -15,8 %. Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
-        }
-    },
-    {
-        "id": "v-20260823-arb",
-        "issued_at": "2026-08-23T23:20:00Z",
-        "asset": "arbitrum",
-        "ticker": "ARB",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h -2.3%",
-            "7j -8.9%"
-        ],
-        "signal_consensus": {
-            "technique": "haussier",
-            "fondamental": "potentiellement_positif_non_confirme",
-            "macro": "haussier",
-            "accord_count": 2
-        },
-        "reasoning": "ARB a progressé d'environ +30,3 % pendant l'interruption. Une actualité relayée mentionne une mise à niveau du réseau (upgrade technique et annonces de règlement ZK) comme catalyseur possible, mais non confirmée par une source primaire lors de ce cycle. Signal technique haussier mais mouvement déjà largement réalisé, signal fondamental potentiellement positif mais non confirmé, signal macro haussier. Deux signaux sur trois penchent haussier : confiance insuffisante pour dépasser le seuil de confiance 60 % sans confirmation fondamentale directe, attente prudente.",
-        "price_at_issue": 0.08838,
-        "resolves_at": "2026-09-06T23:20:00Z",
-        "status": "pending",
-        "threshold_pct": 5,
-        "regime_at_issue": "risk-on",
-        "outcome": {
-            "price_at_resolution": null,
-            "actual_move_pct": null,
-            "actual_direction": null,
-            "verdict_correct": null,
-            "resolved_at": null
-        },
-        "signal_precoce": {
-            "detected_at": "2026-08-26T10:20:00Z",
-            "price_at_signal_eur": 0.079114,
-            "move_pct_since_issue": -10.48,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Arbitrum (ARB) : seuil de mouvement directionnel (5 %) franchi à la baisse, conforme au renversement déjà signalé ce cycle (08h21 UTC), amplitude légèrement affinée par une nouvelle vérification directe à l'API CoinGecko : 0,079114 euro contre un prix d'émission de 0,08838 euro, soit -10,5 %. Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
-        }
-    },
-    {
-        "id": "v-20260823-inj",
-        "issued_at": "2026-08-23T23:20:00Z",
-        "asset": "injective-protocol",
-        "ticker": "INJ",
-        "verdict": "ATTENTE",
-        "horizon_days": 14,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h +4.4%"
-        ],
-        "signal_consensus": {
-            "technique": "baissier",
-            "fondamental": "neutre",
-            "macro": "haussier",
-            "accord_count": 1
-        },
-        "reasoning": "INJ a reculé d'environ -9,1 % pendant l'interruption, à contre-courant du marché général — le verdict précédent (VENTE) vient d'être validé sur ce même actif, ce qui renforce la lecture baissière à court terme. Signal technique baissier, signal fondamental neutre (secteur DeFi L1 sans catalyseur spécifique confirmé), signal macro haussier (contradictoire avec le technique). Aucun consensus net (1 sur 3 par direction) : attente en attendant confirmation, malgré la baisse déjà observée.",
-        "price_at_issue": 3.59,
-        "resolves_at": "2026-09-06T23:20:00Z",
-        "status": "pending",
-        "threshold_pct": 5,
-        "regime_at_issue": "risk-on",
-        "outcome": {
-            "price_at_resolution": null,
-            "actual_move_pct": null,
-            "actual_direction": null,
-            "verdict_correct": null,
-            "resolved_at": null
-        },
-        "signal_precoce": {
-            "detected_at": "2026-08-26T10:20:00Z",
-            "price_at_signal_eur": 4.7,
-            "move_pct_since_issue": 30.92,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Injective (INJ) : seuil de mouvement directionnel (5 %) toujours franchi à la hausse, mais amplitude corrigée ce cycle (le signal du 25 août, +55,7 %, était affecté par l'anomalie de devise transversale décrite dans l'alerte de ce cycle). Prix vérifié par appel direct à l'API CoinGecko : 4,70 euros contre un prix d'émission de 3,59 euros, soit +30,9 %. Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
-        }
-    },
-    {
-        "id": "v-20260824-ctsi",
-        "issued_at": "2026-08-24T04:21:00Z",
-        "asset": "cartesi",
-        "ticker": "CTSI",
-        "verdict": "ATTENTE",
-        "horizon_days": 7,
-        "confidence_pct": 50,
-        "signals_used": [
-            "24h -4.6%",
-            "7j +16.0%"
-        ],
-        "signal_consensus": {
-            "technique": "mixte",
-            "fondamental": "neutre",
-            "macro": "haussier",
-            "accord_count": 1
-        },
-        "reasoning": "Le verdict ATTENTE précédent sur Cartesi vient d'être validé (mouvement de -0,84 % à l'échéance, sous le seuil directionnel). Lecture technique mixte pour ce nouveau cycle : repli de -4,6 % sur les dernières 24h après un rebond de +16,0 % sur 7 jours, plutôt une consolidation post-rebond qu'un signal directionnel net. Aucun nouveau catalyseur fondamental identifié ce cycle sur l'infrastructure modulaire (le jalon de décentralisation Stage 2 sur L2BEAT, déjà noté le 10 août, reste d'actualité mais n'est pas un développement neuf). Contexte macro toujours risk-on (indice de peur et de cupidité en zone Greed, stable par rapport au cycle précédent). Un seul signal sur trois converge nettement (macro) : confiance insuffisante pour un appel directionnel, horizon volontairement raccourci à 7 jours vu la volatilité historique de cet actif.",
-        "price_at_issue": 0.02487,
-        "resolves_at": "2026-08-31T04:21:00Z",
-        "status": "pending",
-        "outcome": {
-            "price_at_resolution": null,
-            "actual_move_pct": null,
-            "actual_direction": null,
-            "verdict_correct": null,
-            "resolved_at": null
-        },
-        "threshold_pct": 5,
-        "regime_at_issue": "risk-on",
-        "signal_precoce": {
-            "detected_at": "2026-08-26T10:20:00Z",
-            "price_at_signal_eur": 0.02211591,
-            "move_pct_since_issue": -11.07,
-            "threshold_pct": 5,
-            "threshold_crossed": true,
-            "note": "Cartesi (CTSI) : première alerte de seuil sur ce nouveau verdict émis le 24 août. Seuil de mouvement directionnel (5 %) franchi à la baisse, prix vérifié par appel direct à l'API CoinGecko : 0,02211591 euro contre un prix d'émission de 0,02487 euro, soit -11,1 %. Aucune actualité spécifique identifiée pour l'expliquer ce cycle. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 31 août."
-        }
+    "threshold_pct": 5,
+    "signal_precoce": {
+      "detected_at": "2026-08-10T10:30:00Z",
+      "price_at_signal_eur": 65024.73,
+      "move_pct_since_issue": 16.5,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Bitcoin (BTC) : écart de +16,5 % à +17,0 % entre le prix d'émission enregistré du verdict (55 800 dollars, 7 août 2026) et le prix confirmé ce cycle par double vérification indépendante (65 024,73 à 65 300 dollars, cohérent avec tous les cycles précédents depuis le 7 août). Ce fossé n'a jamais été signalé jusqu'ici car les cycles précédents comparaient uniquement la stabilité d'un cycle à l'autre, sans revérifier par rapport au prix d'émission d'origine. Point important : une recherche dédiée sur le prix réel du Bitcoin le 7 août 2026 (date d'émission) converge sur environ 64 940 dollars (fourchette 64 100-65 300 dollars, Yahoo Finance/TheStreet), cohérent avec le niveau actuel — Bitcoin est donc resté globalement stable (mouvement réel estimé sous 1 %) depuis l'émission du verdict, et non en hausse de 16,5 %. Cela indique fortement que le champ price_at_issue de ce verdict (55 800 dollars) est erroné à la source (probable donnée corrompue ou périmée au moment de l'émission), plutôt qu'un mouvement de marché réel. Signal enregistré ici pour la première fois à titre de signalement d'anomalie de données, et non comme un signal de marché exploitable : recommandation de vérification manuelle du prix d'émission d'origine avant la résolution officielle du 21 août, qui serait sinon faussée."
     }
+  },
+  {
+    "id": "v-20260807-eth",
+    "issued_at": "2026-08-07T00:20:00Z",
+    "asset": "ethereum",
+    "ticker": "ETH",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -0.1%",
+      "7j -1.1%",
+      "30j +7.2%"
+    ],
+    "reasoning": "Léger repli court terme (-1.1% sur 7j) mais tendance 30j toujours positive (+7.2%) : pas un signal de sortie, pas non plus un point d'entrée frais.",
+    "price_at_issue": 1649.89,
+    "resolves_at": "2026-08-21T00:20:00Z",
+    "status": "resolved",
+    "outcome": {
+      "price_at_resolution": 2066.96,
+      "actual_move_pct": 25.28,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-08-23T23:20:00Z"
+    },
+    "threshold_pct": 5,
+    "signal_precoce": {
+      "detected_at": "2026-08-10T10:30:00Z",
+      "price_at_signal_eur": 1914.37,
+      "move_pct_since_issue": 16.0,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Ethereum (ETH) : même anomalie que sur Bitcoin ce cycle. Écart de +16,0 % à +16,7 % entre le prix d'émission enregistré (1 649,89 dollars, 7 août 2026) et le prix confirmé ce cycle (1 914,37 à 1 925,02 dollars, double vérification indépendante, cohérent avec tous les cycles précédents). Une recherche dédiée sur le prix réel de l'Ethereum le 7 août 2026 converge sur environ 1 910 dollars (Yahoo Finance), cohérent avec le niveau actuel — Ethereum est donc resté globalement stable (mouvement réel estimé sous 1 %) depuis l'émission du verdict, comme Bitcoin. Le champ price_at_issue de ce verdict (1 649,89 dollars) semble donc également erroné à la source. Signal enregistré à titre de signalement d'anomalie de données, pas comme signal de marché exploitable : même recommandation de vérification manuelle avant la résolution du 21 août."
+    }
+  },
+  {
+    "id": "v-20260807-fet",
+    "issued_at": "2026-08-07T00:20:00Z",
+    "asset": "fetch-ai",
+    "ticker": "FET",
+    "verdict": "VENTE",
+    "horizon_days": 14,
+    "confidence_pct": 62,
+    "signals_used": [
+      "24h -4.9%",
+      "7j -6.0%",
+      "30j -17.4%"
+    ],
+    "reasoning": "Déclin cohérent et qui s'accélère sur les trois horizons (24h -4.9%, 7j -6.0%, 30j -17.4%). Lecture technique pure, aucune actualité vérifiée à ce stade sur la cause.",
+    "price_at_issue": 0.117162,
+    "resolves_at": "2026-08-21T00:20:00Z",
+    "status": "resolved",
+    "outcome": {
+      "price_at_resolution": 0.1582,
+      "actual_move_pct": 35.03,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-08-23T23:20:00Z"
+    },
+    "threshold_pct": 5,
+    "signal_precoce": {
+      "detected_at": "2026-08-10T06:30:00Z",
+      "price_at_signal_eur": 0.1356,
+      "move_pct_since_issue": 15.7,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Fetch.ai (FET) : contrairement à l'habitude sur les favoris de capitalisation moyenne, deux recherches indépendantes menées ce cycle convergent sur une fourchette resserrée, de 0,1356 dollar (CoinMarketCap) à 0,1600 dollar (Coinbase, Kraken), recoupée par six sources nommées au total. En retenant la valeur CoinMarketCap comme référence prudente (borne basse de la fourchette), le prix affiche +15,7 % par rapport au prix d'émission du verdict VENTE (0,117162 dollar), déjà bien au-delà du seuil de mouvement directionnel de 5 % — et jusqu'à +36,6 % si l'on retient la borne haute (Coinbase/Kraken, 0,16 dollar). Ce mouvement va dans le sens opposé au verdict initial. Contexte trouvé en recherche complémentaire : plusieurs sources évoquent un « rally de récupération » sur les tokens liés à l'intelligence artificielle (dont FET) malgré un momentum qualifié de baissier début août (RSI à 36,6, MACD négatif), avec une zone de rejet technique identifiée entre 0,15 et 0,16 dollar où les rallyes ont tendance à buter jusqu'ici. Signal précoce enregistré uniquement, ne préjuge pas de l'issue à l'échéance du 21 août : le verdict VENTE reste en attente, à confirmer ou infirmer au prochain cycle."
+    }
+  },
+  {
+    "id": "v-20260807-grt",
+    "issued_at": "2026-08-07T00:20:00Z",
+    "asset": "the-graph",
+    "ticker": "GRT",
+    "verdict": "VENTE",
+    "horizon_days": 14,
+    "confidence_pct": 60,
+    "signals_used": [
+      "24h -3.0%",
+      "7j -3.1%",
+      "30j -18.7%"
+    ],
+    "reasoning": "Baisse régulière et alignée sur les trois horizons (24h -3.0%, 7j -3.1%, 30j -18.7%), sans signe de stabilisation à ce stade.",
+    "price_at_issue": 0.01257596,
+    "resolves_at": "2026-08-21T00:20:00Z",
+    "status": "resolved",
+    "outcome": {
+      "price_at_resolution": 0.02148,
+      "actual_move_pct": 70.8,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-08-23T23:20:00Z"
+    },
+    "threshold_pct": 5,
+    "signal_precoce": {
+      "detected_at": "2026-08-10T10:30:00Z",
+      "price_at_signal_eur": 0.01459,
+      "move_pct_since_issue": 16.0,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "The Graph (GRT) : seuil de mouvement directionnel (5 %) franchi à la hausse, en sens opposé au verdict VENTE. Prix confirmé ce cycle (CoinGecko, 0,01459 dollar) cohérent avec au moins trois cycles précédents consécutifs (~0,0146 dollar, stable sur plusieurs jours malgré une source unique par cycle — la persistance sur un intervalle aussi long limite le risque de contenu indexé dupliqué). Par rapport au prix d'émission (0,01257596 dollar), le mouvement est de +16,0 %. Aucune actualité spécifique trouvée pour l'expliquer : lecture purement technique. Signal précoce enregistré avec la réserve habituelle (source unique par cycle, non recoupée par une seconde plateforme ce cycle) ; ne préjuge pas de l'issue à l'échéance du 21 août."
+    }
+  },
+  {
+    "id": "v-20260807-tia",
+    "issued_at": "2026-08-07T00:20:00Z",
+    "asset": "celestia",
+    "ticker": "TIA",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h +0.7%",
+      "7j +2.4%",
+      "30j -11.0%"
+    ],
+    "reasoning": "Léger mieux court terme (+2.4% sur 7j) après un mois négatif (-11.0%) : trop tôt pour parler de retournement, à surveiller si le 7j se confirme au prochain cycle.",
+    "price_at_issue": 0.291794,
+    "resolves_at": "2026-08-21T00:20:00Z",
+    "status": "resolved",
+    "outcome": {
+      "price_at_resolution": 0.306677,
+      "actual_move_pct": 5.1,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-08-23T23:20:00Z"
+    },
+    "threshold_pct": 5
+  },
+  {
+    "id": "v-20260807-ctsi",
+    "issued_at": "2026-08-07T00:20:00Z",
+    "asset": "cartesi",
+    "ticker": "CTSI",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 45,
+    "signals_used": [
+      "24h +41.2%",
+      "7j +39.4%",
+      "30j +30.6%"
+    ],
+    "reasoning": "Mouvement extrême et inhabituel (+41.2% en 24h) sans catalyseur vérifié de mon côté (aucune recherche d'actualité confirmée à cette heure). Un tel pic est aussi souvent suivi d'une correction brutale qu'il ne se poursuit. Ne pas courir après ce mouvement sans confirmation — horizon volontairement raccourci à 7j vu la volatilité.",
+    "price_at_issue": 0.02677609,
+    "resolves_at": "2026-08-14T00:20:00Z",
+    "status": "resolved",
+    "outcome": {
+      "price_at_resolution": 0.02508,
+      "actual_move_pct": -6.33,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-08-17T01:03:00Z"
+    },
+    "threshold_pct": 5,
+    "signal_precoce": {
+      "detected_at": "2026-08-07T14:30:00Z",
+      "price_at_signal_eur": 0.02318228,
+      "move_pct_since_issue": -13.4,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Le seuil de mouvement directionnel (5 %) est déjà franchi à la baisse, bien avant l'échéance officielle du 14 août. Le pic technique de ce matin (+41,2 % en 24h au moment du verdict) s'est complètement retourné : -25,6 % sur les dernières 24h désormais, et le prix est aujourd'hui environ 13,4 % sous le prix d'émission du verdict. Aucune actualité spécifique à Cartesi n'a été trouvée pour expliquer ce retournement (recherche d'actualités dédiées effectuée ce cycle, rien de récent) : lecture purement technique, cohérente avec la prudence déjà exprimée dans le raisonnement initial. Signal précoce uniquement, pas une résolution : le verdict ATTENTE reste en attente de son échéance officielle, aucun outcome n'est rempli."
+    }
+  },
+  {
+    "id": "v-20260807-peaq",
+    "issued_at": "2026-08-07T00:20:00Z",
+    "asset": "peaq-2",
+    "ticker": "PEAQ",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h +3.7%",
+      "7j +1.7%",
+      "30j -11.0%"
+    ],
+    "reasoning": "Stabilisation récente (+1.7% sur 7j) après un mois négatif (-11.0%) : signal insuffisant pour confirmer un retournement.",
+    "price_at_issue": 0.01549363,
+    "resolves_at": "2026-08-21T00:20:00Z",
+    "status": "resolved",
+    "outcome": {
+      "price_at_resolution": 0.01355,
+      "actual_move_pct": -12.54,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-08-23T23:20:00Z"
+    },
+    "threshold_pct": 5,
+    "signal_precoce": {
+      "detected_at": "2026-08-10T10:30:00Z",
+      "price_at_signal_eur": 0.01762,
+      "move_pct_since_issue": 13.7,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Peaq (PEAQ) : seuil de mouvement directionnel (5 %) franchi à la hausse. Prix confirmé ce cycle par deux sources nommées et convergentes (CoinGecko 0,01762 dollar, CoinMarketCap 0,01788 dollar), après une lecture isolée et écartée au cycle précédent (~0,02184 dollar, non retenue). Par rapport au prix d'émission (0,01549363 dollar), le mouvement est de +13,7 % à +15,4 % selon la source retenue. Aucune actualité spécifique trouvée pour l'expliquer : lecture purement technique. Le verdict ATTENTE reste en attente de son échéance du 21 août, ce signal ne préjuge pas de l'issue."
+    }
+  },
+  {
+    "id": "v-20260807-link",
+    "issued_at": "2026-08-07T00:20:00Z",
+    "asset": "chainlink",
+    "ticker": "LINK",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h +0.6%",
+      "7j -3.3%",
+      "30j +4.1%"
+    ],
+    "reasoning": "Signaux contradictoires selon l'horizon (7j -3.3% vs 30j +4.1%) : pas de tendance nette actuellement.",
+    "price_at_issue": 7.12,
+    "resolves_at": "2026-08-21T00:20:00Z",
+    "status": "resolved",
+    "outcome": {
+      "price_at_resolution": 7.42,
+      "actual_move_pct": 4.21,
+      "actual_direction": "ATTENTE",
+      "verdict_correct": true,
+      "resolved_at": "2026-08-23T23:20:00Z"
+    },
+    "threshold_pct": 5,
+    "signal_precoce": {
+      "detected_at": "2026-08-11T16:20:00Z",
+      "price_at_signal_eur": 8.28,
+      "move_pct_since_issue": 16.3,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Chainlink (LINK) : seuil de mouvement directionnel (5 %) franchi à la hausse, repéré ce cycle via un article de marché (« Chainlink Tops Gains ») puis confirmé par trois sources nommées et convergentes (CoinMarketCap 8,28 dollars, CoinDesk 8,31 dollars, CoinGecko 8,50 dollars). Par rapport au prix d'émission du verdict ATTENTE (7,12 dollars), le mouvement est de +16,3 % à +19,4 % selon la source retenue. Catalyseur identifié et cohérent, contrairement à la plupart des signaux précédents sur les autres favoris : Standard Chartered a initié une couverture le 10 août avec un objectif de cours de 200 dollars à horizon 2030 (soit un potentiel de x25), et le volume total sécurisé par les oracles Chainlink a franchi les 33 430 milliards de dollars (contre 30 060 milliards en avril), plus de 3 000 milliards de dollars de transactions supplémentaires en quatre mois. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 21 août : le verdict ATTENTE reste en attente, à confirmer ou infirmer au prochain cycle."
+    }
+  },
+  {
+    "id": "v-20260807-ondo",
+    "issued_at": "2026-08-07T00:20:00Z",
+    "asset": "ondo-finance",
+    "ticker": "ONDO",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 52,
+    "signals_used": [
+      "24h -3.7%",
+      "7j -13.8%",
+      "30j +9.4%"
+    ],
+    "reasoning": "Faiblesse court terme marquée (-13.8% sur 7j) alors que le mois reste positif (+9.4%) : tendance de fond pas encore cassée, mais seuil de vigilance posé — si le 7j continue de se dégrader au prochain cycle, ce sera un signal de vente.",
+    "price_at_issue": 0.310451,
+    "resolves_at": "2026-08-21T00:20:00Z",
+    "status": "resolved",
+    "outcome": {
+      "price_at_resolution": 0.3837,
+      "actual_move_pct": 23.59,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-08-23T23:20:00Z"
+    },
+    "threshold_pct": 5,
+    "signal_precoce": {
+      "detected_at": "2026-08-10T10:30:00Z",
+      "price_at_signal_eur": 0.35,
+      "move_pct_since_issue": 12.7,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Ondo Finance (ONDO) : seuil de mouvement directionnel (5 %) franchi à la hausse, alors même que la crise de gouvernance (plainte de Kathleen Allman devant le tribunal du Delaware, déjà alertée le 7 août) constituait a priori un catalyseur négatif retenu dans le raisonnement initial du verdict. Prix confirmé ce cycle (MetaMask, 0,35 dollar) cohérent avec plusieurs cycles précédents consécutifs (~0,350-0,353 dollar). Par rapport au prix d'émission (0,310451 dollar), le mouvement est de +12,7 %. Le marché ne semble donc pas, à ce stade, avoir sanctionné le titre pour ce risque de gouvernance — à surveiller si le dossier judiciaire évolue. Le verdict ATTENTE reste en attente de son échéance du 21 août."
+    }
+  },
+  {
+    "id": "v-20260807-jup",
+    "issued_at": "2026-08-07T00:20:00Z",
+    "asset": "jupiter-exchange-solana",
+    "ticker": "JUP",
+    "verdict": "VENTE",
+    "horizon_days": 14,
+    "confidence_pct": 63,
+    "signals_used": [
+      "24h -3.9%",
+      "7j -7.8%",
+      "30j -23.9%"
+    ],
+    "reasoning": "Un des signaux les plus faibles des 15 favoris : déclin aligné sur les trois horizons (24h -3.9%, 7j -7.8%, 30j -23.9%).",
+    "price_at_issue": 0.156368,
+    "resolves_at": "2026-08-21T00:20:00Z",
+    "status": "resolved",
+    "outcome": {
+      "price_at_resolution": 0.138,
+      "actual_move_pct": -11.75,
+      "actual_direction": "VENTE",
+      "verdict_correct": true,
+      "resolved_at": "2026-08-23T23:20:00Z"
+    },
+    "threshold_pct": 5,
+    "signal_precoce": {
+      "detected_at": "2026-08-10T10:30:00Z",
+      "price_at_signal_eur": 0.1843,
+      "move_pct_since_issue": 17.9,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Jupiter (JUP) : seuil de mouvement directionnel (5 %) franchi à la hausse, en sens opposé au verdict VENTE. Deux recherches indépendantes menées ce cycle convergent (0,1843 dollar puis 0,1852 dollar, cette dernière explicitement sourcée CoinMarketCap), cohérent avec la fourchette déjà notée au cycle précédent (0,182-0,208 dollar). Par rapport au prix d'émission (0,156368 dollar), le mouvement est de +17,9 % à +18,4 %. Aucune actualité spécifique trouvée pour l'expliquer : lecture purement technique. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 21 août : le verdict VENTE reste en attente, à confirmer ou infirmer au prochain cycle."
+    }
+  },
+  {
+    "id": "v-20260807-lpt",
+    "issued_at": "2026-08-07T00:20:00Z",
+    "asset": "livepeer",
+    "ticker": "LPT",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -0.4%",
+      "7j +0.7%",
+      "30j -18.8%"
+    ],
+    "reasoning": "Court terme plat (24h -0.4%, 7j +0.7%) malgré une faiblesse notable sur 30j (-18.8%) : pas de nouveau signal exploitable cette semaine.",
+    "price_at_issue": 1.11,
+    "resolves_at": "2026-08-21T00:20:00Z",
+    "status": "resolved",
+    "outcome": {
+      "price_at_resolution": 1.21,
+      "actual_move_pct": 9.01,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-08-23T23:20:00Z"
+    },
+    "threshold_pct": 5
+  },
+  {
+    "id": "v-20260807-aioz",
+    "issued_at": "2026-08-07T00:20:00Z",
+    "asset": "aioz-network",
+    "ticker": "AIOZ",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -0.1%",
+      "7j -5.9%",
+      "30j -10.2%"
+    ],
+    "reasoning": "Faiblesse modérée et assez régulière (7j -5.9%, 30j -10.2%) mais pas assez marquée pour un signal de vente ferme.",
+    "price_at_issue": 0.04051463,
+    "resolves_at": "2026-08-21T00:20:00Z",
+    "status": "resolved",
+    "outcome": {
+      "price_at_resolution": 0.1252,
+      "actual_move_pct": 209.02,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-08-23T23:20:00Z"
+    },
+    "threshold_pct": 5
+  },
+  {
+    "id": "v-20260807-flux",
+    "issued_at": "2026-08-07T00:20:00Z",
+    "asset": "zelcash",
+    "ticker": "FLUX",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h +0.5%",
+      "7j +3.3%",
+      "30j -10.4%"
+    ],
+    "reasoning": "Léger rebond sur 7j (+3.3%) après un mois négatif (-10.4%) : même lecture que TIA/PEAQ, trop tôt pour confirmer un retournement.",
+    "price_at_issue": 0.03450754,
+    "resolves_at": "2026-08-21T00:20:00Z",
+    "status": "resolved",
+    "outcome": {
+      "price_at_resolution": 0.04491,
+      "actual_move_pct": 30.15,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-08-23T23:20:00Z"
+    },
+    "threshold_pct": 5
+  },
+  {
+    "id": "v-20260807-arb",
+    "issued_at": "2026-08-07T00:20:00Z",
+    "asset": "arbitrum",
+    "ticker": "ARB",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -2.6%",
+      "7j +0.3%",
+      "30j +1.6%"
+    ],
+    "reasoning": "Consolidation quasi plate sur 7j et 30j : aucun signal directionnel net actuellement.",
+    "price_at_issue": 0.067826,
+    "resolves_at": "2026-08-21T00:20:00Z",
+    "status": "resolved",
+    "outcome": {
+      "price_at_resolution": 0.08838,
+      "actual_move_pct": 30.3,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-08-23T23:20:00Z"
+    },
+    "threshold_pct": 5,
+    "signal_precoce": {
+      "detected_at": "2026-08-10T10:30:00Z",
+      "price_at_signal_eur": 0.07785,
+      "move_pct_since_issue": 14.8,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Arbitrum (ARB) : seuil de mouvement directionnel (5 %) franchi à la hausse. Prix confirmé ce cycle par deux sources nommées et convergentes (CoinGecko 0,07785 dollar, CoinMarketCap 0,07978 dollar), ce qui résout la divergence extrême et isolée du cycle précédent (~0,2174 dollar, source unique non retenue, désormais considérée comme une erreur de source ou une confusion de méthodologie). Par rapport au prix d'émission (0,067826 dollar), le mouvement est de +14,8 % à +17,6 %. Aucune actualité spécifique trouvée pour l'expliquer : lecture purement technique. Le verdict ATTENTE reste en attente de son échéance du 21 août, ce signal ne préjuge pas de l'issue."
+    }
+  },
+  {
+    "id": "v-20260807-inj",
+    "issued_at": "2026-08-07T00:20:00Z",
+    "asset": "injective-protocol",
+    "ticker": "INJ",
+    "verdict": "VENTE",
+    "horizon_days": 14,
+    "confidence_pct": 55,
+    "signals_used": [
+      "24h -5.7%",
+      "7j -8.0%",
+      "30j -3.0%"
+    ],
+    "reasoning": "Court et moyen terme alignés à la baisse (24h -5.7%, 7j -8.0%), 30j moins marqué (-3.0%) : signal plus récent que sur FET/GRT/JUP, confiance modérée.",
+    "price_at_issue": 3.95,
+    "resolves_at": "2026-08-21T00:20:00Z",
+    "status": "resolved",
+    "outcome": {
+      "price_at_resolution": 3.59,
+      "actual_move_pct": -9.11,
+      "actual_direction": "VENTE",
+      "verdict_correct": true,
+      "resolved_at": "2026-08-23T23:20:00Z"
+    },
+    "threshold_pct": 5,
+    "signal_precoce": {
+      "detected_at": "2026-08-10T10:30:00Z",
+      "price_at_signal_eur": 4.34,
+      "move_pct_since_issue": 9.9,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Injective (INJ) : seuil de mouvement directionnel (5 %) franchi à la hausse, en sens opposé au verdict VENTE. Deux sources nommées et indépendantes convergent enfin ce cycle (CoinMarketCap 4,34 dollars, CoinGecko 4,64 dollars), après plusieurs cycles où la valeur restait identique d'une recherche à l'autre (probable contenu indexé dupliqué, non reconfirmé). Par rapport au prix d'émission (3,95 dollars), le mouvement est de +9,9 % à +17,5 % selon la source retenue. Aucune actualité spécifique trouvée pour l'expliquer ce cycle : lecture purement technique. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 21 août : le verdict VENTE reste en attente, à confirmer ou infirmer au prochain cycle."
+    }
+  },
+  {
+    "id": "v-20260817-ctsi",
+    "issued_at": "2026-08-17T01:03:00Z",
+    "asset": "cartesi",
+    "ticker": "CTSI",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 60,
+    "signals_used": [
+      "24h -5.2%",
+      "7j +17.4%"
+    ],
+    "reasoning": "Consolidation après une semaine volatile : +17,4 % sur 7 jours mais repli de -5,2 % sur les dernières 24h, plutôt un essoufflement du rebond qu'une tendance nette dans un sens ou l'autre. Aucun nouveau catalyseur fondamental identifié ce cycle (le jalon de décentralisation Stage 2 sur L2BEAT du 10 août reste d'actualité mais n'est pas un développement neuf). Régime macro neutre, sans influence directionnelle particulière. Consensus à trois signaux unanimement prudent (3/3 attente) : le précédent verdict ATTENTE sur cet actif vient d'être invalidé par un mouvement de -6,33 % à son échéance, ce qui incite à une lecture encore plus prudente sur un actif historiquement très volatil.",
+    "price_at_issue": 0.02508,
+    "resolves_at": "2026-08-24T01:03:00Z",
+    "status": "resolved",
+    "outcome": {
+      "price_at_resolution": 0.02487,
+      "actual_move_pct": -0.84,
+      "actual_direction": "ATTENTE",
+      "verdict_correct": true,
+      "resolved_at": "2026-08-24T04:21:00Z"
+    },
+    "threshold_pct": 5,
+    "signal_consensus": {
+      "technique": "ATTENTE",
+      "fondamental": "ATTENTE",
+      "macro": "ATTENTE",
+      "accord_count": 3
+    },
+    "regime_at_issue": "neutre"
+  },
+  {
+    "id": "v-20260823-btc",
+    "issued_at": "2026-08-23T23:20:00Z",
+    "asset": "bitcoin",
+    "ticker": "BTC",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -1.9%"
+    ],
+    "signal_consensus": {
+      "technique": "insuffisant",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "Reprise du cycle après plusieurs jours d'interruption : BTC a bondi d'environ +18,7 % depuis le dernier verdict, porté par un basculement net de l'indice de peur et de cupidité (46 « neutre » -> 73 « avidité »), sur fond d'optimisme réglementaire (CLARITY Act, rachats Trésor) largement relayé. Signal technique jugé insuffisant faute d'historique 24h/7j/30j frais pour ce nouveau cycle ; signal fondamental neutre (statut de réserve de valeur inchangé) ; seul le signal macro est nettement haussier. Un seul signal sur trois converge : pas de conviction directionnelle suffisante pour courir après un mouvement déjà réalisé.",
+    "price_at_issue": 66240.0,
+    "resolves_at": "2026-09-06T23:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "signal_precoce": {
+      "detected_at": "2026-08-26T10:20:00Z",
+      "price_at_signal_eur": 67304,
+      "move_pct_since_issue": 1.61,
+      "threshold_pct": 5,
+      "threshold_crossed": false,
+      "note": "Bitcoin (BTC) : re-vérification par appel direct à l'API CoinGecko (coins/markets et simple/price, cohérentes entre elles à 67 304-67 325 euros, 78 533 dollars), recoupée par une recherche web confirmant que Bitcoin a touché environ 81 000 dollars avant de retomber vers 78 000 dollars ce cycle. Le signal précédent (25 août, 79 674) était en réalité une valeur en dollars stockée par erreur dans le champ prix en euros — voir l'alerte transversale de ce cycle sur cette anomalie de méthodologie, retrouvée de façon quasi uniforme sur la plupart des favoris. Mouvement réel corrigé depuis le prix d'émission du 23 août (66 240 euros) : +1,6 %, sous le seuil de mouvement directionnel de 5 %."
+    }
+  },
+  {
+    "id": "v-20260823-eth",
+    "issued_at": "2026-08-23T23:20:00Z",
+    "asset": "ethereum",
+    "ticker": "ETH",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -4.4%",
+      "7j +28.1%"
+    ],
+    "signal_consensus": {
+      "technique": "insuffisant",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "Même contexte que BTC : ETH a progressé d'environ +25,3 % pendant l'interruption du cycle, dans le sillage du regain d'appétit pour le risque (indice de peur et de cupidité en forte hausse). Signal technique insuffisant (pas d'historique 24h/7j/30j frais disponible ce cycle), signal fondamental neutre (rôle de plateforme L1 inchangé), signal macro haussier. Un seul signal sur trois converge : prudence après un rattrapage déjà important plutôt que poursuite du mouvement.",
+    "price_at_issue": 2066.96,
+    "resolves_at": "2026-09-06T23:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "signal_precoce": {
+      "detected_at": "2026-08-26T10:20:00Z",
+      "price_at_signal_eur": 2101.19,
+      "move_pct_since_issue": 1.66,
+      "threshold_pct": 5,
+      "threshold_crossed": false,
+      "note": "Ethereum (ETH) : même correction que Bitcoin ce cycle (voir alerte transversale). Prix vérifié par appel direct à l'API CoinGecko (2 101,19 euros, cohérent entre coins/markets et simple/price). Le signal précédent (25 août, 2 500) était une valeur en dollars mal étiquetée en euros. Mouvement réel corrigé depuis le prix d'émission du 23 août (2 066,96 euros) : +1,7 %, sous le seuil de mouvement directionnel de 5 %."
+    }
+  },
+  {
+    "id": "v-20260823-fet",
+    "issued_at": "2026-08-23T23:20:00Z",
+    "asset": "fetch-ai",
+    "ticker": "FET",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -0.8%",
+      "7j -15.4%"
+    ],
+    "signal_consensus": {
+      "technique": "mixte",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "FET a progressé d'environ +35 % pendant l'interruption, effaçant largement la faiblesse relative notée sur les 7 derniers jours (-15,4 % selon les dernières données disponibles) avant ce rebond. Signal technique mixte (rebond fort mais partant d'une base affaiblie), signal fondamental neutre (secteur IA sans catalyseur spécifique confirmé ce cycle), signal macro haussier. Un signal sur trois nettement favorable : pas assez pour reconduire un appel directionnel après le mouvement déjà réalisé.",
+    "price_at_issue": 0.1582,
+    "resolves_at": "2026-09-06T23:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "signal_precoce": {
+      "detected_at": "2026-08-26T10:20:00Z",
+      "price_at_signal_eur": 0.139257,
+      "move_pct_since_issue": -11.97,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Fetch.ai (FET) : première alerte de seuil sur ce verdict. Seuil de mouvement directionnel (5 %) franchi à la baisse, prix vérifié par appel direct à l'API CoinGecko (0,139257 euro contre un prix d'émission de 0,1582 euro), soit -12,0 %. Cohérent avec une actualité relayée ce cycle notant un recul de FET d'environ -6,4 % sur 24h glissantes dans un marché plus prudent après le rallye de la semaine passée. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 6 septembre."
+    }
+  },
+  {
+    "id": "v-20260823-grt",
+    "issued_at": "2026-08-23T23:20:00Z",
+    "asset": "the-graph",
+    "ticker": "GRT",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h +2.1%",
+      "7j +4.7%"
+    ],
+    "signal_consensus": {
+      "technique": "a_risque_retournement",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "GRT a bondi d'environ +71 % pendant l'interruption, un mouvement extrême qui dépasse largement le cadre d'un simple rattrapage macro. Signal technique jugé à haut risque de retournement (mouvement de cette ampleur rarement linéaire), signal fondamental neutre (secteur IA/indexation sans catalyseur spécifique confirmé), signal macro haussier. Un seul signal sur trois converge clairement : verdict prudent malgré le mouvement spectaculaire, cohérent avec la doctrine du moteur de ne pas courir après un pic déjà réalisé.",
+    "price_at_issue": 0.02148,
+    "resolves_at": "2026-09-06T23:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "signal_precoce": {
+      "detected_at": "2026-08-26T10:20:00Z",
+      "price_at_signal_eur": 0.01498091,
+      "move_pct_since_issue": -30.26,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "The Graph (GRT) : seuil de mouvement directionnel (5 %) toujours franchi à la baisse, mais amplitude corrigée ce cycle (le signal du 25 août, -17,2 %, portait sur une base de comparaison affectée par l'anomalie de devise transversale décrite dans l'alerte de ce cycle). Prix vérifié par appel direct à l'API CoinGecko : 0,01498091 euro contre un prix d'émission de 0,02148 euro, soit -30,3 %. Aucune actualité spécifique identifiée pour l'expliquer. Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
+    }
+  },
+  {
+    "id": "v-20260823-tia",
+    "issued_at": "2026-08-23T23:20:00Z",
+    "asset": "celestia",
+    "ticker": "TIA",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -3.3%",
+      "7j -13.0%",
+      "30j -9.0%"
+    ],
+    "signal_consensus": {
+      "technique": "neutre",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "TIA a progressé d'environ +5,1 % depuis le dernier prix connu, un mouvement à la limite du seuil directionnel (5 %) et donc peu significatif en soi. Signal technique neutre (mouvement marginal), signal fondamental neutre (infra modulaire sans catalyseur spécifique confirmé), signal macro haussier. Un seul signal sur trois converge : attente justifiée par l'absence de conviction forte.",
+    "price_at_issue": 0.306677,
+    "resolves_at": "2026-09-06T23:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "signal_precoce": {
+      "detected_at": "2026-08-26T10:20:00Z",
+      "price_at_signal_eur": 0.300001,
+      "move_pct_since_issue": -2.18,
+      "threshold_pct": 5,
+      "threshold_crossed": false,
+      "note": "Celestia (TIA) : correction importante ce cycle (voir alerte transversale sur l'anomalie de devise) — le signal du 25 août (+17,5 %) reposait sur une valeur en dollars mal étiquetée en euros. Prix re-vérifié par appel direct à l'API CoinGecko (0,300001 euro contre un prix d'émission de 0,306677 euro, verdict ATTENTE du 23 août) : mouvement réel de -2,2 %, sous le seuil de mouvement directionnel de 5 %. Aucun signal précoce ne devrait donc être considéré comme actif sur ce verdict actuellement."
+    }
+  },
+  {
+    "id": "v-20260823-peaq",
+    "issued_at": "2026-08-23T23:20:00Z",
+    "asset": "peaq-2",
+    "ticker": "PEAQ",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -4.8%",
+      "7j +7.6%"
+    ],
+    "signal_consensus": {
+      "technique": "baissier",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "PEAQ a reculé d'environ -12,5 % pendant l'interruption du cycle, à contre-courant du rebond général du marché — signal notable qui mérite une surveillance rapprochée au prochain cycle. Signal technique baissier, signal fondamental neutre (secteur DePIN sans catalyseur spécifique confirmé), signal macro haussier (contradictoire avec le technique). Un signal sur trois par direction : pas de consensus, attente en attendant confirmation.",
+    "price_at_issue": 0.01355,
+    "resolves_at": "2026-09-06T23:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "signal_precoce": {
+      "detected_at": "2026-08-26T10:20:00Z",
+      "price_at_signal_eur": 0.0186511,
+      "move_pct_since_issue": 37.65,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Peaq (PEAQ) : seuil de mouvement directionnel (5 %) toujours franchi à la hausse, mais amplitude corrigée ce cycle (le signal du 25 août, +65,8 %, était affecté par l'anomalie de devise transversale décrite dans l'alerte de ce cycle). Prix vérifié par appel direct à l'API CoinGecko : 0,0186511 euro contre un prix d'émission de 0,01355 euro, soit +37,7 %. Aucune actualité spécifique identifiée pour l'expliquer. Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
+    }
+  },
+  {
+    "id": "v-20260823-link",
+    "issued_at": "2026-08-23T23:20:00Z",
+    "asset": "chainlink",
+    "ticker": "LINK",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h +2.5%",
+      "7j +11.3%"
+    ],
+    "signal_consensus": {
+      "technique": "neutre",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "LINK a progressé d'environ +4,2 %, sous le seuil directionnel (5 %) malgré le contexte macro haussier — la hausse la plus modeste des favoris sur cette période, cohérent avec un profil plus établi et moins volatil. Signal technique neutre, signal fondamental neutre (rôle d'oracle inchangé), signal macro haussier. Un seul signal sur trois converge : attente.",
+    "price_at_issue": 7.42,
+    "resolves_at": "2026-09-06T23:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "signal_precoce": {
+      "detected_at": "2026-08-26T10:20:00Z",
+      "price_at_signal_eur": 9.7,
+      "move_pct_since_issue": 30.73,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Chainlink (LINK) : seuil de mouvement directionnel (5 %) toujours franchi à la hausse, mais amplitude corrigée ce cycle (le signal du 25 août, +53,9 %, était affecté par l'anomalie de devise transversale décrite dans l'alerte de ce cycle). Prix vérifié par appel direct à l'API CoinGecko : 9,70 euros contre un prix d'émission de 7,42 euros, soit +30,7 %. Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
+    }
+  },
+  {
+    "id": "v-20260823-ondo",
+    "issued_at": "2026-08-23T23:20:00Z",
+    "asset": "ondo-finance",
+    "ticker": "ONDO",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h +7.7%",
+      "7j +21.5%"
+    ],
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 2
+    },
+    "reasoning": "ONDO a progressé d'environ +23,6 % pendant l'interruption, dans la continuité du narratif RWA (actifs réels tokenisés) déjà porteur. Signal technique haussier mais mouvement déjà largement réalisé, signal fondamental neutre (pas de catalyseur RWA spécifique confirmé ce cycle), signal macro haussier. Deux signaux sur trois penchent haussier mais aucune confirmation fondamentale fraîche : attente plutôt que poursuite d'un mouvement déjà consommé.",
+    "price_at_issue": 0.3837,
+    "resolves_at": "2026-09-06T23:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "signal_precoce": {
+      "detected_at": "2026-08-26T10:20:00Z",
+      "price_at_signal_eur": 0.312488,
+      "move_pct_since_issue": -18.56,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Ondo Finance (ONDO) : seuil de mouvement directionnel (5 %) toujours franchi à la baisse, amplitude corrigée et accentuée ce cycle (le signal du 26 août 00h20, -5,7 %, était partiellement affecté par l'anomalie de devise transversale décrite dans l'alerte de ce cycle). Prix vérifié par appel direct à l'API CoinGecko : 0,312488 euro contre un prix d'émission de 0,3837 euro, soit -18,6 %. Aucune actualité spécifique nouvelle identifiée ce cycle pour l'expliquer (la crise de gouvernance déjà documentée reste d'actualité). Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
+    }
+  },
+  {
+    "id": "v-20260823-jup",
+    "issued_at": "2026-08-23T23:20:00Z",
+    "asset": "jupiter-exchange-solana",
+    "ticker": "JUP",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h +0.3%"
+    ],
+    "signal_consensus": {
+      "technique": "baissier",
+      "fondamental": "legerement_positif",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "JUP a reculé d'environ -11,7 % pendant l'interruption, à contre-courant du marché général — fait notable puisque le verdict précédent (VENTE) vient d'être validé sur ce même actif. Une actualité relayée mentionne toutefois un rebond récent de +3,7 % porté par les fondamentaux DeFi de Solana, signe d'une possible stabilisation. Signal technique baissier sur la période complète, signal fondamental légèrement positif (actualité DeFi Solana), signal macro haussier (contradictoire avec le technique). Aucun consensus net (1 sur 3 par direction) : attente en attendant confirmation.",
+    "price_at_issue": 0.138,
+    "resolves_at": "2026-09-06T23:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "signal_precoce": {
+      "detected_at": "2026-08-26T10:20:00Z",
+      "price_at_signal_eur": 0.188793,
+      "move_pct_since_issue": 36.81,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Jupiter (JUP) : seuil de mouvement directionnel (5 %) toujours franchi à la hausse, mais amplitude corrigée ce cycle (le signal du 25 août, +52,3 %, était affecté par l'anomalie de devise transversale décrite dans l'alerte de ce cycle). Prix vérifié par appel direct à l'API CoinGecko : 0,188793 euro contre un prix d'émission de 0,138 euro, soit +36,8 %. Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
+    }
+  },
+  {
+    "id": "v-20260823-lpt",
+    "issued_at": "2026-08-23T23:20:00Z",
+    "asset": "livepeer",
+    "ticker": "LPT",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [],
+    "signal_consensus": {
+      "technique": "peu_fiable",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "LPT a progressé d'environ +9 % pendant l'interruption, estimation obtenue par conversion USD->EUR (cotations EUR directes trop divergentes ce cycle entre sources pour être retenues telles quelles) — donnée à confirmer au prochain cycle. Signal technique jugé peu fiable vu l'incertitude de sourcing, signal fondamental neutre (secteur IA/infra vidéo sans catalyseur spécifique confirmé), signal macro haussier. Un seul signal sur trois solide : attente, avec vérification prioritaire du prix au prochain cycle.",
+    "price_at_issue": 1.21,
+    "resolves_at": "2026-09-06T23:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "signal_precoce": {
+      "detected_at": "2026-08-26T10:20:00Z",
+      "price_at_signal_eur": 1.19,
+      "move_pct_since_issue": -1.65,
+      "threshold_pct": 5,
+      "threshold_crossed": false,
+      "note": "Livepeer (LPT) : correction importante ce cycle (voir alerte transversale sur l'anomalie de devise) — le signal du 25 août (+16,5 %) reposait sur une valeur en dollars mal étiquetée en euros. Prix re-vérifié par appel direct à l'API CoinGecko (1,19 euro contre un prix d'émission de 1,21 euro, verdict ATTENTE du 23 août) : mouvement réel de -1,6 %, sous le seuil de mouvement directionnel de 5 %. Aucun signal précoce ne devrait donc être considéré comme actif sur ce verdict actuellement."
+    }
+  },
+  {
+    "id": "v-20260823-aioz",
+    "issued_at": "2026-08-23T23:20:00Z",
+    "asset": "aioz-network",
+    "ticker": "AIOZ",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -7.4%",
+      "7j -18.4%"
+    ],
+    "signal_consensus": {
+      "technique": "a_risque_retournement",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "AIOZ affiche un mouvement extrême depuis le dernier prix connu (+209 %), bien au-delà du simple rattrapage macro général — donnée cohérente en interne (recoupée avec les variations 7j/24h relayées par la même source) mais à confirmer par une source indépendante au prochain cycle vu son ampleur inhabituelle. Signal technique jugé à très haut risque de retournement après un mouvement de cette taille, signal fondamental neutre (secteur DePIN/stockage sans catalyseur spécifique confirmé), signal macro haussier. Verdict volontairement prudent malgré l'ampleur du mouvement : ne pas courir après un pic aussi extrême sans confirmation supplémentaire.",
+    "price_at_issue": 0.1252,
+    "resolves_at": "2026-09-06T23:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "signal_precoce": {
+      "detected_at": "2026-08-26T10:20:00Z",
+      "price_at_signal_eur": 0.04587471,
+      "move_pct_since_issue": -63.36,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "AIOZ Network (AIOZ) : seuil de mouvement directionnel (5 %) toujours franchi à la baisse, amplitude recalculée ce cycle (le signal du 25 août, -57,1 %, était affecté par l'anomalie de devise transversale décrite dans l'alerte de ce cycle). Prix vérifié par appel direct à l'API CoinGecko : 0,04587471 euro contre un prix d'émission de 0,1252 euro, soit -63,4 %. Prudence de lecture inchangée : ce prix d'émission lui-même reposait sur un bond de +209 % jamais confirmé indépendamment (voir le raisonnement du verdict) — ce recul pourrait en partie refléter la correction d'un prix d'émission déjà anormal plutôt qu'un mouvement de marché intégralement réel. Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
+    }
+  },
+  {
+    "id": "v-20260823-flux",
+    "issued_at": "2026-08-23T23:20:00Z",
+    "asset": "zelcash",
+    "ticker": "FLUX",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h +1.6%",
+      "7j -2.5%"
+    ],
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 2
+    },
+    "reasoning": "FLUX (Zelcash) a progressé d'environ +30 % pendant l'interruption, dans la continuité du rebond général du marché. Signal technique haussier mais mouvement déjà largement réalisé, signal fondamental neutre (secteur DePIN/cloud sans catalyseur spécifique confirmé), signal macro haussier. Deux signaux sur trois penchent haussier sans confirmation fondamentale fraîche : attente plutôt que poursuite d'un mouvement déjà consommé.",
+    "price_at_issue": 0.04491,
+    "resolves_at": "2026-09-06T23:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "signal_precoce": {
+      "detected_at": "2026-08-26T10:20:00Z",
+      "price_at_signal_eur": 0.03779309,
+      "move_pct_since_issue": -15.85,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Flux/Zelcash (FLUX) : seuil de mouvement directionnel (5 %) franchi à la baisse, conforme à l'alerte déjà émise ce cycle (08h21 UTC), amplitude légèrement affinée par une nouvelle vérification directe à l'API CoinGecko : 0,03779309 euro contre un prix d'émission de 0,04491 euro, soit -15,8 %. Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
+    }
+  },
+  {
+    "id": "v-20260823-arb",
+    "issued_at": "2026-08-23T23:20:00Z",
+    "asset": "arbitrum",
+    "ticker": "ARB",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -2.3%",
+      "7j -8.9%"
+    ],
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "potentiellement_positif_non_confirme",
+      "macro": "haussier",
+      "accord_count": 2
+    },
+    "reasoning": "ARB a progressé d'environ +30,3 % pendant l'interruption. Une actualité relayée mentionne une mise à niveau du réseau (upgrade technique et annonces de règlement ZK) comme catalyseur possible, mais non confirmée par une source primaire lors de ce cycle. Signal technique haussier mais mouvement déjà largement réalisé, signal fondamental potentiellement positif mais non confirmé, signal macro haussier. Deux signaux sur trois penchent haussier : confiance insuffisante pour dépasser le seuil de confiance 60 % sans confirmation fondamentale directe, attente prudente.",
+    "price_at_issue": 0.08838,
+    "resolves_at": "2026-09-06T23:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "signal_precoce": {
+      "detected_at": "2026-08-26T10:20:00Z",
+      "price_at_signal_eur": 0.079114,
+      "move_pct_since_issue": -10.48,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Arbitrum (ARB) : seuil de mouvement directionnel (5 %) franchi à la baisse, conforme au renversement déjà signalé ce cycle (08h21 UTC), amplitude légèrement affinée par une nouvelle vérification directe à l'API CoinGecko : 0,079114 euro contre un prix d'émission de 0,08838 euro, soit -10,5 %. Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
+    }
+  },
+  {
+    "id": "v-20260823-inj",
+    "issued_at": "2026-08-23T23:20:00Z",
+    "asset": "injective-protocol",
+    "ticker": "INJ",
+    "verdict": "ATTENTE",
+    "horizon_days": 14,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h +4.4%"
+    ],
+    "signal_consensus": {
+      "technique": "baissier",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "INJ a reculé d'environ -9,1 % pendant l'interruption, à contre-courant du marché général — le verdict précédent (VENTE) vient d'être validé sur ce même actif, ce qui renforce la lecture baissière à court terme. Signal technique baissier, signal fondamental neutre (secteur DeFi L1 sans catalyseur spécifique confirmé), signal macro haussier (contradictoire avec le technique). Aucun consensus net (1 sur 3 par direction) : attente en attendant confirmation, malgré la baisse déjà observée.",
+    "price_at_issue": 3.59,
+    "resolves_at": "2026-09-06T23:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "signal_precoce": {
+      "detected_at": "2026-08-26T10:20:00Z",
+      "price_at_signal_eur": 4.7,
+      "move_pct_since_issue": 30.92,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Injective (INJ) : seuil de mouvement directionnel (5 %) toujours franchi à la hausse, mais amplitude corrigée ce cycle (le signal du 25 août, +55,7 %, était affecté par l'anomalie de devise transversale décrite dans l'alerte de ce cycle). Prix vérifié par appel direct à l'API CoinGecko : 4,70 euros contre un prix d'émission de 3,59 euros, soit +30,9 %. Signal précoce mis à jour, ne préjuge pas de l'issue à l'échéance du 6 septembre."
+    }
+  },
+  {
+    "id": "v-20260824-ctsi",
+    "issued_at": "2026-08-24T04:21:00Z",
+    "asset": "cartesi",
+    "ticker": "CTSI",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -4.6%",
+      "7j +16.0%"
+    ],
+    "signal_consensus": {
+      "technique": "mixte",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "Le verdict ATTENTE précédent sur Cartesi vient d'être validé (mouvement de -0,84 % à l'échéance, sous le seuil directionnel). Lecture technique mixte pour ce nouveau cycle : repli de -4,6 % sur les dernières 24h après un rebond de +16,0 % sur 7 jours, plutôt une consolidation post-rebond qu'un signal directionnel net. Aucun nouveau catalyseur fondamental identifié ce cycle sur l'infrastructure modulaire (le jalon de décentralisation Stage 2 sur L2BEAT, déjà noté le 10 août, reste d'actualité mais n'est pas un développement neuf). Contexte macro toujours risk-on (indice de peur et de cupidité en zone Greed, stable par rapport au cycle précédent). Un seul signal sur trois converge nettement (macro) : confiance insuffisante pour un appel directionnel, horizon volontairement raccourci à 7 jours vu la volatilité historique de cet actif.",
+    "price_at_issue": 0.02487,
+    "resolves_at": "2026-08-31T04:21:00Z",
+    "status": "resolved",
+    "outcome": {
+      "price_at_resolution": 0.02166328,
+      "actual_move_pct": -12.89,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-08-31T06:30:00Z"
+    },
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on",
+    "signal_precoce": {
+      "detected_at": "2026-08-26T10:20:00Z",
+      "price_at_signal_eur": 0.02211591,
+      "move_pct_since_issue": -11.07,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Cartesi (CTSI) : première alerte de seuil sur ce nouveau verdict émis le 24 août. Seuil de mouvement directionnel (5 %) franchi à la baisse, prix vérifié par appel direct à l'API CoinGecko : 0,02211591 euro contre un prix d'émission de 0,02487 euro, soit -11,1 %. Aucune actualité spécifique identifiée pour l'expliquer ce cycle. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 31 août."
+    }
+  },
+  {
+    "id": "v-20260831-ctsi",
+    "issued_at": "2026-08-31T06:30:00Z",
+    "asset": "cartesi",
+    "ticker": "CTSI",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -0.4%",
+      "7j -4.9%"
+    ],
+    "signal_consensus": {
+      "technique": "mixte",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "Le verdict ATTENTE précédent sur Cartesi vient d'être invalidé : mouvement de -12,89 % à l'échéance, largement au-delà du seuil directionnel de 5 % — repli survenu surtout dans les jours suivant l'émission (un signal précoce l'avait détecté dès le 26 août à -11,07 %), le marché a donc tranché nettement à la baisse là où le consensus à trois signaux restait prudent. Pour ce nouveau cycle, lecture technique mixte : quasi-stabilité sur les dernières 24h (-0,4 %) après le repli de la semaine passée (-4,9 % sur 7 jours), plutôt une stabilisation qu'une poursuite nette de la baisse. Aucun nouveau catalyseur fondamental identifié sur l'infrastructure modulaire (le jalon de décentralisation Stage 2 sur L2BEAT reste d'actualité mais n'est pas un développement neuf). Contexte macro toujours risk-on (indice de peur et de cupidité en zone Greed, 67, stable par rapport au cycle précédent). Un seul signal sur trois converge nettement (macro) : confiance insuffisante pour un appel directionnel malgré l'échec du verdict précédent, horizon maintenu à 7 jours vu la volatilité historique de cet actif.",
+    "price_at_issue": 0.02166328,
+    "resolves_at": "2026-09-07T06:30:00Z",
+    "status": "pending",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on"
+  }
 ]
