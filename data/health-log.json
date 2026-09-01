@@ -118,6 +118,12 @@
       "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h55)", "data/news.json (last_updated_at, ~0h55)", "data/opportunities.json (last_scan_at, ~5h11)"],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h55, actualités il y a 0h55, opportunités il y a 5h11 - rien à signaler. La panne globale signalée le 30/08 23h42 UTC est résolue (cause confirmée entre-temps : limite hebdomadaire d'usage du compte, reset le 30/08 à 23h00 UTC ; les routines ont repris naturellement dès leur cycle suivant)."
+    },
+    {
+      "checked_at": "2026-09-01T09:16:28Z",
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h59)", "data/opportunities.json (last_scan_at, ~5h10)"],
+      "files_broken": ["data/news.json (last_updated_at figé depuis ~11h00, seuil de 8h dépassé)"],
+      "note": "ATTENTION FRAICHEUR : data/news.json (last_updated_at = 2026-08-31T22:16:00Z) est figé depuis environ 11h00, soit ~3h au-delà du seuil de 8h attendu pour le cycle profond - un dépassement modéré, pas une panne globale (les deux autres sources sont dans les clous : engine-history ~0h59, opportunities ~5h10). Cette routine n'a pas les outils pour investiguer ou corriger elle-même ; à surveiller au prochain cycle."
     }
   ]
 }
