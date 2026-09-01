@@ -1134,6 +1134,14 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "risk-on"
+    "regime_at_issue": "risk-on",
+    "signal_precoce": {
+      "detected_at": "2026-09-01T08:17:00Z",
+      "price_at_signal_eur": 0.02147013,
+      "move_pct_since_issue": -0.89,
+      "threshold_pct": 5,
+      "threshold_crossed": false,
+      "note": "Cartesi (CTSI) : premier relevé de signal précoce depuis l'émission du 31 août. Prix vérifié par appel direct à l'API CoinGecko (groupé) : 0,02147013 euro contre un prix d'émission de 0,02166328 euro, soit -0,89 %. Sous le seuil de mouvement directionnel de 5 %. Ne préjuge pas de l'issue à l'échéance du 7 septembre."
+    }
   }
 ]
