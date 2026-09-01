@@ -769,5 +769,14 @@
     "message": "Arbitrum (ARB) : catalyseur désormais identifié pour la hausse déjà signalée ce matin (+29,7 % en 24h à l'alerte de 00h35 UTC, faute de source fiable à l'époque). CoinDesk rapporte que la chaîne Robinhood Chain, construite sur Arbitrum, voit ses revenus de frais quotidiens dépasser 2 millions de dollars, un développement fondamental concret qui explique la poursuite du mouvement (prix toujours environ +8 % au-dessus du prix d'émission du verdict ATTENTE du 23 août). Sentiment positif clair, catalyseur confirmé par une source primaire vérifiable, contrairement à la lecture purement technique retenue jusqu'ici.",
     "source": "CoinDesk (coindesk.com/markets/2026/09/01/bitcoin-consolidates-near-usd78-000-as-arbitrum-surges-30-on-robinhood-chain-revenue)",
     "sentiment": "positif"
+  },
+  {
+    "id": "alert-20260901-1820-lpt-baisse",
+    "ticker_ou_theme": "LPT",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-01T18:20:00Z",
+    "sentiment": "négatif",
+    "message": "Livepeer (LPT) : seuil de mouvement directionnel (5 %) de nouveau franchi à la baisse sur le verdict ATTENTE du 23 août, après un retour temporaire sous le seuil au cycle précédent (-4,1 % à 16h15 UTC). Prix vérifié par appel direct à l'API CoinGecko (groupé) : 1,14 euro contre un prix d'émission de 1,21 euro, soit -5,8 %. Aucune actualité spécifique identifiée pour l'expliquer ce cycle. Signal précoce mis à jour sur le verdict correspondant, ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko directe (api.coingecko.com/api/v3/simple/price)"
   }
 ]
