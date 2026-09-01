@@ -972,8 +972,13 @@
         },
         "j14": {
           "check_at": "2026-09-01T09:44:50Z",
-          "status": "pending",
-          "outcome": null
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 72.43628898829982,
+            "move_pct": 41.08,
+            "validated": true,
+            "checked_at": "2026-09-01T12:38:06Z"
+          }
         },
         "m6": {
           "check_at": "2027-02-16T09:44:50Z",
@@ -1209,8 +1214,13 @@
         },
         "j14": {
           "check_at": "2026-09-01T09:44:50Z",
-          "status": "pending",
-          "outcome": null
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 448.10373902911545,
+            "move_pct": 25.88,
+            "validated": true,
+            "checked_at": "2026-09-01T12:38:06Z"
+          }
         },
         "m6": {
           "check_at": "2027-02-16T09:44:50Z",
@@ -1446,8 +1456,13 @@
         },
         "j14": {
           "check_at": "2026-09-01T09:44:50Z",
-          "status": "pending",
-          "outcome": null
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 729.6469050487991,
+            "move_pct": 67.06,
+            "validated": true,
+            "checked_at": "2026-09-01T12:38:06Z"
+          }
         },
         "m6": {
           "check_at": "2027-02-16T09:44:50Z",
@@ -1683,8 +1698,13 @@
         },
         "j14": {
           "check_at": "2026-09-01T09:44:50Z",
-          "status": "pending",
-          "outcome": null
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 0.014381563246570072,
+            "move_pct": 27.32,
+            "validated": true,
+            "checked_at": "2026-09-01T12:38:06Z"
+          }
         },
         "m6": {
           "check_at": "2027-02-16T09:44:50Z",
@@ -2127,8 +2147,13 @@
       "horizons": {
         "j1": {
           "check_at": "2026-09-01T04:04:07Z",
-          "status": "pending",
-          "outcome": null
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 8.231839306180746,
+            "move_pct": -1.09,
+            "validated": false,
+            "checked_at": "2026-09-01T12:38:06Z"
+          }
         },
         "j3": {
           "check_at": "2026-09-03T04:04:07Z",
