@@ -103,6 +103,14 @@ async function fetchOrderBookImbalance(tvSymbol) {
   }
 }
 
+// Source : data/favoris-context.json (clé = ticker, pas cgId — seul fichier de données dans ce
+// cas, voir CLAUDE.md), affiché sous "Contexte élargi" et son sous-titre "Thèse long terme"
+// (Bull/Base/Bear + note d'hypothèses). NE PAS CONFONDRE avec la "Thèse hebdo" de portfolio.js
+// (data/portfolio-thesis.json, badge de recommandation + un seul `constat`) — les deux
+// paragraphes voisins dans une tuile Portefeuille se ressemblent assez pour fixer le mauvais
+// bloc si un utilisateur dit juste "la thèse est illisible" sans préciser laquelle (déjà arrivé
+// dans ce repo, voir CLAUDE.md). Celui-ci est aussi visible sur Favoris/Opportunités, pas
+// seulement Portefeuille.
 function renderFavorisContextSection(ticker) {
   // typeof ... "undefined" (pas juste !latestFavorisContext) : ce `let` est déclaré dans
   // app.js, pas ici — le référencer avant que app.js ait chargé (ex: portfolio.js appelant

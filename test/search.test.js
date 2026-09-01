@@ -198,6 +198,16 @@ describe("search.js — renderUntrackedResult (actif hors radar, fiche d'identit
     expect(link.getAttribute("href")).toBe("https://example.com/xyz");
   });
 
+  it("highlights a key figure in the description (highlightKeyInfo, not a bare escapeHtml)", async () => {
+    dom.window.fetch = async () => ({
+      ok: true,
+      json: async () => ({ description: { fr: "Offre en circulation représente environ 42 % du total." }, categories: [], links: {} }),
+    });
+    await dom.window.renderUntrackedResult(coin);
+    const el = dom.window.document.getElementById("search-fiche-identite");
+    expect(el.querySelector("mark.hl-stat").textContent).toBe("42 %");
+  });
+
   it("drops a javascript: homepage link instead of rendering it (safeUrl)", async () => {
     dom.window.fetch = async () => ({
       ok: true,

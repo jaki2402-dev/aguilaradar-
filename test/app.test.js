@@ -430,6 +430,11 @@ describe("app.js — renderOpportunities", () => {
     expect(dom.window.document.querySelectorAll("#opportunities-body .opp-tile")).toHaveLength(5);
   });
 
+  it("highlights a key figure in the opportunity's reason text (.opp-card, highlightKeyInfo not a bare escapeHtml)", () => {
+    dom.window.renderOpportunities({ opportunities: [opp("AAA", { reason: "Rebond de 15 % sur 7 jours, volume en hausse." })] });
+    expect(dom.window.document.querySelector("#accueil-highlights .opp-card mark.hl-stat").textContent).toBe("15 %");
+  });
+
   it("records the rendered tickers, in input order, for the opportunities constellation", () => {
     dom.window.renderOpportunities({ opportunities: [opp("AAA"), opp("BBB")] });
     expect(getGlobal(dom, "latestOpportunityTickers")).toEqual(["AAA", "BBB"]);
@@ -725,6 +730,11 @@ describe("app.js — renderAvisDuJour (synthèse quotidienne mise en avant + not
     expect(el.textContent).toContain("<b>x</b>");
   });
 
+  it("highlights a key figure in the message (highlightKeyInfo, not a bare escapeHtml)", () => {
+    dom.window.renderAvisDuJour([avisItem({ message: "BTC a reculé de 8,2 % cette semaine." })]);
+    expect(dom.window.document.querySelector(".avis-du-jour-text mark.hl-stat").textContent).toBe("8,2 %");
+  });
+
   it("does not warn about staleness for a fresh avis (well under 30h old)", () => {
     dom.window.Date.now = () => new Date("2026-08-31T08:00:00Z").getTime(); // 2h apres triggered_at
     dom.window.renderAvisDuJour([avisItem({ triggered_at: "2026-08-31T06:00:00Z" })]);
@@ -849,6 +859,11 @@ describe("app.js — renderMacroRegime", () => {
     expect(el.querySelector("b")).toBeNull();
     expect(el.textContent).toContain("<b>x</b>");
   });
+
+  it("highlights a key figure in the regime note (highlightKeyInfo, not a bare escapeHtml)", () => {
+    dom.window.renderMacroRegime({ macro_regime: { regime: "neutre", fear_greed_value: 50, btc_dominance_pct: 50, note: "Dominance en hausse de 1,5 % sur la semaine." } });
+    expect(dom.window.document.querySelector("#macro-regime-banner mark.hl-stat").textContent).toBe("1,5 %");
+  });
 });
 
 describe("app.js — renderNews", () => {
@@ -869,6 +884,11 @@ describe("app.js — renderNews", () => {
     const el = dom.window.document.getElementById("news-body");
     expect(el.querySelector("b")).toBeNull();
     expect(el.textContent).toContain("<b>Titre</b>");
+  });
+
+  it("highlights a key figure in the headline (highlightKeyInfo, not a bare escapeHtml)", () => {
+    dom.window.renderNews({ items: [{ title: "BTC bondit de 12 %", url: "https://example.com/a", source: "X" }] });
+    expect(dom.window.document.querySelector("#news-body mark.hl-stat").textContent).toBe("12 %");
   });
 
   it("renders a real http(s) URL as a safe, new-tab link", () => {

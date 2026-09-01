@@ -105,6 +105,15 @@ describe("insights.js — renderMarketContext (contexte macro : stablecoins/empl
     expect(html).toContain("Trésor US 10 ans");
     expect(html.match(/stat-value">—</g).length).toBe(3);
   });
+
+  it("highlights a key figure inside a market-context note (highlightKeyInfo, not a bare escapeHtml)", () => {
+    const dom = pageWithContext();
+    dom.window.renderMarketContext({
+      last_computed_at: "2026-08-31T00:38:00Z",
+      stablecoins: { dominance_pct: 11.11, note: "Dominance en repli de 2,3 % ce mois-ci." },
+    });
+    expect(dom.window.document.querySelector("#market-context-body mark.hl-stat").textContent).toBe("2,3 %");
+  });
 });
 
 describe("insights.js — initDayReplay (régression 3caff5e : accumulation d'écouteurs)", () => {

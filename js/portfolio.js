@@ -265,6 +265,11 @@ function renderPortfolioTile(p, idx) {
 // une vraie analyse fondamentale complémentaire, jamais générée par le chat/l'IA elle-même (voir
 // CLAUDE.md). Absente tant que la routine n'a pas encore tourné une première fois — pas de bloc
 // affiché plutôt qu'un vide trompeur.
+// NE PAS CONFONDRE avec le bloc "Thèse long terme" plus bas (renderFavorisContextSection,
+// detail.js, data/favoris-context.json) — celui-ci affiche un badge de recommandation + un seul
+// paragraphe `constat`, l'autre un découpage Bull/Base/Bear sans badge. Erreur déjà faite une
+// fois dans ce repo (voir CLAUDE.md) : les deux se ressemblent assez pour fixer le mauvais quand
+// un utilisateur signale juste "la thèse est illisible" sans préciser laquelle.
 function renderThesisBlock(p) {
   if (!p.recommendation && !p.recommendationRaw && !p.constat) return "";
   const badgeHtml = p.recommendation
