@@ -760,5 +760,14 @@
     "triggered_at": "2026-09-01T00:35:00Z",
     "message": "ARB bondit de +30 % en 24h sans catalyseur confirmé (signal à confirmer, verdict technique encore ATTENTE). Reste du portefeuille inchangé, régime risk-on stable.",
     "sentiment": "neutre"
+  },
+  {
+    "id": "alert-20260901-1421-arb-catalyseur",
+    "ticker_ou_theme": "ARB",
+    "type": "actualite_favori",
+    "triggered_at": "2026-09-01T14:21:00Z",
+    "message": "Arbitrum (ARB) : catalyseur désormais identifié pour la hausse déjà signalée ce matin (+29,7 % en 24h à l'alerte de 00h35 UTC, faute de source fiable à l'époque). CoinDesk rapporte que la chaîne Robinhood Chain, construite sur Arbitrum, voit ses revenus de frais quotidiens dépasser 2 millions de dollars, un développement fondamental concret qui explique la poursuite du mouvement (prix toujours environ +8 % au-dessus du prix d'émission du verdict ATTENTE du 23 août). Sentiment positif clair, catalyseur confirmé par une source primaire vérifiable, contrairement à la lecture purement technique retenue jusqu'ici.",
+    "source": "CoinDesk (coindesk.com/markets/2026/09/01/bitcoin-consolidates-near-usd78-000-as-arbitrum-surges-30-on-robinhood-chain-revenue)",
+    "sentiment": "positif"
   }
 ]

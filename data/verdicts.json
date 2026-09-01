@@ -977,12 +977,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-09-01T02:19:00Z",
-      "price_at_signal_eur": 0.0434053,
-      "move_pct_since_issue": -3.35,
+      "detected_at": "2026-09-01T14:21:00Z",
+      "price_at_signal_eur": 0.04262991,
+      "move_pct_since_issue": -5.08,
       "threshold_pct": 5,
-      "threshold_crossed": false,
-      "note": "Flux/Zelcash (FLUX) : retour sous le seuil de mouvement directionnel (5 %) ce cycle, après le franchissement à la baisse détecté le 31 août à 14h18 UTC (-6,6 %). Prix vérifié par appel direct à l'API CoinGecko (groupé) : 0.0434053 euro contre un prix d'émission de 0.04491 euro, soit -3.35 %. Aucune actualité spécifique identifiée. Ne préjuge pas de l'issue à l'échéance du 6 septembre."
+      "threshold_crossed": true,
+      "note": "Flux/Zelcash (FLUX) : seuil de mouvement directionnel (5 %) franchi à la baisse pour la première fois depuis l'émission du verdict ATTENTE du 23 août (prix d'émission 0,04491 euro), après être resté sous ce seuil aux cycles précédents (-3,35 % au dernier cycle, 04h18 UTC). Prix vérifié par appel HTTP direct à l'API CoinGecko (groupé, un seul appel pour les 15 favoris et les 9 opportunités) : 0,04262991 euro, soit -5,08 %. Aucune actualité spécifique identifiée pour expliquer ce repli. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance du 6 septembre."
     }
   },
   {
