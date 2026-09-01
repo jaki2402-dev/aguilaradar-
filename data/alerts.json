@@ -744,5 +744,21 @@
     "sentiment": "négatif",
     "message": "Cronos, la blockchain adossée à Crypto.com, a stoppé l'intégralité de son réseau le 31 août après avoir identifié un exploit visant le protocole de prêt Tectonic, estimé à environ 75 millions de dollars. L'attaquant a exploité un facteur de collatéral de 20 % et une liquidité insuffisante sur le jeton de gouvernance TONIC, dont le prix a été gonflé d'un facteur 100 en 20 minutes avant d'emprunter d'autres actifs (schéma comparable à l'attaque Mango Markets). La valeur totale verrouillée de Tectonic est passée d'environ 121,7 millions de dollars le 26 août à environ 3 millions le 31 août. Seuls environ 6 millions de dollars ont pu être pontés vers Ethereum avant l'arrêt du réseau : l'essentiel des fonds reste piégé sur Cronos. Aucune date de reprise du réseau annoncée à ce stade. Événement d'ampleur rare (arrêt complet d'une blockchain entière, pas seulement d'un protocole), confirmé par cinq sources indépendantes (Cointelegraph, The Block, CoinDesk, Decrypt, crypto.news).",
     "source": "https://www.coindesk.com/tech/2026/08/31/cronos-halts-blockchain-after-usd75-million-lending-exploit-hits-lending-app-tectonic"
+  },
+  {
+    "id": "alert-20260901-arb-seuil",
+    "ticker_ou_theme": "ARB",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-01T00:35:00Z",
+    "message": "Arbitrum (ARB) : hausse marquée de +29,7 % en 24h glissantes, confirmée par deux séries de données CoinGecko indépendantes (prix instantané et historique horaire), plus fort mouvement 24h parmi les 15 favoris ce cycle. Franchit pour la première fois le seuil de mouvement directionnel de 5 % depuis l'émission du verdict ATTENTE du 23 août (prix d'émission 0,08838 €, mouvement réel désormais +7,9 %), après être resté sous ce seuil aux cycles précédents (+4,7 % au dernier cycle). Aucune actualité fondamentale fiable identifiée pour expliquer ce mouvement à cette heure — les recherches menées ne remontent que des sites de prédiction de prix automatisés, pas une source d'actualité vérifiable. Signal précoce enregistré sur le verdict correspondant, ne préjuge pas de l'issue finale à l'échéance du 6 septembre.",
+    "source": "appel HTTP direct CoinGecko (/simple/price et /coins/arbitrum/market_chart)"
+  },
+  {
+    "id": "avis-jour-2026-09-01",
+    "ticker_ou_theme": "PORTEFEUILLE",
+    "type": "avis_du_jour",
+    "triggered_at": "2026-09-01T00:35:00Z",
+    "message": "ARB bondit de +30 % en 24h sans catalyseur confirmé (signal à confirmer, verdict technique encore ATTENTE). Reste du portefeuille inchangé, régime risk-on stable.",
+    "sentiment": "neutre"
   }
 ]
