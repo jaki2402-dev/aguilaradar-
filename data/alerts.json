@@ -830,5 +830,14 @@
     "sentiment": "neutre",
     "message": "La Russie a légalisé le trading de cryptomonnaies (loi fédérale 282-FZ) le 1er septembre 2026, plaçant bitcoin, ether et USDT sous la supervision de la Banque de Russie : limite annuelle de 300 000 roubles (environ 3 300 dollars) pour les investisseurs particuliers après un test obligatoire, règlements transfrontaliers sans plafond pour les exportateurs et importateurs, mais paiements domestiques en cryptomonnaies toujours interdits. Cette légalisation intervient le même jour que le lancement commercial obligatoire du rouble numérique dans les douze plus grandes banques du pays (loi entrée en vigueur en juillet 2025). Décision réglementaire d'ampleur pour une économie du G20, confirmée par plusieurs sources indépendantes.",
     "source": "CryptoTimes, Bitcoin Ethereum News, CoinSpectator (recoupement multi-sources)"
+  },
+  {
+    "id": "alert-20260902-1619-macro-sec-transfer-agent",
+    "ticker_ou_theme": "MACRO",
+    "type": "actualite_macro",
+    "triggered_at": "2026-09-02T16:19:00Z",
+    "sentiment": "neutre",
+    "message": "La SEC américaine propose une refonte des règles applicables aux agents de transfert afin d'y intégrer les registres sur blockchain, dans la continuité des travaux préparatoires au CLARITY Act déjà suivis dans ces alertes. Une table ronde est fixée au 17 septembre 2026, réunissant notamment BlackRock, Nasdaq, NYSE et Robinhood, centrée sur la perspective d'un trading boursier continu 24 heures sur 24. Développement réglementaire distinct de l'escalade Iran/États-Unis déjà signalée ce jour (12h24 UTC) : porte sur l'infrastructure des marchés financiers traditionnels plutôt que sur les cryptoactifs directement, mais pertinent pour la trajectoire réglementaire d'ensemble déjà suivie sur ce dossier.",
+    "source": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-wednesday-september-2-2026-crypto-prices-tumble-as-iran-war-reignites-112639522.html"
   }
 ]
