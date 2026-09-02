@@ -785,5 +785,14 @@
     "type": "avis_du_jour",
     "triggered_at": "2026-09-02T00:18:00Z",
     "message": "Thèses fondamentales divergentes du verdict technique : ETH, LINK et INJ jugés à renforcer par la thèse hebdo, alors que le verdict technique reste en ATTENTE sur les 15 positions."
+  },
+  {
+    "id": "alert-20260902-0418-lpt-baisse",
+    "ticker_ou_theme": "LPT",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-02T04:18:00Z",
+    "sentiment": "négatif",
+    "message": "Livepeer (LPT) : seuil de mouvement directionnel (5 %) de nouveau franchi à la baisse sur le verdict ATTENTE du 23 août, après un retour temporaire sous le seuil au cycle précédent (-4,96 % à 00h18 UTC). Prix vérifié par appel direct à l'API CoinGecko (groupé) : 1,14 euro contre un prix d'émission de 1,21 euro, soit -5,79 %. Aucune actualité spécifique identifiée pour l'expliquer ce cycle. Signal précoce mis à jour sur le verdict correspondant, ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko directe (api.coingecko.com/api/v3/simple/price)"
   }
 ]
