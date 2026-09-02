@@ -324,8 +324,11 @@ function renderPortfolioBenchmarkResult(el, sortedSnapshots, cache) {
 
 // Historique BTC/ETH mis en cache (clôtures quotidiennes) : évite de re-fetch à chaque tick de
 // prix (60s, refreshPrices/app.js) une donnée qui ne change qu'une fois par jour. Invalidé après
-// 1h ou si la fenêtre demandée (days) a changé — ex. l'historique du portefeuille s'est allongé
-// d'un jour de plus depuis le dernier calcul.
+// 1h ou si la fenêtre demandée a changé — clé sur les DATES exactes (premier/dernier snapshot),
+// pas seulement leur nombre de jours : deux fenêtres de même durée mais décalées dans le temps
+// (ex. 30/08→31/08 puis 31/08→01/09, toutes deux "2 jours") auraient sinon partagé le même cache
+// et affiché un comparatif périmé pendant l'heure de validité — bug repéré en relisant cette
+// fonction avant de la considérer terminée, jamais couvert par un test avant ce correctif.
 let portfolioBenchmarkCache = null;
 let portfolioBenchmarkLoading = false;
 
@@ -352,19 +355,25 @@ async function loadPortfolioBenchmark(history) {
     return;
   }
   const sorted = snapshots.slice().sort((a, b) => new Date(a.date) - new Date(b.date));
-  const daysSpan = Math.max(2, Math.round((new Date(sorted[sorted.length - 1].date) - new Date(sorted[0].date)) / 86400000) + 1);
+  const firstDate = sorted[0].date;
+  const lastDate = sorted[sorted.length - 1].date;
 
   const now = Date.now();
-  const cacheFresh = portfolioBenchmarkCache && portfolioBenchmarkCache.days === daysSpan && now - portfolioBenchmarkCache.fetchedAt < 3600000;
+  const cacheFresh =
+    portfolioBenchmarkCache &&
+    portfolioBenchmarkCache.firstDate === firstDate &&
+    portfolioBenchmarkCache.lastDate === lastDate &&
+    now - portfolioBenchmarkCache.fetchedAt < 3600000;
   if (!cacheFresh) {
     if (portfolioBenchmarkLoading) return; // un chargement est déjà en vol, il rendra lui-même le résultat à sa résolution.
     portfolioBenchmarkLoading = true;
     try {
+      const daysSpan = Math.max(2, Math.round((new Date(lastDate) - new Date(firstDate)) / 86400000) + 1);
       const [btcCloses, ethCloses] = await Promise.all([
         fetchHistoricalCloses("bitcoin", daysSpan).catch(() => null),
         fetchHistoricalCloses("ethereum", daysSpan).catch(() => null),
       ]);
-      portfolioBenchmarkCache = { fetchedAt: now, days: daysSpan, btcCloses, ethCloses };
+      portfolioBenchmarkCache = { fetchedAt: now, firstDate, lastDate, btcCloses, ethCloses };
     } finally {
       portfolioBenchmarkLoading = false;
     }

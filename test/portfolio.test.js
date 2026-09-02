@@ -819,4 +819,26 @@ describe("portfolio.js — comparaison à un hold BTC/ETH (loadPortfolioBenchmar
     await new Promise((resolve) => setTimeout(resolve, 0));
     expect(fetchCalls).toBe(2); // toujours 2 : un tick de prix seul ne redéclenche jamais loadPortfolioBenchmark
   });
+
+  it("fetches again when the window shifts to different dates even with the same day-count (régression : cache jadis clé sur le nombre de jours, pas les dates exactes)", async () => {
+    let fetchCalls = 0;
+    dom.window.fetch = async (url) => {
+      fetchCalls++;
+      if (url.includes("/bitcoin/")) return { ok: true, json: async () => ({ prices: [[1, 100], [2, 110]] }) };
+      if (url.includes("/ethereum/")) return { ok: true, json: async () => ({ prices: [[1, 50], [2, 55]] }) };
+      throw new Error(`unexpected fetch: ${url}`);
+    };
+
+    const historyA = { snapshots: [{ date: "2026-08-30", total_value_eur: 1000 }, { date: "2026-08-31", total_value_eur: 1000 }] };
+    dom.window.renderPortfolio({ positions: [pos()] }, [], null, historyA);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(fetchCalls).toBe(2); // BTC + ETH
+
+    // Même durée (2 jours), mais fenêtre décalée d'un jour : doit redéclencher un vrai fetch,
+    // jamais réutiliser à tort le cache de la fenêtre précédente.
+    const historyB = { snapshots: [{ date: "2026-08-31", total_value_eur: 1000 }, { date: "2026-09-01", total_value_eur: 1100 }] };
+    dom.window.renderPortfolio({ positions: [pos()] }, [], null, historyB);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(fetchCalls).toBe(4); // 2 de plus : un vrai nouveau fetch, pas un cache réutilisé à tort
+  });
 });
