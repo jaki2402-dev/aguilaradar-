@@ -794,5 +794,14 @@
     "sentiment": "négatif",
     "message": "Livepeer (LPT) : seuil de mouvement directionnel (5 %) de nouveau franchi à la baisse sur le verdict ATTENTE du 23 août, après un retour temporaire sous le seuil au cycle précédent (-4,96 % à 00h18 UTC). Prix vérifié par appel direct à l'API CoinGecko (groupé) : 1,14 euro contre un prix d'émission de 1,21 euro, soit -5,79 %. Aucune actualité spécifique identifiée pour l'expliquer ce cycle. Signal précoce mis à jour sur le verdict correspondant, ne préjuge pas de l'issue à l'échéance du 6 septembre.",
     "source": "API CoinGecko directe (api.coingecko.com/api/v3/simple/price)"
+  },
+  {
+    "id": "alert-20260902-flux-seuil",
+    "ticker_ou_theme": "FLUX",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-02T10:20:00Z",
+    "message": "Flux (FLUX) : seuil de mouvement directionnel (5 %) franchi à la baisse sur le verdict ATTENTE actif (émis le 23 août à 0,04491 dollar). Prix vérifié par appel direct à l'API CoinGecko (groupé) : 0,04251054 dollar, soit -5,34 %. Aucune actualité spécifique identifiée pour l'expliquer ce cycle : lecture purement technique. Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko (appel direct groupé)",
+    "sentiment": "negatif"
   }
 ]
