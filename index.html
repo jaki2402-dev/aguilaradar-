@@ -11,7 +11,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 <link rel="manifest" href="manifest.json" />
-<link rel="stylesheet" href="css/style.css?v=20260831d" />
+<link rel="stylesheet" href="css/style.css?v=20260902b" />
 </head>
 <body>
 
@@ -256,17 +256,37 @@
       <details class="accueil-section" style="margin-top: 20px;">
         <summary>Ajouter un achat ou une vente</summary>
         <div class="accueil-section-body">
-          <p class="section-sub">Calcule le nouveau qty / capital investi à partir d'une transaction (coût moyen pondéré) — n'enregistre rien automatiquement : tu copies le résultat toi-même dans data/portfolio.json sur GitHub.</p>
-          <div style="display:flex; flex-wrap:wrap; gap:10px; align-items:center;">
-            <select id="tx-asset" style="background:var(--bg-elevated); border:1px solid var(--border); color:var(--text); border-radius:var(--radius-sm); padding:8px 10px; font-family:inherit;"></select>
-            <select id="tx-type" style="background:var(--bg-elevated); border:1px solid var(--border); color:var(--text); border-radius:var(--radius-sm); padding:8px 10px; font-family:inherit;">
-              <option value="achat">Achat</option>
-              <option value="vente">Vente</option>
-            </select>
-            <input id="tx-price" type="number" step="any" min="0" placeholder="Prix unitaire (€)" style="background:var(--bg-elevated); border:1px solid var(--border); color:var(--text); border-radius:var(--radius-sm); padding:8px 10px; font-family:inherit; width:150px;" />
-            <input id="tx-qty" type="number" step="any" min="0" placeholder="Quantité" style="background:var(--bg-elevated); border:1px solid var(--border); color:var(--text); border-radius:var(--radius-sm); padding:8px 10px; font-family:inherit; width:130px;" />
-            <button id="tx-calc-btn" type="button" style="background:var(--accent-dim); color:var(--accent); border:none; border-radius:8px; padding:8px 14px; font-weight:700; font-size:0.85rem; cursor:pointer; font-family:inherit;">Calculer</button>
-          </div>
+          <p class="section-sub" id="tx-mode-note">Calcule le nouveau qty / capital investi à partir d'une transaction (coût moyen pondéré) — n'enregistre rien automatiquement : tu copies le résultat toi-même dans data/portfolio.json sur GitHub.</p>
+          <form id="tx-form" class="tx-form" autocomplete="off">
+            <div class="tx-field">
+              <label for="tx-asset">Actif</label>
+              <select id="tx-asset"></select>
+            </div>
+            <div class="tx-field">
+              <label for="tx-type">Type</label>
+              <select id="tx-type">
+                <option value="achat">Achat</option>
+                <option value="vente">Vente</option>
+              </select>
+            </div>
+            <div class="tx-field">
+              <label for="tx-price">Prix unitaire (€)</label>
+              <input id="tx-price" type="number" step="any" min="0" inputmode="decimal" required />
+            </div>
+            <div class="tx-field">
+              <label for="tx-qty">Quantité</label>
+              <input id="tx-qty" type="number" step="any" min="0" inputmode="decimal" required />
+            </div>
+            <div class="tx-field">
+              <label for="tx-invested-override">Montant investi (optionnel)</label>
+              <input id="tx-invested-override" type="number" step="any" min="0" inputmode="decimal" placeholder="= prix × quantité si vide" />
+            </div>
+            <div class="tx-field" id="tx-secret-field" hidden>
+              <label for="tx-secret">Code d'écriture</label>
+              <input id="tx-secret" type="password" autocomplete="off" placeholder="Saisi une fois par visite" />
+            </div>
+            <button id="tx-calc-btn" type="submit" class="tx-submit-btn">Calculer</button>
+          </form>
           <div id="tx-result" style="margin-top: 14px;"></div>
         </div>
       </details>
@@ -496,14 +516,14 @@
      cache: "no-store", donc toujours frais) - bug réel constaté le 18/08 : la correction de
      l'Assistant était bien en ligne, mais assistant.js restait servi en cache. Bump la date à
      CHAQUE modification d'un fichier js/*.js ou css/*.css, pas seulement pour ce correctif-ci. -->
-<script src="js/config.js?v=20260902a"></script>
+<script src="js/config.js?v=20260902b"></script>
 <script src="js/prices.js?v=20260824i"></script>
 <script src="js/charts.js?v=20260824i"></script>
 <script src="js/engine.js?v=20260831d"></script>
 <script src="js/cards.js?v=20260831d"></script>
 <script src="js/detail.js?v=20260831e"></script>
 <script src="js/insights.js?v=20260902a"></script>
-<script src="js/portfolio.js?v=20260902a"></script>
+<script src="js/portfolio.js?v=20260902b"></script>
 <script src="js/background-fx.js?v=20260824i"></script>
 <script src="js/bg-themes-extra.js?v=20260824i"></script>
 <!-- Module (pas un script classique) : import ES natif depuis js/vendor/three.module.min.js

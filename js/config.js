@@ -207,6 +207,18 @@ function glossaryTipHtml(term) {
 // du site, doit rester réaffectable (idem latestFavorisPrices dans prices.js).
 let AI_RELAY_URL = "https://aguilaradar-assistant-ia.jaki2402.workers.dev/";
 
+// URL de la route d'écriture du portefeuille (même Worker que AI_RELAY_URL, route /transaction —
+// voir cloudflare-worker/worker.js) utilisée par renderTransactionCalculator (portfolio.js) pour
+// enregistrer une transaction directement dans data/portfolio.json plutôt que par copier-coller
+// manuel. Placeholder ("REMPLACE-MOI") par défaut, même mécanique que AI_RELAY_URL avant son
+// propre déploiement : tant que ce n'est pas remplacé par la vraie URL, le formulaire retombe sur
+// le calcul affiché à copier-coller (comportement actuel, aucune régression) — voir
+// renderTransactionCalculator. Ne PAS pointer vers l'URL réelle du Worker avant que la route
+// /transaction y soit effectivement déployée (voir cloudflare-worker/README.md) : sans ça, un clic
+// sur "Enregistrer" atteindrait le Worker actuel sur une route qu'il ne reconnaît pas encore. `let`
+// pour la même raison que AI_RELAY_URL (valeur à changer après coup par un humain).
+let PORTFOLIO_WRITE_URL = "REMPLACE-MOI-URL-du-worker/transaction";
+
 const DATA_URLS = {
   verdicts: "data/verdicts.json",
   engineHistory: "data/engine-history.json",

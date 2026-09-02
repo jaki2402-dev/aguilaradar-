@@ -154,6 +154,42 @@ function renderPortfolioConcentration(positions) {
     </div>`;
 }
 
+// Repère les positions où le verdict technique (14j, moteur) et la thèse hebdo (recherche web
+// réelle) pointent dans des directions clairement opposées — les deux existent déjà par position
+// (computePortfolioSummary), mais il fallait ouvrir les 15 tuiles une à une pour remarquer une
+// contradiction. Règle volontairement stricte (seulement les opposés francs : ACHAT+Réduire,
+// VENTE+Renforcer) plutôt qu'un score de désaccord inventé sur des combinaisons plus ambiguës
+// (ex. ACHAT+Attendre, ATTENTE+Renforcer) — une vraie contradiction reconnaissable par n'importe
+// quel lecteur, pas un jugement de valeur habillé en fait.
+const VERDICT_THESIS_CONFLICTS = { ACHAT: "reduire", VENTE: "renforcer" };
+
+function renderPortfolioSignalConflicts(positions) {
+  const comparable = (positions || []).filter((p) => !p.pending && p.verdict && p.recommendation);
+  if (comparable.length === 0) return "";
+  const conflicts = comparable.filter((p) => VERDICT_THESIS_CONFLICTS[p.verdict] === p.recommendation);
+
+  if (conflicts.length === 0) {
+    return `
+      <div class="portfolio-chart-card">
+        <span class="hint">Verdict technique vs thèse hebdo</span>
+        <p class="hint">Aucune contradiction franche entre le verdict technique (14j) et la thèse hebdo sur les ${comparable.length} position(s) comparables.</p>
+      </div>`;
+  }
+  return `
+    <div class="portfolio-chart-card">
+      <span class="hint">Verdict technique vs thèse hebdo — ${conflicts.length} désaccord(s)</span>
+      ${conflicts
+        .map(
+          (p) => `<div class="journal-entry">
+            <div class="log-header"><span><strong>${escapeHtml(p.ticker)}</strong></span></div>
+            <p class="hint">Verdict technique (14j) : <span class="badge badge-${p.verdict.toLowerCase()}">${escapeHtml(p.verdict)}</span> — Thèse hebdo : <span class="badge badge-${p.recommendation}">${escapeHtml(p.recommendationRaw)}</span></p>
+            <p class="hint">Deux lectures opposées sur le même actif — l'une regarde 14 jours de technique, l'autre le narratif fondamental à plus long terme. Vaut le coup d'œil avant d'agir.</p>
+          </div>`
+        )
+        .join("")}
+    </div>`;
+}
+
 // Répartition par position (barres horizontales, valeur actuelle) — vue d'ensemble avant le
 // détail tuile par tuile plus bas. Réutilise le composant .sector-bars déjà utilisé par
 // renderSectorBreakdown (Accueil, insights.js) plutôt qu'un 2e langage visuel pour la même
@@ -381,17 +417,19 @@ async function loadPortfolioBenchmark(history) {
   renderPortfolioBenchmarkResult(el, sorted, portfolioBenchmarkCache);
 }
 
-// Assemble les graphiques ci-dessus dans #portfolio-charts : concentration puis historique puis
-// comparatif BTC/ETH en pleine largeur (l'ordre reflète la priorité — risque avant performance),
-// répartition + performance côte à côte en dessous (voir .portfolio-charts, style.css).
+// Assemble les graphiques ci-dessus dans #portfolio-charts : concentration puis désaccords
+// verdict/thèse puis historique puis comparatif BTC/ETH en pleine largeur (l'ordre reflète la
+// priorité — risque et qualité du signal avant performance brute), répartition + performance
+// côte à côte en dessous (voir .portfolio-charts, style.css).
 function renderPortfolioCharts(positions, history) {
   const concentrationHtml = renderPortfolioConcentration(positions);
+  const conflictsHtml = renderPortfolioSignalConflicts(positions);
   const historyHtml = renderPortfolioHistoryChart(history);
   const benchmarkHtml = renderPortfolioBenchmarkCard(history);
   const allocHtml = renderPortfolioAllocationChart(positions);
   const perfHtml = renderPortfolioPerformanceChart(positions);
   const gridParts = [allocHtml, perfHtml].filter(Boolean);
-  return `${concentrationHtml}${historyHtml}${benchmarkHtml}${gridParts.length ? `<div class="portfolio-charts">${gridParts.join("")}</div>` : ""}`;
+  return `${concentrationHtml}${conflictsHtml}${historyHtml}${benchmarkHtml}${gridParts.length ? `<div class="portfolio-charts">${gridParts.join("")}</div>` : ""}`;
 }
 
 // Tuile dense (même esprit que .favori-tile/.opp-tile — voir CLAUDE.md/style.css : "Coin360,
@@ -603,17 +641,26 @@ function renderPortfolio(portfolio, verdicts, thesis, history) {
 }
 
 // Calculette achat/vente — coût moyen pondéré (même méthode que "coût net moyen" affiché par
-// l'app de suivi de l'utilisateur, voir CLAUDE.md). N'écrit JAMAIS data/portfolio.json : une
-// vraie écriture publique demanderait sa propre protection dédiée (pas le portail cosmétique),
-// donc ceci reste un calcul affiché à copier soi-même — décision explicite de l'utilisateur.
-function computeTransactionResult(currentQty, currentInvested, type, price, qty) {
+// l'app de suivi de l'utilisateur, voir CLAUDE.md). investedOverride (optionnel, achat
+// uniquement) : montant réellement investi si différent de prix × quantité (frais, slippage —
+// l'app source de l'utilisateur affiche parfois un montant légèrement différent du calcul brut).
+// Ignoré à la vente : "investi" y suit toujours le coût moyen déjà en position, jamais le prix de
+// vente — un montant "investi" n'a pas de sens sur une cession. Par défaut (PORTFOLIO_WRITE_URL
+// non configuré, voir config.js), le résultat reste affiché à copier soi-même dans
+// data/portfolio.json ; voir saveTransaction plus bas pour l'écriture directe une fois le Worker
+// déployé — jamais l'inverse (aucune écriture tant que ce n'est pas explicitement configuré).
+function computeTransactionResult(currentQty, currentInvested, type, price, qty, investedOverride) {
   const curQty = currentQty || 0;
   const curInvested = currentInvested || 0;
   if (!(price > 0) || !(qty > 0)) {
     return { error: "Indique un prix et une quantité strictement positifs." };
   }
+  if (investedOverride !== undefined && !(investedOverride >= 0)) {
+    return { error: "Le montant investi optionnel doit être positif ou nul." };
+  }
   if (type === "achat") {
-    return { newQty: curQty + qty, newInvested: curInvested + qty * price };
+    const addedInvested = investedOverride !== undefined ? investedOverride : qty * price;
+    return { newQty: curQty + qty, newInvested: curInvested + addedInvested };
   }
   if (curQty <= 0) {
     return { error: "Aucune position actuelle pour cet actif — impossible de calculer une vente." };
@@ -632,29 +679,118 @@ function roundEuro(n) {
   return Math.round(n * 100) / 100;
 }
 
+// Vérité vivante de "PORTFOLIO_WRITE_URL est-il configuré" — même motif que
+// fetchLiveAiFallback/assistant.js pour AI_RELAY_URL (placeholder "REMPLACE-MOI" par défaut,
+// jamais un simple !PORTFOLIO_WRITE_URL qui laisserait passer une chaîne vide accidentelle).
+// Fonction (pas une constante figée à l'exécution du script) : PORTFOLIO_WRITE_URL est un `let`
+// réaffectable après coup (voir config.js), donc chaque appel doit relire sa valeur actuelle.
+function portfolioWriteConfigured() {
+  return typeof PORTFOLIO_WRITE_URL !== "undefined" && !!PORTFOLIO_WRITE_URL && !PORTFOLIO_WRITE_URL.includes("REMPLACE-MOI");
+}
+
+// Code d'écriture saisi une fois par vraie visite (voir ACCESS_SESSION_KEY, auth.js — même choix
+// sessionStorage plutôt que localStorage) : ne vit JAMAIS dans ce dépôt public, seulement dans le
+// navigateur après saisie manuelle. Le Worker (cloudflare-worker/worker.js) le compare à
+// env.PORTFOLIO_WRITE_SECRET, un vrai secret côté serveur — voir CLAUDE.md/README du Worker pour
+// les limites réelles de cette protection sur un site public (même classe que le portail d'accès :
+// filtre un visiteur qui tombe dessus par hasard, pas quelqu'un de déterminé qui lit le code).
+const TX_SECRET_SESSION_KEY = "aguilaradar_tx_secret";
+
+function loadSavedTxSecret() {
+  try {
+    return sessionStorage.getItem(TX_SECRET_SESSION_KEY) || "";
+  } catch (e) {
+    return "";
+  }
+}
+function saveTxSecret(value) {
+  try {
+    sessionStorage.setItem(TX_SECRET_SESSION_KEY, value);
+  } catch (e) {
+    // Stockage indisponible (navigation privée, quota) : redemande simplement la prochaine fois.
+  }
+}
+
+// Écriture directe (Worker configuré, voir portfolioWriteConfigured ci-dessus) : POST le nouveau
+// qty/invested déjà calculé par computeTransactionResult — le Worker ne refait AUCUN calcul de
+// coût moyen pondéré, il se contente de committer le résultat déjà validé côté client dans
+// data/portfolio.json (lecture/modification/écriture via l'API GitHub Contents), pour ne jamais
+// dupliquer cette logique à deux endroits (voir cloudflare-worker/worker.js). Échec réseau/auth :
+// message honnête, jamais une régression vers un état incohérent — "rien n'a été modifié" reste
+// vrai tant que le Worker ne répond pas 2xx.
+async function saveTransaction({ cgId, ticker, newQty, newInvested, secret }, resultEl, currentQty, currentInvested) {
+  resultEl.innerHTML = `<p class="hint">Enregistrement en cours…</p>`;
+  try {
+    const res = await fetch(PORTFOLIO_WRITE_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "X-Portfolio-Secret": secret || "" },
+      body: JSON.stringify({ cgId, qty: newQty, invested: newInvested }),
+    });
+    if (!res.ok) {
+      const msg = res.status === 401 ? "Code d'écriture incorrect." : `Échec de l'enregistrement (code ${res.status}).`;
+      resultEl.innerHTML = `<p class="hint" style="color:var(--loss)">${escapeHtml(msg)} Rien n'a été modifié.</p><p class="hint">Actuel : ${currentQty} ${escapeHtml(ticker)} — ${formatPrice(currentInvested, "EUR")} investi.</p>`;
+      return;
+    }
+    resultEl.innerHTML = `
+      <p class="hint" style="color:var(--gain)">Enregistré : ${newQty} ${escapeHtml(ticker)} — ${formatPrice(newInvested, "EUR")} investi.</p>
+      <p class="hint">Le nouveau chiffre apparaîtra dans tes tuiles au prochain rafraîchissement de la page (le temps que GitHub Pages republie, en général moins d'une minute).</p>`;
+  } catch (e) {
+    resultEl.innerHTML = `<p class="hint" style="color:var(--loss)">Enregistrement impossible (réseau indisponible) — rien n'a été modifié. Réessaie dans un instant.</p>`;
+  }
+}
+
 function renderTransactionCalculator() {
   const select = document.getElementById("tx-asset");
   const typeSelect = document.getElementById("tx-type");
   const priceInput = document.getElementById("tx-price");
   const qtyInput = document.getElementById("tx-qty");
+  const investedInput = document.getElementById("tx-invested-override");
+  const secretField = document.getElementById("tx-secret-field");
+  const secretInput = document.getElementById("tx-secret");
+  const form = document.getElementById("tx-form");
   const btn = document.getElementById("tx-calc-btn");
   const resultEl = document.getElementById("tx-result");
-  if (!select || !typeSelect || !priceInput || !qtyInput || !btn || !resultEl) return;
+  const modeNote = document.getElementById("tx-mode-note");
+  if (!select || !typeSelect || !priceInput || !qtyInput || !form || !btn || !resultEl) return;
 
   select.innerHTML = FAVORIS.map((f) => `<option value="${f.cgId}">${escapeHtml(f.ticker)} — ${escapeHtml(f.name)}</option>`).join("");
 
-  btn.addEventListener("click", () => {
+  const writeConfigured = portfolioWriteConfigured();
+  if (writeConfigured) {
+    btn.textContent = "Enregistrer";
+    if (secretField) secretField.hidden = false;
+    if (modeNote) {
+      modeNote.textContent =
+        "Calcule le nouveau qty / capital investi (coût moyen pondéré) et l'enregistre directement dans data/portfolio.json — un vrai commit git, historique complet conservé.";
+    }
+    if (secretInput) secretInput.value = loadSavedTxSecret();
+  }
+
+  // Champ "montant investi" pertinent seulement à l'achat (voir computeTransactionResult, il est
+  // ignoré à la vente) — masqué dès qu'on choisit "Vente" pour ne jamais laisser croire qu'il a
+  // un effet dessus.
+  function syncInvestedFieldVisibility() {
+    const field = investedInput ? investedInput.closest(".tx-field") : null;
+    if (field) field.hidden = typeSelect.value !== "achat";
+  }
+  typeSelect.addEventListener("change", syncInvestedFieldVisibility);
+  syncInvestedFieldVisibility();
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
     const cgId = select.value;
     const type = typeSelect.value;
     const price = parseFloat(priceInput.value);
     const qty = parseFloat(qtyInput.value);
+    const investedRaw = investedInput && type === "achat" ? investedInput.value.trim() : "";
+    const investedOverride = investedRaw !== "" ? parseFloat(investedRaw) : undefined;
 
     const positions = (latestPortfolio && latestPortfolio.positions) || [];
     const pos = positions.find((p) => p.cgId === cgId);
     const currentQty = pos && pos.qty !== null && pos.qty !== undefined ? pos.qty : 0;
     const currentInvested = pos && pos.invested !== null && pos.invested !== undefined ? pos.invested : 0;
 
-    const result = computeTransactionResult(currentQty, currentInvested, type, price, qty);
+    const result = computeTransactionResult(currentQty, currentInvested, type, price, qty, investedOverride);
     if (result.error) {
       resultEl.innerHTML = `<p class="hint" style="color:var(--loss)">${escapeHtml(result.error)}</p>`;
       return;
@@ -663,11 +799,19 @@ function renderTransactionCalculator() {
     const ticker = fav ? fav.ticker : cgId;
     const newQty = roundQty(result.newQty);
     const newInvested = roundEuro(result.newInvested);
+
+    if (writeConfigured) {
+      const secret = secretInput ? secretInput.value : "";
+      if (secretInput) saveTxSecret(secret);
+      saveTransaction({ cgId, ticker, newQty, newInvested, secret }, resultEl, currentQty, currentInvested);
+      return;
+    }
+
     resultEl.innerHTML = `
       <p class="hint">Actuel : ${currentQty} ${escapeHtml(ticker)} — ${formatPrice(currentInvested, "EUR")} investi</p>
       <p><strong>Nouveau : ${newQty} ${escapeHtml(ticker)} — ${formatPrice(newInvested, "EUR")} investi</strong></p>
       <p class="hint">À coller dans data/portfolio.json à la place de la ligne "${escapeHtml(cgId)}" :</p>
-      <pre style="background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text-dim); font-family:var(--font-mono); font-size:0.72rem; padding:10px 12px; white-space:pre-wrap; word-break:break-all;">{ "cgId": "${escapeHtml(cgId)}", "qty": ${newQty}, "invested": ${newInvested} }</pre>
+      <pre class="tx-json-preview">{ "cgId": "${escapeHtml(cgId)}", "qty": ${newQty}, "invested": ${newInvested} }</pre>
     `;
   });
 }
