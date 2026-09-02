@@ -536,6 +536,7 @@ describe("portfolio.js — renderTransactionCalculator", () => {
   });
 
   it("calcule et affiche le nouveau qty/investi pour un achat, à partir de la position déjà chargée", () => {
+    setGlobal(dom, "PORTFOLIO_WRITE_URL", "REMPLACE-MOI-URL-du-worker/transaction");
     dom.window.renderPortfolio({ positions: [pos({ cgId: "bitcoin", qty: 2, invested: 200 })] }, []);
     dom.window.renderTransactionCalculator();
 
@@ -552,6 +553,7 @@ describe("portfolio.js — renderTransactionCalculator", () => {
   });
 
   it("calcule un premier achat quand l'actif n'a encore aucune position enregistrée", () => {
+    setGlobal(dom, "PORTFOLIO_WRITE_URL", "REMPLACE-MOI-URL-du-worker/transaction");
     dom.window.renderPortfolio({ positions: [] }, []);
     dom.window.renderTransactionCalculator();
 
@@ -580,6 +582,7 @@ describe("portfolio.js — renderTransactionCalculator", () => {
   });
 
   it("reste en mode calcul (bouton 'Calculer', champ code masqué) quand PORTFOLIO_WRITE_URL n'est pas configuré", () => {
+    setGlobal(dom, "PORTFOLIO_WRITE_URL", "REMPLACE-MOI-URL-du-worker/transaction");
     dom.window.renderTransactionCalculator();
     expect(dom.window.document.getElementById("tx-calc-btn").textContent).toBe("Calculer");
     expect(dom.window.document.getElementById("tx-secret-field").hidden).toBe(true);

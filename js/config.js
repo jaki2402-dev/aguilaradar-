@@ -210,14 +210,14 @@ let AI_RELAY_URL = "https://aguilaradar-assistant-ia.jaki2402.workers.dev/";
 // URL de la route d'écriture du portefeuille (même Worker que AI_RELAY_URL, route /transaction —
 // voir cloudflare-worker/worker.js) utilisée par renderTransactionCalculator (portfolio.js) pour
 // enregistrer une transaction directement dans data/portfolio.json plutôt que par copier-coller
-// manuel. Placeholder ("REMPLACE-MOI") par défaut, même mécanique que AI_RELAY_URL avant son
-// propre déploiement : tant que ce n'est pas remplacé par la vraie URL, le formulaire retombe sur
-// le calcul affiché à copier-coller (comportement actuel, aucune régression) — voir
-// renderTransactionCalculator. Ne PAS pointer vers l'URL réelle du Worker avant que la route
-// /transaction y soit effectivement déployée (voir cloudflare-worker/README.md) : sans ça, un clic
-// sur "Enregistrer" atteindrait le Worker actuel sur une route qu'il ne reconnaît pas encore. `let`
-// pour la même raison que AI_RELAY_URL (valeur à changer après coup par un humain).
-let PORTFOLIO_WRITE_URL = "REMPLACE-MOI-URL-du-worker/transaction";
+// manuel. Route déployée et secrets (GITHUB_WRITE_TOKEN, PORTFOLIO_WRITE_SECRET) ajoutés le 02/09
+// (voir cloudflare-worker/README.md, section "Écriture directe des transactions") — jamais testée
+// en conditions réelles avant ce changement (mon environnement ne peut pas atteindre workers.dev
+// directement). Si jamais le Worker n'était pas réellement joignable sur cette route, le
+// formulaire retombe automatiquement sur le calcul à copier-coller (voir saveTransaction,
+// portfolio.js : message d'erreur clair, rien de cassé). `let` pour la même raison que
+// AI_RELAY_URL (valeur à changer après coup par un humain).
+let PORTFOLIO_WRITE_URL = "https://aguilaradar-assistant-ia.jaki2402.workers.dev/transaction";
 
 const DATA_URLS = {
   verdicts: "data/verdicts.json",
