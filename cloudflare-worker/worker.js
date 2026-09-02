@@ -68,12 +68,22 @@ function json(obj, status) {
 // argumentée plutôt qu'une réponse évasive — mais les garde-fous anti-hallucination/anti-conseil
 // réglementé sont renforcés en même temps, pas assouplis, précisément pour que ce ton plus
 // affirmé reste ancré dans les données réelles plutôt que dans une impression générale du modèle.
-// Format à 5 phrases + liste explicite de tournures évasives interdites ajoutés après coup
-// directement sur le Worker déployé (le raisonnement produit des réponses qui traînaient en
-// généralités sans jamais vraiment conclure) — reporté ici le 02/09 pour que ce dépôt cesse de
-// diverger silencieusement de ce qui tourne réellement en production (voir CLAUDE.md sur ce
-// risque : le Worker déployé watch un dépôt SÉPARÉ, jamais celui-ci — un écart peut donc se
-// créer dans les deux sens, pas seulement "ce dépôt en avance sur le déploiement").
+//
+// Renforcé le 31/08 : constat concret sur des réponses réelles (llama-3.3-70b-instruct-fp8-fast,
+// Workers AI) — la version précédente ("5 phrases maximum", "jamais évasif" en instruction
+// abstraite) était régulièrement dépassée en longueur ET se terminait quand même par une pirouette
+// du type "difficile de prédire avec certitude... il faudrait surveiller les développements
+// futurs" — exactement la réponse évasive que la règle interdisait déjà, juste reformulée. Un
+// modèle de cette taille suit un FORMAT explicite et une liste concrète de tournures interdites
+// bien mieux qu'une consigne de style abstraite ("sois précis", "jamais vague") — donc les deux
+// ci-dessous remplacent l'ancienne instruction unique, sans rien retirer aux garde-fous anti-
+// hallucination/anti-conseil réglementé qui restent à l'identique en dessous.
+//
+// Ce commentaire et le renforcement du 31/08 existaient déjà sur le Worker RÉELLEMENT déployé,
+// jamais reportés ici avant le 02/09 (voir CLAUDE.md : le Worker watch un dépôt SÉPARÉ,
+// jamais celui-ci — l'écart peut donc aussi se creuser dans ce sens, pas seulement "ce dépôt en
+// avance sur le déploiement"). Comparé caractère pour caractère au texte réellement en prod avant
+// de committer ce correctif.
 const SYSTEM_PROMPT_PREFIX =
   "Tu es l'analyste expert du site AguilaRadar, spécialiste des marchés crypto. Tu raisonnes comme " +
   "un vrai analyste financier expérimenté : tu prends position clairement sur les signaux " +
