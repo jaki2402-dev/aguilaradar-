@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { loadPage, setGlobal } from "./helpers/loadPage.js";
+import { loadPage, setGlobal, runScript } from "./helpers/loadPage.js";
 
 describe("insights.js — computeProvisionalStanding", () => {
   function pageWithPrice(prices) {
@@ -113,6 +113,31 @@ describe("insights.js — renderMarketContext (contexte macro : stablecoins/empl
       stablecoins: { dominance_pct: 11.11, note: "Dominance en repli de 2,3 % ce mois-ci." },
     });
     expect(dom.window.document.querySelector("#market-context-body mark.hl-stat").textContent).toBe("2,3 %");
+  });
+});
+
+describe("insights.js — renderSectorBreakdown (seuil de concentration partagé, THRESHOLDS.concentrationWarningPct)", () => {
+  function pageWithBreakdown() {
+    return loadPage(["config.js", "insights.js"], { html: `<!doctype html><html><body><div id="sector-breakdown"></div></body></html>` });
+  }
+
+  it("ne déclenche pas d'avertissement au seuil par défaut (30%) sur la répartition réelle des 15 favoris", () => {
+    const dom = pageWithBreakdown();
+    dom.window.renderSectorBreakdown([]);
+    const html = dom.window.document.getElementById("sector-breakdown").innerHTML;
+    expect(html).toContain("raisonnablement diversifiée");
+  });
+
+  it("déclenche l'avertissement dès que la concentration réelle dépasse THRESHOLDS.concentrationWarningPct, jamais un seuil recodé en dur ici", () => {
+    const dom = pageWithBreakdown();
+    // Mutation en place (pas de réaffectation : THRESHOLDS est un const) pour abaisser le seuil
+    // sous la concentration max réelle des 15 favoris et vérifier que le rendu suit bien la
+    // valeur vivante de THRESHOLDS plutôt qu'un "30" ou "0.3" figé dans la fonction.
+    runScript(dom, "THRESHOLDS.concentrationWarningPct = 1;", "lower threshold");
+    dom.window.renderSectorBreakdown([]);
+    const html = dom.window.document.getElementById("sector-breakdown").innerHTML;
+    expect(html).toContain("Concentration notable");
+    expect(html).toContain("plus de 1%");
   });
 });
 

@@ -609,6 +609,49 @@ describe("portfolio.js — renderPortfolioPerformanceChart", () => {
   });
 });
 
+describe("portfolio.js — renderPortfolioConcentration (concentration réelle pondérée en €, pas un simple nombre de positions)", () => {
+  let dom;
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js"]);
+  });
+
+  it("returns an empty string when no position has a usable value", () => {
+    const html = dom.window.renderPortfolioConcentration([summaryPos({ pending: true, value: null })]);
+    expect(html).toBe("");
+  });
+
+  it("warns when a single position exceeds the concentration threshold (30% par défaut)", () => {
+    const positions = [summaryPos({ cgId: "fetch-ai", ticker: "FET", value: 900 }), summaryPos({ cgId: "bitcoin", ticker: "BTC", value: 100 })];
+    const html = dom.window.renderPortfolioConcentration(positions);
+    expect(html).toContain("FET représente à lui seul 90%");
+    // Famille "IA" à un seul membre ici (FET seul) : pas de 2e avertissement redondant sur le même fait.
+    expect(html).not.toContain("Le thème");
+  });
+
+  it("does not warn when value is spread reasonably across positions and themes (4 familles distinctes, 25% chacune)", () => {
+    const positions = [
+      summaryPos({ cgId: "bitcoin", ticker: "BTC", value: 250 }), // Réserve de valeur
+      summaryPos({ cgId: "ethereum", ticker: "ETH", value: 250 }), // Infra L1/L2/DeFi
+      summaryPos({ cgId: "fetch-ai", ticker: "FET", value: 250 }), // IA
+      summaryPos({ cgId: "ondo-finance", ticker: "ONDO", value: 250 }), // Oracle / RWA / DEX
+    ];
+    const html = dom.window.renderPortfolioConcentration(positions);
+    expect(html).toContain("Pas de concentration excessive");
+  });
+
+  it("warns on a shared theme even when no single position alone crosses the threshold (FET/GRT/LPT = famille IA, SECTOR_FAMILIES)", () => {
+    const positions = [
+      summaryPos({ cgId: "fetch-ai", ticker: "FET", value: 300 }),
+      summaryPos({ cgId: "the-graph", ticker: "GRT", value: 300 }),
+      summaryPos({ cgId: "livepeer", ticker: "LPT", value: 100 }),
+      summaryPos({ cgId: "bitcoin", ticker: "BTC", value: 300 }),
+    ];
+    const html = dom.window.renderPortfolioConcentration(positions);
+    expect(html).toContain('Le thème "IA" concentre 70%');
+    expect(html).not.toContain("représente à lui seul");
+  });
+});
+
 describe("portfolio.js — renderPortfolioHistoryChart", () => {
   let dom;
   beforeEach(() => {
@@ -671,8 +714,12 @@ describe("portfolio.js — renderPortfolioCharts (assembly)", () => {
 });
 
 describe("portfolio.js — renderPortfolio wires the charts container", () => {
+  // detail.js chargé ici (en plus de la liste minimale utilisée par les autres describe de ce
+  // fichier) : ces deux tests passent un vrai historique à 2+ points, ce qui déclenche désormais
+  // loadPortfolioBenchmark (comparatif BTC/ETH) — lui-même dépendant de fetchHistoricalCloses,
+  // définie dans detail.js. Même raison que le describe "signaux techniques" plus haut.
   it("renders allocation/performance/history charts into #portfolio-charts", () => {
-    const dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js"], { html: PORTFOLIO_FIXTURE_HTML });
+    const dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "portfolio.js"], { html: PORTFOLIO_FIXTURE_HTML });
     setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 }, ethereum: { eur: 50 } });
     dom.window.renderPortfolio(
       { positions: [pos({ cgId: "bitcoin", qty: 2, invested: 100 }), pos({ cgId: "ethereum", qty: 1, invested: 100 })] },
@@ -686,12 +733,112 @@ describe("portfolio.js — renderPortfolio wires the charts container", () => {
   });
 
   it("leaves the charts container untouched on a price-only refresh (no history arg) rather than wiping it", () => {
-    const dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js"], { html: PORTFOLIO_FIXTURE_HTML });
+    const dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "portfolio.js"], { html: PORTFOLIO_FIXTURE_HTML });
     setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
     dom.window.renderPortfolio({ positions: [pos({ qty: 1, invested: 50 })] }, [], null, { snapshots: [{ date: "2026-08-30", total_value_eur: 100 }, { date: "2026-08-31", total_value_eur: 100 }] });
     const beforeRefresh = dom.window.document.getElementById("portfolio-charts").innerHTML;
     dom.window.renderPortfolio(); // tick de prix, comme refreshPrices() toutes les 60s
     const afterRefresh = dom.window.document.getElementById("portfolio-charts").innerHTML;
     expect(afterRefresh).toBe(beforeRefresh);
+  });
+});
+
+// Comparaison à un hold BTC/ETH (loadPortfolioBenchmark) : réutilise fetchHistoricalCloses de
+// detail.js, donc detail.js chargé ici en plus — même raison que le describe "signaux
+// techniques" plus haut. Passe systématiquement par renderPortfolio(..., history) (jamais
+// loadPortfolioBenchmark appelée directement en double) pour ne pas faire courir un 2e
+// chargement en parallèle de celui que renderPortfolio déclenche déjà lui-même — flush avec le
+// même `await new Promise(setTimeout)` que le describe "signaux techniques" pour laisser la
+// chaîne fetch -> json -> calcul -> rendu se résoudre.
+describe("portfolio.js — comparaison à un hold BTC/ETH (loadPortfolioBenchmark)", () => {
+  let dom;
+
+  function mockBenchmarkFetch(dom, { btcPrices, ethPrices, btcOk = true, ethOk = true } = {}) {
+    dom.window.fetch = async (url) => {
+      if (url.includes("coingecko.com") && url.includes("/bitcoin/")) {
+        if (!btcOk) return { ok: false, status: 429 };
+        return { ok: true, json: async () => ({ prices: (btcPrices || [100, 110]).map((p, i) => [1700000000000 + i * 86400000, p]) }) };
+      }
+      if (url.includes("coingecko.com") && url.includes("/ethereum/")) {
+        if (!ethOk) return { ok: false, status: 429 };
+        return { ok: true, json: async () => ({ prices: (ethPrices || [50, 55]).map((p, i) => [1700000000000 + i * 86400000, p]) }) };
+      }
+      throw new Error(`unexpected fetch: ${url}`);
+    };
+  }
+
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "portfolio.js"], { html: PORTFOLIO_FIXTURE_HTML });
+  });
+
+  it("shows a waiting message and fetches nothing when fewer than 2 history snapshots exist", () => {
+    dom.window.renderPortfolio({ positions: [pos()] }, [], null, { snapshots: [{ date: "2026-08-31", total_value_eur: 100 }] });
+    const chartsHtml = dom.window.document.getElementById("portfolio-charts").innerHTML;
+    expect(chartsHtml).toContain("Comparaison disponible dès que l'historique");
+    expect(dom.window.document.getElementById("portfolio-benchmark-body")).toBeNull();
+  });
+
+  it("computes the portfolio's real return alongside a same-window BTC/ETH hold return", async () => {
+    mockBenchmarkFetch(dom, { btcPrices: [100, 120], ethPrices: [50, 40] });
+    const history = { snapshots: [{ date: "2026-08-31", total_value_eur: 1000 }, { date: "2026-09-01", total_value_eur: 1100 }] };
+    dom.window.renderPortfolio({ positions: [pos()] }, [], null, history);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    const body = dom.window.document.getElementById("portfolio-benchmark-body").textContent;
+    expect(body).toContain("+10.0%"); // portefeuille : (1100-1000)/1000
+    expect(body).toContain("+20.0%"); // BTC : (120-100)/100
+    expect(body).toContain("-20.0%"); // ETH : (40-50)/50
+  });
+
+  it("shows a dash for a leg whose fetch failed, without losing the rest", async () => {
+    mockBenchmarkFetch(dom, { btcOk: false, ethPrices: [50, 60] });
+    const history = { snapshots: [{ date: "2026-08-31", total_value_eur: 1000 }, { date: "2026-09-01", total_value_eur: 1100 }] };
+    dom.window.renderPortfolio({ positions: [pos()] }, [], null, history);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    const body = dom.window.document.getElementById("portfolio-benchmark-body").textContent;
+    expect(body).toContain("+10.0%"); // portefeuille, toujours calculable
+    expect(body).toContain("+20.0%"); // ETH : (60-50)/50
+    expect(body).toContain("—"); // BTC indisponible
+  });
+
+  it("does not refetch on a price-only refresh right after (no history arg, cache untouched)", async () => {
+    let fetchCalls = 0;
+    dom.window.fetch = async (url) => {
+      fetchCalls++;
+      if (url.includes("/bitcoin/")) return { ok: true, json: async () => ({ prices: [[1, 100], [2, 110]] }) };
+      if (url.includes("/ethereum/")) return { ok: true, json: async () => ({ prices: [[1, 50], [2, 55]] }) };
+      throw new Error(`unexpected fetch: ${url}`);
+    };
+    const history = { snapshots: [{ date: "2026-08-31", total_value_eur: 1000 }, { date: "2026-09-01", total_value_eur: 1100 }] };
+    dom.window.renderPortfolio({ positions: [pos()] }, [], null, history);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(fetchCalls).toBe(2); // BTC + ETH
+
+    dom.window.renderPortfolio(); // tick de prix (60s) : history redevient undefined, pas un nouveau chargement de données
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(fetchCalls).toBe(2); // toujours 2 : un tick de prix seul ne redéclenche jamais loadPortfolioBenchmark
+  });
+
+  it("fetches again when the window shifts to different dates even with the same day-count (régression : cache jadis clé sur le nombre de jours, pas les dates exactes)", async () => {
+    let fetchCalls = 0;
+    dom.window.fetch = async (url) => {
+      fetchCalls++;
+      if (url.includes("/bitcoin/")) return { ok: true, json: async () => ({ prices: [[1, 100], [2, 110]] }) };
+      if (url.includes("/ethereum/")) return { ok: true, json: async () => ({ prices: [[1, 50], [2, 55]] }) };
+      throw new Error(`unexpected fetch: ${url}`);
+    };
+
+    const historyA = { snapshots: [{ date: "2026-08-30", total_value_eur: 1000 }, { date: "2026-08-31", total_value_eur: 1000 }] };
+    dom.window.renderPortfolio({ positions: [pos()] }, [], null, historyA);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(fetchCalls).toBe(2); // BTC + ETH
+
+    // Même durée (2 jours), mais fenêtre décalée d'un jour : doit redéclencher un vrai fetch,
+    // jamais réutiliser à tort le cache de la fenêtre précédente.
+    const historyB = { snapshots: [{ date: "2026-08-31", total_value_eur: 1000 }, { date: "2026-09-01", total_value_eur: 1100 }] };
+    dom.window.renderPortfolio({ positions: [pos()] }, [], null, historyB);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(fetchCalls).toBe(4); // 2 de plus : un vrai nouveau fetch, pas un cache réutilisé à tort
   });
 });

@@ -94,6 +94,66 @@ function computePortfolioSummary(portfolio, prices, verdicts, thesis) {
   return { positions: rows, totalValue, totalInvested, totalPnl, totalPnlPct, thesisGeneratedAt };
 }
 
+// Concentration RÉELLE (pondérée en euros de valeur actuelle) par thème et par position —
+// distincte de renderSectorBreakdown (Accueil, insights.js) qui compte les 15 favoris à égalité
+// (1 favori = 1 voix) et ne reflète jamais combien de CAPITAL RÉEL est concentré où. Regroupe
+// par SECTOR_FAMILIES (config.js), pas par SECTORS (plus fin, 3 libellés IA distincts) : pour une
+// question de risque sur de l'argent réel, FET/GRT/LPT sont le même pari si le narratif IA se
+// dégonfle — voir le commentaire sur SECTOR_FAMILIES. Même seuil d'alerte que
+// renderSectorBreakdown (THRESHOLDS.concentrationWarningPct), jamais un 2e chiffre recodé en dur
+// pour la même idée. L'avertissement "position unique" et l'avertissement "thème partagé" sont
+// volontairement distincts : le 2e ne se déclenche que si au moins 2 positions contribuent au
+// thème (sinon c'est la même information que le 1er, redite pour rien).
+function renderPortfolioConcentration(positions) {
+  const withValue = (positions || []).filter((p) => !p.pending && p.value !== null && p.value > 0);
+  if (withValue.length === 0) return "";
+  const total = withValue.reduce((sum, p) => sum + p.value, 0);
+  if (total <= 0) return "";
+
+  const families = {};
+  withValue.forEach((p) => {
+    const family = (typeof SECTOR_FAMILIES !== "undefined" && SECTOR_FAMILIES[p.cgId]) || "Autre";
+    if (!families[family]) families[family] = { family, value: 0, count: 0, color: null };
+    families[family].value += p.value;
+    families[family].count += 1;
+    if (!families[family].color && p.sectorColor) families[family].color = p.sectorColor;
+  });
+  const familyRows = Object.values(families)
+    .map((f) => ({ ...f, pct: (f.value / total) * 100 }))
+    .sort((a, b) => b.pct - a.pct);
+
+  const topPosition = withValue.slice().sort((a, b) => b.value - a.value)[0];
+  const topPositionPct = (topPosition.value / total) * 100;
+  const topFamily = familyRows[0];
+
+  const warnings = [];
+  if (topPositionPct > THRESHOLDS.concentrationWarningPct) {
+    warnings.push(`${escapeHtml(topPosition.ticker)} représente à lui seul ${topPositionPct.toFixed(0)}% de la valeur du portefeuille — si cette position se retourne, le reste ne suffit pas à amortir le choc.`);
+  }
+  if (topFamily && topFamily.count >= 2 && topFamily.pct > THRESHOLDS.concentrationWarningPct) {
+    warnings.push(`Le thème "${escapeHtml(topFamily.family)}" concentre ${topFamily.pct.toFixed(0)}% du portefeuille à lui seul (${topFamily.count} positions) — des paris différents en apparence, mais un seul narratif : s'il tourne mal, ils peuvent tous en pâtir en même temps.`);
+  }
+
+  return `
+    <div class="portfolio-chart-card">
+      <span class="hint">Concentration par thème (valeur réelle du portefeuille, pas un simple nombre de positions)</span>
+      <div class="sector-bars">
+        ${familyRows
+          .map((f) => `<div class="sector-row" style="--sector-color:${f.color || "var(--accent)"}">
+            <span class="sector-label">${escapeHtml(f.family)}</span>
+            <div class="sector-track"><div class="sector-fill" style="width:${f.pct.toFixed(1)}%"></div></div>
+            <span class="sector-pct">${formatPrice(f.value, "EUR")} · ${f.pct.toFixed(0)}%</span>
+          </div>`)
+          .join("")}
+      </div>
+      ${
+        warnings.length
+          ? `<p class="hint" style="margin-top:10px; color: var(--warning);">${warnings.join(" ")}</p>`
+          : `<p class="hint" style="margin-top:10px;">Pas de concentration excessive détectée (seuil ${THRESHOLDS.concentrationWarningPct}%) — répartition raisonnable entre thèmes et positions.</p>`
+      }
+    </div>`;
+}
+
 // Répartition par position (barres horizontales, valeur actuelle) — vue d'ensemble avant le
 // détail tuile par tuile plus bas. Réutilise le composant .sector-bars déjà utilisé par
 // renderSectorBreakdown (Accueil, insights.js) plutôt qu'un 2e langage visuel pour la même
@@ -203,14 +263,135 @@ function renderPortfolioHistoryChart(history) {
     </div>`;
 }
 
-// Assemble les 3 graphiques ci-dessus dans #portfolio-charts (historique en pleine largeur,
-// répartition + performance côte à côte en dessous — voir .portfolio-charts, style.css).
+// Coquille synchrone du comparatif "vs hold BTC/ETH" ci-dessous — même condition et même ton que
+// renderPortfolioHistoryChart juste au-dessus (moins de 2 points réels = message d'attente
+// honnête, jamais un graphique vide ou trompeur) puisque les deux blocs dépendent de la même
+// donnée (data/portfolio-history.json). Avec 2+ points, pose juste le conteneur
+// #portfolio-benchmark-body que loadPortfolioBenchmark (async, plus bas) remplira — décomposé en
+// deux fonctions pour la même raison que loadPortfolioTechnical/renderPortfolioTile plus bas :
+// cette fonction-ci reste pure et synchrone (donc testable et réutilisable sans réseau),
+// le fetch réseau vit à part.
+function renderPortfolioBenchmarkCard(history) {
+  const snapshots = (history && history.snapshots) || [];
+  if (snapshots.length < 2) {
+    return `
+      <div class="portfolio-chart-card">
+        <span class="hint">Ton portefeuille vs hold BTC/ETH</span>
+        <p class="empty-state">Comparaison disponible dès que l'historique aura au moins 2 jours — même donnée que le graphique d'évolution ci-dessus, repasse dans quelques jours.</p>
+      </div>`;
+  }
+  return `
+    <div class="portfolio-chart-card">
+      <span class="hint">Ton portefeuille vs hold BTC/ETH (même fenêtre, comparaison approximative)</span>
+      <div id="portfolio-benchmark-body"><p class="empty-state">Calcul en cours…</p></div>
+    </div>`;
+}
+
+// Rendement simple (premier point -> dernier point) d'une série de clôtures — même formule que
+// l'évolution déjà affichée par renderPortfolioHistoryChart, juste appliquée à un actif de
+// référence (BTC/ETH) plutôt qu'au total du portefeuille, pour rester directement comparable.
+function computeSeriesReturn(closes) {
+  if (!closes || closes.length < 2) return null;
+  const first = closes[0];
+  const last = closes[closes.length - 1];
+  return first ? ((last - first) / first) * 100 : null;
+}
+
+function renderPortfolioBenchmarkResult(el, sortedSnapshots, cache) {
+  const first = sortedSnapshots[0];
+  const last = sortedSnapshots[sortedSnapshots.length - 1];
+  const portfolioPct = first.total_value_eur ? ((last.total_value_eur - first.total_value_eur) / first.total_value_eur) * 100 : null;
+  const btcPct = computeSeriesReturn(cache && cache.btcCloses);
+  const ethPct = computeSeriesReturn(cache && cache.ethCloses);
+
+  const cell = (label, pct) => {
+    if (pct === null || pct === undefined) {
+      return `<div class="stat-card"><div class="stat-label">${escapeHtml(label)}</div><div class="stat-value">—</div></div>`;
+    }
+    const cls = pct >= 0 ? "positive" : "negative";
+    const sign = pct >= 0 ? "+" : "";
+    return `<div class="stat-card"><div class="stat-label">${escapeHtml(label)}</div><div class="stat-value ${cls}">${sign}${pct.toFixed(1)}%</div></div>`;
+  };
+
+  el.innerHTML = `
+    <p class="hint">Sur les ${sortedSnapshots.length} derniers points d'historique réels (${new Date(first.date).toLocaleDateString("fr-FR")} → ${new Date(last.date).toLocaleDateString("fr-FR")}) — approximatif (jour le plus proche, pas l'heure exacte de chaque transaction passée, qty/invested ne gardant qu'un coût moyen glissant sans date par transaction), s'affine à mesure que l'historique s'allonge.</p>
+    <div class="stat-row" style="margin-top:10px;">
+      ${cell("Ton portefeuille", portfolioPct)}
+      ${cell("Si tout en BTC", btcPct)}
+      ${cell("Si tout en ETH", ethPct)}
+    </div>`;
+}
+
+// Historique BTC/ETH mis en cache (clôtures quotidiennes) : évite de re-fetch à chaque tick de
+// prix (60s, refreshPrices/app.js) une donnée qui ne change qu'une fois par jour. Invalidé après
+// 1h ou si la fenêtre demandée a changé — clé sur les DATES exactes (premier/dernier snapshot),
+// pas seulement leur nombre de jours : deux fenêtres de même durée mais décalées dans le temps
+// (ex. 30/08→31/08 puis 31/08→01/09, toutes deux "2 jours") auraient sinon partagé le même cache
+// et affiché un comparatif périmé pendant l'heure de validité — bug repéré en relisant cette
+// fonction avant de la considérer terminée, jamais couvert par un test avant ce correctif.
+let portfolioBenchmarkCache = null;
+let portfolioBenchmarkLoading = false;
+
+// Compare l'évolution RÉELLE du portefeuille (data/portfolio-history.json, même donnée que
+// renderPortfolioHistoryChart) à ce qu'aurait fait un simple hold BTC/ETH sur LA MÊME FENÊTRE —
+// jamais "depuis la date d'achat de chaque position", qu'il est impossible de connaître
+// honnêtement : qty/invested ne garde qu'un coût moyen glissant, jamais une date par transaction
+// (voir computeTransactionResult plus bas). Se limite donc volontairement à la fenêtre déjà
+// couverte par l'historique enregistré, comme le graphique d'évolution juste au-dessus — jamais
+// une comparaison "depuis le début" inventée à partir d'une hypothèse non vérifiable. Isolée de
+// renderPortfolioCharts (synchrone) pour la même raison que loadPortfolioTechnical plus bas :
+// a besoin d'un fetch réseau (réutilise fetchHistoricalCloses de detail.js, déjà chargé avant ce
+// fichier dans index.html), qui ne doit jamais bloquer le reste du rendu du portefeuille.
+async function loadPortfolioBenchmark(history) {
+  const el = document.getElementById("portfolio-benchmark-body");
+  if (!el) return; // pas assez d'historique : renderPortfolioBenchmarkCard a déjà affiché le message d'attente, rien à charger.
+  const snapshots = (history && history.snapshots) || [];
+  if (snapshots.length < 2) return;
+  // fetchHistoricalCloses vit dans detail.js (chargé avant ce fichier dans index.html) : ce
+  // garde évite une ReferenceError non rattrapée si jamais cette fonction tournait un jour sans
+  // detail.js chargé — jamais casser le reste du portefeuille pour un comparatif optionnel.
+  if (typeof fetchHistoricalCloses !== "function") {
+    el.innerHTML = `<p class="empty-state">Comparatif indisponible pour l'instant.</p>`;
+    return;
+  }
+  const sorted = snapshots.slice().sort((a, b) => new Date(a.date) - new Date(b.date));
+  const firstDate = sorted[0].date;
+  const lastDate = sorted[sorted.length - 1].date;
+
+  const now = Date.now();
+  const cacheFresh =
+    portfolioBenchmarkCache &&
+    portfolioBenchmarkCache.firstDate === firstDate &&
+    portfolioBenchmarkCache.lastDate === lastDate &&
+    now - portfolioBenchmarkCache.fetchedAt < 3600000;
+  if (!cacheFresh) {
+    if (portfolioBenchmarkLoading) return; // un chargement est déjà en vol, il rendra lui-même le résultat à sa résolution.
+    portfolioBenchmarkLoading = true;
+    try {
+      const daysSpan = Math.max(2, Math.round((new Date(lastDate) - new Date(firstDate)) / 86400000) + 1);
+      const [btcCloses, ethCloses] = await Promise.all([
+        fetchHistoricalCloses("bitcoin", daysSpan).catch(() => null),
+        fetchHistoricalCloses("ethereum", daysSpan).catch(() => null),
+      ]);
+      portfolioBenchmarkCache = { fetchedAt: now, firstDate, lastDate, btcCloses, ethCloses };
+    } finally {
+      portfolioBenchmarkLoading = false;
+    }
+  }
+  renderPortfolioBenchmarkResult(el, sorted, portfolioBenchmarkCache);
+}
+
+// Assemble les graphiques ci-dessus dans #portfolio-charts : concentration puis historique puis
+// comparatif BTC/ETH en pleine largeur (l'ordre reflète la priorité — risque avant performance),
+// répartition + performance côte à côte en dessous (voir .portfolio-charts, style.css).
 function renderPortfolioCharts(positions, history) {
+  const concentrationHtml = renderPortfolioConcentration(positions);
   const historyHtml = renderPortfolioHistoryChart(history);
+  const benchmarkHtml = renderPortfolioBenchmarkCard(history);
   const allocHtml = renderPortfolioAllocationChart(positions);
   const perfHtml = renderPortfolioPerformanceChart(positions);
   const gridParts = [allocHtml, perfHtml].filter(Boolean);
-  return `${historyHtml}${gridParts.length ? `<div class="portfolio-charts">${gridParts.join("")}</div>` : ""}`;
+  return `${concentrationHtml}${historyHtml}${benchmarkHtml}${gridParts.length ? `<div class="portfolio-charts">${gridParts.join("")}</div>` : ""}`;
 }
 
 // Tuile dense (même esprit que .favori-tile/.opp-tile — voir CLAUDE.md/style.css : "Coin360,
@@ -414,6 +595,11 @@ function renderPortfolio(portfolio, verdicts, thesis, history) {
 
   const chartsEl = document.getElementById("portfolio-charts");
   if (chartsEl) chartsEl.innerHTML = renderPortfolioCharts(summary.positions, latestPortfolioHistory);
+  // Seulement sur un vrai rafraîchissement de données (history fourni), jamais sur le tick de
+  // prix seul (renderPortfolio() rappelé sans argument par refreshPrices() toutes les 60s,
+  // history alors undefined) — l'historique quotidien ne change de toute façon pas plus vite
+  // que ça, et le cache interne de loadPortfolioBenchmark s'en charge déjà pour le reste.
+  if (history !== undefined) loadPortfolioBenchmark(latestPortfolioHistory);
 }
 
 // Calculette achat/vente — coût moyen pondéré (même méthode que "coût net moyen" affiché par

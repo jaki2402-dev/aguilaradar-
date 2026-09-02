@@ -128,7 +128,10 @@ function renderSectorBreakdown(verdicts) {
   });
   const total = FAVORIS.length;
   const rows = Object.entries(counts).sort((a, b) => b[1] - a[1]);
-  const maxShare = Math.max(...rows.map(([, n]) => n)) / total;
+  // En pourcentage (pas une fraction) pour se comparer directement à
+  // THRESHOLDS.concentrationWarningPct (config.js) — même seuil que renderPortfolioConcentration
+  // (portfolio.js), jamais un chiffre recodé en dur ici qui pourrait diverger de l'autre vue.
+  const maxSharePct = (Math.max(...rows.map(([, n]) => n)) / total) * 100;
 
   el.innerHTML = `
     <div class="sector-bars">
@@ -145,8 +148,8 @@ function renderSectorBreakdown(verdicts) {
         .join("")}
     </div>
     ${
-      maxShare > 0.3
-        ? `<p class="hint" style="margin-top:10px; color: var(--warning);">Concentration notable : plus de 30% de tes favoris partagent le même secteur — si son thème tourne mal, plusieurs positions peuvent en pâtir en même temps, même si chacune a l'air correcte isolément.</p>`
+      maxSharePct > THRESHOLDS.concentrationWarningPct
+        ? `<p class="hint" style="margin-top:10px; color: var(--warning);">Concentration notable : plus de ${THRESHOLDS.concentrationWarningPct}% de tes favoris partagent le même secteur — si son thème tourne mal, plusieurs positions peuvent en pâtir en même temps, même si chacune a l'air correcte isolément.</p>`
         : `<p class="hint" style="margin-top:10px;">Répartition raisonnablement diversifiée entre secteurs.</p>`
     }`;
 }

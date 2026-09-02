@@ -124,6 +124,33 @@ const SECTOR_COLORS = {
   "jupiter-exchange-solana": "#fb8362",
 };
 
+// Même regroupement en 5 familles que les commentaires ci-dessus sur SECTOR_COLORS (une couleur
+// = une famille), mais exposé ici comme un vrai texte plutôt que seulement un commentaire JS —
+// utilisé par renderPortfolioConcentration (portfolio.js) pour juger la concentration RÉELLE
+// (pondérée en euros) du portefeuille. Délibérément plus grossier que SECTORS ci-dessus, qui
+// distingue "IA", "IA / Indexation" et "IA / Infra vidéo" comme 3 secteurs séparés — pertinent
+// pour cartographier la diversité des 15 favoris sur l'Accueil (renderSectorBreakdown,
+// insights.js), mais pas pour une question de RISQUE sur de l'argent réel : FET/GRT/LPT sont le
+// même pari si le narratif IA se dégonfle, peu importe la sous-niche technique de chacun —
+// les compter comme 3 secteurs distincts masquerait une concentration bien réelle.
+const SECTOR_FAMILIES = {
+  bitcoin: "Réserve de valeur",
+  ethereum: "Infra L1/L2/DeFi",
+  arbitrum: "Infra L1/L2/DeFi",
+  "injective-protocol": "Infra L1/L2/DeFi",
+  "fetch-ai": "IA",
+  "the-graph": "IA",
+  livepeer: "IA",
+  celestia: "Infra modulaire / DePIN",
+  cartesi: "Infra modulaire / DePIN",
+  "peaq-2": "Infra modulaire / DePIN",
+  "aioz-network": "Infra modulaire / DePIN",
+  zelcash: "Infra modulaire / DePIN",
+  chainlink: "Oracle / RWA / DEX",
+  "ondo-finance": "Oracle / RWA / DEX",
+  "jupiter-exchange-solana": "Oracle / RWA / DEX",
+};
+
 const REFRESH = {
   quantCycleMinutes: 10, // pouls rapide : prix / seuils / alertes, sans raisonnement IA
   deepCycleHours: 2,     // cycle profond : verdicts, actus, mise à jour du moteur
@@ -131,8 +158,13 @@ const REFRESH = {
 
 // Seuil UNIQUE de "mouvement directionnel", utilisé partout (backtest, confusion matrix,
 // évaluation des verdicts neutres). Ne jamais faire varier ce seuil d'un tableau à l'autre.
+// concentrationWarningPct : même principe pour l'idée de "concentration excessive" — un seul
+// seuil, partagé entre renderSectorBreakdown (insights.js, favoris comptés à égalité) et
+// renderPortfolioConcentration (portfolio.js, pondéré en euros réels) — jamais deux chiffres
+// différents pour la même alerte.
 const THRESHOLDS = {
   directionalMovePct: 5,
+  concentrationWarningPct: 30,
 };
 
 // Glossaire débutant — même texte que la section repliable "Glossaire débutant" de index.html
