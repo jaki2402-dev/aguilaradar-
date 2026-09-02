@@ -803,5 +803,23 @@
     "message": "Flux (FLUX) : seuil de mouvement directionnel (5 %) franchi à la baisse sur le verdict ATTENTE actif (émis le 23 août à 0,04491 dollar). Prix vérifié par appel direct à l'API CoinGecko (groupé) : 0,04251054 dollar, soit -5,34 %. Aucune actualité spécifique identifiée pour l'expliquer ce cycle : lecture purement technique. Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
     "source": "API CoinGecko (appel direct groupé)",
     "sentiment": "negatif"
+  },
+  {
+    "id": "alert-20260902-1224-flux-reprise",
+    "ticker_ou_theme": "FLUX",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-02T12:24:00Z",
+    "message": "Flux (FLUX) : repasse sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 23 août à 0,04491 euro), après l'avoir franchi au cycle précédent (10h20 UTC). Prix vérifié par appel direct à l'API CoinGecko (groupé) : 0,04326544 euro, soit -3,66 % depuis l'émission. Aucune actualité spécifique identifiée pour l'expliquer : lecture purement technique. Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko (appel direct groupé)",
+    "sentiment": "neutre"
+  },
+  {
+    "id": "alert-20260902-1224-macro-iran-selloff",
+    "ticker_ou_theme": "MACRO",
+    "type": "actualite_macro",
+    "triggered_at": "2026-09-02T12:24:00Z",
+    "message": "Escalade militaire États-Unis/Iran (frappes américaines confirmées le 1er septembre contre des cibles des Gardiens de la révolution, riposte iranienne par roquettes et drones contre des bases américaines) : le marché crypto au sens large recule depuis, Solana, Ether et XRP en tête de la baisse, plus de 115 millions de dollars de positions longues sur Bitcoin liquidées en une heure lors du choc initial. Confirmé par plusieurs sources indépendantes (CoinDesk, Yahoo Finance, CryptoRank). Cohérent avec le repli de l'indice de peur et de cupidité (69 le 1er septembre, 63 ce jour) et la légère baisse 24h observée sur les favoris (BTC -1,17 %, ETH -2,60 %). Aucun changement de régime macro à ce stade (toujours « risk-on »), mais point de vigilance macro à suivre en cas d'escalade supplémentaire.",
+    "source": "CoinDesk / Yahoo Finance / CryptoRank",
+    "sentiment": "negatif"
   }
 ]
