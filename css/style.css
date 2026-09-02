@@ -946,6 +946,36 @@ footer.site-footer {
   border-radius: var(--radius-sm); padding: 8px 12px; font-family: inherit;
 }
 
+/* ---- Formulaire "Ajouter un achat ou une vente" (Portefeuille, voir renderTransactionCalculator,
+   portfolio.js) — seul formulaire du site à être encore passé par des styles inline avant ce
+   correctif : ni thème, ni <label>, donc invisible pour un lecteur d'écran (le placeholder seul
+   n'en tient jamais lieu). Réutilise les mêmes tokens (--bg-elevated/--border/--radius-sm) que le
+   reste du site plutôt que d'inventer un 2e langage visuel pour un formulaire. ---- */
+.tx-form { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+.tx-field { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.tx-field[hidden] { display: none; }
+.tx-field label { font-size: 0.72rem; color: var(--text-dim); }
+.tx-field select, .tx-field input {
+  background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text);
+  border-radius: var(--radius-sm); padding: 8px 10px; font-family: inherit; font-size: 0.88rem;
+}
+.tx-field select:focus, .tx-field input:focus { border-color: var(--accent); outline: none; }
+.tx-field input { width: 150px; }
+.tx-submit-btn {
+  background: var(--accent-dim); color: var(--accent); border: none;
+  border-radius: 8px; padding: 9px 16px; font-weight: 700; font-size: 0.85rem; cursor: pointer;
+  font-family: inherit; transition: background 0.15s ease;
+}
+.tx-submit-btn:hover { background: rgba(47, 211, 176, 0.22); }
+/* Aperçu JSON à copier-coller (mode non configuré, voir PORTFOLIO_WRITE_URL/config.js) — même
+   traitement visuel que le <pre> déjà utilisé pour le code d'abonnement push (.push-sub-text),
+   cohérent avec l'autre "bloc technique à copier" du site plutôt qu'un 3e style inventé. */
+.tx-json-preview {
+  background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  color: var(--text-dim); font-family: var(--font-mono); font-size: 0.72rem; padding: 10px 12px;
+  white-space: pre-wrap; word-break: break-all;
+}
+
 /* ---- Accordéon des sections secondaires de l'Accueil ---- */
 details.accueil-section {
   background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);

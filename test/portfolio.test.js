@@ -5,14 +5,23 @@ const PORTFOLIO_FIXTURE_HTML = `<!doctype html><html><body>
   <div id="portfolio-totals"></div>
   <div id="portfolio-charts"></div>
   <div id="portfolio-body"></div>
-  <select id="tx-asset"></select>
-  <select id="tx-type">
-    <option value="achat">Achat</option>
-    <option value="vente">Vente</option>
-  </select>
-  <input id="tx-price" type="number" />
-  <input id="tx-qty" type="number" />
-  <button id="tx-calc-btn" type="button">Calculer</button>
+  <p id="tx-mode-note"></p>
+  <form id="tx-form">
+    <select id="tx-asset"></select>
+    <select id="tx-type">
+      <option value="achat">Achat</option>
+      <option value="vente">Vente</option>
+    </select>
+    <input id="tx-price" type="number" />
+    <input id="tx-qty" type="number" />
+    <div class="tx-field">
+      <input id="tx-invested-override" type="number" />
+    </div>
+    <div class="tx-field" id="tx-secret-field" hidden>
+      <input id="tx-secret" type="password" />
+    </div>
+    <button id="tx-calc-btn" type="submit">Calculer</button>
+  </form>
   <div id="tx-result"></div>
 </body></html>`;
 
@@ -490,6 +499,26 @@ describe("portfolio.js — computeTransactionResult (calculette achat/vente, co�
   it("refuse une quantité non strictement positive", () => {
     expect(computeTransactionResult(2, 100, "achat", 10, 0).error).toBeDefined();
   });
+
+  it("achat : utilise le montant investi fourni plutôt que prix × quantité si présent (ex: frais)", () => {
+    expect(computeTransactionResult(2, 100, "achat", 60, 1, 65)).toEqual({ newQty: 3, newInvested: 165 });
+  });
+
+  it("achat : retombe sur prix × quantité quand aucun montant investi optionnel n'est fourni", () => {
+    expect(computeTransactionResult(2, 100, "achat", 60, 1, undefined)).toEqual({ newQty: 3, newInvested: 160 });
+  });
+
+  it("achat : accepte un montant investi optionnel à zéro (ex: airdrop)", () => {
+    expect(computeTransactionResult(0, 0, "achat", 60, 1, 0)).toEqual({ newQty: 1, newInvested: 0 });
+  });
+
+  it("refuse un montant investi optionnel négatif", () => {
+    expect(computeTransactionResult(2, 100, "achat", 60, 1, -5).error).toBeDefined();
+  });
+
+  it("vente : ignore le montant investi optionnel (n'a pas de sens sur une cession, voir le coût moyen déjà en position)", () => {
+    expect(computeTransactionResult(10, 100, "vente", 999, 4, 12345)).toEqual({ newQty: 6, newInvested: 60 });
+  });
 });
 
 describe("portfolio.js — renderTransactionCalculator", () => {
@@ -548,6 +577,114 @@ describe("portfolio.js — renderTransactionCalculator", () => {
     const resultEl = dom.window.document.getElementById("tx-result");
     expect(resultEl.textContent).toMatch(/position actuelle/);
     expect(resultEl.querySelector("pre")).toBeNull();
+  });
+
+  it("reste en mode calcul (bouton 'Calculer', champ code masqué) quand PORTFOLIO_WRITE_URL n'est pas configuré", () => {
+    dom.window.renderTransactionCalculator();
+    expect(dom.window.document.getElementById("tx-calc-btn").textContent).toBe("Calculer");
+    expect(dom.window.document.getElementById("tx-secret-field").hidden).toBe(true);
+  });
+
+  it("passe en mode enregistrement (bouton 'Enregistrer', champ code visible) quand PORTFOLIO_WRITE_URL est configuré", () => {
+    setGlobal(dom, "PORTFOLIO_WRITE_URL", "https://example.test/transaction");
+    dom.window.renderTransactionCalculator();
+    expect(dom.window.document.getElementById("tx-calc-btn").textContent).toBe("Enregistrer");
+    expect(dom.window.document.getElementById("tx-secret-field").hidden).toBe(false);
+  });
+
+  it("masque le champ 'montant investi' à la vente (n'a pas d'effet dessus), le montre à l'achat", () => {
+    dom.window.renderTransactionCalculator();
+    const typeSelect = dom.window.document.getElementById("tx-type");
+    const field = dom.window.document.getElementById("tx-invested-override").closest(".tx-field");
+    expect(field.hidden).toBe(false); // "achat" sélectionné par défaut
+
+    typeSelect.value = "vente";
+    typeSelect.dispatchEvent(new dom.window.Event("change"));
+    expect(field.hidden).toBe(true);
+
+    typeSelect.value = "achat";
+    typeSelect.dispatchEvent(new dom.window.Event("change"));
+    expect(field.hidden).toBe(false);
+  });
+
+  it("enregistre directement via le Worker configuré (en-tête secret inclus) et confirme le succès", async () => {
+    setGlobal(dom, "PORTFOLIO_WRITE_URL", "https://example.test/transaction");
+    dom.window.renderPortfolio({ positions: [pos({ cgId: "bitcoin", qty: 2, invested: 200 })] }, []);
+    dom.window.renderTransactionCalculator();
+
+    let capturedRequest = null;
+    dom.window.fetch = async (url, options) => {
+      capturedRequest = { url, options };
+      return { ok: true, status: 200, json: async () => ({ ok: true }) };
+    };
+
+    dom.window.document.getElementById("tx-asset").value = "bitcoin";
+    dom.window.document.getElementById("tx-type").value = "achat";
+    dom.window.document.getElementById("tx-price").value = "100";
+    dom.window.document.getElementById("tx-qty").value = "1";
+    dom.window.document.getElementById("tx-secret").value = "mon-code-secret";
+    dom.window.document.getElementById("tx-calc-btn").click();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(capturedRequest.url).toBe("https://example.test/transaction");
+    expect(capturedRequest.options.headers["X-Portfolio-Secret"]).toBe("mon-code-secret");
+    expect(JSON.parse(capturedRequest.options.body)).toEqual({ cgId: "bitcoin", qty: 3, invested: 300 });
+    expect(dom.window.document.getElementById("tx-result").textContent).toContain("Enregistré");
+  });
+
+  it("retient le code d'écriture en sessionStorage d'un rendu à l'autre, jamais écrit dans le code source", async () => {
+    setGlobal(dom, "PORTFOLIO_WRITE_URL", "https://example.test/transaction");
+    dom.window.renderPortfolio({ positions: [pos({ cgId: "bitcoin", qty: 2, invested: 200 })] }, []);
+    dom.window.renderTransactionCalculator();
+    dom.window.fetch = async () => ({ ok: true, status: 200, json: async () => ({ ok: true }) });
+
+    dom.window.document.getElementById("tx-asset").value = "bitcoin";
+    dom.window.document.getElementById("tx-price").value = "100";
+    dom.window.document.getElementById("tx-qty").value = "1";
+    dom.window.document.getElementById("tx-secret").value = "code-a-retenir";
+    dom.window.document.getElementById("tx-calc-btn").click();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(dom.window.sessionStorage.getItem("aguilaradar_tx_secret")).toBe("code-a-retenir");
+
+    // Un nouveau rendu (ex: réouverture de l'accordéon) doit repré-remplir le champ depuis sessionStorage.
+    dom.window.renderTransactionCalculator();
+    expect(dom.window.document.getElementById("tx-secret").value).toBe("code-a-retenir");
+  });
+
+  it("affiche un message clair et ne prétend rien avoir modifié quand le Worker refuse le code d'écriture (401)", async () => {
+    setGlobal(dom, "PORTFOLIO_WRITE_URL", "https://example.test/transaction");
+    dom.window.renderPortfolio({ positions: [pos({ cgId: "bitcoin", qty: 2, invested: 200 })] }, []);
+    dom.window.renderTransactionCalculator();
+    dom.window.fetch = async () => ({ ok: false, status: 401 });
+
+    dom.window.document.getElementById("tx-asset").value = "bitcoin";
+    dom.window.document.getElementById("tx-price").value = "100";
+    dom.window.document.getElementById("tx-qty").value = "1";
+    dom.window.document.getElementById("tx-secret").value = "mauvais-code";
+    dom.window.document.getElementById("tx-calc-btn").click();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    const text = dom.window.document.getElementById("tx-result").textContent;
+    expect(text).toContain("Code d'écriture incorrect");
+    expect(text).toContain("Rien n'a été modifié");
+  });
+
+  it("affiche un message honnête (jamais une erreur brute) quand le réseau échoue pendant l'enregistrement", async () => {
+    setGlobal(dom, "PORTFOLIO_WRITE_URL", "https://example.test/transaction");
+    dom.window.renderPortfolio({ positions: [pos({ cgId: "bitcoin", qty: 2, invested: 200 })] }, []);
+    dom.window.renderTransactionCalculator();
+    dom.window.fetch = async () => {
+      throw new Error("offline");
+    };
+
+    dom.window.document.getElementById("tx-asset").value = "bitcoin";
+    dom.window.document.getElementById("tx-price").value = "100";
+    dom.window.document.getElementById("tx-qty").value = "1";
+    dom.window.document.getElementById("tx-calc-btn").click();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(dom.window.document.getElementById("tx-result").textContent).toContain("réseau indisponible");
   });
 });
 
@@ -649,6 +786,58 @@ describe("portfolio.js — renderPortfolioConcentration (concentration réelle p
     const html = dom.window.renderPortfolioConcentration(positions);
     expect(html).toContain('Le thème "IA" concentre 70%');
     expect(html).not.toContain("représente à lui seul");
+  });
+});
+
+describe("portfolio.js — renderPortfolioSignalConflicts (verdict technique vs thèse hebdo)", () => {
+  let dom;
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js"]);
+  });
+
+  it("returns an empty string when no position has both a verdict and a thesis recommendation yet", () => {
+    const html = dom.window.renderPortfolioSignalConflicts([summaryPos({ verdict: "ACHAT", recommendation: null })]);
+    expect(html).toBe("");
+  });
+
+  it("shows a reassuring message when no strict conflict exists among comparable positions", () => {
+    const positions = [
+      summaryPos({ ticker: "BTC", verdict: "ACHAT", recommendation: "renforcer", recommendationRaw: "Renforcer" }),
+      summaryPos({ ticker: "ETH", verdict: "ATTENTE", recommendation: "conserver", recommendationRaw: "Conserver" }),
+    ];
+    const html = dom.window.renderPortfolioSignalConflicts(positions);
+    expect(html).toContain("Aucune contradiction franche");
+    expect(html).toContain("2 position(s) comparables");
+  });
+
+  it("flags a position where a bullish technical verdict meets a bearish thesis (ACHAT + Réduire)", () => {
+    const positions = [summaryPos({ ticker: "FET", verdict: "ACHAT", recommendation: "reduire", recommendationRaw: "Réduire" })];
+    const html = dom.window.renderPortfolioSignalConflicts(positions);
+    expect(html).toContain("1 désaccord(s)");
+    expect(html).toContain("FET");
+    expect(html).toContain('<span class="badge badge-achat">ACHAT</span>');
+    expect(html).toContain('<span class="badge badge-reduire">Réduire</span>');
+  });
+
+  it("flags a position where a bearish technical verdict meets a bullish thesis (VENTE + Renforcer)", () => {
+    const positions = [summaryPos({ ticker: "TIA", verdict: "VENTE", recommendation: "renforcer", recommendationRaw: "Renforcer" })];
+    const html = dom.window.renderPortfolioSignalConflicts(positions);
+    expect(html).toContain("1 désaccord(s)");
+    expect(html).toContain("TIA");
+  });
+
+  it("does not flag a milder mismatch (ACHAT + Attendre) as a strict conflict", () => {
+    const positions = [summaryPos({ ticker: "GRT", verdict: "ACHAT", recommendation: "attendre", recommendationRaw: "Attendre" })];
+    const html = dom.window.renderPortfolioSignalConflicts(positions);
+    expect(html).toContain("Aucune contradiction franche");
+  });
+
+  it("escapes the thesis label before displaying it (no HTML injection)", () => {
+    const payload = "<img src=x onerror=alert(1)>";
+    const positions = [summaryPos({ ticker: "FET", verdict: "ACHAT", recommendation: "reduire", recommendationRaw: payload })];
+    const html = dom.window.renderPortfolioSignalConflicts(positions);
+    expect(html).not.toContain("<img");
+    expect(html).toContain("&lt;img src=x onerror=alert(1)&gt;");
   });
 });
 
