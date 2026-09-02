@@ -124,6 +124,12 @@
       "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h59)", "data/opportunities.json (last_scan_at, ~5h10)"],
       "files_broken": ["data/news.json (last_updated_at figé depuis ~11h00, seuil de 8h dépassé)"],
       "note": "ATTENTION FRAICHEUR : data/news.json (last_updated_at = 2026-08-31T22:16:00Z) est figé depuis environ 11h00, soit ~3h au-delà du seuil de 8h attendu pour le cycle profond - un dépassement modéré, pas une panne globale (les deux autres sources sont dans les clous : engine-history ~0h59, opportunities ~5h10). Cette routine n'a pas les outils pour investiguer ou corriger elle-même ; à surveiller au prochain cycle."
+    },
+    {
+      "checked_at": "2026-09-02T09:17:00Z",
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~1h00)", "data/opportunities.json (last_scan_at, ~29h11)"],
+      "files_broken": ["data/news.json (last_updated_at figé depuis ~18h56, seuil de 8h dépassé)"],
+      "note": "ATTENTION FRAICHEUR : data/news.json (last_updated_at = 2026-09-01T14:21:00Z) est figé depuis environ 18h56, soit ~10h56 au-delà du seuil de 8h - en nette aggravation par rapport au cycle précédent du 01/09 (~11h00). Deux passages consécutifs en anomalie avec un écart croissant : à surveiller de près, pourrait indiquer un vrai blocage plutôt qu'un simple retard ponctuel. data/opportunities.json (last_scan_at = 2026-09-01T04:05:51Z, ~29h11) reste sous son seuil de 36h mais se rapproche - à surveiller aussi au prochain cycle. data/engine-history.json (routine_health.last_success_at, ~1h00) est dans les clous. Cette routine n'a pas les outils pour investiguer ou corriger elle-même."
     }
   ]
 }
