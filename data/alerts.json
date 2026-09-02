@@ -821,5 +821,14 @@
     "message": "Escalade militaire États-Unis/Iran (frappes américaines confirmées le 1er septembre contre des cibles des Gardiens de la révolution, riposte iranienne par roquettes et drones contre des bases américaines) : le marché crypto au sens large recule depuis, Solana, Ether et XRP en tête de la baisse, plus de 115 millions de dollars de positions longues sur Bitcoin liquidées en une heure lors du choc initial. Confirmé par plusieurs sources indépendantes (CoinDesk, Yahoo Finance, CryptoRank). Cohérent avec le repli de l'indice de peur et de cupidité (69 le 1er septembre, 63 ce jour) et la légère baisse 24h observée sur les favoris (BTC -1,17 %, ETH -2,60 %). Aucun changement de régime macro à ce stade (toujours « risk-on »), mais point de vigilance macro à suivre en cas d'escalade supplémentaire.",
     "source": "CoinDesk / Yahoo Finance / CryptoRank",
     "sentiment": "negatif"
+  },
+  {
+    "id": "alert-20260902-1422-macro-russia-crypto-law",
+    "ticker_ou_theme": "MACRO",
+    "type": "actualite_generale",
+    "triggered_at": "2026-09-02T14:22:00Z",
+    "sentiment": "neutre",
+    "message": "La Russie a légalisé le trading de cryptomonnaies (loi fédérale 282-FZ) le 1er septembre 2026, plaçant bitcoin, ether et USDT sous la supervision de la Banque de Russie : limite annuelle de 300 000 roubles (environ 3 300 dollars) pour les investisseurs particuliers après un test obligatoire, règlements transfrontaliers sans plafond pour les exportateurs et importateurs, mais paiements domestiques en cryptomonnaies toujours interdits. Cette légalisation intervient le même jour que le lancement commercial obligatoire du rouble numérique dans les douze plus grandes banques du pays (loi entrée en vigueur en juillet 2025). Décision réglementaire d'ampleur pour une économie du G20, confirmée par plusieurs sources indépendantes.",
+    "source": "CryptoTimes, Bitcoin Ethereum News, CoinSpectator (recoupement multi-sources)"
   }
 ]
