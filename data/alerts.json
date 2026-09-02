@@ -839,5 +839,14 @@
     "sentiment": "neutre",
     "message": "La SEC américaine propose une refonte des règles applicables aux agents de transfert afin d'y intégrer les registres sur blockchain, dans la continuité des travaux préparatoires au CLARITY Act déjà suivis dans ces alertes. Une table ronde est fixée au 17 septembre 2026, réunissant notamment BlackRock, Nasdaq, NYSE et Robinhood, centrée sur la perspective d'un trading boursier continu 24 heures sur 24. Développement réglementaire distinct de l'escalade Iran/États-Unis déjà signalée ce jour (12h24 UTC) : porte sur l'infrastructure des marchés financiers traditionnels plutôt que sur les cryptoactifs directement, mais pertinent pour la trajectoire réglementaire d'ensemble déjà suivie sur ce dossier.",
     "source": "https://finance.yahoo.com/personal-finance/investing/article/bitcoin-and-ethereum-prices-today-wednesday-september-2-2026-crypto-prices-tumble-as-iran-war-reignites-112639522.html"
+  },
+  {
+    "id": "alert-20260902-2220-flux-seuil",
+    "ticker_ou_theme": "FLUX",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-02T22:20:00Z",
+    "sentiment": "négatif",
+    "message": "Flux (FLUX) : franchit de nouveau le seuil de mouvement directionnel (5 %) à la baisse sur le verdict ATTENTE actif (émis le 23 août à 0,04491 euro), après être repassé sous ce seuil au cycle du 12h24 UTC (-3,66 % à l'époque). Prix vérifié par appel direct à l'API CoinGecko (groupé) : 0,04226268 euro, soit -5,89 %. Aucune actualité spécifique identifiée pour l'expliquer ce cycle, lecture purement technique. Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko directe (api.coingecko.com/api/v3/coins/markets)"
   }
 ]
