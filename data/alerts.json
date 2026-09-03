@@ -856,5 +856,12 @@
     "triggered_at": "2026-09-03T00:19:00Z",
     "message": "LINK cumule +28,8 % depuis son verdict ATTENTE et une thèse hebdo à Renforcer (conviction 8/10) : signaux qui convergent, à surveiller. LPT et FLUX flirtent avec leur seuil de vigilance à la baisse.",
     "sentiment": "neutre"
+  },
+  {
+    "id": "alert-20260903-0419-lpt-repasse-sous-seuil",
+    "ticker_ou_theme": "LPT",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-03T04:19:00Z",
+    "message": "Livepeer (LPT) : repasse sous le seuil de mouvement directionnel (5 %) ce cycle (-4,96 % depuis l'émission, contre -5,79 % au cycle précédent), après l'avoir franchi à plusieurs reprises depuis fin août. Prix vérifié par appel direct à l'API CoinGecko (groupé) : 1,15 euro(s) contre un prix d'émission de 1,21 euro(s). Ne préjuge pas de l'issue du verdict ATTENTE (échéance le 6 septembre)."
   }
 ]
