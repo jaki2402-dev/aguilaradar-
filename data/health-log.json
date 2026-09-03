@@ -130,6 +130,31 @@
       "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~1h00)", "data/opportunities.json (last_scan_at, ~29h11)"],
       "files_broken": ["data/news.json (last_updated_at figé depuis ~18h56, seuil de 8h dépassé)"],
       "note": "ATTENTION FRAICHEUR : data/news.json (last_updated_at = 2026-09-01T14:21:00Z) est figé depuis environ 18h56, soit ~10h56 au-delà du seuil de 8h - en nette aggravation par rapport au cycle précédent du 01/09 (~11h00). Deux passages consécutifs en anomalie avec un écart croissant : à surveiller de près, pourrait indiquer un vrai blocage plutôt qu'un simple retard ponctuel. data/opportunities.json (last_scan_at = 2026-09-01T04:05:51Z, ~29h11) reste sous son seuil de 36h mais se rapproche - à surveiller aussi au prochain cycle. data/engine-history.json (routine_health.last_success_at, ~1h00) est dans les clous. Cette routine n'a pas les outils pour investiguer ou corriger elle-même."
+    },
+    {
+      "checked_at": "2026-09-03T08:52:37Z",
+      "site_reachable": false,
+      "files_ok": [
+        "data/verdicts.json",
+        "data/opportunities.json",
+        "data/engine-history.json",
+        "data/alerts.json",
+        "data/news.json",
+        "data/control-group.json",
+        "data/market-context.json",
+        "data/favoris-context.json",
+        "data/health-log.json",
+        "index.html (18/18 scripts js/*.js references, aucun manquant)"
+      ],
+      "files_broken": [],
+      "counts": {
+        "verdicts": 32,
+        "alerts": 105,
+        "opportunities": 8,
+        "news": 8,
+        "favoris_context_populated": 15
+      },
+      "note": "Verifications OK. Site : non verifiable ce cycle - WebFetch et curl echouent tous deux avec un blocage reseau (EGRESS_BLOCKED / 403 du proxy sortant) sur jaki2402-dev.github.io, restriction de la politique reseau de cet environnement, pas une panne confirmee du site (meme situation deja rencontree et documentee le 26/08 08h52 UTC). Les 9 fichiers data/*.json controles (verdicts, opportunities, engine-history, alerts, news, control-group, market-context, favoris-context, health-log) sont tous un JSON valide et non vide/tronque. index.html reference bien les 18 fichiers js/*.js presents sur disque, aucun manquant ni orphelin. Volumes du passage courant : verdicts=32, alerts=105, opportunities=8, news=8, favoris_context_populated=15/15. Comparaison stricte au dernier passage enregistre (02/09 09h17 UTC) impossible : ce dernier n'a pas de champ counts (lacune de suivi depuis le 26/08, les passages du 30/08 au 02/09 n'ont pas rempli ce champ). A titre informatif, comparaison au dernier passage qui avait un champ counts (26/08 08h52 UTC : verdicts=31, alerts=82, opportunities=12, news=8, favoris_context_populated=15) : verdicts et alerts en hausse normale (croissance attendue, historique permanent), opportunities en baisse de 12 a 8 (-33%, sous le seuil d'alerte de 50% et coherent avec le renouvellement documente du criblage Top 300), news et favoris_context_populated stables. Aucun chiffre tombe a 0, aucune chute suspecte superieure a 50% detectee : pas d'anomalie de volume ce cycle. Rappel du correctif de fiabilite du 24/08 : aucun outil mcp__CoinGecko-, mcp__Alpha-Vantage-MCP-Server ou mcp__Anthropic-Economic-Index n'a ete appele pour cette verification (cette routine n'en a de toute facon jamais besoin) ; seule lecture locale des fichiers data/*.json et de index.html, plus WebFetch/curl (bloques) pour la disponibilite du site."
     }
   ]
 }
