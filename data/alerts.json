@@ -863,5 +863,14 @@
     "type": "seuil_technique",
     "triggered_at": "2026-09-03T04:19:00Z",
     "message": "Livepeer (LPT) : repasse sous le seuil de mouvement directionnel (5 %) ce cycle (-4,96 % depuis l'émission, contre -5,79 % au cycle précédent), après l'avoir franchi à plusieurs reprises depuis fin août. Prix vérifié par appel direct à l'API CoinGecko (groupé) : 1,15 euro(s) contre un prix d'émission de 1,21 euro(s). Ne préjuge pas de l'issue du verdict ATTENTE (échéance le 6 septembre)."
+  },
+  {
+    "id": "alert-20260903-1618-btc-seuil",
+    "ticker_ou_theme": "BTC",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-03T16:18:00Z",
+    "sentiment": "positif",
+    "message": "Bitcoin (BTC) : franchit pour la première fois le seuil de mouvement directionnel (5 %) à la hausse sur le verdict ATTENTE actif (émis le 23 août à 66 240 euros). Prix vérifié par appel direct à l'API CoinGecko (groupé) : 69 603 euros, soit +5,08 %. Mouvement cohérent avec le regain d'appétit pour le risque déjà noté ce cycle (indice de peur et de cupidité orienté vers la zone « Greed », dominance BTC quasi stable à 59,33 %) plutôt qu'une actualité spécifique à Bitcoin identifiée ce cycle. Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
   }
 ]
