@@ -1,55 +1,55 @@
 {
-  "last_computed_at": "2026-08-31T14:45:00Z",
+  "last_computed_at": "2026-09-03T08:30:00Z",
   "assets": {
     "BTC": {
-      "last_computed_at": "2026-08-18T08:24:00Z",
+      "last_computed_at": "2026-09-03T08:30:00Z",
       "competitor": {
         "ticker": "XAU",
-        "name": "Or (marche de l'or investissable)",
-        "comparison_note": "Bitcoin n'a pas de concurrent direct au sens classique ; la comparaison la plus factuelle reste la these de la « reserve de valeur numerique » face a l'or. Capitalisation BTC estimee a environ 1,26 trillion de dollars (dominance crypto d'environ 56,3 a 56,65%) contre un marche de l'or investissable estime a 14-16 trillions de dollars : BTC represente donc environ 8% de l'or investissable. Le ratio BTC/or a historiquement oscille entre 0,05 (2017) et 0,15 (pics 2021/2024). A titre secondaire, la dominance BTC face au reste du marche crypto (~2,28 trillions de dollars au total) est en hausse depuis 2025, signe que les capitaux entrants se concentrent sur BTC plutot que sur ETH ou les altcoins. Note honnete : ni l'or ni Ethereum ne sont de vrais « concurrents » au sens propre, leurs propositions de valeur etant differentes de celle de Bitcoin."
+        "name": "Or (marché de l'or)",
+        "comparison_note": "Bitcoin cote autour de 77 882 dollars pour une capitalisation d'environ 1 563,6 milliards de dollars (dominance BTC sur l'ensemble du marché crypto d'environ 59,58 %, capitalisation crypto totale d'environ 2 614 milliards de dollars). Le marché de l'or est estimé nettement plus haut qu'aux cycles précédents : environ 31,1 à 34 trillions de dollars selon les sources les plus récentes trouvées ce cycle (contre 14-16 trillions retenus pour l'or « investissable » aux cycles précédents), les seules banques centrales en détenant pour environ 5 trillions de dollars. Sur cette base élargie, BTC ne représenterait plus que 5 % environ de la capitalisation totale de l'or, contre 8 % avec l'estimation « investissable » plus restrictive utilisée précédemment - l'écart entre les deux mesures illustre la difficulté à définir un périmètre comparable unique ; aucune des deux n'est retraitée ici, les deux sont citées telles quelles. Le ratio BTC/or reste ainsi proche du bas de sa fourchette historique (0,05-0,15)."
       },
       "long_term_thesis": {
-        "bull": "Adoption institutionnelle continue via les ETF spot americains (encours cumules d'environ 76,6 milliards de dollars, environ 51,8 milliards de dollars d'entrees nettes depuis janvier 2024), multiplication des reserves strategiques etatiques (Etats-Unis environ 325 000 a 328 000 BTC, ainsi que le Bresil, le Bhoutan et le Salvador), effet de rarete post-halving 2024 (emission divisee par deux), le tout dans un contexte de baisse potentielle des taux directeurs favorable aux actifs a risque.",
-        "base": "Marche en range, alternance de semaines d'entrees et de sorties nettes sur les ETF (exemple : semaine du 10 aout 2026, -389,7 millions de dollars de sorties nettes apres +853,5 millions la semaine precedente, puis trois jours consecutifs de sorties au 14 aout), dominance BTC elevee mais prix stagnant autour de 60 000-65 000 dollars, croissance progressive correlee au cycle macro plutot qu'a un catalyseur propre.",
-        "bear": "Resserrement monetaire inattendu, denouement de positions institutionnelles massif, regulation restrictive dans une grande juridiction, ou choc de liquidite pouvant faire refluer BTC loin sous son pic d'octobre 2025 (capitalisation alors estimee a environ 2,5 trillions de dollars, soit environ 125 000 dollars par BTC) vers les niveaux actuels ou plus bas.",
-        "assumptions_note": "Ces scenarios supposent : (1) la poursuite des flux ETF spot americains comme baremetre institutionnel principal ; (2) l'absence de choc reglementaire majeur ou d'interdiction dans une grande juridiction ; (3) que le halving de 2024 continue de reduire l'offre nouvelle sans choc de demande inverse ; (4) que la politique de taux des banques centrales reste un facteur macro dominant. Aucun multiplicateur ou objectif de prix chiffre n'est avance faute de source fiable verifiee."
+        "bull": "Signe de retour de la demande institutionnelle après plusieurs semaines mitigées : les ETF spot américains ont enregistré environ 853 millions de dollars d'entrées nettes hebdomadaires début août 2026 (plus haut niveau depuis avril), dont 693 millions de dollars pour le seul IBIT de BlackRock. Les ETF spot détiendraient collectivement environ 1,3 million de BTC pour un encours cumulé d'environ 147,5 milliards de dollars (fin septembre 2025), et une étude relayée par la presse estime que ces flux expliqueraient désormais environ 45 % des mouvements de prix hebdomadaires de Bitcoin, un lien mécanique plus fort qu'avec le cycle de halving ou le sentiment de détail. Le prix s'est nettement redressé depuis les points bas d'août 2026, remontant à environ -38,2 % sous son sommet d'octobre 2025 (126 080 dollars), contre environ -49 % évoqué aux cycles précédents.",
+        "base": "La demande institutionnelle est décrite par la presse financière comme « en cours de retour, pas encore pleinement rétablie » : les flux ETF alternent encore entrées et sorties nettes d'une semaine à l'autre. La dominance BTC reste élevée (environ 59,6 % du marché crypto total, contre 11,2 % pour ETH), cohérent avec une phase où les capitaux se concentrent sur l'actif jugé le plus sûr du secteur plutôt qu'avec une nouvelle impulsion haussière propre à Bitcoin.",
+        "bear": "Le prix reste environ 38 % sous son sommet d'octobre 2025 malgré le rebond récent, et les flux ETF ont déjà montré leur capacité à s'inverser brutalement sur une semaine (sorties nettes documentées aux cycles précédents). Si le lien statistique entre flux ETF et prix (environ 45 % du mouvement hebdomadaire selon une étude relayée par la presse) se confirme, une reprise des sorties nettes ferait mécaniquement pression sur le prix ; un choc macro (taux directeurs, régulation) reste le facteur de risque générique déjà identifié aux cycles précédents.",
+        "assumptions_note": "Ces scénarios supposent : (1) les flux ETF spot américains restent le baromètre institutionnel dominant et leur lien statistique avec le prix (environ 45 % du mouvement hebdomadaire selon une étude relayée par la presse) se maintient, (2) le rebond du prix depuis les points bas d'août 2026 reflète un vrai retour de la demande plutôt qu'un simple rebond technique, (3) absence de choc réglementaire ou macro majeur. Les deux estimations de capitalisation de l'or (31-34 trillions de dollars au sens large contre 14-16 trillions « investissables » retenus aux cycles précédents) ne sont pas réconciliées ici, faute de méthodologie commune trouvée ce cycle ; aucun multiplicateur de prix n'est avancé."
       },
       "open_interest": {
-        "value_usd": 47878400018,
+        "value_usd": 53657852403,
         "funding_rate_pct": null,
-        "source": "CoinGlass (resultat indexe via WebSearch)",
-        "note": "Open interest total agrege estime a environ 47,88 milliards de dollars, volume futures 24h environ 38,09 milliards de dollars, volume spot 24h environ 2,25 milliards de dollars. Funding rate precis et date non trouve ce cycle (seule une valeur par defaut generique et non confirmee est apparue) - acces direct a coinglass.com bloque par le proxy reseau, laisse a null."
+        "source": "CoinGlass (résultat indexé via WebSearch)",
+        "note": "Open interest total agrégé estimé à environ 53,66 milliards de dollars selon la page CoinGlass la plus récente trouvée ce cycle, contre environ 47,75 milliards de dollars pour un autre instantané également retrouvé - écart qui illustre à nouveau la variabilité selon l'instant de capture plutôt qu'une valeur unique fiable. Funding rate non trouvé sous forme chiffrée et datée ce cycle, laissé à null. Accès direct à coinglass.com et fapi.binance.com bloqué par le proxy réseau de cet environnement."
       },
       "defi_tvl": {
         "value_usd": null,
         "change_7d_pct": null,
         "source": null,
-        "note": "Non applicable au sens classique : Bitcoin n'a pas de smart contracts natifs ni d'ecosysteme DeFi propre comparable a Ethereum. Aucun chiffre recent fiable de TVL liee au BTC wrappe ou aux layers 2 (Stacks, Lightning) n'a ete recherche ce cycle."
+        "note": "Non applicable au sens classique : Bitcoin n'a pas de smart contracts natifs ni d'écosystème DeFi propre comparable à Ethereum. Aucun chiffre récent fiable de TVL liée au BTC wrappé ou aux layers 2 (Stacks, Lightning) n'a été recherché ce cycle."
       },
       "onchain_signal": {
         "available": false,
-        "note": "Plusieurs mouvements whale documentes en aout 2026 (1 275 BTC le 11 aout vers exchanges/OTC ; 1 564 BTC vers Binance et 1 818 BTC depuis Kraken le 7 aout ; 1 790 BTC entre wallets inconnus le 6 aout ; 19 632 BTC entre wallets inconnus le 2 aout, le plus important du mois), mais aucun n'est date de moins de 48h par rapport a ce cycle (le plus recent, 11 aout, date de 7 jours) - retenu comme available=false conformement au seuil de fraicheur, les mouvements ci-dessus sont cites a titre de contexte uniquement.",
-        "source_url": "https://coinfomania.com/whale-alert-reports-19632-btc-transfer-potential-market-impact/"
+        "note": "Un transfert de 688 BTC (environ 53,24 millions de dollars) d'un portefeuille inconnu vers Kraken a été identifié via recherche ciblée ce cycle, mais sans horodatage précis permettant de confirmer qu'il date de moins de 48h avant ce cycle ; un autre mouvement plus ancien et déjà documenté (19 632 BTC le 2 août 2026) reste hors fenêtre de fraîcheur. Faute de date confirmée pour le transfert le plus récent, retenu comme available=false par prudence.",
+        "source_url": null
       }
     },
     "ETH": {
-      "last_computed_at": "2026-08-19T08:23:00Z",
+      "last_computed_at": "2026-09-03T08:30:00Z",
       "competitor": {
         "ticker": "SOL",
         "name": "Solana",
-        "comparison_note": "Ethereum reste la deuxième plus grande capitalisation crypto et la première plateforme de contrats intelligents, avec un prix d'environ 1 900-1 913 dollars, une capitalisation d'environ 227,8 à 231,4 milliards de dollars (rang #2) et une variation sur 7 jours d'environ +2,0 % (18 août 2026). Solana cote autour de 76,91 dollars pour une capitalisation d'environ 44,03 milliards de dollars (rang #7), soit un rapport d'environ 5,2x en faveur d'Ethereum. La performance 7 jours de Solana est rapportée de façon contradictoire selon la source (+0,90 % ou -0,90 %), le marché crypto global affichant environ +1,30 % sur la même période, ce qui suggère dans les deux cas une sous-performance relative de Solana face au marché."
+        "comparison_note": "Ethereum cote autour de 2 403 dollars pour une capitalisation d'environ 293,15 milliards de dollars (rang #2, dominance de marché ETH environ 11,17 %), en repli d'environ 3,8 % sur 7 jours mais en hausse d'environ 29,3 % sur 30 jours. Solana (SOL) cote autour de 100,74 dollars pour une capitalisation d'environ 58,96 milliards de dollars (rang #7), quasi stable sur 7 jours (environ -0,9 %) et également en forte hausse sur 30 jours (environ +36,9 %, une progression mensuelle légèrement supérieure à celle d'Ethereum). L'écart de capitalisation reste d'environ 5 fois en faveur d'Ethereum, stable par rapport aux cycles précédents."
       },
       "long_term_thesis": {
-        "bull": "Les flux ETF spot américains sur Ethereum sont repartis positivement (quatre jours consécutifs d'entrées nettes jusqu'au 7 août, dont environ 49,6 millions de dollars ce jour-là pour l'ETHA de BlackRock ; plusieurs semaines consécutives d'entrées nettes rapportées jusqu'au 18 août). Le 17 mars 2026, la SEC et la CFTC ont classifié conjointement 16 actifs numériques dont ETH comme « digital commodities » hors du champ des valeurs mobilières, et la SEC a approuvé des normes de cotation génériques réduisant le délai d'approbation des ETP crypto (jusqu'à 240 jours auparavant, contre aussi peu que 75 jours désormais). En janvier 2026, un ETF spot ETH américain a distribué pour la première fois des revenus de staking à ses actionnaires. Les rollups L2 (Arbitrum, Optimism, zkSync) continuent d'absorber l'activité DeFi/RWA institutionnelle, avec plus de 12 milliards de dollars de RWA tokenisés déjà émis sur Ethereum selon une source.",
-        "base": "Malgré des flux ETF orientés positivement, le prix reste cantonné sous 1 900-1 950 dollars, signe que ces flux ne se traduisent pas encore en dynamique de prix. Le projet de loi américain sur la structure de marché crypto, fusionné en juillet 2026 au Sénat, est resté bloqué avant la pause d'août sur des points de friction (récompenses liées aux stablecoins, protection des développeurs).",
-        "bear": "La classification SEC/CFTC de mars 2026 relève d'une position d'agence et non d'une loi votée, donc potentiellement révocable ; une source relève d'ailleurs qu'Ethereum pourrait encore être requalifié en valeur mobilière dans certains scénarios, signe d'une ambiguïté juridique residuelle. La fragmentation de la liquidité entre rollups L2 et la concurrence des L1 haute performance restent des risques structurels pour la part de marché et les frais captés par la couche de base.",
-        "assumptions_note": "Ces scénarios supposent : (1) la classification digital commodity de mars 2026 n'est pas révoquée ou contestée avec succès, (2) les flux ETF spot et le mécanisme de distribution de rewards de staking se maintiennent, (3) l'adoption L2/RWA institutionnelle se poursuit sans fragmentation excessive de la liquidité. Aucun multiplicateur chiffré n'est avancé. Note de fiabilité : un chiffre d'encours cumulé ETHA d'environ 116,5 milliards de dollars trouvé dans une source parait disproportionné par rapport à la capitalisation totale d'ETH et n'est pas retenu comme fiable."
+        "bull": "Les ETF spot Ethereum américains enchaînent une série positive : douze jours consécutifs d'entrées nettes au 1er septembre 2026 (environ 10,95 millions de dollars ce jour-là), portée notamment par le fonds ETHB de BlackRock orienté staking. Le montant d'ETH staké atteindrait un record d'environ 41,7 à 42 millions de coins, portant le taux de staking au-delà de 35 % de l'offre totale ; une analyse relayée par la presse financière avance que ce différentiel de rendement (ETH stake, BTC non) renforcerait la thèse relative d'ETH dans une allocation diversifiée sur une base de rendement total.",
+        "base": "Les flux ETF positifs et la hausse du taux de staking coexistent avec une performance de prix négative sur 7 jours (environ -3,8 %), signe que ces éléments structurels ne se sont pas encore traduits en dynamique de prix immédiate ; la progression sur 30 jours (+29,3 %) reste néanmoins substantielle et cohérente avec le rebond généralisé du marché crypto sur la période.",
+        "bear": "La rotation « BTC vers ETH » évoquée par la presse reste une thèse relative fondée sur le différentiel de rendement de staking, pas un fait acquis : elle suppose que le marché continue de valoriser le rendement du staking à travers l'enveloppe ETF, un mécanisme encore récent. La fragmentation de la liquidité entre rollups L2 et la concurrence de L1 haute performance (Solana notamment, en hausse plus marquée sur 30 jours) restent des risques structurels déjà identifiés aux cycles précédents.",
+        "assumptions_note": "Ces scénarios supposent : (1) la série de flux ETF positifs (douze jours consécutifs au 1er septembre 2026) et la croissance du taux de staking (>35 % de l'offre) se poursuivent, (2) le mécanisme de capture du rendement de staking par les ETF (ETHB de BlackRock notamment) continue d'attirer des flux institutionnels, (3) aucun multiplicateur de prix n'est avancé. La thèse de « rotation BTC vers ETH » relayée par une source d'analyse reste une lecture parmi d'autres, non un consensus établi."
       },
       "open_interest": {
-        "value_usd": 25000000000,
+        "value_usd": 32920296758,
         "funding_rate_pct": null,
-        "source": "CoinGlass (résultats indexés via WebSearch, datés du 19 août 2026)",
-        "note": "Deux valeurs trouvées sur la même source pour le même jour sont incohérentes entre elles (environ 25,56 milliards de dollars contre environ 24,45 milliards, avec un volume futures 24h d'environ 27,33 milliards) : retenu un ordre de grandeur médian d'environ 25 milliards de dollars plutôt qu'un chiffre unique. Funding rate non trouvé sous forme chiffrée ce cycle, laissé à null. Accès direct aux endpoints Binance bloqué par le proxy réseau de cet environnement."
+        "source": "CoinGlass (résultat indexé via WebSearch)",
+        "note": "Open interest total agrégé estimé à environ 32,92 milliards de dollars, volume futures 24h environ 58,14 milliards de dollars. Funding rate non trouvé sous forme chiffrée et datée ce cycle, laissé à null. Accès direct à fapi.binance.com bloqué par le proxy réseau de cet environnement."
       },
       "defi_tvl": {
         "value_usd": null,
@@ -59,8 +59,8 @@
       },
       "onchain_signal": {
         "available": true,
-        "note": "Le 17 août 2026 (moins de 48h avant ce cycle), un whale a déposé 32 400 ETH (environ 61,46 millions de dollars) dans le contrat de dépôt de staking d'Ethereum. D'autres mouvements identifiés (2 680 ETH le 11 août, 2 000 ETH le 8 août) sont hors de la fenêtre de fraîcheur de 48h et non retenus.",
-        "source_url": "https://www.kucoin.com/news/flash/whale-deposits-32-400-eth-worth-61-46m-into-ethereum-staking-contract"
+        "note": "Le 1er septembre 2026 (moins de 48h avant ce cycle), un portefeuille a transféré 44 126 ETH (plus de 108 millions de dollars) directement vers Coinbase, un mouvement relayé comme potentiellement significatif dans un contexte de marché aux signaux mitigés. Le même jour, la plateforme d'analyse on-chain Arkham a identifié deux adresses ETH auparavant dormantes ayant retiré environ 126,25 millions de dollars d'ETH des dépositaires FalconX et BitGo, suscitant des spéculations non confirmées sur un lien avec BitMine/Tom Lee.",
+        "source_url": "https://en.cryptonomist.ch/2026/09/01/ethereum-whale-transfer-coinbase/"
       }
     },
     "FET": {
@@ -405,65 +405,65 @@
       }
     },
     "ARB": {
-      "last_computed_at": "2026-08-18T08:24:00Z",
+      "last_computed_at": "2026-09-03T08:30:00Z",
       "competitor": {
         "ticker": "OP",
         "name": "Optimism",
-        "comparison_note": "Comparaison a Optimism (OP), operateur de la Superchain/OP Stack, concurrent direct sur le segment layer-2 optimistic rollup. Les sources divergent fortement selon leur fraicheur : une premiere serie (probablement obsolete) donnait ARB a 2,18 $ (capitalisation ~2,7 milliards de dollars) contre OP a 4,45 $ (~4,5 milliards) ; une seconde serie plus recente, croisant plusieurs trackers independants (Bybit, Kraken, CoinMarketCap, CoinGecko, MetaMask) au 4-18 aout 2026, donne ARB a environ 0,074-0,08 $ (capitalisation ~475-523 millions de dollars, offre circulante ~6,6 milliards sur 10 milliards max) contre OP a environ 0,09 $ (capitalisation ~200 millions de dollars). Le second jeu de chiffres, corrobore par plusieurs plateformes independantes, est retenu comme le plus credible. Cote TVL, Arbitrum resterait le n°1 des rollups optimistic (~1,2 a 2 milliards de dollars selon la source, ecart non reconcilie) contre ~0,7 a 1 milliard pour OP Mainnet ; Arbitrum, Base et OP detiendraient ensemble environ 80% de la TVL des L2 optimistic."
+        "comparison_note": "Arbitrum (ARB) a connu un rallye marqué début septembre 2026 : cours autour de 0,137 dollar pour une capitalisation d'environ 917,5 millions de dollars (rang #74), en hausse d'environ 50 % sur 7 jours et 65,7 % sur 30 jours - un rebond d'environ 56 % depuis son plus bas historique récent. Optimism (OP) cote autour de 0,099 dollar pour une capitalisation d'environ 226,3 millions de dollars (rang #163), en hausse plus modeste (environ +1,4 % sur 7 jours, +10,8 % sur 30 jours). L'écart de capitalisation s'est ainsi nettement creusé à environ 4 fois en faveur d'Arbitrum, porté par un catalyseur propre (voir thèse ci-dessous) plutôt que par un mouvement de marché partagé par les deux rollups. Côté TVL, Arbitrum resterait le rollup optimistic n°1 avec environ 1,39 milliard de dollars selon DefiLlama."
       },
       "long_term_thesis": {
-        "bull": "Acceleration des chaines Orbit (notamment Robinhood Chain, en service depuis juillet 2026, ciblee sur les actifs tokenises/courtage on-chain) et montee en charge de Stylus (contrats Rust/C/C++ en WASM), elargissant la base de developpeurs et la demande de gas ARB, avec des frais reverses a la DAO.",
-        "base": "Arbitrum conserve son leadership de TVL parmi les optimistic rollups mais la concurrence (Base, sans token propre, environ 10 milliards de dollars de TVL ; zkSync Era en forte reprise) erode sa part relative ; croissance flat a moderee du prix, portee par le volume d'activite plutot que par une re-rating speculative.",
-        "bear": "Des deblocages de tokens reguliers (environ 92,65 millions ARB debloques le 16 aout 2026, soit ~1,61% du circulant, majoritairement equipe/conseillers et investisseurs) creent une pression vendeuse continue ; combines a une reduction de part des cohortes de baleines moyennes (de 32,15% a 31,74% entre le 3 et le 10 aout 2026, lue comme une distribution discrete) et a la concurrence des rollups ZK, le prix pourrait rester sous pression prolongee.",
-        "assumptions_note": "Ces scenarios supposent : (a) qu'aucun multiplicateur de prix n'est avance sans base factuelle - aucune projection chiffree n'est faite ici ; (b) que le calendrier de deblocage de tokens (vesting) se poursuit tel qu'annonce ; (c) que Robinhood Chain et les autres chaines Orbit continuent de generer des frais reverses a Arbitrum One ; (d) que la comparaison de TVL entre rollups reste valable dans sa definition DefiLlama actuelle ; (e) aucune hypothese de regulation ou de choc macro specifique n'est integree."
+        "bull": "Le rallye de début septembre 2026 (+30 à +33 % en une journée le 1er septembre) est directement attribué au succès de Robinhood Chain, le réseau basé sur la technologie Arbitrum lancé par Robinhood : cette chaîne aurait généré environ 1,92 million de dollars de revenus en 24h, devançant toutes les autres blockchains, et l'accord technologique prévoit que 10 % des profits nets de Robinhood Chain reviennent à l'écosystème Arbitrum (plus de 175 000 dollars par jour au pic pour la Fondation Arbitrum). L'upgrade ArbOS Elara, récemment activée, ajoute un filtrage de conformité au niveau protocole et des frais prioritaires personnalisables pour les chaînes dédiées Arbitrum, ainsi qu'une meilleure gestion des frais de base sur Arbitrum One.",
+        "base": "L'open interest sur les dérivés ARB a bondi (environ +62 % à 157 millions de dollars) en même temps que le volume futures (+714 % à environ 814 millions de dollars), une hausse de l'activité dérivée cohérente avec un mouvement de prix marqué mais qui n'indique pas à elle seule une adoption fondamentale nouvelle et durable.",
+        "bear": "Plusieurs sources soulignent que le rallye manque de catalyseur confirmé au-delà de l'annonce Robinhood Chain, et que les données on-chain montreraient une activité organique encore mince avec un niveau élevé de wash trading (environ 99,1 % selon une seule source, non recoupée), suggérant que le mouvement pourrait être porté par du volume coordonné plutôt qu'une demande réellement nouvelle. Deux déblocages de tokens contradictoirement datés apparaissent selon la source consultée : environ 92,63 millions ARB (~0,93 % de l'offre max) le 16 septembre 2026 selon une source, contre environ 139 millions ARB (~1,4 % de l'offre) le 23 septembre 2026 selon une autre - non réconciliés ce cycle, mais convergents sur l'existence d'un déblocage notable courant septembre 2026 susceptible de peser sur le prix après le rallye.",
+        "assumptions_note": "Ces scénarios supposent : (1) les revenus de Robinhood Chain reversés à l'écosystème Arbitrum (10 % des profits nets) se maintiennent au-delà du pic initial du 1er septembre 2026, (2) le chiffre de wash trading d'environ 99,1 % cité par une seule source n'a pas été recoupé de façon indépendante et est à traiter avec prudence, (3) le déblocage de tokens courant septembre 2026 (date et montant non réconciliés entre sources, voir bear) se déroule sans accélération majeure. Aucun multiplicateur de prix n'est avancé."
       },
       "open_interest": {
-        "value_usd": 98900000,
+        "value_usd": 157060000,
         "funding_rate_pct": null,
-        "source": "CoinGlass (resultat indexe via WebSearch)",
-        "note": "Open interest agrege estime a environ 98,9 millions de dollars, volume futures 24h environ 102,2 millions de dollars (contrat liquide confirme). Funding rate non trouve avec un chiffre exact ce cycle - acces direct a coinglass.com bloque par le proxy reseau de cet environnement, laisse a null."
+        "source": "CoinGlass via presse spécialisée (résultat indexé via WebSearch, daté du 1er septembre 2026)",
+        "note": "Open interest sur les dérivés ARB estimé à environ 157,06 millions de dollars au 1er septembre 2026, en hausse d'environ 62 % sur la période, avec un volume futures 24h en hausse d'environ 714 % à environ 814 millions de dollars - la hausse de l'open interest est directement associée au rallye de prix du même jour. Funding rate non trouvé sous forme chiffrée. Accès direct à fapi.binance.com bloqué par le proxy réseau de cet environnement."
       },
       "defi_tvl": {
-        "value_usd": null,
+        "value_usd": 1389000000,
         "change_7d_pct": null,
-        "source": "DefiLlama (resultat indexe via WebSearch)",
-        "note": "Chiffres divergents selon la source consultee : un resume cite environ 1,244 milliard de dollars, un autre situe la fourchette a 1,5-2 milliards de dollars pour mi-2026 (GMX, Vertex, Pendle, Camelot, Aave V3 comme principaux contributeurs). Valeur exacte non retenue faute de convergence fiable ; variation 7 jours non trouvee. Acces direct a defillama.com bloque par le proxy reseau."
+        "source": "DefiLlama (résultat indexé via WebSearch)",
+        "note": "TVL DefiLlama estimée à environ 1,39 milliard de dollars, Arbitrum restant décrit comme le rollup optimistic n°1 par TVL et dominant les dérivés on-chain en 2026 selon une source. Capitalisation des stablecoins sur Arbitrum estimée à environ 3,48 milliards de dollars. Variation 7 jours non trouvée avec un chiffre fiable ce cycle ; accès direct à api.llama.fi bloqué par le proxy réseau de cet environnement."
       },
       "onchain_signal": {
-        "available": true,
-        "note": "Le 16 aout 2026 (moins de 48h avant ce cycle), deblocage d'environ 92,65 millions ARB (~7,2 millions de dollars, ~1,61% du circulant), dont ~56,13 millions ARB vers equipe/conseillers et ~36,52 millions vers investisseurs. En parallele, les cohortes de baleines moyennes (1 a 10 millions ARB) ont reduit leur part de 32,15% a 31,74% entre le 3 et le 10 aout 2026, lu comme une distribution discrete avant le deblocage.",
-        "source_url": "https://coinmarketcap.com/top-stories/6a7f90fa3d9f261069251a00/"
+        "available": false,
+        "note": "Le mouvement le plus récent identifié via recherche ciblée ce cycle (accumulation d'environ 15,56 millions ARB, environ 1,37 million de dollars, retirés de Coinbase) date de juillet 2026, donc hors fenêtre de fraîcheur de 48h ; aucun transfert individuel chiffré et daté de moins de 48h n'a été trouvé malgré le fort regain d'activité dérivée du 1er septembre 2026.",
+        "source_url": "https://cryptorank.io/news/feed/347f7-arbitrum-price-nears-breakout-after-1-37m-whale-accumulation"
       }
     },
     "INJ": {
-      "last_computed_at": "2026-08-18T08:24:00Z",
+      "last_computed_at": "2026-09-03T08:30:00Z",
       "competitor": {
         "ticker": "HYPE",
         "name": "Hyperliquid",
-        "comparison_note": "Hyperliquid (HYPE), DEX perpetuel/L1 dominant du meme secteur (trading on-chain), capitalise environ 9,77 milliards de dollars avec une TVL d'environ 5 milliards de dollars (mai 2026) et capterait plus de 70% du volume perpetuel decentralise au T1 2026, beneficiant d'un effet ETF (produits spot listes au NYSE). A titre de comparaison secondaire, dYdX (DYDX) capitalise environ 94 millions de dollars (TVL ~350 millions). Injective (INJ) capitalise entre 427 et 462 millions de dollars selon la source (ecart d'environ 35 millions de dollars entre agregateurs, probablement du a des instants de capture differents), tres loin derriere Hyperliquid (environ 20 fois plus gros) mais devant dYdX (environ 4 a 5 fois plus gros)."
+        "comparison_note": "Hyperliquid (HYPE) consolide sa position dominante sur le trading perpétuel décentralisé : capitalisation d'environ 18,24 milliards de dollars (rang #9), proche de son plus haut historique (86,71 dollars le 27 août 2026), en hausse de +51,1 % sur 30 jours. Injective (INJ) cote autour de 4,88 dollars pour une capitalisation d'environ 487,7 millions de dollars (rang #107), en repli d'environ 10,3 % sur 7 jours et 3,0 % sur 30 jours - une nette sous-performance relative face à Hyperliquid, l'écart de capitalisation entre les deux atteignant désormais environ 37 fois (contre environ 20 fois aux cycles précédents). dYdX (DYDX), également en repli (-4,6 % sur 7 jours), capitalise environ 94,6 millions de dollars, restant environ 5 fois plus petit qu'Injective."
       },
       "long_term_thesis": {
-        "bull": "L'ETF « Canary Staked INJ » (S-1/A depose le 25 juin 2026 aupres de la SEC, cotation prevue au Cboe, custodian BitGo) est approuve et draine des flux institutionnels comparables a l'effet ETF observe sur Hyperliquid ; le mecanisme de burn mensuel via le Community BuyBack (plus de 33 000 INJ brules en aout 2026) amplifie la rarete de l'offre.",
-        "base": "L'ETF reste en instruction prolongee aupres de la SEC (scenario frequent), INJ continue de croitre modestement via les RWA et les validateurs institutionnels ainsi que l'extension IBC (testnet Cardano annonce le 9 aout 2026), mais reste un acteur de niche loin derriere Hyperliquid en volume et en TVL.",
-        "bear": "Hyperliquid consolide encore sa domination (plus de 70% du volume perpetuel decentralise), l'ecart de liquidite et de TVL avec Injective se creuse, et l'absence de catalyseur ETF concret (rejet ou retard prolonge de la SEC) laisse INJ dans un range baissier prolonge.",
-        "assumptions_note": "Ces scenarios supposent : (a) qu'aucune decision SEC officielle sur l'ETF Canary n'est encore confirmee a ce jour (dernier statut trouve = depot S-1/A, pas d'approbation) ; (b) que le tokenomics d'INJ reste integralement debloque, le vesting principal s'etant acheve en 2023 sans cliff majeur identifie ; (c) que la hierarchie concurrentielle Hyperliquid/dYdX/Injective reste stable. Aucun multiplicateur de prix n'est avance - seules des trajectoires qualitatives."
+        "bull": "L'ETF « Canary Staked INJ » (ticker proposé INJS) reste en cours d'instruction à la SEC : la dernière modification du dossier S-1/A date du 25 juin 2026, la SEC ayant ouvert une période de commentaires publics sur le produit, qui viserait une cotation sur Cboe BZX avec distribution du rendement de staking aux porteurs. Une source relève par ailleurs une accumulation par les gros portefeuilles (top 100 en hausse de 6,23 % sur une semaine, à 97,52 millions INJ, donnée de juillet 2026), lue comme un signal de conviction à long terme malgré la baisse de prix récente.",
+        "base": "Le dossier ETF reste au milieu du processus réglementaire (commentaires publics ouverts, pas d'approbation), une situation similaire aux cycles précédents ; une analyse technique datée du 1er septembre 2026 décrit un biais neutre pour INJ, prix ancré au centre de son range pluri-hebdomadaire sans direction claire, cohérent avec l'attente du dénouement du dossier ETF.",
+        "bear": "Injective sous-performe nettement Hyperliquid sur toutes les fenêtres récentes, et les frais spot du protocole auraient chuté d'environ 70 % sur 24h, 88 % sur 7 jours et 45 % sur 30 jours selon une source, signe d'un ralentissement marqué de l'activité on-chain malgré l'attente du catalyseur ETF. La TVL DefiLlama d'Injective reste très faible (de l'ordre de 10 à 13 millions de dollars selon l'instant de capture), largement inférieure à celle des concurrents directs du secteur trading on-chain.",
+        "assumptions_note": "Ces scénarios supposent : (1) le dossier ETF Canary Staked INJ (S-1/A du 25 juin 2026, commentaires publics ouverts) aboutit à une décision (approbation ou rejet) dans un délai raisonnable, non garanti à ce jour, (2) la baisse rapportée des frais spot (-70 % à -88 % selon la fenêtre, source unique) reflète une vraie perte d'activité et n'a pas pu être recoupée avec une deuxième source ce cycle, (3) l'accumulation des gros portefeuilles relevée en juillet 2026 se poursuit sans inversion. Aucun multiplicateur de prix n'est avancé."
       },
       "open_interest": {
         "value_usd": 120804420,
         "funding_rate_pct": null,
-        "source": "CoinGlass (resultat indexe via WebSearch)",
-        "note": "Open interest total agrege estime a environ 120,8 millions de dollars, volume futures 24h environ 253,6 millions de dollars, liquidations 24h environ 277 300 dollars. Funding rate non trouve avec un chiffre exact et date ce cycle - acces direct a coinglass.com et coinalyze.net bloque par le proxy reseau, laisse a null."
+        "source": "CoinGlass (résultat indexé via WebSearch)",
+        "note": "Open interest retrouvé strictement identique à celui du cycle du 18 août 2026 (environ 120,8 millions de dollars), ce qui suggère à nouveau une page indexée en cache plutôt qu'une capture réellement rafraîchie ce cycle, à traiter avec prudence (biais déjà documenté sur ce champ pour plusieurs favoris). Volume futures 24h environ 253,6 millions de dollars, volume spot 24h environ 23,9 millions de dollars selon la même page. Funding rate non trouvé avec un chiffre daté et fiable ce cycle, laissé à null. Accès direct à fapi.binance.com et coinglass.com bloqué par le proxy réseau de cet environnement."
       },
       "defi_tvl": {
-        "value_usd": null,
+        "value_usd": 10650000,
         "change_7d_pct": null,
-        "source": "DefiLlama (resultat indexe via WebSearch)",
-        "note": "Chiffres divergents selon l'instant de capture des recherches : environ 8,3 millions de dollars dans une capture, environ 12,59 millions de dollars dans une autre. Sur une base aussi faible, l'ecart peut refleter une vraie variation intrajournaliere ou un cache different des pages indexees ; valeur exacte non retenue faute de convergence fiable, variation 7 jours non trouvee. Acces direct a defillama.com bloque par le proxy reseau."
+        "source": "DefiLlama (résultat indexé via WebSearch)",
+        "note": "TVL DefiLlama estimée à environ 10,65 millions de dollars pour un prix INJ alors coté à 5,33 dollars (donnée légèrement décalée par rapport au prix actuel de 4,88 dollars, capture probablement de quelques heures antérieure) - un ordre de grandeur cohérent avec les fourchettes de 8,3 à 12,59 millions de dollars déjà relevées aux cycles précédents pour ce protocole. Variation 7 jours non trouvée. Accès direct à api.llama.fi bloqué par le proxy réseau de cet environnement."
       },
       "onchain_signal": {
         "available": false,
-        "note": "Aucune transaction whale individuelle chiffree et datee de moins de 48h trouvee via une recherche ciblee. Seul element proche : une tendance generale non precisement horodatee indiquant que les plus gros detenteurs auraient augmente leurs positions de plus de 6% sur une semaine avant une decision de la Fed, avec des soldes en baisse sur les exchanges.",
-        "source_url": "https://en.coinotag.com/injective-whales-add-5-7m-inj-ahead-of-fed-decision"
+        "note": "Aucun transfert whale individuel chiffré et daté de moins de 48h trouvé via recherche ciblée ce cycle ; le seul signal d'accumulation identifié (top 100 portefeuilles +6,23 % sur une semaine à 97,52 millions INJ) date de juillet 2026 et reste hors fenêtre de fraîcheur, déjà cité à titre de contexte dans la thèse ci-dessus.",
+        "source_url": null
       }
     }
   }
