@@ -848,5 +848,13 @@
     "sentiment": "négatif",
     "message": "Flux (FLUX) : franchit de nouveau le seuil de mouvement directionnel (5 %) à la baisse sur le verdict ATTENTE actif (émis le 23 août à 0,04491 euro), après être repassé sous ce seuil au cycle du 12h24 UTC (-3,66 % à l'époque). Prix vérifié par appel direct à l'API CoinGecko (groupé) : 0,04226268 euro, soit -5,89 %. Aucune actualité spécifique identifiée pour l'expliquer ce cycle, lecture purement technique. Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
     "source": "API CoinGecko directe (api.coingecko.com/api/v3/coins/markets)"
+  },
+  {
+    "id": "avis-jour-2026-09-03",
+    "ticker_ou_theme": "PORTEFEUILLE",
+    "type": "avis_du_jour",
+    "triggered_at": "2026-09-03T00:19:00Z",
+    "message": "LINK cumule +28,8 % depuis son verdict ATTENTE et une thèse hebdo à Renforcer (conviction 8/10) : signaux qui convergent, à surveiller. LPT et FLUX flirtent avec leur seuil de vigilance à la baisse.",
+    "sentiment": "neutre"
   }
 ]
