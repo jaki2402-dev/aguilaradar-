@@ -540,12 +540,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-09-03T18:18:00Z",
-      "price_at_signal_eur": 69836.0,
-      "move_pct_since_issue": 5.43,
+      "detected_at": "2026-09-03T20:16:00Z",
+      "price_at_signal_eur": 70053,
+      "move_pct_since_issue": 5.76,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Bitcoin (BTC) : reste au-dessus du seuil de mouvement directionnel (5 %) à la hausse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 69836.0 euro(s) contre un prix d'émission de 66240.0 euro(s), soit +5.43 %. Ne préjuge pas de l'issue."
+      "note": "Bitcoin (BTC) : reste au-dessus du seuil de mouvement directionnel (5 %) à la hausse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 70053 euro(s) contre un prix d'émission de 66240.0 euro(s), soit +5.76 %. Ne préjuge pas de l'issue."
     }
   },
   {
@@ -580,12 +580,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-09-03T18:18:00Z",
-      "price_at_signal_eur": 2155.6,
-      "move_pct_since_issue": 4.29,
+      "detected_at": "2026-09-03T20:16:00Z",
+      "price_at_signal_eur": 2159.95,
+      "move_pct_since_issue": 4.5,
       "threshold_pct": 5,
       "threshold_crossed": false,
-      "note": "Ethereum (ETH) : sous le seuil de mouvement directionnel (5 %) depuis l'émission, aucun signal précoce à ce stade. Prix vérifié par appel direct groupé à l'API CoinGecko : 2155.6 euro(s) contre un prix d'émission de 2066.96 euro(s), soit +4.29 %."
+      "note": "Ethereum (ETH) : sous le seuil de mouvement directionnel (5 %) depuis l'émission, aucun signal précoce à ce stade. Prix vérifié par appel direct groupé à l'API CoinGecko : 2159.95 euro(s) contre un prix d'émission de 2066.96 euro(s), soit +4.5 %."
     }
   },
   {
@@ -620,12 +620,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-09-03T18:18:00Z",
-      "price_at_signal_eur": 0.137216,
-      "move_pct_since_issue": -13.26,
+      "detected_at": "2026-09-03T20:16:00Z",
+      "price_at_signal_eur": 0.136828,
+      "move_pct_since_issue": -13.51,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Fetch.ai (FET) : reste au-dessus du seuil de mouvement directionnel (5 %) à la baisse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.137216 euro(s) contre un prix d'émission de 0.1582 euro(s), soit -13.26 %. Ne préjuge pas de l'issue."
+      "note": "Fetch.ai (FET) : reste au-dessus du seuil de mouvement directionnel (5 %) à la baisse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.136828 euro(s) contre un prix d'émission de 0.1582 euro(s), soit -13.51 %. Ne préjuge pas de l'issue."
     }
   },
   {
@@ -660,12 +660,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-09-03T18:18:00Z",
-      "price_at_signal_eur": 0.01487148,
-      "move_pct_since_issue": -30.77,
+      "detected_at": "2026-09-03T20:16:00Z",
+      "price_at_signal_eur": 0.01495092,
+      "move_pct_since_issue": -30.4,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "The Graph (GRT) : reste au-dessus du seuil de mouvement directionnel (5 %) à la baisse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.01487148 euro(s) contre un prix d'émission de 0.02148 euro(s), soit -30.77 %. Ne préjuge pas de l'issue."
+      "note": "The Graph (GRT) : reste au-dessus du seuil de mouvement directionnel (5 %) à la baisse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.01495092 euro(s) contre un prix d'émission de 0.02148 euro(s), soit -30.4 %. Ne préjuge pas de l'issue."
     }
   },
   {
@@ -701,12 +701,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-09-03T18:18:00Z",
-      "price_at_signal_eur": 0.319859,
-      "move_pct_since_issue": 4.3,
+      "detected_at": "2026-09-03T20:16:00Z",
+      "price_at_signal_eur": 0.318727,
+      "move_pct_since_issue": 3.93,
       "threshold_pct": 5,
       "threshold_crossed": false,
-      "note": "Celestia (TIA) : sous le seuil de mouvement directionnel (5 %) depuis l'émission, aucun signal précoce à ce stade. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.319859 euro(s) contre un prix d'émission de 0.306677 euro(s), soit +4.30 %."
+      "note": "Celestia (TIA) : sous le seuil de mouvement directionnel (5 %) depuis l'émission, aucun signal précoce à ce stade. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.318727 euro(s) contre un prix d'émission de 0.306677 euro(s), soit +3.93 %."
     }
   },
   {
@@ -741,12 +741,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-09-03T18:18:00Z",
-      "price_at_signal_eur": 0.01949609,
-      "move_pct_since_issue": 43.88,
+      "detected_at": "2026-09-03T20:16:00Z",
+      "price_at_signal_eur": 0.01979408,
+      "move_pct_since_issue": 46.08,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Peaq (PEAQ) : reste au-dessus du seuil de mouvement directionnel (5 %) à la hausse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.01949609 euro(s) contre un prix d'émission de 0.01355 euro(s), soit +43.88 %. Ne préjuge pas de l'issue."
+      "note": "Peaq (PEAQ) : reste au-dessus du seuil de mouvement directionnel (5 %) à la hausse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.01979408 euro(s) contre un prix d'émission de 0.01355 euro(s), soit +46.08 %. Ne préjuge pas de l'issue."
     }
   },
   {
@@ -781,12 +781,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-09-03T18:18:00Z",
-      "price_at_signal_eur": 10.13,
-      "move_pct_since_issue": 36.52,
+      "detected_at": "2026-09-03T20:16:00Z",
+      "price_at_signal_eur": 10.19,
+      "move_pct_since_issue": 37.33,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Chainlink (LINK) : reste au-dessus du seuil de mouvement directionnel (5 %) à la hausse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 10.13 euro(s) contre un prix d'émission de 7.42 euro(s), soit +36.52 %. Ne préjuge pas de l'issue."
+      "note": "Chainlink (LINK) : reste au-dessus du seuil de mouvement directionnel (5 %) à la hausse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 10.19 euro(s) contre un prix d'émission de 7.42 euro(s), soit +37.33 %. Ne préjuge pas de l'issue."
     }
   },
   {
@@ -821,12 +821,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-09-03T18:18:00Z",
-      "price_at_signal_eur": 0.316673,
-      "move_pct_since_issue": -17.47,
+      "detected_at": "2026-09-03T20:16:00Z",
+      "price_at_signal_eur": 0.315487,
+      "move_pct_since_issue": -17.78,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Ondo Finance (ONDO) : reste au-dessus du seuil de mouvement directionnel (5 %) à la baisse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.316673 euro(s) contre un prix d'émission de 0.3837 euro(s), soit -17.47 %. Ne préjuge pas de l'issue."
+      "note": "Ondo Finance (ONDO) : reste au-dessus du seuil de mouvement directionnel (5 %) à la baisse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.315487 euro(s) contre un prix d'émission de 0.3837 euro(s), soit -17.78 %. Ne préjuge pas de l'issue."
     }
   },
   {
@@ -860,12 +860,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-09-03T18:18:00Z",
-      "price_at_signal_eur": 0.202514,
-      "move_pct_since_issue": 46.75,
+      "detected_at": "2026-09-03T20:16:00Z",
+      "price_at_signal_eur": 0.203773,
+      "move_pct_since_issue": 47.66,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Jupiter (JUP) : reste au-dessus du seuil de mouvement directionnel (5 %) à la hausse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.202514 euro(s) contre un prix d'émission de 0.138 euro(s), soit +46.75 %. Ne préjuge pas de l'issue."
+      "note": "Jupiter (JUP) : reste au-dessus du seuil de mouvement directionnel (5 %) à la hausse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.203773 euro(s) contre un prix d'émission de 0.138 euro(s), soit +47.66 %. Ne préjuge pas de l'issue."
     }
   },
   {
@@ -897,12 +897,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-09-03T18:18:00Z",
+      "detected_at": "2026-09-03T20:16:00Z",
       "price_at_signal_eur": 1.21,
       "move_pct_since_issue": 0.0,
       "threshold_pct": 5,
       "threshold_crossed": false,
-      "note": "Livepeer (LPT) : sous le seuil de mouvement directionnel (5 %) depuis l'émission, aucun signal précoce à ce stade. Prix vérifié par appel direct groupé à l'API CoinGecko : 1.21 euro(s) contre un prix d'émission de 1.21 euro(s), soit +0.00 %."
+      "note": "Livepeer (LPT) : sous le seuil de mouvement directionnel (5 %) depuis l'émission, aucun signal précoce à ce stade. Prix vérifié par appel direct groupé à l'API CoinGecko : 1.21 euro(s) contre un prix d'émission de 1.21 euro(s), soit +0.0 %."
     }
   },
   {
@@ -937,12 +937,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-09-03T18:18:00Z",
-      "price_at_signal_eur": 0.04868026,
-      "move_pct_since_issue": -61.12,
+      "detected_at": "2026-09-03T20:16:00Z",
+      "price_at_signal_eur": 0.04933676,
+      "move_pct_since_issue": -60.59,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "AIOZ Network (AIOZ) : reste au-dessus du seuil de mouvement directionnel (5 %) à la baisse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.04868026 euro(s) contre un prix d'émission de 0.1252 euro(s), soit -61.12 %. Ne préjuge pas de l'issue."
+      "note": "AIOZ Network (AIOZ) : reste au-dessus du seuil de mouvement directionnel (5 %) à la baisse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.04933676 euro(s) contre un prix d'émission de 0.1252 euro(s), soit -60.59 %. Ne préjuge pas de l'issue."
     }
   },
   {
@@ -977,12 +977,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-09-03T18:18:00Z",
-      "price_at_signal_eur": 0.04263206,
-      "move_pct_since_issue": -5.07,
+      "detected_at": "2026-09-03T20:16:00Z",
+      "price_at_signal_eur": 0.04310766,
+      "move_pct_since_issue": -4.01,
       "threshold_pct": 5,
-      "threshold_crossed": true,
-      "note": "Flux (FLUX) : reste au-dessus du seuil de mouvement directionnel (5 %) à la baisse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.04263206 euro(s) contre un prix d'émission de 0.04491 euro(s), soit -5.07 %. Ne préjuge pas de l'issue."
+      "threshold_crossed": false,
+      "note": "Flux (FLUX) : repasse sous le seuil de mouvement directionnel (5 %) depuis l'émission (état précédemment franchi, ne l'est plus ce cycle). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.04310766 euro(s) contre un prix d'émission de 0.04491 euro(s), soit -4.01 %."
     }
   },
   {
@@ -1017,12 +1017,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-09-03T18:18:00Z",
-      "price_at_signal_eur": 0.115536,
-      "move_pct_since_issue": 30.73,
+      "detected_at": "2026-09-03T20:16:00Z",
+      "price_at_signal_eur": 0.118067,
+      "move_pct_since_issue": 33.59,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Arbitrum (ARB) : reste au-dessus du seuil de mouvement directionnel (5 %) à la hausse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.115536 euro(s) contre un prix d'émission de 0.08838 euro(s), soit +30.73 %. Ne préjuge pas de l'issue."
+      "note": "Arbitrum (ARB) : reste au-dessus du seuil de mouvement directionnel (5 %) à la hausse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.118067 euro(s) contre un prix d'émission de 0.08838 euro(s), soit +33.59 %. Ne préjuge pas de l'issue."
     }
   },
   {
@@ -1056,12 +1056,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-09-03T18:18:00Z",
-      "price_at_signal_eur": 4.37,
-      "move_pct_since_issue": 21.73,
+      "detected_at": "2026-09-03T20:16:00Z",
+      "price_at_signal_eur": 4.36,
+      "move_pct_since_issue": 21.45,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Injective (INJ) : reste au-dessus du seuil de mouvement directionnel (5 %) à la hausse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 4.37 euro(s) contre un prix d'émission de 3.59 euro(s), soit +21.73 %. Ne préjuge pas de l'issue."
+      "note": "Injective (INJ) : reste au-dessus du seuil de mouvement directionnel (5 %) à la hausse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 4.36 euro(s) contre un prix d'émission de 3.59 euro(s), soit +21.45 %. Ne préjuge pas de l'issue."
     }
   },
   {
@@ -1136,12 +1136,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-03T18:18:00Z",
-      "price_at_signal_eur": 0.02216081,
-      "move_pct_since_issue": 2.3,
+      "detected_at": "2026-09-03T20:16:00Z",
+      "price_at_signal_eur": 0.02192662,
+      "move_pct_since_issue": 1.22,
       "threshold_pct": 5,
       "threshold_crossed": false,
-      "note": "Cartesi (CTSI) : sous le seuil de mouvement directionnel (5 %) depuis l'émission, aucun signal précoce à ce stade. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.02216081 euro(s) contre un prix d'émission de 0.02166328 euro(s), soit +2.30 %."
+      "note": "Cartesi (CTSI) : sous le seuil de mouvement directionnel (5 %) depuis l'émission, aucun signal précoce à ce stade. Prix vérifié par appel direct groupé à l'API CoinGecko : 0.02192662 euro(s) contre un prix d'émission de 0.02166328 euro(s), soit +1.22 %."
     }
   }
 ]
