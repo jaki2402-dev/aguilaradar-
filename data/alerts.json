@@ -872,5 +872,14 @@
     "sentiment": "positif",
     "message": "Bitcoin (BTC) : franchit pour la première fois le seuil de mouvement directionnel (5 %) à la hausse sur le verdict ATTENTE actif (émis le 23 août à 66 240 euros). Prix vérifié par appel direct à l'API CoinGecko (groupé) : 69 603 euros, soit +5,08 %. Mouvement cohérent avec le regain d'appétit pour le risque déjà noté ce cycle (indice de peur et de cupidité orienté vers la zone « Greed », dominance BTC quasi stable à 59,33 %) plutôt qu'une actualité spécifique à Bitcoin identifiée ce cycle. Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
     "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "alert-20260903-2016-flux-repasse-sous-seuil",
+    "ticker_ou_theme": "FLUX",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-03T20:16:00Z",
+    "sentiment": "positif",
+    "message": "Flux (FLUX) : repasse sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 23 août à 0,04491 euro), après plusieurs cycles au-dessus de ce seuil à la baisse. Prix vérifié par appel direct groupé à l'API CoinGecko : 0,04310766 euro, soit -4,01 % depuis l'émission (contre -5,07 % au cycle précédent de 18h18). Léger redressement plutôt qu'une actualité spécifique identifiée ce cycle sur ce projet. Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
   }
 ]
