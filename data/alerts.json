@@ -943,5 +943,13 @@
     "sentiment": "positif",
     "message": "Livepeer (LPT) : franchit à nouveau le seuil de mouvement directionnel (5 %) à la hausse sur le verdict ATTENTE actif (émis le 23 août à 1,21 euro), après être repassé sous ce seuil au cycle précédent de 02h20. Prix vérifié par appel direct groupé à l'API CoinGecko : 1,28 euro, soit +5,79 % depuis l'émission (contre +4,13 % au cycle précédent). Aucune actualité spécifique identifiée ce cycle pour l'expliquer. Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
     "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "alert-20260904-0620-lpt-repasse-sous-seuil",
+    "ticker_ou_theme": "LPT",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-04T06:23:00Z",
+    "message": "Livepeer (LPT) repasse sous le seuil de mouvement directionnel (5 %) : +4,13 % depuis l'émission du verdict ATTENTE du 23 août (contre +5,79 % au cycle précédent de 04h17 UTC). Nouveau franchissement puis repassage sous le seuil pour la deuxième fois en 24 heures sur cet actif, cohérent avec une oscillation autour du seuil plutôt qu'une tendance nette. Prix vérifié par appel direct groupé à l'API CoinGecko : 1,26 euro contre un prix d'émission de 1,21 euro. Aucune actualité spécifique identifiée pour l'expliquer ce cycle. Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "criblage technique interne"
   }
 ]
