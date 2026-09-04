@@ -959,5 +959,32 @@
     "triggered_at": "2026-09-04T08:18:00Z",
     "message": "Bitcoin (BTC) repasse sous son seuil de mouvement directionnel de 5 % depuis l'émission du verdict ATTENTE du 23 août (+4,95 % contre +5,11 % au cycle précédent) — fluctuation marginale autour du seuil, ne préjuge pas de l'issue à l'échéance du 6 septembre.",
     "source": "criblage technique interne"
+  },
+  {
+    "id": "alert-20260904-1120-btc-franchit-seuil",
+    "ticker_ou_theme": "BTC",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-04T11:20:00Z",
+    "sentiment": "positif",
+    "message": "Bitcoin (BTC) : franchit le seuil de mouvement directionnel (5 %) à la hausse sur le verdict ATTENTE actif (émis le 23 août à 66 240 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 69 875 euros, soit +5,49 % depuis l'émission (contre +4,95 % au cycle précédent). Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "alert-20260904-1120-eth-franchit-seuil",
+    "ticker_ou_theme": "ETH",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-04T11:20:00Z",
+    "sentiment": "positif",
+    "message": "Ethereum (ETH) : franchit le seuil de mouvement directionnel (5 %) à la hausse sur le verdict ATTENTE actif (émis le 23 août à 2 066,96 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 2 171,4 euros, soit +5,05 % depuis l'émission (contre +4,52 % au cycle précédent). Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "alert-20260904-1120-flux-repasse-sous-seuil",
+    "ticker_ou_theme": "FLUX",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-04T11:20:00Z",
+    "sentiment": "neutre",
+    "message": "Flux (FLUX) : repasse sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 23 août à 0,04491 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,04271073 euro, soit -4,9 % depuis l'émission (contre -5,82 % au cycle précédent). Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
   }
 ]
