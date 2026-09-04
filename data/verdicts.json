@@ -540,12 +540,12 @@
       "resolved_at": null
     },
     "signal_precoce": {
-      "detected_at": "2026-09-04T06:23:00Z",
-      "price_at_signal_eur": 69627,
-      "move_pct_since_issue": 5.11,
+      "detected_at": "2026-09-04T08:18:00Z",
+      "price_at_signal_eur": 69517,
+      "move_pct_since_issue": 4.95,
       "threshold_pct": 5,
-      "threshold_crossed": true,
-      "note": "Bitcoin (BTC) : reste au-dessus du seuil de mouvement directionnel (5 %) à la hausse depuis l'émission, aucun changement d'état par rapport au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 69627 euro(s) contre un prix d'émission de 66240.0 euro(s), soit +5.11 %. Ne préjuge pas de l'issue."
+      "threshold_crossed": false,
+      "note": "Bitcoin (BTC) : repasse sous le seuil de mouvement directionnel (5 %) (contre +5,11 % au cycle précédent), sur le verdict ATTENTE actif (émis le 2026-08-23 à 66 240,0 euro(s)). Prix vérifié par appel direct groupé à l'API CoinGecko : 69 517 euro(s), soit +4,95 % depuis l'émission — fluctuation marginale autour du seuil, ne préjuge pas de l'issue."
     }
   },
   {
