@@ -898,5 +898,32 @@
     "triggered_at": "2026-09-04T00:22:00Z",
     "message": "LPT franchit son seuil de vigilance à la hausse (+7,4 % depuis son verdict ATTENTE), thèse hebdo Conserver (conviction 5/10) : à surveiller. Reste du portefeuille en ATTENTE, régime risk-on stable.",
     "sentiment": "neutre"
+  },
+  {
+    "id": "alert-20260904-0220-btc-repasse-sous-seuil",
+    "ticker_ou_theme": "BTC",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-04T02:20:00Z",
+    "sentiment": "neutre",
+    "message": "Bitcoin (BTC) : repasse sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 23 août à 66 240 euros), après être passé au-dessus au cycle de 16h18. Prix vérifié par appel direct groupé à l'API CoinGecko : 69 470 euros, soit +4,88 % depuis l'émission (contre +5,48 % au cycle précédent de 00h22). Léger repli plutôt qu'une actualité spécifique identifiée ce cycle. Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "alert-20260904-0220-lpt-repasse-sous-seuil",
+    "ticker_ou_theme": "LPT",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-04T02:20:00Z",
+    "sentiment": "neutre",
+    "message": "Livepeer (LPT) : repasse sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 23 août à 1,21 euro), après avoir franchi ce seuil pour la première fois au cycle précédent (00h22). Prix vérifié par appel direct groupé à l'API CoinGecko : 1,26 euro, soit +4,13 % depuis l'émission (contre +7,44 % au cycle précédent). Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "alert-20260904-0220-flux-seuil",
+    "ticker_ou_theme": "FLUX",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-04T02:20:00Z",
+    "sentiment": "negatif",
+    "message": "Flux (FLUX) : franchit à nouveau le seuil de mouvement directionnel (5 %) à la baisse sur le verdict ATTENTE actif (émis le 23 août à 0,04491 euro), après être repassé au-dessus de ce seuil au cycle de 20h16. Prix vérifié par appel direct groupé à l'API CoinGecko : 0,04248718 euro, soit -5,39 % depuis l'émission (contre -4,82 % au cycle précédent). Aucune actualité spécifique identifiée ce cycle pour l'expliquer. Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
   }
 ]
