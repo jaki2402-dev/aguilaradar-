@@ -925,5 +925,23 @@
     "sentiment": "negatif",
     "message": "Flux (FLUX) : franchit à nouveau le seuil de mouvement directionnel (5 %) à la baisse sur le verdict ATTENTE actif (émis le 23 août à 0,04491 euro), après être repassé au-dessus de ce seuil au cycle de 20h16. Prix vérifié par appel direct groupé à l'API CoinGecko : 0,04248718 euro, soit -5,39 % depuis l'émission (contre -4,82 % au cycle précédent). Aucune actualité spécifique identifiée ce cycle pour l'expliquer. Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
     "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "alert-20260904-0417-btc-franchit-seuil",
+    "ticker_ou_theme": "BTC",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-04T04:17:00Z",
+    "sentiment": "positif",
+    "message": "Bitcoin (BTC) : franchit à nouveau le seuil de mouvement directionnel (5 %) à la hausse sur le verdict ATTENTE actif (émis le 23 août à 66 240 euros), après être repassé sous ce seuil au cycle précédent de 02h20. Prix vérifié par appel direct groupé à l'API CoinGecko : 69 629 euros, soit +5,12 % depuis l'émission (contre +4,88 % au cycle précédent). Léger regain plutôt qu'une actualité spécifique identifiée ce cycle. Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "alert-20260904-0417-lpt-franchit-seuil",
+    "ticker_ou_theme": "LPT",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-04T04:17:00Z",
+    "sentiment": "positif",
+    "message": "Livepeer (LPT) : franchit à nouveau le seuil de mouvement directionnel (5 %) à la hausse sur le verdict ATTENTE actif (émis le 23 août à 1,21 euro), après être repassé sous ce seuil au cycle précédent de 02h20. Prix vérifié par appel direct groupé à l'API CoinGecko : 1,28 euro, soit +5,79 % depuis l'émission (contre +4,13 % au cycle précédent). Aucune actualité spécifique identifiée ce cycle pour l'expliquer. Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
   }
 ]
