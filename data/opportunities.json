@@ -10,19 +10,16 @@
       "name": "Unibase",
       "cgId": "unibase",
       "image": "https://coin-images.coingecko.com/coins/images/69108/large/unibase.png?1757501820",
-      "price_eur": 0.105538,
-      "market_cap": 263814975,
-      "market_cap_rank": 137,
-      "change_24h_pct": 1.35,
-      "change_7d_pct": -6.2,
-      "change_30d_pct": 3.2,
-      "ath_change_pct": -49.64,
+      "price_eur": 0.103957,
+      "market_cap": 259896667,
+      "market_cap_rank": 136,
+      "change_24h_pct": -4.09,
+      "change_7d_pct": -8.8,
+      "change_30d_pct": -20.6,
+      "ath_change_pct": -50.39,
       "opportunity_score": 12.3,
       "recognized": false,
       "sparkline": [
-        0.12988622397485317,
-        0.13056615158918264,
-        0.13226545106697507,
         0.13255912023150684,
         0.1332903631458531,
         0.1360321422590508,
@@ -187,7 +184,10 @@
         0.12365657459016759,
         0.12322401124796448,
         0.12270144885887281,
-        0.12298824392024589
+        0.12298824392024589,
+        0.12269897382657068,
+        0.1223803388818721,
+        0.12178557828638302
       ],
       "tags": [
         "Projet peu connu",
@@ -197,7 +197,7 @@
       "flagged_at": "2026-08-07T00:20:00Z",
       "price_at_flag": 0.13704,
       "threshold_pct": 5,
-      "price_refreshed_at": "2026-09-04T08:18:00Z",
+      "price_refreshed_at": "2026-09-04T11:20:00Z",
       "horizons": {
         "j1": {
           "check_at": "2026-08-08T00:20:00Z",
@@ -257,19 +257,16 @@
       "name": "Kite",
       "cgId": "kite-2",
       "image": "https://coin-images.coingecko.com/coins/images/70426/large/KITE-ICON.png?1762328605",
-      "price_eur": 0.114432,
-      "market_cap": 273614918,
-      "market_cap_rank": 130,
-      "change_24h_pct": -4.54,
-      "change_7d_pct": 2.2,
-      "change_30d_pct": 32.9,
-      "ath_change_pct": -58.56,
+      "price_eur": 0.116685,
+      "market_cap": 278945131,
+      "market_cap_rank": 129,
+      "change_24h_pct": -0.94,
+      "change_7d_pct": 7.0,
+      "change_30d_pct": 33.0,
+      "ath_change_pct": -57.74,
       "opportunity_score": 9.0,
       "recognized": false,
       "sparkline": [
-        0.1285179465347702,
-        0.1279190521290774,
-        0.12652033486667108,
         0.12693324840101888,
         0.12614196717578363,
         0.12700857747011846,
@@ -434,7 +431,10 @@
         0.13509198439046827,
         0.13442686268177811,
         0.13303839641814152,
-        0.1334459579915307
+        0.1334459579915307,
+        0.13342319196271304,
+        0.13282570214628042,
+        0.133307286655023
       ],
       "tags": [
         "Projet peu connu",
@@ -444,7 +444,7 @@
       "flagged_at": "2026-08-07T00:20:00Z",
       "price_at_flag": 0.092685,
       "threshold_pct": 5,
-      "price_refreshed_at": "2026-09-04T08:18:00Z",
+      "price_refreshed_at": "2026-09-04T11:20:00Z",
       "horizons": {
         "j1": {
           "check_at": "2026-08-08T00:20:00Z",
@@ -504,19 +504,16 @@
       "name": "Hyperliquid",
       "cgId": "hyperliquid",
       "image": "https://coin-images.coingecko.com/coins/images/50882/large/hyperliquid.jpg?1729431300",
-      "price_eur": 74.07,
-      "market_cap": 16472506959,
-      "market_cap_rank": 10,
-      "change_24h_pct": 4.7,
-      "change_7d_pct": 3.3,
-      "change_30d_pct": 51.4,
-      "ath_change_pct": -2.2,
+      "price_eur": 74.88,
+      "market_cap": 16656128570,
+      "market_cap_rank": 9,
+      "change_24h_pct": 6.26,
+      "change_7d_pct": 5.2,
+      "change_30d_pct": 52.0,
+      "ath_change_pct": -1.13,
       "opportunity_score": 6.1,
       "recognized": true,
       "sparkline": [
-        84.06505690235274,
-        83.36289059723002,
-        82.74886287406247,
         83.45833762390707,
         83.02074112246022,
         83.03900497078808,
@@ -681,7 +678,10 @@
         87.23340523012494,
         86.41946024073704,
         86.15419187745356,
-        85.98221649018491
+        85.98221649018491,
+        86.27440508286837,
+        86.8410106971982,
+        86.88306998855633
       ],
       "tags": [
         "Momentum confirmé",
@@ -691,7 +691,7 @@
       "flagged_at": "2026-08-18T09:44:50Z",
       "price_at_flag": 51.344013,
       "threshold_pct": 5,
-      "price_refreshed_at": "2026-09-04T08:18:00Z",
+      "price_refreshed_at": "2026-09-04T11:20:00Z",
       "horizons": {
         "j1": {
           "check_at": "2026-08-19T09:44:50Z",
@@ -746,19 +746,16 @@
       "name": "Monero",
       "cgId": "monero",
       "image": "https://coin-images.coingecko.com/coins/images/69/large/monero_logo.png?1696501460",
-      "price_eur": 464.4,
-      "market_cap": 8739087420,
-      "market_cap_rank": 14,
-      "change_24h_pct": 4.43,
-      "change_7d_pct": 17.1,
-      "change_30d_pct": 53.6,
-      "ath_change_pct": -32.25,
+      "price_eur": 473.11,
+      "market_cap": 8894471789,
+      "market_cap_rank": 13,
+      "change_24h_pct": 6.9,
+      "change_7d_pct": 16.9,
+      "change_30d_pct": 55.3,
+      "ath_change_pct": -30.98,
       "opportunity_score": 5.0,
       "recognized": true,
       "sparkline": [
-        463.9646730873111,
-        471.3708167019136,
-        468.6703094146633,
         469.64736716892423,
         472.8079503111655,
         475.1694266984479,
@@ -923,7 +920,10 @@
         504.76469704467564,
         502.2370428320606,
         502.8095512318053,
-        531.1871194166056
+        531.1871194166056,
+        540.2983646762779,
+        550.7172440317714,
+        562.6597670245774
       ],
       "tags": [
         "Projet établi",
@@ -933,7 +933,7 @@
       "flagged_at": "2026-08-18T09:44:50Z",
       "price_at_flag": 355.970183,
       "threshold_pct": 5,
-      "price_refreshed_at": "2026-09-04T08:18:00Z",
+      "price_refreshed_at": "2026-09-04T11:20:00Z",
       "horizons": {
         "j1": {
           "check_at": "2026-08-19T09:44:50Z",
@@ -988,19 +988,16 @@
       "name": "Zcash",
       "cgId": "zcash",
       "image": "https://coin-images.coingecko.com/coins/images/486/large/Brandmark-Yellow_%281%29.png?1785810558",
-      "price_eur": 834.61,
-      "market_cap": 14119574114,
-      "market_cap_rank": 11,
-      "change_24h_pct": 16.67,
-      "change_7d_pct": 21.8,
-      "change_30d_pct": 86.3,
-      "ath_change_pct": -70.99,
+      "price_eur": 861.8,
+      "market_cap": 14570308952,
+      "market_cap_rank": 10,
+      "change_24h_pct": 19.37,
+      "change_7d_pct": 26.7,
+      "change_30d_pct": 94.2,
+      "ath_change_pct": -70.04,
       "opportunity_score": 3.7,
       "recognized": true,
       "sparkline": [
-        791.1225355272923,
-        787.5430438520403,
-        790.9766863036832,
         798.4088566308828,
         800.9634151177314,
         798.1407138027582,
@@ -1165,7 +1162,10 @@
         945.526217841603,
         947.2844300190102,
         956.7384214903054,
-        957.8713416151157
+        957.8713416151157,
+        968.0322640768933,
+        1021.9917039247673,
+        1003.6051389314574
       ],
       "tags": [
         "Projet établi",
@@ -1175,7 +1175,7 @@
       "flagged_at": "2026-08-18T09:44:50Z",
       "price_at_flag": 436.760989,
       "threshold_pct": 5,
-      "price_refreshed_at": "2026-09-04T08:18:00Z",
+      "price_refreshed_at": "2026-09-04T11:20:00Z",
       "horizons": {
         "j1": {
           "check_at": "2026-08-19T09:44:50Z",
@@ -1230,19 +1230,16 @@
       "name": "Rain",
       "cgId": "rain",
       "image": "https://coin-images.coingecko.com/coins/images/69134/large/Rain_logo_1_.png?1762952191",
-      "price_eur": 0.0145038,
-      "market_cap": 10284293026,
-      "market_cap_rank": 13,
-      "change_24h_pct": 0.97,
-      "change_7d_pct": -3.0,
-      "change_30d_pct": 35.3,
-      "ath_change_pct": -13.02,
+      "price_eur": 0.014521,
+      "market_cap": 10301219895,
+      "market_cap_rank": 12,
+      "change_24h_pct": 1.68,
+      "change_7d_pct": -4.7,
+      "change_30d_pct": 36.2,
+      "ath_change_pct": -12.92,
       "opportunity_score": 3.4,
       "recognized": false,
       "sparkline": [
-        0.017361523781021557,
-        0.017738726127575113,
-        0.017732395173265993,
         0.017640311726324295,
         0.01748437508795125,
         0.0174278499413156,
@@ -1407,7 +1404,10 @@
         0.017103959369276944,
         0.017085905350006914,
         0.01707447844134408,
-        0.017034171081579796
+        0.017034171081579796,
+        0.016824512869264827,
+        0.0168752095041028,
+        0.016869929818692304
       ],
       "tags": [
         "Projet récent",
@@ -1417,7 +1417,7 @@
       "flagged_at": "2026-08-18T09:44:50Z",
       "price_at_flag": 0.011296,
       "threshold_pct": 5,
-      "price_refreshed_at": "2026-09-04T08:18:00Z",
+      "price_refreshed_at": "2026-09-04T11:20:00Z",
       "horizons": {
         "j1": {
           "check_at": "2026-08-19T09:44:50Z",
@@ -1472,19 +1472,16 @@
       "name": "WhiteBIT Coin",
       "cgId": "whitebit",
       "image": "https://coin-images.coingecko.com/coins/images/27045/large/wbt_token.png?1696526096",
-      "price_eur": 63.49,
-      "market_cap": 7488522758,
-      "market_cap_rank": 17,
-      "change_24h_pct": 3.29,
-      "change_7d_pct": 0,
-      "change_30d_pct": 32.7,
-      "ath_change_pct": -1.45,
+      "price_eur": 63.71,
+      "market_cap": 7515009877,
+      "market_cap_rank": 16,
+      "change_24h_pct": 3.82,
+      "change_7d_pct": 1.2,
+      "change_30d_pct": 33.5,
+      "ath_change_pct": -1.1,
       "opportunity_score": 17.9,
       "recognized": true,
       "sparkline": [
-        73.43487289987208,
-        73.32209517608592,
-        73.13828871416284,
         73.27974774412822,
         73.37866492669498,
         73.1688898105297,
@@ -1649,7 +1646,10 @@
         73.80384781262,
         73.948526990551,
         73.89935759003889,
-        73.8023957195714
+        73.8023957195714,
+        73.62215243154847,
+        74.08226194733733,
+        73.97759086187214
       ],
       "tags": [
         "Momentum confirmé",
@@ -1659,7 +1659,7 @@
       "flagged_at": "2026-08-24T04:03:59Z",
       "price_at_flag": 61.608363,
       "threshold_pct": 5,
-      "price_refreshed_at": "2026-09-04T08:18:00Z",
+      "price_refreshed_at": "2026-09-04T11:20:00Z",
       "horizons": {
         "j1": {
           "check_at": "2026-08-25T04:03:59Z",
@@ -1709,19 +1709,16 @@
       "name": "LEO Token",
       "cgId": "leo-token",
       "image": "https://coin-images.coingecko.com/coins/images/8418/large/leo-token.png?1696508607",
-      "price_eur": 8.01,
-      "market_cap": 7365239536,
-      "market_cap_rank": 18,
-      "change_24h_pct": -0.1,
-      "change_7d_pct": -1.7,
-      "change_30d_pct": -4.6,
-      "ath_change_pct": -17.32,
+      "price_eur": 8.0,
+      "market_cap": 7362708311,
+      "market_cap_rank": 17,
+      "change_24h_pct": -1.43,
+      "change_7d_pct": -2.0,
+      "change_30d_pct": -5.1,
+      "ath_change_pct": -17.35,
       "opportunity_score": 3.6,
       "recognized": true,
       "sparkline": [
-        9.46383903529011,
-        9.448429180421275,
-        9.448543725378084,
         9.450634028822606,
         9.450625623538878,
         9.4493088595115,
@@ -1886,7 +1883,10 @@
         9.316847786500396,
         9.311876433744084,
         9.312370873095878,
-        9.303600183977714
+        9.303600183977714,
+        9.303180621114935,
+        9.303619739541293,
+        9.286297735195859
       ],
       "tags": [
         "Token d'exchange",
@@ -1896,7 +1896,7 @@
       "flagged_at": "2026-08-31T04:04:07Z",
       "price_at_flag": 8.322596,
       "threshold_pct": 5,
-      "price_refreshed_at": "2026-09-04T08:18:00Z",
+      "price_refreshed_at": "2026-09-04T11:20:00Z",
       "horizons": {
         "j1": {
           "check_at": "2026-09-01T04:04:07Z",
@@ -1941,19 +1941,16 @@
       "name": "Cardano",
       "cgId": "cardano",
       "image": "https://coin-images.coingecko.com/coins/images/975/large/cardano.png?1696502090",
-      "price_eur": 0.190455,
-      "market_cap": 7141551706,
-      "market_cap_rank": 19,
-      "change_24h_pct": 6.64,
-      "change_7d_pct": 4.2,
-      "change_30d_pct": 15.4,
-      "ath_change_pct": -92.69,
+      "price_eur": 0.190161,
+      "market_cap": 7129911486,
+      "market_cap_rank": 18,
+      "change_24h_pct": 6.62,
+      "change_7d_pct": 6.3,
+      "change_30d_pct": 12.3,
+      "ath_change_pct": -92.7,
       "opportunity_score": 8.6,
       "recognized": true,
       "sparkline": [
-        0.20955992772519777,
-        0.20910258889468866,
-        0.20785242665298204,
         0.20916602652219446,
         0.20919849645587252,
         0.20826092135525337,
@@ -2118,7 +2115,10 @@
         0.22409729586435273,
         0.2230917623777165,
         0.2211566529755694,
-        0.22105770121697726
+        0.22105770121697726,
+        0.2201180630804477,
+        0.22281918518567054,
+        0.22108598096208193
       ],
       "tags": [
         "Projet établi",
@@ -2128,7 +2128,7 @@
       "flagged_at": "2026-09-04T04:04:09Z",
       "price_at_flag": 0.193031,
       "threshold_pct": 5,
-      "price_refreshed_at": "2026-09-04T08:18:00Z",
+      "price_refreshed_at": "2026-09-04T11:20:00Z",
       "horizons": {
         "j1": {
           "check_at": "2026-09-05T04:04:09Z",
@@ -3653,5 +3653,5 @@
       "archived_reason": "Score de momentum recalcule au 03/09 nettement negatif (9.2 -> -3.9 : -7.0% sur 7j et -7.9% sur 24h), alors que le reste du marche suivi reste globalement stable ou positif (Kite +11.1%, Monero +15.3%). Signal initial invalide, retire du suivi actif."
     }
   ],
-  "last_checked_at": "2026-09-04T06:23:00Z"
+  "last_checked_at": "2026-09-04T11:20:00Z"
 }
