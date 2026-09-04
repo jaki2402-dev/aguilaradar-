@@ -881,5 +881,22 @@
     "sentiment": "positif",
     "message": "Flux (FLUX) : repasse sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 23 août à 0,04491 euro), après plusieurs cycles au-dessus de ce seuil à la baisse. Prix vérifié par appel direct groupé à l'API CoinGecko : 0,04310766 euro, soit -4,01 % depuis l'émission (contre -5,07 % au cycle précédent de 18h18). Léger redressement plutôt qu'une actualité spécifique identifiée ce cycle sur ce projet. Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
     "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "alert-20260904-0022-lpt-seuil",
+    "ticker_ou_theme": "LPT",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-04T00:22:00Z",
+    "sentiment": "positif",
+    "message": "Livepeer (LPT) : franchit pour la première fois le seuil de mouvement directionnel (5 %) à la hausse sur le verdict ATTENTE actif (émis le 23 août à 1,21 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 1,30 euro, soit +7,44 % (contre 0,0 % au cycle précédent de 20h16). Mouvement cohérent avec le regain d'appétit pour le risque déjà noté sur plusieurs favoris ce cycle plutôt qu'une actualité spécifique à Livepeer identifiée. Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "avis-jour-2026-09-04",
+    "ticker_ou_theme": "PORTEFEUILLE",
+    "type": "avis_du_jour",
+    "triggered_at": "2026-09-04T00:22:00Z",
+    "message": "LPT franchit son seuil de vigilance à la hausse (+7,4 % depuis son verdict ATTENTE), thèse hebdo Conserver (conviction 5/10) : à surveiller. Reste du portefeuille en ATTENTE, régime risk-on stable.",
+    "sentiment": "neutre"
   }
 ]
