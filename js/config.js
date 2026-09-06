@@ -153,7 +153,8 @@ const SECTOR_FAMILIES = {
 
 const REFRESH = {
   quantCycleMinutes: 10, // pouls rapide : prix / seuils / alertes, sans raisonnement IA
-  deepCycleHours: 2,     // cycle profond : verdicts, actus, mise à jour du moteur
+  deepCycleHours: 4,     // cycle profond : verdicts, actus, mise à jour du moteur (passé de 2h à 4h le 06/09,
+  // pour diviser par ~2 la conso IA du poste le plus coûteux du projet — voir aguilaradar-cycle-2h)
 };
 
 // Seuil UNIQUE de "mouvement directionnel", utilisé partout (backtest, confusion matrix,
