@@ -986,5 +986,13 @@
     "sentiment": "neutre",
     "message": "Flux (FLUX) : repasse sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 23 août à 0,04491 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,04271073 euro, soit -4,9 % depuis l'émission (contre -5,82 % au cycle précédent). Ne préjuge pas de l'issue à l'échéance du 6 septembre.",
     "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "avis-jour-2026-09-06",
+    "ticker_ou_theme": "PORTEFEUILLE",
+    "type": "avis_du_jour",
+    "triggered_at": "2026-09-06T23:30:00Z",
+    "message": "Rebond marqué sur plusieurs positions (GRT, TIA, LINK, ONDO, JUP, ARB) qui repassent en ACHAT technique après un fort mouvement haussier. BTC et ETH restent en ATTENTE, régime risk-on inchangé.",
+    "sentiment": "positif"
   }
 ]
