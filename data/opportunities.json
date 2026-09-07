@@ -1693,8 +1693,13 @@
         },
         "j14": {
           "check_at": "2026-09-07T04:03:59Z",
-          "status": "pending",
-          "outcome": null
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 63.67124290283513,
+            "move_pct": 3.35,
+            "validated": false,
+            "checked_at": "2026-09-07T06:39:34.620Z"
+          }
         },
         "m6": {
           "check_at": "2027-02-22T04:03:59Z",
@@ -1920,8 +1925,13 @@
         },
         "j7": {
           "check_at": "2026-09-07T04:04:07Z",
-          "status": "pending",
-          "outcome": null
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 8.05410097163554,
+            "move_pct": -3.23,
+            "validated": false,
+            "checked_at": "2026-09-07T06:39:34.620Z"
+          }
         },
         "j14": {
           "check_at": "2026-09-14T04:04:07Z",
@@ -2132,13 +2142,23 @@
       "horizons": {
         "j1": {
           "check_at": "2026-09-05T04:04:09Z",
-          "status": "pending",
-          "outcome": null
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 0.18184806795671735,
+            "move_pct": -5.79,
+            "validated": false,
+            "checked_at": "2026-09-07T06:39:34.620Z"
+          }
         },
         "j3": {
           "check_at": "2026-09-07T04:04:09Z",
-          "status": "pending",
-          "outcome": null
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 0.19230021485913687,
+            "move_pct": -0.38,
+            "validated": false,
+            "checked_at": "2026-09-07T06:39:34.620Z"
+          }
         },
         "j7": {
           "check_at": "2026-09-11T04:04:09Z",
@@ -3444,8 +3464,13 @@
         },
         "j14": {
           "check_at": "2026-09-07T04:03:59Z",
-          "status": "pending",
-          "outcome": null
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 0.16138183810813117,
+            "move_pct": -2.71,
+            "validated": false,
+            "checked_at": "2026-09-07T06:39:34.620Z"
+          }
         },
         "m6": {
           "check_at": "2027-02-22T04:03:59Z",
