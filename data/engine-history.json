@@ -1,15 +1,15 @@
 {
   "current_version": "v1",
   "global_stats": {
-    "last_computed_at": "2026-09-06T23:45:00Z",
-    "total_verdicts_issued": 46,
-    "total_verdicts_resolved": 31,
-    "accuracy_strict_pct": 29.03,
-    "coverage_pct": 12.9,
-    "baseline_majority_class_pct": 51.61,
-    "baseline_buy_hold_btc_pct": 51.61,
-    "f1_macro": 37.26,
-    "f1_weighted": 36.99,
+    "last_computed_at": "2026-09-07T16:20:00Z",
+    "total_verdicts_issued": 47,
+    "total_verdicts_resolved": 32,
+    "accuracy_strict_pct": 31.25,
+    "coverage_pct": 12.5,
+    "baseline_majority_class_pct": 50.0,
+    "baseline_buy_hold_btc_pct": 50.0,
+    "f1_macro": 38.89,
+    "f1_weighted": 38.89,
     "confusion_matrix": {
       "ACHAT": {
         "ACHAT": 0,
@@ -18,7 +18,7 @@
       },
       "ATTENTE": {
         "ACHAT": 14,
-        "ATTENTE": 7,
+        "ATTENTE": 8,
         "VENTE": 6
       },
       "VENTE": {
@@ -36,11 +36,11 @@
         "actualTotal": 16
       },
       "ATTENTE": {
-        "precision": 0.2593,
+        "precision": 0.2857,
         "recall": 1.0,
-        "f1": 0.4118,
-        "predictedTotal": 27,
-        "actualTotal": 7
+        "f1": 0.4444,
+        "predictedTotal": 28,
+        "actualTotal": 8
       },
       "VENTE": {
         "precision": 0.5,
@@ -61,17 +61,17 @@
     "average_move_pct": null
   },
   "routine_health": {
-    "last_success_at": "2026-09-07T04:20:00Z",
+    "last_success_at": "2026-09-07T16:20:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 07/09/2026, ~04h20 UTC (heure réelle confirmée par `date -u` en début de cycle), aucun incident. Conformément aux correctifs de fiabilité, aucun outil mcp__ n'a été appelé ce cycle, exclusivement Bash/Read/Edit/WebSearch/git.\n\nRésolution : aucun verdict dû ce cycle (le plus proche, v-20260831-ctsi, échoit le 07/09 à 06h30 UTC, encore ~2h à venir) ; aucun item du groupe témoin dû (échantillon du 12/08 déjà entièrement résolu). Tous les favoris ont déjà un verdict actif : aucune nouvelle émission ce cycle.\n\nPrix : un appel HTTP direct groupé à l'API CoinGecko réussi du premier coup sur les 15 positions du portefeuille, réutilisé pour trois usages (avis du jour, snapshot d'historique, détection de signal précoce sur les verdicts émis la veille). Trois franchissements de seuil directionnel (5 %) détectés par comparaison au price_at_issue des verdicts émis le 06/09 : PEAQ (+5,63 %), JUP (-8,65 %, retournement après le rallye ayant motivé son ACHAT) et ARB (-6,81 %, idem). Alertes seuil_technique ajoutées pour les trois.\n\nPortefeuille (data/portfolio.json, lecture seule) : les 15 positions ont un prix live disponible ce cycle. Avis du jour et snapshot d'historique ajoutés pour le 07/09 (aucune entrée n'existait encore ce jour calendaire UTC) — valeur totale 6 224,70 €, investi 9 292,70 €, P&L -33,02 %.\n\nOpportunités : non retouchées ce cycle (last_scan_at déjà très frais, 04h05 UTC, probablement la routine dédiée aguilaradar-opportunites-quotidien passée juste avant) — pas de rafraîchissement redondant.\n\nnews.json : recherche macro ciblée, recherche générale « crypto news today » et recherche dédiée hacks/exploits effectuées ; résultats bruyants et peu datés avec précision, aucune actualité réellement nouvelle et suffisamment sourcée identifiée au-delà de ce qui est déjà loggé (Coldcard notamment) — aucun ajout à items[], last_checked_at avancé conformément au correctif du 31/08.\n\nAucune résolution ce cycle : global_stats/opportunities_stats/paper_portfolio_stats inchangés. macro_regime reconfirmé (risk-on, valeurs inchangées faute de lecture fraîche fiable).\n\nFusion vers main effectuée en toute fin de cycle, voir procédure du correctif du 17/08 (soir)."
+    "last_failure_reason": "Cycle du 07/09/2026, ~16h20 UTC (heure réelle confirmée par `date -u` en début de cycle), aucun incident. Conformément aux correctifs de fiabilité, aucun outil mcp__ n'a été appelé ce cycle, exclusivement Bash/curl/Edit/WebSearch/git.\n\nRésolution : un verdict était dû (v-20260831-ctsi, échéance 07/09 06h30 UTC) — résolu avec +1,22 % (sous le seuil de 5 %), verdict ATTENTE validé. Nouveau verdict CTSI émis dans la foulée (favori sans verdict actif après résolution), consensus 1/3 (macro haussier seul), ATTENTE, horizon 7 jours maintenu vu la volatilité historique de cet actif. Aucun item du groupe témoin dû (échantillon du 12/08 déjà entièrement résolu, aucun nouvel échantillon depuis).\n\nPrix : un appel HTTP direct groupé à l'API CoinGecko réussi du premier coup sur les 15 favoris (réutilisé pour la résolution CTSI et la détection de signal précoce sur les verdicts du 06/09), plus un appel dédié /coins/markets pour les variations 24h/7j/30j de CTSI (un throttle transitoire, résolu par une nouvelle tentative). Quatre franchissements de seuil directionnel (5 %) confirmés ou aggravés par rapport au cycle précédent : PEAQ (+18,01 %, en forte accélération depuis +5,63 %), JUP (-8,43 %, stable), ARB (-15,12 %, repli qui s'accélère depuis -6,81 %) et INJ (+6,36 %, nouveau franchissement). Alertes seuil_technique ajoutées pour les quatre.\n\nPortefeuille et avis du jour/historique de valeur : déjà traités ce jour calendaire UTC lors du cycle précédent (04h20 UTC) — contrôle de fréquence respecté, aucune relecture de portfolio.json ni recalcul ce cycle.\n\nOpportunités : non retouchées ce cycle (last_scan_at du 07/09 04h05 UTC encore raisonnablement frais, routine dédiée aguilaradar-opportunites-quotidien probablement repassée depuis) — pas de rafraîchissement pour préserver le budget du cycle.\n\nnews.json : recherche macro ciblée, recherche générale « crypto news today » et recherche dédiée hacks/exploits effectuées. Découverte majeure et bien confirmée (3 sources indépendantes) : piratage du Liquid Network (sidechain Bitcoin de Blockstream), environ 320 millions de dollars, 3e plus gros piratage crypto de 2026 — ajouté à news.json (en remplacement du titre le plus ancien) et à alerts.json en actualite_generale vu sa portée durable. last_checked_at et last_updated_at avancés ensemble.\n\nglobal_stats recalculé depuis les verdicts.json à jour (32 résolus désormais, +1) : accuracy_strict_pct 31,25 % (+2,22 pt), coverage_pct 12,5 %, f1_macro/f1_weighted 38,89 %. paper_portfolio_stats non retouché (position ATTENTE à poids nul, aucun impact sur le rendement cumulé) — pas de nouveau seuil de correction automatique franchi (1 seul nouveau résolu, seuil à 5). macro_regime mis à jour (voir ci-dessous).\n\nFusion vers main effectuée en toute fin de cycle, voir procédure du correctif du 17/08 (soir)."
   },
   "macro_regime": {
-    "last_computed_at": "2026-09-07T04:20:00Z",
+    "last_computed_at": "2026-09-07T16:20:00Z",
     "regime": "risk-on",
-    "fear_greed_value": 59,
-    "btc_dominance_pct": 59.21,
+    "fear_greed_value": 71,
+    "btc_dominance_pct": 57.8,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Cycle du 07/09, ~04h20 UTC : recherche macro ciblée effectuée mais résultats dispersés et peu datés avec précision cette fois (indices allant de 57 « Neutre » à 73 « Greed » selon la source, sans convergence claire sur une valeur fraîche pour ce cycle précis) — valeur conservée inchangée à 59 conformément à la consigne (« si la valeur est proche du cycle précédent, garde-la telle quelle ») plutôt que de retenir une lecture isolée non recoupée. Dominance BTC également inchangée à 59,21 % faute de donnée fraîche fiable trouvée ce cycle. Aucun changement de régime macro à noter : toujours « risk-on »."
+    "note": "Cycle du 07/09, ~16h20 UTC : recherche macro ciblée effectuée, indice de peur et de cupidité relevé à 71 (« Greed », Yahoo Finance, en léger repli par rapport à 73 la veille) sur une source datée et spécifique au 7 septembre, retenu à la place de la valeur interne figée à 59 depuis plusieurs cycles — cohérent avec les niveaux de 67-73 déjà mentionnés dans les raisonnements de plusieurs verdicts récents (regime risk-on jamais remis en cause entre-temps), signe probable que la valeur interne était simplement restée bloquée sur une lecture obsolète plutôt qu'un vrai changement de régime. Une source secondaire (CFGI.io, méthodologie différente) affiche 57 (« Neutre ») : dispersion habituelle entre méthodologies, non retenue face à une source datée avec précision. Dominance BTC réévaluée à 57,8 % (contre 59,21 % conservé jusqu'ici), écart modeste cohérent avec une dérive progressive. Aucun changement de régime macro à noter : toujours « risk-on », aucun ré-signalement regime_change_impact nécessaire."
   },
   "paper_portfolio_stats": {
     "last_computed_at": "2026-09-06T23:45:00Z",
@@ -82,12 +82,12 @@
     "method": "Position virtuelle par verdict résolu, taille proportionnelle à confidence_pct, ouverte à price_at_issue et fermée à price_at_resolution (ACHAT=long, VENTE=short, ATTENTE=position nulle). Rendement cumulé recalculé sur les 31 verdicts désormais résolus (14 nouveaux ce cycle) : -3,24 %, en nette amélioration par rapport aux -5,77 % du dernier calcul, porté par plusieurs positions ACHAT/VENTE correctement orientées dans ce nouveau lot malgré une exactitude stricte modeste. Changement de méthode pour le comparatif buy-hold BTC : les verdicts résolus couvrent désormais deux fenêtres temporelles nettement distinctes (07/08-23/08 et 23/08-06/09) au lieu d'une seule fenêtre partagée par la quasi-totalité du lot comme lors du dernier calcul — l'ancienne approximation (« rendement BTC de la fenêtre dominante appliqué à tout le lot ») n'est donc plus adaptée. Le comparatif utilise à présent le rendement réel de Bitcoin sur toute la période couverte par le moteur depuis son tout premier verdict (07/08, 55 800 €) jusqu'à aujourd'hui (06/09, 69 078 €), soit +23,80 % — une vraie mesure « buy-hold BTC depuis le début », plutôt qu'une approximation par fenêtre. Écart (edge) : -27,04 points, le moteur reste nettement moins performant qu'un simple achat et conservation de Bitcoin sur la période complète."
   },
   "data_source_reliability": {
-    "last_computed_at": "2026-09-07T04:20:00Z",
-    "cycles_logged": 124,
+    "last_computed_at": "2026-09-07T16:20:00Z",
+    "cycles_logged": 125,
     "coingecko_connector_success_count": 23,
-    "coingecko_curl_fallback_count": 127,
+    "coingecko_curl_fallback_count": 130,
     "websearch_price_fallback_count": 244,
-    "notes": "Cycle du 07/09/2026, ~04h20 UTC : aucun outil mcp__ utilisé, exclusivement Bash/WebFetch/WebSearch/git. Un seul appel HTTP direct groupé à api.coingecko.com réussi du premier coup (/api/v3/simple/price sur les 15 positions du portefeuille), réutilisé pour l'avis du jour, le snapshot d'historique et la détection de signal précoce sur PEAQ/JUP/ARB — aucun appel de prix supplémentaire nécessaire ce cycle (opportunities.json déjà rafraîchi très récemment par une autre routine, aucune résolution de verdict due). Quatre recherches WebSearch complémentaires (indice de peur et de cupidité, biggest movers, actualités générales, hacks/exploits) : résultats dispersés/peu datés, aucun n'a débouché sur un ajout à news.json ni sur un changement de macro_regime."
+    "notes": "Cycle du 07/09/2026, ~16h20 UTC : aucun outil mcp__ utilisé, exclusivement Bash/curl/WebSearch/git. Deux appels HTTP directs à api.coingecko.com réussis (un groupé /api/v3/simple/price sur les 15 favoris, un throttle transitoire suivi d'un /api/v3/coins/markets réussi pour les variations 24h/7j/30j de CTSI) — réutilisés pour la résolution du verdict CTSI, l'émission du nouveau verdict CTSI et la détection de signal précoce sur PEAQ/JUP/ARB/INJ. Quatre recherches WebSearch complémentaires (indice de peur et de cupidité + dominance BTC, biggest movers, actualités générales, hacks/exploits) : la recherche hacks/exploits a débouché sur une découverte majeure confirmée par 3 sources indépendantes (piratage Liquid Network, ~320 M$), ajoutée à news.json et alerts.json ; la recherche macro a permis une mise à jour du régime (fear&greed 59→71, dominance BTC 59,21→57,8 %) après plusieurs cycles sur une valeur manifestement obsolète."
   },
   "correction_log": [
     {
