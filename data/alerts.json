@@ -994,5 +994,40 @@
     "triggered_at": "2026-09-06T23:30:00Z",
     "message": "Rebond marqué sur plusieurs positions (GRT, TIA, LINK, ONDO, JUP, ARB) qui repassent en ACHAT technique après un fort mouvement haussier. BTC et ETH restent en ATTENTE, régime risk-on inchangé.",
     "sentiment": "positif"
+  },
+  {
+    "id": "alert-20260907-0420-peaq-franchit-seuil",
+    "ticker_ou_theme": "PEAQ",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-07T04:20:00Z",
+    "sentiment": "neutre",
+    "message": "Peaq (PEAQ) : franchit le seuil de mouvement directionnel (5 %) à la hausse, quelques heures après l'émission du verdict ATTENTE (6 septembre à 0,02235604 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,02361376 euro, soit +5,63 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance du 13 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "alert-20260907-0420-jup-franchit-seuil",
+    "ticker_ou_theme": "JUP",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-07T04:20:00Z",
+    "sentiment": "négatif",
+    "message": "Jupiter (JUP) : franchit le seuil de mouvement directionnel (5 %) à la baisse, en sens opposé au verdict ACHAT émis quelques heures plus tôt (6 septembre à 0,232896 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,212742 euro, soit -8,65 % depuis l'émission — retournement rapide après le rallye de +68,8 % qui avait motivé ce verdict. Ne préjuge pas de l'issue à l'échéance du 13 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "alert-20260907-0420-arb-franchit-seuil",
+    "ticker_ou_theme": "ARB",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-07T04:20:00Z",
+    "sentiment": "négatif",
+    "message": "Arbitrum (ARB) : franchit le seuil de mouvement directionnel (5 %) à la baisse, en sens opposé au verdict ACHAT émis quelques heures plus tôt (6 septembre à 0,163523 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,152392 euro, soit -6,81 % depuis l'émission — début de correction après le rallye de +112,2 % sur 7 jours qui avait motivé ce verdict. Ne préjuge pas de l'issue à l'échéance du 13 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "avis-jour-2026-09-07",
+    "ticker_ou_theme": "PORTEFEUILLE",
+    "type": "avis_du_jour",
+    "triggered_at": "2026-09-07T04:20:00Z",
+    "message": "TIA, ARB, JUP et LINK basculent en ACHAT technique après des hausses extrêmes (ARB +112 % sur 7 j) : risque de surchauffe à surveiller — ARB et JUP reviennent déjà sous leur prix d'émission. BTC/ETH restent en ATTENTE, régime risk-on inchangé.",
+    "sentiment": "neutre"
   }
 ]
