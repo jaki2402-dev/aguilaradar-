@@ -1082,5 +1082,14 @@
     "triggered_at": "2026-09-07T16:20:00Z",
     "message": "Indice de peur et de cupidité réévalué à 71 (« Greed »), en repli modeste par rapport à 73 la veille mais nettement au-dessus de la valeur interne conservée depuis plusieurs cycles (59) — probable retard de mise à jour côté source primaire plutôt qu'un changement de régime : régime toujours classé « risk-on », cohérent avec le niveau de peur et cupidité élevé sur toute la semaine (67-73 selon les cycles). Dominance BTC réévaluée à 57,8 % (contre 59,21 % conservé jusqu'ici), écart modeste. Recherche large « biggest movers » : classement toujours dominé par des actifs non suivis (Observer, COTI, Biconomy), aucun des 15 favoris ni des opportunités suivies au-delà du seuil de 15 % — aucune action déclenchée en dehors des franchissements de 5 % déjà signalés séparément sur PEAQ/JUP/ARB/INJ. Aucun changement de régime macro à noter.",
     "source": "agrégat WebSearch (indice de peur et de cupidité + dominance BTC + biggest movers)"
+  },
+  {
+    "id": "alert-20260907-2016-inj-hausse",
+    "ticker_ou_theme": "INJ",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-07T20:16:45Z",
+    "sentiment": "positif",
+    "message": "Injective (INJ) : forte accélération de la hausse sur le verdict ATTENTE actif (émis le 6 septembre à 4,56 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 5,4 euros, soit +18,42 % depuis l'émission (contre +6,36 % au cycle précédent) — franchissement net qui mérite une surveillance rapprochée. Ne préjuge pas de l'issue à l'échéance du 13 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
   }
 ]
