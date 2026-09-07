@@ -8,7 +8,16 @@
   --border: #212e40;
   --text: #eef2f7;
   --text-dim: #93a0b4;
-  --text-faint: #5b6779;
+  /* #7e8ba3, pas #5b6779 (avant le 07/09) : l'ancienne valeur ne tenait que ~3.0-3.4:1 sur les
+     fonds réels du site (--bg/--card/--card-2), sous le seuil WCAG AA de 4.5:1 exigé en texte
+     normal — confirmé par calcul de luminance relative, pas une impression : .hint/.pin-label/
+     .cell-pct/.sector-pct/placeholders l'utilisent tous à 0.6-0.88rem, jamais en "grand texte"
+     (24px+) qui aurait toléré 3:1. Cette valeur tient >=4.5:1 sur les 5 fonds du site (marge
+     jusqu'à ~4.8 sur --card-2, le pire cas) tout en restant visiblement plus sourde que
+     --text-dim (ratio ~5.0-5.9 contre ~6.3-7.3) — la hiérarchie visuelle à 3 niveaux reste
+     intacte, seul le niveau le plus faible devient réellement lisible.
+  */
+  --text-faint: #7e8ba3;
   --accent: #2fd3b0;
   --accent-2: #22b8e0;
   --accent-dim: rgba(47, 211, 176, 0.13);
@@ -264,7 +273,12 @@ header.site-header h1 { margin: 0; font-family: var(--font-mono); letter-spacing
 .notif-bell-badge {
   position: absolute; top: -2px; right: -2px;
   min-width: 16px; height: 16px; padding: 0 4px; border-radius: 999px;
-  background: var(--loss); color: #fff;
+  /* #c22a22, pas var(--loss) : blanc sur --loss (#f1554c) ne tient que 3.42:1, sous le seuil
+     WCAG AA (4.5:1) pour un texte normal — ce compteur (0.62rem) en est un, pas une décoration.
+     Un rouge propre à ce badge (5.76:1 en blanc) plutôt que changer --loss lui-même, qui reste
+     utilisé ailleurs comme COULEUR DE TEXTE sur fond sombre (badges, P&L négatif) où il passe déjà
+     largement (5.66:1+) — le changer partout aurait été une correction hors sujet, pas ciblée. */
+  background: #c22a22; color: #fff;
   font-size: 0.62rem; font-weight: 800; line-height: 16px; text-align: center;
   border: 2px solid var(--bg);
 }
@@ -572,6 +586,40 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
 }
 .portfolio-chart-card .hint { display: block; margin-bottom: 10px; }
 .portfolio-chart-card .sector-pct { width: 100px; }
+
+/* "Où placer ma prochaine recharge ?" (renderPortfolioAttractivenessRanking, portfolio.js +
+   allocation.js) — réutilise .chat-suggestion-chip pour les puces de montant (même composant
+   que les suggestions de l'Assistant) plutôt qu'un 2e style de bouton. */
+.alloc-amount-chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+.alloc-amount-chips .chat-suggestion-chip:hover { border-color: var(--accent); color: var(--text); }
+.alloc-custom-wrap { display: inline-flex; gap: 6px; align-items: center; }
+.alloc-custom-wrap input {
+  width: 84px; background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text);
+  border-radius: var(--radius-sm); padding: 8px 10px; font-family: inherit; font-size: 0.8rem;
+}
+.alloc-custom-wrap input:focus { border-color: var(--accent); outline: none; }
+.alloc-rank-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 8px 0 4px; border-top: 1px solid var(--border); }
+.alloc-rank-row:first-child { border-top: none; }
+.alloc-rank-idx { color: var(--text-faint); font-family: var(--font-mono); font-size: 0.78rem; width: 22px; flex-shrink: 0; }
+.alloc-rank-ticker { font-weight: 700; width: 52px; flex-shrink: 0; }
+.alloc-reason { margin: 0 0 2px 30px; }
+.alloc-caveat { margin: 0 0 6px 30px; color: var(--warning); }
+.alloc-close { font-style: italic; }
+
+/* Repli "voir les N autres positions" au-delà de ALLOC_RANKING_VISIBLE_COUNT (portfolio.js) —
+   même grammaire visuelle que details.accueil-section (flèche qui pivote, texte sourd) mais SANS
+   son fond/bordure propres : imbriquer une 2e carte dans .portfolio-chart-card empilerait une
+   boîte dans une boîte (voir le commentaire sur .accueil-more, plus haut dans ce fichier) — un
+   simple séparateur suffit ici. */
+.alloc-more { border-top: 1px solid var(--border); margin-top: 6px; padding-top: 4px; }
+.alloc-more summary {
+  cursor: pointer; list-style: none; padding: 6px 0; font-size: 0.82rem; color: var(--text-dim);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.alloc-more summary::-webkit-details-marker { display: none; }
+.alloc-more summary::after { content: "▾"; color: var(--text-faint); transition: transform 0.2s ease; }
+.alloc-more[open] summary::after { transform: rotate(180deg); }
+.alloc-more .alloc-rank-row:first-of-type { border-top: none; }
 /* Historique de valeur (data/portfolio-history.json, 1 point réel/jour — voir
    renderPortfolioHistoryChart, portfolio.js). Même technique que sparklinePoints (cards.js)
    mais en plus grand, avec des points survolables (contrairement au mini spark-line purement
@@ -715,6 +763,11 @@ th { color: var(--text-dim); font-weight: 600; font-size: 0.76rem; text-transfor
    space-between (label à gauche, un seul badge à droite) déjà utilisé par les autres usages
    de .log-header (Journal, etc.). */
 .alert-badges { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+/* Note de contexte croisée avec la thèse hebdo (contextualizeAlert, allocation.js) — teinte
+   informative (--accent-2, même couleur que le liseré .type-seuil_technique juste au-dessus),
+   jamais --warning : cette note peut être rassurante ("pas de détérioration détectée") autant que
+   prudente, contrairement à .alloc-caveat qui n'est jamais qu'un signal d'alerte. */
+.alert-context-note { color: var(--accent-2); margin-top: 4px; }
 
 /* ---- Aperçu tronqué + "Lire plus" pour un texte long (voir renderClampableText, app.js) —
    Journal (raisonnement) et Alertes (message) partagent ce motif. ---- */

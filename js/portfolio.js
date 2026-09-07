@@ -417,19 +417,141 @@ async function loadPortfolioBenchmark(history) {
   renderPortfolioBenchmarkResult(el, sorted, portfolioBenchmarkCache);
 }
 
-// Assemble les graphiques ci-dessus dans #portfolio-charts : concentration puis désaccords
-// verdict/thèse puis historique puis comparatif BTC/ETH en pleine largeur (l'ordre reflète la
-// priorité — risque et qualité du signal avant performance brute), répartition + performance
-// côte à côte en dessous (voir .portfolio-charts, style.css).
+// Dernier classement calculé (rankPortfolioAttractiveness, allocation.js) — mémorisé pour que
+// attachAllocationChips (plus bas) construise sa question à l'Assistant sur EXACTEMENT ce qui
+// est affiché à l'écran, jamais un recalcul séparé qui pourrait diverger. Même motif que
+// latestPortfolio/latestPortfolioVerdicts/latestPortfolioThesis juste au-dessus.
+let latestPortfolioRanking = [];
+
+// Nombre de positions affichées d'emblée avant le repli "voir les autres" — au-delà, la carte
+// devenait un mur de texte sur 15 positions (chacune avec raison + points de vigilance), plus
+// long à scanner que le classement lui-même n'apporte de valeur au premier coup d'œil.
+const ALLOC_RANKING_VISIBLE_COUNT = 5;
+
+// Une ligne du classement — factorisé pour être appelé identiquement sur les positions toujours
+// visibles ET celles repliées sous <details> (voir renderPortfolioAttractivenessRanking),
+// jamais 2 gabarits divergents pour la même donnée. idx est le rang RÉEL (0-based) dans le
+// classement complet, pas la position dans la tranche affichée — sinon la section repliée
+// recommencerait à "#1".
+function renderAllocRankRow(r, idx) {
+  const shareLabel = r.valueShare !== null && r.valueShare !== undefined ? `<span class="hint">déjà ${r.valueShare.toFixed(0)} % du portefeuille</span>` : "";
+  const closeLabel = r.closeCallWith ? `<span class="hint alloc-close">quasi ex-æquo avec ${escapeHtml(r.closeCallWith)}</span>` : "";
+  const topReason = r.reasons[0] ? `<p class="hint alloc-reason">${escapeHtml(r.reasons[0])}</p>` : "";
+  const caveatsHtml = r.caveats.length ? `<p class="hint alloc-caveat">${r.caveats.map((c) => escapeHtml(c)).join(" ")}</p>` : "";
+  return `
+      <div class="alloc-rank-row">
+        <span class="alloc-rank-idx">#${idx + 1}</span>
+        <span class="alloc-rank-ticker">${escapeHtml(r.ticker)}</span>
+        <span class="badge ${tierBadgeClass(r.tier)}">${escapeHtml(r.tier)}</span>
+        <span class="hint">confiance ${escapeHtml(r.confidenceLevel)}</span>
+        ${shareLabel}
+        ${closeLabel}
+      </div>
+      ${topReason}${caveatsHtml}`;
+}
+
+// "Où placer ma prochaine recharge ?" — classement transparent (allocation.js, jamais un score à
+// fausse précision) des 15 positions. Garde défensive typeof (même motif que
+// renderFavorisContextSection, detail.js) : si jamais ce fichier tournait sans allocation.js
+// chargé, le reste du Portefeuille continue de fonctionner, cette carte disparaît juste.
+function renderPortfolioAttractivenessRanking(positions) {
+  if (typeof rankPortfolioAttractiveness !== "function") return "";
+  const favCtx = typeof latestFavorisContext !== "undefined" ? latestFavorisContext : null;
+  const ranked = rankPortfolioAttractiveness(positions, latestPortfolioVerdicts, latestPortfolioThesis, favCtx);
+  latestPortfolioRanking = ranked;
+  if (ranked.length === 0) return "";
+
+  const visibleRows = ranked.slice(0, ALLOC_RANKING_VISIBLE_COUNT).map((r, i) => renderAllocRankRow(r, i)).join("");
+  const rest = ranked.slice(ALLOC_RANKING_VISIBLE_COUNT);
+  // <details>/<summary> natif (même grammaire visuelle que .accueil-section, voir style.css) —
+  // pas de JS de repli à écrire/tester, accessible clavier gratuitement. Volontairement PAS la
+  // classe .accueil-section elle-même : imbriquer sa propre carte (fond+bordure+radius) DANS
+  // .portfolio-chart-card empilerait une boîte dans une boîte (le commentaire au-dessus de
+  // .accueil-more dans style.css met déjà en garde contre exactement ça) — .alloc-more est un
+  // simple séparateur, jamais une 2e carte.
+  const restHtml = rest.length
+    ? `<details class="alloc-more"><summary>Voir les ${rest.length} autres positions</summary>${rest.map((r, i) => renderAllocRankRow(r, i + ALLOC_RANKING_VISIBLE_COUNT)).join("")}</details>`
+    : "";
+
+  return `
+    <div class="portfolio-chart-card" id="portfolio-allocation-card">
+      <span class="hint">Où placer ma prochaine recharge ? — classement transparent (pas un score magique)</span>
+      <div class="alloc-amount-chips">
+        <button type="button" class="chat-suggestion-chip" data-alloc-amount="50">Recharger 50 €</button>
+        <button type="button" class="chat-suggestion-chip" data-alloc-amount="100">Recharger 100 €</button>
+        <button type="button" class="chat-suggestion-chip" data-alloc-amount="150">Recharger 150 €</button>
+        <span class="alloc-custom-wrap">
+          <input type="number" id="alloc-custom-amount" min="1" step="1" placeholder="Autre €" aria-label="Autre montant en euros" />
+          <button type="button" class="chat-suggestion-chip" data-alloc-amount="custom">Demander</button>
+        </span>
+      </div>
+      <div class="alloc-rank-list">${visibleRows}</div>
+      ${restHtml}
+      <p class="hint">Classement basé sur le verdict technique (14j) et la thèse hebdo — les 2 seules dimensions couvertes sur les 15 positions aujourd'hui. Flux ETF/whales par actif et calendrier des unlocks : non disponibles, jamais estimés (le point de vigilance d'une position le signale quand une vraie donnée existe). Un écart faible entre deux positions ne veut pas dire que l'une est objectivement meilleure — voir "quasi ex-æquo" ci-dessus le cas échéant.</p>
+    </div>`;
+}
+
+// Construit une question riche et déjà contextualisée plutôt que de laisser l'utilisateur
+// reformuler à la main ce que la carte affiche déjà — même esprit que CHAT_SUGGESTIONS
+// (assistant.js), mais générée dynamiquement à partir du VRAI classement du moment. Le montant
+// et la définition "recharge = 50-150€, progressif" viennent de la demande explicite de
+// l'utilisateur ; c'est le relais IA (system prompt, cloudflare-worker/worker.js) qui fait le
+// vrai raisonnement stratégique, jamais ce fichier.
+function buildAllocationQuestion(amount, ranked) {
+  const top = ranked
+    .slice(0, 4)
+    .map((r, i) => {
+      const share = r.valueShare !== null && r.valueShare !== undefined ? `, déjà ${r.valueShare.toFixed(0)}% du portefeuille` : "";
+      return `${i + 1}. ${r.ticker} — ${r.tier} (confiance ${r.confidenceLevel}${share})`;
+    })
+    .join(" ");
+  return (
+    `J'ai ${amount} € à placer sur mon portefeuille crypto (15 positions). Classement transparent calculé par le site, du plus au moins attractif sur les seuls signaux réellement disponibles : ${top}. ` +
+    `Comment répartirais-tu ces ${amount} € en tenant compte du coût d'opportunité par rapport à mes autres positions, de ma concentration actuelle, et d'un éventuel biais de ma part (FOMO, prix bas = fausse bonne affaire, attachement à une position) ? ` +
+    `Donne-moi ton avis direct, "si tu étais à ma place" — et ce qui invaliderait ce raisonnement.`
+  );
+}
+
+// Écouteurs des puces de montant — posés après coup (comme attachPortfolioToggle) puisque le
+// HTML vient d'être injecté via innerHTML. switchTab/submitChatQuestion : fonctions globales
+// d'app.js/assistant.js (chargés après ce fichier dans index.html, mais l'appel n'a lieu qu'au
+// clic, bien après que tous les scripts aient fini de s'exécuter — même raisonnement que
+// renderFavorisContextSection plus haut) ; gardées derrière un typeof pour ne jamais casser le
+// reste du Portefeuille si jamais l'un des deux fichiers manquait.
+function attachAllocationChips() {
+  const card = document.getElementById("portfolio-allocation-card");
+  if (!card) return;
+  card.querySelectorAll("[data-alloc-amount]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      let amount = btn.dataset.allocAmount;
+      if (amount === "custom") {
+        const input = document.getElementById("alloc-custom-amount");
+        amount = input ? parseFloat(input.value) : NaN;
+      } else {
+        amount = parseFloat(amount);
+      }
+      if (!(amount > 0) || latestPortfolioRanking.length === 0) return;
+      const question = buildAllocationQuestion(amount, latestPortfolioRanking);
+      if (typeof switchTab === "function") switchTab("assistant");
+      if (typeof submitChatQuestion === "function") submitChatQuestion(question);
+    });
+  });
+}
+
+// Assemble les graphiques ci-dessus dans #portfolio-charts : classement d'allocation (l'action la
+// plus immédiatement utile) puis concentration puis désaccords verdict/thèse puis historique puis
+// comparatif BTC/ETH en pleine largeur, répartition + performance côte à côte en dessous (voir
+// .portfolio-charts, style.css).
 function renderPortfolioCharts(positions, history) {
+  const allocationHtml = renderPortfolioAttractivenessRanking(positions);
   const concentrationHtml = renderPortfolioConcentration(positions);
   const conflictsHtml = renderPortfolioSignalConflicts(positions);
   const historyHtml = renderPortfolioHistoryChart(history);
   const benchmarkHtml = renderPortfolioBenchmarkCard(history);
-  const allocHtml = renderPortfolioAllocationChart(positions);
+  const allocChartHtml = renderPortfolioAllocationChart(positions);
   const perfHtml = renderPortfolioPerformanceChart(positions);
-  const gridParts = [allocHtml, perfHtml].filter(Boolean);
-  return `${concentrationHtml}${conflictsHtml}${historyHtml}${benchmarkHtml}${gridParts.length ? `<div class="portfolio-charts">${gridParts.join("")}</div>` : ""}`;
+  const gridParts = [allocChartHtml, perfHtml].filter(Boolean);
+  return `${allocationHtml}${concentrationHtml}${conflictsHtml}${historyHtml}${benchmarkHtml}${gridParts.length ? `<div class="portfolio-charts">${gridParts.join("")}</div>` : ""}`;
 }
 
 // Tuile dense (même esprit que .favori-tile/.opp-tile — voir CLAUDE.md/style.css : "Coin360,
@@ -632,7 +754,10 @@ function renderPortfolio(portfolio, verdicts, thesis, history) {
   renderPortfolioTotals(summary.totalValue, summary.totalInvested, summary.thesisGeneratedAt);
 
   const chartsEl = document.getElementById("portfolio-charts");
-  if (chartsEl) chartsEl.innerHTML = renderPortfolioCharts(summary.positions, latestPortfolioHistory);
+  if (chartsEl) {
+    chartsEl.innerHTML = renderPortfolioCharts(summary.positions, latestPortfolioHistory);
+    attachAllocationChips();
+  }
   // Seulement sur un vrai rafraîchissement de données (history fourni), jamais sur le tick de
   // prix seul (renderPortfolio() rappelé sans argument par refreshPrices() toutes les 60s,
   // history alors undefined) — l'historique quotidien ne change de toute façon pas plus vite
