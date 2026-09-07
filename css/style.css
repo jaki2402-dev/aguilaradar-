@@ -8,7 +8,16 @@
   --border: #212e40;
   --text: #eef2f7;
   --text-dim: #93a0b4;
-  --text-faint: #5b6779;
+  /* #7e8ba3, pas #5b6779 (avant le 07/09) : l'ancienne valeur ne tenait que ~3.0-3.4:1 sur les
+     fonds réels du site (--bg/--card/--card-2), sous le seuil WCAG AA de 4.5:1 exigé en texte
+     normal — confirmé par calcul de luminance relative, pas une impression : .hint/.pin-label/
+     .cell-pct/.sector-pct/placeholders l'utilisent tous à 0.6-0.88rem, jamais en "grand texte"
+     (24px+) qui aurait toléré 3:1. Cette valeur tient >=4.5:1 sur les 5 fonds du site (marge
+     jusqu'à ~4.8 sur --card-2, le pire cas) tout en restant visiblement plus sourde que
+     --text-dim (ratio ~5.0-5.9 contre ~6.3-7.3) — la hiérarchie visuelle à 3 niveaux reste
+     intacte, seul le niveau le plus faible devient réellement lisible.
+  */
+  --text-faint: #7e8ba3;
   --accent: #2fd3b0;
   --accent-2: #22b8e0;
   --accent-dim: rgba(47, 211, 176, 0.13);
@@ -572,6 +581,25 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
 }
 .portfolio-chart-card .hint { display: block; margin-bottom: 10px; }
 .portfolio-chart-card .sector-pct { width: 100px; }
+
+/* "Où placer ma prochaine recharge ?" (renderPortfolioAttractivenessRanking, portfolio.js +
+   allocation.js) — réutilise .chat-suggestion-chip pour les puces de montant (même composant
+   que les suggestions de l'Assistant) plutôt qu'un 2e style de bouton. */
+.alloc-amount-chips { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+.alloc-amount-chips .chat-suggestion-chip:hover { border-color: var(--accent); color: var(--text); }
+.alloc-custom-wrap { display: inline-flex; gap: 6px; align-items: center; }
+.alloc-custom-wrap input {
+  width: 84px; background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text);
+  border-radius: var(--radius-sm); padding: 8px 10px; font-family: inherit; font-size: 0.8rem;
+}
+.alloc-custom-wrap input:focus { border-color: var(--accent); outline: none; }
+.alloc-rank-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 8px 0 4px; border-top: 1px solid var(--border); }
+.alloc-rank-row:first-child { border-top: none; }
+.alloc-rank-idx { color: var(--text-faint); font-family: var(--font-mono); font-size: 0.78rem; width: 22px; flex-shrink: 0; }
+.alloc-rank-ticker { font-weight: 700; width: 52px; flex-shrink: 0; }
+.alloc-reason { margin: 0 0 2px 30px; }
+.alloc-caveat { margin: 0 0 6px 30px; color: var(--warning); }
+.alloc-close { font-style: italic; }
 /* Historique de valeur (data/portfolio-history.json, 1 point réel/jour — voir
    renderPortfolioHistoryChart, portfolio.js). Même technique que sparklinePoints (cards.js)
    mais en plus grand, avec des points survolables (contrairement au mini spark-line purement

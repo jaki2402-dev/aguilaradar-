@@ -41,8 +41,9 @@ async function ensureChatData() {
     loadJson(DATA_URLS.digest),
     loadJson(DATA_URLS.portfolio),
     loadJson(DATA_URLS.portfolioThesis),
-  ]).then(([verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis]) => {
-    chatData = { verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis };
+    loadJson(DATA_URLS.favorisContext),
+  ]).then(([verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext]) => {
+    chatData = { verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext };
     return chatData;
   });
   return chatDataLoading;
@@ -74,6 +75,40 @@ function findAssetMention(text) {
   );
   if (opp) return { cgId: opp.cgId, ticker: opp.ticker, name: opp.name, tracked: "opportunite" };
   return null;
+}
+
+// Combien d'actifs SUIVIS distincts (favoris) la question nomme — sert uniquement à détecter une
+// vraie comparaison ("INJ ou LINK ?"), jamais à répondre à la place de l'IA. Limité aux favoris
+// (pas aux opportunités, trop nombreuses et changeantes pour un coût de calcul par frappe) : une
+// comparaison entre 2 favoris est de très loin le cas réel le plus fréquent (section 13 de la
+// demande utilisateur — "entre FET, CTSI et ARB").
+function countDistinctAssetMentions(text) {
+  const norm = text.toLowerCase();
+  return FAVORIS.filter(
+    (f) => wordBoundaryMatch(norm, f.ticker.toLowerCase()) || wordBoundaryMatch(norm, f.name.toLowerCase()) || (f.aliases || []).some((a) => wordBoundaryMatch(norm, a.toLowerCase()))
+  ).length;
+}
+
+// Choisit un FORMAT de réponse à demander au relais IA — jamais une réponse toute faite : le
+// relais reste seul à raisonner, ceci ne fait que l'aiguiller vers le bon gabarit (voir
+// SYSTEM_PROMPT_PREFIX, cloudflare-worker/worker.js, qui décrit les 4 formats et sait de toute
+// façon les choisir seul à la lecture de la question — cette détection n'est qu'un indice en
+// plus, jamais la seule source de vérité, donc un faux positif ici reste sans risque réel).
+// Volontairement AVANT le routage "un seul actif nommé" de answerQuestion : une question du
+// type "je devrais renforcer Cartesi avec 100€ ?" nomme un seul favori mais appelle quand même
+// le format allocation, pas la simple fiche verdict.
+const ALLOCATION_INTENT_RE = /\b(recharge\w*|renforce\w*|placer|replacer|investir|ajouter|allou\w*|mettre)\b/i;
+const THESIS_INTENT_RE = /\bthèses?\b|\bthese\b|\bthesis\b/i;
+
+// 2+ favoris nommés dans la même question -> presque toujours une vraie comparaison ("INJ ou
+// LINK ?", "FET, CTSI et ARB") même sans mot "compare"/"vs" explicite — un mot-clé en plus
+// n'aurait rien apporté ici, le nombre d'actifs cités est déjà le signal fiable.
+function detectResponseMode(question) {
+  const text = question || "";
+  if (THESIS_INTENT_RE.test(text)) return "thesis";
+  if (countDistinctAssetMentions(text) >= 2) return "comparison";
+  if (ALLOCATION_INTENT_RE.test(text)) return "allocation";
+  return "quick";
 }
 
 // Repère un mot qui ressemble à un nom de projet/ticker que la question mentionne mais que
@@ -276,7 +311,8 @@ function correctionLogSummary() {
 async function fetchAssetAiOpinion(question, factualAnswer) {
   if (!AI_RELAY_URL || AI_RELAY_URL.includes("REMPLACE-MOI")) return null;
   const context = `${factualAnswer}\n\n${buildAiContext()}`;
-  return (await requestAiRelayOnce(question, context)) || (await requestAiRelayOnce(question, context));
+  const mode = detectResponseMode(question);
+  return (await requestAiRelayOnce(question, context, mode)) || (await requestAiRelayOnce(question, context, mode));
 }
 
 // Position personnelle de l'utilisateur sur cet actif (data/portfolio.json), si tenue — rend la
@@ -523,6 +559,22 @@ function buildAiContext() {
         (pendingTickers.length ? ` Positions pas encore configurées : ${pendingTickers.join(", ")}.` : "") +
         (summary.thesisGeneratedAt ? ` La thèse hebdo (recherche web réelle par la routine, distincte du verdict technique 14j) date du ${new Date(summary.thesisGeneratedAt).toLocaleDateString("fr-FR")}.` : " Aucune thèse hebdo générée pour l'instant — ne pas en inventer une, dire que cette analyse n'existe pas encore si demandée.")
     );
+
+    // Classement transparent (allocation.js, rankPortfolioAttractiveness) — MÊME calcul que la
+    // carte "Où placer ma prochaine recharge ?" du Portefeuille, jamais recalculé différemment
+    // pour l'IA. Fournit à l'IA des points de comparaison DÉJÀ objectifs (verdict/thèse/
+    // concentration/désaccords) plutôt que de la laisser relire seule 15 lignes de texte brut et
+    // improviser son propre classement à chaque appel — c'est justement ce classement, pas l'IA,
+    // qui porte la garantie "jamais halluciné" sur ces chiffres.
+    if (typeof rankPortfolioAttractiveness === "function" && typeof formatAttractivenessForAiContext === "function") {
+      const ranked = rankPortfolioAttractiveness(summary.positions, chatData.verdicts || [], chatData.portfolioThesis, chatData.favorisContext);
+      if (ranked.length) {
+        parts.push(
+          "Classement transparent des positions du portefeuille par attractivité relative (verdict technique + thèse hebdo uniquement — jamais un score composite masqué, catégories qualitatives seulement) :\n" +
+            formatAttractivenessForAiContext(ranked)
+        );
+      }
+    }
   }
 
   return parts.join("\n");
@@ -531,14 +583,14 @@ function buildAiContext() {
 // Un seul essai d'appel au relais IA — voir fetchLiveAiFallback pour pourquoi ça vaut la peine
 // de réessayer une fois avant d'abandonner (Workers AI gratuit : cold start / rate-limit ponctuel
 // bien plus fréquents qu'une vraie panne durable).
-async function requestAiRelayOnce(question, context) {
+async function requestAiRelayOnce(question, context, responseMode) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), 12000);
   try {
     const res = await fetch(AI_RELAY_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question, context }),
+      body: JSON.stringify({ question, context, responseMode }),
       signal: controller.signal,
     });
     if (!res.ok) return null;
@@ -563,7 +615,8 @@ async function requestAiRelayOnce(question, context) {
 async function fetchLiveAiFallback(question) {
   if (!AI_RELAY_URL || AI_RELAY_URL.includes("REMPLACE-MOI")) return null;
   const context = buildAiContext();
-  const answer = (await requestAiRelayOnce(question, context)) || (await requestAiRelayOnce(question, context));
+  const mode = detectResponseMode(question);
+  const answer = (await requestAiRelayOnce(question, context, mode)) || (await requestAiRelayOnce(question, context, mode));
   if (!answer) return null;
   return `${answer}\n\n(Réponse générée par IA à partir des données du site — pas un verdict vérifié du moteur.)`;
 }
@@ -597,6 +650,19 @@ function tryKeywordFallback(norm) {
 async function answerQuestion(question) {
   await ensureChatData();
   const norm = question.toLowerCase();
+
+  // Comparaison entre 2+ favoris nommés ("INJ ou LINK ?") : DOIT passer avant le routage
+  // "un seul actif nommé" juste en dessous — findAssetMention() ne renvoie jamais que LE PREMIER
+  // actif trouvé, donc sans ce court-circuit une vraie question comparative recevait la fiche
+  // d'un seul des deux actifs, jamais un comparatif (bug qu'aurait gardé la réorganisation du
+  // 24/08 si elle n'avait traité que le cas "un seul actif"). buildAiContext liste déjà les 15
+  // verdicts+thèses : l'IA a tout ce qu'il faut pour comparer sans context dédié.
+  if (detectResponseMode(question) === "comparison") {
+    const comparisonAnswer = await fetchLiveAiFallback(question);
+    if (comparisonAnswer) return comparisonAnswer;
+    // Relais IA indisponible : retombe sur le comportement normal ci-dessous (fiche d'un seul
+    // des actifs plutôt que rien).
+  }
 
   // Actif suivi nommément, définition de glossaire, ou recherche CoinGecko en direct sur un nom
   // d'actif repéré : trois cas où une vraie donnée sourcée existe, à privilégier sur une réponse
