@@ -517,8 +517,12 @@ describe("portfolio.js — computeTransactionResult (calculette achat/vente, co�
     expect(computeTransactionResult(2, 100, "achat", 60, 1, -5).error).toBeDefined();
   });
 
-  it("vente : ignore le montant investi optionnel (n'a pas de sens sur une cession, voir le coût moyen déjà en position)", () => {
-    expect(computeTransactionResult(10, 100, "vente", 999, 4, 12345)).toEqual({ newQty: 6, newInvested: 60 });
+  it("vente : un montant investi optionnel remplace le retrait proportionnel (ex: frais, lot à coût différent)", () => {
+    expect(computeTransactionResult(10, 100, "vente", 999, 4, 25)).toEqual({ newQty: 6, newInvested: 75 });
+  });
+
+  it("vente : refuse un montant investi retiré supérieur à l'investi actuel", () => {
+    expect(computeTransactionResult(10, 100, "vente", 999, 4, 150).error).toMatch(/dépasser l'investi actuel/);
   });
 
   it("correction : applique directement qty/investi tapés, sans coût moyen ni prix (cas réel arbitrum du 07/09)", () => {
@@ -613,19 +617,39 @@ describe("portfolio.js — renderTransactionCalculator", () => {
     expect(dom.window.document.getElementById("tx-secret-field").hidden).toBe(false);
   });
 
-  it("masque le champ 'montant investi' à la vente (n'a pas d'effet dessus), le montre à l'achat", () => {
+  it("montre le champ 'montant investi' à l'achat ET à la vente (override optionnel du calcul automatique dans les deux cas)", () => {
     dom.window.renderTransactionCalculator();
     const typeSelect = dom.window.document.getElementById("tx-type");
-    const field = dom.window.document.getElementById("tx-invested-override").closest(".tx-field");
+    const investedInput = dom.window.document.getElementById("tx-invested-override");
+    const field = investedInput.closest(".tx-field");
     expect(field.hidden).toBe(false); // "achat" sélectionné par défaut
+    expect(investedInput.required).toBe(false);
 
     typeSelect.value = "vente";
     typeSelect.dispatchEvent(new dom.window.Event("change"));
-    expect(field.hidden).toBe(true);
+    expect(field.hidden).toBe(false);
+    expect(investedInput.required).toBe(false); // reste optionnel à la vente, contrairement à la correction
 
     typeSelect.value = "achat";
     typeSelect.dispatchEvent(new dom.window.Event("change"));
     expect(field.hidden).toBe(false);
+  });
+
+  it("vente : le montant investi tapé remplace le retrait proportionnel dans le résultat affiché", () => {
+    setGlobal(dom, "PORTFOLIO_WRITE_URL", "REMPLACE-MOI-URL-du-worker/transaction");
+    dom.window.renderPortfolio({ positions: [pos({ cgId: "bitcoin", qty: 10, invested: 100 })] }, []);
+    dom.window.renderTransactionCalculator();
+
+    dom.window.document.getElementById("tx-asset").value = "bitcoin";
+    dom.window.document.getElementById("tx-type").value = "vente";
+    dom.window.document.getElementById("tx-price").value = "999";
+    dom.window.document.getElementById("tx-qty").value = "4";
+    dom.window.document.getElementById("tx-invested-override").value = "25";
+    dom.window.document.getElementById("tx-calc-btn").click();
+
+    const text = dom.window.document.getElementById("tx-result").textContent;
+    expect(text).toContain('"qty": 6');
+    expect(text).toContain('"invested": 75');
   });
 
   it("en mode Correction : le prix devient inutile (non requis), le montant investi devient obligatoire", () => {
