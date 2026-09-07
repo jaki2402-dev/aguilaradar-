@@ -77,16 +77,22 @@ function findAssetMention(text) {
   return null;
 }
 
-// Combien d'actifs SUIVIS distincts (favoris) la question nomme — sert uniquement à détecter une
-// vraie comparaison ("INJ ou LINK ?"), jamais à répondre à la place de l'IA. Limité aux favoris
-// (pas aux opportunités, trop nombreuses et changeantes pour un coût de calcul par frappe) : une
-// comparaison entre 2 favoris est de très loin le cas réel le plus fréquent (section 13 de la
-// demande utilisateur — "entre FET, CTSI et ARB").
-function countDistinctAssetMentions(text) {
-  const norm = text.toLowerCase();
+// Les favoris SUIVIS réellement nommés dans le texte — sert à détecter une vraie comparaison
+// ("INJ ou LINK ?") ET à cibler le contexte long terme (favoris-context.json) sur seulement les
+// actifs vraiment concernés par la question (voir longTermFundamentalsBlock plus bas), jamais à
+// répondre à la place de l'IA. Limité aux favoris (pas aux opportunités, trop nombreuses et
+// changeantes pour un coût de calcul par frappe) : une comparaison entre 2 favoris est de très
+// loin le cas réel le plus fréquent (section 13 de la demande utilisateur — "entre FET, CTSI et ARB").
+function namedFavorisMentions(text) {
+  const norm = (text || "").toLowerCase();
   return FAVORIS.filter(
     (f) => wordBoundaryMatch(norm, f.ticker.toLowerCase()) || wordBoundaryMatch(norm, f.name.toLowerCase()) || (f.aliases || []).some((a) => wordBoundaryMatch(norm, a.toLowerCase()))
-  ).length;
+  );
+}
+
+// Raccourci sur namedFavorisMentions ci-dessus — jamais une 2e implémentation de la même détection.
+function countDistinctAssetMentions(text) {
+  return namedFavorisMentions(text).length;
 }
 
 // Choisit un FORMAT de réponse à demander au relais IA — jamais une réponse toute faite : le
@@ -297,6 +303,34 @@ function correctionLogSummary() {
   return `${log.length} tentative(s) d'auto-correction enregistrée(s) à ce jour. La dernière (${dateLabel}, ${statusLabel}) : ${last.what || ""} ${last.action || ""}`.trim();
 }
 
+// Thèse fondamentale LONG TERME (favoris-context.json, recherche web réelle : bull/base/bear +
+// positionnement concurrentiel) pour une petite liste de favoris CIBLÉS — jamais dumpée pour les
+// 15 d'un coup dans buildAiContext (les 4 paragraphes par actif feraient largement exploser le
+// budget de 20000 caractères du relais, voir worker.js), seulement pour le ou les 2-3 actifs
+// RÉELLEMENT concernés par la question en cours (un avis sur un favori précis, ou une
+// comparaison — voir fetchAssetAiOpinion/fetchLiveAiFallback). Sert le volet "long terme" de la
+// section 7 de la demande utilisateur (fondamentaux/avantage compétitif/positionnement) qu'aucune
+// des 2 dimensions déjà dans le classement d'allocation.js (verdict technique + thèse hebdo) ne
+// couvre vraiment. Jamais tronqué au milieu d'une phrase : soit le paragraphe complet, soit rien.
+function longTermFundamentalsBlock(favorisList) {
+  const favCtx = chatData.favorisContext && chatData.favorisContext.assets;
+  if (!favCtx || !favorisList || favorisList.length === 0) return "";
+  const parts = favorisList
+    .map((f) => {
+      const ctx = favCtx[f.ticker];
+      if (!ctx || !ctx.long_term_thesis) return null;
+      const lt = ctx.long_term_thesis;
+      const bits = [`${f.ticker} — thèse fondamentale long terme (recherche web réelle) :`];
+      if (lt.bull) bits.push(`Bull : ${lt.bull}`);
+      if (lt.base) bits.push(`Base : ${lt.base}`);
+      if (lt.bear) bits.push(`Bear : ${lt.bear}`);
+      if (ctx.competitor && ctx.competitor.comparison_note) bits.push(`Positionnement : ${ctx.competitor.comparison_note}`);
+      return bits.join(" ");
+    })
+    .filter(Boolean);
+  return parts.join("\n\n");
+}
+
 // Commentaire IA optionnel ajouté PAR-DESSUS une réponse factuelle déjà correcte sur un actif
 // suivi, jamais à la place (voir answerAboutAsset) — répond au reproche réel remonté par
 // l'utilisateur : une question formulée comme une demande d'avis ("va monter ? donne-moi ton
@@ -308,9 +342,16 @@ function correctionLogSummary() {
 // général, voir cloudflare-worker/worker.js). Best-effort comme fetchLiveAiFallback : silencieux
 // et sans effet si indisponible/échoue après le réessai — ne fait donc jamais régresser la
 // réponse factuelle déjà correcte, systématiquement affichée intégralement avant cet ajout.
-async function fetchAssetAiOpinion(question, factualAnswer) {
+async function fetchAssetAiOpinion(question, factualAnswer, mention) {
   if (!AI_RELAY_URL || AI_RELAY_URL.includes("REMPLACE-MOI")) return null;
-  const context = `${factualAnswer}\n\n${buildAiContext()}`;
+  let context = `${factualAnswer}\n\n${buildAiContext()}`;
+  // mention.tracked === "favori" seulement : favoris-context.json ne couvre QUE les 15 favoris,
+  // jamais les opportunités (Top 300) — pas de donnée à ajouter pour ces dernières.
+  if (mention && mention.tracked === "favori") {
+    const fav = FAVORIS.find((f) => f.cgId === mention.cgId);
+    const ltBlock = fav ? longTermFundamentalsBlock([fav]) : "";
+    if (ltBlock) context += `\n\n${ltBlock}`;
+  }
   const mode = detectResponseMode(question);
   return (await requestAiRelayOnce(question, context, mode)) || (await requestAiRelayOnce(question, context, mode));
 }
@@ -351,7 +392,7 @@ async function answerAboutAsset(mention, question) {
   // intégralement et en premier, que cet appel réussisse, échoue, ou ne soit jamais tenté — voir
   // fetchAssetAiOpinion.
   const withAiTake = async (factual) => {
-    const take = await fetchAssetAiOpinion(question, factual);
+    const take = await fetchAssetAiOpinion(question, factual, mention);
     return take ? `${factual}\n\n${take}` : factual;
   };
 
@@ -614,8 +655,17 @@ async function requestAiRelayOnce(question, context, responseMode) {
 // deuxième essai immédiat rattrape ce cas fréquent sans faire attendre indéfiniment pour autant.
 async function fetchLiveAiFallback(question) {
   if (!AI_RELAY_URL || AI_RELAY_URL.includes("REMPLACE-MOI")) return null;
-  const context = buildAiContext();
+  let context = buildAiContext();
   const mode = detectResponseMode(question);
+  // Comparaison entre favoris nommés : ajoute LEUR thèse fondamentale long terme (favoris-
+  // context.json), sinon l'IA ne peut comparer que sur verdict+thèse hebdo déjà dans le contexte
+  // général — insuffisant pour juger un "avantage compétitif"/"positionnement stratégique" (volet
+  // long terme, section 7 de la demande utilisateur). Seulement pour les 2-3 actifs concernés,
+  // jamais les 15 (voir longTermFundamentalsBlock).
+  if (mode === "comparison") {
+    const ltBlock = longTermFundamentalsBlock(namedFavorisMentions(question));
+    if (ltBlock) context += `\n\n${ltBlock}`;
+  }
   const answer = (await requestAiRelayOnce(question, context, mode)) || (await requestAiRelayOnce(question, context, mode));
   if (!answer) return null;
   return `${answer}\n\n(Réponse générée par IA à partir des données du site — pas un verdict vérifié du moteur.)`;

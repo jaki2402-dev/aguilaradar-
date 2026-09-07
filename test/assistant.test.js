@@ -690,6 +690,75 @@ describe("assistant.js — detectResponseMode + routage d'une comparaison entre 
   });
 });
 
+describe("assistant.js — thèse fondamentale long terme ciblée (favoris-context.json, section 7)", () => {
+  let dom;
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "portfolio.js", "allocation.js", "search.js", "assistant.js"]);
+  });
+
+  function baseData(overrides) {
+    return {
+      verdicts: [],
+      opportunities: { opportunities: [] },
+      alerts: [],
+      news: [],
+      engineHistory: { global_stats: {}, macro_regime: {} },
+      marketContext: {},
+      digest: {},
+      portfolio: null,
+      favorisContext: {
+        assets: {
+          BTC: { long_term_thesis: { bull: "Adoption institutionnelle réelle.", base: "Range.", bear: "Choc réglementaire." }, competitor: { comparison_note: "Face à l'or." } },
+        },
+      },
+      ...overrides,
+    };
+  }
+
+  it("adds the targeted long-term thesis for a single named favori's AI opinion, never for the visible factual answer", async () => {
+    dom.window.aguilaradarData = baseData({ verdicts: [{ asset: "bitcoin", ticker: "BTC", verdict: "ACHAT", confidence_pct: 60, horizon_days: 14, issued_at: "2026-08-10T00:00:00Z", reasoning: "x" }] });
+    let sentBody = null;
+    dom.window.fetch = async (url, opts) => {
+      sentBody = JSON.parse(opts.body);
+      return { ok: true, json: async () => ({ answer: "Avis IA." }) };
+    };
+    const answer = await dom.window.answerQuestion("Donne-moi ton avis sur Bitcoin");
+    // La réponse factuelle visible ne s'alourdit jamais du pavé bull/base/bear.
+    expect(answer).not.toContain("Adoption institutionnelle réelle");
+    expect(sentBody.context).toContain("Adoption institutionnelle réelle");
+    expect(sentBody.context).toContain("Face à l'or");
+  });
+
+  it("never adds a long-term thesis block for an untracked opportunity (favoris-context.json doesn't cover it)", async () => {
+    dom.window.aguilaradarData = baseData({ opportunities: { opportunities: [{ cgId: "some-coin", ticker: "SOME", name: "SomeCoin", reason: "x", price_eur: 1, change_7d_pct: 1 }] } });
+    let sentBody = null;
+    dom.window.fetch = async (url, opts) => {
+      sentBody = JSON.parse(opts.body);
+      return { ok: true, json: async () => ({ answer: "Avis IA." }) };
+    };
+    await dom.window.answerQuestion("Donne-moi ton avis sur SomeCoin");
+    expect(sentBody.context).not.toContain("thèse fondamentale long terme");
+  });
+
+  it("adds targeted long-term theses for the named favoris in a comparison, not the full 15", async () => {
+    dom.window.aguilaradarData = baseData({
+      verdicts: [
+        { asset: "bitcoin", ticker: "BTC", verdict: "ACHAT", confidence_pct: 60, horizon_days: 14, issued_at: "2026-08-10T00:00:00Z", reasoning: "x" },
+        { asset: "chainlink", ticker: "LINK", verdict: "ATTENTE", confidence_pct: 50, horizon_days: 14, issued_at: "2026-08-10T00:00:00Z", reasoning: "y" },
+      ],
+    });
+    let sentBody = null;
+    dom.window.fetch = async (url, opts) => {
+      sentBody = JSON.parse(opts.body);
+      return { ok: true, json: async () => ({ answer: "Comparatif IA." }) };
+    };
+    await dom.window.answerQuestion("BTC ou LINK, lequel recharger ?");
+    expect(sentBody.context).toContain("BTC — thèse fondamentale long terme");
+    // LINK n'a pas d'entrée dans favorisContext.assets ici -> aucun bloc inventé pour lui.
+    expect(sentBody.context).not.toContain("LINK — thèse fondamentale long terme");
+  });
+});
+
 describe("assistant.js — thèse hebdomadaire (data/portfolio-thesis.json)", () => {
   let dom;
 
