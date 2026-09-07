@@ -24,6 +24,9 @@ const PORTFOLIO_FIXTURE_HTML = `<!doctype html><html><body>
     <button id="tx-calc-btn" type="submit">Calculer</button>
   </form>
   <div id="tx-result"></div>
+  <details id="tx-history-section">
+    <div id="tx-history-body"></div>
+  </details>
 </body></html>`;
 
 function pos(overrides) {
@@ -767,6 +770,95 @@ describe("portfolio.js — renderTransactionCalculator", () => {
     await new Promise((resolve) => setTimeout(resolve, 0));
 
     expect(dom.window.document.getElementById("tx-result").textContent).toContain("réseau indisponible");
+  });
+});
+
+describe("portfolio.js — historique des transactions (reconstruit depuis les commits git, jamais un journal séparé)", () => {
+  let dom;
+
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "portfolio.js", "allocation.js"], { html: PORTFOLIO_FIXTURE_HTML });
+  });
+
+  function b64(obj) {
+    return Buffer.from(JSON.stringify(obj), "utf-8").toString("base64");
+  }
+
+  function mockGithubFetch({ commits, contentBySha }) {
+    return async (url) => {
+      if (String(url).includes("/commits?path=")) {
+        return { ok: true, status: 200, json: async () => commits };
+      }
+      const sha = String(url).match(/ref=([^&]+)/)[1];
+      const content = contentBySha[sha];
+      if (!content) return { ok: false, status: 404 };
+      return { ok: true, status: 200, json: async () => ({ content: b64(content) }) };
+    };
+  }
+
+  const commitsFixture = [
+    { sha: "sha1", commit: { author: { date: "2026-09-01T10:00:00Z" }, message: "Transaction portefeuille : bitcoin" } },
+    { sha: "sha2", commit: { author: { date: "2026-09-02T10:00:00Z" }, message: "Transaction portefeuille : ethereum" } },
+    { sha: "sha3", commit: { author: { date: "2026-09-03T10:00:00Z" }, message: "Transaction portefeuille : bitcoin" } },
+    { sha: "sha4", commit: { author: { date: "2026-09-04T10:00:00Z" }, message: "Cycle du 04/09 : rien de nouveau" } },
+  ];
+  const contentBySha = {
+    sha1: { positions: [{ cgId: "bitcoin", qty: 1, invested: 100 }] },
+    sha2: { positions: [{ cgId: "bitcoin", qty: 1, invested: 100 }, { cgId: "ethereum", qty: 2, invested: 200 }] },
+    sha3: { positions: [{ cgId: "bitcoin", qty: 1.5, invested: 130 }, { cgId: "ethereum", qty: 2, invested: 200 }] },
+  };
+
+  it("fetchTransactionHistory : ignore les commits qui ne sont pas des transactions, calcule le delta contre le dernier commit connu du MÊME actif", async () => {
+    dom.window.fetch = mockGithubFetch({ commits: commitsFixture, contentBySha });
+    const entries = await dom.window.fetchTransactionHistory();
+
+    expect(entries).toHaveLength(3); // sha4 (pas "Transaction portefeuille :") exclu
+    expect(entries[0]).toMatchObject({ cgId: "bitcoin", qty: 1.5, invested: 130, deltaQty: 0.5, deltaInvested: 30 }); // sha3, le plus récent en premier
+    expect(entries[1]).toMatchObject({ cgId: "ethereum", qty: 2, invested: 200, deltaQty: null, deltaInvested: null }); // sha2, 1re transaction connue pour ETH
+    expect(entries[2]).toMatchObject({ cgId: "bitcoin", qty: 1, invested: 100, deltaQty: null, deltaInvested: null }); // sha1, 1re transaction connue pour BTC
+  });
+
+  it("renderTransactionHistory : affiche le ticker et le delta signé, 'premier point suivi' quand il n'y a rien à comparer", () => {
+    dom.window.renderTransactionHistory([
+      { date: "2026-09-03T10:00:00Z", cgId: "bitcoin", qty: 1.5, invested: 130, deltaQty: 0.5, deltaInvested: 30 },
+      { date: "2026-09-01T10:00:00Z", cgId: "bitcoin", qty: 1, invested: 100, deltaQty: null, deltaInvested: null },
+    ]);
+    const html = dom.window.document.getElementById("tx-history-body").innerHTML;
+    expect(html).toContain("BTC");
+    expect(html).toContain("+0.5");
+    expect(html).toContain("premier point suivi");
+  });
+
+  it("renderTransactionHistory : message honnête quand aucune transaction n'est encore enregistrée", () => {
+    dom.window.renderTransactionHistory([]);
+    expect(dom.window.document.getElementById("tx-history-body").textContent).toMatch(/Aucune transaction/);
+  });
+
+  it("ne charge l'historique qu'à la première ouverture de l'accordéon, jamais au rendu initial (évite de payer l'API GitHub pour rien)", () => {
+    let fetchCalled = false;
+    dom.window.fetch = async (...args) => {
+      fetchCalled = true;
+      return mockGithubFetch({ commits: commitsFixture, contentBySha })(...args);
+    };
+    dom.window.renderTransactionCalculator();
+    expect(fetchCalled).toBe(false);
+
+    const details = dom.window.document.getElementById("tx-history-section");
+    details.open = true;
+    details.dispatchEvent(new dom.window.Event("toggle"));
+    expect(fetchCalled).toBe(true);
+  });
+
+  it("affiche un message honnête (jamais une erreur brute) quand l'API GitHub échoue", async () => {
+    dom.window.renderTransactionCalculator();
+    dom.window.fetch = async () => ({ ok: false, status: 403 });
+
+    const details = dom.window.document.getElementById("tx-history-section");
+    details.open = true;
+    details.dispatchEvent(new dom.window.Event("toggle"));
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    expect(dom.window.document.getElementById("tx-history-body").textContent).toMatch(/indisponible/);
   });
 });
 
