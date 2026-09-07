@@ -1334,7 +1334,15 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "risk-on"
+    "regime_at_issue": "risk-on",
+    "signal_precoce": {
+      "detected_at": "2026-09-07T04:20:00Z",
+      "move_pct_since_issue": 5.63,
+      "note": "Peaq (PEAQ) : franchit le seuil de mouvement directionnel (5 %) à la hausse, quelques heures seulement après l'émission du verdict ATTENTE (émis le 6 septembre à 0,02235604 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,02361376 euro, soit +5,63 % depuis l'émission. Cohérent avec la prudence déjà exprimée dans le raisonnement du verdict (mouvement d'une telle ampleur jugé instable). Ne préjuge pas de l'issue à l'échéance du 13 septembre.",
+      "price_at_signal_eur": 0.02361376,
+      "threshold_crossed": true,
+      "threshold_pct": 5
+    }
   },
   {
     "id": "v-20260906-link",
@@ -1430,7 +1438,15 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "risk-on"
+    "regime_at_issue": "risk-on",
+    "signal_precoce": {
+      "detected_at": "2026-09-07T04:20:00Z",
+      "move_pct_since_issue": -8.65,
+      "note": "Jupiter (JUP) : franchit le seuil de mouvement directionnel (5 %) à la baisse, en sens opposé au verdict ACHAT émis quelques heures plus tôt (6 septembre à 0,232896 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,212742 euro, soit -8,65 % depuis l'émission. Retournement rapide cohérent avec le risque de « retournement brutal » explicitement évoqué dans le raisonnement du verdict après un rallye de +68,8 % en deux semaines. Ne préjuge pas de l'issue à l'échéance du 13 septembre.",
+      "price_at_signal_eur": 0.212742,
+      "threshold_crossed": true,
+      "threshold_pct": 5
+    }
   },
   {
     "id": "v-20260906-lpt",
@@ -1558,7 +1574,15 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "risk-on"
+    "regime_at_issue": "risk-on",
+    "signal_precoce": {
+      "detected_at": "2026-09-07T04:20:00Z",
+      "move_pct_since_issue": -6.81,
+      "note": "Arbitrum (ARB) : franchit le seuil de mouvement directionnel (5 %) à la baisse, en sens opposé au verdict ACHAT émis quelques heures plus tôt (6 septembre à 0,163523 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,152392 euro, soit -6,81 % depuis l'émission. Cohérent avec le risque de « correction brutale » explicitement évoqué dans le raisonnement du verdict après un rallye de +112,2 % sur 7 jours. Ne préjuge pas de l'issue à l'échéance du 13 septembre.",
+      "price_at_signal_eur": 0.152392,
+      "threshold_crossed": true,
+      "threshold_pct": 5
+    }
   },
   {
     "id": "v-20260906-inj",
