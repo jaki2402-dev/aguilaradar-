@@ -267,6 +267,7 @@
               <select id="tx-type">
                 <option value="achat">Achat</option>
                 <option value="vente">Vente</option>
+                <option value="correction">Correction</option>
               </select>
             </div>
             <div class="tx-field">
@@ -278,7 +279,7 @@
               <input id="tx-qty" type="number" step="any" min="0" inputmode="decimal" required />
             </div>
             <div class="tx-field">
-              <label for="tx-invested-override">Montant investi (optionnel)</label>
+              <label for="tx-invested-override" id="tx-invested-label">Montant investi (optionnel)</label>
               <input id="tx-invested-override" type="number" step="any" min="0" inputmode="decimal" placeholder="= prix × quantité si vide" />
             </div>
             <div class="tx-field" id="tx-secret-field" hidden>
@@ -287,6 +288,7 @@
             </div>
             <button id="tx-calc-btn" type="submit" class="tx-submit-btn">Calculer</button>
           </form>
+          <p class="hint" id="tx-correction-hint" hidden style="margin-top: 8px;">Mode Correction : tu tapes directement les valeurs finales correctes pour cet actif (pas un achat/vente en plus) — ça remplace qty et investi actuels tels quels.</p>
           <div id="tx-result" style="margin-top: 14px;"></div>
         </div>
       </details>

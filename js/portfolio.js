@@ -765,18 +765,33 @@ function renderPortfolio(portfolio, verdicts, thesis, history) {
   if (history !== undefined) loadPortfolioBenchmark(latestPortfolioHistory);
 }
 
-// Calculette achat/vente — coût moyen pondéré (même méthode que "coût net moyen" affiché par
-// l'app de suivi de l'utilisateur, voir CLAUDE.md). investedOverride (optionnel, achat
-// uniquement) : montant réellement investi si différent de prix × quantité (frais, slippage —
-// l'app source de l'utilisateur affiche parfois un montant légèrement différent du calcul brut).
-// Ignoré à la vente : "investi" y suit toujours le coût moyen déjà en position, jamais le prix de
-// vente — un montant "investi" n'a pas de sens sur une cession. Par défaut (PORTFOLIO_WRITE_URL
-// non configuré, voir config.js), le résultat reste affiché à copier soi-même dans
-// data/portfolio.json ; voir saveTransaction plus bas pour l'écriture directe une fois le Worker
-// déployé — jamais l'inverse (aucune écriture tant que ce n'est pas explicitement configuré).
+// Calculette achat/vente/correction — coût moyen pondéré (même méthode que "coût net moyen"
+// affiché par l'app de suivi de l'utilisateur, voir CLAUDE.md). investedOverride (optionnel,
+// achat uniquement) : montant réellement investi si différent de prix × quantité (frais,
+// slippage — l'app source de l'utilisateur affiche parfois un montant légèrement différent du
+// calcul brut). Ignoré à la vente : "investi" y suit toujours le coût moyen déjà en position,
+// jamais le prix de vente — un montant "investi" n'a pas de sens sur une cession. Par défaut
+// (PORTFOLIO_WRITE_URL non configuré, voir config.js), le résultat reste affiché à copier
+// soi-même dans data/portfolio.json ; voir saveTransaction plus bas pour l'écriture directe une
+// fois le Worker déployé — jamais l'inverse (aucune écriture tant que ce n'est pas explicitement
+// configuré).
+// "correction" (pas de coût moyen calculé, qty/investi tapés sont les valeurs finales appliquées
+// telles quelles) existe uniquement parce qu'aucune trace individuelle des transactions n'est
+// gardée nulle part — seul ce total courant l'est (voir CLAUDE.md) — donc réparer une saisie
+// erronée (mauvais type, montant faux) n'avait pas d'autre voie qu'un achat/vente compensatoire
+// deviné à la main, fragile (un cas réel s'est corrigé tout seul par coïncidence de montants,
+// voir historique git du 07/09 sur arbitrum — la prochaine fois pourrait ne pas avoir cette
+// chance).
 function computeTransactionResult(currentQty, currentInvested, type, price, qty, investedOverride) {
   const curQty = currentQty || 0;
   const curInvested = currentInvested || 0;
+
+  if (type === "correction") {
+    if (!(qty >= 0)) return { error: "Indique une quantité correcte (0 ou plus)." };
+    if (!(investedOverride >= 0)) return { error: "Indique un montant investi correct (0 ou plus)." };
+    return { newQty: qty, newInvested: investedOverride };
+  }
+
   if (!(price > 0) || !(qty > 0)) {
     return { error: "Indique un prix et une quantité strictement positifs." };
   }
@@ -891,15 +906,28 @@ function renderTransactionCalculator() {
     if (secretInput) secretInput.value = loadSavedTxSecret();
   }
 
-  // Champ "montant investi" pertinent seulement à l'achat (voir computeTransactionResult, il est
-  // ignoré à la vente) — masqué dès qu'on choisit "Vente" pour ne jamais laisser croire qu'il a
-  // un effet dessus.
-  function syncInvestedFieldVisibility() {
-    const field = investedInput ? investedInput.closest(".tx-field") : null;
-    if (field) field.hidden = typeSelect.value !== "achat";
+  const priceField = priceInput.closest(".tx-field");
+  const investedLabel = document.getElementById("tx-invested-label");
+  const correctionHint = document.getElementById("tx-correction-hint");
+
+  // Champs pertinents selon le type : "montant investi" utile à l'achat (optionnel) ET à la
+  // correction (obligatoire, voir computeTransactionResult) mais toujours ignoré à la vente ;
+  // "prix" inutile en correction (aucun coût moyen recalculé, qty/investi tapés sont directement
+  // les valeurs finales) — masqués plutôt que laissés visibles sans effet, pour ne jamais laisser
+  // croire qu'ils comptent dans le calcul.
+  function syncFieldsForType() {
+    const type = typeSelect.value;
+    const investedField = investedInput ? investedInput.closest(".tx-field") : null;
+    if (investedField) investedField.hidden = type === "vente";
+    if (investedInput) investedInput.required = type === "correction";
+    if (investedLabel) investedLabel.textContent = type === "correction" ? "Montant investi correct (€)" : "Montant investi (optionnel)";
+    if (investedInput) investedInput.placeholder = type === "correction" ? "Total réellement investi sur cet actif" : "= prix × quantité si vide";
+    if (priceField) priceField.hidden = type === "correction";
+    priceInput.required = type !== "correction";
+    if (correctionHint) correctionHint.hidden = type !== "correction";
   }
-  typeSelect.addEventListener("change", syncInvestedFieldVisibility);
-  syncInvestedFieldVisibility();
+  typeSelect.addEventListener("change", syncFieldsForType);
+  syncFieldsForType();
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -907,7 +935,7 @@ function renderTransactionCalculator() {
     const type = typeSelect.value;
     const price = parseFloat(priceInput.value);
     const qty = parseFloat(qtyInput.value);
-    const investedRaw = investedInput && type === "achat" ? investedInput.value.trim() : "";
+    const investedRaw = investedInput && (type === "achat" || type === "correction") ? investedInput.value.trim() : "";
     const investedOverride = investedRaw !== "" ? parseFloat(investedRaw) : undefined;
 
     const positions = (latestPortfolio && latestPortfolio.positions) || [];

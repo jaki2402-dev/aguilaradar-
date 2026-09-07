@@ -11,11 +11,12 @@ const PORTFOLIO_FIXTURE_HTML = `<!doctype html><html><body>
     <select id="tx-type">
       <option value="achat">Achat</option>
       <option value="vente">Vente</option>
+      <option value="correction">Correction</option>
     </select>
-    <input id="tx-price" type="number" />
-    <input id="tx-qty" type="number" />
+    <input id="tx-price" type="number" step="any" min="0" />
+    <input id="tx-qty" type="number" step="any" min="0" />
     <div class="tx-field">
-      <input id="tx-invested-override" type="number" />
+      <input id="tx-invested-override" type="number" step="any" min="0" />
     </div>
     <div class="tx-field" id="tx-secret-field" hidden>
       <input id="tx-secret" type="password" />
@@ -519,6 +520,23 @@ describe("portfolio.js — computeTransactionResult (calculette achat/vente, co�
   it("vente : ignore le montant investi optionnel (n'a pas de sens sur une cession, voir le coût moyen déjà en position)", () => {
     expect(computeTransactionResult(10, 100, "vente", 999, 4, 12345)).toEqual({ newQty: 6, newInvested: 60 });
   });
+
+  it("correction : applique directement qty/investi tapés, sans coût moyen ni prix (cas réel arbitrum du 07/09)", () => {
+    expect(computeTransactionResult(1714.42, 148.65, "correction", undefined, 848.08, 65.3)).toEqual({ newQty: 848.08, newInvested: 65.3 });
+  });
+
+  it("correction : accepte une quantité et un montant investi à zéro (position soldée)", () => {
+    expect(computeTransactionResult(10, 100, "correction", undefined, 0, 0)).toEqual({ newQty: 0, newInvested: 0 });
+  });
+
+  it("correction : refuse une quantité négative", () => {
+    expect(computeTransactionResult(10, 100, "correction", undefined, -1, 50).error).toBeDefined();
+  });
+
+  it("correction : refuse un montant investi manquant ou négatif", () => {
+    expect(computeTransactionResult(10, 100, "correction", undefined, 5, undefined).error).toBeDefined();
+    expect(computeTransactionResult(10, 100, "correction", undefined, 5, -1).error).toBeDefined();
+  });
 });
 
 describe("portfolio.js — renderTransactionCalculator", () => {
@@ -608,6 +626,43 @@ describe("portfolio.js — renderTransactionCalculator", () => {
     typeSelect.value = "achat";
     typeSelect.dispatchEvent(new dom.window.Event("change"));
     expect(field.hidden).toBe(false);
+  });
+
+  it("en mode Correction : le prix devient inutile (non requis), le montant investi devient obligatoire", () => {
+    dom.window.renderTransactionCalculator();
+    const typeSelect = dom.window.document.getElementById("tx-type");
+    const priceInput = dom.window.document.getElementById("tx-price");
+    const investedInput = dom.window.document.getElementById("tx-invested-override");
+    const investedField = investedInput.closest(".tx-field");
+
+    typeSelect.value = "correction";
+    typeSelect.dispatchEvent(new dom.window.Event("change"));
+    expect(priceInput.required).toBe(false);
+    expect(investedField.hidden).toBe(false);
+    expect(investedInput.required).toBe(true);
+
+    typeSelect.value = "achat";
+    typeSelect.dispatchEvent(new dom.window.Event("change"));
+    expect(priceInput.required).toBe(true);
+    expect(investedInput.required).toBe(false);
+  });
+
+  it("mode Correction : écrase qty/investi tapés tels quels, indépendamment de la position actuelle en mémoire (répare une saisie erronée sans deviner d'achat/vente compensatoire)", () => {
+    setGlobal(dom, "PORTFOLIO_WRITE_URL", "REMPLACE-MOI-URL-du-worker/transaction");
+    dom.window.renderPortfolio({ positions: [pos({ cgId: "arbitrum", qty: 1714.42, invested: 148.65 })] }, []);
+    dom.window.renderTransactionCalculator();
+
+    const typeSelect = dom.window.document.getElementById("tx-type");
+    dom.window.document.getElementById("tx-asset").value = "arbitrum";
+    typeSelect.value = "correction";
+    typeSelect.dispatchEvent(new dom.window.Event("change"));
+    dom.window.document.getElementById("tx-qty").value = "848.08";
+    dom.window.document.getElementById("tx-invested-override").value = "65.3";
+    dom.window.document.getElementById("tx-calc-btn").click();
+
+    const text = dom.window.document.getElementById("tx-result").textContent;
+    expect(text).toContain('"qty": 848.08');
+    expect(text).toContain('"invested": 65.3');
   });
 
   it("enregistre directement via le Worker configuré (en-tête secret inclus) et confirme le succès", async () => {
