@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-07T12:12:53Z",
-  "headline": "Situation stable depuis le dernier résumé",
-  "summary": "Aucun événement notable depuis le dernier résumé (06h12 UTC) : aucun nouveau verdict, aucune nouvelle alerte ni résolution enregistrés dans le dépôt. Le repli déjà signalé sur ARB et JUP après leur rallye du 6 septembre se poursuit sans changement notable. Contexte macro inchangé depuis le 4 septembre : Fed toujours en position attentiste avant sa réunion du 16 septembre, chômage américain à 4,3 %.",
+  "generated_at": "2026-09-07T18:09:03Z",
+  "headline": "Piratage Liquid Network (320 M$) ; moteur ajuste son horizon",
+  "summary": "Le lot de verdicts du 23 août s'est résolu (6/15 corrects) : précision globale remonte à 31,25 % (32 résolus), toujours sous la nouvelle baseline (50 %). Des mouvements extrêmes (ARB +85 %, JUP +69 %, PEAQ +65 %, AIOZ -57 %) poussent le moteur à adopter un horizon adaptatif de 7 jours sur les actifs volatils, contre 14 jours avant. Les verdicts émis le 6/09 divergent déjà : ARB et JUP reculent contre leur ACHAT, PEAQ et INJ montent contre ATTENTE. Piratage marquant : Liquid Network, ~320 M$ (4 000 BTC) dérobés.",
   "tips": [
-    "Aucune nouvelle donnée depuis 06h12 UTC, marché stable sur cette fenêtre.",
-    "ARB et JUP restent sous leur prix d'émission après leur rallye du 6 septembre.",
-    "Précision du moteur : 29 % sur 31 verdicts résolus, sous la baseline (51,6 %)."
+    "Moteur : 31,25 % de précision (32 résolus), adopte un horizon 7j sur les actifs volatils.",
+    "Nouveaux verdicts (6/09) déjà en écart : ARB et JUP reculent contre ACHAT, PEAQ/INJ montent.",
+    "Piratage Liquid Network (Blockstream) : ~320 M$ (4 000 BTC) dérobés, réseau en pause."
   ],
   "market_tone": "neutre"
 }
