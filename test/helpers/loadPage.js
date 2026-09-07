@@ -47,6 +47,11 @@ export function createPage({ url = DEFAULT_URL, html = "<!doctype html><html><bo
     lastError = err;
   });
   const dom = new JSDOM(html, { url, runScripts: "dangerously", virtualConsole });
+  // jsdom expose TextEncoder mais pas TextDecoder sur window (contrairement à un vrai
+  // navigateur, qui a les deux) — gap de l'environnement de test, pas du navigateur réel :
+  // portfolio.js décode du base64 UTF-8 (API GitHub Contents) avec TextDecoder, exactement
+  // comme cloudflare-worker/worker.js le fait déjà côté Worker pour la même raison.
+  dom.window.TextDecoder = TextDecoder;
   dom.__getLastError = () => lastError;
   dom.__clearLastError = () => {
     lastError = null;

@@ -977,4 +977,121 @@ function renderTransactionCalculator() {
       <pre class="tx-json-preview">{ "cgId": "${escapeHtml(cgId)}", "qty": ${newQty}, "invested": ${newInvested} }</pre>
     `;
   });
+
+  attachTransactionHistoryToggle();
+}
+
+// Historique des transactions — reconstruit à partir des commits git réels de data/portfolio.json
+// (API GitHub publique, dépôt public donc lecture sans authentification ni secret) plutôt qu'un
+// journal séparé à tenir à jour en double : chaque achat/vente/correction est déjà "un vrai commit
+// git" (voir saveTransaction plus haut), l'historique existe donc déjà, il suffit de le lire.
+// Chargé à la première ouverture de l'accordéon seulement (attachTransactionHistoryToggle plus
+// bas), jamais au chargement de la page : ~1 requête GitHub par transaction jamais payée si
+// personne ne regarde. Limite API GitHub non authentifiée (60/h/IP) : largement suffisante pour
+// le volume réel de ce portefeuille (usage personnel, quelques transactions par mois).
+let txHistoryCache = null;
+
+// Décodage identique à b64ToUtf8Text du Worker (cloudflare-worker/worker.js) : l'API GitHub
+// Contents renvoie le fichier en base64 des OCTETS UTF-8 bruts, atob() seul donnerait une chaîne
+// "binaire" (1 code unit par octet) fausse dès qu'un accent apparaît dans portfolio.json (ex.
+// "réellement", "capital réellement engagé").
+function b64ToUtf8(b64) {
+  const bin = atob(b64.replace(/\n/g, ""));
+  const bytes = Uint8Array.from(bin, (c) => c.charCodeAt(0));
+  return new TextDecoder().decode(bytes);
+}
+
+// Un seul appel pour lister TOUS les commits touchant data/portfolio.json (quel que soit
+// l'actif), filtré au message exact posé par le Worker (updatePortfolioPosition,
+// cloudflare-worker/worker.js) — jamais les autres commits qui touchent ce fichier (setup manuel
+// initial, etc.), qui n'ont pas ce format et n'ont rien d'un "achat/vente" à afficher ici. Un seul
+// appel de contenu par commit retenu (pas deux) : le delta d'un actif se calcule contre le DERNIER
+// commit connu pour CE MÊME actif, jamais contre le commit immédiatement précédent dans la liste
+// globale (qui peut concerner un autre actif) — donc rien à demander en plus pour la toute
+// première transaction connue d'un actif, affichée sans delta plutôt que d'inventer un "avant".
+async function fetchTransactionHistory() {
+  const listRes = await fetch(`${GITHUB_REPO_API_BASE}/commits?path=data/portfolio.json&per_page=100`);
+  if (!listRes.ok) throw new Error(`commits ${listRes.status}`);
+  const commits = await listRes.json();
+  const txCommits = commits
+    .filter((c) => /^Transaction portefeuille : /.test(c.commit.message))
+    .sort((a, b) => new Date(a.commit.author.date) - new Date(b.commit.author.date));
+
+  const lastKnown = {};
+  const entries = [];
+  for (const c of txCommits) {
+    const cgId = c.commit.message.replace("Transaction portefeuille : ", "").trim();
+    const contentRes = await fetch(`${GITHUB_REPO_API_BASE}/contents/data/portfolio.json?ref=${c.sha}`);
+    if (!contentRes.ok) continue; // un commit illisible ne doit pas casser tout le reste de l'historique
+    const contentJson = await contentRes.json();
+    const portfolio = JSON.parse(b64ToUtf8(contentJson.content));
+    const pos = (portfolio.positions || []).find((p) => p.cgId === cgId);
+    if (!pos) continue;
+
+    const prev = lastKnown[cgId];
+    entries.push({
+      date: c.commit.author.date,
+      cgId,
+      qty: pos.qty,
+      invested: pos.invested,
+      deltaQty: prev ? roundQty(pos.qty - prev.qty) : null,
+      deltaInvested: prev ? roundEuro(pos.invested - prev.invested) : null,
+    });
+    lastKnown[cgId] = { qty: pos.qty, invested: pos.invested };
+  }
+  return entries.reverse(); // plus récent en premier, comme les autres journaux du site (correction_log, digest...)
+}
+
+function renderTransactionHistory(entries) {
+  const el = document.getElementById("tx-history-body");
+  if (!el) return;
+  if (entries.length === 0) {
+    el.innerHTML = `<p class="empty-state">Aucune transaction enregistrée via ce formulaire pour l'instant.</p>`;
+    return;
+  }
+  el.innerHTML = entries
+    .map((e) => {
+      const fav = FAVORIS.find((f) => f.cgId === e.cgId);
+      const ticker = fav ? fav.ticker : e.cgId;
+      const dateLabel = new Date(e.date).toLocaleString("fr-FR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+      const deltaHtml =
+        e.deltaQty === null
+          ? `<span class="hint">premier point suivi</span>`
+          : `<span class="${e.deltaQty >= 0 ? "positive" : "negative"}">${e.deltaQty >= 0 ? "+" : ""}${e.deltaQty} ${escapeHtml(ticker)}</span> / <span class="${e.deltaInvested >= 0 ? "positive" : "negative"}">${e.deltaInvested >= 0 ? "+" : ""}${formatPrice(e.deltaInvested, "EUR")}</span>`;
+      return `<div class="journal-entry">
+        <div class="log-header"><span><strong>${escapeHtml(ticker)}</strong></span><span class="hint">${escapeHtml(dateLabel)}</span></div>
+        <p class="hint">${deltaHtml} — position après : ${e.qty} ${escapeHtml(ticker)} / ${formatPrice(e.invested, "EUR")} investi</p>
+      </div>`;
+    })
+    .join("");
+}
+
+async function loadTransactionHistory() {
+  const el = document.getElementById("tx-history-body");
+  if (!el) return;
+  el.innerHTML = `<p class="empty-state">Chargement de l'historique…</p>`;
+  try {
+    if (!txHistoryCache) txHistoryCache = await fetchTransactionHistory();
+    renderTransactionHistory(txHistoryCache);
+  } catch (err) {
+    console.error("Historique des transactions indisponible :", err);
+    el.innerHTML = `<p class="empty-state">Historique indisponible pour l'instant (API GitHub limitée ou hors ligne) — referme et rouvre pour réessayer.</p>`;
+  }
+}
+
+// Chargé à la première ouverture seulement (même mécanique que attachPortfolioToggle plus haut) :
+// personne ne doit payer ~1 requête GitHub par transaction pour un accordéon jamais ouvert. loaded
+// remis à false en cas d'échec pour qu'une prochaine ouverture retente réellement (ex: limite API
+// dépassée puis réinitialisée une heure plus tard).
+function attachTransactionHistoryToggle() {
+  const details = document.getElementById("tx-history-section");
+  if (!details) return;
+  let loaded = false;
+  details.addEventListener("toggle", () => {
+    if (!details.open || loaded) return;
+    loaded = true;
+    loadTransactionHistory().then(() => {
+      if (!txHistoryCache) loaded = false;
+    });
+  });
 }

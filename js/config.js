@@ -220,6 +220,16 @@ let AI_RELAY_URL = "https://aguilaradar-assistant-ia.jaki2402.workers.dev/";
 // AI_RELAY_URL (valeur à changer après coup par un humain).
 let PORTFOLIO_WRITE_URL = "https://aguilaradar-assistant-ia.jaki2402.workers.dev/transaction";
 
+// Base de l'API GitHub publique (dépôt public, lecture seule, sans authentification ni secret —
+// même limite de 60 requêtes/heure/IP que n'importe quel visiteur anonyme) utilisée par
+// l'historique des transactions (loadTransactionHistory, portfolio.js) : chaque achat/vente/
+// correction est déjà "un vrai commit git" sur data/portfolio.json (voir saveTransaction
+// ci-dessus), donc l'historique existe déjà dans git — pas besoin d'un journal séparé à tenir à
+// jour en double, juste le lire. `const` (jamais réaffectée) : contrairement à
+// AI_RELAY_URL/PORTFOLIO_WRITE_URL, ce n'est pas un endpoint à déployer/configurer, juste ce
+// dépôt lui-même.
+const GITHUB_REPO_API_BASE = "https://api.github.com/repos/jaki2402-dev/aguilaradar-";
+
 const DATA_URLS = {
   verdicts: "data/verdicts.json",
   engineHistory: "data/engine-history.json",
