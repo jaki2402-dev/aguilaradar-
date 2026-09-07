@@ -423,6 +423,33 @@ async function loadPortfolioBenchmark(history) {
 // latestPortfolio/latestPortfolioVerdicts/latestPortfolioThesis juste au-dessus.
 let latestPortfolioRanking = [];
 
+// Nombre de positions affichées d'emblée avant le repli "voir les autres" — au-delà, la carte
+// devenait un mur de texte sur 15 positions (chacune avec raison + points de vigilance), plus
+// long à scanner que le classement lui-même n'apporte de valeur au premier coup d'œil.
+const ALLOC_RANKING_VISIBLE_COUNT = 5;
+
+// Une ligne du classement — factorisé pour être appelé identiquement sur les positions toujours
+// visibles ET celles repliées sous <details> (voir renderPortfolioAttractivenessRanking),
+// jamais 2 gabarits divergents pour la même donnée. idx est le rang RÉEL (0-based) dans le
+// classement complet, pas la position dans la tranche affichée — sinon la section repliée
+// recommencerait à "#1".
+function renderAllocRankRow(r, idx) {
+  const shareLabel = r.valueShare !== null && r.valueShare !== undefined ? `<span class="hint">déjà ${r.valueShare.toFixed(0)} % du portefeuille</span>` : "";
+  const closeLabel = r.closeCallWith ? `<span class="hint alloc-close">quasi ex-æquo avec ${escapeHtml(r.closeCallWith)}</span>` : "";
+  const topReason = r.reasons[0] ? `<p class="hint alloc-reason">${escapeHtml(r.reasons[0])}</p>` : "";
+  const caveatsHtml = r.caveats.length ? `<p class="hint alloc-caveat">${r.caveats.map((c) => escapeHtml(c)).join(" ")}</p>` : "";
+  return `
+      <div class="alloc-rank-row">
+        <span class="alloc-rank-idx">#${idx + 1}</span>
+        <span class="alloc-rank-ticker">${escapeHtml(r.ticker)}</span>
+        <span class="badge ${tierBadgeClass(r.tier)}">${escapeHtml(r.tier)}</span>
+        <span class="hint">confiance ${escapeHtml(r.confidenceLevel)}</span>
+        ${shareLabel}
+        ${closeLabel}
+      </div>
+      ${topReason}${caveatsHtml}`;
+}
+
 // "Où placer ma prochaine recharge ?" — classement transparent (allocation.js, jamais un score à
 // fausse précision) des 15 positions. Garde défensive typeof (même motif que
 // renderFavorisContextSection, detail.js) : si jamais ce fichier tournait sans allocation.js
@@ -434,24 +461,17 @@ function renderPortfolioAttractivenessRanking(positions) {
   latestPortfolioRanking = ranked;
   if (ranked.length === 0) return "";
 
-  const rows = ranked
-    .map((r, i) => {
-      const shareLabel = r.valueShare !== null && r.valueShare !== undefined ? `<span class="hint">déjà ${r.valueShare.toFixed(0)} % du portefeuille</span>` : "";
-      const closeLabel = r.closeCallWith ? `<span class="hint alloc-close">quasi ex-æquo avec ${escapeHtml(r.closeCallWith)}</span>` : "";
-      const topReason = r.reasons[0] ? `<p class="hint alloc-reason">${escapeHtml(r.reasons[0])}</p>` : "";
-      const caveatsHtml = r.caveats.length ? `<p class="hint alloc-caveat">${r.caveats.map((c) => escapeHtml(c)).join(" ")}</p>` : "";
-      return `
-      <div class="alloc-rank-row">
-        <span class="alloc-rank-idx">#${i + 1}</span>
-        <span class="alloc-rank-ticker">${escapeHtml(r.ticker)}</span>
-        <span class="badge ${tierBadgeClass(r.tier)}">${escapeHtml(r.tier)}</span>
-        <span class="hint">confiance ${escapeHtml(r.confidenceLevel)}</span>
-        ${shareLabel}
-        ${closeLabel}
-      </div>
-      ${topReason}${caveatsHtml}`;
-    })
-    .join("");
+  const visibleRows = ranked.slice(0, ALLOC_RANKING_VISIBLE_COUNT).map((r, i) => renderAllocRankRow(r, i)).join("");
+  const rest = ranked.slice(ALLOC_RANKING_VISIBLE_COUNT);
+  // <details>/<summary> natif (même grammaire visuelle que .accueil-section, voir style.css) —
+  // pas de JS de repli à écrire/tester, accessible clavier gratuitement. Volontairement PAS la
+  // classe .accueil-section elle-même : imbriquer sa propre carte (fond+bordure+radius) DANS
+  // .portfolio-chart-card empilerait une boîte dans une boîte (le commentaire au-dessus de
+  // .accueil-more dans style.css met déjà en garde contre exactement ça) — .alloc-more est un
+  // simple séparateur, jamais une 2e carte.
+  const restHtml = rest.length
+    ? `<details class="alloc-more"><summary>Voir les ${rest.length} autres positions</summary>${rest.map((r, i) => renderAllocRankRow(r, i + ALLOC_RANKING_VISIBLE_COUNT)).join("")}</details>`
+    : "";
 
   return `
     <div class="portfolio-chart-card" id="portfolio-allocation-card">
@@ -465,7 +485,8 @@ function renderPortfolioAttractivenessRanking(positions) {
           <button type="button" class="chat-suggestion-chip" data-alloc-amount="custom">Demander</button>
         </span>
       </div>
-      <div class="alloc-rank-list">${rows}</div>
+      <div class="alloc-rank-list">${visibleRows}</div>
+      ${restHtml}
       <p class="hint">Classement basé sur le verdict technique (14j) et la thèse hebdo — les 2 seules dimensions couvertes sur les 15 positions aujourd'hui. Flux ETF/whales par actif et calendrier des unlocks : non disponibles, jamais estimés (le point de vigilance d'une position le signale quand une vraie donnée existe). Un écart faible entre deux positions ne veut pas dire que l'une est objectivement meilleure — voir "quasi ex-æquo" ci-dessus le cas échéant.</p>
     </div>`;
 }

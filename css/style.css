@@ -600,6 +600,21 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
 .alloc-reason { margin: 0 0 2px 30px; }
 .alloc-caveat { margin: 0 0 6px 30px; color: var(--warning); }
 .alloc-close { font-style: italic; }
+
+/* Repli "voir les N autres positions" au-delà de ALLOC_RANKING_VISIBLE_COUNT (portfolio.js) —
+   même grammaire visuelle que details.accueil-section (flèche qui pivote, texte sourd) mais SANS
+   son fond/bordure propres : imbriquer une 2e carte dans .portfolio-chart-card empilerait une
+   boîte dans une boîte (voir le commentaire sur .accueil-more, plus haut dans ce fichier) — un
+   simple séparateur suffit ici. */
+.alloc-more { border-top: 1px solid var(--border); margin-top: 6px; padding-top: 4px; }
+.alloc-more summary {
+  cursor: pointer; list-style: none; padding: 6px 0; font-size: 0.82rem; color: var(--text-dim);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.alloc-more summary::-webkit-details-marker { display: none; }
+.alloc-more summary::after { content: "▾"; color: var(--text-faint); transition: transform 0.2s ease; }
+.alloc-more[open] summary::after { transform: rotate(180deg); }
+.alloc-more .alloc-rank-row:first-of-type { border-top: none; }
 /* Historique de valeur (data/portfolio-history.json, 1 point réel/jour — voir
    renderPortfolioHistoryChart, portfolio.js). Même technique que sparklinePoints (cards.js)
    mais en plus grand, avec des points survolables (contrairement au mini spark-line purement

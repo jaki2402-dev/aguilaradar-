@@ -1058,6 +1058,37 @@ describe("portfolio.js — renderPortfolioAttractivenessRanking (\"Où placer ma
     expect(dom.window.document.getElementById("portfolio-allocation-card")).toBeNull();
   });
 
+  it("shows the top 5 positions directly and folds the rest behind a <details> toggle, correctly numbered", () => {
+    setGlobal(
+      dom,
+      "latestFavorisPrices",
+      Object.fromEntries(["bitcoin", "ethereum", "chainlink", "arbitrum", "celestia", "cartesi", "livepeer"].map((id) => [id, { eur: 100 }]))
+    );
+    const positions = ["bitcoin", "ethereum", "chainlink", "arbitrum", "celestia", "cartesi", "livepeer"].map((cgId) => pos({ cgId, qty: 1, invested: 100 }));
+    dom.window.renderPortfolio({ positions }, [], null);
+    const card = dom.window.document.getElementById("portfolio-allocation-card");
+    const visibleList = card.querySelector(".alloc-rank-list");
+    const more = card.querySelector("details.alloc-more");
+    expect(visibleList.querySelectorAll(".alloc-rank-row")).toHaveLength(5);
+    expect(visibleList.textContent).toContain("#1");
+    expect(visibleList.textContent).toContain("#5");
+    expect(more).not.toBeNull();
+    expect(more.querySelectorAll(".alloc-rank-row")).toHaveLength(2);
+    // Rang réel (6, 7), jamais recommencé à #1 dans la section repliée.
+    expect(more.textContent).toContain("#6");
+    expect(more.textContent).toContain("#7");
+    expect(more.querySelector("summary").textContent).toContain("2 autres positions");
+  });
+
+  it("shows no fold-out toggle when there are 5 or fewer positions to rank", () => {
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 }, ethereum: { eur: 100 } });
+    const positions = [pos({ cgId: "bitcoin", qty: 1, invested: 100 }), pos({ cgId: "ethereum", qty: 1, invested: 100 })];
+    dom.window.renderPortfolio({ positions }, [], null);
+    const card = dom.window.document.getElementById("portfolio-allocation-card");
+    expect(card.querySelector("details.alloc-more")).toBeNull();
+    expect(card.querySelectorAll(".alloc-rank-row")).toHaveLength(2);
+  });
+
   it("clicking an amount chip switches to the Assistant tab and submits a question grounded in the real ranking", () => {
     setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
     dom.window.renderPortfolio({ positions: [pos({ qty: 1, invested: 100 })] }, [], null);
