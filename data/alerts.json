@@ -1029,5 +1029,67 @@
     "triggered_at": "2026-09-07T04:20:00Z",
     "message": "TIA, ARB, JUP et LINK basculent en ACHAT technique après des hausses extrêmes (ARB +112 % sur 7 j) : risque de surchauffe à surveiller — ARB et JUP reviennent déjà sous leur prix d'émission. BTC/ETH restent en ATTENTE, régime risk-on inchangé.",
     "sentiment": "neutre"
+  },
+  {
+    "id": "alert-20260907-1620-peaq-hausse",
+    "ticker_ou_theme": "PEAQ",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-07T16:20:00Z",
+    "sentiment": "positif",
+    "message": "Peaq (PEAQ) : l'écart continue de se creuser à la hausse sur le verdict ATTENTE actif (émis le 6 septembre à 0,02235604 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,02638215 euro, soit +18,01 % depuis l'émission (contre +5,63 % au cycle précédent) — accélération nette de l'engouement DePIN plutôt que l'essoufflement anticipé dans le raisonnement du verdict. Ne préjuge pas de l'issue à l'échéance du 13 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "alert-20260907-1620-jup-baisse",
+    "ticker_ou_theme": "JUP",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-07T16:20:00Z",
+    "sentiment": "négatif",
+    "message": "Jupiter (JUP) : reste sous le seuil de mouvement directionnel (5 %), en sens opposé au verdict ACHAT émis le 6 septembre à 0,232896 euro. Prix vérifié par appel direct groupé à l'API CoinGecko : 0,213274 euro, soit -8,43 % depuis l'émission (contre -8,65 % au cycle précédent, écart stable). Ne préjuge pas de l'issue à l'échéance du 13 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "alert-20260907-1620-arb-baisse",
+    "ticker_ou_theme": "ARB",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-07T16:20:00Z",
+    "sentiment": "négatif",
+    "message": "Arbitrum (ARB) : le repli s'accélère nettement, toujours en sens opposé au verdict ACHAT émis le 6 septembre à 0,163523 euro. Prix vérifié par appel direct groupé à l'API CoinGecko : 0,138806 euro, soit -15,12 % depuis l'émission (contre -6,81 % au cycle précédent) — confirmation du risque de correction brutale déjà évoqué dans le raisonnement du verdict après le rallye de +112,2 % sur 7 jours qui l'a motivé.",
+    "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "alert-20260907-1620-inj-hausse",
+    "ticker_ou_theme": "INJ",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-07T16:20:00Z",
+    "sentiment": "positif",
+    "message": "Injective (INJ) : franchit le seuil de mouvement directionnel (5 %) à la hausse sur le verdict ATTENTE actif (émis le 6 septembre à 4,56 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 4,85 euros, soit +6,36 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance du 13 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "alert-20260907-liquid-network-hack",
+    "ticker_ou_theme": "MACRO",
+    "type": "actualite_generale",
+    "triggered_at": "2026-09-07T16:20:00Z",
+    "sentiment": "négatif",
+    "message": "Piratage majeur confirmé sur le Liquid Network, la sidechain Bitcoin de Blockstream utilisée par plusieurs exchanges : environ 4 000 BTC (~320 millions de dollars) retirés le 6 septembre via une faille de validation dans le logiciel Elements, permettant de frapper du L-BTC non adossé à du vrai Bitcoin — près de 95 % de la réserve fédérée du réseau. Les auteurs se revendiquent « white hat » (message OP_RETURN) et négocieraient une restitution conditionnée à la correction du bug, mais aucun retour de fonds confirmé à ce stade. Réseau mis en pause, dépôts/retraits L-BTC suspendus par plusieurs plateformes. Troisième plus gros piratage crypto de 2026 (portant le total de l'année au-delà de 1,2 milliard de dollars sur 276 incidents) — confirmé par au moins trois sources indépendantes (The Block, CoinDesk, Bloomberg). Sans lien direct avec le prix de Bitcoin au moment de cette alerte, mais un nouveau coup porté à la confiance dans l'infrastructure de sécurité crypto, après le piratage Coldcard déjà loggé fin août.",
+    "source": "https://www.theblock.co/news/defi/2026-09-06-liquid-network-pauses-after-purported-white-hat-hackers-withdraw-320-million-in-bitcoin-413626"
+  },
+  {
+    "id": "alert-20260907-1620-macro-stable",
+    "ticker_ou_theme": "MACRO",
+    "type": "actualite_macro",
+    "triggered_at": "2026-09-07T16:20:00Z",
+    "message": "Indice de peur et de cupidité réévalué à 71 (« Greed »), en repli modeste par rapport à 73 la veille mais nettement au-dessus de la valeur interne conservée depuis plusieurs cycles (59) — probable retard de mise à jour côté source primaire plutôt qu'un changement de régime : régime toujours classé « risk-on », cohérent avec le niveau de peur et cupidité élevé sur toute la semaine (67-73 selon les cycles). Dominance BTC réévaluée à 57,8 % (contre 59,21 % conservé jusqu'ici), écart modeste. Recherche large « biggest movers » : classement toujours dominé par des actifs non suivis (Observer, COTI, Biconomy), aucun des 15 favoris ni des opportunités suivies au-delà du seuil de 15 % — aucune action déclenchée en dehors des franchissements de 5 % déjà signalés séparément sur PEAQ/JUP/ARB/INJ. Aucun changement de régime macro à noter.",
+    "source": "agrégat WebSearch (indice de peur et de cupidité + dominance BTC + biggest movers)"
+  },
+  {
+    "id": "alert-20260907-2016-inj-hausse",
+    "ticker_ou_theme": "INJ",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-07T20:16:45Z",
+    "sentiment": "positif",
+    "message": "Injective (INJ) : forte accélération de la hausse sur le verdict ATTENTE actif (émis le 6 septembre à 4,56 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 5,4 euros, soit +18,42 % depuis l'émission (contre +6,36 % au cycle précédent) — franchissement net qui mérite une surveillance rapprochée. Ne préjuge pas de l'issue à l'échéance du 13 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
   }
 ]

@@ -1125,13 +1125,13 @@
     "reasoning": "Le verdict ATTENTE précédent sur Cartesi vient d'être invalidé : mouvement de -12,89 % à l'échéance, largement au-delà du seuil directionnel de 5 % — repli survenu surtout dans les jours suivant l'émission (un signal précoce l'avait détecté dès le 26 août à -11,07 %), le marché a donc tranché nettement à la baisse là où le consensus à trois signaux restait prudent. Pour ce nouveau cycle, lecture technique mixte : quasi-stabilité sur les dernières 24h (-0,4 %) après le repli de la semaine passée (-4,9 % sur 7 jours), plutôt une stabilisation qu'une poursuite nette de la baisse. Aucun nouveau catalyseur fondamental identifié sur l'infrastructure modulaire (le jalon de décentralisation Stage 2 sur L2BEAT reste d'actualité mais n'est pas un développement neuf). Contexte macro toujours risk-on (indice de peur et de cupidité en zone Greed, 67, stable par rapport au cycle précédent). Un seul signal sur trois converge nettement (macro) : confiance insuffisante pour un appel directionnel malgré l'échec du verdict précédent, horizon maintenu à 7 jours vu la volatilité historique de cet actif.",
     "price_at_issue": 0.02166328,
     "resolves_at": "2026-09-07T06:30:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.021927,
+      "actual_move_pct": 1.22,
+      "actual_direction": "ATTENTE",
+      "verdict_correct": true,
+      "resolved_at": "2026-09-07T16:20:00Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1143,6 +1143,39 @@
       "threshold_crossed": false,
       "threshold_pct": 5
     }
+  },
+  {
+    "id": "v-20260907-ctsi",
+    "issued_at": "2026-09-07T16:20:00Z",
+    "asset": "cartesi",
+    "ticker": "CTSI",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -0.5%",
+      "7j +2.4%",
+      "30j +0.1%"
+    ],
+    "signal_consensus": {
+      "technique": "neutre",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "Le verdict ATTENTE précédent (émis le 31 août) vient d'être validé : mouvement de +1,22 % à l'échéance, largement sous le seuil directionnel de 5 %. Nouveau cycle : lecture technique neutre, mouvement quasi plat sur les trois horizons (24h -0,5 %, 7j +2,4 %, 30j +0,1 %), aucune tendance nette. Signal fondamental neutre : aucun nouveau développement confirmé ce cycle sur l'infrastructure modulaire. Signal macro haussier (régime risk-on). Un seul signal sur trois converge : ATTENTE retenue, horizon maintenu à 7 jours vu la volatilité historique de cet actif.",
+    "price_at_issue": 0.021927,
+    "resolves_at": "2026-09-14T16:20:00Z",
+    "status": "pending",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on"
   },
   {
     "id": "v-20260906-btc",
@@ -1336,12 +1369,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-07T04:20:00Z",
-      "move_pct_since_issue": 5.63,
-      "note": "Peaq (PEAQ) : franchit le seuil de mouvement directionnel (5 %) à la hausse, quelques heures seulement après l'émission du verdict ATTENTE (émis le 6 septembre à 0,02235604 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,02361376 euro, soit +5,63 % depuis l'émission. Cohérent avec la prudence déjà exprimée dans le raisonnement du verdict (mouvement d'une telle ampleur jugé instable). Ne préjuge pas de l'issue à l'échéance du 13 septembre.",
-      "price_at_signal_eur": 0.02361376,
+      "detected_at": "2026-09-07T20:16:45Z",
+      "price_at_signal_eur": 0.02665114,
+      "move_pct_since_issue": 19.21,
+      "threshold_pct": 5,
       "threshold_crossed": true,
-      "threshold_pct": 5
+      "note": "Peaq (PEAQ) : l'écart continue de se creuser à la hausse sur le verdict ATTENTE actif (émis le 6 septembre à 0,02235604 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,02665114 euro, soit +19,21 % depuis l'émission (contre +18,01 % au cycle précédent, poursuite modérée). Ne préjuge pas de l'issue à l'échéance du 13 septembre."
     }
   },
   {
@@ -1440,12 +1473,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-07T04:20:00Z",
-      "move_pct_since_issue": -8.65,
-      "note": "Jupiter (JUP) : franchit le seuil de mouvement directionnel (5 %) à la baisse, en sens opposé au verdict ACHAT émis quelques heures plus tôt (6 septembre à 0,232896 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,212742 euro, soit -8,65 % depuis l'émission. Retournement rapide cohérent avec le risque de « retournement brutal » explicitement évoqué dans le raisonnement du verdict après un rallye de +68,8 % en deux semaines. Ne préjuge pas de l'issue à l'échéance du 13 septembre.",
-      "price_at_signal_eur": 0.212742,
+      "detected_at": "2026-09-07T20:16:45Z",
+      "price_at_signal_eur": 0.216394,
+      "move_pct_since_issue": -7.09,
+      "threshold_pct": 5,
       "threshold_crossed": true,
-      "threshold_pct": 5
+      "note": "Jupiter (JUP) : reste sous le seuil de mouvement directionnel (5 %), en sens opposé au verdict ACHAT émis le 6 septembre à 0,232896 euro. Prix vérifié par appel direct groupé à l'API CoinGecko : 0,216394 euro, soit -7,09 % depuis l'émission (contre -8,43 % au cycle précédent, léger retracement). Ne préjuge pas de l'issue à l'échéance du 13 septembre."
     }
   },
   {
@@ -1576,12 +1609,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-07T04:20:00Z",
-      "move_pct_since_issue": -6.81,
-      "note": "Arbitrum (ARB) : franchit le seuil de mouvement directionnel (5 %) à la baisse, en sens opposé au verdict ACHAT émis quelques heures plus tôt (6 septembre à 0,163523 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,152392 euro, soit -6,81 % depuis l'émission. Cohérent avec le risque de « correction brutale » explicitement évoqué dans le raisonnement du verdict après un rallye de +112,2 % sur 7 jours. Ne préjuge pas de l'issue à l'échéance du 13 septembre.",
-      "price_at_signal_eur": 0.152392,
+      "detected_at": "2026-09-07T20:16:45Z",
+      "price_at_signal_eur": 0.144083,
+      "move_pct_since_issue": -11.89,
+      "threshold_pct": 5,
       "threshold_crossed": true,
-      "threshold_pct": 5
+      "note": "Arbitrum (ARB) : le repli se stabilise après l'accélération du cycle précédent, toujours en sens opposé au verdict ACHAT émis le 6 septembre à 0,163523 euro. Prix vérifié par appel direct groupé à l'API CoinGecko : 0,144083 euro, soit -11,89 % depuis l'émission (contre -15,12 % au cycle précédent, léger retracement). Ne préjuge pas de l'issue à l'échéance du 13 septembre."
     }
   },
   {
@@ -1614,6 +1647,14 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "risk-on"
+    "regime_at_issue": "risk-on",
+    "signal_precoce": {
+      "detected_at": "2026-09-07T20:16:45Z",
+      "price_at_signal_eur": 5.4,
+      "move_pct_since_issue": 18.42,
+      "threshold_pct": 5,
+      "threshold_crossed": true,
+      "note": "Injective (INJ) : forte accélération de la hausse sur le verdict ATTENTE actif (émis le 6 septembre à 4,56 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 5,4 euros, soit +18,42 % depuis l'émission (contre +6,36 % au cycle précédent) — franchissement net qui mérite une surveillance rapprochée. Ne préjuge pas de l'issue à l'échéance du 13 septembre."
+    }
   }
 ]
