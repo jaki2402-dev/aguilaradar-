@@ -1,8 +1,8 @@
 {
-  "last_scan_at": "2026-09-04T04:04:09Z",
+  "last_scan_at": "2026-09-07T04:05:28Z",
   "scanned_count": 20,
   "excluded_meme_count": 22,
-  "methodology": "Cycle du 04/09/2026 : Top 20 CoinGecko via le connecteur MCP CoinGecko (memes limites connues : plafond 20 coins, USD natif converti en EUR via taux de change reel Alpha Vantage, variation 7j calculee depuis le sparkline 7 jours reel, variation 30j calculee depuis un prix historique reel a J-30, ATH indisponible -> omis). Exclusion memecoins, stablecoins, actifs de dette tokenises, mega-caps deja notoires (BTC/ETH/BNB/XRP/SOL/TRX) et positions deja suivies au Portefeuille (Chainlink). Marche nettement haussier aujourd'hui (BTC +4.0%, ETH +4.1%, ZEC +15.4% sur 24h). Cardano, archive le 31/08 pour momentum invalide (-11.8% sur 7j a l'epoque), a nettement recupere (7j +7.4%, 24h +9.5%) : reintegre comme nouvelle entree (le dedoublonnage ne verifie que la liste active, pas les archives ; le rattrapage est reel et verifie sur donnees fraiches, pas un artefact). Stellar reste trop faible pour reintegration (7j -0.6%). 6 des 20 coins etaient deja suivis. Revue optionnelle des 8 opportunites actives (avant ajout) : tous les scores recalcules sont sains dans ce marche haussier (Zcash +18.9% sur 7j en tete) -> aucun retrait ce cycle.",
+  "methodology": "Cycle du 07/09/2026 : Top 20 CoinGecko via le connecteur MCP CoinGecko (memes limites connues : plafond 20 coins, USD natif converti en EUR via taux de change reel Alpha Vantage, variation 7j calculee depuis le sparkline 7 jours reel, variation 30j calculee depuis un prix historique reel a J-30, ATH indisponible -> omis). Exclusion memecoins, stablecoins, actifs de dette tokenises, mega-caps deja notoires (BTC/ETH/BNB/XRP/SOL/TRX) et positions deja suivies au Portefeuille (Chainlink, malgre un +7% remarquable aujourd'hui). Zcash poursuit une envolee marquee (+44.8% sur 7j, +11.2% sur 24h). Stellar, archive le 31/08 pour momentum invalide (-9.8% sur 7j a l'epoque), a nettement recupere sur donnees fraiches (7j +7.2%) : reintegre comme nouvelle entree (dedoublonnage sur la liste active uniquement, momentum verifie sur donnees fraiches). 7 des 20 coins etaient deja suivis. Revue optionnelle des 9 opportunites actives (avant ajout) : LEO Token legerement negatif (-0.4, depuis 3.6) mais fourchette normale de fluctuation, pas retire. Les autres restent saines, aucun retrait ce cycle.",
   "opportunities": [
     {
       "id": "opp-20260807-ub",
@@ -2152,6 +2152,59 @@
         },
         "m6": {
           "check_at": "2027-03-05T04:04:09Z",
+          "status": "pending",
+          "outcome": null
+        }
+      }
+    },
+    {
+      "id": "opp-20260907-xlm",
+      "ticker": "XLM",
+      "name": "Stellar",
+      "cgId": "stellar",
+      "image": "https://coin-images.coingecko.com/coins/images/100/large/fmpFRHHQ_400x400.jpg?1735231350",
+      "price_eur": 0.16133,
+      "market_cap": 5615121805,
+      "market_cap_rank": 19,
+      "change_24h_pct": 0.4785,
+      "change_7d_pct": 7.24,
+      "change_30d_pct": 15.62,
+      "ath_change_pct": null,
+      "opportunity_score": 5.8,
+      "recognized": true,
+      "sparkline": [],
+      "tags": [
+        "Projet établi",
+        "Momentum retrouvé"
+      ],
+      "reason": "Reintegration apres archivage le 31/08 (momentum invalide a l'epoque, -9.8% sur 7j). Recuperation nette : variation 7j desormais +7.2%, dans un marche globalement porteur (Zcash +44.8% sur 7j, Cardano +14.5%). Donnee ATH indisponible via le connecteur MCP actuel (omise, non estimee).",
+      "flagged_at": "2026-09-07T04:05:28Z",
+      "price_at_flag": 0.16133,
+      "threshold_pct": 5,
+      "price_refreshed_at": "2026-09-07T04:05:28Z",
+      "horizons": {
+        "j1": {
+          "check_at": "2026-09-08T04:05:28Z",
+          "status": "pending",
+          "outcome": null
+        },
+        "j3": {
+          "check_at": "2026-09-10T04:05:28Z",
+          "status": "pending",
+          "outcome": null
+        },
+        "j7": {
+          "check_at": "2026-09-14T04:05:28Z",
+          "status": "pending",
+          "outcome": null
+        },
+        "j14": {
+          "check_at": "2026-09-21T04:05:28Z",
+          "status": "pending",
+          "outcome": null
+        },
+        "m6": {
+          "check_at": "2027-03-08T04:05:28Z",
           "status": "pending",
           "outcome": null
         }
