@@ -45,14 +45,15 @@ describe("app.js — updateFreshnessIndicator (régression 4d520ad, puis régres
     expect(el.textContent).toContain("Actualités");
   });
 
-  it("régression du 17/08 — un routine_health frais ne doit plus masquer une veille actualités obsolète sur son propre rythme ~2h", () => {
-    // Cas réel du 17/08 : cycle macro/verdicts frais (tourne toutes les 2h) pendant que la
-    // veille actualités n'avait rien écrit depuis 8h. Avant ce correctif, prendre le
-    // timestamp le plus récent des sources affichait "à jour" et masquait le blocage.
+  it("régression du 17/08 — un routine_health frais ne doit plus masquer une veille actualités obsolète sur son propre rythme ~4h", () => {
+    // Cas réel du 17/08 : cycle macro/verdicts frais (tourne toutes les 4h depuis le 06/09,
+    // 2h avant) pendant que la veille actualités n'avait rien écrit depuis 14h. Avant ce
+    // correctif, prendre le timestamp le plus récent des sources affichait "à jour" et
+    // masquait le blocage.
     dom.window.updateFreshnessIndicator(
       { routine_health: { last_success_at: "2026-08-17T11:00:00Z" } }, // 1h — frais
       {},
-      { last_updated_at: "2026-08-17T04:00:00Z" } // 8h — obsolète pour une source ~2h
+      { last_updated_at: "2026-08-16T22:00:00Z" } // 14h — obsolète pour une source ~4h
     );
     expect(el.classList.contains("freshness-stale")).toBe(true);
     expect(el.textContent).toContain("Actualités");
@@ -74,7 +75,7 @@ describe("app.js — updateFreshnessIndicator (régression 4d520ad, puis régres
   });
 
   it("retombe sur last_updated_at si last_checked_at est absent (compatibilité avec les cycles avant le 25/08)", () => {
-    dom.window.updateFreshnessIndicator({}, {}, { last_updated_at: "2026-08-17T04:00:00Z" }); // 8h, pas de last_checked_at
+    dom.window.updateFreshnessIndicator({}, {}, { last_updated_at: "2026-08-16T22:00:00Z" }); // 14h, pas de last_checked_at
     expect(el.classList.contains("freshness-stale")).toBe(true);
   });
 
@@ -104,19 +105,19 @@ describe("app.js — updateFreshnessIndicator (régression 4d520ad, puis régres
     expect(el.textContent).toBe("Automatisation pas encore activée — routine programmée à configurer.");
   });
 
-  it("routine_health : 'ok' at exactly 3 hours, 'warning' just past it", () => {
-    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-17T09:00:00Z" } }, {}, {});
+  it("routine_health : 'ok' at exactly 6 hours, 'warning' just past it", () => {
+    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-17T06:00:00Z" } }, {}, {});
     expect(el.classList.contains("freshness-ok")).toBe(true);
 
-    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-17T08:59:00Z" } }, {}, {});
+    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-17T05:59:00Z" } }, {}, {});
     expect(el.classList.contains("freshness-warning")).toBe(true);
   });
 
-  it("routine_health : 'warning' at exactly 6 hours, 'stale' (with a warning glyph) just past it", () => {
-    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-17T06:00:00Z" } }, {}, {});
+  it("routine_health : 'warning' at exactly 12 hours, 'stale' (with a warning glyph) just past it", () => {
+    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-17T00:00:00Z" } }, {}, {});
     expect(el.classList.contains("freshness-warning")).toBe(true);
 
-    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-17T05:59:00Z" } }, {}, {});
+    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-16T23:59:00Z" } }, {}, {});
     expect(el.classList.contains("freshness-stale")).toBe(true);
     expect(el.textContent).toContain("⚠");
     expect(el.textContent).toContain("routine semble bloquée");
@@ -138,7 +139,7 @@ describe("app.js — updateFreshnessIndicator (régression 4d520ad, puis régres
 
   it("shows the single worst source when several are degraded, ranked stale > warning > ok", () => {
     dom.window.updateFreshnessIndicator(
-      { routine_health: { last_success_at: "2026-08-17T08:00:00Z" } }, // 4h — warning
+      { routine_health: { last_success_at: "2026-08-17T04:00:00Z" } }, // 8h — warning
       { last_scan_at: "2026-08-07T00:00:00Z" }, // 10j12h — stale
       { last_updated_at: "2026-08-17T11:00:00Z" } // 1h — ok
     );

@@ -13,7 +13,7 @@ Three-part architecture, chosen to never depend on a credit system that can run 
 - **Automation**: scheduled Cowork routines (cloud) write to `data/*.json` and commit. The frontend never computes verdicts/opportunities itself — it only renders JSON that a routine already produced.
 - **Database**: this git repo. Each cycle commits JSON files under `data/`; nothing is ever overwritten or reset, so full history survives even after days of inactivity.
 
-The site has two speed tiers: **instant** client-side work (prices/charts — direct CoinGecko + Binance + TradingView widget calls on every page open) vs **scheduled deep-cycle** work (verdicts, Top 300 screening, engine backtest — requires actual reasoning, not instant-at-click; target cadence: quant pulse every 5-15 min, deep cycle every 2h).
+The site has two speed tiers: **instant** client-side work (prices/charts — direct CoinGecko + Binance + TradingView widget calls on every page open) vs **scheduled deep-cycle** work (verdicts, Top 300 screening, engine backtest — requires actual reasoning, not instant-at-click; cadence: quant pulse every 5-15 min, deep cycle every 4h — halved from 2h on 2026-09-06 to cut token consumption on the single most expensive routine; `aguilaradar-watchdog-cycle-2h`, its auto-recovery safety net, was disabled in the same change since its stale-detection threshold is hardcoded to the old 2h cadence and cannot be edited from outside its own bound session — a stuck cycle now only surfaces via the site's own freshness indicator, not an automatic retry).
 
 ## Commands
 
