@@ -186,6 +186,37 @@ function rankPortfolioAttractiveness(positions, verdicts, thesis, favorisContext
   return ranked;
 }
 
+// "Alerte contextuelle" (section 16B de la demande utilisateur) : croise un mouvement de prix
+// (alerts.json, type "seuil_technique") avec la thèse hebdo DÉJÀ ANALYSÉE sur cet actif — jamais
+// une 2e analyse inventée ici, juste une lecture croisée de deux données déjà réelles. Ne
+// retourne une note que pour une vraie DIVERGENCE (baisse de prix + thèse toujours positive, ou
+// hausse + thèse négative) — les deux exemples donnés par l'utilisateur ("baisse forte mais pas
+// de détérioration fondamentale" / "hausse non confirmée par les fondamentaux"). Un mouvement
+// aligné avec la thèse, une thèse "Attendre" (ni franchement positive ni négative), ou une thèse
+// absente : retourne null plutôt que de forcer un commentaire sans substance.
+function contextualizeAlert(alert) {
+  if (!alert || alert.type !== "seuil_technique" || !alert.ticker_ou_theme) return null;
+  const fav = FAVORIS.find((f) => f.ticker === alert.ticker_ou_theme);
+  if (!fav) return null;
+  const thesisByAsset = (typeof latestPortfolioThesis !== "undefined" && latestPortfolioThesis && latestPortfolioThesis.positions) || {};
+  const entry = thesisByAsset[fav.cgId];
+  if (!entry) return null;
+  const rec = normalizeRecommendation(entry.recommendation);
+  if (!rec) return null;
+
+  const bullishRec = rec === "renforcer" || rec === "conserver";
+  const bearishRec = rec === "reduire";
+  const convictionSuffix = typeof entry.conviction === "number" ? ` (conviction ${entry.conviction}/10)` : "";
+
+  if (alert.sentiment === "négatif" && bullishRec) {
+    return `Thèse hebdo actuelle (recherche réelle) : ${entry.recommendation}${convictionSuffix} — aucune détérioration fondamentale majeure signalée pour l'instant malgré ce mouvement de prix.`;
+  }
+  if (alert.sentiment === "positif" && bearishRec) {
+    return `Thèse hebdo actuelle (recherche réelle) : ${entry.recommendation}${convictionSuffix} — cette hausse n'est pour l'instant pas confirmée par la dernière analyse fondamentale.`;
+  }
+  return null;
+}
+
 // Résumé compact texte pour le contexte envoyé au relais IA (assistant.js buildAiContext) — les
 // listes reasons/caveats/missingData restent structurées côté JS (rendu HTML) et sont seulement
 // aplaties en phrases ici, jamais 2 formulations différentes de la même donnée.

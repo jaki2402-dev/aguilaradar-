@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { loadPage, runScript, getGlobal } from "./helpers/loadPage.js";
+import { loadPage, runScript, getGlobal, setGlobal } from "./helpers/loadPage.js";
 
 // updateFreshnessIndicator ne dépend de "maintenant" que via Date.now() (les new Date(t)
 // du code, eux, reçoivent toujours un argument et gardent leur vrai comportement). Note :
@@ -672,6 +672,11 @@ describe("app.js — renderNotifications / renderNotificationsPage", () => {
     expect(dom.window.document.getElementById("notifications-body").textContent).not.toContain("Source :");
   });
 
+  it("never crashes and adds no contextual note when allocation.js isn't loaded (defensive guard)", () => {
+    dom.window.renderNotifications([alertItem(0)]);
+    expect(dom.window.document.querySelector(".alert-context-note")).toBeNull();
+  });
+
   it("shows a permanent-history total footer once every alert fits on a single page", () => {
     dom.window.renderNotifications([alertItem(0), alertItem(1)]);
     expect(dom.window.document.getElementById("notifications-body").textContent).toContain("2 alerte(s) au total");
@@ -687,6 +692,32 @@ describe("app.js — renderNotifications / renderNotificationsPage", () => {
     expect(dom.window.document.querySelectorAll("#notifications-body .alert-entry")).toHaveLength(17);
     expect(dom.window.document.getElementById("notifications-load-more")).toBeNull();
     expect(dom.window.document.getElementById("notifications-body").textContent).toContain("17 alerte(s) au total");
+  });
+});
+
+describe("app.js — renderNotifications, note contextuelle croisée avec la thèse hebdo (allocation.js, section 16B)", () => {
+  let dom;
+
+  function alertItem(overrides = {}) {
+    return { id: "a0", type: "seuil_technique", ticker_ou_theme: "BTC", sentiment: "négatif", message: "Bitcoin recule.", triggered_at: "2026-08-01T00:00:00Z", ...overrides };
+  }
+
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "portfolio.js", "allocation.js", "app.js"], { html: APP_FIXTURE_HTML });
+  });
+
+  it("shows the cross-referenced note under the alert when the price move diverges from the weekly thesis", () => {
+    setGlobal(dom, "latestPortfolioThesis", { positions: { bitcoin: { recommendation: "Renforcer", conviction: 8 } } });
+    dom.window.renderNotifications([alertItem({ sentiment: "négatif" })]);
+    const note = dom.window.document.querySelector(".alert-context-note");
+    expect(note).not.toBeNull();
+    expect(note.textContent).toContain("aucune détérioration fondamentale majeure");
+  });
+
+  it("adds no note when the price move already agrees with the weekly thesis", () => {
+    setGlobal(dom, "latestPortfolioThesis", { positions: { bitcoin: { recommendation: "Réduire", conviction: 6 } } });
+    dom.window.renderNotifications([alertItem({ sentiment: "négatif" })]);
+    expect(dom.window.document.querySelector(".alert-context-note")).toBeNull();
   });
 });
 

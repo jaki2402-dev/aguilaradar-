@@ -343,8 +343,12 @@ function renderNotificationsPage() {
   const remaining = notificationsSorted.length - visible.length;
   el.innerHTML =
     visible
-      .map(
-        (a) => `
+      .map((a) => {
+        // Croise le mouvement de prix avec la thèse hebdo déjà connue (allocation.js,
+        // section 16B de la demande utilisateur) — null la plupart du temps (mouvement aligné
+        // avec la thèse, ou pas de thèse sur cet actif), auquel cas rien n'est ajouté.
+        const contextNote = typeof contextualizeAlert === "function" ? contextualizeAlert(a) : null;
+        return `
       <div class="alert-entry type-${a.type || ""}">
         <div class="log-header">
           <span><strong>${a.ticker_ou_theme || a.ticker || ""}</strong> · ${a.triggered_at}</span>
@@ -352,8 +356,9 @@ function renderNotificationsPage() {
         </div>
         ${renderClampableText(a.message)}
         ${a.source ? `<p class="hint">Source : ${escapeHtml(a.source)}</p>` : ""}
-      </div>`
-      )
+        ${contextNote ? `<p class="hint alert-context-note">${highlightKeyInfo(contextNote)}</p>` : ""}
+      </div>`;
+      })
       .join("") +
     (remaining > 0
       ? `<div class="expand-hint clickable" id="notifications-load-more">Voir ${Math.min(remaining, NOTIFICATIONS_PAGE_SIZE)} alerte(s) de plus (${remaining} restante${remaining > 1 ? "s" : ""}) <span class="chevron">▾</span></div>`

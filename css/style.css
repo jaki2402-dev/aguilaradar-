@@ -758,6 +758,11 @@ th { color: var(--text-dim); font-weight: 600; font-size: 0.76rem; text-transfor
    space-between (label à gauche, un seul badge à droite) déjà utilisé par les autres usages
    de .log-header (Journal, etc.). */
 .alert-badges { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+/* Note de contexte croisée avec la thèse hebdo (contextualizeAlert, allocation.js) — teinte
+   informative (--accent-2, même couleur que le liseré .type-seuil_technique juste au-dessus),
+   jamais --warning : cette note peut être rassurante ("pas de détérioration détectée") autant que
+   prudente, contrairement à .alloc-caveat qui n'est jamais qu'un signal d'alerte. */
+.alert-context-note { color: var(--accent-2); margin-top: 4px; }
 
 /* ---- Aperçu tronqué + "Lire plus" pour un texte long (voir renderClampableText, app.js) —
    Journal (raisonnement) et Alertes (message) partagent ce motif. ---- */

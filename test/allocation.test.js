@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { loadPage } from "./helpers/loadPage.js";
+import { loadPage, setGlobal } from "./helpers/loadPage.js";
 
 function verdict(overrides) {
   return { asset: "bitcoin", verdict: "ACHAT", confidence_pct: 70, issued_at: "2026-09-01T00:00:00Z", ...overrides };
@@ -83,6 +83,53 @@ describe("allocation.js — computePositionAttractiveness", () => {
     const r = compute(verdict(), thesis(), null, 5);
     expect(r.missingData.some((m) => m.includes("ETF"))).toBe(true);
     expect(r.missingData.some((m) => m.includes("unlocks"))).toBe(true);
+  });
+});
+
+describe("allocation.js — contextualizeAlert (alertes contextuelles, section 16B)", () => {
+  let dom;
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "portfolio.js", "allocation.js"]);
+  });
+
+  function alert(overrides) {
+    return { type: "seuil_technique", ticker_ou_theme: "BTC", sentiment: "négatif", ...overrides };
+  }
+
+  it("flags a price drop as NOT confirming fundamental deterioration when the weekly thesis is still bullish", () => {
+    setGlobal(dom, "latestPortfolioThesis", { positions: { bitcoin: { recommendation: "Renforcer", conviction: 8 } } });
+    const note = dom.window.contextualizeAlert(alert({ sentiment: "négatif" }));
+    expect(note).toContain("aucune détérioration fondamentale majeure");
+    expect(note).toContain("Renforcer");
+    expect(note).toContain("8/10");
+  });
+
+  it("flags a price rise as NOT confirmed by fundamentals when the weekly thesis says Réduire", () => {
+    setGlobal(dom, "latestPortfolioThesis", { positions: { bitcoin: { recommendation: "Réduire", conviction: 6 } } });
+    const note = dom.window.contextualizeAlert(alert({ sentiment: "positif" }));
+    expect(note).toContain("n'est pour l'instant pas confirmée");
+  });
+
+  it("says nothing when price direction and thesis already agree — never manufactures a divergence", () => {
+    setGlobal(dom, "latestPortfolioThesis", { positions: { bitcoin: { recommendation: "Renforcer", conviction: 8 } } });
+    expect(dom.window.contextualizeAlert(alert({ sentiment: "positif" }))).toBeNull();
+  });
+
+  it("says nothing for a neutral (\"Attendre\") thesis — never invents a direction it doesn't have", () => {
+    setGlobal(dom, "latestPortfolioThesis", { positions: { bitcoin: { recommendation: "Attendre", conviction: 4 } } });
+    expect(dom.window.contextualizeAlert(alert({ sentiment: "négatif" }))).toBeNull();
+    expect(dom.window.contextualizeAlert(alert({ sentiment: "positif" }))).toBeNull();
+  });
+
+  it("says nothing when no thesis exists yet for this asset — never guesses one", () => {
+    setGlobal(dom, "latestPortfolioThesis", { positions: {} });
+    expect(dom.window.contextualizeAlert(alert())).toBeNull();
+  });
+
+  it("only applies to seuil_technique alerts on a tracked favori — a macro/theme alert is left alone", () => {
+    setGlobal(dom, "latestPortfolioThesis", { positions: { bitcoin: { recommendation: "Renforcer", conviction: 8 } } });
+    expect(dom.window.contextualizeAlert(alert({ type: "actualite_macro" }))).toBeNull();
+    expect(dom.window.contextualizeAlert(alert({ ticker_ou_theme: "Régulation UE" }))).toBeNull();
   });
 });
 
