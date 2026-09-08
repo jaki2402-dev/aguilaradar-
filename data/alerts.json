@@ -1106,5 +1106,13 @@
     "triggered_at": "2026-09-08T04:20:00Z",
     "message": "Fetch.ai (FET) : franchit pour la première fois le seuil de mouvement directionnel (5 %) à la hausse, dans le sens du verdict ACHAT émis le 6 septembre à 0,150781 euro. Prix vérifié par appel direct groupé à l'API CoinGecko : 0,158495 euro, soit +5,12 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance du 20 septembre.",
     "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "alert-20260908-tia-seuil",
+    "ticker_ou_theme": "TIA",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-08T08:17:00Z",
+    "message": "Celestia (TIA) : franchit pour la première fois le seuil de mouvement directionnel (5 %) à la baisse, en sens opposé au verdict ACHAT émis le 6 septembre à 0,381104 euro. Prix vérifié par appel direct groupé à l'API CoinGecko : 0,359565 euro, soit -5,65 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance du 13 septembre.",
+    "source": "API CoinGecko (appel direct groupé)"
   }
 ]
