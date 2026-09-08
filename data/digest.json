@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-07T18:09:03Z",
-  "headline": "Piratage Liquid Network (320 M$) ; moteur ajuste son horizon",
-  "summary": "Le lot de verdicts du 23 août s'est résolu (6/15 corrects) : précision globale remonte à 31,25 % (32 résolus), toujours sous la nouvelle baseline (50 %). Des mouvements extrêmes (ARB +85 %, JUP +69 %, PEAQ +65 %, AIOZ -57 %) poussent le moteur à adopter un horizon adaptatif de 7 jours sur les actifs volatils, contre 14 jours avant. Les verdicts émis le 6/09 divergent déjà : ARB et JUP reculent contre leur ACHAT, PEAQ et INJ montent contre ATTENTE. Piratage marquant : Liquid Network, ~320 M$ (4 000 BTC) dérobés.",
+  "generated_at": "2026-09-08T00:09:05Z",
+  "headline": "ARB accélère sa correction, INJ et PEAQ montent encore",
+  "summary": "Peu de changement structurel depuis le dernier résumé, mais l'écart entre les verdicts du 6 septembre et le marché continue de se creuser : Arbitrum (ACHAT) recule désormais de -15,1 % depuis l'émission (contre -6,8 % il y a quelques heures), tandis qu'Injective et Peaq (tous deux ATTENTE) montent à respectivement +18,4 % et +18,0 %. Jupiter reste sous son prix d'émission (-8,4 %). Le verdict ATTENTE sur Cartesi vient d'être validé (+1,2 %, sous le seuil) et un nouveau verdict ATTENTE a été émis sur cet actif. Précision globale du moteur inchangée à 31,25 % (32 verdicts résolus), régime macro toujours risk-on.",
   "tips": [
-    "Moteur : 31,25 % de précision (32 résolus), adopte un horizon 7j sur les actifs volatils.",
-    "Nouveaux verdicts (6/09) déjà en écart : ARB et JUP reculent contre ACHAT, PEAQ/INJ montent.",
-    "Piratage Liquid Network (Blockstream) : ~320 M$ (4 000 BTC) dérobés, réseau en pause."
+    "ARB (ACHAT, 6/09) : correction qui s'accélère nettement, -15,1 % depuis l'émission.",
+    "INJ et PEAQ (ATTENTE) divergent à la hausse, +18,4 % et +18,0 % depuis leur émission.",
+    "Précision du moteur stable à 31,25 % (32 résolus), toujours sous la baseline de 50 %."
   ],
   "market_tone": "neutre"
 }
