@@ -1114,5 +1114,32 @@
     "triggered_at": "2026-09-08T08:17:00Z",
     "message": "Celestia (TIA) : franchit pour la première fois le seuil de mouvement directionnel (5 %) à la baisse, en sens opposé au verdict ACHAT émis le 6 septembre à 0,381104 euro. Prix vérifié par appel direct groupé à l'API CoinGecko : 0,359565 euro, soit -5,65 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance du 13 septembre.",
     "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "alert-20260908-aioz-seuil",
+    "ticker_ou_theme": "AIOZ",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-08T20:21:00Z",
+    "message": "AIOZ Network (AIOZ) : franchit pour la première fois le seuil de mouvement directionnel (5 %) à la hausse, sur le verdict ATTENTE émis le 6 septembre à 0,053949 euro. Prix vérifié par appel direct groupé à l'API CoinGecko : 0,063998 euro, soit +18,63 % depuis l'émission (variation 24h de +18,1 % sur la même source, cohérente). Ne préjuge pas de l'issue à l'échéance du 13 septembre.",
+    "source": "API CoinGecko (appel direct groupé)",
+    "sentiment": "positif"
+  },
+  {
+    "id": "alert-20260908-cronos-tectonic-hack",
+    "ticker_ou_theme": "MACRO",
+    "type": "actualite_generale",
+    "triggered_at": "2026-09-08T20:21:00Z",
+    "message": "Exploit majeur du protocole de prêt Tectonic sur la blockchain Cronos : un attaquant a manipulé le prix du jeton TONIC (multiplié par environ 100 en quelques minutes sur une liquidité DEX réduite) pour emprunter 120,4 millions de dollars le 30 août. Réponse inédite et controversée le 8 septembre : les validateurs Cronos ont voté un retour en arrière de près de 11 000 blocs pour restaurer les soldes antérieurs à l'attaque, récupérant environ 111,2 millions de dollars — mais 9,19 millions de dollars, déjà transférés vers des plateformes externes avant l'arrêt du réseau, restent non récupérés. Confirmé par plusieurs sources indépendantes (CoinDesk, The Block, crypto.news). Aucun favori ni opportunité suivie directement concerné, mais précédent notable sur la finalité des blockchains, à portée durable pour le secteur DeFi.",
+    "source": "CoinDesk / The Block / crypto.news",
+    "sentiment": "negatif"
+  },
+  {
+    "id": "alert-20260908-macro-regime-neutre",
+    "ticker_ou_theme": "MACRO",
+    "type": "actualite_macro",
+    "triggered_at": "2026-09-08T20:21:00Z",
+    "message": "Changement de régime macro : reclassé « neutre » (depuis « risk-on »). Trois lectures indépendantes de l'indice de peur et de cupidité trouvées ce cycle divergent nettement de la valeur stable précédente (69, « Greed ») : 49 (AltIndex), 50 (CFGI, lecture Bitcoin) et 59 (Coingabbar — cette dernière source associée à un prix Bitcoin incohérent, 78 874-79 000 dollars, avec le prix confirmé ce cycle par appel direct CoinGecko, donc traitée avec prudence). Valeur interne retenue à 52 (moyenne prudente), cohérente avec la zone « Neutre » sur la majorité des sources. Dominance BTC stable à 57,7 %. Repli de marché mentionné (capitalisation totale -1,1 %) sans mouvement extrême sur les favoris suivis.",
+    "source": "AltIndex / CFGI.io / Coingabbar",
+    "sentiment": "neutre"
   }
 ]
