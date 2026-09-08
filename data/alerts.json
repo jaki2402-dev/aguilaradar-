@@ -1091,5 +1091,12 @@
     "sentiment": "positif",
     "message": "Injective (INJ) : forte accélération de la hausse sur le verdict ATTENTE actif (émis le 6 septembre à 4,56 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 5,4 euros, soit +18,42 % depuis l'émission (contre +6,36 % au cycle précédent) — franchissement net qui mérite une surveillance rapprochée. Ne préjuge pas de l'issue à l'échéance du 13 septembre.",
     "source": "API CoinGecko (appel direct groupé)"
+  },
+  {
+    "id": "avis-jour-2026-09-08",
+    "ticker_ou_theme": "PORTEFEUILLE",
+    "type": "avis_du_jour",
+    "triggered_at": "2026-09-08T00:35:00Z",
+    "message": "Sur tes positions : ARB (-10,7 %) et JUP (-6,8 %) évoluent à l'inverse de leur verdict ACHAT récent, à surveiller. INJ et PEAQ montent fort mais restent en ATTENTE."
   }
 ]
