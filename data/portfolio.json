@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-09-07",
+  "updated_at": "2026-09-08",
   "source": "Saisie manuelle par l'utilisateur (capture d'écran de son app de suivi de portefeuille), pas une automatisation.",
   "note": "qty et invested sont figés (capital réellement engagé par position) — jamais recalculés automatiquement, jamais déduits d'un prix. Valeur, P&L et P&L% ne sont JAMAIS stockés ici : toujours recalculés en direct à partir du prix live (voir js/portfolio.js). invested dérivé de valeur-P&L affichés par l'app source pour la plupart des lignes (précision à quelques euros près, l'app source arrondit ses propres champs indépendamment) ; FET utilise le champ 'coût total' exact de sa fiche détail, plus fiable.",
   "positions": [
@@ -15,8 +15,9 @@
     },
     {
       "cgId": "fetch-ai",
-      "qty": 7316.84127307,
-      "invested": 2826.86
+      "qty": 7635.66127307,
+      "invested": 2876.86,
+      "pending": false
     },
     {
       "cgId": "celestia",
