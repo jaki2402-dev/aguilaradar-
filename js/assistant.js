@@ -21,6 +21,18 @@
 //    sert plus que de filet de secours si l'IA est indisponible (AI_RELAY_URL non configuré,
 //    placeholder par défaut — voir fetchLiveAiFallback) ou échoue (réseau, timeout) : dans ce
 //    cas seulement, le site retombe sur une réponse plus fruste plutôt que rien.
+//
+// Renforcé le 09/09/2026 (demande explicite : l'assistant doit raisonner comme un analyste, pas
+// juste reformuler des données) : un actif HORS RADAR (ni favori ni opportunité, ex. "tu connais
+// Worldcoin ?") recevait jusqu'ici SEULEMENT le prix/rang CoinGecko en direct, sans jamais passer
+// par l'IA — voir fetchUntrackedAssetAiOpinion, qui ajoute désormais un vrai avis d'analyste
+// PAR-DESSUS ce prix (même principe que fetchAssetAiOpinion pour un actif suivi : la donnée
+// factuelle reste toujours affichée intégralement, l'avis IA vient seulement en plus, jamais à sa
+// place, et disparaît silencieusement si le relais est indisponible). detectResponseMode gagne
+// aussi un mode "portfolio" (question sur la santé globale du portefeuille, qui tombait avant
+// dans le gabarit "quick" du relais — 5 phrases maximum, bien trop court pour une vraie analyse
+// de concentration/qualité fondamentale) — voir cloudflare-worker/worker.js pour le contenu de
+// chaque format.
 
 let chatData = null;
 let chatDataLoading = null;
@@ -106,14 +118,26 @@ function countDistinctAssetMentions(text) {
 const ALLOCATION_INTENT_RE = /\b(recharge\w*|renforce\w*|placer|replacer|investir|ajouter|allou\w*|mettre)\b/i;
 const THESIS_INTENT_RE = /\bthèses?\b|\bthese\b|\bthesis\b/i;
 
+// Question sur la santé GLOBALE du portefeuille ("comment va mon portefeuille ?", "analyse mes
+// positions") plutôt que sur un placement précis — ajouté le 09/09/2026 : sans ce mode dédié, une
+// telle question tombait dans le gabarit "quick" du relais IA (cloudflare-worker/worker.js, 5
+// phrases/250 tokens maximum), bien trop court pour la vraie analyse de concentration/qualité
+// fondamentale/gagnants-retardataires demandée explicitement par l'utilisateur (section 17).
+// Mêmes intitulés que le bucket "mon portefeuille" de CHAT_INTENTS plus bas (answerPortfolio),
+// jamais une 2e liste de mots-clés divergente pour la même idée.
+const PORTFOLIO_INTENT_RE = /\b(mon portefeuille|mes positions|mon p&l|mon pnl|mes gains|mes pertes|ma performance|mon exposition|ma diversification|ma concentration|ma répartition)\b/i;
+
 // 2+ favoris nommés dans la même question -> presque toujours une vraie comparaison ("INJ ou
 // LINK ?", "FET, CTSI et ARB") même sans mot "compare"/"vs" explicite — un mot-clé en plus
-// n'aurait rien apporté ici, le nombre d'actifs cités est déjà le signal fiable.
+// n'aurait rien apporté ici, le nombre d'actifs cités est déjà le signal fiable. ALLOCATION avant
+// PORTFOLIO : un verbe d'action explicite ("je devrais renforcer mon portefeuille") reste une
+// question d'allocation, même si "portefeuille" y est aussi cité.
 function detectResponseMode(question) {
   const text = question || "";
   if (THESIS_INTENT_RE.test(text)) return "thesis";
   if (countDistinctAssetMentions(text) >= 2) return "comparison";
   if (ALLOCATION_INTENT_RE.test(text)) return "allocation";
+  if (PORTFOLIO_INTENT_RE.test(text)) return "portfolio";
   return "quick";
 }
 
@@ -329,6 +353,24 @@ function longTermFundamentalsBlock(favorisList) {
     })
     .filter(Boolean);
   return parts.join("\n\n");
+}
+
+// Utilité/capture de valeur du TOKEN (FAVORIS[].utility, config.js) pour les 15 favoris — texte
+// STATIQUE et factuel (comment le jeton capture de la valeur, jamais un avis), donc à coût nul
+// (aucun fetch) et sans risque de dépasser le budget de 20000 caractères du relais IA (contrairement
+// aux thèses bull/base/bear de favoris-context.json, ~4500 caractères PAR ACTIF, forcément ciblées
+// sur 1-3 actifs nommés — voir longTermFundamentalsBlock ci-dessus). Ajouté le 09/09/2026 : sans
+// ça, une question d'allocation/comparaison/portefeuille n'avait aucune base pour distinguer "bon
+// projet" de "bon token" (section 5 de la demande utilisateur) — l'IA ne voyait que verdict+thèse,
+// jamais ce que le jeton capture réellement. Secteur (SECTOR_FAMILIES, config.js) inclus pour la
+// même raison : permet de repérer une concentration thématique (ex. FET/GRT/LPT tous "IA") sans
+// dupliquer le calcul de renderPortfolioConcentration (portfolio.js) — l'IA fait elle-même le
+// rapprochement à partir des tickers et des parts % déjà données par le classement plus bas.
+function favorisUtilityBlock() {
+  return FAVORIS.map((f) => {
+    const family = (typeof SECTOR_FAMILIES !== "undefined" && SECTOR_FAMILIES[f.cgId]) || "Autre";
+    return `${f.ticker} (${family}) : ${f.utility || "utilité non documentée"}`;
+  }).join("\n");
 }
 
 // Commentaire IA optionnel ajouté PAR-DESSUS une réponse factuelle déjà correcte sur un actif
@@ -565,6 +607,10 @@ function buildAiContext() {
     parts.push(`Verdicts actifs sur les 15 favoris : ${lines.join(", ")}.`);
   }
 
+  // Toujours inclus (voir favorisUtilityBlock ci-dessus) : coût de caractères fixe et minime,
+  // contrairement aux thèses bull/base/bear ciblées uniquement sur les actifs nommés plus bas.
+  parts.push(`Utilité et capture de valeur du token (fait factuel, jamais un avis) pour les 15 favoris :\n${favorisUtilityBlock()}`);
+
   const stats = chatData.engineHistory && chatData.engineHistory.global_stats;
   if (stats && stats.accuracy_strict_pct != null) {
     parts.push(`Fiabilité mesurée du moteur : ${stats.accuracy_strict_pct.toFixed(1)} % d'exactitude sur ${stats.total_verdicts_resolved} verdicts vérifiés.`);
@@ -679,11 +725,33 @@ async function fetchLiveAiFallback(question) {
 // nom propre capitalisé peut apparaître dans une phrase sans rapport (ex. "Twitter" cité en
 // passant) — d'où rememberAssetCandidate, réutilisé par answerQuestion pour le message final
 // "pas suivi" seulement si rien d'autre (y compris l'IA) n'a pu répondre.
+// Avis d'analyste PAR-DESSUS le prix/rang factuel d'un actif HORS RADAR, jamais à la place — même
+// principe que fetchAssetAiOpinion pour un actif suivi (voir plus haut), étendu le 09/09/2026 au
+// cas non couvert jusqu'ici : "tu connais Worldcoin ?" ne recevait qu'un prix CoinGecko brut, sans
+// jamais interroger l'IA, alors que c'est exactement l'exemple donné par l'utilisateur pour "une
+// vraie analyse de projet" (ce qu'il fait, tokenomics, concurrence, avis — voir FORMAT_PROJECT,
+// cloudflare-worker/worker.js). mode="project" forcé (jamais detectResponseMode(question)) : on
+// SAIT déjà, à cet endroit précis de l'appel, qu'aucun favori/opportunité n'est nommé (sinon
+// answerQuestion aurait déjà répondu plus tôt via answerAboutAsset) — deviner à nouveau depuis le
+// texte serait une 2e détection redondante et moins fiable que ce que le code sait déjà.
+// Best-effort comme fetchAssetAiOpinion : silencieux et sans effet si indisponible/échoue, la
+// réponse factuelle déjà correcte reste alors affichée seule, intégralement.
+async function fetchUntrackedAssetAiOpinion(question, factualAnswer) {
+  if (!AI_RELAY_URL || AI_RELAY_URL.includes("REMPLACE-MOI")) return null;
+  const context =
+    `${factualAnswer}\n\n(Cet actif n'est pas suivi par le moteur AguilaRadar — pas de verdict ni ` +
+    `de thèse dessus, seulement le prix/rang en direct ci-dessus — voir FORMAT_PROJECT.)\n\n${buildAiContext()}`;
+  return (await requestAiRelayOnce(question, context, "project")) || (await requestAiRelayOnce(question, context, "project"));
+}
+
 async function tryLiveAssetSearch(question, rememberAssetCandidate) {
   const assetQuery = extractAssetQuery(question);
   if (!assetQuery) return null;
   rememberAssetCandidate(assetQuery);
-  return await fetchLiveSearchAnswer(assetQuery);
+  const factual = await fetchLiveSearchAnswer(assetQuery);
+  if (!factual) return null;
+  const take = await fetchUntrackedAssetAiOpinion(question, factual);
+  return take ? `${factual}\n\n${take}` : factual;
 }
 
 // Dernier filet, seulement si l'IA est indisponible (AI_RELAY_URL non configuré) ou échoue

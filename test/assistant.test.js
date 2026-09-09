@@ -229,6 +229,37 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
     expect(answer).toContain("Je ne trouve pas cet actif");
   });
 
+  it("layers a real AI analyst opinion on top of the untracked asset's factual price, in 'project' mode, never replacing the factual data (changement demandé 09/09/2026 : 'tu connais Worldcoin ?' ne recevait avant qu'un prix CoinGecko brut, jamais un vrai avis d'analyste)", async () => {
+    runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
+    let sentBody = null;
+    dom.window.fetch = async (url, opts) => {
+      if (url.includes("/search?")) return { ok: true, json: async () => ({ coins: [{ id: "worldcoin-wld", name: "Worldcoin", symbol: "wld" }] }) };
+      if (url.includes("test-relay.workers.dev")) {
+        sentBody = JSON.parse(opts.body);
+        return { ok: true, json: async () => ({ answer: "Mon avis d'investisseur : projet spéculatif, à surveiller sans se précipiter." }) };
+      }
+      return { ok: true, json: async () => [{ name: "Worldcoin", symbol: "wld", current_price: 1.23, market_cap_rank: 45 }] };
+    };
+    const answer = await dom.window.answerQuestion("Tu connais Worldcoin ?");
+    expect(answer).toContain("ne fait pas partie des 15 favoris"); // la donnée factuelle reste intégrale
+    expect(answer).toContain("Mon avis d'investisseur : projet spéculatif");
+    expect(sentBody.responseMode).toBe("project"); // forcé, jamais deviné depuis le texte de la question
+    expect(sentBody.question).toBe("Tu connais Worldcoin ?");
+    expect(sentBody.context).toContain("Worldcoin"); // le prix déjà trouvé est bien repassé en contexte
+  });
+
+  it("keeps the untracked asset's factual price fully intact when the AI relay is configured but fails (zero-regression guarantee, same contract as fetchAssetAiOpinion for a tracked asset)", async () => {
+    runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
+    dom.window.fetch = async (url) => {
+      if (url.includes("/search?")) return { ok: true, json: async () => ({ coins: [{ id: "worldcoin-wld", name: "Worldcoin", symbol: "wld" }] }) };
+      if (url.includes("test-relay.workers.dev")) throw new Error("indisponible (comportement normal pour ce test)");
+      return { ok: true, json: async () => [{ name: "Worldcoin", symbol: "wld", current_price: 1.23, market_cap_rank: 45 }] };
+    };
+    const answer = await dom.window.answerQuestion("Tu connais Worldcoin ?");
+    expect(answer).toContain("ne fait pas partie des 15 favoris");
+    expect(answer).not.toContain("undefined");
+  });
+
   it("answers a definition question from the glossary instead of misreading the term as a ticker to search (régression : 'c'est quoi le RSI' déclenchait une recherche CoinGecko sur 'RSI')", async () => {
     const answer = await dom.window.answerQuestion("c'est quoi le RSI ?");
     expect(answer).toContain("RSI :");
@@ -560,6 +591,22 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
       expect(sentContext).toContain("Alerte 4"); // la 4e alerte n'est plus coupée (ancienne limite : 3)
       expect(sentContext).toContain("Titre actu récente"); // les actualités n'étaient jamais incluses avant
     });
+
+    it("inclut l'utilité/capture de valeur du token pour les 15 favoris, même sans portefeuille ni actif nommé (section 5 de la demande utilisateur : distinguer qualité du projet et qualité du token)", async () => {
+      runScript(dom, 'AI_RELAY_URL = "https://test-relay.workers.dev";', "set AI_RELAY_URL");
+      let sentContext = null;
+      dom.window.fetch = async (url, opts) => {
+        sentContext = JSON.parse(opts.body).context;
+        return { ok: true, json: async () => ({ answer: "Réponse IA." }) };
+      };
+      await dom.window.answerQuestion("Quelle est ta lecture globale du marché en ce moment ?");
+      // ARB (gouvernance pure, gas payé en ETH) vs INJ (rachat-destruction des frais) : distinction
+      // déjà documentée en dur dans FAVORIS[].utility (config.js), jamais un avis inventé ici.
+      expect(sentContext).toContain("ARB (Infra L1/L2/DeFi)");
+      expect(sentContext).toContain("payés en ETH, pas en ARB");
+      expect(sentContext).toContain("INJ (Infra L1/L2/DeFi)");
+      expect(sentContext).toContain("racheter et brûler de l'INJ");
+    });
   });
 });
 
@@ -656,11 +703,17 @@ describe("assistant.js — detectResponseMode + routage d'une comparaison entre 
     dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "portfolio.js", "allocation.js", "search.js", "assistant.js"]);
   });
 
-  it("détecte allocation / comparaison / thèse / quick à partir du seul texte de la question", () => {
+  it("détecte allocation / comparaison / thèse / portfolio / quick à partir du seul texte de la question", () => {
     expect(dom.window.detectResponseMode("Je devrais renforcer Cartesi ?")).toBe("allocation");
     expect(dom.window.detectResponseMode("INJ ou LINK, lequel recharger ?")).toBe("comparison");
     expect(dom.window.detectResponseMode("Fais-moi une thèse d'investissement sur Celestia")).toBe("thesis");
     expect(dom.window.detectResponseMode("Comment va le marché en ce moment ?")).toBe("quick");
+    // Régression 09/09/2026 : une question sur la santé globale du portefeuille tombait avant
+    // dans le gabarit "quick" (5 phrases max), bien trop court pour une vraie analyse.
+    expect(dom.window.detectResponseMode("Comment va mon portefeuille ?")).toBe("portfolio");
+    expect(dom.window.detectResponseMode("Analyse mes positions")).toBe("portfolio");
+    // Un verbe d'action explicite garde la priorité sur la simple mention "portefeuille".
+    expect(dom.window.detectResponseMode("Je devrais renforcer mon portefeuille avec 100€ ?")).toBe("allocation");
   });
 
   it("une question citant 2 favoris passe par le relais IA en mode comparaison plutôt que la fiche d'un seul actif (findAssetMention ne renvoie jamais que le premier trouvé)", async () => {
