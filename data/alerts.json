@@ -1148,5 +1148,13 @@
     "type": "avis_du_jour",
     "triggered_at": "2026-09-09T00:20:00Z",
     "message": "Sur tes positions : AIOZ, PEAQ et INJ poursuivent une forte hausse (+20 % env.) malgré des verdicts ATTENTE ; JUP reste sous pression (-9,6 %) malgré une thèse hebdo à renforcer — à surveiller."
+  },
+  {
+    "id": "alert-20260909-link-seuil",
+    "ticker_ou_theme": "LINK",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-09T04:20:00Z",
+    "message": "Chainlink (LINK) franchit pour la première fois le seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif émis le 6 septembre (11,32 euros) : -5,39 % ce cycle (10,71 euros), en sens opposé au verdict, après le mois de forte hausse déjà validé sur le verdict précédent. Aucune actualité spécifique trouvée pour l'expliquer à ce stade — lecture purement technique, à surveiller au prochain cycle.",
+    "source": "criblage technique interne"
   }
 ]
