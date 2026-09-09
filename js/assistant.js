@@ -33,6 +33,11 @@
 // dans le gabarit "quick" du relais — 5 phrases maximum, bien trop court pour une vraie analyse
 // de concentration/qualité fondamentale) — voir cloudflare-worker/worker.js pour le contenu de
 // chaque format.
+//
+// 2e passe le même jour, à partir de captures d'écran réelles du site : un mode "market" en plus
+// pour une question sur le marché DANS SON ENSEMBLE ("pourquoi le marché baisse ?"), qui tombait
+// aussi dans "quick" et se faisait couper en plein mot par le plafond de tokens en prod — voir
+// isMarketWideQuestion.
 
 let chatData = null;
 let chatDataLoading = null;
@@ -127,17 +132,38 @@ const THESIS_INTENT_RE = /\bthèses?\b|\bthese\b|\bthesis\b/i;
 // jamais une 2e liste de mots-clés divergente pour la même idée.
 const PORTFOLIO_INTENT_RE = /\b(mon portefeuille|mes positions|mon p&l|mon pnl|mes gains|mes pertes|ma performance|mon exposition|ma diversification|ma concentration|ma répartition)\b/i;
 
+// Question sur le marché crypto DANS SON ENSEMBLE ("pourquoi le marché baisse ?", "on est en
+// bullrun ?") plutôt que sur un actif précis — ajouté le 09/09/2026 (2e passe), constaté en prod :
+// ce genre de question tombait dans "quick" (voir FORMAT_QUICK, worker.js), beaucoup trop court
+// pour vraiment expliquer un mouvement de marché (plusieurs facteurs + impact portefeuille + avis),
+// et le modèle débordait systématiquement du plafond de 5 phrases jusqu'à se faire couper en plein
+// mot par la limite de tokens. Exige le mot "marché"/"marche" explicite (ou un terme de régime sans
+// ambiguïté : bullrun/bull market/bear market/bullish/bearish) pour ne JAMAIS intercepter une
+// question sur un actif précis ("Pourquoi Chainlink monte ?" ne doit jamais tomber ici — elle ne
+// contient aucun de ces mots). wordBoundaryMatch, PAS un \b natif sur "marché" : même piège déjà
+// documenté plus haut (findAssetMention) — un \b natif de JS ne reconnaît pas "é" comme un
+// caractère de mot, donc un \bmarch[ée]\b échoue silencieusement dès que "marché" est suivi d'un
+// espace (bug réel trouvé en écrivant les tests : "Comment va le marché en ce moment ?" ne
+// matchait jamais).
+function isMarketWideQuestion(text) {
+  const norm = text || "";
+  return /\b(bullrun|bull run|bull market|bear market|bullish|bearish)\b/i.test(norm) || wordBoundaryMatch(norm, "marché") || wordBoundaryMatch(norm, "marche");
+}
+
 // 2+ favoris nommés dans la même question -> presque toujours une vraie comparaison ("INJ ou
 // LINK ?", "FET, CTSI et ARB") même sans mot "compare"/"vs" explicite — un mot-clé en plus
 // n'aurait rien apporté ici, le nombre d'actifs cités est déjà le signal fiable. ALLOCATION avant
 // PORTFOLIO : un verbe d'action explicite ("je devrais renforcer mon portefeuille") reste une
-// question d'allocation, même si "portefeuille" y est aussi cité.
+// question d'allocation, même si "portefeuille" y est aussi cité. MARKET en dernier avant le
+// défaut "quick" : les cas plus spécifiques (thèse/comparaison/allocation/portefeuille) gagnent
+// toujours s'ils matchent en même temps.
 function detectResponseMode(question) {
   const text = question || "";
   if (THESIS_INTENT_RE.test(text)) return "thesis";
   if (countDistinctAssetMentions(text) >= 2) return "comparison";
   if (ALLOCATION_INTENT_RE.test(text)) return "allocation";
   if (PORTFOLIO_INTENT_RE.test(text)) return "portfolio";
+  if (isMarketWideQuestion(text)) return "market";
   return "quick";
 }
 

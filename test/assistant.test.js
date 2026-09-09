@@ -703,17 +703,29 @@ describe("assistant.js — detectResponseMode + routage d'une comparaison entre 
     dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "portfolio.js", "allocation.js", "search.js", "assistant.js"]);
   });
 
-  it("détecte allocation / comparaison / thèse / portfolio / quick à partir du seul texte de la question", () => {
+  it("détecte allocation / comparaison / thèse / portfolio / market / quick à partir du seul texte de la question", () => {
     expect(dom.window.detectResponseMode("Je devrais renforcer Cartesi ?")).toBe("allocation");
     expect(dom.window.detectResponseMode("INJ ou LINK, lequel recharger ?")).toBe("comparison");
     expect(dom.window.detectResponseMode("Fais-moi une thèse d'investissement sur Celestia")).toBe("thesis");
-    expect(dom.window.detectResponseMode("Comment va le marché en ce moment ?")).toBe("quick");
+    expect(dom.window.detectResponseMode("Pourquoi ça monte ?")).toBe("quick"); // pas "marché" explicite
     // Régression 09/09/2026 : une question sur la santé globale du portefeuille tombait avant
     // dans le gabarit "quick" (5 phrases max), bien trop court pour une vraie analyse.
     expect(dom.window.detectResponseMode("Comment va mon portefeuille ?")).toBe("portfolio");
     expect(dom.window.detectResponseMode("Analyse mes positions")).toBe("portfolio");
     // Un verbe d'action explicite garde la priorité sur la simple mention "portefeuille".
     expect(dom.window.detectResponseMode("Je devrais renforcer mon portefeuille avec 100€ ?")).toBe("allocation");
+    // Régression 09/09/2026 (2e passe, captures d'écran réelles) : "Comment va le marché en ce
+    // moment ?" tombait dans "quick" (250 tokens) — trop court pour expliquer un mouvement de
+    // marché, le modèle se faisait couper en plein mot en prod. Exemples EXACTS remontés par
+    // l'utilisateur ci-dessous.
+    expect(dom.window.detectResponseMode("Comment va le marché en ce moment ?")).toBe("market");
+    expect(dom.window.detectResponseMode("Pourquoi le marché est en baisse aujourd'hui ?")).toBe("market");
+    expect(dom.window.detectResponseMode("Pourquoi le marché est-il en baisse ?")).toBe("market");
+    expect(dom.window.detectResponseMode("Est-ce qu'on est en bullrun ?")).toBe("market");
+    // Une question sur UN actif précis ne doit jamais basculer sur "market" même avec un verbe
+    // de mouvement de prix — seul le mot "marché" (ou un terme de régime sans ambiguïté) doit
+    // déclencher ce mode, jamais "monte"/"baisse" seuls (régression que ce garde-fou évite).
+    expect(dom.window.detectResponseMode("Pourquoi Chainlink monte ?")).toBe("quick");
   });
 
   it("une question citant 2 favoris passe par le relais IA en mode comparaison plutôt que la fiche d'un seul actif (findAssetMention ne renvoie jamais que le premier trouvé)", async () => {
