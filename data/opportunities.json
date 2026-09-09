@@ -1,8 +1,8 @@
 {
-  "last_scan_at": "2026-09-08T04:04:30Z",
+  "last_scan_at": "2026-09-09T04:04:38Z",
   "scanned_count": 20,
   "excluded_meme_count": 22,
-  "methodology": "Cycle du 08/09/2026 : Top 20 CoinGecko via le connecteur MCP CoinGecko (memes limites connues : plafond 20 coins, USD natif converti en EUR via taux de change reel Alpha Vantage, variation 7j calculee depuis le sparkline 7 jours reel, ATH indisponible -> omis). Exclusion memecoins, stablecoins, actifs de dette tokenises, mega-caps deja notoires (BTC/ETH/BNB/XRP/SOL/TRX) et positions deja suivies au Portefeuille (Chainlink). Marche en repli general aujourd'hui (BTC -0.9%, ZEC -5.0%, Monero -4.3%, Hyperliquid -2.6% sur 24h). 8 des 20 coins etaient deja suivis, aucun autre candidat ne passe les exclusions : 0 nouvelle entree ce cycle. Revue optionnelle des 10 opportunites actives : tous les scores recalcules restent dans une fourchette normale malgre le repli (Zcash toujours en tete avec +31.9% sur 7j malgre -5.0% aujourd'hui) -> aucun retrait ce cycle.",
+  "methodology": "Cycle du 09/09/2026 : Top 20 CoinGecko via le connecteur MCP CoinGecko (memes limites connues : plafond 20 coins, USD natif converti en EUR via taux de change reel Alpha Vantage, variation 7j calculee depuis le sparkline 7 jours reel, ATH indisponible -> omis). Exclusion memecoins, stablecoins, actifs de dette tokenises, mega-caps deja notoires (BTC/ETH/BNB/XRP/SOL/TRX) et positions deja suivies au Portefeuille (Chainlink). 8 des 20 coins etaient deja suivis, aucun autre candidat ne passe les exclusions : 0 nouvelle entree ce cycle. Revue optionnelle des 10 opportunites actives : Kite recalcule nettement negatif (9.0 -> -4.1 : -9.2% sur 7j et -5.0% sur 24h, reversal soutenu) -> retire vers archived_opportunities. Rain a legerement decroche (3.4 -> -2.0) mais reste dans une fourchette normale, pas retire. Zcash et WhiteBIT restent en tete (respectivement +40.7% et +14.4% sur 7j).",
   "opportunities": [
     {
       "id": "opp-20260807-ub",
