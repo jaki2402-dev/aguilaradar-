@@ -1156,5 +1156,14 @@
     "triggered_at": "2026-09-09T04:20:00Z",
     "message": "Chainlink (LINK) franchit pour la première fois le seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif émis le 6 septembre (11,32 euros) : -5,39 % ce cycle (10,71 euros), en sens opposé au verdict, après le mois de forte hausse déjà validé sur le verdict précédent. Aucune actualité spécifique trouvée pour l'expliquer à ce stade — lecture purement technique, à surveiller au prochain cycle.",
     "source": "criblage technique interne"
+  },
+  {
+    "id": "alert-20260909-macro-regime-riskon",
+    "ticker_ou_theme": "MACRO",
+    "type": "actualite_macro",
+    "triggered_at": "2026-09-09T08:20:00Z",
+    "message": "Changement de régime macro : reclassé « risk-on » (depuis « neutre »). Trois sources datées et concordantes trouvées ce cycle (Yahoo Finance, Milkroad, CoinGabbar) situent l'indice de peur et de cupidité à 66 (« Greed »), en repli depuis 69 la veille — une tendance cohérente plutôt qu'une lecture isolée. La source CFGI.io (indice Bitcoin dédié), utilisée en référence lors des cycles précédents pour arbitrer les divergences, était inaccessible ce cycle (blocage réseau), donc pas de contre-vérification possible avec cette méthode habituelle. Dominance BTC en léger repli, autour de 56,8 % (contre 57,7 % au cycle précédent). Aucun mouvement extrême (>15 %) détecté par la recherche large sur les favoris ou opportunités suivis en dehors des franchissements déjà documentés dans verdicts.json. À confirmer au prochain cycle vu l'instabilité déjà observée plusieurs fois entre régimes ces derniers jours.",
+    "source": "Yahoo Finance / Milkroad / CoinGabbar",
+    "sentiment": "neutre"
   }
 ]
