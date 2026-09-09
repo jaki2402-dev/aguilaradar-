@@ -1273,12 +1273,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-08T20:21:00Z",
-      "price_at_signal_eur": 0.154882,
-      "move_pct_since_issue": 2.72,
+      "detected_at": "2026-09-09T00:20:00Z",
+      "price_at_signal_eur": 0.156054,
+      "move_pct_since_issue": 3.5,
       "threshold_pct": 5,
       "threshold_crossed": false,
-      "note": "Fetch.ai (FET) : repasse sous le seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 6 septembre à 0,150781 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,154882 euro, soit +2,72 % depuis l'émission (contre +5,05 % au cycle précédent, franchissement initial du 8 septembre à 4h20 UTC). Ne préjuge pas de l'issue à l'échéance du 20 septembre."
+      "note": "Fetch.ai (FET) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 6 septembre à 0,150781 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,156054 euro, soit +3,50 % depuis l'émission (contre +2,72 % au cycle précédent), légère reprise mais toujours sous le seuil. Ne préjuge pas de l'issue à l'échéance du 20 septembre."
     }
   },
   {
@@ -1345,12 +1345,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-08T20:21:00Z",
-      "price_at_signal_eur": 0.354705,
-      "move_pct_since_issue": -6.93,
+      "detected_at": "2026-09-09T00:20:00Z",
+      "price_at_signal_eur": 0.354732,
+      "move_pct_since_issue": -6.92,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Celestia (TIA) : reste au-dessous du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 6 septembre à 0,381104 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,354705 euro, soit -6,93 % depuis l'émission (contre -6,51 % au cycle précédent). Ne préjuge pas de l'issue à l'échéance du 13 septembre."
+      "note": "Celestia (TIA) : reste au-dessous du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 6 septembre à 0,381104 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,354732 euro, soit -6,92 % depuis l'émission (quasi stable par rapport au cycle précédent, -6,93 %). Ne préjuge pas de l'issue à l'échéance du 13 septembre."
     }
   },
   {
@@ -1385,12 +1385,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-08T20:21:00Z",
-      "price_at_signal_eur": 0.02639858,
-      "move_pct_since_issue": 18.08,
+      "detected_at": "2026-09-09T00:20:00Z",
+      "price_at_signal_eur": 0.02678807,
+      "move_pct_since_issue": 19.82,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Peaq (PEAQ) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 6 septembre à 0,02235604 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,02639858 euro, soit +18,08 % depuis l'émission (contre +12,46 % au cycle précédent), en accélération notable. Ne préjuge pas de l'issue à l'échéance du 13 septembre."
+      "note": "Peaq (PEAQ) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 6 septembre à 0,02235604 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,02678807 euro, soit +19,82 % depuis l'émission (contre +18,08 % au cycle précédent), poursuite de l'accélération. Ne préjuge pas de l'issue à l'échéance du 13 septembre."
     }
   },
   {
@@ -1489,12 +1489,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-08T20:21:00Z",
-      "price_at_signal_eur": 0.207496,
-      "move_pct_since_issue": -10.91,
+      "detected_at": "2026-09-09T00:20:00Z",
+      "price_at_signal_eur": 0.21049,
+      "move_pct_since_issue": -9.62,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Jupiter (JUP) : reste au-dessous du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 6 septembre à 0,232896 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,207496 euro, soit -10,91 % depuis l'émission (contre -10,79 % au cycle précédent). Ne préjuge pas de l'issue à l'échéance du 13 septembre."
+      "note": "Jupiter (JUP) : reste au-dessous du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 6 septembre à 0,232896 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,21049 euro, soit -9,62 % depuis l'émission (légère atténuation par rapport au cycle précédent, -10,91 %). Ne préjuge pas de l'issue à l'échéance du 13 septembre."
     }
   },
   {
@@ -1561,12 +1561,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-08T20:21:00Z",
-      "price_at_signal_eur": 0.063998,
-      "move_pct_since_issue": 18.63,
+      "detected_at": "2026-09-09T00:20:00Z",
+      "price_at_signal_eur": 0.064728,
+      "move_pct_since_issue": 19.98,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "AIOZ Network (AIOZ) : franchit pour la première fois le seuil de mouvement directionnel (5 %) à la hausse sur le verdict ATTENTE actif (émis le 6 septembre à 0,053949 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,063998 euro, soit +18,63 % depuis l'émission — variation 24h également marquée (+18,1 %) selon la même source, cohérente avec ce mouvement. Aucune actualité spécifique DePIN/stockage identifiée ce cycle pour l'expliquer : lecture purement technique. Ne préjuge pas de l'issue à l'échéance du 13 septembre."
+      "note": "AIOZ Network (AIOZ) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 6 septembre à 0,053949 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,064728 euro, soit +19,98 % depuis l'émission (contre +18,63 % au cycle précédent), poursuite de la hausse. Ne préjuge pas de l'issue à l'échéance du 13 septembre."
     }
   },
   {
@@ -1633,12 +1633,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-08T20:21:00Z",
-      "price_at_signal_eur": 0.145157,
-      "move_pct_since_issue": -11.23,
+      "detected_at": "2026-09-09T00:20:00Z",
+      "price_at_signal_eur": 0.142353,
+      "move_pct_since_issue": -12.95,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Arbitrum (ARB) : reste au-dessous du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 6 septembre à 0,163523 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,145157 euro, soit -11,23 % depuis l'émission (contre -11,22 % au cycle précédent, quasi stable). Ne préjuge pas de l'issue à l'échéance du 13 septembre."
+      "note": "Arbitrum (ARB) : reste au-dessous du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 6 septembre à 0,163523 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,142353 euro, soit -12,95 % depuis l'émission (contre -11,23 % au cycle précédent), léger creusement. Ne préjuge pas de l'issue à l'échéance du 13 septembre."
     }
   },
   {
@@ -1673,12 +1673,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-08T20:21:00Z",
-      "price_at_signal_eur": 5.56,
-      "move_pct_since_issue": 21.93,
+      "detected_at": "2026-09-09T00:20:00Z",
+      "price_at_signal_eur": 5.54,
+      "move_pct_since_issue": 21.49,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Injective (INJ) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 6 septembre à 4,56 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 5,56 euros, soit +21,93 % depuis l'émission (contre +21,05 % au cycle précédent). Ne préjuge pas de l'issue à l'échéance du 13 septembre."
+      "note": "Injective (INJ) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 6 septembre à 4,56 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 5,54 euros, soit +21,49 % depuis l'émission (quasi stable par rapport au cycle précédent, +21,93 %). Ne préjuge pas de l'issue à l'échéance du 13 septembre."
     }
   }
 ]
