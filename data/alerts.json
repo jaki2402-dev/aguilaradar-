@@ -1141,5 +1141,12 @@
     "message": "Changement de régime macro : reclassé « neutre » (depuis « risk-on »). Trois lectures indépendantes de l'indice de peur et de cupidité trouvées ce cycle divergent nettement de la valeur stable précédente (69, « Greed ») : 49 (AltIndex), 50 (CFGI, lecture Bitcoin) et 59 (Coingabbar — cette dernière source associée à un prix Bitcoin incohérent, 78 874-79 000 dollars, avec le prix confirmé ce cycle par appel direct CoinGecko, donc traitée avec prudence). Valeur interne retenue à 52 (moyenne prudente), cohérente avec la zone « Neutre » sur la majorité des sources. Dominance BTC stable à 57,7 %. Repli de marché mentionné (capitalisation totale -1,1 %) sans mouvement extrême sur les favoris suivis.",
     "source": "AltIndex / CFGI.io / Coingabbar",
     "sentiment": "neutre"
+  },
+  {
+    "id": "avis-jour-2026-09-09",
+    "ticker_ou_theme": "PORTEFEUILLE",
+    "type": "avis_du_jour",
+    "triggered_at": "2026-09-09T00:20:00Z",
+    "message": "Sur tes positions : AIOZ, PEAQ et INJ poursuivent une forte hausse (+20 % env.) malgré des verdicts ATTENTE ; JUP reste sous pression (-9,6 %) malgré une thèse hebdo à renforcer — à surveiller."
   }
 ]
