@@ -1173,5 +1173,23 @@
     "triggered_at": "2026-09-10T00:16:00Z",
     "message": "TIA casse le support clé à 0,36 $ évoqué en thèse hebdo (désormais ~0,33 $), alors que le verdict actif reste ACHAT — position à surveiller de près.",
     "sentiment": "negatif"
+  },
+  {
+    "id": "alert-20260910-allemagne-fiscalite",
+    "ticker_ou_theme": "MACRO",
+    "type": "actualite_generale",
+    "triggered_at": "2026-09-10T16:18:00Z",
+    "message": "Le ministère fédéral allemand des Finances a présenté le 9 septembre un projet de loi mettant fin à la règle d'exonération fiscale après un an de détention sur les cryptomonnaies : les actifs acquis après le 1er janvier 2027 seraient soumis à un prélèvement forfaitaire de 25 % (26,375 % avec la surtaxe de solidarité), avec retenue automatique par les prestataires de services à partir du 1er janvier 2028. Les avoirs déjà détenus, ou acquis avant cette date-butoir, resteraient couverts par l'exonération actuelle après douze mois de détention. Recette fiscale supplémentaire attendue : environ 350 millions d'euros. Le texte reste un projet à ce stade, non encore examiné par le Bundestag ni le Bundesrat — décision réglementaire d'une économie majeure du G7, à suivre pour son cheminement parlementaire.",
+    "source": "https://cryptobriefing.com/germany-25-percent-crypto-tax-plan/",
+    "sentiment": "négatif"
+  },
+  {
+    "id": "alert-20260910-xlm-usbdc",
+    "ticker_ou_theme": "XLM",
+    "type": "actualite_generale",
+    "triggered_at": "2026-09-10T16:18:00Z",
+    "message": "U.S. Bank (U.S. Bancorp) a finalisé le 9 septembre un premier paiement transfrontalier réel sur la blockchain Stellar avec son propre stablecoin adossé au dollar, USBDC, entre ses entités d'Amérique du Nord et d'Europe (transfert intragroupe, pas encore un flux client). Le pilote valide les fonctions de frappe, remboursement, gel et clawback de la plateforme d'actifs numériques interne de la banque, construite sur son partenariat stratégique avec la Stellar Development Foundation ; plusieurs usages institutionnels (gestion de liquidité, mobilité du collatéral, trésorerie transfrontalière) sont à l'étude pour la suite. Validation institutionnelle concrète pour l'écosystème Stellar (XLM, une des opportunités suivies), distincte d'un simple partenariat annoncé sans exécution réelle.",
+    "source": "https://cryptodaily.co.uk/2026/09/us-bank-usbdc-stellar-live-cross-border-payment",
+    "sentiment": "positif"
   }
 ]
