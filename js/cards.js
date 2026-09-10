@@ -142,6 +142,32 @@ function renderOpportunityTile(o, idx, containerId) {
     </div>`;
 }
 
+// Résumé chiffré au-dessus du mur de tuiles — absent jusqu'ici, contrairement à l'Accueil qui a
+// déjà "État du radar". Uniquement des agrégats dérivés de champs réels déjà utilisés par
+// renderOpportunityTile (computeConfidence, change_24h_pct) : rien de nouveau n'est inventé,
+// juste résumé avant le détail tuile par tuile.
+function renderOpportunitiesSummary(containerId, opportunities) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
+  const items = opportunities || [];
+  if (items.length === 0) {
+    el.innerHTML = "";
+    return;
+  }
+  const confidences = items.map(computeConfidence);
+  const avgConfidence = confidences.reduce((a, b) => a + b, 0) / items.length;
+  const highConfidence = confidences.filter((c) => c >= 75).length;
+  const up = items.filter((o) => o.change_24h_pct >= 0).length;
+  const down = items.length - up;
+  el.innerHTML = `
+    <div class="stat-row">
+      <div class="stat-card accent-gold"><div class="stat-label">Pépites trouvées</div><div class="stat-value">${items.length}</div></div>
+      <div class="stat-card accent-teal"><div class="stat-label">Confiance moyenne</div><div class="stat-value">${avgConfidence.toFixed(0)} %</div></div>
+      <div class="stat-card accent-violet"><div class="stat-label">Confiance ≥ 75 %</div><div class="stat-value">${highConfidence}</div></div>
+      <div class="stat-card accent-gray"><div class="stat-label">Hausse / baisse 24h</div><div class="stat-value"><span class="positive">${up}</span> / <span class="negative">${down}</span></div></div>
+    </div>`;
+}
+
 // limit optionnel (même convention que renderOpportunityCards juste au-dessus) : ajouté le
 // 10/09/2026 pour que l'Accueil ("Meilleures analyses du moment", 3 éléments) puisse réutiliser
 // cette même tuile compacte au lieu de la carte lourde .opp-card — plus cohérent avec l'onglet

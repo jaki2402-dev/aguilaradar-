@@ -91,6 +91,35 @@ function updateFavorisVerdicts(verdicts) {
   });
 }
 
+// Résumé "Achat/Vente/Attente/pas encore" sur les 15 favoris — absent jusqu'ici (l'Accueil
+// montre un total global de verdicts émis, jamais cette répartition propre aux favoris). Même
+// calcul "dernier verdict par actif" que updateFavorisVerdicts juste au-dessus (une seule
+// source de vérité), pour ne jamais afficher un chiffre qui contredirait les badges déjà
+// visibles sur les tuiles.
+function renderFavorisSummary(verdicts) {
+  const el = document.getElementById("favoris-summary");
+  if (!el) return;
+  const counts = { ACHAT: 0, VENTE: 0, ATTENTE: 0 };
+  let unanalyzed = 0;
+  FAVORIS.forEach((f) => {
+    const latest = (verdicts || [])
+      .filter((v) => v.asset === f.cgId)
+      .sort((a, b) => new Date(b.issued_at) - new Date(a.issued_at))[0];
+    if (!latest || !(latest.verdict in counts)) {
+      unanalyzed += 1;
+      return;
+    }
+    counts[latest.verdict] += 1;
+  });
+  el.innerHTML = `
+    <div class="stat-row">
+      <div class="stat-card accent-teal"><div class="stat-label">Achat</div><div class="stat-value positive">${counts.ACHAT}</div></div>
+      <div class="stat-card accent-gray"><div class="stat-label">Vente</div><div class="stat-value negative">${counts.VENTE}</div></div>
+      <div class="stat-card accent-gold"><div class="stat-label">Attente</div><div class="stat-value">${counts.ATTENTE}</div></div>
+      <div class="stat-card accent-indigo"><div class="stat-label">Pas encore analysé</div><div class="stat-value">${unanalyzed}</div></div>
+    </div>`;
+}
+
 const HEAT_TIER_CLASSES = ["heat-pos-1", "heat-pos-2", "heat-pos-3", "heat-neg-1", "heat-neg-2", "heat-neg-3"];
 
 // Fond légèrement teinté vert/rouge selon l'intensité de la variation 24h (esprit Coin360 :
@@ -160,6 +189,7 @@ function renderOpportunities(data) {
   const items = (data && data.opportunities) || [];
   latestOpportunityTickers = items.map((o) => o.ticker).filter(Boolean);
   renderOpportunityTiles("opportunities-body", items);
+  renderOpportunitiesSummary("opportunities-summary", items);
   // Tuile compacte (même patron que l'onglet Opportunités), pas la carte lourde .opp-card :
   // changement du 10/09/2026, voir renderOpportunityTiles (cards.js) pour le pourquoi.
   renderOpportunityTiles("accueil-highlights", items, 3);
@@ -522,6 +552,7 @@ async function loadAllData() {
   initDayReplay({ verdicts: verdicts || [], opportunities, alerts: alerts || [] });
   updateHeroStats(verdicts || [], alerts);
   updateFavorisVerdicts(verdicts || []);
+  renderFavorisSummary(verdicts || []);
   if (window.renderPortfolio) renderPortfolio(portfolio, verdicts || [], portfolioThesis, portfolioHistory);
 
   updateFreshnessIndicator(engineHistory, opportunities, news);
