@@ -542,6 +542,11 @@ function attachAllocationChips() {
 // plus immédiatement utile) puis concentration puis désaccords verdict/thèse puis historique puis
 // comparatif BTC/ETH en pleine largeur, répartition + performance côte à côte en dessous (voir
 // .portfolio-charts, style.css).
+// Regroupement en .dashboard-grid (2 colonnes dès 320px de large chacune, voir style.css) —
+// même utilitaire déjà utilisé sur l'Accueil (Avis du jour + Régime macro). Avant ce
+// regroupement, ces 4 cartes courtes s'empilaient pleine largeur sans raison sur desktop.
+// Deux paires par thème (performance dans le temps / composition-risque) plutôt qu'un seul
+// bloc de 4 : garde une lecture cohérente au lieu d'un assemblage arbitraire.
 function renderPortfolioCharts(positions, history) {
   const allocationHtml = renderPortfolioAttractivenessRanking(positions);
   const concentrationHtml = renderPortfolioConcentration(positions);
@@ -550,8 +555,10 @@ function renderPortfolioCharts(positions, history) {
   const benchmarkHtml = renderPortfolioBenchmarkCard(history);
   const allocChartHtml = renderPortfolioAllocationChart(positions);
   const perfHtml = renderPortfolioPerformanceChart(positions);
+  const performanceParts = [historyHtml, benchmarkHtml].filter(Boolean);
+  const riskParts = [concentrationHtml, conflictsHtml].filter(Boolean);
   const gridParts = [allocChartHtml, perfHtml].filter(Boolean);
-  return `${allocationHtml}${concentrationHtml}${conflictsHtml}${historyHtml}${benchmarkHtml}${gridParts.length ? `<div class="portfolio-charts">${gridParts.join("")}</div>` : ""}`;
+  return `${allocationHtml}${performanceParts.length ? `<div class="dashboard-grid">${performanceParts.join("")}</div>` : ""}${riskParts.length ? `<div class="dashboard-grid">${riskParts.join("")}</div>` : ""}${gridParts.length ? `<div class="portfolio-charts">${gridParts.join("")}</div>` : ""}`;
 }
 
 // Tuile dense (même esprit que .favori-tile/.opp-tile — voir CLAUDE.md/style.css : "Coin360,
