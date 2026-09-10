@@ -130,8 +130,8 @@ function renderFavorisContextSection(ticker) {
   const onchainSourceUrl = onchain.source_url ? safeUrl(onchain.source_url) : null;
   return `<div class="detail-context">
     <strong>Contexte élargi</strong>
-    ${comp.name ? `<p class="hint"><strong>Concurrent (${escapeHtml(comp.ticker || "?")}) :</strong> ${highlightKeyInfo(comp.comparison_note || "—")}</p>` : `<p class="hint">Comparaison concurrent : pas encore calculée.</p>`}
-    ${thesis.assumptions_note ? `<p class="hint"><strong>Thèse long terme</strong> — ${highlightKeyInfo(`Bull : ${thesis.bull || "—"} · Base : ${thesis.base || "—"} · Bear : ${thesis.bear || "—"}`)} <br/><em>${highlightKeyInfo(thesis.assumptions_note)}</em></p>` : `<p class="hint">Thèse long terme : pas encore rédigée.</p>`}
+    ${comp.name ? `<div class="hint"><strong>Concurrent (${escapeHtml(comp.ticker || "?")}) :</strong>${renderClampableText(comp.comparison_note || "—")}</div>` : `<p class="hint">Comparaison concurrent : pas encore calculée.</p>`}
+    ${thesis.assumptions_note ? `<div class="hint"><strong>Thèse long terme</strong>${renderClampableText(`Bull : ${thesis.bull || "—"} · Base : ${thesis.base || "—"} · Bear : ${thesis.bear || "—"} — Hypothèses : ${thesis.assumptions_note}`)}</div>` : `<p class="hint">Thèse long terme : pas encore rédigée.</p>`}
     <p class="hint"><strong>Open interest :</strong> ${oi.value_usd ? formatMarketCap(oi.value_usd) + (oi.funding_rate_pct !== null && oi.funding_rate_pct !== undefined ? ` · funding ${oi.funding_rate_pct.toFixed(3)}%` : "") : highlightKeyInfo(oi.note || "—")}</p>
     <p class="hint"><strong>TVL DeFi :</strong> ${tvl.value_usd ? formatMarketCap(tvl.value_usd) : highlightKeyInfo(tvl.note || "—")}</p>
     <p class="hint"><strong>Signal on-chain (opportuniste, pas systématique) :</strong> ${onchain.available ? `${highlightKeyInfo(onchain.note)} ${onchainSourceUrl ? `<a href="${escapeHtml(onchainSourceUrl)}" target="_blank" rel="noopener">source</a>` : ""}` : highlightKeyInfo(onchain.note || "aucun signal cette fois")}</p>
@@ -437,11 +437,12 @@ async function renderDetailPanel(panelEl, asset) {
     ${technicalHtml}
     <div class="detail-opinion">
       <strong>Mon avis</strong>
-      <p>${highlightKeyInfo(asset.reasoning || asset.reason || "Analyse pas encore disponible pour cet actif — en attente du prochain cycle.")}</p>
+      ${renderClampableText(asset.reasoning || asset.reason || "Analyse pas encore disponible pour cet actif — en attente du prochain cycle.")}
       ${asset.verdict ? `<p class="hint">Verdict actuel : <span class="badge badge-${asset.verdict.toLowerCase()}">${asset.verdict}</span> — vérifié automatiquement à son échéance, jamais avant.</p>` : ""}
     </div>
     ${asset.horizons ? renderOpportunityHorizonsSection(asset.horizons) : ""}
     ${renderFavorisContextSection(asset.ticker)}`;
+  wireClampToggles(panelEl);
 
   if (technicalOk && chartId) mountTradingViewChart(chartId, asset.tvSymbol);
   return technicalOk;

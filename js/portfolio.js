@@ -594,7 +594,7 @@ function renderPortfolioTile(p, idx) {
           <span class="hint">Signaux techniques (calculés en direct)</span>
           <div class="portfolio-technical" id="portfolio-technical-${idx}"><p class="empty-state">Se charge à l'ouverture…</p></div>
         </div>
-        ${p.reasoning ? `<p class="hint portfolio-reasoning">${highlightKeyInfo(p.reasoning)}</p>` : ""}
+        ${p.reasoning ? `<div class="hint portfolio-reasoning">${renderClampableText(p.reasoning)}</div>` : ""}
         ${renderThesisBlock(p)}
         ${typeof renderFavorisContextSection === "function" ? renderFavorisContextSection(p.ticker) : ""}
       </div>
@@ -623,7 +623,7 @@ function renderThesisBlock(p) {
         <div class="portfolio-thesis">
           <span class="hint">Thèse hebdo (recherche réelle)</span>
           <div class="portfolio-thesis-meta">${badgeHtml}${convictionHtml}</div>
-          ${p.constat ? `<p class="hint portfolio-thesis-constat">${highlightKeyInfo(p.constat)}</p>` : ""}
+          ${p.constat ? `<div class="hint portfolio-thesis-constat">${renderClampableText(p.constat)}</div>` : ""}
         </div>`;
 }
 
@@ -740,6 +740,7 @@ function renderPortfolio(portfolio, verdicts, thesis, history) {
   const summary = computePortfolioSummary(latestPortfolio, prices, latestPortfolioVerdicts, latestPortfolioThesis);
 
   el.innerHTML = `<div class="favoris-grid portfolio-tile-grid">${summary.positions.map((p, i) => renderPortfolioTile(p, i)).join("")}</div>`;
+  wireClampToggles(el);
   summary.positions.forEach((p, i) => {
     if (p.pending) return;
     const tileEl = document.getElementById(`portfolio-tile-${i}`);

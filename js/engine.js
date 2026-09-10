@@ -11,6 +11,11 @@ const CLASSES = ["ACHAT", "ATTENTE", "VENTE"];
 // pour rester cohérent avec la seule autre section du site qui gate déjà un jugement global.
 const MIN_RESOLVED_FOR_SELF_ASSESSMENT = 10;
 
+// Journal de corrections : historique permanent, potentiellement long — n'affiche que les plus
+// récentes d'entrée de jeu, le reste derrière un <details> (voir renderEngineTab), même logique
+// que ALLOC_RANKING_VISIBLE_COUNT (portfolio.js) pour la même raison (liste non bornée).
+const ENGINE_LOG_VISIBLE_COUNT = 5;
+
 function classifyActualMove(pctChange, thresholdPct) {
   if (pctChange === null || pctChange === undefined) return null;
   if (pctChange > thresholdPct) return "ACHAT";
@@ -254,6 +259,33 @@ function renderEnginePin(stats) {
     <div class="pin-card"><span class="pin-val ${edgeCls}">${edgeVal}</span><span class="pin-label">Vs référence${enoughForEdge ? "" : ` (min. ${MIN_RESOLVED_FOR_SELF_ASSESSMENT})`}</span></div>`;
 }
 
+// Champs réels écrits par la routine (voir CLAUDE.md sur engine-history.json) : id, logged_at,
+// trigger, what, why, action, status ("accepted"/"rejected"), validation_score_before_pct,
+// validation_score_after_pct — pas version/attempted_at/change_description/note, qui n'ont
+// jamais existé côté données et laissaient donc chaque entrée s'afficher vide.
+function renderCorrectionLogEntry(entry) {
+  const before = entry.validation_score_before_pct;
+  const after = entry.validation_score_after_pct;
+  const scoreLine =
+    before === undefined || before === null
+      ? ""
+      : `<p class="hint">Score de validation : ${before} %${
+          after === undefined || after === null ? " (aucun changement appliqué)" : ` → ${after} %`
+        }</p>`;
+  return `
+  <div class="log-entry">
+    <div class="log-header">
+      <span>${escapeHtml(entry.logged_at ? new Date(entry.logged_at).toLocaleString("fr-FR") : "")}</span>
+      <span class="badge ${entry.status === "accepted" ? "badge-success" : "badge-neutral"}">${entry.status === "accepted" ? "Appliquée" : "Rejetée"}</span>
+    </div>
+    <div class="hint">${renderClampableText(entry.trigger || "")}</div>
+    <div><strong>Diagnostic</strong>${renderClampableText(entry.what || "")}</div>
+    <div><strong>Pourquoi</strong>${renderClampableText(entry.why || "")}</div>
+    <div><strong>Décision</strong>${renderClampableText(entry.action || "")}</div>
+    ${scoreLine}
+  </div>`;
+}
+
 function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGroup) {
   const resolved = verdicts.filter((v) => v.status === "resolved");
   const pending = verdicts.filter((v) => v.status === "pending");
@@ -284,10 +316,10 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGrou
         ? `Le moteur ne fait pas mieux qu'une supposition naïve pour l'instant (écart de ${edge.toFixed(0)} points). Ses verdicts ne doivent pas être suivis mécaniquement tant que ça reste vrai.`
         : `Le moteur fait actuellement moins bien que le hasard (${edge.toFixed(0)} points) — un vrai problème que la correction automatique doit adresser en priorité, pas un détail.`;
     const selfAssessmentBlock = !enoughForVerdict
-      ? `<p class="empty-state">${selfAssessment}</p>`
+      ? `<div class="empty-state">${renderClampableText(selfAssessment)}</div>`
       : `<div class="detail-opinion" style="margin-bottom:16px;">
         <strong>Verdict du moteur sur lui-même</strong>
-        <p>${selfAssessment}</p>
+        ${renderClampableText(selfAssessment)}
       </div>`;
     matrixEl.innerHTML = `
       ${selfAssessmentBlock}
@@ -313,6 +345,7 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGrou
           }).join("")}
         </tbody>
       </table>`;
+    wireClampToggles(matrixEl);
 
     classesEl.innerHTML = `
       <table class="classes-table">
@@ -334,40 +367,20 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGrou
       <p class="hint">Précision = fiabilité d'un verdict quand il est émis. Rappel = capacité à ne pas rater les vrais mouvements. F1 = équilibre entre les deux (0 à 100).</p>`;
   }
 
-  // Champs réels écrits par la routine (voir CLAUDE.md sur engine-history.json) : id, logged_at,
-  // trigger, what, why, action, status ("accepted"/"rejected"), validation_score_before_pct,
-  // validation_score_after_pct — pas version/attempted_at/change_description/note, qui n'ont
-  // jamais existé côté données et laissaient donc chaque entrée s'afficher vide.
   const log = (engineHistory && engineHistory.correction_log) || [];
   if (log.length === 0) {
     logEl.innerHTML = `<p class="empty-state">Aucune correction tentée pour l'instant — le moteur a besoin de plusieurs verdicts vérifiés avant sa première auto-évaluation.</p>`;
   } else {
-    logEl.innerHTML = log
-      .slice()
-      .reverse()
-      .map((entry) => {
-        const before = entry.validation_score_before_pct;
-        const after = entry.validation_score_after_pct;
-        const scoreLine =
-          before === undefined || before === null
-            ? ""
-            : `<p class="hint">Score de validation : ${before} %${
-                after === undefined || after === null ? " (aucun changement appliqué)" : ` → ${after} %`
-              }</p>`;
-        return `
-        <div class="log-entry">
-          <div class="log-header">
-            <span>${escapeHtml(entry.logged_at ? new Date(entry.logged_at).toLocaleString("fr-FR") : "")}</span>
-            <span class="badge ${entry.status === "accepted" ? "badge-success" : "badge-neutral"}">${entry.status === "accepted" ? "Appliquée" : "Rejetée"}</span>
-          </div>
-          <p class="hint">${highlightKeyInfo(entry.trigger || "")}</p>
-          <p><strong>Diagnostic —</strong> ${highlightKeyInfo(entry.what || "")}</p>
-          <p><strong>Pourquoi —</strong> ${highlightKeyInfo(entry.why || "")}</p>
-          <p><strong>Décision —</strong> ${highlightKeyInfo(entry.action || "")}</p>
-          ${scoreLine}
-        </div>`;
-      })
-      .join("");
+    const chronological = log.slice().reverse();
+    const visible = chronological.slice(0, ENGINE_LOG_VISIBLE_COUNT).map(renderCorrectionLogEntry).join("");
+    const rest = chronological.slice(ENGINE_LOG_VISIBLE_COUNT);
+    // <details> natif, même patron que .alloc-more (portfolio.js, renderPortfolioAttractivenessRanking) —
+    // pas de nouveau composant, juste réutilisé ici pour ne plus afficher un journal illimité d'un coup.
+    const restHtml = rest.length
+      ? `<details class="alloc-more"><summary>Voir les ${rest.length} correction(s) précédente(s)</summary>${rest.map(renderCorrectionLogEntry).join("")}</details>`
+      : "";
+    logEl.innerHTML = visible + restHtml;
+    wireClampToggles(logEl);
   }
 
   renderCalibrationByBucket(resolved);

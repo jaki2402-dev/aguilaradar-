@@ -170,9 +170,10 @@ function renderDigestPanel(digest) {
       <span class="hint">Résumé généré le ${new Date(digest.generated_at).toLocaleString("fr-FR")}</span>
     </div>
     <h3 class="digest-headline">${highlightKeyInfo(digest.headline || "")}</h3>
-    <p class="digest-summary">${highlightKeyInfo(digest.summary || "")}</p>
+    <div class="digest-summary">${renderClampableText(digest.summary || "")}</div>
     ${tipsHtml ? `<ul class="digest-tips">${tipsHtml}</ul>` : ""}
   `;
+  wireClampToggles(el);
 }
 
 async function checkDigest() {

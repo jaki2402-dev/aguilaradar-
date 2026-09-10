@@ -424,16 +424,25 @@ describe("app.js — renderOpportunities", () => {
     expect(dom.window.document.querySelectorAll("#opportunities-body .opp-tile")).toHaveLength(3);
   });
 
-  it("mirrors only the top 3 (by confidence) into #accueil-highlights (full .opp-card) while the full list stays in #opportunities-body (dense .opp-tile)", () => {
+  it("mirrors only the top 3 (by confidence) into #accueil-highlights (même tuile compacte .opp-tile que l'onglet Opportunités, plus la carte lourde .opp-card — changement du 10/09/2026) while the full list stays in #opportunities-body", () => {
     const items = [opp("AAA"), opp("BBB"), opp("CCC"), opp("DDD"), opp("EEE")];
     dom.window.renderOpportunities({ opportunities: items });
-    expect(dom.window.document.querySelectorAll("#accueil-highlights .opp-card")).toHaveLength(3);
+    expect(dom.window.document.querySelectorAll("#accueil-highlights .opp-tile")).toHaveLength(3);
     expect(dom.window.document.querySelectorAll("#opportunities-body .opp-tile")).toHaveLength(5);
   });
 
-  it("highlights a key figure in the opportunity's reason text (.opp-card, highlightKeyInfo not a bare escapeHtml)", () => {
+  // Régression 10/09/2026 : le texte du "reason" n'est plus affiché en clair au premier coup
+  // d'oeil (c'est justement le but de la tuile compacte — voir renderOpportunityTile, cards.js) :
+  // il reste accessible via l'attribut data-reason, lu par attachDetailToggle au clic pour
+  // alimenter "Mon avis" dans le panneau de détail (voir detail.js, désormais passé par
+  // renderClampableText — highlightKeyInfo y est donc toujours appliqué, un niveau plus loin).
+  // Ce test vérifie juste que l'attribut ne casse pas le HTML (échappement), pas l'affichage
+  // immédiat du surlignage, qui n'existe plus à ce niveau par conception.
+  it("escapes the opportunity's reason text into the tile's data-reason attribute (no raw HTML/quote breakout), highlighting happens one level deeper when the detail panel opens", () => {
     dom.window.renderOpportunities({ opportunities: [opp("AAA", { reason: "Rebond de 15 % sur 7 jours, volume en hausse." })] });
-    expect(dom.window.document.querySelector("#accueil-highlights .opp-card mark.hl-stat").textContent).toBe("15 %");
+    const tile = dom.window.document.querySelector("#accueil-highlights .opp-tile");
+    expect(tile.dataset.reason).toBe("Rebond de 15 % sur 7 jours, volume en hausse.");
+    expect(dom.window.document.querySelector("#accueil-highlights mark.hl-stat")).toBeNull();
   });
 
   it("records the rendered tickers, in input order, for the opportunities constellation", () => {

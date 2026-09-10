@@ -127,7 +127,11 @@ describe("notify.js — updateNotifBellBadge / renderDigestPanel / clearNotifBel
   let dom;
 
   beforeEach(() => {
-    dom = loadPage(["config.js", "notify.js"], {
+    // app.js avant notify.js (même ordre qu'index.html) : renderDigestPanel appelle désormais
+    // renderClampableText (défini dans app.js) pour replier un résumé long — dépendance réelle
+    // depuis le 10/09/2026, pas un oubli. app.js ne fait que déclarer des fonctions/écouteurs
+    // gardés par des "if (!el) return", donc son chargement ici ne touche rien dans ce fixture.
+    dom = loadPage(["config.js", "app.js", "notify.js"], {
       html: `<!doctype html><html><body><span id="notif-bell-badge" hidden></span><div id="digest-panel"></div></body></html>`,
     });
   });

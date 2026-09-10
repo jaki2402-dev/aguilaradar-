@@ -37,7 +37,7 @@ describe("portfolio.js — renderPortfolio", () => {
   let dom;
 
   beforeEach(() => {
-    dom = loadPage(["config.js", "prices.js", "portfolio.js", "allocation.js"], { html: PORTFOLIO_FIXTURE_HTML });
+    dom = loadPage(["config.js", "prices.js", "portfolio.js", "allocation.js", "app.js"], { html: PORTFOLIO_FIXTURE_HTML });
   });
 
   it("computes value, P&L (€) and P&L (%) from the live price against the fixed invested capital", () => {
@@ -169,7 +169,7 @@ describe("portfolio.js — renderPortfolio", () => {
 });
 
 describe("portfolio.js — computePortfolioSummary (calcul pur, réutilisé par l'Assistant)", () => {
-  const dom = loadPage(["config.js", "prices.js", "portfolio.js", "allocation.js"]);
+  const dom = loadPage(["config.js", "prices.js", "portfolio.js", "allocation.js", "app.js"]);
   const { computePortfolioSummary } = dom.window;
 
   it("calcule valeur/P&L/P&L% pour une position normale et l'inclut dans les totaux", () => {
@@ -255,7 +255,7 @@ describe("portfolio.js — grille de tuiles et repli/dépli", () => {
   let dom;
 
   beforeEach(() => {
-    dom = loadPage(["config.js", "prices.js", "portfolio.js", "allocation.js"], { html: PORTFOLIO_FIXTURE_HTML });
+    dom = loadPage(["config.js", "prices.js", "portfolio.js", "allocation.js", "app.js"], { html: PORTFOLIO_FIXTURE_HTML });
   });
 
   it("rend une tuile .portfolio-tile par position, dans une grille .portfolio-tile-grid", () => {
@@ -352,7 +352,7 @@ describe("portfolio.js — signaux techniques d'une position (réutilise detail.
   }
 
   beforeEach(() => {
-    dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "portfolio.js", "allocation.js"], { html: PORTFOLIO_FIXTURE_HTML });
+    dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "portfolio.js", "allocation.js", "app.js"], { html: PORTFOLIO_FIXTURE_HTML });
   });
 
   it("calcule et affiche RSI/MM20/MM50 réels (même calcul que Favoris) une fois chargé", async () => {
@@ -464,7 +464,7 @@ describe("portfolio.js — signaux techniques d'une position (réutilise detail.
 });
 
 describe("portfolio.js — computeTransactionResult (calculette achat/vente, coût moyen pondéré)", () => {
-  const dom = loadPage(["config.js", "prices.js", "portfolio.js", "allocation.js"]);
+  const dom = loadPage(["config.js", "prices.js", "portfolio.js", "allocation.js", "app.js"]);
   const { computeTransactionResult } = dom.window;
 
   it("achat : ajoute la quantité et le coût à une position existante", () => {
@@ -550,7 +550,7 @@ describe("portfolio.js — renderTransactionCalculator", () => {
   let dom;
 
   beforeEach(() => {
-    dom = loadPage(["config.js", "prices.js", "portfolio.js", "allocation.js"], { html: PORTFOLIO_FIXTURE_HTML });
+    dom = loadPage(["config.js", "prices.js", "portfolio.js", "allocation.js", "app.js"], { html: PORTFOLIO_FIXTURE_HTML });
   });
 
   it("peuple le menu déroulant avec les 15 favoris", () => {
@@ -777,7 +777,7 @@ describe("portfolio.js — historique des transactions (reconstruit depuis les c
   let dom;
 
   beforeEach(() => {
-    dom = loadPage(["config.js", "prices.js", "portfolio.js", "allocation.js"], { html: PORTFOLIO_FIXTURE_HTML });
+    dom = loadPage(["config.js", "prices.js", "portfolio.js", "allocation.js", "app.js"], { html: PORTFOLIO_FIXTURE_HTML });
   });
 
   function b64(obj) {
@@ -869,7 +869,7 @@ function summaryPos(overrides) {
 describe("portfolio.js — renderPortfolioAllocationChart", () => {
   let dom;
   beforeEach(() => {
-    dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js", "allocation.js"]);
+    dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js", "allocation.js", "app.js"]);
   });
 
   it("returns an empty string when no position has a usable value (all pending)", () => {
@@ -897,7 +897,7 @@ describe("portfolio.js — renderPortfolioAllocationChart", () => {
 describe("portfolio.js — renderPortfolioPerformanceChart", () => {
   let dom;
   beforeEach(() => {
-    dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js", "allocation.js"]);
+    dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js", "allocation.js", "app.js"]);
   });
 
   it("returns an empty string when no position has a computed P&L%", () => {
@@ -923,7 +923,7 @@ describe("portfolio.js — renderPortfolioPerformanceChart", () => {
 describe("portfolio.js — renderPortfolioConcentration (concentration réelle pondérée en €, pas un simple nombre de positions)", () => {
   let dom;
   beforeEach(() => {
-    dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js", "allocation.js"]);
+    dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js", "allocation.js", "app.js"]);
   });
 
   it("returns an empty string when no position has a usable value", () => {
@@ -966,7 +966,7 @@ describe("portfolio.js — renderPortfolioConcentration (concentration réelle p
 describe("portfolio.js — renderPortfolioSignalConflicts (verdict technique vs thèse hebdo)", () => {
   let dom;
   beforeEach(() => {
-    dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js", "allocation.js"]);
+    dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js", "allocation.js", "app.js"]);
   });
 
   it("returns an empty string when no position has both a verdict and a thesis recommendation yet", () => {
@@ -1018,7 +1018,7 @@ describe("portfolio.js — renderPortfolioSignalConflicts (verdict technique vs 
 describe("portfolio.js — renderPortfolioHistoryChart", () => {
   let dom;
   beforeEach(() => {
-    dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js", "allocation.js"]);
+    dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js", "allocation.js", "app.js"]);
   });
 
   it("shows a waiting message instead of a chart when fewer than 2 real snapshots exist", () => {
@@ -1061,7 +1061,7 @@ describe("portfolio.js — renderPortfolioHistoryChart", () => {
 describe("portfolio.js — renderPortfolioCharts (assembly)", () => {
   let dom;
   beforeEach(() => {
-    dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js", "allocation.js"]);
+    dom = loadPage(["config.js", "prices.js", "cards.js", "portfolio.js", "allocation.js", "app.js"]);
   });
 
   it("always includes the history block (even as a waiting message) and wraps allocation+performance in .portfolio-charts", () => {
@@ -1082,7 +1082,7 @@ describe("portfolio.js — renderPortfolio wires the charts container", () => {
   // loadPortfolioBenchmark (comparatif BTC/ETH) — lui-même dépendant de fetchHistoricalCloses,
   // définie dans detail.js. Même raison que le describe "signaux techniques" plus haut.
   it("renders allocation/performance/history charts into #portfolio-charts", () => {
-    const dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "portfolio.js", "allocation.js"], { html: PORTFOLIO_FIXTURE_HTML });
+    const dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "portfolio.js", "allocation.js", "app.js"], { html: PORTFOLIO_FIXTURE_HTML });
     setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 }, ethereum: { eur: 50 } });
     dom.window.renderPortfolio(
       { positions: [pos({ cgId: "bitcoin", qty: 2, invested: 100 }), pos({ cgId: "ethereum", qty: 1, invested: 100 })] },
@@ -1096,7 +1096,7 @@ describe("portfolio.js — renderPortfolio wires the charts container", () => {
   });
 
   it("leaves the charts container untouched on a price-only refresh (no history arg) rather than wiping it", () => {
-    const dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "portfolio.js", "allocation.js"], { html: PORTFOLIO_FIXTURE_HTML });
+    const dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "portfolio.js", "allocation.js", "app.js"], { html: PORTFOLIO_FIXTURE_HTML });
     setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 100 } });
     dom.window.renderPortfolio({ positions: [pos({ qty: 1, invested: 50 })] }, [], null, { snapshots: [{ date: "2026-08-30", total_value_eur: 100 }, { date: "2026-08-31", total_value_eur: 100 }] });
     const beforeRefresh = dom.window.document.getElementById("portfolio-charts").innerHTML;
@@ -1131,7 +1131,7 @@ describe("portfolio.js — comparaison à un hold BTC/ETH (loadPortfolioBenchmar
   }
 
   beforeEach(() => {
-    dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "portfolio.js", "allocation.js"], { html: PORTFOLIO_FIXTURE_HTML });
+    dom = loadPage(["config.js", "prices.js", "cards.js", "detail.js", "portfolio.js", "allocation.js", "app.js"], { html: PORTFOLIO_FIXTURE_HTML });
   });
 
   it("shows a waiting message and fetches nothing when fewer than 2 history snapshots exist", () => {
@@ -1209,7 +1209,7 @@ describe("portfolio.js — comparaison à un hold BTC/ETH (loadPortfolioBenchmar
 describe("portfolio.js — renderPortfolioAttractivenessRanking (\"Où placer ma prochaine recharge ?\")", () => {
   let dom;
   beforeEach(() => {
-    dom = loadPage(["config.js", "prices.js", "portfolio.js", "allocation.js"], { html: PORTFOLIO_FIXTURE_HTML });
+    dom = loadPage(["config.js", "prices.js", "portfolio.js", "allocation.js", "app.js"], { html: PORTFOLIO_FIXTURE_HTML });
   });
 
   it("renders a ranked position, its tier badge and confidence — never a raw numeric score in the DOM", () => {
