@@ -88,36 +88,20 @@ function renderOpportunityCard(o, idx, containerId) {
     </div>`;
 }
 
-function renderOpportunityCards(containerId, opportunities, limit) {
-  const el = document.getElementById(containerId);
-  if (!el) return;
-  const items = (opportunities || []).slice().sort((a, b) => computeConfidence(b) - computeConfidence(a));
-  const shown = limit ? items.slice(0, limit) : items;
-  if (shown.length === 0) {
-    el.innerHTML = `<p class="empty-state">Aucun screening réalisé pour l'instant — le Top 300 (memecoins exclus) sera analysé au premier cycle profond de la routine programmée.</p>`;
-    return;
-  }
-  el.innerHTML = `<div class="opp-grid">${shown.map((o, i) => renderOpportunityCard(o, i, containerId)).join("")}</div>`;
-
-  el.querySelectorAll(".opp-card.clickable").forEach((cardEl) => {
-    const panelId = cardEl.dataset.detailTarget;
-    const cgId = cardEl.dataset.cgid;
-    const ath = cardEl.dataset.ath ? parseFloat(cardEl.dataset.ath) : null;
-    const reason = cardEl.dataset.reason || "";
-    const opp = shown.find((o) => (o.id || o.ticker) === cardEl.dataset.oppId);
-    attachDetailToggle(cardEl, panelId, { cgId, athChangePct: ath, reasoning: reason, tvSymbol: null, horizons: opp && opp.horizons });
-  });
-}
+// renderOpportunityCard (singulier, ci-dessus) reste utilisé tel quel par la recherche libre
+// (search.js, un seul résultat isolé, jamais dans une grille) — seul le pluriel
+// renderOpportunityCards (la grille .opp-grid de plusieurs .opp-card) a été retiré le 10/09/2026 :
+// son unique appelant (le résumé "Meilleures analyses" de l'Accueil) utilise désormais la même
+// tuile compacte que l'onglet Opportunités, voir renderOpportunityTiles ci-dessous.
 
 // Grille dense pour l'onglet Opportunités (esprit Coin360, même logique que .favori-tile) :
 // ticker/confiance/prix/variation seulement au premier coup d'oeil, teintée selon la variation
-// 24h. Le reste (nom, rang, jauge, mini-graphique, tags, 7j/30j/cap) — jusque-là toujours
-// visible dans .opp-card, la vraie cause de la longueur de cet onglet — vit désormais dans
-// .opp-tile-body, révélé par pure CSS sur la classe .expanded déjà posée par
-// attachDetailToggle (aucun changement necessaire cote detail.js). Les indicateurs vivants
-// (chart, RSI...) restent dans .detail-panel comme avant, chargés au clic uniquement.
-// renderOpportunityCards/.opp-card ci-dessus reste intact et sert toujours le résumé "Meilleures
-// analyses" de l'Accueil (3 éléments seulement — la densité n'y a pas la même urgence).
+// 24h. Le reste (nom, rang, jauge, mini-graphique, tags, 7j/30j/cap) vit dans .opp-tile-body,
+// révélé par pure CSS sur la classe .expanded déjà posée par attachDetailToggle (aucun
+// changement necessaire cote detail.js). Les indicateurs vivants (chart, RSI...) restent dans
+// .detail-panel comme avant, chargés au clic uniquement. Depuis le 10/09/2026 (voir limit
+// optionnel plus bas), sert aussi le résumé "Meilleures analyses" de l'Accueil — même tuile,
+// juste limitée aux 3 meilleures, pour ne plus avoir 2 composants différents pour la même info.
 function renderOpportunityTile(o, idx, containerId) {
   const conf = computeConfidence(o);
   const trendUp = o.sparkline && o.sparkline.length > 1 && o.sparkline[o.sparkline.length - 1] >= o.sparkline[0];
@@ -158,10 +142,16 @@ function renderOpportunityTile(o, idx, containerId) {
     </div>`;
 }
 
-function renderOpportunityTiles(containerId, opportunities) {
+// limit optionnel (même convention que renderOpportunityCards juste au-dessus) : ajouté le
+// 10/09/2026 pour que l'Accueil ("Meilleures analyses du moment", 3 éléments) puisse réutiliser
+// cette même tuile compacte au lieu de la carte lourde .opp-card — plus cohérent avec l'onglet
+// Opportunités, jamais un 2e composant pour la même information. Absent -> tout le tableau,
+// comportement strictement inchangé pour l'appel existant (onglet Opportunités, sans limite).
+function renderOpportunityTiles(containerId, opportunities, limit) {
   const el = document.getElementById(containerId);
   if (!el) return;
-  const items = (opportunities || []).slice().sort((a, b) => computeConfidence(b) - computeConfidence(a));
+  const sorted = (opportunities || []).slice().sort((a, b) => computeConfidence(b) - computeConfidence(a));
+  const items = limit ? sorted.slice(0, limit) : sorted;
   if (items.length === 0) {
     el.innerHTML = `<p class="empty-state">Aucun screening réalisé pour l'instant — le Top 300 (memecoins exclus) sera analysé au premier cycle profond de la routine programmée.</p>`;
     return;

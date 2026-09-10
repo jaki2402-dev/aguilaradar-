@@ -410,6 +410,20 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
 .hl-scenario.hl-bear { background: rgba(241, 85, 76, 0.15); color: var(--loss); }
 .hl-scenario.hl-base { background: rgba(34, 184, 224, 0.15); color: var(--accent-2); }
 
+/* ---- Grille de tableau de bord (Accueil) : place 2 modules courts côte à côte sur desktop au
+   lieu de les empiler en pleine largeur (4 hero-cards consécutives avant même les accordéons —
+   trop de défilement vertical avant la moindre section repliable, cause réelle du "sentiment de
+   longueur" signalé). auto-fit + minmax, pas repeat(2,...) figé : se replie tout seul en 1
+   colonne dès que la largeur ne tient plus 2 pistes de 320px (mobile/tablette étroite), sans
+   media query dédiée à écrire/maintenir — même technique déjà éprouvée ici pour .favoris-grid.
+   Marge de sécurité : un enfant caché (voir #avis-du-jour:empty plus bas) n'est pas un item de
+   grille du tout, donc le module restant reprend naturellement toute la largeur de la ligne. */
+.dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; align-items: start; }
+/* "Avis du jour" est vide tant qu'aucune alerte de ce type n'existe (renderAvisDuJour, app.js) —
+   même traitement que .digest-panel:empty plus bas, pour ne jamais réserver une case de grille
+   à un bloc qui n'affiche rien. */
+#avis-du-jour:empty { display: none; }
+
 /* ---- Carte "hero" de la vue d'ensemble + résumé (digest) : les deux éléments phares de
    l'Accueil partagent le même traitement "instrument" — coins en équerre façon viseur radar,
    cohérent avec l'identité du site plutôt qu'une carte générique de plus. ---- */
@@ -757,6 +771,10 @@ th { color: var(--text-dim); font-weight: 600; font-size: 0.76rem; text-transfor
 .avis-du-jour-card { border-left: 3px solid var(--accent); }
 .avis-du-jour-head { display: flex; align-items: center; gap: 8px; }
 .avis-du-jour-text { font-size: 1rem; font-weight: 600; line-height: 1.5; margin: 8px 0; }
+/* Ces 3 blocs sont désormais des <div> (pas des <p>) contenant le <p> déjà produit par
+   renderClampableText (app.js) — sans ce reset, le <p> imbriqué garderait sa marge de navigateur
+   par défaut (~1em), en plus de la marge déjà posée sur le conteneur lui-même. */
+.avis-du-jour-text p, .digest-summary p, .macro-regime-note p { margin: 0; }
 .log-header { display: flex; justify-content: space-between; align-items: center; gap: 10px; font-size: 0.82rem; color: var(--text-dim); margin-bottom: 6px; }
 /* Regroupe le badge de sentiment (bullish/bearish, voir sentimentBadgeHtml) et le badge de
    type sous UN SEUL enfant flex de .log-header — sinon un 3e enfant direct casse le

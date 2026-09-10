@@ -188,7 +188,9 @@ describe("engine.js — renderEngineTab / renderEnginePin (régression 062374d :
     // Reproduit le cas réel : 1 verdict résolu sur 16, faux (CTSI) -> exactitude 0%,
     // baseline 100% (classe majoritaire = la seule observée) -> écart brut de -100 points,
     // qui ne doit PLUS jamais s'afficher tel quel comme un "verdict du moteur sur lui-même".
-    const dom = loadPage(["config.js", "engine.js"], { html: CONTAINER_HTML });
+    // app.js : renderClampableText/wireClampToggles (auto-évaluation + journal de corrections
+    // clampés, voir renderEngineTab) sont définis dans app.js, jamais engine.js lui-même.
+    const dom = loadPage(["config.js", "engine.js", "app.js"], { html: CONTAINER_HTML });
     const verdicts = [
       { status: "resolved", verdict: "VENTE", outcome: { actual_direction: "ACHAT" } },
       ...Array.from({ length: 15 }, () => ({ status: "pending", verdict: "ATTENTE" })),
@@ -211,7 +213,9 @@ describe("engine.js — renderEngineTab / renderEnginePin (régression 062374d :
   });
 
   it("once 10 resolved verdicts are reached, the gate opens and a real judgment + numeric edge appear", () => {
-    const dom = loadPage(["config.js", "engine.js"], { html: CONTAINER_HTML });
+    // app.js : renderClampableText/wireClampToggles (auto-évaluation + journal de corrections
+    // clampés, voir renderEngineTab) sont définis dans app.js, jamais engine.js lui-même.
+    const dom = loadPage(["config.js", "engine.js", "app.js"], { html: CONTAINER_HTML });
     const verdicts = [
       ...Array.from({ length: 4 }, () => ({ status: "resolved", verdict: "ACHAT", outcome: { actual_direction: "ACHAT" } })),
       ...Array.from({ length: 3 }, () => ({ status: "resolved", verdict: "VENTE", outcome: { actual_direction: "VENTE" } })),
@@ -250,13 +254,17 @@ describe("engine.js — renderEngineTab (journal des corrections)", () => {
   </body></html>`;
 
   it("shows the empty-state message when correction_log is empty or absent", () => {
-    const dom = loadPage(["config.js", "engine.js"], { html: CONTAINER_HTML });
+    // app.js : renderClampableText/wireClampToggles (auto-évaluation + journal de corrections
+    // clampés, voir renderEngineTab) sont définis dans app.js, jamais engine.js lui-même.
+    const dom = loadPage(["config.js", "engine.js", "app.js"], { html: CONTAINER_HTML });
     dom.window.renderEngineTab([], {}, null, null);
     expect(dom.window.document.getElementById("engine-log").textContent).toContain("Aucune correction tentée");
   });
 
   it("renders the real fields of a rejected attempt (what/why/action/trigger), not blank", () => {
-    const dom = loadPage(["config.js", "engine.js"], { html: CONTAINER_HTML });
+    // app.js : renderClampableText/wireClampToggles (auto-évaluation + journal de corrections
+    // clampés, voir renderEngineTab) sont définis dans app.js, jamais engine.js lui-même.
+    const dom = loadPage(["config.js", "engine.js", "app.js"], { html: CONTAINER_HTML });
     const engineHistory = {
       correction_log: [
         {
@@ -285,7 +293,9 @@ describe("engine.js — renderEngineTab (journal des corrections)", () => {
   });
 
   it("highlights key figures inside the diagnostic/why/decision/trigger text (long self-correction prose, hard to scan without it)", () => {
-    const dom = loadPage(["config.js", "engine.js"], { html: CONTAINER_HTML });
+    // app.js : renderClampableText/wireClampToggles (auto-évaluation + journal de corrections
+    // clampés, voir renderEngineTab) sont définis dans app.js, jamais engine.js lui-même.
+    const dom = loadPage(["config.js", "engine.js", "app.js"], { html: CONTAINER_HTML });
     const engineHistory = {
       correction_log: [
         {
@@ -308,7 +318,9 @@ describe("engine.js — renderEngineTab (journal des corrections)", () => {
   });
 
   it("renders an accepted attempt with the success badge and a before → after score", () => {
-    const dom = loadPage(["config.js", "engine.js"], { html: CONTAINER_HTML });
+    // app.js : renderClampableText/wireClampToggles (auto-évaluation + journal de corrections
+    // clampés, voir renderEngineTab) sont définis dans app.js, jamais engine.js lui-même.
+    const dom = loadPage(["config.js", "engine.js", "app.js"], { html: CONTAINER_HTML });
     const engineHistory = {
       correction_log: [
         {

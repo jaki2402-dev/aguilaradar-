@@ -160,7 +160,9 @@ function renderOpportunities(data) {
   const items = (data && data.opportunities) || [];
   latestOpportunityTickers = items.map((o) => o.ticker).filter(Boolean);
   renderOpportunityTiles("opportunities-body", items);
-  renderOpportunityCards("accueil-highlights", items, 3);
+  // Tuile compacte (même patron que l'onglet Opportunités), pas la carte lourde .opp-card :
+  // changement du 10/09/2026, voir renderOpportunityTiles (cards.js) pour le pourquoi.
+  renderOpportunityTiles("accueil-highlights", items, 3);
   if (constellationControllers.opportunities) constellationControllers.opportunities.refresh();
 }
 
@@ -312,12 +314,17 @@ function renderAvisDuJour(alerts) {
   // >30h plutôt que >24h : marge pour un cycle qui écrit un peu tard dans la journée sans
   // déclencher un avertissement "pas d'aujourd'hui" trompeur pour un avis en réalité tout frais.
   const staleHint = ageMs > 30 * 3600 * 1000 ? ` — dernière mise à jour il y a plus d'un jour, pas forcément celui d'aujourd'hui` : "";
+  // <div>, pas <p>, pour .avis-du-jour-text : renderClampableText produit déjà son propre <p>
+  // (+ un <span> "Lire plus" quand le texte dépasse CLAMP_TEXT_THRESHOLD) — un <p> imbriqué dans
+  // un <p> serait invalide. Le sélecteur ".avis-du-jour-text mark.hl-stat" (voir tests) matche
+  // toujours : combinateur descendant, peu importe le niveau d'imbrication exact.
   el.innerHTML = `
     <div class="hero-card avis-du-jour-card">
       <div class="avis-du-jour-head"><span class="hint">Avis du jour</span>${sentimentBadgeHtml(latest.sentiment)}</div>
-      <p class="avis-du-jour-text">${highlightKeyInfo(latest.message)}</p>
+      <div class="avis-du-jour-text">${renderClampableText(latest.message)}</div>
       <div class="hint">${new Date(latest.triggered_at).toLocaleString("fr-FR")}${staleHint}</div>
     </div>`;
+  wireClampToggles(el);
 }
 
 const NOTIFICATIONS_PAGE_SIZE = 15;
@@ -394,8 +401,9 @@ function renderMacroRegime(engineHistory) {
         <div><div class="hero-stat-value">${regime.fear_greed_value ?? "—"}</div><div class="hero-stat-label">Fear &amp; Greed${glossaryTipHtml("Indice de peur et de cupidité")}</div></div>
         <div><div class="hero-stat-value">${regime.btc_dominance_pct !== null && regime.btc_dominance_pct !== undefined ? regime.btc_dominance_pct.toFixed(1) + " %" : "—"}</div><div class="hero-stat-label">Dominance BTC${glossaryTipHtml("Dominance BTC")}</div></div>
       </div>
-      ${regime.note ? `<p class="hint" style="margin-top:10px;">${highlightKeyInfo(regime.note)}</p>` : ""}
+      ${regime.note ? `<div class="hint macro-regime-note" style="margin-top:10px;">${renderClampableText(regime.note)}</div>` : ""}
     </div>`;
+  wireClampToggles(el);
 }
 
 // Repérage de mots-clés associés à une actualité potentiellement majeure (réglementation,
