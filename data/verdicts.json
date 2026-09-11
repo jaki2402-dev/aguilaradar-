@@ -1177,12 +1177,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-11T04:20:00Z",
-      "price_at_signal_eur": 0.02049402,
-      "move_pct_since_issue": -6.54,
+      "detected_at": "2026-09-11T08:20:00Z",
+      "price_at_signal_eur": 0.02056866,
+      "move_pct_since_issue": -6.19,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Cartesi (CTSI) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 07/09 à 0,021927 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,02049402 euro, soit -6,54 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
+      "note": "Cartesi (CTSI) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-07 à 0.021927 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.02056866 euro, soit -6.19 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
     }
   },
   {
@@ -1215,7 +1215,15 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "risk-on"
+    "regime_at_issue": "risk-on",
+    "signal_precoce": {
+      "detected_at": "2026-09-11T08:20:00Z",
+      "price_at_signal_eur": 66483,
+      "move_pct_since_issue": -3.76,
+      "threshold_pct": 5,
+      "threshold_crossed": false,
+      "note": "Bitcoin (BTC) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 69078.0 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 66483 euro, soit -3.76 % depuis l'émission."
+    }
   },
   {
     "id": "v-20260906-eth",
@@ -1247,7 +1255,15 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "risk-on"
+    "regime_at_issue": "risk-on",
+    "signal_precoce": {
+      "detected_at": "2026-09-11T08:20:00Z",
+      "price_at_signal_eur": 2123.83,
+      "move_pct_since_issue": -1.84,
+      "threshold_pct": 5,
+      "threshold_crossed": false,
+      "note": "Ethereum (ETH) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 2163.54 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 2123.83 euro, soit -1.84 % depuis l'émission."
+    }
   },
   {
     "id": "v-20260906-fet",
@@ -1281,12 +1297,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-11T04:20:00Z",
-      "price_at_signal_eur": 0.14376,
-      "move_pct_since_issue": -4.66,
+      "detected_at": "2026-09-11T08:20:00Z",
+      "price_at_signal_eur": 0.142091,
+      "move_pct_since_issue": -5.76,
       "threshold_pct": 5,
-      "threshold_crossed": false,
-      "note": "Fetch.ai (FET) : repasse sous le seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif, après un franchissement au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 0,14376 euro, soit -4,66 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
+      "threshold_crossed": true,
+      "note": "Fetch.ai (FET) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 2026-09-06 à 0.150781 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.142091 euro, soit -5.76 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
     }
   },
   {
@@ -1321,12 +1337,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-11T04:20:00Z",
-      "price_at_signal_eur": 0.0152811,
-      "move_pct_since_issue": -9.27,
+      "detected_at": "2026-09-11T08:20:00Z",
+      "price_at_signal_eur": 0.01528391,
+      "move_pct_since_issue": -9.26,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "The Graph (GRT) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 06/09 à 0,01684297 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,0152811 euro, soit -9,27 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
+      "note": "The Graph (GRT) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 2026-09-06 à 0.01684297 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.01528391 euro, soit -9.26 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
     }
   },
   {
@@ -1361,12 +1377,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-11T04:20:00Z",
-      "price_at_signal_eur": 0.321051,
-      "move_pct_since_issue": -15.76,
+      "detected_at": "2026-09-11T08:20:00Z",
+      "price_at_signal_eur": 0.31711,
+      "move_pct_since_issue": -16.79,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Celestia (TIA) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 06/09 à 0,381104 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,321051 euro, soit -15,76 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
+      "note": "Celestia (TIA) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 2026-09-06 à 0.381104 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.31711 euro, soit -16.79 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
     }
   },
   {
@@ -1401,12 +1417,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-11T04:20:00Z",
-      "price_at_signal_eur": 0.0222268,
-      "move_pct_since_issue": -0.58,
+      "detected_at": "2026-09-11T08:20:00Z",
+      "price_at_signal_eur": 0.02228741,
+      "move_pct_since_issue": -0.31,
       "threshold_pct": 5,
       "threshold_crossed": false,
-      "note": "Peaq (PEAQ) : repasse sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif, après un franchissement au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 0,0222268 euro, soit -0,58 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
+      "note": "Peaq (PEAQ) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 0.02235604 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.02228741 euro, soit -0.31 % depuis l'émission."
     }
   },
   {
@@ -1441,12 +1457,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-11T04:20:00Z",
-      "price_at_signal_eur": 9.91,
-      "move_pct_since_issue": -12.46,
+      "detected_at": "2026-09-11T08:20:00Z",
+      "price_at_signal_eur": 9.87,
+      "move_pct_since_issue": -12.81,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Chainlink (LINK) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 06/09 à 11,32 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 9,91 euro, soit -12,46 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
+      "note": "Chainlink (LINK) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 2026-09-06 à 11.32 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 9.87 euro, soit -12.81 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
     }
   },
   {
@@ -1481,12 +1497,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-11T04:20:00Z",
-      "price_at_signal_eur": 0.30053,
-      "move_pct_since_issue": -9.52,
+      "detected_at": "2026-09-11T08:20:00Z",
+      "price_at_signal_eur": 0.301019,
+      "move_pct_since_issue": -9.37,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Ondo Finance (ONDO) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 06/09 à 0,332149 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,30053 euro, soit -9,52 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
+      "note": "Ondo (ONDO) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 2026-09-06 à 0.332149 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.301019 euro, soit -9.37 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
     }
   },
   {
@@ -1521,12 +1537,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-11T04:20:00Z",
-      "price_at_signal_eur": 0.20154,
-      "move_pct_since_issue": -13.46,
+      "detected_at": "2026-09-11T08:20:00Z",
+      "price_at_signal_eur": 0.200613,
+      "move_pct_since_issue": -13.86,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Jupiter (JUP) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 06/09 à 0,232896 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,20154 euro, soit -13,46 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
+      "note": "Jupiter (JUP) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 2026-09-06 à 0.232896 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.200613 euro, soit -13.86 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
     }
   },
   {
@@ -1561,12 +1577,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-11T04:20:00Z",
+      "detected_at": "2026-09-11T08:20:00Z",
       "price_at_signal_eur": 1.18,
       "move_pct_since_issue": -4.84,
       "threshold_pct": 5,
       "threshold_crossed": false,
-      "note": "Livepeer (LPT) : repasse sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif, après un franchissement au cycle précédent. Prix vérifié par appel direct groupé à l'API CoinGecko : 1,18 euro, soit -4,84 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
+      "note": "Livepeer (LPT) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 1.24 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 1.18 euro, soit -4.84 % depuis l'émission."
     }
   },
   {
@@ -1601,12 +1617,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-11T04:20:00Z",
-      "price_at_signal_eur": 0.058674,
-      "move_pct_since_issue": 8.76,
+      "detected_at": "2026-09-11T08:20:00Z",
+      "price_at_signal_eur": 0.058086,
+      "move_pct_since_issue": 7.67,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "AIOZ Network (AIOZ) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 06/09 à 0,053949 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,058674 euro, soit +8,76 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
+      "note": "AIOZ Network (AIOZ) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 0.053949 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.058086 euro, soit +7.67 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
     }
   },
   {
@@ -1639,7 +1655,15 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "risk-on"
+    "regime_at_issue": "risk-on",
+    "signal_precoce": {
+      "detected_at": "2026-09-11T08:20:00Z",
+      "price_at_signal_eur": 0.04333124,
+      "move_pct_since_issue": -2.3,
+      "threshold_pct": 5,
+      "threshold_crossed": false,
+      "note": "Flux (FLUX) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 0.04435153 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.04333124 euro, soit -2.30 % depuis l'émission."
+    }
   },
   {
     "id": "v-20260906-arb",
@@ -1673,12 +1697,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-11T04:20:00Z",
-      "price_at_signal_eur": 0.126055,
-      "move_pct_since_issue": -22.91,
+      "detected_at": "2026-09-11T08:20:00Z",
+      "price_at_signal_eur": 0.123935,
+      "move_pct_since_issue": -24.21,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Arbitrum (ARB) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 06/09 à 0,163523 euro). Prix vérifié par appel direct groupé à l'API CoinGecko : 0,126055 euro, soit -22,91 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
+      "note": "Arbitrum (ARB) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 2026-09-06 à 0.163523 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.123935 euro, soit -24.21 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
     }
   },
   {
@@ -1713,12 +1737,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-11T04:20:00Z",
-      "price_at_signal_eur": 5.2,
-      "move_pct_since_issue": 14.04,
+      "detected_at": "2026-09-11T08:20:00Z",
+      "price_at_signal_eur": 5.15,
+      "move_pct_since_issue": 12.94,
       "threshold_pct": 5,
       "threshold_crossed": true,
-      "note": "Injective (INJ) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 06/09 à 4,56 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 5,2 euro, soit +14,04 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
+      "note": "Injective (INJ) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 4.56 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 5.15 euro, soit +12.94 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
     }
   }
 ]
