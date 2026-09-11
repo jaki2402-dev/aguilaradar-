@@ -1,8 +1,8 @@
 {
-  "last_scan_at": "2026-09-10T04:03:55Z",
+  "last_scan_at": "2026-09-11T04:04:04Z",
   "scanned_count": 20,
   "excluded_meme_count": 22,
-  "methodology": "Cycle du 10/09/2026 : Top 20 CoinGecko via le connecteur MCP CoinGecko (memes limites connues : plafond 20 coins, USD natif converti en EUR via taux de change reel Alpha Vantage, variation 7j calculee depuis le sparkline 7 jours reel, ATH indisponible -> omis). Exclusion memecoins, stablecoins, actifs de dette tokenises, mega-caps deja notoires (BTC/ETH/BNB/XRP/SOL/TRX) et positions deja suivies au Portefeuille (Chainlink). 8 des 20 coins etaient deja suivis, aucun autre candidat ne passe les exclusions : 0 nouvelle entree ce cycle. Revue optionnelle des 9 opportunites actives : tous les scores recalcules sont sains, Zcash poursuit une envolee exceptionnelle (+52.2% sur 7j) -> aucun retrait ce cycle.",
+  "methodology": "Cycle du 11/09/2026 : Top 20 CoinGecko via le connecteur MCP CoinGecko (memes limites connues : plafond 20 coins, USD natif converti en EUR via taux de change reel Alpha Vantage, variation 7j calculee depuis le sparkline 7 jours reel, ATH indisponible -> omis). Exclusion memecoins, stablecoins, actifs de dette tokenises, mega-caps deja notoires (BTC/ETH/BNB/XRP/SOL/TRX) et positions deja suivies au Portefeuille (Chainlink). Repli marque et generalise aujourd'hui (BTC -1.8%, SOL -2.5%, Hyperliquid -6.4%, Zcash -14.3% sur 24h apres son envolee des jours precedents). 8 des 20 coins etaient deja suivis, 0 nouvelle entree ce cycle. Revue optionnelle des 9 opportunites actives : plusieurs scores recalcules sont passes negatifs (Hyperliquid, Rain, Cardano, Stellar), mais ce repli est generalise a l'ensemble du marche suivi le meme jour (pas un signal specifique a un projet) et non un reversal soutenu sur plusieurs jours comme dans les archivages precedents (Cardano a ete reintegre il y a a peine une semaine avec un momentum fort) -> aucun retrait ce cycle, a reevaluer si la faiblesse persiste demain.",
   "opportunities": [
     {
       "id": "opp-20260807-ub",
