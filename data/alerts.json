@@ -1207,5 +1207,39 @@
     "triggered_at": "2026-09-11T00:20:00Z",
     "message": "Repli marqué depuis le 06/09 sur ARB (-25,7 %), JUP (-15,8 %) et TIA (-15,7 %), à l'opposé des verdicts ACHAT tout juste émis. Portefeuille à -36,7 % de P&L — positions à surveiller.",
     "sentiment": "négatif"
+  },
+  {
+    "id": "alert-20260913-flux-seuil",
+    "ticker_ou_theme": "FLUX",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-13T23:16:00Z",
+    "message": "Flux (FLUX) : +6,61 % depuis l'émission du verdict ATTENTE du 06/09 (0,044352 € → 0,047285 €), seuil de mouvement directionnel de 5 % désormais franchi à la hausse. Aucune actualité spécifique identifiée pour expliquer ce mouvement — lecture purement technique. Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance.",
+    "source": "criblage technique interne"
+  },
+  {
+    "id": "alert-20260913-nasdaq-payward",
+    "ticker_ou_theme": "MACRO",
+    "type": "actualite_generale",
+    "triggered_at": "2026-09-13T23:16:00Z",
+    "message": "Nasdaq Ventures investit 100 millions de dollars dans Payward, société mère de Kraken (valorisation 21 Md$), pour étendre le partenariat autour du cadre Nasdaq Equity Token (NET) : actions Nasdaq tokenisées distribuées via Kraken avec droits de vote équivalents à ceux du marché traditionnel, lancement visé au T2 2027, et adoption par Payward de la technologie de surveillance de marché de Nasdaq sur l'ensemble de ses plateformes.",
+    "source": "https://www.coindesk.com/business/2026/09/10/nasdaq-invests-usd100-million-in-kraken-parent-company-payward-at-usd21-billion-valuation",
+    "sentiment": "positif"
+  },
+  {
+    "id": "alert-20260913-clarity-act-cloture",
+    "ticker_ou_theme": "MACRO",
+    "type": "actualite_macro",
+    "triggered_at": "2026-09-13T23:16:00Z",
+    "message": "Le Sénat américain doit tenir un vote de clôture sur le CLARITY Act le 15 septembre (60 voix requises pour passer en débat), sur la base d'un texte révisé publié le 11 septembre ajoutant un cadre CFTC pour identifier les protocoles « décentralisés de nom seulement ». Trois désaccords non résolus (règles d'éthique visant les revenus crypto du président Trump, responsabilité des développeurs DeFi, fiscalité du rendement stablecoin) font chuter les probabilités d'adoption en 2026 sur Polymarket, de 82 % en février à environ 16 % début septembre.",
+    "source": "https://crypto.news/clarity-act-senate-vote-september-15-provisions/",
+    "sentiment": "négatif"
+  },
+  {
+    "id": "avis-jour-2026-09-13",
+    "ticker_ou_theme": "PORTEFEUILLE",
+    "type": "avis_du_jour",
+    "triggered_at": "2026-09-13T23:17:00Z",
+    "message": "TIA, LINK, ARB, JUP et ONDO se résolvent aujourd'hui avec un net recul depuis leur verdict ACHAT du 06/09, à l'opposé de la thèse hebdo Renforcer sur LINK — positions à surveiller de près.",
+    "sentiment": "négatif"
   }
 ]

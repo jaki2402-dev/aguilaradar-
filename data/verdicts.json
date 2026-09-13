@@ -1177,12 +1177,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-11T08:20:00Z",
-      "price_at_signal_eur": 0.02056866,
-      "move_pct_since_issue": -6.19,
+      "detected_at": "2026-09-13T23:15:00Z",
+      "price_at_signal_eur": 0.02202598,
+      "move_pct_since_issue": 0.45,
       "threshold_pct": 5,
-      "threshold_crossed": true,
-      "note": "Cartesi (CTSI) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-07 à 0.021927 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.02056866 euro, soit -6.19 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
+      "threshold_crossed": false,
+      "note": "Cartesi (CTSI) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-07 à 0.021927 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.02202598 euro, soit +0.45 % depuis l'émission."
     }
   },
   {
@@ -1217,12 +1217,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-11T08:20:00Z",
-      "price_at_signal_eur": 66483,
-      "move_pct_since_issue": -3.76,
+      "detected_at": "2026-09-13T23:15:00Z",
+      "price_at_signal_eur": 66173,
+      "move_pct_since_issue": -4.21,
       "threshold_pct": 5,
       "threshold_crossed": false,
-      "note": "Bitcoin (BTC) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 69078.0 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 66483 euro, soit -3.76 % depuis l'émission."
+      "note": "Bitcoin (BTC) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 69078.0 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 66173 euro, soit -4.21 % depuis l'émission."
     }
   },
   {
@@ -1257,12 +1257,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-11T08:20:00Z",
-      "price_at_signal_eur": 2123.83,
-      "move_pct_since_issue": -1.84,
+      "detected_at": "2026-09-13T23:15:00Z",
+      "price_at_signal_eur": 2137.07,
+      "move_pct_since_issue": -1.22,
       "threshold_pct": 5,
       "threshold_crossed": false,
-      "note": "Ethereum (ETH) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 2163.54 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 2123.83 euro, soit -1.84 % depuis l'émission."
+      "note": "Ethereum (ETH) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 2163.54 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 2137.07 euro, soit -1.22 % depuis l'émission."
     }
   },
   {
@@ -1297,12 +1297,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-11T08:20:00Z",
-      "price_at_signal_eur": 0.142091,
-      "move_pct_since_issue": -5.76,
+      "detected_at": "2026-09-13T23:15:00Z",
+      "price_at_signal_eur": 0.143393,
+      "move_pct_since_issue": -4.9,
       "threshold_pct": 5,
-      "threshold_crossed": true,
-      "note": "Fetch.ai (FET) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 2026-09-06 à 0.150781 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.142091 euro, soit -5.76 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
+      "threshold_crossed": false,
+      "note": "Fetch.ai (FET) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 2026-09-06 à 0.150781 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.143393 euro, soit -4.90 % depuis l'émission."
     }
   },
   {
@@ -1326,13 +1326,13 @@
     "reasoning": "Le verdict ATTENTE du 23 août est invalidé : The Graph a chuté de -21,59 % sur la période, largement au-delà du seuil de 5 % côté baissier — un repli marqué que le consensus prudent n'avait pas anticipé. Nouveau cycle : signal technique désormais haussier, rebond net sur 24h (+8,0 %) et 7 jours (+18,1 %) depuis ce creux, cohérent avec le narratif IA/indexation. Signal fondamental neutre : aucun nouveau jalon confirmé ce cycle. Signal macro haussier. Deux signaux sur trois convergent : ACHAT retenu, mais horizon réduit à 7 jours compte tenu de la volatilité extrême démontrée sur le cycle précédent.",
     "price_at_issue": 0.01684297,
     "resolves_at": "2026-09-13T23:25:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.01576705,
+      "actual_move_pct": -6.39,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-09-13T23:25:20Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1366,13 +1366,13 @@
     "reasoning": "Le verdict ATTENTE du 23 août est invalidé : Celestia a bondi de +24,27 % sur la période, largement au-dessus du seuil de 5 % côté haussier. Nouveau cycle : signal technique haussier fort et déjà bien engagé (24h +15,4 %, 7 jours +29,2 %, +33,3 % sur 30 jours) — l'infrastructure modulaire profite pleinement de l'appétit pour le risque, mais la hausse est désormais très avancée et expose à un risque de correction technique à court terme. Signal fondamental neutre : aucun nouveau jalon identifié ce cycle. Signal macro haussier. Deux signaux sur trois convergent : ACHAT retenu malgré le risque de surchauffe, horizon réduit à 7 jours vu la volatilité désormais élevée.",
     "price_at_issue": 0.381104,
     "resolves_at": "2026-09-13T23:25:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.302559,
+      "actual_move_pct": -20.61,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-09-13T23:25:20Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1406,13 +1406,13 @@
     "reasoning": "Le verdict ATTENTE du 23 août est invalidé : Peaq a bondi de +64,99 % sur la période, un mouvement extrême très au-delà du seuil de 5 %, porté par l'engouement pour le secteur DePIN. Nouveau cycle : signal technique jugé mixte — la hausse ralentit nettement sur 24h (+1,3 %) après ce pic, même si le mouvement sur 7 jours reste positif (+6,7 %), signe possible d'un essoufflement après une progression d'une telle ampleur. Signal fondamental neutre : aucun nouveau catalyseur DePIN confirmé ce cycle. Signal macro haussier. Un seul signal sur trois converge nettement : ATTENTE retenue par prudence après un mouvement d'une telle ampleur, horizon réduit à 7 jours vu la volatilité désormais très élevée de cet actif.",
     "price_at_issue": 0.02235604,
     "resolves_at": "2026-09-13T23:25:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.02125716,
+      "actual_move_pct": -4.92,
+      "actual_direction": "ATTENTE",
+      "verdict_correct": true,
+      "resolved_at": "2026-09-13T23:25:20Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1446,13 +1446,13 @@
     "reasoning": "Le verdict ATTENTE du 23 août est invalidé : Chainlink a grimpé de +52,56 % sur la période, très au-delà du seuil de 5 %. Nouveau cycle : signal technique haussier et toujours actif (24h +9,8 %, 7 jours +13,2 %, +59,5 % sur 30 jours) — la hausse reste alimentée mais son ampleur sur un mois expose à un risque de reprise de respiration. Signal fondamental neutre : pas de nouveau partenariat ou intégration oracle confirmé ce cycle. Signal macro haussier. Deux signaux sur trois convergent : ACHAT retenu, horizon réduit à 7 jours vu la volatilité désormais élevée.",
     "price_at_issue": 11.32,
     "resolves_at": "2026-09-13T23:25:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 9.67,
+      "actual_move_pct": -14.58,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-09-13T23:25:20Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1486,13 +1486,13 @@
     "reasoning": "Le verdict ATTENTE du 23 août est invalidé : Ondo Finance a reculé de -13,44 % sur la période, au-delà du seuil de 5 % côté baissier. Nouveau cycle : signal technique désormais haussier, rebond sur 24h (+4,0 %) et 7 jours (+7,4 %) depuis ce creux, sur un secteur RWA qui reste porté par l'appétit institutionnel pour la tokenisation. Signal fondamental neutre : pas de nouveau développement produit confirmé ce cycle. Signal macro haussier. Deux signaux sur trois convergent : ACHAT retenu, horizon réduit à 7 jours vu la volatilité démontrée sur le cycle précédent.",
     "price_at_issue": 0.332149,
     "resolves_at": "2026-09-13T23:25:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.296049,
+      "actual_move_pct": -10.87,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-09-13T23:25:20Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1526,13 +1526,13 @@
     "reasoning": "Le verdict ATTENTE du 23 août est invalidé : Jupiter a bondi de +68,77 % sur la période, un mouvement extrême. Nouveau cycle : signal technique haussier fort et toujours en accélération (24h +22,9 %, 7 jours +24,0 %) — le DEX profite pleinement du regain d'activité sur l'écosystème Solana, mais un mouvement de cette ampleur sur si peu de temps comporte un risque élevé de retournement brutal. Signal fondamental neutre : aucun nouveau catalyseur produit confirmé ce cycle. Signal macro haussier. Deux signaux sur trois convergent : ACHAT retenu malgré le risque de surchauffe marqué, horizon réduit à 7 jours vu la volatilité extrême de cet actif en ce moment.",
     "price_at_issue": 0.232896,
     "resolves_at": "2026-09-13T23:25:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.198231,
+      "actual_move_pct": -14.88,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-09-13T23:25:20Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1577,7 +1577,7 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-11T08:20:00Z",
+      "detected_at": "2026-09-13T23:15:00Z",
       "price_at_signal_eur": 1.18,
       "move_pct_since_issue": -4.84,
       "threshold_pct": 5,
@@ -1606,13 +1606,13 @@
     "reasoning": "Le verdict ATTENTE du 23 août est invalidé : AIOZ Network s'est effondré de -56,91 % sur la période, un mouvement extrême — le prix d'émission du 23 août avait en réalité capté un pic local, entièrement reperdu depuis. Nouveau cycle : signal technique jugé mixte malgré le rebond récent (24h +9,0 %, 7 jours +5,6 %) — un rebond de cette taille reste insuffisant pour confirmer un retournement de tendance après une chute d'une telle ampleur. Signal fondamental neutre : aucun développement DePIN/stockage confirmé ce cycle qui expliquerait le repli. Signal macro haussier. Un seul signal sur trois converge : ATTENTE retenue par prudence, horizon réduit à 7 jours vu la volatilité extrême démontrée.",
     "price_at_issue": 0.053949,
     "resolves_at": "2026-09-13T23:25:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.062013,
+      "actual_move_pct": 14.95,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-09-13T23:25:20Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1657,12 +1657,12 @@
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "signal_precoce": {
-      "detected_at": "2026-09-11T08:20:00Z",
-      "price_at_signal_eur": 0.04333124,
-      "move_pct_since_issue": -2.3,
+      "detected_at": "2026-09-13T23:15:00Z",
+      "price_at_signal_eur": 0.04728529,
+      "move_pct_since_issue": 6.61,
       "threshold_pct": 5,
-      "threshold_crossed": false,
-      "note": "Flux (FLUX) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 0.04435153 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.04333124 euro, soit -2.30 % depuis l'émission."
+      "threshold_crossed": true,
+      "note": "Flux (FLUX) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 0.04435153 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.04728529 euro, soit +6.61 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
     }
   },
   {
@@ -1686,13 +1686,13 @@
     "reasoning": "Le verdict ATTENTE du 23 août est invalidé : Arbitrum a bondi de +85,02 % sur la période, le mouvement le plus extrême de ce cycle de résolution. Nouveau cycle : signal technique haussier toujours actif (24h +6,8 %, 7 jours +112,2 %, +140,7 % sur 30 jours) — le L2 profite d'un narratif très porteur, mais l'ampleur de la hausse sur un mois est exceptionnelle et expose à un risque élevé de correction brutale. Signal fondamental neutre : aucun nouveau catalyseur confirmé ce cycle qui justifierait à lui seul un tel mouvement. Signal macro haussier. Deux signaux sur trois convergent : ACHAT retenu malgré un risque de surchauffe très marqué, horizon réduit à 7 jours vu la volatilité extrême actuelle de cet actif.",
     "price_at_issue": 0.163523,
     "resolves_at": "2026-09-13T23:25:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.114969,
+      "actual_move_pct": -29.69,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-09-13T23:25:20Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1726,13 +1726,13 @@
     "reasoning": "Le verdict ATTENTE du 23 août est invalidé : Injective a progressé de +27,02 % sur la période, au-delà du seuil de 5 %. Nouveau cycle : signal technique jugé mixte — rebond net sur 24h (+7,8 %) mais mouvement quasi nul sur 7 jours (-0,5 %), sans tendance claire à court terme malgré la hausse sur la période complète. Signal fondamental neutre : aucun nouveau développement confirmé sur la chaîne DeFi L1 ce cycle. Signal macro haussier. Un seul signal sur trois converge nettement : ATTENTE retenue par prudence, horizon réduit à 7 jours vu la volatilité désormais élevée de cet actif.",
     "price_at_issue": 4.56,
     "resolves_at": "2026-09-13T23:25:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 5.09,
+      "actual_move_pct": 11.62,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-09-13T23:25:20Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1744,5 +1744,293 @@
       "threshold_crossed": true,
       "note": "Injective (INJ) : reste au-dessus du seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 4.56 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 5.15 euro, soit +12.94 % depuis l'émission. Ne préjuge pas de l'issue à l'échéance."
     }
+  },
+  {
+    "id": "v-20260913-grt",
+    "issued_at": "2026-09-13T23:26:00Z",
+    "asset": "the-graph",
+    "ticker": "GRT",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h +0.8%",
+      "7j -7.0%"
+    ],
+    "signal_consensus": {
+      "technique": "baissier",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "Le verdict ACHAT du 06/09 est invalidé : The Graph a reculé de -6,39 % sur la période, au-delà du seuil de 5 % côté baissier — le rebond qui avait motivé ce verdict s'est retourné. Nouveau cycle : signal technique désormais baissier (7 jours -7,0 %, même si 30 jours reste positif à +34,7 %). Signal fondamental neutre : aucun nouveau catalyseur confirmé ce cycle. Signal macro haussier. Un seul signal sur trois converge : ATTENTE retenue par prudence, dans la continuité de l'enseignement tiré de ce cycle sur les rebonds techniques non confirmés.",
+    "price_at_issue": 0.01576705,
+    "resolves_at": "2026-09-20T23:26:00Z",
+    "status": "pending",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on"
+  },
+  {
+    "id": "v-20260913-tia",
+    "issued_at": "2026-09-13T23:26:00Z",
+    "asset": "celestia",
+    "ticker": "TIA",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h +0.1%",
+      "7j -19.8%"
+    ],
+    "signal_consensus": {
+      "technique": "baissier",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "Le verdict ACHAT du 06/09 est invalidé : Celestia a chuté de -20,61 % sur la période, largement au-delà du seuil de 5 % — la hausse déjà qualifiée de « très avancée » lors de l'émission s'est retournée nettement, comme redouté. Nouveau cycle : signal technique baissier (7 jours -19,8 %). Signal fondamental neutre : le support de 0,36 $ évoqué en thèse hebdo est désormais cassé, sans catalyseur nouveau identifié ce cycle. Signal macro haussier. Un seul signal sur trois converge : ATTENTE retenue par prudence.",
+    "price_at_issue": 0.302559,
+    "resolves_at": "2026-09-20T23:26:00Z",
+    "status": "pending",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on"
+  },
+  {
+    "id": "v-20260913-peaq",
+    "issued_at": "2026-09-13T23:26:00Z",
+    "asset": "peaq-2",
+    "ticker": "PEAQ",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -1.2%",
+      "7j -5.5%"
+    ],
+    "signal_consensus": {
+      "technique": "baissier",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "Le verdict ATTENTE du 06/09 est confirmé : Peaq a reculé de -4,92 % sur la période, sous le seuil de 5 % — la prudence retenue après le pic du cycle précédent s'est révélée justifiée. Nouveau cycle : signal technique toujours baissier (7 jours -5,5 %), dans la continuité du déblocage de jetons du 12/09 déjà anticipé en thèse hebdo. Signal fondamental neutre. Signal macro haussier. Un seul signal sur trois converge : ATTENTE reconduite.",
+    "price_at_issue": 0.02125716,
+    "resolves_at": "2026-09-20T23:26:00Z",
+    "status": "pending",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on"
+  },
+  {
+    "id": "v-20260913-link",
+    "issued_at": "2026-09-13T23:26:00Z",
+    "asset": "chainlink",
+    "ticker": "LINK",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -2.6%",
+      "7j -13.3%"
+    ],
+    "signal_consensus": {
+      "technique": "baissier",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "Le verdict ACHAT du 06/09 est invalidé : Chainlink a reculé de -14,58 % sur la période, au-delà du seuil de 5 % — une prise de profits marquée après la hausse de +52,6 % du mois précédent. Nouveau cycle : signal technique désormais baissier (7 jours -13,3 %), à l'opposé de la thèse hebdo Renforcer (intégrations institutionnelles Circle/Coinbase/Schwab) — divergence réelle entre le technique court terme et le fondamental de fond, à surveiller. Signal fondamental neutre pour ce cycle (aucune actualisation propre). Signal macro haussier. Un seul signal sur trois converge : ATTENTE retenue par prudence.",
+    "price_at_issue": 9.67,
+    "resolves_at": "2026-09-20T23:26:00Z",
+    "status": "pending",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on"
+  },
+  {
+    "id": "v-20260913-ondo",
+    "issued_at": "2026-09-13T23:26:00Z",
+    "asset": "ondo-finance",
+    "ticker": "ONDO",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -1.5%",
+      "7j -10.5%"
+    ],
+    "signal_consensus": {
+      "technique": "baissier",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "Le verdict ACHAT du 06/09 est invalidé : Ondo Finance a reculé de -10,87 % sur la période, au-delà du seuil de 5 %. Nouveau cycle : signal technique désormais baissier (7 jours -10,5 %), le conflit de gouvernance devant le tribunal du Delaware restant non résolu. Signal fondamental neutre : aucune clarification confirmée ce cycle. Signal macro haussier. Un seul signal sur trois converge : ATTENTE retenue par prudence.",
+    "price_at_issue": 0.296049,
+    "resolves_at": "2026-09-20T23:26:00Z",
+    "status": "pending",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on"
+  },
+  {
+    "id": "v-20260913-jup",
+    "issued_at": "2026-09-13T23:26:00Z",
+    "asset": "jupiter-exchange-solana",
+    "ticker": "JUP",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -5.1%",
+      "7j -14.2%"
+    ],
+    "signal_consensus": {
+      "technique": "baissier",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "Le verdict ACHAT du 06/09 est invalidé : Jupiter a reculé de -14,88 % sur la période — le risque de retournement brutal après le bond de +68,8 % explicitement signalé lors de l'émission s'est matérialisé. Nouveau cycle : signal technique désormais baissier (7 jours -14,2 %). Signal fondamental neutre pour ce cycle malgré une traction produit réelle notée en thèse hebdo (Universal Deposit, TVL Jupiter Lend en hausse) — aucune actualisation propre ce cycle. Signal macro haussier. Un seul signal sur trois converge : ATTENTE retenue par prudence.",
+    "price_at_issue": 0.198231,
+    "resolves_at": "2026-09-20T23:26:00Z",
+    "status": "pending",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on"
+  },
+  {
+    "id": "v-20260913-aioz",
+    "issued_at": "2026-09-13T23:26:00Z",
+    "asset": "aioz-network",
+    "ticker": "AIOZ",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -3.7%",
+      "7j +19.0%"
+    ],
+    "signal_consensus": {
+      "technique": "mixte",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "Le verdict ATTENTE du 06/09 est invalidé : AIOZ Network a grimpé de +14,95 % sur la période, au-delà du seuil de 5 % côté haussier. Nouveau cycle : signal technique requalifié mixte plutôt que haussier malgré un mouvement sur 7 jours de +19,0 % — changement procédural (voir corr-20260913-biais-chasse-momentum) : un mouvement déjà extrême au moment de l'émission n'est plus compté comme une confirmation technique fraîche, après deux lots consécutifs où ce type de rebond récent extrapolé s'est retourné dans l'horizon suivant. Signal fondamental neutre : aucun nouveau catalyseur DePIN/stockage confirmé ce cycle. Signal macro haussier. Un seul signal sur trois converge clairement : ATTENTE retenue par prudence renforcée.",
+    "price_at_issue": 0.062013,
+    "resolves_at": "2026-09-20T23:26:00Z",
+    "status": "pending",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on"
+  },
+  {
+    "id": "v-20260913-arb",
+    "issued_at": "2026-09-13T23:26:00Z",
+    "asset": "arbitrum",
+    "ticker": "ARB",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 50,
+    "signals_used": [
+      "24h -4.4%",
+      "7j -30.2%"
+    ],
+    "signal_consensus": {
+      "technique": "baissier",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 1
+    },
+    "reasoning": "Le verdict ACHAT du 06/09 est invalidé : Arbitrum a chuté de -29,69 % sur la période, le retournement le plus marqué de ce lot — le risque de correction brutale après la hausse de +112,2 % explicitement signalé lors de l'émission s'est matérialisé avec ampleur. Nouveau cycle : signal technique désormais baissier (7 jours -30,2 %), le déblocage de jetons du 16/09 déjà anticipé en thèse hebdo restant à venir. Signal fondamental neutre. Signal macro haussier. Un seul signal sur trois converge : ATTENTE retenue par prudence.",
+    "price_at_issue": 0.114969,
+    "resolves_at": "2026-09-20T23:26:00Z",
+    "status": "pending",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on"
+  },
+  {
+    "id": "v-20260913-inj",
+    "issued_at": "2026-09-13T23:26:00Z",
+    "asset": "injective-protocol",
+    "ticker": "INJ",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 60,
+    "signals_used": [
+      "24h -1.3%",
+      "7j +13.0%"
+    ],
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 2
+    },
+    "reasoning": "Le verdict ATTENTE du 06/09 est invalidé : Injective a progressé de +11,62 % sur la période, au-delà du seuil de 5 % côté haussier. Nouveau cycle : signal technique haussier (7 jours +13,0 %, mouvement modéré et sous le seuil de prudence renforcée de 15 % appliqué ce cycle — voir corr-20260913-biais-chasse-momentum), l'exploit du 31 août et la suspension Upbit restant les seuls points de vigilance déjà connus, sans aggravation confirmée ce cycle. Signal fondamental neutre. Signal macro haussier. Deux signaux sur trois convergent : ACHAT retenu, horizon réduit à 7 jours vu la volatilité désormais élevée de cet actif.",
+    "price_at_issue": 5.09,
+    "resolves_at": "2026-09-20T23:26:00Z",
+    "status": "pending",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on"
   }
 ]
