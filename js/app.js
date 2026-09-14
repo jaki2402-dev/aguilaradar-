@@ -4,6 +4,7 @@ const TABS = ["overview", "portfolio", "favoris", "opportunities", "journal", "e
 let pricesIntervalStarted = false;
 let latestFavorisContext = null;
 let latestOnchainHistory = null;
+let latestFavorisSupply = {};
 
 function switchTab(tabId) {
   TABS.forEach((id) => {
@@ -738,6 +739,14 @@ async function initApp() {
   if (!pricesIntervalStarted) {
     setInterval(refreshPrices, 60000);
     pricesIntervalStarted = true;
+  }
+  // Isolé (son propre try/catch, jamais dans un Promise.all partagé) : un échec ici ne doit
+  // jamais entraîner un fetch voisin sans rapport avec lui — même piège déjà documenté sur
+  // l'activité on-chain (CLAUDE.md). Une fois au chargement seulement, pas sur le tick 60s.
+  if (typeof fetchFavorisSupply === "function") {
+    fetchFavorisSupply()
+      .then((supply) => { latestFavorisSupply = supply; })
+      .catch((err) => console.error("Erreur de récupération de l'offre en circulation (tokenomics) :", err));
   }
 
   await loadAllData();
