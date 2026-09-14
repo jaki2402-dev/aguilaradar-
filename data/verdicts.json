@@ -1166,13 +1166,13 @@
     "reasoning": "Le verdict ATTENTE précédent (émis le 31 août) vient d'être validé : mouvement de +1,22 % à l'échéance, largement sous le seuil directionnel de 5 %. Nouveau cycle : lecture technique neutre, mouvement quasi plat sur les trois horizons (24h -0,5 %, 7j +2,4 %, 30j +0,1 %), aucune tendance nette. Signal fondamental neutre : aucun nouveau développement confirmé ce cycle sur l'infrastructure modulaire. Signal macro haussier (régime risk-on). Un seul signal sur trois converge : ATTENTE retenue, horizon maintenu à 7 jours vu la volatilité historique de cet actif.",
     "price_at_issue": 0.021927,
     "resolves_at": "2026-09-14T16:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.021947,
+      "actual_move_pct": 0.09,
+      "actual_direction": "ATTENTE",
+      "verdict_correct": true,
+      "resolved_at": "2026-09-14T20:22:00Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -2104,5 +2104,38 @@
       "threshold_crossed": true,
       "note": "Injective (INJ) : franchit le seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 2026-09-13 à 5.09 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 5.4 euro, soit +6.09 % depuis l'émission."
     }
+  },
+  {
+    "id": "v-20260914-ctsi",
+    "issued_at": "2026-09-14T20:22:00Z",
+    "asset": "cartesi",
+    "ticker": "CTSI",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 65,
+    "signals_used": [
+      "24h +0.26%",
+      "7j -1.35%",
+      "30j +1.09%"
+    ],
+    "signal_consensus": {
+      "technique": "neutre",
+      "fondamental": "neutre",
+      "macro": "haussier",
+      "accord_count": 2
+    },
+    "reasoning": "Le verdict ATTENTE du 07/09 est validé : mouvement de +0,09 % à l'échéance (0,021927 → 0,021947 euro), largement sous le seuil directionnel de 5 %. Nouveau cycle, formule de confiance reproductible (révision du 14/09) : lecture technique neutre, CTSI reste quasi plat sur les trois horizons (24h +0,26 %, 7j -1,35 %, 30j +1,09 %), sans tendance nette. Signal fondamental neutre, confirmé par croisement avec les données déjà écrites ailleurs (portfolio-thesis.json : recommandation Attendre, conviction 4/10, aucune annonce produit identifiée cette semaine, liquidité limitée ; favoris-context.json : scénario de base sans catalyseur fondamental nouveau) — technique et fondamental alignés, aucune contradiction à signaler. Signal macro haussier (régime risk-on, indice peur/cupidité à 58). Deux signaux sur trois convergent sur neutre (accord_count=2) : ATTENTE retenue, confiance 65 % (fourchette 60-70, accord modéré car macro seul insuffisant pour renverser la lecture), horizon maintenu à 7 jours par cohérence avec le verdict précédent sur cet actif.",
+    "price_at_issue": 0.021947,
+    "resolves_at": "2026-09-21T20:22:00Z",
+    "status": "pending",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-on"
   }
 ]
