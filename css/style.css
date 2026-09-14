@@ -664,7 +664,9 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
 .alloc-more summary {
   cursor: pointer; list-style: none; padding: 6px 0; font-size: 0.82rem; color: var(--text-dim);
   display: flex; align-items: center; justify-content: space-between;
+  transition: color 0.15s ease;
 }
+.alloc-more summary:hover { color: var(--text); }
 .alloc-more summary::-webkit-details-marker { display: none; }
 .alloc-more summary::after { content: "▾"; color: var(--text-faint); transition: transform 0.2s ease; }
 .alloc-more[open] summary::after { transform: rotate(180deg); }
@@ -698,7 +700,10 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
 .onchain-history-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-top: 10px; }
 /* .detail-context-card (renderFavorisContextSection, detail.js) partage exactement cet habillage
    — même famille visuelle "carte de donnée compacte", pas une carte de graphique cette fois. */
-.onchain-chart-card, .detail-context-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; min-width: 0; }
+/* box-shadow : même rôle que .stat-card (petite carte métrique compacte, une valeur + un
+   libellé, jamais cliquable elle-même) — pas le même traitement que .detail-context/
+   .verdict-breakdown (sections de contenu plus larges, volontairement plates, voir plus bas). */
+.onchain-chart-card, .detail-context-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; min-width: 0; box-shadow: var(--shadow); }
 .onchain-chart-card strong, .detail-context-card strong { font-family: var(--font-mono); font-size: 1.05rem; display: block; margin: 2px 0 4px; }
 .onchain-chart-tabs { display: flex; gap: 4px; margin-top: 8px; flex-wrap: wrap; }
 .onchain-chart-tab {
@@ -802,7 +807,15 @@ th { color: var(--text-dim); font-weight: 600; font-size: 0.76rem; text-transfor
    la piste — et donc toute la page — au lieu de laisser .matrix-table/.classes-table gérer leur
    propre overflow-x. Même piège déjà documenté sur .detail-stat plus haut, revérifié ici en
    mobile réel (390px) : sans cette ligne, la page passait à 480px et coupait "Total"/"Prédits". */
-.engine-tables-row > div { min-width: 0; }
+/* Même traitement que .detail-context/.verdict-breakdown (fond + bordure, jamais d'ombre —
+   des sections de contenu, pas de petites cartes métrique) : sans ça les deux tableaux
+   flottaient nus sur le fond de la page une fois côte à côte, seuls parmi tout le site à ne pas
+   avoir de carte propre. */
+.engine-tables-row > div {
+  min-width: 0;
+  background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 14px;
+}
 
 .matrix-table td, .matrix-table th { text-align: center; }
 .matrix-table th:first-child, .matrix-table td:first-child { text-align: left; }
@@ -1184,7 +1197,9 @@ details.accueil-section {
 details.accueil-section summary {
   padding: 14px 16px; cursor: pointer; font-weight: 700; list-style: none;
   display: flex; justify-content: space-between; align-items: center;
+  transition: color 0.15s ease;
 }
+details.accueil-section summary:hover { color: var(--accent); }
 details.accueil-section summary::-webkit-details-marker { display: none; }
 details.accueil-section summary::after { content: "▾"; color: var(--text-faint); transition: transform 0.2s ease; }
 details.accueil-section[open] summary::after { transform: rotate(180deg); }
@@ -1212,7 +1227,12 @@ details.info-toggle { margin: 2px 0 10px; }
 details.info-toggle summary {
   cursor: pointer; list-style: none; color: var(--text-faint); font-size: 0.78rem;
   font-weight: 600; display: inline-flex; align-items: center; gap: 4px;
+  transition: color 0.15s ease;
 }
+/* Aucun résumé de <details>/accordéon du site n'avait de retour au survol (souris) avant le
+   14/09 — chacun ci-dessous éclaircit vers sa couleur "ouvert" existante plutôt que d'inventer
+   une nouvelle teinte, pour rester cohérent avec l'état actif déjà en place. */
+details.info-toggle summary:hover { color: var(--text-dim); }
 details.info-toggle summary::-webkit-details-marker { display: none; }
 details.info-toggle summary::after { content: "▾"; transition: transform 0.2s ease; }
 details.info-toggle[open] summary::after { transform: rotate(180deg); }
@@ -1244,8 +1264,10 @@ details.info-toggle .section-sub { margin: 8px 0 0; }
   width: 100%; background: none; border: none; color: var(--text); font-family: inherit;
   display: flex; justify-content: space-between; align-items: center; gap: 12px;
   padding: 15px 2px; cursor: pointer; text-align: left; font-weight: 800; font-size: 0.9rem; letter-spacing: -0.01em;
+  transition: color 0.15s ease;
 }
 .engine-acc-summary .chevron { color: var(--text-faint); flex-shrink: 0; }
+.engine-acc-summary:hover { color: var(--c-engine); }
 .engine-acc-summary[aria-expanded="true"] { color: var(--c-engine); }
 .engine-acc-summary[aria-expanded="true"] .chevron { color: var(--c-engine); transform: rotate(180deg); }
 .engine-acc-body { display: none; }
