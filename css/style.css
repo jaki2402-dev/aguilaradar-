@@ -165,6 +165,17 @@ header.site-header h1 { margin: 0; font-family: var(--font-mono); letter-spacing
 #last-deep-cycle.freshness-warning { color: var(--warning); }
 #last-deep-cycle.freshness-stale { color: var(--loss); font-weight: 600; }
 
+/* Badge de fraîcheur PAR DONNÉE (data-integrity.js) — même vocabulaire ok/warning/stale que
+   #last-deep-cycle ci-dessus (fichiers entiers), réutilisé ici pour un point de donnée précis
+   (ex: contexte étendu d'un favori). Jamais une 4e couleur : gain/warning/loss existants. */
+.freshness-chip {
+  display: inline-block; font-size: 0.62rem; padding: 1px 7px; border-radius: 999px;
+  margin-left: 6px; font-weight: 600; vertical-align: middle; background: var(--bg-elevated);
+}
+.freshness-chip.freshness-ok { color: var(--gain); }
+.freshness-chip.freshness-warning { color: var(--warning); }
+.freshness-chip.freshness-stale { color: var(--loss); }
+
 .header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .refresh-btn, .notif-bell-btn {
   width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;

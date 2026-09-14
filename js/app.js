@@ -544,7 +544,7 @@ async function loadAllData() {
   renderNews(news);
   renderMacroRegime(engineHistory);
   renderMarketContext(marketContext);
-  renderHealthStatus(healthLog);
+  renderHealthStatus(healthLog, favorisContext, verdicts || []);
   renderSectorBreakdown(verdicts || []);
   renderConfidenceHistory(verdicts || []);
   renderWeeklyDigest(verdicts || [], opportunities, alerts || []);

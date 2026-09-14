@@ -128,8 +128,17 @@ function renderFavorisContextSection(ticker) {
   const tvl = ctx.defi_tvl || {};
   const onchain = ctx.onchain_signal || {};
   const onchainSourceUrl = onchain.source_url ? safeUrl(onchain.source_url) : null;
+  // Badge de fraîcheur PAR ACTIF (data-integrity.js) : ce contexte est peuplé par rotation
+  // quotidienne (voir CLAUDE.md), donc "le fichier existe" ne veut pas dire "ces chiffres
+  // précis datent d'aujourd'hui" — rend explicite l'âge réel de CE favori précis plutôt que de
+  // laisser croire à une fraîcheur uniforme sur les 15.
+  const freshness = typeof freshnessStatusForDate === "function" ? freshnessStatusForDate(ctx.last_computed_at) : null;
+  const freshnessLabel = freshness && { ok: "à jour", warning: "à vérifier", stale: "périmé" }[freshness.status];
+  const freshnessChip = freshness
+    ? `<span class="freshness-chip freshness-${freshness.status}" title="Dernier calcul : ${new Date(ctx.last_computed_at).toLocaleString("fr-FR")}">${freshnessLabel} · ${Math.round(freshness.ageDays)} j</span>`
+    : "";
   return `<div class="detail-context">
-    <strong>Contexte élargi</strong>
+    <strong>Contexte élargi ${freshnessChip}</strong>
     ${comp.name ? `<div class="hint"><strong>Concurrent (${escapeHtml(comp.ticker || "?")}) :</strong>${renderClampableText(comp.comparison_note || "—")}</div>` : `<p class="hint">Comparaison concurrent : pas encore calculée.</p>`}
     ${thesis.assumptions_note ? `<div class="hint"><strong>Thèse long terme</strong>${renderClampableText(`Bull : ${thesis.bull || "—"} · Base : ${thesis.base || "—"} · Bear : ${thesis.bear || "—"} — Hypothèses : ${thesis.assumptions_note}`)}</div>` : `<p class="hint">Thèse long terme : pas encore rédigée.</p>`}
     <p class="hint"><strong>Open interest :</strong> ${oi.value_usd ? formatMarketCap(oi.value_usd) + (oi.funding_rate_pct !== null && oi.funding_rate_pct !== undefined ? ` · funding ${oi.funding_rate_pct.toFixed(3)}%` : "") : highlightKeyInfo(oi.note || "—")}</p>
