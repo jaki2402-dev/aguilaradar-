@@ -88,6 +88,19 @@ Cette règle garantit qu'aucun favori ne reste périmé plus de ~5 jours ouvrés
 4. **Ne jamais écrire un snapshot dont les 3 champs sont `null`** — dans ce cas, ne rien ajouter ce jour plutôt que d'ajouter une ligne vide qui polluerait le graphique.
 5. Ajouter le nouveau snapshot à la fin du tableau `snapshots` (ordre chronologique croissant, jamais réordonné/retrié).
 
-## 3. Commit
+## 3. Commit — deux étapes obligatoires, pas juste "push"
 
-Un seul commit git à la fin de l'exécution, couvrant les deux fichiers modifiés (`data/favoris-context.json` et `data/onchain-history.json`), message clair (ex. `"Rotation favoris + snapshot on-chain BTC du <date>"`) — même convention que les autres routines de ce projet (voir historique git).
+**Piège réel, confirmé le 14/09/2026 sur `aguilaradar-cycle-2h`** (même infrastructure, donc
+même risque ici) : un cycle peut produire un commit correct mais s'arrêter après l'avoir poussé
+sur sa propre branche de sortie, sans jamais fusionner dans `main` — invisible sur le site en
+ligne jusqu'à une intervention manuelle. "Pousse-le sur main" seul ne suffit pas comme
+instruction.
+
+Procédure en 2 étapes, obligatoires toutes les deux à chaque cycle :
+1. Commit normal (un seul, sur la branche de travail courante) couvrant les fichiers modifiés
+   (`data/favoris-context.json` et, si un snapshot du jour a pu être confirmé,
+   `data/onchain-history.json`), message clair (ex. `"Rotation favoris + snapshot on-chain BTC du
+   <date>"`).
+2. **Fusionner explicitement cette branche dans `main` et pousser `main`** — `git checkout main`
+   (ou équivalent), `git merge --no-ff &lt;ta-branche&gt; -m "Merge cycle &lt;date&gt; into main"`,
+   `git push origin main`. Le cycle n'est pas terminé tant que cette 2e étape n'a pas réussi.

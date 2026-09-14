@@ -123,7 +123,23 @@ résolu en nombre suffisant, logger honnêtement si l'exactitude s'est amélior�
 pas bougé de façon significative — jamais présenter une amélioration qui ne serait pas
 statistiquement confirmée par les chiffres réels.
 
-## 7. Commit
+## 7. Commit — deux étapes obligatoires, pas juste "push"
 
-Un seul commit git par cycle couvrant les deux fichiers modifiés, message clair (ex. "Cycle du
-<date> : N verdicts émis, M résolus"), même convention que le reste de ce projet.
+**Constat du 14/09/2026** : le premier cycle exécuté sous cette révision a produit un commit
+correct (confidence_pct=65, croisement bien appliqué, `correction_log` correctement mis à jour)
+mais **s'est arrêté après le commit sur sa propre branche de sortie, sans jamais atteindre
+`main`** — resté invisible sur le site en ligne jusqu'à une fusion manuelle. Vérifié en comparant
+avec un cycle antérieur réussi (`0101615`/`8a0e2b3`, 14/09 16h20 UTC) : la même session y avait
+fait exactement 2 commits, 39 secondes d'écart, tous deux signés `Claude <noreply@anthropic.com>`
+— un commit normal sur sa branche, PUIS un commit de fusion sur `main` dont les 2 parents sont
+l'ancien HEAD de `main` et ce commit. **"Pousse-le sur main" ne suffit pas comme instruction** si
+l'étape de fusion n'est pas explicitement nommée.
+
+Procédure en 2 étapes, obligatoires toutes les deux à chaque cycle :
+1. Commit normal (un seul, sur la branche de travail courante) couvrant les deux fichiers
+   modifiés, message clair (ex. "Cycle du &lt;date&gt; : N verdicts émis, M résolus").
+2. **Fusionner explicitement cette branche dans `main` et pousser `main`** — `git checkout main`
+   (ou équivalent), `git merge --no-ff &lt;ta-branche&gt; -m "Merge cycle &lt;date&gt; into main"`,
+   `git push origin main`. Ne pas considérer le cycle terminé tant que cette 2e étape n'a pas
+   réussi — un commit qui reste seulement sur une branche de sortie, jamais fusionné, équivaut à
+   ne rien avoir écrit du point de vue du site en ligne.
