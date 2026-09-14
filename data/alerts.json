@@ -1248,5 +1248,13 @@
     "type": "avis_du_jour",
     "triggered_at": "2026-09-14T00:40:00Z",
     "message": "INJ reste en ACHAT technique, mais la thèse hebdo appelle à attendre après l'exploit de 4,9 M$ et la suspension Upbit — deux signaux de confiance non encore résolus à surveiller."
+  },
+  {
+    "id": "alert-20260914-inj-seuil",
+    "ticker_ou_theme": "INJ",
+    "type": "seuil_technique",
+    "triggered_at": "2026-09-14T16:20:00Z",
+    "message": "Injective (INJ) : +6,09 % depuis l'émission du verdict ACHAT du 13/09 (5,09 € → 5,40 €), seuil de mouvement directionnel de 5 % désormais franchi à la hausse, dans le sens du verdict. Mouvement modéré, sous le seuil de prudence renforcée de 15 % retenu pour le biais chasse-momentum. Aucune actualité nouvelle identifiée ce cycle pour expliquer ce mouvement au-delà des points de vigilance déjà connus (exploit du 31 août, suspension Upbit). Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance.",
+    "source": "criblage technique interne"
   }
 ]
