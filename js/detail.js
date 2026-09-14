@@ -389,7 +389,7 @@ async function renderTechnicalSection(asset) {
         .map(
           (s) => `<div class="detail-signal">
             <strong>${s.label}</strong>
-            <p class="hint">${s.text}</p>
+            <p class="hint">${highlightKeyInfo(s.text)}</p>
           </div>`
         )
         .join("")}

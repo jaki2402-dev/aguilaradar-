@@ -384,6 +384,14 @@ main { padding: 20px 20px 40px; max-width: 1100px; margin: 0 auto; }
 @media (max-width: 767px), (max-height: 500px) and (orientation: landscape) {
   main { padding-bottom: 96px; }
 }
+/* Palier large desktop : au-delà de 1100px, les grilles (favoris/opportunités/journal/
+   alertes) avaient de la place inexploitée sur un écran large plutôt que d'en profiter
+   (section 14 de la demande utilisateur — "exploite davantage la largeur disponible"). Reste
+   raisonnable (1320px, pas 1800px) : la prose des cartes doit rester lisible, seules les
+   grilles bénéficient vraiment de la largeur en plus. */
+@media (min-width: 1440px) {
+  main { max-width: 1320px; }
+}
 section.tab-panel { display: none; animation: fadein 0.2s ease; }
 section.tab-panel.active { display: block; }
 @keyframes fadein { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
@@ -776,6 +784,24 @@ th { color: var(--text-dim); font-weight: 600; font-size: 0.76rem; text-transfor
 .alert-entry.type-actualite_favori { --entry-color: var(--accent); }
 .alert-entry.type-actualite_generale { --entry-color: var(--text-faint); }
 .alert-entry.type-avis_du_jour { --entry-color: var(--accent); }
+/* Journal / Alertes : grille responsive plutôt qu'un empilement 100% vertical (section 1 de
+   la demande utilisateur) — même idiome repeat(auto-fill, minmax(N,1fr)) que .favoris-grid
+   plus haut, colonne plus large ici car chaque carte porte un paragraphe de texte, pas juste
+   un chiffre. align-items:start : une carte encore courte ne s'étire pas pour égaler la
+   hauteur d'une voisine déjà dépliée dans la même ligne de grille (le Journal, contrairement
+   aux Alertes, peut déplier une fiche complète via attachDetailToggle). */
+#journal-body, #notifications-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 10px;
+  align-items: start;
+}
+#journal-body .journal-entry, #notifications-body .alert-entry { margin-bottom: 0; }
+/* Même mécanisme que .favori-tile.expanded (plus haut) : une fiche Journal dépliée doit
+   pouvoir occuper toute la largeur de la grille, pas rester coincée dans sa colonne de
+   320px — sinon la fiche technique complète (RSI/MM/volume/carnet) y serait illisible. */
+.journal-entry.expanded { grid-column: 1 / -1; }
+#journal-body > #journal-load-more, #notifications-body > p.hint { grid-column: 1 / -1; }
 /* Carte "Avis du jour" (voir renderAvisDuJour, app.js) : même habillage que .hero-card
    (dégradé + coins en équerre "instrument"), plus un liseré pour la distinguer visuellement de
    la carte "État du radar" juste en dessous — sinon les deux se confondent en tête d'Accueil. */
@@ -838,6 +864,9 @@ footer.site-footer {
   line-height: 1.5;
   max-width: 1100px;
   margin: 0 auto;
+}
+@media (min-width: 1440px) {
+  footer.site-footer { max-width: 1320px; }
 }
 
 @media (max-width: 767px), (max-height: 500px) and (orientation: landscape) {
