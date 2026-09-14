@@ -1,80 +1,80 @@
 {
-  "generated_at": "2026-09-07T05:08:03Z",
+  "generated_at": "2026-09-14T05:08:36Z",
   "positions": {
     "bitcoin": {
       "recommendation": "Conserver",
       "conviction": 7,
-      "constat": "BTC consolide entre 77 000 et 80 000 $ début septembre après le short squeeze d'août, avec Strategy qui a repris ses achats (370 M$) au-dessus de 80 000 $, signe de demande institutionnelle réelle. Le marché reste toutefois en attente d'un catalyseur clair (Fed, données d'emploi) avant de casser la résistance, donc pas d'urgence à renforcer sur ces niveaux."
+      "constat": "BTC est passé d'environ 64 800 $ le 7 août à environ 79 000-79 700 $ début septembre (+22%), mais bute à plusieurs reprises sur la zone 80 000-82 500 $ sans la franchir. Le sentiment reste prudemment haussier (demande spot institutionnelle, tendance mensuelle constructive) mais la prise de profits après la hausse rapide et l'incertitude sur la politique de la Fed limitent la conviction à court terme."
     },
     "ethereum": {
       "recommendation": "Conserver",
-      "conviction": 6,
-      "constat": "Les ETF spot ETH ont attiré près d'1 Md$ d'entrées sur la semaine du 7 septembre, un signal institutionnel solide, et le testnet public de l'upgrade Glamsterdam démarre le 28 septembre avant une activation mainnet prévue au T4 2026. Le prix reste très en retrait de son ATH et certaines analyses évoquent des tensions internes à la Fondation, donc le catalyseur reste à confirmer avant d'ajouter."
+      "conviction": 7,
+      "constat": "ETH consolide autour de 2 441 $, rejeté sous la résistance 2 500-2 560 $ avec un RSI redescendu à 58 ; le support clé à surveiller est 2 438 $ (Fibonacci 0,618 hebdo), sous peine d'exposer la zone 2 220-2 000 $. L'upgrade Glamsterdam glisse au T4 2026 (testnet Sepolia le 28 septembre) et Consensys a annoncé une scission en deux entités (MetaMask grand public / Consensys institutionnel) d'ici fin 2026 ; le CPI du 11 septembre et la décision Fed du 16 septembre sont les catalyseurs macro à court terme les plus déterminants."
     },
     "fetch-ai": {
       "recommendation": "Conserver",
       "conviction": 5,
-      "constat": "FET a rebondi de +15,6% sur 7 jours vers 0,177-0,18 $, porté par le lancement imminent de la bêta ouverte d'ASI:Create et l'Agent Launchpad déjà actif, mais le token reste à plus de 90% sous son pic de 2024 et le rebranding complet FET→ASI n'a toujours pas eu lieu mi-2026. Thèse agents IA on-chain toujours valable mais exécution encore incertaine."
+      "constat": "L'Alliance ASI poursuit le durcissement de son infrastructure multi-agents et prépare le lancement en bêta publique d'ASI:Create pour accroître l'activité on-chain, mais le retrait litigieux d'Ocean Protocol depuis octobre 2025 (gouvernance contestée devant les tribunaux) reste non résolu et le rebranding complet du ticker FET vers ASI n'a toujours pas eu lieu mi-septembre 2026. Thèse agents IA on-chain intacte sur le fond, exécution et structure de l'alliance encore incertaines."
     },
     "celestia": {
-      "recommendation": "Conserver",
-      "conviction": 5,
-      "constat": "TIA teste une zone de support critique autour de 0,36 $ après une chute prolongée, mais le gros de la pression de vente liée aux déblocages d'investisseurs 2024-2025 s'est éteint depuis mars 2026, et l'upgrade V8 (transferts cross-chain, messagerie vérifiée par ZK) est livré. Le prix reste piloté par la demande organique et l'adoption modulaire, sans catalyseur fort identifié cette semaine."
+      "recommendation": "Attendre",
+      "conviction": 4,
+      "constat": "TIA a chuté d'environ -23% sur les 7 derniers jours à l'approche d'un déblocage massif d'environ 175 M TIA (de l'ordre de 850 M$ à plus d'1 Md$) prévu le 30 octobre, la pression vendeuse anticipée pesant déjà sur le prix avant même l'échéance. Pas de catalyseur produit fort identifié cette semaine pour contrebalancer ce risque d'offre ; mieux vaut laisser passer l'échéance avant de renforcer."
     },
     "chainlink": {
       "recommendation": "Renforcer",
       "conviction": 8,
-      "constat": "LINK enchaîne les intégrations institutionnelles majeures : oracle officiel du mainnet Arc de Circle (lancement le 16 septembre), infrastructure de pricing choisie par Coinbase pour les actions tokenisées sur Base, et cotation annoncée chez Charles Schwab aux côtés de SOL et AVAX. Le prix a bondi de 8,30 $ à près de 12,50 $ la semaine dernière avant une prise de profits, confirmant une dynamique d'adoption réelle plutôt que spéculative."
+      "constat": "LINK enchaîne les intégrations institutionnelles confirmées : oracle officiel du mainnet Arc de Circle lancé le 16 septembre (validateurs fondateurs BlackRock, DTCC, Visa, Mastercard), infrastructure retenue par Coinbase pour les actions tokenisées sur Base, cotation annoncée chez Charles Schwab aux côtés de SOL et AVAX, et partenariat avec Bottomline (plateformes de paiement de plus de 600 banques, 16 000 Md$ de flux annuels). La mise à niveau CCIP v1.5 (self-serve token, support zkRollups) est en attente d'audit avant lancement, confirmant une dynamique d'adoption réelle plutôt que spéculative."
     },
     "the-graph": {
       "recommendation": "Conserver",
       "conviction": 5,
-      "constat": "GRT reste proche de ses plus bas historiques (-99% depuis le pic 2021) malgré plus de 1200 milliards de requêtes traitées par le réseau, un décalage marqué entre usage réel et valorisation. Le token est désormais transférable nativement entre Arbitrum, Base et Avalanche via Chainlink CCIP et de nouveaux serveurs MCP permettent l'interrogation IA des données on-chain, mais rien ne indique un catalyseur de prix à court terme."
+      "constat": "GRT a bondi d'environ +15% le 6 septembre avec un volume en hausse de +180%, porté par le déploiement de serveurs MCP et de compétences IA permettant d'interroger les données on-chain via le protocole de paiement x402. Le token reste néanmoins proche de ses plus bas historiques (environ -99% depuis le pic de 2021) malgré plus de 1 200 milliards de requêtes traitées par le réseau, un décalage persistant entre usage réel et valorisation qui ne justifie pas un renforcement cette semaine."
     },
     "peaq-2": {
       "recommendation": "Attendre",
       "conviction": 4,
-      "constat": "PEAQ a reculé d'environ -9% sur 7 jours, sous-performant le marché crypto global, et un déblocage de jetons est prévu le 12 septembre (autour de 85 à 96 M PEAQ selon les sources, soit ~2% de l'offre totale), ce qui crée un risque de pression vendeuse à court terme. La thèse Machine Economy/DePIN (robots on-chain, Initial Machine Offerings avec CoinList) reste intacte sur le fond mais spéculative, donc mieux vaut laisser passer l'unlock avant de renforcer."
+      "constat": "Un déblocage de jetons a eu lieu le 12 septembre, dans une fenêtre où environ 45,2 M$ d'unlocks étaient programmés entre le 8 et le 14 septembre, créant une pression vendeuse récente sur un actif déjà peu liquide (environ 570 000 $ de volume sur 24h). La thèse Machine Economy/DePIN (Initial Machine Offerings avec CoinList, paiements autonomes de robots) reste intacte sur le fond mais demeure spéculative ; mieux vaut laisser l'unlock se digérer avant de renforcer."
     },
     "livepeer": {
       "recommendation": "Conserver",
       "conviction": 5,
-      "constat": "Livepeer Agent (génération/édition vidéo par IA) passe en bêta ouverte début septembre, une source de demande payante potentielle pour le réseau, et un rapport confirme un usage réseau record avec un basculement vers des revenus liés aux frais. À l'inverse, une plateforme d'échange a retiré les paires LPT/USDT et LPT/TRY (retraits possibles jusqu'au 30 septembre), un signal de liquidité dégradé qui pèse sur le sentiment."
+      "constat": "Livepeer Agent (génération et édition vidéo par IA) vise une bêta ouverte début septembre, une source potentielle de demande payante pour le réseau, et un rapport confirme un usage réseau record avec un basculement vers des revenus liés aux frais. À l'inverse, une plateforme d'échange a retiré les paires LPT/USDT et LPT/TRY (retraits possibles jusqu'au 30 septembre), un signal de liquidité dégradé qui pèse sur le sentiment court terme."
     },
     "injective-protocol": {
-      "recommendation": "Attendre",
-      "conviction": 4,
-      "constat": "Injective a subi un exploit de 4,9 M$ le 31 août (collision d'identifiant de marché sur les options binaires) ayant nécessité un arrêt de production de blocs de près de 4 heures ; la fondation a qualifié l'incident d'\"upgrade accéléré\" plutôt que d'arrêt, une communication contestée par le chercheur ayant signalé la faille. Des validateurs ont été temporairement exclus et Upbit a suspendu dépôts/retraits d'INJ, deux signaux de confiance à surveiller avant de renforcer."
+      "recommendation": "Renforcer",
+      "conviction": 7,
+      "constat": "Le staking INJ a atteint un plus haut historique le 7 septembre (58,8 M INJ verrouillés) et la migration par Pineapple Financial de plus d'1 Md$ d'actifs immobiliers tokenisés sur le réseau le 5 septembre a propulsé le prix de +19,79% le 8 septembre ; le programme de rachat communautaire a par ailleurs brûlé 25 200 INJ en septembre. L'ETF INJ staké de Canary Capital (S-1 révisé, listing visé sur Cboe BZX) reste toutefois en cours d'examen à la SEC, un catalyseur réglementaire important mais encore incertain."
     },
     "cartesi": {
       "recommendation": "Attendre",
       "conviction": 4,
-      "constat": "CTSI se négocie autour de 0,024 $, en tendance baissière technique persistante (moyenne mobile 200 jours en baisse depuis fin juillet), sans catalyseur spécifique identifié pour septembre. Le protocole continue de développer sa couche d'exécution Linux on-chain (Honeypot v2, tournois de preuve de fraude sans permission) mais rien de nouveau ne justifie un renforcement cette semaine."
+      "constat": "Aucune annonce produit significative n'a été identifiée pour CTSI cette semaine ; le prix est resté globalement stable (environ -2,3% sur 7 jours) avec une capitalisation et des volumes très faibles (environ 24 M$ de capitalisation, 1,5 M$ de volume sur 24h), signe d'une liquidité limitée. Rien ne justifie un renforcement en l'absence de catalyseur confirmé."
     },
     "jupiter-exchange-solana": {
-      "recommendation": "Renforcer",
-      "conviction": 7,
-      "constat": "Jupiter a lancé Universal Deposit le 2 septembre (dépôt USDC natif sur Solana depuis Ethereum, Base, Arbitrum et Sui pour 0,30 $ de frais fixe), renforçant sa position dominante d'agrégateur DEX sur Solana (63 à 95% de part de marché selon les mesures) avec 3,5 Md$ de volume de swap sur la semaine au 1er septembre. Jupiter Lend voit aussi ses dépôts grimper vers 800 M$ de TVL, confirmant une traction produit réelle et diversifiée."
-    },
-    "arbitrum": {
       "recommendation": "Conserver",
       "conviction": 6,
-      "constat": "ARB a plus que doublé depuis fin août (environ +127%), porté par le volume DEX record de la Robinhood Chain (L2 construite sur la technologie Arbitrum) et l'activation de l'upgrade ArbOS Elara. Un déblocage de 92,63 M ARB (~9 M$) est prévu le 16 septembre et pourrait tester la solidité du rally après une hausse aussi rapide, donc mieux vaut conserver la position plutôt que d'ajouter à chaud."
+      "constat": "Jupiter a lancé Universal Deposit le 2 septembre (dépôt USDC natif sur Solana depuis Ethereum, Base, Arbitrum et Sui pour 0,30 $ de frais fixe), avec 3,5 Md$ de volume de swap traité sur la semaine au 1er septembre. Le token a bondi de +12,58% le 7 septembre mais sans catalyseur confirmé identifiable derrière ce mouvement (donnée non confirmée sur la cause précise) ; la traction produit réelle justifie de conserver sans se précipiter à renforcer sur un pic non expliqué."
+    },
+    "arbitrum": {
+      "recommendation": "Réduire",
+      "conviction": 6,
+      "constat": "ARB a plus que doublé depuis fin août, porté par le volume record de la Robinhood Chain (L2 construite sur la technologie Arbitrum, dont les frais ont dépassé Pump.fun). Deux tests concrets de la durabilité de ce rallye arrivent presque simultanément : un déblocage de 92,6 M ARB (0,93% de l'offre) le 16 septembre et la fin de la subvention de gas de 90 jours de Robinhood Chain fin septembre ; après une hausse aussi rapide, alléger une partie de la position avant ces deux échéances limite le risque plutôt que d'attendre une correction potentielle."
     },
     "ondo-finance": {
       "recommendation": "Attendre",
       "conviction": 4,
-      "constat": "La SEC a clos son enquête sur la plateforme d'actions tokenisées d'Ondo sans poursuites, un signal positif, et la société gère environ 3,43 Md$ d'actifs tokenisés (dont plus de 2,1 Md$ via USDY). Mais un conflit de gouvernance sérieux oppose depuis août la mère du fondateur décédé Nathan Allman au CEO actuel Ian De Bode devant un tribunal du Delaware sur le contrôle légal de l'entreprise, un risque d'incertitude direct sur la structure qui justifie d'attendre une clarification avant de renforcer."
+      "constat": "Ondo Network (qui remplace le projet initial Ondo Chain) est opérationnel avec Ondo Perps, et la plateforme reste leader des actions tokenisées avec environ 860 M$ de valeur sur un total de 2,96 M détenteurs recensés sur le marché ; le prix a toutefois reculé de -3,10% le 10 septembre après un rejet de la résistance à 0,39 $. Le statut du différend de gouvernance signalé fin août entre la mère du fondateur décédé et l'actuel CEO n'a pas pu être reconfirmé cette semaine (donnée non confirmée), et la dilution se poursuit avec seulement 4,87 Md ONDO en circulation sur 10 Md maximum ; mieux vaut attendre une clarification avant de renforcer."
     },
     "aioz-network": {
-      "recommendation": "Conserver",
-      "conviction": 5,
-      "constat": "AIOZ a présenté son Vision Paper V2 unifiant stockage (Pin), streaming (Stream) et calcul IA (AI) dans une couche DePIN coordonnée, avec plus de 26 000 To de données traitées et 326 000 téléchargements d'applications à fin juin. Le prix (~0,06 $) reste proche des prévisions moyennes de septembre, sans catalyseur fort ni négatif marquant cette semaine."
+      "recommendation": "Renforcer",
+      "conviction": 6,
+      "constat": "AIOZ a présenté son Vision Paper V2 unifiant stockage (Pin), streaming (Stream) et calcul IA (AI) dans une couche DePIN coordonnée, avec un prix en hausse de +7,06% le 8 septembre vers 0,0691 $. Le protocole prévoit de réduire son inflation annuelle à 5% d'ici le 25 décembre 2026, ce qui limitera la dilution future et soutient la thèse à moyen terme sur fond de croissance d'usage continue (plus de 26 000 To de données traitées à fin juin)."
     },
     "zelcash": {
-      "recommendation": "Conserver",
+      "recommendation": "Attendre",
       "conviction": 4,
-      "constat": "FLUX progresse d'environ +6% sur 24h et +9% sur 7 jours, porté par le narratif DePIN (plus de 15 000 nœuds actifs, cloud décentralisé, partenariats gaming/IA), sans catalyseur spécifique daté de septembre identifié au-delà de ces mentions générales. Position à surveiller plutôt qu'à renforcer en l'absence d'annonce concrète cette semaine."
+      "constat": "Aucun catalyseur daté et confirmé n'a été identifié pour FLUX cette semaine au-delà de mentions générales sur le réseau de plus de 15 000 nœuds et des partenariats gaming/IA déjà connus. La capitalisation et le volume restent faibles (environ 22,4 M$ de capitalisation, 2,1 M$ de volume sur 24h), signe d'une liquidité limitée ; position à surveiller plutôt qu'à renforcer en l'absence d'annonce concrète cette semaine."
     }
   }
 }
