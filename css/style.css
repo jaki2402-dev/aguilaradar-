@@ -658,11 +658,29 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
    mais en plus grand, avec des points survolables (contrairement au mini spark-line purement
    décoratif des tuiles opportunités). */
 .portfolio-history-chart { width: 100%; height: 110px; margin-top: 4px; display: block; }
-.portfolio-history-chart .hist-area { fill: var(--accent); opacity: 0.08; stroke: none; }
-.portfolio-history-chart .hist-line { fill: none; stroke: var(--accent); stroke-width: 2; vector-effect: non-scaling-stroke; }
+/* .onchain-history-chart (js/onchain.js) réutilise le même tracé ligne+aire — plus bas (60px)
+   car 3 graphiques on-chain se partagent une seule fiche, contre 1 seul graphique Portefeuille. */
+.onchain-history-chart { width: 100%; height: 60px; margin-top: 6px; display: block; }
+.portfolio-history-chart .hist-area, .onchain-history-chart .hist-area { fill: var(--accent); opacity: 0.08; stroke: none; }
+.portfolio-history-chart .hist-line, .onchain-history-chart .hist-line { fill: none; stroke: var(--accent); stroke-width: 2; vector-effect: non-scaling-stroke; }
 .portfolio-history-chart .hist-point { fill: var(--bg); stroke: var(--accent); stroke-width: 1.6; vector-effect: non-scaling-stroke; cursor: pointer; }
 .portfolio-history-chart .hist-point:hover, .portfolio-history-chart .hist-point:focus { fill: var(--accent); outline: none; }
 .portfolio-history-range { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+
+/* ---- Activité on-chain (fiche Bitcoin uniquement, js/onchain.js) : direct + historique ---- */
+.detail-onchain {
+  margin-top: 14px; padding: 14px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
+}
+.detail-onchain > strong { display: block; margin-bottom: 8px; }
+.onchain-history-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-top: 10px; }
+.onchain-chart-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; }
+.onchain-chart-card strong { font-family: var(--font-mono); font-size: 1.05rem; display: block; margin: 2px 0 4px; }
+.onchain-chart-tabs { display: flex; gap: 4px; margin-top: 8px; flex-wrap: wrap; }
+.onchain-chart-tab {
+  background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text-dim);
+  border-radius: 999px; padding: 3px 10px; font-size: 0.7rem; cursor: pointer; font-family: inherit;
+}
+.onchain-chart-tab.active { background: var(--accent-dim); color: var(--accent); border-color: transparent; font-weight: 700; }
 /* Confiance de l'opportunité (voir confidenceColor, cards.js) — même code couleur que la jauge
    circulaire affichée une fois la tuile dépliée, juste plus compact pour la vue repliée. */
 .opp-tile-conf { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; }

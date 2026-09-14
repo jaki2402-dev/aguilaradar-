@@ -440,10 +440,26 @@ async function renderDetailPanel(panelEl, asset) {
     technicalHtml = `<p class="empty-state">Indicateurs techniques indisponibles pour l'instant (limite API probable) — referme et rouvre la fiche pour réessayer.</p>`;
   }
 
+  // Activité on-chain : volontairement PAS dans renderTechnicalSection ci-dessus — son
+  // Promise.all échoue globalement si le graphique de prix échoue (source réseau totalement
+  // différente), ce qui ferait disparaître aussi l'on-chain sans raison. Même isolation que le
+  // commentaire au-dessus de renderTechnicalSection le documente déjà pour le reste de la fiche.
+  let onchainHtml = "";
+  if (asset.cgId === "bitcoin" && typeof fetchBtcOnchainLive === "function") {
+    try {
+      const onchainLive = await fetchBtcOnchainLive();
+      onchainHtml = renderOnchainSection(asset.cgId, onchainLive, typeof latestOnchainHistory !== "undefined" ? latestOnchainHistory : null);
+    } catch (err) {
+      console.error("Erreur activité on-chain:", err);
+      onchainHtml = `<div class="detail-onchain"><strong>Activité on-chain</strong><p class="hint">Indisponible pour l'instant — referme et rouvre la fiche pour réessayer.</p></div>`;
+    }
+  }
+
   // Le reste (avis, horizons, contexte favori) est déjà en mémoire (aucun fetch requis) :
   // s'affiche toujours, meme si la section technique ci-dessus a échoué.
   panelEl.innerHTML = `
     ${technicalHtml}
+    ${onchainHtml}
     <div class="detail-opinion">
       <strong>Mon avis</strong>
       ${renderClampableText(asset.reasoning || asset.reason || "Analyse pas encore disponible pour cet actif — en attente du prochain cycle.")}
@@ -452,6 +468,9 @@ async function renderDetailPanel(panelEl, asset) {
     ${asset.horizons ? renderOpportunityHorizonsSection(asset.horizons) : ""}
     ${renderFavorisContextSection(asset.ticker)}`;
   wireClampToggles(panelEl);
+  if (typeof wireOnchainSection === "function") {
+    wireOnchainSection(panelEl.querySelector(".detail-onchain"), typeof latestOnchainHistory !== "undefined" ? latestOnchainHistory : null);
+  }
 
   if (technicalOk && chartId) mountTradingViewChart(chartId, asset.tvSymbol);
   return technicalOk;
