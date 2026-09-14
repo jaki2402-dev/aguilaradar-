@@ -128,8 +128,17 @@ function renderFavorisContextSection(ticker) {
   const tvl = ctx.defi_tvl || {};
   const onchain = ctx.onchain_signal || {};
   const onchainSourceUrl = onchain.source_url ? safeUrl(onchain.source_url) : null;
+  // Badge de fraîcheur PAR ACTIF (data-integrity.js) : ce contexte est peuplé par rotation
+  // quotidienne (voir CLAUDE.md), donc "le fichier existe" ne veut pas dire "ces chiffres
+  // précis datent d'aujourd'hui" — rend explicite l'âge réel de CE favori précis plutôt que de
+  // laisser croire à une fraîcheur uniforme sur les 15.
+  const freshness = typeof freshnessStatusForDate === "function" ? freshnessStatusForDate(ctx.last_computed_at) : null;
+  const freshnessLabel = freshness && { ok: "à jour", warning: "à vérifier", stale: "périmé" }[freshness.status];
+  const freshnessChip = freshness
+    ? `<span class="freshness-chip freshness-${freshness.status}" title="Dernier calcul : ${new Date(ctx.last_computed_at).toLocaleString("fr-FR")}">${freshnessLabel} · ${Math.round(freshness.ageDays)} j</span>`
+    : "";
   return `<div class="detail-context">
-    <strong>Contexte élargi</strong>
+    <strong>Contexte élargi ${freshnessChip}</strong>
     ${comp.name ? `<div class="hint"><strong>Concurrent (${escapeHtml(comp.ticker || "?")}) :</strong>${renderClampableText(comp.comparison_note || "—")}</div>` : `<p class="hint">Comparaison concurrent : pas encore calculée.</p>`}
     ${thesis.assumptions_note ? `<div class="hint"><strong>Thèse long terme</strong>${renderClampableText(`Bull : ${thesis.bull || "—"} · Base : ${thesis.base || "—"} · Bear : ${thesis.bear || "—"} — Hypothèses : ${thesis.assumptions_note}`)}</div>` : `<p class="hint">Thèse long terme : pas encore rédigée.</p>`}
     <p class="hint"><strong>Open interest :</strong> ${oi.value_usd ? formatMarketCap(oi.value_usd) + (oi.funding_rate_pct !== null && oi.funding_rate_pct !== undefined ? ` · funding ${oi.funding_rate_pct.toFixed(3)}%` : "") : highlightKeyInfo(oi.note || "—")}</p>
@@ -380,7 +389,7 @@ async function renderTechnicalSection(asset) {
         .map(
           (s) => `<div class="detail-signal">
             <strong>${s.label}</strong>
-            <p class="hint">${s.text}</p>
+            <p class="hint">${highlightKeyInfo(s.text)}</p>
           </div>`
         )
         .join("")}
@@ -431,18 +440,66 @@ async function renderDetailPanel(panelEl, asset) {
     technicalHtml = `<p class="empty-state">Indicateurs techniques indisponibles pour l'instant (limite API probable) — referme et rouvre la fiche pour réessayer.</p>`;
   }
 
+  // Activité on-chain : volontairement PAS dans renderTechnicalSection ci-dessus — son
+  // Promise.all échoue globalement si le graphique de prix échoue (source réseau totalement
+  // différente), ce qui ferait disparaître aussi l'on-chain sans raison. Même isolation que le
+  // commentaire au-dessus de renderTechnicalSection le documente déjà pour le reste de la fiche.
+  let onchainHtml = "";
+  let onchainLive = null;
+  if (asset.cgId === "bitcoin" && typeof fetchBtcOnchainLive === "function") {
+    try {
+      onchainLive = await fetchBtcOnchainLive();
+      onchainHtml = renderOnchainSection(asset.cgId, onchainLive, typeof latestOnchainHistory !== "undefined" ? latestOnchainHistory : null);
+    } catch (err) {
+      console.error("Erreur activité on-chain:", err);
+      onchainHtml = `<div class="detail-onchain"><strong>Activité on-chain</strong><p class="hint">Indisponible pour l'instant — referme et rouvre la fiche pour réessayer.</p></div>`;
+    }
+  }
+
+  // Décomposition du verdict (docs/verdict-methodology.md) : uniquement des données déjà en
+  // mémoire (verdict complet via latestVerdictFor, pas juste la string asset.verdict ; thèse
+  // portefeuille ; prix/marketcap déjà chargés ; TVL live si la section on-chain ci-dessus l'a
+  // obtenue ce cycle) — aucun fetch de plus. try/catch par prudence seulement : chaque fonction
+  // de score est déjà défensive sur des entrées manquantes/mal formées.
+  let breakdownHtml = "";
+  if (typeof computeVerdictBreakdown === "function" && typeof renderVerdictBreakdown === "function") {
+    try {
+      const allData = window.aguilaradarData || {};
+      const fullVerdict = typeof latestVerdictFor === "function" ? latestVerdictFor(asset.cgId, allData.verdicts || []) : null;
+      const thesisEntry = allData.portfolioThesis && allData.portfolioThesis.positions ? allData.portfolioThesis.positions[asset.cgId] : null;
+      const priceEntry = typeof latestFavorisPrices !== "undefined" ? latestFavorisPrices[asset.cgId] : null;
+      const marketCapUsd = priceEntry ? priceEntry.usd_market_cap : null;
+      const btcSnapshots = allData.onchainHistory && allData.onchainHistory.assets && allData.onchainHistory.assets.bitcoin ? allData.onchainHistory.assets.bitcoin.snapshots : [];
+      const lastSnapshotTvl = btcSnapshots.length ? btcSnapshots[btcSnapshots.length - 1].tvl_usd : null;
+      const tvlUsd = asset.cgId === "bitcoin" ? (onchainLive && onchainLive.tvl ? onchainLive.tvl.valueUsd : lastSnapshotTvl) : null;
+      const breakdown = computeVerdictBreakdown({ verdict: fullVerdict, thesisEntry, marketCapUsd, tvlUsd });
+      breakdownHtml = renderVerdictBreakdown(breakdown);
+    } catch (err) {
+      console.error("Erreur décomposition du verdict:", err);
+    }
+  }
+
   // Le reste (avis, horizons, contexte favori) est déjà en mémoire (aucun fetch requis) :
   // s'affiche toujours, meme si la section technique ci-dessus a échoué.
+  // Ordre voulu par la demande utilisateur (section 3) : Marché → On-chain → Fondamentaux →
+  // Interprétation/Verdict. "Contexte élargi" (thèse long terme, fondamentaux) passe donc AVANT
+  // "Mon avis" — inversé par rapport à l'ordre historique, qui plaçait le verdict avant les
+  // fondamentaux qui le motivent.
   panelEl.innerHTML = `
     ${technicalHtml}
+    ${onchainHtml}
+    ${renderFavorisContextSection(asset.ticker)}
     <div class="detail-opinion">
       <strong>Mon avis</strong>
       ${renderClampableText(asset.reasoning || asset.reason || "Analyse pas encore disponible pour cet actif — en attente du prochain cycle.")}
       ${asset.verdict ? `<p class="hint">Verdict actuel : <span class="badge badge-${asset.verdict.toLowerCase()}">${asset.verdict}</span> — vérifié automatiquement à son échéance, jamais avant.</p>` : ""}
     </div>
-    ${asset.horizons ? renderOpportunityHorizonsSection(asset.horizons) : ""}
-    ${renderFavorisContextSection(asset.ticker)}`;
+    ${breakdownHtml}
+    ${asset.horizons ? renderOpportunityHorizonsSection(asset.horizons) : ""}`;
   wireClampToggles(panelEl);
+  if (typeof wireOnchainSection === "function") {
+    wireOnchainSection(panelEl.querySelector(".detail-onchain"), typeof latestOnchainHistory !== "undefined" ? latestOnchainHistory : null);
+  }
 
   if (technicalOk && chartId) mountTradingViewChart(chartId, asset.tvSymbol);
   return technicalOk;

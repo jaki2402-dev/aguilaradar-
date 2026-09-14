@@ -28,6 +28,13 @@
   --radius-sm: 12px;
   --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
   --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", Menlo, Consolas, monospace;
+  /* Couleurs par section : identité visuelle + repérage rapide */
+  --c-favoris: var(--accent);
+  --c-opportunities: #f0b429;
+  --c-journal: #7c9eff;
+  --c-engine: #b48cf2;
+  --c-notifications: #fb8362;
+  --c-assistant: #f277b3;
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -164,6 +171,17 @@ header.site-header h1 { margin: 0; font-family: var(--font-mono); letter-spacing
 #last-deep-cycle.freshness-ok { color: var(--gain); }
 #last-deep-cycle.freshness-warning { color: var(--warning); }
 #last-deep-cycle.freshness-stale { color: var(--loss); font-weight: 600; }
+
+/* Badge de fraîcheur PAR DONNÉE (data-integrity.js) — même vocabulaire ok/warning/stale que
+   #last-deep-cycle ci-dessus (fichiers entiers), réutilisé ici pour un point de donnée précis
+   (ex: contexte étendu d'un favori). Jamais une 4e couleur : gain/warning/loss existants. */
+.freshness-chip {
+  display: inline-block; font-size: 0.62rem; padding: 1px 7px; border-radius: 999px;
+  margin-left: 6px; font-weight: 600; vertical-align: middle; background: var(--bg-elevated);
+}
+.freshness-chip.freshness-ok { color: var(--gain); }
+.freshness-chip.freshness-warning { color: var(--warning); }
+.freshness-chip.freshness-stale { color: var(--loss); }
 
 .header-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
 .refresh-btn, .notif-bell-btn {
@@ -372,6 +390,14 @@ main { padding: 20px 20px 40px; max-width: 1100px; margin: 0 auto; }
    chaque onglet derriere la nav. */
 @media (max-width: 767px), (max-height: 500px) and (orientation: landscape) {
   main { padding-bottom: 96px; }
+}
+/* Palier large desktop : au-delà de 1100px, les grilles (favoris/opportunités/journal/
+   alertes) avaient de la place inexploitée sur un écran large plutôt que d'en profiter
+   (section 14 de la demande utilisateur — "exploite davantage la largeur disponible"). Reste
+   raisonnable (1320px, pas 1800px) : la prose des cartes doit rester lisible, seules les
+   grilles bénéficient vraiment de la largeur en plus. */
+@media (min-width: 1440px) {
+  main { max-width: 1320px; }
 }
 section.tab-panel { display: none; animation: fadein 0.2s ease; }
 section.tab-panel.active { display: block; }
@@ -639,11 +665,29 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
    mais en plus grand, avec des points survolables (contrairement au mini spark-line purement
    décoratif des tuiles opportunités). */
 .portfolio-history-chart { width: 100%; height: 110px; margin-top: 4px; display: block; }
-.portfolio-history-chart .hist-area { fill: var(--accent); opacity: 0.08; stroke: none; }
-.portfolio-history-chart .hist-line { fill: none; stroke: var(--accent); stroke-width: 2; vector-effect: non-scaling-stroke; }
+/* .onchain-history-chart (js/onchain.js) réutilise le même tracé ligne+aire — plus bas (60px)
+   car 3 graphiques on-chain se partagent une seule fiche, contre 1 seul graphique Portefeuille. */
+.onchain-history-chart { width: 100%; height: 60px; margin-top: 6px; display: block; }
+.portfolio-history-chart .hist-area, .onchain-history-chart .hist-area { fill: var(--accent); opacity: 0.08; stroke: none; }
+.portfolio-history-chart .hist-line, .onchain-history-chart .hist-line { fill: none; stroke: var(--accent); stroke-width: 2; vector-effect: non-scaling-stroke; }
 .portfolio-history-chart .hist-point { fill: var(--bg); stroke: var(--accent); stroke-width: 1.6; vector-effect: non-scaling-stroke; cursor: pointer; }
 .portfolio-history-chart .hist-point:hover, .portfolio-history-chart .hist-point:focus { fill: var(--accent); outline: none; }
 .portfolio-history-range { display: flex; justify-content: space-between; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+
+/* ---- Activité on-chain (fiche Bitcoin uniquement, js/onchain.js) : direct + historique ---- */
+.detail-onchain {
+  margin-top: 14px; padding: 14px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
+}
+.detail-onchain > strong { display: block; margin-bottom: 8px; }
+.onchain-history-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-top: 10px; }
+.onchain-chart-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; }
+.onchain-chart-card strong { font-family: var(--font-mono); font-size: 1.05rem; display: block; margin: 2px 0 4px; }
+.onchain-chart-tabs { display: flex; gap: 4px; margin-top: 8px; flex-wrap: wrap; }
+.onchain-chart-tab {
+  background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text-dim);
+  border-radius: 999px; padding: 3px 10px; font-size: 0.7rem; cursor: pointer; font-family: inherit;
+}
+.onchain-chart-tab.active { background: var(--accent-dim); color: var(--accent); border-color: transparent; font-weight: 700; }
 /* Confiance de l'opportunité (voir confidenceColor, cards.js) — même code couleur que la jauge
    circulaire affichée une fois la tuile dépliée, juste plus compact pour la vue repliée. */
 .opp-tile-conf { font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; }
@@ -765,6 +809,24 @@ th { color: var(--text-dim); font-weight: 600; font-size: 0.76rem; text-transfor
 .alert-entry.type-actualite_favori { --entry-color: var(--accent); }
 .alert-entry.type-actualite_generale { --entry-color: var(--text-faint); }
 .alert-entry.type-avis_du_jour { --entry-color: var(--accent); }
+/* Journal / Alertes : grille responsive plutôt qu'un empilement 100% vertical (section 1 de
+   la demande utilisateur) — même idiome repeat(auto-fill, minmax(N,1fr)) que .favoris-grid
+   plus haut, colonne plus large ici car chaque carte porte un paragraphe de texte, pas juste
+   un chiffre. align-items:start : une carte encore courte ne s'étire pas pour égaler la
+   hauteur d'une voisine déjà dépliée dans la même ligne de grille (le Journal, contrairement
+   aux Alertes, peut déplier une fiche complète via attachDetailToggle). */
+#journal-body, #notifications-body {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 10px;
+  align-items: start;
+}
+#journal-body .journal-entry, #notifications-body .alert-entry { margin-bottom: 0; }
+/* Même mécanisme que .favori-tile.expanded (plus haut) : une fiche Journal dépliée doit
+   pouvoir occuper toute la largeur de la grille, pas rester coincée dans sa colonne de
+   320px — sinon la fiche technique complète (RSI/MM/volume/carnet) y serait illisible. */
+.journal-entry.expanded { grid-column: 1 / -1; }
+#journal-body > #journal-load-more, #notifications-body > p.hint { grid-column: 1 / -1; }
 /* Carte "Avis du jour" (voir renderAvisDuJour, app.js) : même habillage que .hero-card
    (dégradé + coins en équerre "instrument"), plus un liseré pour la distinguer visuellement de
    la carte "État du radar" juste en dessous — sinon les deux se confondent en tête d'Accueil. */
@@ -827,6 +889,9 @@ footer.site-footer {
   line-height: 1.5;
   max-width: 1100px;
   margin: 0 auto;
+}
+@media (min-width: 1440px) {
+  footer.site-footer { max-width: 1320px; }
 }
 
 @media (max-width: 767px), (max-height: 500px) and (orientation: landscape) {
@@ -995,6 +1060,15 @@ footer.site-footer {
   margin-top: 14px; padding: 14px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
 }
 .detail-horizons strong { display: block; margin-bottom: 4px; }
+/* ---- Décomposition du verdict (js/verdict-breakdown.js, docs/verdict-methodology.md) ---- */
+.verdict-breakdown {
+  margin-top: 14px; padding: 14px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
+}
+.verdict-breakdown > strong { display: block; margin-bottom: 4px; }
+.verdict-breakdown > p.hint { margin: 0 0 8px; }
+.verdict-cat-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-top: 1px solid var(--border); }
+.verdict-cat-row:first-of-type { border-top: none; }
+.verdict-cat-row strong { font-family: var(--font-mono); font-size: 0.88rem; }
 .detail-horizons > p.hint { margin: 0 0 10px; }
 .horizons-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .horizon-chip {
@@ -1122,16 +1196,6 @@ details.info-toggle .section-sub { margin: 8px 0 0; }
 .engine-acc-body { display: none; }
 .engine-acc-body.open { display: block; }
 .engine-acc-body-inner { padding: 0 2px 22px; }
-
-/* ---- Couleurs par section : identité visuelle + repérage rapide ---- */
-:root {
-  --c-favoris: var(--accent);
-  --c-opportunities: #f0b429;
-  --c-journal: #7c9eff;
-  --c-engine: #b48cf2;
-  --c-notifications: #fb8362;
-  --c-assistant: #f277b3;
-}
 
 .section-head { display: flex; align-items: center; gap: 12px; margin-top: 4px; }
 .section-head h2 { margin: 0; }

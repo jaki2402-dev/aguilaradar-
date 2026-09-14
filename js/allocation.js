@@ -16,10 +16,12 @@
 // moteur) et thèse hebdo (recherche web réelle), les 2 SEULES dimensions couvertes à 15/15 sur
 // le portefeuille actuel. Tout le reste (smart money/onchain, concentration déjà détenue, signal
 // précoce, désaccord verdict/thèse) est une ANNOTATION qualitative séparée, jamais fondue dans ce
-// total : ces signaux sont soit trop épars (3/15 favoris seulement ont un onchain_signal
-// disponible aujourd'hui), soit conceptuellement différents ("bon actif" vs "bon endroit pour PLUS
-// de capital MAINTENANT" — mélanger les deux masquerait justement la distinction que la section 3
-// de la demande utilisateur exige de préserver).
+// total : ces signaux sont soit trop épars (seule une minorité des 15 favoris a un onchain_signal
+// disponible à un instant donné — rotation quotidienne, voir checkFavorisContextFreshness dans
+// data-integrity.js pour l'état courant plutôt qu'un compte figé ici), soit conceptuellement
+// différents ("bon actif" vs "bon endroit pour PLUS de capital MAINTENANT" — mélanger les deux
+// masquerait justement la distinction que la section 3 de la demande utilisateur exige de
+// préserver).
 function verdictPoints(verdict) {
   if (!verdict || !verdict.verdict) return { points: 0, available: false };
   const conf = verdict.confidence_pct;
@@ -120,9 +122,10 @@ function computePositionAttractiveness(pos, verdict, thesisEntry, favContextEntr
     caveats.push("Le verdict technique et la thèse hebdo pointent dans des directions opposées — signal à regarder avant d'agir, pas juste un chiffre à sommer.");
   }
 
-  // Smart money / on-chain (favoris-context.json) : présent pour seulement 3/15 favoris
-  // aujourd'hui (ETH, LINK, ARB au 07/09) — jamais estimé pour les autres, listé en donnée
-  // manquante plutôt que silencieusement ignoré.
+  // Smart money / on-chain (favoris-context.json) : présent seulement pour une minorité des 15
+  // favoris à un instant donné (rotation quotidienne, jamais un compte fixe à tenir à jour dans
+  // ce commentaire) — jamais estimé pour les autres, listé en donnée manquante plutôt que
+  // silencieusement ignoré.
   if (favContextEntry && favContextEntry.onchain_signal && favContextEntry.onchain_signal.available) {
     caveats.push(`Signal on-chain récent disponible : ${favContextEntry.onchain_signal.note || "voir Contexte élargi"}.`);
   } else {

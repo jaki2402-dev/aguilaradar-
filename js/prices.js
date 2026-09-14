@@ -6,7 +6,11 @@ let latestFavorisPrices = {};
 
 async function fetchFavorisPrices() {
   const ids = FAVORIS.map((f) => f.cgId).join(",");
-  const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd,eur&include_24hr_change=true&include_last_updated_at=true`;
+  // include_market_cap : seul ajout au-delà des champs déjà utilisés (prix/variation 24h) —
+  // aucun appel réseau de plus, juste un champ de plus sur la même réponse. Alimente
+  // scoreValorisation (js/verdict-breakdown.js), qui n'avait jusqu'ici aucune source de
+  // capitalisation pour les favoris (seulement pour les opportunités, opportunities.json).
+  const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ids}&vs_currencies=usd,eur&include_24hr_change=true&include_market_cap=true&include_last_updated_at=true`;
   const res = await fetch(url);
   if (!res.ok) throw new Error(`CoinGecko ${res.status}`);
   return res.json();

@@ -91,7 +91,7 @@ function renderMarketContext(ctx) {
     ${conf.level ? `<p class="hint" style="margin-top:8px;"><strong>Confiance globale du site : ${escapeHtml(conf.level)}</strong> — ${highlightKeyInfo(conf.note || "")}</p>` : ""}`;
 }
 
-function renderHealthStatus(healthLog) {
+function renderHealthStatus(healthLog, favorisContext, verdicts) {
   const el = document.getElementById("site-health-body");
   if (!el) return;
   const checks = (healthLog && healthLog.checks) || [];
@@ -104,6 +104,10 @@ function renderHealthStatus(healthLog) {
   // réseau vers ce domaine, constaté systématiquement), pas la disponibilité réelle du site pour un
   // visiteur — seul files_broken reflète un vrai problème de données, donc seul lui determine le badge.
   const ok = !last.files_broken || last.files_broken.length === 0;
+  // counts existe déjà dans health-log.json depuis le 12/08 (voir CLAUDE.md/README) mais n'était
+  // jamais rendu — la routine le calculait pour rien du point de vue de l'utilisateur.
+  const counts = last.counts;
+  const integrity = typeof summarizeDataIntegrity === "function" ? summarizeDataIntegrity(favorisContext, verdicts) : null;
   el.innerHTML = `
     <div class="journal-entry">
       <div class="log-header"><span><strong>Dernière vérification</strong> · ${new Date(last.checked_at).toLocaleString("fr-FR")}</span><span class="badge badge-${ok ? "achat" : "vente"}">${ok ? "OK" : "Problème détecté"}</span></div>
@@ -111,7 +115,43 @@ function renderHealthStatus(healthLog) {
       <p class="hint">Accessibilité du site depuis l'environnement de la routine : ${last.site_reachable ? "oui" : "non testable (restriction réseau de l'environnement d'exécution, pas un indicateur de panne réelle du site)"}.</p>
       ${last.note ? `<p class="hint">${highlightKeyInfo(last.note)}</p>` : ""}
     </div>
-    <p class="hint" style="margin-top:8px;">${checks.length} vérification(s) enregistrée(s) au total, historique permanent.</p>`;
+    ${
+      counts
+        ? `<div class="stat-row" style="margin-top:10px;">
+      <div class="stat-card accent-teal"><div class="stat-label">Verdicts</div><div class="stat-value">${counts.verdicts ?? "—"}</div></div>
+      <div class="stat-card accent-indigo"><div class="stat-label">Alertes</div><div class="stat-value">${counts.alerts ?? "—"}</div></div>
+      <div class="stat-card accent-gold"><div class="stat-label">Opportunités</div><div class="stat-value">${counts.opportunities ?? "—"}</div></div>
+      <div class="stat-card accent-violet"><div class="stat-label">Actus</div><div class="stat-value">${counts.news ?? "—"}</div></div>
+      <div class="stat-card accent-gray"><div class="stat-label">Favoris avec contexte</div><div class="stat-value">${counts.favoris_context_populated ?? "—"}/15</div></div>
+    </div>`
+        : ""
+    }
+    <p class="hint" style="margin-top:8px;">${checks.length} vérification(s) enregistrée(s) au total, historique permanent.</p>
+    ${integrity ? renderDataIntegritySummary(integrity) : ""}`;
+}
+
+// "Cohérence des données" — distinct de la santé technique ci-dessus (fichiers/pipeline) :
+// ceci vérifie le CONTENU déjà chargé (fraîcheur par favori, plausibilité des verdicts, voir
+// data-integrity.js), pas le pipeline qui les écrit. Ne corrige jamais rien, ne fait que
+// compter et lister pour investigation manuelle.
+function renderDataIntegritySummary(integrity) {
+  if (integrity.totalIssues === 0) {
+    return `<div class="journal-entry" style="margin-top:10px;">
+      <div class="log-header"><span><strong>Cohérence des données</strong></span><span class="badge badge-success">Aucune anomalie</span></div>
+      <p class="hint">Fraîcheur du contexte par favori et plausibilité des verdicts vérifiées, rien à signaler.</p>
+    </div>`;
+  }
+  const staleList = integrity.staleFavoris
+    .map((f) => `<span class="freshness-chip freshness-${f.status}">${escapeHtml(f.ticker)} · ${Math.round(f.ageDays)} j</span>`)
+    .join(" ");
+  const plausList = integrity.plausibilityIssues
+    .map((p) => `<li class="hint">${escapeHtml(p.ticker || p.id)} — ${escapeHtml(p.field)} : ${escapeHtml(p.issue)} (valeur ${escapeHtml(String(p.value))})</li>`)
+    .join("");
+  return `<div class="journal-entry" style="margin-top:10px;">
+    <div class="log-header"><span><strong>Cohérence des données</strong></span><span class="badge badge-warning">${integrity.totalIssues} point${integrity.totalIssues > 1 ? "s" : ""} à vérifier</span></div>
+    ${staleList ? `<p class="hint">Contexte favori pas mis à jour récemment : ${staleList}</p>` : ""}
+    ${plausList ? `<ul class="hint" style="margin:4px 0 0 16px;">${plausList}</ul>` : ""}
+  </div>`;
 }
 
 function renderSectorBreakdown(verdicts) {

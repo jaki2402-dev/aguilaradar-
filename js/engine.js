@@ -330,7 +330,7 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGrou
         <div class="stat-card accent-indigo"><div class="stat-label">Taux de couverture</div><div class="stat-value">${stats.coveragePct.toFixed(0)} %</div></div>
         <div class="stat-card accent-violet"><div class="stat-label">F1 macro</div><div class="stat-value">${stats.f1Macro !== null ? stats.f1Macro.toFixed(0) : "—"}</div></div>
       </div>
-      <p class="hint">Couverture = part des verdicts où le moteur a vraiment tranché (Achat/Vente) plutôt que de s'abriter derrière Attente. Seuil de mouvement directionnel : calibré par actif selon sa volatilité réelle depuis fin août (avant cette date, ±${THRESHOLDS.directionalMovePct} % fixe a été utilisé pour tous — chaque verdict affiche le seuil qui a réellement servi à le juger, jamais rétroactif).</p>
+      <p class="hint">Couverture = part des verdicts où le moteur a vraiment tranché (Achat/Vente) plutôt que de s'abriter derrière Attente. Seuil de mouvement directionnel : chaque verdict enregistre le seuil qui a réellement servi à le juger (±${THRESHOLDS.directionalMovePct} % par défaut), jamais rétroactif — une calibration par actif reste possible à l'avenir, mais aucune variation réelle n'apparaît encore dans l'historique actuel.</p>
       <table class="matrix-table">
         <thead><tr><th>Prédit \\ Réel</th>${CLASSES.map((c) => `<th>${c}</th>`).join("")}<th>Total</th></tr></thead>
         <tbody>
