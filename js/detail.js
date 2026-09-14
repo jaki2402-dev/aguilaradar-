@@ -137,13 +137,32 @@ function renderFavorisContextSection(ticker) {
   const freshnessChip = freshness
     ? `<span class="freshness-chip freshness-${freshness.status}" title="Dernier calcul : ${new Date(ctx.last_computed_at).toLocaleString("fr-FR")}">${freshnessLabel} · ${Math.round(freshness.ageDays)} j</span>`
     : "";
+  // Deux sous-grilles plutôt qu'une liste empilée : Concurrent/Thèse long terme (prose, 2 colonnes
+  // dès 720px) puis Open interest/TVL DeFi/Signal on-chain (données courtes, 3 colonnes dès
+  // 640px, même carte que la rangée "Activité on-chain" juste au-dessus) — voir le commentaire
+  // sur .detail-context-prose/.detail-context-grid dans style.css.
   return `<div class="detail-context">
     <strong>Contexte élargi ${freshnessChip}</strong>
-    ${comp.name ? `<div class="hint"><strong>Concurrent (${escapeHtml(comp.ticker || "?")}) :</strong>${renderClampableText(comp.comparison_note || "—")}</div>` : `<p class="hint">Comparaison concurrent : pas encore calculée.</p>`}
-    ${thesis.assumptions_note ? `<div class="hint"><strong>Thèse long terme</strong>${renderClampableText(`Bull : ${thesis.bull || "—"} · Base : ${thesis.base || "—"} · Bear : ${thesis.bear || "—"} — Hypothèses : ${thesis.assumptions_note}`)}</div>` : `<p class="hint">Thèse long terme : pas encore rédigée.</p>`}
-    <p class="hint"><strong>Open interest :</strong> ${oi.value_usd ? formatMarketCap(oi.value_usd) + (oi.funding_rate_pct !== null && oi.funding_rate_pct !== undefined ? ` · funding ${oi.funding_rate_pct.toFixed(3)}%` : "") : highlightKeyInfo(oi.note || "—")}</p>
-    <p class="hint"><strong>TVL DeFi :</strong> ${tvl.value_usd ? formatMarketCap(tvl.value_usd) : highlightKeyInfo(tvl.note || "—")}</p>
-    <p class="hint"><strong>Signal on-chain (opportuniste, pas systématique) :</strong> ${onchain.available ? `${highlightKeyInfo(onchain.note)} ${onchainSourceUrl ? `<a href="${escapeHtml(onchainSourceUrl)}" target="_blank" rel="noopener">source</a>` : ""}` : highlightKeyInfo(onchain.note || "aucun signal cette fois")}</p>
+    <div class="detail-context-prose">
+      ${comp.name ? `<div class="hint"><strong>Concurrent (${escapeHtml(comp.ticker || "?")}) :</strong>${renderClampableText(comp.comparison_note || "—")}</div>` : `<p class="hint">Comparaison concurrent : pas encore calculée.</p>`}
+      ${thesis.assumptions_note ? `<div class="hint"><strong>Thèse long terme</strong>${renderClampableText(`Bull : ${thesis.bull || "—"} · Base : ${thesis.base || "—"} · Bear : ${thesis.bear || "—"} — Hypothèses : ${thesis.assumptions_note}`)}</div>` : `<p class="hint">Thèse long terme : pas encore rédigée.</p>`}
+    </div>
+    <div class="detail-context-grid">
+      <div class="detail-context-card">
+        <span class="hint">Open interest</span>
+        <strong>${oi.value_usd ? formatMarketCap(oi.value_usd) + (oi.funding_rate_pct !== null && oi.funding_rate_pct !== undefined ? ` · funding ${oi.funding_rate_pct.toFixed(3)}%` : "") : "—"}</strong>
+        ${!oi.value_usd ? `<p class="hint">${highlightKeyInfo(oi.note || "—")}</p>` : ""}
+      </div>
+      <div class="detail-context-card">
+        <span class="hint">TVL DeFi</span>
+        <strong>${tvl.value_usd ? formatMarketCap(tvl.value_usd) : "—"}</strong>
+        ${!tvl.value_usd ? `<p class="hint">${highlightKeyInfo(tvl.note || "—")}</p>` : ""}
+      </div>
+      <div class="detail-context-card">
+        <span class="hint">Signal on-chain (opportuniste, pas systématique)</span>
+        <p class="hint">${onchain.available ? `${highlightKeyInfo(onchain.note)} ${onchainSourceUrl ? `<a href="${escapeHtml(onchainSourceUrl)}" target="_blank" rel="noopener">source</a>` : ""}` : highlightKeyInfo(onchain.note || "aucun signal cette fois")}</p>
+      </div>
+    </div>
   </div>`;
 }
 

@@ -638,12 +638,21 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
   border-radius: var(--radius-sm); padding: 8px 10px; font-family: inherit; font-size: 0.8rem;
 }
 .alloc-custom-wrap input:focus { border-color: var(--accent); outline: none; }
-.alloc-rank-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 8px 0 4px; border-top: 1px solid var(--border); }
-.alloc-rank-row:first-child { border-top: none; }
+/* Grille plutôt qu'une liste à diviseurs (border-top par ligne) : ce découpage ne survivait pas
+   à un passage en colonnes (seule la 1re carte de chaque colonne aurait perdu sa bordure). Chaque
+   position devient sa propre carte (.alloc-rank-entry) — même famille visuelle que .journal-entry/
+   .news-item, hauteurs différentes selon le nombre de mises en garde, comme partout ailleurs sur
+   le site où une grille de cartes a déjà remplacé une liste empilée. */
+.alloc-rank-list { display: grid; grid-template-columns: 1fr; gap: 8px; }
+@media (min-width: 900px) {
+  .alloc-rank-list { grid-template-columns: 1fr 1fr; }
+}
+.alloc-rank-entry { background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; }
+.alloc-rank-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .alloc-rank-idx { color: var(--text-faint); font-family: var(--font-mono); font-size: 0.78rem; width: 22px; flex-shrink: 0; }
 .alloc-rank-ticker { font-weight: 700; width: 52px; flex-shrink: 0; }
-.alloc-reason { margin: 0 0 2px 30px; }
-.alloc-caveat { margin: 0 0 6px 30px; color: var(--warning); }
+.alloc-reason { margin: 6px 0 2px; }
+.alloc-caveat { margin: 0; color: var(--warning); }
 .alloc-close { font-style: italic; }
 
 /* Repli "voir les N autres positions" au-delà de ALLOC_RANKING_VISIBLE_COUNT (portfolio.js) —
@@ -659,7 +668,7 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
 .alloc-more summary::-webkit-details-marker { display: none; }
 .alloc-more summary::after { content: "▾"; color: var(--text-faint); transition: transform 0.2s ease; }
 .alloc-more[open] summary::after { transform: rotate(180deg); }
-.alloc-more .alloc-rank-row:first-of-type { border-top: none; }
+.alloc-more .alloc-rank-list { margin-top: 4px; }
 /* Historique de valeur (data/portfolio-history.json, 1 point réel/jour — voir
    renderPortfolioHistoryChart, portfolio.js). Même technique que sparklinePoints (cards.js)
    mais en plus grand, avec des points survolables (contrairement au mini spark-line purement
@@ -680,8 +689,10 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
 }
 .detail-onchain > strong { display: block; margin-bottom: 8px; }
 .onchain-history-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-top: 10px; }
-.onchain-chart-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; }
-.onchain-chart-card strong { font-family: var(--font-mono); font-size: 1.05rem; display: block; margin: 2px 0 4px; }
+/* .detail-context-card (renderFavorisContextSection, detail.js) partage exactement cet habillage
+   — même famille visuelle "carte de donnée compacte", pas une carte de graphique cette fois. */
+.onchain-chart-card, .detail-context-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; }
+.onchain-chart-card strong, .detail-context-card strong { font-family: var(--font-mono); font-size: 1.05rem; display: block; margin: 2px 0 4px; }
 .onchain-chart-tabs { display: flex; gap: 4px; margin-top: 8px; flex-wrap: wrap; }
 .onchain-chart-tab {
   background: var(--bg-elevated); border: 1px solid var(--border); color: var(--text-dim);
@@ -771,6 +782,20 @@ table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
 th, td { text-align: left; padding: 10px 10px; border-bottom: 1px solid var(--border); }
 th { color: var(--text-dim); font-weight: 600; font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.02em; }
 .data-table, .matrix-table, .classes-table { display: block; overflow-x: auto; white-space: nowrap; border-radius: var(--radius-sm); }
+/* Matrice de confusion + tableau précision/rappel/F1 (engine.js) : deux tableaux étroits qui
+   s'empilaient pleine largeur alors qu'ils tiennent très bien côte à côte — chacun garde son
+   propre overflow-x (règle ci-dessus) si jamais il dépasse sa colonne. align-items:start pour
+   ne pas étirer le plus court des deux à la hauteur de l'autre. */
+.engine-tables-row { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: start; }
+@media (min-width: 860px) {
+  .engine-tables-row { grid-template-columns: 1fr 1fr; }
+}
+/* min-width:0 sur les items de grille : un <table> reporte sa largeur min-content (assez pour
+   n'avoir AUCUNE colonne qui empiète sur une autre) à son parent de grille, qui sans ça élargit
+   la piste — et donc toute la page — au lieu de laisser .matrix-table/.classes-table gérer leur
+   propre overflow-x. Même piège déjà documenté sur .detail-stat plus haut, revérifié ici en
+   mobile réel (390px) : sans cette ligne, la page passait à 480px et coupait "Total"/"Prédits". */
+.engine-tables-row > div { min-width: 0; }
 
 .matrix-table td, .matrix-table th { text-align: center; }
 .matrix-table th:first-child, .matrix-table td:first-child { text-align: left; }
@@ -940,11 +965,15 @@ footer.site-footer {
 .opp-footer strong { color: var(--text); font-family: var(--font-mono); font-weight: 600; }
 
 /* ---- Actualites ---- */
+/* Grille plutôt qu'une liste empilée à diviseurs : même idiome que #journal-body/#notifications-body
+   plus haut (repeat(auto-fill, minmax(320px,1fr))) — une dizaine de titres courts n'avait aucune
+   raison d'occuper chacun toute la largeur du bureau. */
+#news-body { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 10px; align-items: start; }
 .news-item {
   display: flex; flex-direction: column; gap: 2px;
-  padding: 12px 14px; border-bottom: 1px solid var(--border);
+  padding: 12px 14px;
+  background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm);
 }
-.news-item:last-child { border-bottom: none; }
 .news-item a { color: var(--text); text-decoration: none; font-size: 0.9rem; }
 .news-item a:hover { color: var(--accent); }
 /* "À surveiller" (voir isNewsImportant, app.js) : repérage par mot-clé, pas un avis
@@ -1056,6 +1085,20 @@ footer.site-footer {
 }
 .detail-context strong { display: block; margin-bottom: 6px; }
 .detail-context p { margin: 4px 0; }
+/* Concurrent + Thèse long terme, côte à côte dès que la largeur le permet : 2 blocs de prose
+   comparables plutôt qu'empilés pleine largeur (une ligne de ~150 caractères à 1600px est de
+   toute façon trop large pour bien se lire — gain de lisibilité en plus du gain de défilement). */
+.detail-context-prose { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 10px; }
+@media (min-width: 720px) {
+  .detail-context-prose { grid-template-columns: 1fr 1fr; }
+}
+/* Open interest / TVL DeFi / Signal on-chain : 3 données courtes, même idiome que la rangée
+   "Activité on-chain" juste au-dessus (.onchain-chart-card) plutôt qu'un <p> par ligne. */
+.detail-context-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
+@media (min-width: 640px) {
+  .detail-context-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.detail-context-card p.hint { margin: 4px 0 0; }
 .detail-horizons {
   margin-top: 14px; padding: 14px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
 }

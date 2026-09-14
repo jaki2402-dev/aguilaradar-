@@ -294,6 +294,11 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGrou
 
   const summaryEl = document.getElementById("engine-summary");
   const matrixEl = document.getElementById("engine-matrix");
+  // La matrice de confusion vit dans son propre conteneur, séparé du reste de matrixEl (auto-
+  // évaluation + 5 cartes stat) : #engine-matrix-table et #engine-classes sont rangés côte à côte
+  // par .engine-tables-row (index.html/style.css) — les regrouper dans un seul matrixEl les
+  // aurait empêchés d'être mis en grille indépendamment de l'auto-évaluation au-dessus.
+  const matrixTableEl = document.getElementById("engine-matrix-table");
   const classesEl = document.getElementById("engine-classes");
   const logEl = document.getElementById("engine-log");
 
@@ -301,6 +306,7 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGrou
 
   if (!stats) {
     matrixEl.innerHTML = `<p class="empty-state">Aucun verdict vérifié pour l'instant. La matrice de confusion et les scores d'exactitude apparaîtront dès que les premiers verdicts auront atteint leur horizon annoncé — aucun chiffre n'est inventé avant ça.</p>`;
+    matrixTableEl.innerHTML = "";
     classesEl.innerHTML = "";
   } else {
     const buyHoldBtc = engineHistory && engineHistory.global_stats && engineHistory.global_stats.baseline_buy_hold_btc_pct;
@@ -330,7 +336,10 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGrou
         <div class="stat-card accent-indigo"><div class="stat-label">Taux de couverture</div><div class="stat-value">${stats.coveragePct.toFixed(0)} %</div></div>
         <div class="stat-card accent-violet"><div class="stat-label">F1 macro</div><div class="stat-value">${stats.f1Macro !== null ? stats.f1Macro.toFixed(0) : "—"}</div></div>
       </div>
-      <p class="hint">Couverture = part des verdicts où le moteur a vraiment tranché (Achat/Vente) plutôt que de s'abriter derrière Attente. Seuil de mouvement directionnel : chaque verdict enregistre le seuil qui a réellement servi à le juger (±${THRESHOLDS.directionalMovePct} % par défaut), jamais rétroactif — une calibration par actif reste possible à l'avenir, mais aucune variation réelle n'apparaît encore dans l'historique actuel.</p>
+      <p class="hint">Couverture = part des verdicts où le moteur a vraiment tranché (Achat/Vente) plutôt que de s'abriter derrière Attente. Seuil de mouvement directionnel : chaque verdict enregistre le seuil qui a réellement servi à le juger (±${THRESHOLDS.directionalMovePct} % par défaut), jamais rétroactif — une calibration par actif reste possible à l'avenir, mais aucune variation réelle n'apparaît encore dans l'historique actuel.</p>`;
+    wireClampToggles(matrixEl);
+
+    matrixTableEl.innerHTML = `
       <table class="matrix-table">
         <thead><tr><th>Prédit \\ Réel</th>${CLASSES.map((c) => `<th>${c}</th>`).join("")}<th>Total</th></tr></thead>
         <tbody>
@@ -345,7 +354,6 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGrou
           }).join("")}
         </tbody>
       </table>`;
-    wireClampToggles(matrixEl);
 
     classesEl.innerHTML = `
       <table class="classes-table">
