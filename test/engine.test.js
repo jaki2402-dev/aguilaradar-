@@ -175,6 +175,7 @@ describe("engine.js — renderEngineTab / renderEnginePin (régression 062374d :
     <div id="engine-pin"></div>
     <div id="engine-summary"></div>
     <div id="engine-matrix"></div>
+    <div id="engine-matrix-table"></div>
     <div id="engine-classes"></div>
     <div id="engine-log"></div>
     <div id="engine-calibration"></div>
@@ -244,6 +245,7 @@ describe("engine.js — renderEngineTab (journal des corrections)", () => {
     <div id="engine-pin"></div>
     <div id="engine-summary"></div>
     <div id="engine-matrix"></div>
+    <div id="engine-matrix-table"></div>
     <div id="engine-classes"></div>
     <div id="engine-log"></div>
     <div id="engine-calibration"></div>

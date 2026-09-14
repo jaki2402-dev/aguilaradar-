@@ -438,16 +438,21 @@ function renderAllocRankRow(r, idx) {
   const closeLabel = r.closeCallWith ? `<span class="hint alloc-close">quasi ex-æquo avec ${escapeHtml(r.closeCallWith)}</span>` : "";
   const topReason = r.reasons[0] ? `<p class="hint alloc-reason">${escapeHtml(r.reasons[0])}</p>` : "";
   const caveatsHtml = r.caveats.length ? `<p class="hint alloc-caveat">${r.caveats.map((c) => escapeHtml(c)).join(" ")}</p>` : "";
+  // .alloc-rank-entry regroupe la ligne + son motif + ses mises en garde en UN item de grille
+  // (voir .alloc-rank-list, style.css) — sans ce wrapper, la grille 2 colonnes disperserait ces
+  // 3 éléments indépendamment au lieu de les garder ensemble comme une seule carte de position.
   return `
-      <div class="alloc-rank-row">
-        <span class="alloc-rank-idx">#${idx + 1}</span>
-        <span class="alloc-rank-ticker">${escapeHtml(r.ticker)}</span>
-        <span class="badge ${tierBadgeClass(r.tier)}">${escapeHtml(r.tier)}</span>
-        <span class="hint">confiance ${escapeHtml(r.confidenceLevel)}</span>
-        ${shareLabel}
-        ${closeLabel}
-      </div>
-      ${topReason}${caveatsHtml}`;
+      <div class="alloc-rank-entry">
+        <div class="alloc-rank-row">
+          <span class="alloc-rank-idx">#${idx + 1}</span>
+          <span class="alloc-rank-ticker">${escapeHtml(r.ticker)}</span>
+          <span class="badge ${tierBadgeClass(r.tier)}">${escapeHtml(r.tier)}</span>
+          <span class="hint">confiance ${escapeHtml(r.confidenceLevel)}</span>
+          ${shareLabel}
+          ${closeLabel}
+        </div>
+        ${topReason}${caveatsHtml}
+      </div>`;
 }
 
 // "Où placer ma prochaine recharge ?" — classement transparent (allocation.js, jamais un score à
@@ -470,7 +475,7 @@ function renderPortfolioAttractivenessRanking(positions) {
   // .accueil-more dans style.css met déjà en garde contre exactement ça) — .alloc-more est un
   // simple séparateur, jamais une 2e carte.
   const restHtml = rest.length
-    ? `<details class="alloc-more"><summary>Voir les ${rest.length} autres positions</summary>${rest.map((r, i) => renderAllocRankRow(r, i + ALLOC_RANKING_VISIBLE_COUNT)).join("")}</details>`
+    ? `<details class="alloc-more"><summary>Voir les ${rest.length} autres positions</summary><div class="alloc-rank-list">${rest.map((r, i) => renderAllocRankRow(r, i + ALLOC_RANKING_VISIBLE_COUNT)).join("")}</div></details>`
     : "";
 
   return `
