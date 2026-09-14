@@ -1053,6 +1053,15 @@ footer.site-footer {
   margin-top: 14px; padding: 14px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
 }
 .detail-horizons strong { display: block; margin-bottom: 4px; }
+/* ---- Décomposition du verdict (js/verdict-breakdown.js, docs/verdict-methodology.md) ---- */
+.verdict-breakdown {
+  margin-top: 14px; padding: 14px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
+}
+.verdict-breakdown > strong { display: block; margin-bottom: 4px; }
+.verdict-breakdown > p.hint { margin: 0 0 8px; }
+.verdict-cat-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-top: 1px solid var(--border); }
+.verdict-cat-row:first-of-type { border-top: none; }
+.verdict-cat-row strong { font-family: var(--font-mono); font-size: 0.88rem; }
 .detail-horizons > p.hint { margin: 0 0 10px; }
 .horizons-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .horizon-chip {

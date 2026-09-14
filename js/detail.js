@@ -445,13 +445,37 @@ async function renderDetailPanel(panelEl, asset) {
   // différente), ce qui ferait disparaître aussi l'on-chain sans raison. Même isolation que le
   // commentaire au-dessus de renderTechnicalSection le documente déjà pour le reste de la fiche.
   let onchainHtml = "";
+  let onchainLive = null;
   if (asset.cgId === "bitcoin" && typeof fetchBtcOnchainLive === "function") {
     try {
-      const onchainLive = await fetchBtcOnchainLive();
+      onchainLive = await fetchBtcOnchainLive();
       onchainHtml = renderOnchainSection(asset.cgId, onchainLive, typeof latestOnchainHistory !== "undefined" ? latestOnchainHistory : null);
     } catch (err) {
       console.error("Erreur activité on-chain:", err);
       onchainHtml = `<div class="detail-onchain"><strong>Activité on-chain</strong><p class="hint">Indisponible pour l'instant — referme et rouvre la fiche pour réessayer.</p></div>`;
+    }
+  }
+
+  // Décomposition du verdict (docs/verdict-methodology.md) : uniquement des données déjà en
+  // mémoire (verdict complet via latestVerdictFor, pas juste la string asset.verdict ; thèse
+  // portefeuille ; prix/marketcap déjà chargés ; TVL live si la section on-chain ci-dessus l'a
+  // obtenue ce cycle) — aucun fetch de plus. try/catch par prudence seulement : chaque fonction
+  // de score est déjà défensive sur des entrées manquantes/mal formées.
+  let breakdownHtml = "";
+  if (typeof computeVerdictBreakdown === "function" && typeof renderVerdictBreakdown === "function") {
+    try {
+      const allData = window.aguilaradarData || {};
+      const fullVerdict = typeof latestVerdictFor === "function" ? latestVerdictFor(asset.cgId, allData.verdicts || []) : null;
+      const thesisEntry = allData.portfolioThesis && allData.portfolioThesis.positions ? allData.portfolioThesis.positions[asset.cgId] : null;
+      const priceEntry = typeof latestFavorisPrices !== "undefined" ? latestFavorisPrices[asset.cgId] : null;
+      const marketCapUsd = priceEntry ? priceEntry.usd_market_cap : null;
+      const btcSnapshots = allData.onchainHistory && allData.onchainHistory.assets && allData.onchainHistory.assets.bitcoin ? allData.onchainHistory.assets.bitcoin.snapshots : [];
+      const lastSnapshotTvl = btcSnapshots.length ? btcSnapshots[btcSnapshots.length - 1].tvl_usd : null;
+      const tvlUsd = asset.cgId === "bitcoin" ? (onchainLive && onchainLive.tvl ? onchainLive.tvl.valueUsd : lastSnapshotTvl) : null;
+      const breakdown = computeVerdictBreakdown({ verdict: fullVerdict, thesisEntry, marketCapUsd, tvlUsd });
+      breakdownHtml = renderVerdictBreakdown(breakdown);
+    } catch (err) {
+      console.error("Erreur décomposition du verdict:", err);
     }
   }
 
@@ -465,6 +489,7 @@ async function renderDetailPanel(panelEl, asset) {
       ${renderClampableText(asset.reasoning || asset.reason || "Analyse pas encore disponible pour cet actif — en attente du prochain cycle.")}
       ${asset.verdict ? `<p class="hint">Verdict actuel : <span class="badge badge-${asset.verdict.toLowerCase()}">${asset.verdict}</span> — vérifié automatiquement à son échéance, jamais avant.</p>` : ""}
     </div>
+    ${breakdownHtml}
     ${asset.horizons ? renderOpportunityHorizonsSection(asset.horizons) : ""}
     ${renderFavorisContextSection(asset.ticker)}`;
   wireClampToggles(panelEl);
