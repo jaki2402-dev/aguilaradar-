@@ -481,17 +481,21 @@ async function renderDetailPanel(panelEl, asset) {
 
   // Le reste (avis, horizons, contexte favori) est déjà en mémoire (aucun fetch requis) :
   // s'affiche toujours, meme si la section technique ci-dessus a échoué.
+  // Ordre voulu par la demande utilisateur (section 3) : Marché → On-chain → Fondamentaux →
+  // Interprétation/Verdict. "Contexte élargi" (thèse long terme, fondamentaux) passe donc AVANT
+  // "Mon avis" — inversé par rapport à l'ordre historique, qui plaçait le verdict avant les
+  // fondamentaux qui le motivent.
   panelEl.innerHTML = `
     ${technicalHtml}
     ${onchainHtml}
+    ${renderFavorisContextSection(asset.ticker)}
     <div class="detail-opinion">
       <strong>Mon avis</strong>
       ${renderClampableText(asset.reasoning || asset.reason || "Analyse pas encore disponible pour cet actif — en attente du prochain cycle.")}
       ${asset.verdict ? `<p class="hint">Verdict actuel : <span class="badge badge-${asset.verdict.toLowerCase()}">${asset.verdict}</span> — vérifié automatiquement à son échéance, jamais avant.</p>` : ""}
     </div>
     ${breakdownHtml}
-    ${asset.horizons ? renderOpportunityHorizonsSection(asset.horizons) : ""}
-    ${renderFavorisContextSection(asset.ticker)}`;
+    ${asset.horizons ? renderOpportunityHorizonsSection(asset.horizons) : ""}`;
   wireClampToggles(panelEl);
   if (typeof wireOnchainSection === "function") {
     wireOnchainSection(panelEl.querySelector(".detail-onchain"), typeof latestOnchainHistory !== "undefined" ? latestOnchainHistory : null);
