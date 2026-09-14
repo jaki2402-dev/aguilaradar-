@@ -504,15 +504,22 @@ async function renderDetailPanel(panelEl, asset) {
   // Interprétation/Verdict. "Contexte élargi" (thèse long terme, fondamentaux) passe donc AVANT
   // "Mon avis" — inversé par rapport à l'ordre historique, qui plaçait le verdict avant les
   // fondamentaux qui le motivent.
+  // skipOpinionBlock (posé par renderJournalPage, app.js) : une .journal-entry affiche déjà son
+  // raisonnement complet ET son badge de verdict en permanence, avant même d'être dépliée (voir
+  // le commentaire au-dessus de attachDetailToggle dans ce fichier) — répéter "Mon avis" ici
+  // dupliquerait mot pour mot un texte déjà visible, trouvé en ouvrant réellement une fiche
+  // Journal dans un navigateur (pas détecté par les tests jsdom, qui n'exercent jamais les deux
+  // rendus l'un après l'autre). Favoris/Opportunités/Portefeuille n'affichent rien de tel avant
+  // dépliage, donc gardent "Mon avis" normalement.
   panelEl.innerHTML = `
     ${technicalHtml}
     ${onchainHtml}
     ${renderFavorisContextSection(asset.ticker)}
-    <div class="detail-opinion">
+    ${asset.skipOpinionBlock ? "" : `<div class="detail-opinion">
       <strong>Mon avis</strong>
       ${renderClampableText(asset.reasoning || asset.reason || "Analyse pas encore disponible pour cet actif — en attente du prochain cycle.")}
       ${asset.verdict ? `<p class="hint">Verdict actuel : <span class="badge badge-${asset.verdict.toLowerCase()}">${asset.verdict}</span> — vérifié automatiquement à son échéance, jamais avant.</p>` : ""}
-    </div>
+    </div>`}
     ${breakdownHtml}
     ${asset.horizons ? renderOpportunityHorizonsSection(asset.horizons) : ""}`;
   wireClampToggles(panelEl);
