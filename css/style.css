@@ -688,10 +688,17 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
   margin-top: 14px; padding: 14px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
 }
 .detail-onchain > strong { display: block; margin-bottom: 8px; }
+/* Essayé et mesuré, pas gardé : forcer 2 colonnes sur mobile (minmax 130-150px) a été testé ici
+   le 14/09 — le texte "Historique insuffisant..." s'enroulait sur tellement de lignes étroites
+   que la page RÉELLE mesurée devenait plus longue (+112px) qu'en 1 colonne, l'inverse du but
+   recherché. 220px minimum = repasse correctement à 1 colonne sous ~460px, ce qui est le bon
+   comportement pour ce texte précis tant qu'il reste aussi long (voir CLAUDE.md/le fil de
+   discussion du 14/09 pour la vraie piste : raccourcir le texte répété 3x, pas le mettre en
+   colonnes). */
 .onchain-history-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; margin-top: 10px; }
 /* .detail-context-card (renderFavorisContextSection, detail.js) partage exactement cet habillage
    — même famille visuelle "carte de donnée compacte", pas une carte de graphique cette fois. */
-.onchain-chart-card, .detail-context-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; }
+.onchain-chart-card, .detail-context-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; min-width: 0; }
 .onchain-chart-card strong, .detail-context-card strong { font-family: var(--font-mono); font-size: 1.05rem; display: block; margin: 2px 0 4px; }
 .onchain-chart-tabs { display: flex; gap: 4px; margin-top: 8px; flex-wrap: wrap; }
 .onchain-chart-tab {
@@ -1093,7 +1100,12 @@ footer.site-footer {
   .detail-context-prose { grid-template-columns: 1fr 1fr; }
 }
 /* Open interest / TVL DeFi / Signal on-chain : 3 données courtes, même idiome que la rangée
-   "Activité on-chain" juste au-dessus (.onchain-chart-card) plutôt qu'un <p> par ligne. */
+   "Activité on-chain" juste au-dessus (.onchain-chart-card) plutôt qu'un <p> par ligne.
+   2 colonnes dès 640px seulement (pas sur mobile) : testé et mesuré à 130-150px sur un vrai
+   mobile le 14/09 — la note TVL DeFi de BTC (longue, "non applicable...") s'enroulait sur
+   tellement de lignes que la fiche entière devenait PLUS longue qu'en 1 colonne. Cette carte
+   varie trop en longueur selon l'actif (courte pour un actif avec vraie TVL DeFi, longue pour
+   BTC) pour qu'un seuil CSS fixe fonctionne bien sur mobile dans tous les cas. */
 .detail-context-grid { display: grid; grid-template-columns: 1fr; gap: 8px; }
 @media (min-width: 640px) {
   .detail-context-grid { grid-template-columns: repeat(3, 1fr); }

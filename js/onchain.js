@@ -150,7 +150,7 @@ function renderMetricHistoryChart(title, snapshots, valueKey, formatValue, activ
   if (inWindow.length < 2) {
     return `<div class="onchain-chart-card" data-metric-key="${escapeHtml(valueKey)}">
       <span class="hint">${escapeHtml(title)}</span>
-      <p class="empty-state">Historique insuffisant sur cet horizon (${inWindow.length} point${inWindow.length > 1 ? "s" : ""} réel${inWindow.length > 1 ? "s" : ""}) — un point réel s'ajoute chaque jour, jamais fabriqué.</p>
+      <p class="empty-state">Historique insuffisant (${inWindow.length} point${inWindow.length > 1 ? "s" : ""}) — jamais fabriqué, un point réel s'ajoute chaque jour.</p>
       ${tabsHtml}
     </div>`;
   }
