@@ -283,6 +283,10 @@ function renderJournalPage() {
       athChangePct: null,
       reasoning: v ? v.reasoning : null,
       verdict: v ? v.verdict : null,
+      // Cette carte affiche déjà son raisonnement + son badge de verdict avant même d'être
+      // dépliée (voir plus haut) — "Mon avis" y répéterait la même phrase (voir le commentaire
+      // sur skipOpinionBlock dans detail.js).
+      skipOpinionBlock: true,
     });
   });
 
