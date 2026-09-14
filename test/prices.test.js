@@ -50,6 +50,34 @@ describe("prices.js — formatPrice", () => {
   });
 });
 
+describe("prices.js — fetchFavorisSupply", () => {
+  it("maps circulating_supply/max_supply per cgId from /coins/markets, discarding price/marketcap fields it doesn't need", async () => {
+    const dom = loadPage(["config.js", "prices.js"]);
+    let requestedUrl = null;
+    dom.window.fetch = async (url) => {
+      requestedUrl = url;
+      return {
+        ok: true,
+        json: async () => [
+          { id: "bitcoin", current_price: 78647, circulating_supply: 20084421, max_supply: 21000000 },
+          { id: "ethereum", current_price: 2538, circulating_supply: 122047243, max_supply: null },
+        ],
+      };
+    };
+    const supply = await dom.window.fetchFavorisSupply();
+    expect(requestedUrl).toContain("/coins/markets");
+    expect(requestedUrl).toContain("bitcoin");
+    expect(supply.bitcoin).toEqual({ circulatingSupply: 20084421, maxSupply: 21000000 });
+    expect(supply.ethereum).toEqual({ circulatingSupply: 122047243, maxSupply: null });
+  });
+
+  it("throws on a non-ok response, same failure contract as fetchFavorisPrices (isolated try/catch at the call site, see app.js)", async () => {
+    const dom = loadPage(["config.js", "prices.js"]);
+    dom.window.fetch = async () => ({ ok: false, status: 503 });
+    await expect(dom.window.fetchFavorisSupply()).rejects.toThrow("503");
+  });
+});
+
 describe("prices.js — formatChangePct", () => {
   const dom = loadPage(["prices.js"]);
   const { formatChangePct } = dom.window;

@@ -55,13 +55,25 @@ en chiffre ici.
 
 ### 3. Tokenomics
 
-**État réel (2026-09-14) : aucune donnée structurée n'existe nulle part dans ce dépôt.**
-`FAVORIS[].utility` (`config.js`) décrit narrativement *comment* un token capture de la valeur
-(ARB = gouvernance pure, INJ = rachat-destruction hebdo, etc.) mais ne donne ni supply, ni
-inflation, ni calendrier d'unlocks, ni concentration des holders. **Cette catégorie affiche
-systématiquement "Donnée insuffisante" pour les 15 favoris tant que cette lacune n'est pas
-comblée** — ne pas la noter à partir du texte `utility` narratif, ce serait une extrapolation, pas
-une mesure.
+**Partiellement comblée le 14/09/2026** : `circulating_supply`/`max_supply` (CoinGecko
+`/coins/markets`, `fetchFavorisSupply()` dans `js/prices.js`, un appel séparé au chargement —
+pas sur le tick de prix 60s, la supply ne bouge pas d'une minute à l'autre) donnent un ratio réel
+"part de l'offre max déjà en circulation" (`scoreTokenomics`, `js/verdict-breakdown.js`). **Pas un
+score 0-10** — comme Valorisation ci-dessous, la fourchette "bon/mauvais" dépendrait du calendrier
+d'unlocks réel (quand exactement le reste se débloque), qu'on n'a pas ; c'est une mesure honnête
+de dilution potentielle restante, pas un jugement.
+
+Cas particulier, jamais "Donnée insuffisante" : un actif sans `max_supply` (ETH, INJ, TIA, GRT,
+AIOZ, LPT parmi les 15 favoris au 14/09) affiche "Offre non plafonnée" — un fait réel et connu
+(pas de plafond défini), pas une donnée manquante, même logique que Risque plus bas.
+
+**Reste manquant** : allocation équipe/investisseurs, calendrier précis des prochains
+déblocages, concentration des holders — `circulating/max` seul ne capture pas ces dimensions
+(CoinGecko ne les fournit pas). `FAVORIS[].utility` (`config.js`) décrit narrativement *comment*
+un token capture de la valeur, jamais transformé en chiffre ici. Combler ce reste demande une
+vraie recherche par actif (calendrier d'unlocks, %équipe) — confié à la routine
+`aguilaradar-favoris-quotidien` (recherche web réelle, comme `competitor`/`long_term_thesis`),
+pas une extrapolation ici.
 
 ### 4. Valorisation
 
@@ -95,16 +107,17 @@ aux autres catégories où l'absence de donnée n'est pas un renseignement.
 
 ## Ce que ça donne concrètement aujourd'hui (honnête, pas optimiste)
 
-Pour la quasi-totalité des 15 favoris/opportunités : Momentum seul est noté, Fondamentaux noté
-seulement pour les positions du portefeuille, Tokenomics et Valorisation "Donnée insuffisante"
-pour presque tous, Risque toujours annoté. **Aucun score global n'apparaît nulle part avant que
-ça change** — c'est le comportement voulu, pas un bug d'affichage à corriger plus tard.
+Pour la quasi-totalité des 15 favoris/opportunités : Momentum seul et Tokenomics (ratio
+circulating/max) sont notés pour 15/15, Fondamentaux noté seulement pour les positions du
+portefeuille, Valorisation "Donnée insuffisante" pour presque tous, Risque toujours annoté.
+**Aucun score global n'apparaît nulle part avant que ça change** — c'est le comportement voulu,
+pas un bug d'affichage à corriger plus tard.
 
-## Prochaines étapes pour combler les lacunes (pas faites dans cette session)
+## Prochaines étapes pour combler les lacunes
 
-1. Tokenomics : aucune source identifiée dans l'audit actuel — nécessiterait une nouvelle
-   recherche (supply/unlocks par token, CoinGecko a parfois `max_supply`/`circulating_supply` en
-   direct, insuffisant seul pour les unlocks).
+1. Tokenomics : le ratio circulating/max (14/09/2026) ne capture ni allocation équipe/investisseurs
+   ni calendrier précis des prochains déblocages — confié à `aguilaradar-favoris-quotidien`
+   (recherche web réelle par actif), pas fait dans cette session.
 2. Fondamentaux au-delà du portefeuille : étendre `portfolio-thesis.json` (ou une entrée
    équivalente) aux 15 favoris, pas seulement aux positions détenues — changement de périmètre
    pour la routine `aguilaradar-these-portefeuille-hebdo`, à décider avec l'utilisateur d'abord

@@ -47,10 +47,19 @@ function scoreFondamentaux(thesisEntry) {
   return null;
 }
 
-// Section "Tokenomics" : aucune source structurée n'existe dans ce dépôt (2026-09-14) — voir le
-// document. Toujours null, pas un oubli à "corriger" en extrapolant depuis FAVORIS[].utility.
-function scoreTokenomics() {
-  return null;
+// Section "Tokenomics" : part de l'offre max déjà en circulation (circulating/max, CoinGecko —
+// voir fetchFavorisSupply, prices.js, ajouté le 14/09/2026). Ratio brut comme scoreValorisation,
+// pas un score 0-10 : "50% en circulation" n'est ni bon ni mauvais en soi, ça dépend du calendrier
+// d'unlocks réel (pas connu ici) — juste une mesure honnête de dilution potentielle restante.
+// PAS de fausse alerte "unlocks inconnus" pour un token sans plafond : `uncapped:true` est un fait
+// réel et connu (pas de max supply défini), pas une donnée manquante — même logique que
+// scoreRisque ci-dessous (l'absence d'un signal EST parfois l'information). Reste partiel : ne
+// capture ni allocation équipe/investisseurs ni calendrier de déblocage précis (voir le document,
+// "prochaines étapes" — recherche qualitative confiée à la routine favoris-quotidien).
+function scoreTokenomics(supplyEntry) {
+  if (!supplyEntry || typeof supplyEntry.circulatingSupply !== "number") return null;
+  if (typeof supplyEntry.maxSupply !== "number" || supplyEntry.maxSupply <= 0) return { uncapped: true };
+  return { circulatingPct: (supplyEntry.circulatingSupply / supplyEntry.maxSupply) * 100 };
 }
 
 // Section "Valorisation" : marketcap ET une mesure d'activité réelle (TVL) pour le MÊME actif,
@@ -75,11 +84,11 @@ function scoreRisque(verdict, thesisEntry) {
   return "élevé";
 }
 
-function computeVerdictBreakdown({ verdict, thesisEntry, marketCapUsd, tvlUsd } = {}) {
+function computeVerdictBreakdown({ verdict, thesisEntry, marketCapUsd, tvlUsd, supplyEntry } = {}) {
   return {
     momentum: scoreMomentum(verdict),
     fondamentaux: scoreFondamentaux(thesisEntry),
-    tokenomics: scoreTokenomics(),
+    tokenomics: scoreTokenomics(supplyEntry),
     valorisation: scoreValorisation(marketCapUsd, tvlUsd),
     risque: scoreRisque(verdict, thesisEntry),
   };
@@ -98,6 +107,11 @@ function renderVerdictBreakdown(breakdown) {
     if (key === "valorisation") {
       const v = breakdown.valorisation;
       return `<div class="verdict-cat-row"><span class="hint">${label}</span><strong>${v ? `Marketcap/TVL ${v.ratio.toFixed(1)}×` : "Donnée insuffisante"}</strong></div>`;
+    }
+    if (key === "tokenomics") {
+      const v = breakdown.tokenomics;
+      const text = !v ? "Donnée insuffisante" : v.uncapped ? "Offre non plafonnée" : `${v.circulatingPct.toFixed(0)} % de l'offre max en circulation`;
+      return `<div class="verdict-cat-row"><span class="hint">${label}</span><strong>${text}</strong></div>`;
     }
     const v = breakdown[key];
     return `<div class="verdict-cat-row"><span class="hint">${label}</span><strong>${typeof v === "number" ? `${v}/10` : "Donnée insuffisante"}</strong></div>`;

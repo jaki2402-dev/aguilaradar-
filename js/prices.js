@@ -16,6 +16,25 @@ async function fetchFavorisPrices() {
   return res.json();
 }
 
+// Offre en circulation / offre max — appel séparé de fetchFavorisPrices, une fois au chargement
+// (pas sur le tick 60s : contrairement au prix, la supply ne bouge pas d'une minute à l'autre).
+// /coins/markets (pas /simple/price, qui ne renvoie pas ces champs) — vs_currency n'a aucune
+// importance ici, seuls des comptes de jetons (indépendants de toute devise) sont utilisés.
+// Alimente scoreTokenomics (js/verdict-breakdown.js), qui retournait toujours null jusqu'ici
+// faute de source (voir docs/verdict-methodology.md).
+async function fetchFavorisSupply() {
+  const ids = FAVORIS.map((f) => f.cgId).join(",");
+  const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${ids}&sparkline=false`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`CoinGecko ${res.status}`);
+  const list = await res.json();
+  const byId = {};
+  list.forEach((c) => {
+    byId[c.id] = { circulatingSupply: c.circulating_supply, maxSupply: c.max_supply };
+  });
+  return byId;
+}
+
 function formatPrice(value, currency) {
   if (value === undefined || value === null) return "—";
   const decimals = value < 1 ? 4 : value < 100 ? 3 : 2;

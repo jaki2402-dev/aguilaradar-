@@ -64,10 +64,26 @@ describe("verdict-breakdown.js — scoreFondamentaux", () => {
 });
 
 describe("verdict-breakdown.js — scoreTokenomics", () => {
-  it("is always null — no structured source exists yet (see docs/verdict-methodology.md)", () => {
-    const dom = loadBreakdownPage();
-    expect(dom.window.computeVerdictBreakdown({}).tokenomics).toBeNull();
-    expect(dom.window.computeVerdictBreakdown({ verdict: {}, thesisEntry: {}, marketCapUsd: 1e9, tvlUsd: 1e6 }).tokenomics).toBeNull();
+  const dom = loadBreakdownPage();
+  const { computeVerdictBreakdown } = dom.window;
+
+  it("is null (Donnée insuffisante) without a supplyEntry — nothing invented from utility text", () => {
+    expect(computeVerdictBreakdown({}).tokenomics).toBeNull();
+    expect(computeVerdictBreakdown({ verdict: {}, thesisEntry: {}, marketCapUsd: 1e9, tvlUsd: 1e6 }).tokenomics).toBeNull();
+  });
+
+  it("is null when circulatingSupply itself is missing/not a number", () => {
+    expect(computeVerdictBreakdown({ supplyEntry: {} }).tokenomics).toBeNull();
+    expect(computeVerdictBreakdown({ supplyEntry: { maxSupply: 21000000 } }).tokenomics).toBeNull();
+  });
+
+  it("flags an uncapped supply as a real known fact, never 'Donnée insuffisante' (e.g. ETH/INJ, no max_supply on CoinGecko)", () => {
+    expect(computeVerdictBreakdown({ supplyEntry: { circulatingSupply: 122000000, maxSupply: null } }).tokenomics).toEqual({ uncapped: true });
+  });
+
+  it("computes the real circulating/max percentage when both are known (e.g. BTC)", () => {
+    const b = computeVerdictBreakdown({ supplyEntry: { circulatingSupply: 20084421, maxSupply: 21000000 } });
+    expect(b.tokenomics.circulatingPct).toBeCloseTo(95.64, 1);
   });
 });
 
@@ -136,10 +152,24 @@ describe("verdict-breakdown.js — renderVerdictBreakdown", () => {
     expect((html.match(/Donnée insuffisante/g) || []).length).toBe(4);
   });
 
-  it("renders Tokenomics as 'Donnée insuffisante' too even though its score is always null", () => {
+  it("renders Tokenomics as 'Donnée insuffisante' when no supplyEntry was passed", () => {
     const html = renderVerdictBreakdown(computeVerdictBreakdown({}));
     const tokenomicsRow = html.split("Tokenomics")[1].split("</div>")[0];
     expect(tokenomicsRow).toContain("Donnée insuffisante");
+  });
+
+  it("renders a real circulating/max percentage for Tokenomics when a supplyEntry is available, never a raw ratio object", () => {
+    const html = renderVerdictBreakdown(computeVerdictBreakdown({ supplyEntry: { circulatingSupply: 748099970, maxSupply: 1000000000 } }));
+    const tokenomicsRow = html.split("Tokenomics")[1].split("</div>")[0];
+    expect(tokenomicsRow).toContain("75 % de l'offre max en circulation");
+    expect(tokenomicsRow).not.toContain("[object");
+  });
+
+  it("renders 'Offre non plafonnée' for Tokenomics on an uncapped asset, never 'Donnée insuffisante'", () => {
+    const html = renderVerdictBreakdown(computeVerdictBreakdown({ supplyEntry: { circulatingSupply: 100000000, maxSupply: null } }));
+    const tokenomicsRow = html.split("Tokenomics")[1].split("</div>")[0];
+    expect(tokenomicsRow).toContain("Offre non plafonnée");
+    expect(tokenomicsRow).not.toContain("Donnée insuffisante");
   });
 
   it("renders exactly the 5 category rows and nothing else numeric (no combined/global score slipped in)", () => {

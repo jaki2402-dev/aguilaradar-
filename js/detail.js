@@ -491,7 +491,8 @@ async function renderDetailPanel(panelEl, asset) {
       const btcSnapshots = allData.onchainHistory && allData.onchainHistory.assets && allData.onchainHistory.assets.bitcoin ? allData.onchainHistory.assets.bitcoin.snapshots : [];
       const lastSnapshotTvl = btcSnapshots.length ? btcSnapshots[btcSnapshots.length - 1].tvl_usd : null;
       const tvlUsd = asset.cgId === "bitcoin" ? (onchainLive && onchainLive.tvl ? onchainLive.tvl.valueUsd : lastSnapshotTvl) : null;
-      const breakdown = computeVerdictBreakdown({ verdict: fullVerdict, thesisEntry, marketCapUsd, tvlUsd });
+      const supplyEntry = typeof latestFavorisSupply !== "undefined" ? latestFavorisSupply[asset.cgId] : null;
+      const breakdown = computeVerdictBreakdown({ verdict: fullVerdict, thesisEntry, marketCapUsd, tvlUsd, supplyEntry });
       breakdownHtml = renderVerdictBreakdown(breakdown);
     } catch (err) {
       console.error("Erreur décomposition du verdict:", err);
