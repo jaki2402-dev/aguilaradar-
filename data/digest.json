@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-11T12:08:31Z",
-  "headline": "Rendements US à 5 %, CPI décisif avant la Fed du 16/09",
-  "summary": "Les anticipations de hausse des taux de la Fed grimpent à 57-60 % après un indice des prix à la production plus élevé que prévu : le rendement du Trésor à 10 ans culmine à 4,95 %, au plus haut depuis 2007. Le CPI d'août, publié aujourd'hui, est la dernière donnée avant la décision du 16 septembre. Malgré ce contexte, les ETF Bitcoin enchaînent un 3e jour d'entrées nettes (757 M$ le 10/09) et les ETF Ethereum sortent d'une série de 6 jours de sorties (+44 M$). BTC quasi stable (-0,9 % sur 24h).",
+  "generated_at": "2026-09-14T00:10:00Z",
+  "headline": "Correction du moteur après un lot à 11 % de réussite",
+  "summary": "Le lot de verdicts ACHAT émis le 06/09 sur TIA, LINK, ARB, JUP et ONDO se résout en perte (ARB -30 %, JUP -14 %, LINK -13 % sur 7 jours), l'exactitude du moteur tombant à 26,83 % sur 41 verdicts résolus, sous les références de base. La correction du 13/09 pointe un biais de chasse au momentum : ces ACHAT reposaient sur un rebond technique sans confirmation fondamentale. Nouvelle règle : un mouvement 7j supérieur à 15 % requalifie le signal technique en mixte plutôt qu'haussier.",
   "tips": [
-    "Rendement US à 10 ans à 4,95 %, plus haut niveau depuis 2007 : pression sur les actifs à risque.",
-    "ETF Bitcoin : 3e jour consécutif d'entrées nettes (757 M$ le 10/09), signal institutionnel positif.",
-    "CPI américain publié aujourd'hui, dernière donnée majeure avant la Fed du 16/09."
+    "ARB, JUP, LINK, ONDO, TIA : verdicts ACHAT du 06/09 résolus en perte, -10 % à -30 % sur 7 jours.",
+    "Nouvelle règle moteur : mouvement 7j >15 % requalifie le signal technique en mixte, plus haussier.",
+    "CLARITY Act (régulation crypto US) : vote au Sénat le 15/09, adoption à 16 % (était 82 % en février)."
   ],
-  "market_tone": "neutre"
+  "market_tone": "baissier"
 }
