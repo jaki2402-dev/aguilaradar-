@@ -142,7 +142,54 @@ la seule façon pour l'indicateur de fraîcheur de distinguer "routine vivante, 
 cycle" de "routine réellement bloquée" — les deux ont l'air identiques de l'extérieur si ce champ
 n'avance pas.
 
-## 8. Commit — deux étapes obligatoires, pas juste "push"
+## 8. `data/news.json` — veille actualités, jamais documentée avant cette révision
+
+**Constat du 15/09/2026** : cette routine fait réellement une veille actualités à chaque cycle
+(recherche fear&greed, dominance BTC, recherche générique "crypto news today", recherche dédiée
+hack/exploit — confirmé en lisant `routine_health.last_failure_reason` de plusieurs cycles
+récents) et écrit dans `data/news.json`, mais **cette responsabilité n'avait jamais été spécifiée
+dans ce document** — un vrai trou, pas juste un oubli cosmétique : le contenu réel (8 items
+sourcés et datés fin août-mi septembre 2026, ex. scission Consensys, projet de loi fiscal allemand,
+vote CLARITY Act) est correct, mais **`last_checked_at` était figé à 2026-09-14T16:20:00Z alors
+que le cycle a tourné avec succès plusieurs fois depuis** (même cause que `routine_health` ci-dessus
+— confirmé le 15/09 par la routine `aguilaradar-verif-fraicheur-quotidien` elle-même :
+`data/news.json` à ~34h de retard, en aggravation). Le bandeau de fraîcheur du site
+(`updateFreshnessIndicator`, `app.js`) lit `last_checked_at` en priorité, donc ce champ figé fait
+croire à une veille interrompue même quand elle tourne normalement.
+
+### Forme exacte
+
+```json
+{
+  "last_checked_at": "<ISO 8601 UTC — À CHAQUE cycle, que quelque chose de nouveau soit trouvé ou non>",
+  "last_updated_at": "<ISO 8601 UTC — SEULEMENT quand `items` change réellement>",
+  "items": [ { "title": "...", "url": "...", "source": "..." } ]
+}
+```
+
+**Ces deux champs ont un sens différent, ne jamais les confondre** : `last_checked_at` prouve que
+la veille a eu lieu ce cycle (même si rien de neuf n'a été retenu) ; `last_updated_at` marque la
+dernière fois où `items` a réellement changé. Un `last_checked_at` récent avec un `last_updated_at`
+plus ancien est un état normal et attendu (pas d'actualité neuve jugée assez significative
+récemment) — **mais `last_checked_at` lui-même ne doit jamais rester figé plus d'un cycle**.
+
+### Procédure, une fois par exécution
+
+1. Faire la recherche (fear&greed, dominance, actualité générale, hack/exploit dédié — déjà la
+   pratique réelle, formalisée ici) : chercher un développement réellement nouveau et significatif
+   (lancement produit majeur, hack, régulation, mouvement institutionnel) — jamais une reformulation
+   d'un item déjà présent dans `items`.
+2. Si un développement neuf et suffisamment significatif est trouvé : l'ajouter à `items` (`title`
+   factuel et sourcé, `url` réelle, `source`) et mettre à jour `last_updated_at`.
+3. **Que l'étape 2 ait ajouté quelque chose ou non, toujours mettre à jour `last_checked_at`** à
+   l'heure de fin de ce cycle — c'est la partie manquée jusqu'ici, celle qui casse le bandeau de
+   fraîcheur si elle est sautée.
+4. `items` n'est pas strictement append-only comme `verdicts.json`/`onchain-history.json` : retirer
+   les entrées les plus anciennes/plus pertinentes si la liste devient longue (pas de taille cible
+   fixée ici — garder un jugement raisonnable, quelques items réellement notables plutôt qu'un flux
+   exhaustif).
+
+## 9. Commit — deux étapes obligatoires, pas juste "push"
 
 **Constat du 14/09/2026** : le premier cycle exécuté sous cette révision a produit un commit
 correct (confidence_pct=65, croisement bien appliqué, `correction_log` correctement mis à jour)
