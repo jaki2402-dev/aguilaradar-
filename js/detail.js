@@ -545,20 +545,42 @@ function attachDetailToggle(cardEl, panelId, baseAsset) {
     const isOpen = panel.classList.toggle("open");
     cardEl.classList.toggle("expanded", isOpen);
     cardEl.setAttribute("aria-expanded", String(isOpen));
-    if (isOpen && !loaded) {
-      loaded = true;
-      // Relit les données réelles (verdict/raisonnement) au moment du clic, pas à l'attache
-      // du gestionnaire — les verdicts arrivent souvent après le rendu initial des cartes.
-      const asset = Object.assign({}, baseAsset, {
-        reasoning: cardEl.dataset.reasoning || baseAsset.reasoning,
-        verdict: cardEl.dataset.verdict || baseAsset.verdict,
-      });
-      // Si le fetch échoue (ex: limite API), on remet loaded à false pour qu'une prochaine
-      // fermeture/réouverture retente réellement, au lieu de rester bloqué sur l'erreur.
-      renderDetailPanel(panel, asset).then((success) => {
-        if (!success) loaded = false;
-      });
+    if (!isOpen) {
+      // Efface la hauteur posée en ligne (voir plus bas) pour que la fermeture s'anime depuis
+      // la vraie valeur courante plutôt que de rester bloquée dessus.
+      panel.style.maxHeight = "";
+      return;
     }
+    // Jamais un plafond CSS deviné à l'avance (ex. l'ancien max-height:2400px, qui coupait
+    // net un contenu réel plus long sans aucun moyen de défiler pour voir la suite — repéré le
+    // 15/09 sur la fiche BTC) : toujours la vraie hauteur du contenu, posée en ligne.
+    if (loaded) {
+      // Contenu déjà chargé lors d'une ouverture précédente (déjà la vraie hauteur finale,
+      // pas un placeholder) : pas de refetch, juste remesurer ce qui est déjà là.
+      panel.style.maxHeight = panel.scrollHeight + "px";
+      return;
+    }
+    loaded = true;
+    // Relit les données réelles (verdict/raisonnement) au moment du clic, pas à l'attache
+    // du gestionnaire — les verdicts arrivent souvent après le rendu initial des cartes.
+    const asset = Object.assign({}, baseAsset, {
+      reasoning: cardEl.dataset.reasoning || baseAsset.reasoning,
+      verdict: cardEl.dataset.verdict || baseAsset.verdict,
+    });
+    // renderDetailPanel pose "Calcul en cours…" de façon SYNCHRONE (avant son premier await,
+    // voir son tout début) : on l'appelle d'abord, puis on mesure dans la foulée (même tick)
+    // pour capturer ce placeholder — pas un panneau encore vide (piège réel trouvé le 15/09 en
+    // vérifiant ce correctif : mesurer avant l'appel donnait 0px, panneau invisible).
+    const pending = renderDetailPanel(panel, asset);
+    panel.style.maxHeight = panel.scrollHeight + "px";
+    pending.then((success) => {
+      // Remesure TOUJOURS, succès ou échec : même le message d'erreur (pas juste le contenu
+      // réel) a une hauteur différente du placeholder mesuré plus haut — sauter la remesure en
+      // cas d'échec recrée exactement le bug initial, juste déclenché par une panne réseau
+      // plutôt que par un contenu long (trouvé le 15/09 via un vrai test réseau coupé).
+      if (!success) loaded = false;
+      if (panel.classList.contains("open")) panel.style.maxHeight = panel.scrollHeight + "px";
+    });
   }
 
   cardEl.addEventListener("click", toggle);

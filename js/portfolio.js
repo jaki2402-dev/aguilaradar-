@@ -676,15 +676,37 @@ function attachPortfolioToggle(tileEl, p, idx) {
   function toggle() {
     const isOpen = tileEl.classList.toggle("expanded");
     tileEl.setAttribute("aria-expanded", String(isOpen));
-    if (isOpen && !loaded) {
-      loaded = true;
-      const techEl = document.getElementById(`portfolio-technical-${idx}`);
-      if (techEl) {
-        loadPortfolioTechnical(techEl, p).then((success) => {
-          if (!success) loaded = false;
-        });
-      }
+    const bodyEl = tileEl.querySelector(".portfolio-tile-body");
+    if (!isOpen) {
+      if (bodyEl) bodyEl.style.maxHeight = "";
+      return;
     }
+    // Jamais un plafond CSS deviné à l'avance (même piège que .detail-panel, voir detail.js/
+    // CLAUDE.md) : la vraie hauteur du contenu, posée en ligne.
+    if (loaded) {
+      // Déjà chargé (ouverture précédente réussie) : pas de refetch, juste remesurer.
+      if (bodyEl) bodyEl.style.maxHeight = bodyEl.scrollHeight + "px";
+      return;
+    }
+    loaded = true;
+    const techEl = document.getElementById(`portfolio-technical-${idx}`);
+    if (!techEl) {
+      if (bodyEl) bodyEl.style.maxHeight = bodyEl.scrollHeight + "px";
+      return;
+    }
+    // loadPortfolioTechnical pose son placeholder de façon SYNCHRONE (avant son premier await) :
+    // on l'appelle d'abord, puis on mesure dans la foulée (même tick) — même logique et même
+    // piège corrigé que renderDetailPanel/detail.js (mesurer avant l'appel sous-estime la
+    // hauteur puisque le contenu n'est pas encore posé).
+    const pending = loadPortfolioTechnical(techEl, p);
+    if (bodyEl) bodyEl.style.maxHeight = bodyEl.scrollHeight + "px";
+    pending.then((success) => {
+      // Remesure TOUJOURS, succès ou échec : le message d'erreur a une hauteur différente du
+      // placeholder mesuré plus haut — sauter la remesure en cas d'échec recrée le bug initial,
+      // juste déclenché par une panne réseau plutôt que par un contenu long.
+      if (!success) loaded = false;
+      if (bodyEl && tileEl.classList.contains("expanded")) bodyEl.style.maxHeight = bodyEl.scrollHeight + "px";
+    });
   }
   tileEl.addEventListener("click", toggle);
   tileEl.addEventListener("keydown", (e) => {

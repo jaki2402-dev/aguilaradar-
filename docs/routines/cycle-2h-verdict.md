@@ -123,7 +123,26 @@ résolu en nombre suffisant, logger honnêtement si l'exactitude s'est amélior�
 pas bougé de façon significative — jamais présenter une amélioration qui ne serait pas
 statistiquement confirmée par les chiffres réels.
 
-## 7. Commit — deux étapes obligatoires, pas juste "push"
+## 7. `engine-history.json.routine_health` — à jour à CHAQUE cycle, même sans verdict émis
+
+**Constat du 15/09/2026** : le bandeau de fraîcheur du site (`updateFreshnessIndicator`, `app.js`)
+lit `routine_health.last_success_at` et affiche "la routine semble bloquée" si ce champ dépasse
+12h. Ce champ était resté figé à 16h20 UTC le 14/09 alors que des cycles réels et corrects avaient
+tourné après (dont celui de 20h22 UTC qui a résolu `v-20260907-ctsi` et émis `v-20260914-ctsi`,
+fusionné vers `main` correctement) — le site affichait donc une fausse alerte pendant qu'il
+fonctionnait normalement. Cause : ce champ n'a jamais été formellement spécifié ici, donc mis à
+jour de façon incohérente d'un cycle à l'autre plutôt qu'à chaque fois.
+
+**Mettre à jour `routine_health.last_success_at` (et remettre `consecutive_failures` à 0) à la fin
+de CHAQUE cycle qui s'exécute sans erreur — y compris un cycle qui ne fait "rien" parce qu'aucun
+verdict n'est dû et aucune résolution n'est en retard.** `last_failure_reason` peut continuer à
+porter un résumé texte du cycle (utile pour le debug) même quand il n'y a pas eu d'échec — mais ne
+jamais laisser `last_success_at` immobile simplement parce que rien de nouveau n'a été émis. C'est
+la seule façon pour l'indicateur de fraîcheur de distinguer "routine vivante, rien à signaler ce
+cycle" de "routine réellement bloquée" — les deux ont l'air identiques de l'extérieur si ce champ
+n'avance pas.
+
+## 8. Commit — deux étapes obligatoires, pas juste "push"
 
 **Constat du 14/09/2026** : le premier cycle exécuté sous cette révision a produit un commit
 correct (confidence_pct=65, croisement bien appliqué, `correction_log` correctement mis à jour)
