@@ -465,9 +465,11 @@ async function renderDetailPanel(panelEl, asset) {
   // commentaire au-dessus de renderTechnicalSection le documente déjà pour le reste de la fiche.
   let onchainHtml = "";
   let onchainLive = null;
-  if (asset.cgId === "bitcoin" && typeof fetchBtcOnchainLive === "function") {
+  if (typeof renderOnchainSection === "function") {
     try {
-      onchainLive = await fetchBtcOnchainLive();
+      if (asset.cgId === "bitcoin" && typeof fetchBtcOnchainLive === "function") {
+        onchainLive = await fetchBtcOnchainLive();
+      }
       onchainHtml = renderOnchainSection(asset.cgId, onchainLive, typeof latestOnchainHistory !== "undefined" ? latestOnchainHistory : null);
     } catch (err) {
       console.error("Erreur activité on-chain:", err);
@@ -488,9 +490,9 @@ async function renderDetailPanel(panelEl, asset) {
       const thesisEntry = allData.portfolioThesis && allData.portfolioThesis.positions ? allData.portfolioThesis.positions[asset.cgId] : null;
       const priceEntry = typeof latestFavorisPrices !== "undefined" ? latestFavorisPrices[asset.cgId] : null;
       const marketCapUsd = priceEntry ? priceEntry.usd_market_cap : null;
-      const btcSnapshots = allData.onchainHistory && allData.onchainHistory.assets && allData.onchainHistory.assets.bitcoin ? allData.onchainHistory.assets.bitcoin.snapshots : [];
-      const lastSnapshotTvl = btcSnapshots.length ? btcSnapshots[btcSnapshots.length - 1].tvl_usd : null;
-      const tvlUsd = asset.cgId === "bitcoin" ? (onchainLive && onchainLive.tvl ? onchainLive.tvl.valueUsd : lastSnapshotTvl) : null;
+      const assetSnapshots = allData.onchainHistory && allData.onchainHistory.assets && allData.onchainHistory.assets[asset.cgId] ? allData.onchainHistory.assets[asset.cgId].snapshots : [];
+      const lastSnapshotTvl = assetSnapshots.length ? assetSnapshots[assetSnapshots.length - 1].tvl_usd : null;
+      const tvlUsd = onchainLive && onchainLive.tvl ? onchainLive.tvl.valueUsd : lastSnapshotTvl;
       const supplyEntry = typeof latestFavorisSupply !== "undefined" ? latestFavorisSupply[asset.cgId] : null;
       const breakdown = computeVerdictBreakdown({ verdict: fullVerdict, thesisEntry, marketCapUsd, tvlUsd, supplyEntry });
       breakdownHtml = renderVerdictBreakdown(breakdown);
@@ -525,7 +527,7 @@ async function renderDetailPanel(panelEl, asset) {
     ${asset.horizons ? renderOpportunityHorizonsSection(asset.horizons) : ""}`;
   wireClampToggles(panelEl);
   if (typeof wireOnchainSection === "function") {
-    wireOnchainSection(panelEl.querySelector(".detail-onchain"), typeof latestOnchainHistory !== "undefined" ? latestOnchainHistory : null);
+    wireOnchainSection(panelEl.querySelector(".detail-onchain"), asset.cgId, typeof latestOnchainHistory !== "undefined" ? latestOnchainHistory : null);
   }
 
   if (technicalOk && chartId) mountTradingViewChart(chartId, asset.tvSymbol);

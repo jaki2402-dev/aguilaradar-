@@ -48,20 +48,22 @@ Cette règle garantit qu'aucun favori ne reste périmé plus de ~5 jours ouvrés
 - `open_interest`/`defi_tvl` : privilégier un appel direct à l'API source (CoinGlass pour l'open interest, DefiLlama pour la TVL) ; si l'accès réseau direct échoue (déjà arrivé, proxy de l'environnement), utiliser WebSearch pour trouver un résultat récemment indexé, et le citer explicitement `"<Source> (résultat indexé via WebSearch)"` dans `source` — jamais présenté comme un appel API direct s'il ne l'était pas.
 - **Détection de résultat en cache** : si un résultat WebSearch semble identique à celui du cycle précédent alors que le marché a bougé entre-temps, le signaler dans `note` (ex. "valeur identique au cycle précédent — pourrait provenir d'une page indexée en cache, à vérifier") plutôt que de le présenter comme une vraie confirmation fraîche.
 - `defi_tvl` pour un actif sans DeFi native sur sa propre chaîne (BTC, etc.) : **ne pas conclure "non applicable" sans avoir vérifié le wrapped/bridged** — DefiLlama référence aussi la valeur d'un actif *wrapped/bridged* verrouillée dans la DeFi d'AUTRES chaînes (ex. WBTC/cbBTC et l'exposition BTC sur Ethereum et ailleurs), un chiffre réel et souvent significatif, différent de la TVL native de la chaîne elle-même. Chercher ce chiffre en premier (DefiLlama : page/API "bridged"/actif wrapped concerné, sinon WebSearch ciblé comme ci-dessus) ; s'il existe, le renseigner normalement (`value_usd`, `source`) avec `note` précisant qu'il s'agit d'une exposition wrapped/bridged, pas de TVL native — jamais présenté comme si c'était la TVL de la chaîne elle-même. Seulement si aucun chiffre fiable n'est trouvé, wrapped compris : `value_usd: null`, `note` explique pourquoi — jamais `0`. Repéré le 14/09/2026 : la routine s'arrêtait jusqu'ici à "non applicable" pour BTC sans avoir cherché ce chiffre wrapped.
-- `onchain_signal` : recherche ciblée d'un mouvement whale significatif (>48h non pertinent, voir `available:false` existant) via **Blockscout** (déjà accordé à cette routine) pour les tickers dont l'écosystème est couvert par Blockscout (EVM/L2 : ETH, ARB, INJ, LINK, GRT, ONDO, JUP le cas échéant, etc.). **Audit du 14/09/2026 : seul LINK avait `onchain_signal.available:true`** — objectif de cette révision : vérifier Blockscout pour CHAQUE ticker EVM-compatible retraité ce cycle (pas seulement de façon opportuniste), même si la réponse reste souvent `available:false` faute de mouvement significatif. Pour les tickers hors écosystème EVM (BTC, TIA, LPT non-EVM, etc.), garder la méthode de recherche actuelle.
+- `onchain_signal` : recherche ciblée d'un mouvement whale significatif (>48h non pertinent, voir `available:false` existant) via **Blockscout** (déjà accordé à cette routine) pour les tickers dont l'écosystème est couvert par Blockscout (EVM/L2 : ETH, ARB, LINK, GRT, ONDO, JUP le cas échéant, etc.). **Audit du 14/09/2026 : seul LINK avait `onchain_signal.available:true`** — objectif de cette révision : vérifier Blockscout pour CHAQUE ticker EVM-compatible retraité ce cycle (pas seulement de façon opportuniste), même si la réponse reste souvent `available:false` faute de mouvement significatif. **Correction du 15/09/2026 : INJ retiré de cette liste** — `get_chains_list` (Blockscout MCP) ne renvoie aucun résultat pour "Injective" (vérifié en direct), la chaîne Injective (Cosmos SDK) n'est pas couverte par Blockscout ; seule une "Injective EVM" existe en testnet à ce jour, pas en mainnet — ne pas réintroduire INJ ici sans revérifier. Pour les tickers hors écosystème EVM (BTC, TIA, INJ, PEAQ, AIOZ, FLUX — tous confirmés non-EVM), garder la méthode de recherche actuelle (WebSearch ciblé).
 
 ---
 
-## 2. `data/onchain-history.json` — nouveau, historique quotidien BTC
+## 2. `data/onchain-history.json` — historique quotidien, 8 actifs avec chaîne propre
 
-**Nouvelle responsabilité de cette routine** (ajoutée le 14/09/2026, alimente les graphiques on-chain de la fiche Bitcoin — `js/onchain.js`). Fichier **append-only, jamais réécrit** : un snapshot réel ajouté par jour, jamais interpolé, jamais rétro-daté, jamais fabriqué si une métrique manque.
+**Étendu le 15/09/2026** (ajouté le 14/09/2026 pour BTC seul, alimente les graphiques on-chain de `js/onchain.js` — `renderOnchainSection`/`ONCHAIN_OWN_CHAIN_ASSETS`). Fichier **append-only, jamais réécrit** : un snapshot réel ajouté par jour et par actif, jamais interpolé, jamais rétro-daté, jamais fabriqué si une métrique manque.
 
-### Forme exacte
+**Les 8 actifs concernés** (chaîne propre confirmée — voir le commentaire `ONCHAIN_OWN_CHAIN_ASSETS` dans `js/onchain.js` pour le raisonnement complet) : `bitcoin`, `ethereum`, `arbitrum`, `celestia`, `injective-protocol`, `peaq-2`, `aioz-network`, `zelcash` (FLUX). **7 des 15 favoris n'en font PAS partie** — `the-graph`, `cartesi`, `chainlink`, `ondo-finance`, `livepeer`, `jupiter-exchange-solana` n'ont pas de chaîne propre (jetons sur Ethereum/Solana, voir `ONCHAIN_NO_OWN_CHAIN_ASSETS`) : **ne jamais leur écrire de snapshot ici**, la métrique n'aurait pas de sens (mesurerait Ethereum/Solana en général). `fetch-ai` n'est dans AUCUNE des deux listes : statut réellement incertain (ex-chaîne propre "fetchhub", fusion ASI Alliance depuis) — **avant d'écrire quoi que ce soit pour FET, vérifier par une vraie recherche web si le jeton a encore une chaîne propre active aujourd'hui**, puis mettre à jour `ONCHAIN_OWN_CHAIN_ASSETS`/`ONCHAIN_NO_OWN_CHAIN_ASSETS` dans `js/onchain.js` en conséquence (et ce document) — ne pas se contenter de deviner ici.
+
+### Forme exacte (même forme par actif, clé = `cgId`)
 
 ```json
 {
   "assets": {
-    "bitcoin": {
+    "<cgId>": {
       "snapshots": [
         {
           "date": "YYYY-MM-DD",
@@ -79,14 +81,18 @@ Cette règle garantit qu'aucun favori ne reste périmé plus de ~5 jours ouvrés
 
 ### Procédure, une fois par exécution (après la rotation des favoris ci-dessus)
 
-1. Vérifier qu'aucun snapshot n'existe déjà pour la date du jour (UTC) — si oui, ne rien faire (jamais deux snapshots le même jour, jamais un doublon écrasé).
-2. Pour chacune des 3 métriques, tenter un appel direct à l'API publique correspondante :
-   - `tvl_usd` : DefiLlama, `https://api.llama.fi/v2/historicalChainTvl/bitcoin` (dernier point du tableau).
-   - `tx_per_day` : Blockchain.com, `https://api.blockchain.info/stats?format=json`, champ `n_tx`.
-   - `active_addresses` : Blockchain.com, `https://api.blockchain.info/charts/n-unique-addresses?timespan=2days&format=json`, dernier point.
-3. Si l'appel direct échoue (proxy réseau bloqué, comme déjà documenté pour d'autres tâches de cette routine) : essayer une fois via WebSearch un résultat récent et fiable pour cette métrique précise ; sinon laisser le champ à `null` et documenter la raison dans `source.<champ>` (ex. `"non confirmé ce cycle — API et WebSearch tous deux indisponibles"`).
-4. **Ne jamais écrire un snapshot dont les 3 champs sont `null`** — dans ce cas, ne rien ajouter ce jour plutôt que d'ajouter une ligne vide qui polluerait le graphique.
-5. Ajouter le nouveau snapshot à la fin du tableau `snapshots` (ordre chronologique croissant, jamais réordonné/retrié).
+Pour **chacun** des 8 `cgId` ci-dessus (pas seulement bitcoin) :
+
+1. Vérifier qu'aucun snapshot n'existe déjà pour ce `cgId` à la date du jour (UTC) — si oui, passer à l'actif suivant (jamais deux snapshots le même jour pour le même actif, jamais un doublon écrasé).
+2. Pour chacune des 3 métriques, tenter une vraie source, **par famille de chaîne** (ne jamais réutiliser une méthode d'une famille pour une autre) :
+   - **bitcoin** (déjà en place, ne pas modifier) : `tvl_usd` via DefiLlama `https://api.llama.fi/v2/historicalChainTvl/bitcoin` ; `tx_per_day`/`active_addresses` via Blockchain.com (`/stats?format=json` champ `n_tx`, `/charts/n-unique-addresses?timespan=2days&format=json` dernier point).
+   - **ethereum, arbitrum** (EVM, Blockscout) : utiliser l'outil MCP Blockscout déjà accordé à cette routine — `direct_api_call(chain_id="1"` pour ethereum, `"42161"` pour arbitrum`, endpoint_path="/api/v2/stats/charts/transactions")`, dernier point du tableau `chart_data` (champ `transactions_count`) pour `tx_per_day`. **Confirmé réellement le 15/09/2026 pour ethereum** (données reçues, dates et volumes réalistes) — arbitrum utilise le même produit Blockscout donc attendu identique, non revérifié séparément à ce jour : si l'appel échoue pour arbitrum spécifiquement, le signaler (`source.tx_per_day` explique l'échec) plutôt que de supposer que la méthode entière est cassée. `active_addresses` : pas d'endpoint confirmé à ce jour — chercher dans `/stats-service/api/v1/lines` (catalogue de graphiques nommés) un nom lié aux adresses actives, sinon WebSearch ; si rien de fiable, laisser `null`. `tvl_usd` : DefiLlama `https://api.llama.fi/v2/historicalChainTvl/{chain}` avec `chain` = `Ethereum`/`Arbitrum` (nom exact à confirmer sur `https://defillama.com/chains` si le premier essai échoue).
+   - **celestia, injective-protocol, peaq-2, aioz-network, zelcash** : aucune source vérifiée depuis une session de développement (proxy sortant bloqué sur ces domaines lors de la rédaction de cette section — voir `js/onchain.js`, commentaire au-dessus de `ONCHAIN_OWN_CHAIN_ASSETS`). Cette routine a un vrai accès WebSearch : chercher l'explorateur public de chaque chaîne (ex. Celenium pour Celestia, l'explorateur RunOnFlux pour Flux) et sa documentation API, confirmer que l'endpoint répond réellement avant de s'en servir, puis réutiliser la même méthode aux cycles suivants une fois confirmée — documenter la source trouvée dans `source.<champ>` à chaque écriture pour que ce soit traçable.
+3. Si une métrique reste incertaine après l'appel direct et une tentative WebSearch : laisser le champ à `null` et documenter la raison dans `source.<champ>` (ex. `"non confirmé ce cycle — API et WebSearch tous deux indisponibles"`) — jamais une valeur devinée.
+4. **Ne jamais écrire un snapshot dont les 3 champs sont `null`** pour un actif donné — dans ce cas, ne rien ajouter ce jour pour CET actif (les autres actifs de la liste ne sont pas affectés) plutôt que d'ajouter une ligne vide qui polluerait son graphique.
+5. Ajouter le nouveau snapshot à la fin du tableau `snapshots` de l'actif concerné (ordre chronologique croissant, jamais réordonné/retrié).
+
+**Ne pas tout faire d'un coup si le budget d'appels/temps du cycle est serré** : bitcoin et ethereum/arbitrum (méthode confirmée) d'abord ; les 5 chaînes non-EVM peuvent progresser un actif de plus par cycle plutôt que de risquer un cycle incomplet ou trop long — cohérent avec la règle "jamais deviner, jamais fabriquer" de ce document : mieux vaut un actif de moins ce cycle qu'une source non vérifiée.
 
 ## 3. Commit — deux étapes obligatoires, pas juste "push"
 
