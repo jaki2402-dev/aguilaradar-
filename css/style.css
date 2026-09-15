@@ -577,7 +577,11 @@ h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }
   max-height: 0; overflow: hidden; opacity: 0;
   transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
 }
-.portfolio-tile.expanded .portfolio-tile-body { max-height: 2400px; opacity: 1; margin-top: 10px; }
+/* Le plafond n'est plus un nombre fixe dans la classe (voir CLAUDE.md, piège du 15/09 : un
+   contenu réel plus long qu'un plafond deviné se retrouve coupé, sans aucun moyen de défiler
+   pour voir le reste) — attachPortfolioToggle (portfolio.js) pose max-height en ligne à la vraie
+   scrollHeight du contenu, avant ET après le chargement de la section technique. */
+.portfolio-tile.expanded .portfolio-tile-body { opacity: 1; margin-top: 10px; }
 /* Raisonnement technique (moteur) vs thèse hebdo (recherche web réelle, distincte — voir
    CLAUDE.md/portfolio-thesis.json) : la thèse reprend le traitement "sous-carte" de
    .detail-signal plus bas, pour se lire comme un module à part plutôt qu'un paragraphe de plus
@@ -1065,7 +1069,14 @@ footer.site-footer {
   max-height: 0; overflow: hidden; opacity: 0;
   transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
 }
-.detail-panel.open { max-height: 2400px; opacity: 1; margin-top: 14px; }
+/* Pas de plafond fixe ici (c'était 2400px) : un favori avec beaucoup de contenu réel (ex. BTC,
+   activité on-chain + contexte élargi + décomposition) peut dépasser n'importe quel nombre
+   deviné à l'avance selon la longueur du texte réellement écrit par la routine ce cycle-là —
+   repéré le 15/09 (utilisateur bloqué, plus aucun défilement possible pour voir la suite, sans
+   que rien ne soit visuellement cassé — juste coupé net). attachDetailToggle (detail.js) pose
+   max-height en ligne à la vraie scrollHeight du panneau, avant ET après son chargement
+   asynchrone — ne peut plus jamais couper du contenu réel, quelle que soit sa longueur. */
+.detail-panel.open { opacity: 1; margin-top: 14px; }
 .detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; }
 .detail-signal {
   background: var(--bg-elevated); border: 1px solid var(--border); border-radius: var(--radius-sm);
