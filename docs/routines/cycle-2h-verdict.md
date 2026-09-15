@@ -100,6 +100,47 @@ rien au calcul de la section 2, mais renforce la légitimité du `reasoning`.
 **Ne jamais** transformer ce croisement en une 2e opinion inventée — c'est une lecture de deux
 données déjà réelles, jamais une extrapolation au-delà de ce qu'elles disent.
 
+### `signal_consensus.macro`/`regime_at_issue` — dériver de `data/market-context.json`, pas du seul fear & greed
+
+**Constat du 15/09/2026 : ce document n'a jamais dit comment déterminer `regime_at_issue`, et les
+cycles récents (lus dans `routine_health.last_failure_reason`) le déduisaient uniquement de
+l'indice fear & greed** — un baromètre de sentiment, alors que `data/market-context.json`
+(écrit par `aguilaradar-marche-quotidien`, lecture seule, aucun nouvel appel réseau requis) contient
+des données macro bien plus rigoureuses, déjà collectées et déjà affichées sur le site (Moteur →
+Contexte marché) mais jamais lues par cette routine : `fed_policy` (taux directeur, `stance`
+hawkish/dovish/neutral, rendement du Trésor 10 ans, date de la prochaine réunion FOMC),
+`etf_flows` (flux nets ETF spot BTC/ETH, avec détail par émetteur), `stablecoins` (capitalisation
+totale, dominance), `gold` (prix spot, ratio BTC/or). Ignorer ce fichier revient à juger la
+"macro" avec le signal le plus faible disponible alors que le plus solide existe déjà à côté.
+
+**À chaque cycle, avant de fixer `signal_consensus.macro` et `regime_at_issue` sur CHAQUE verdict
+du cycle (le contexte macro est le même pour tous, pas la peine de le relire par ticker)** :
+
+1. Lire `data/market-context.json` en entier (`fed_policy`, `etf_flows`, `stablecoins` au minimum).
+2. Combiner qualitativement, jamais avec une formule numérique inventée (même principe que
+   `signal_consensus` en général — un désaccord entre signaux est montré, jamais masqué par un
+   score composite) :
+   - `fed_policy.stance` "hawkish" + rendement 10 ans en hausse marquée → pression vers `risk-off`
+     (coût du capital plus élevé, moins favorable aux actifs à risque).
+   - `etf_flows` nets positifs et croissants sur BTC/ETH → pression vers `risk-on` (demande
+     institutionnelle réelle, indépendante du sentiment retail).
+   - `stablecoins.dominance_pct` en hausse (la part du marché total en stablecoins augmente) →
+     signal `risk-off` (capital qui se met en attente plutôt que déployé) ; en baisse → `risk-on`.
+   - Fear & greed reste un signal parmi d'autres, jamais le seul — le combiner avec les 3
+     ci-dessus, pas le remplacer par eux ni l'ignorer.
+3. **Ces signaux ne s'alignent pas toujours — un cas réel rencontré le 15/09 : Fed hawkish + 10 ans
+   ayant brièvement dépassé 5 % (plus haut depuis 2023) pointent `risk-off`, alors que les flux ETF
+   BTC/ETH sont nets positifs sur plusieurs séances, ce qui pointe `risk-on`.** Dans ce genre de cas,
+   retenir `neutre` plutôt que de forcer une lecture, et **le dire explicitement** dans le
+   `reasoning` du verdict concerné (ex. "Régime macro neutre : Fed toujours restrictive et
+   rendement 10 ans au plus haut depuis 2023, mais flux ETF BTC/ETH nets positifs — signaux macro
+   contradictoires, retenus comme tels plutôt que tranchés arbitrairement") — jamais résoudre la
+   contradiction en choisissant le signal qui arrange le verdict déjà envisagé.
+4. Un événement macro imminent et connu (ex. `fed_policy.next_fomc_date` dans les 24-48h) mérite
+   une mention explicite dans `reasoning` même sans trancher le régime — un verdict émis juste
+   avant une décision Fed importante porte un risque différent d'un verdict émis juste après,
+   information utile même si elle ne change pas `signal_consensus.macro` en soi.
+
 ## 5. Résolution des verdicts en attente
 
 À chaque cycle, pour tout verdict `status:"pending"` dont `resolves_at` est dépassé : calculer
