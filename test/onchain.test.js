@@ -5,7 +5,7 @@ const DAY = 86400000;
 const daysAgo = (n) => new Date(Date.now() - n * DAY).toISOString().slice(0, 10);
 
 function loadOnchainPage() {
-  return loadPage(["config.js", "cards.js", "onchain.js"]);
+  return loadPage(["config.js", "prices.js", "cards.js", "onchain.js"]);
 }
 
 describe("onchain.js — fetchBtcTvlLive", () => {
@@ -174,8 +174,8 @@ describe("onchain.js — renderOnchainSection", () => {
   const dom = loadOnchainPage();
   const { renderOnchainSection } = dom.window;
 
-  it("returns an empty string for any asset other than bitcoin", () => {
-    expect(renderOnchainSection("ethereum", null, null)).toBe("");
+  it("returns an empty string for an asset outside both on-chain categorizations (e.g. an opportunity, never verified)", () => {
+    expect(renderOnchainSection("some-random-opportunity-coin", null, null)).toBe("");
   });
 
   it("renders the section for bitcoin even with no history yet", () => {
@@ -187,5 +187,52 @@ describe("onchain.js — renderOnchainSection", () => {
   it("tolerates a missing/malformed onchainHistory argument", () => {
     expect(() => renderOnchainSection("bitcoin", null, null)).not.toThrow();
     expect(() => renderOnchainSection("bitcoin", null, {})).not.toThrow();
+  });
+
+  it("renders history-only charts (no live cards) for a non-BTC own-chain asset like ethereum", () => {
+    const html = renderOnchainSection("ethereum", null, { assets: { ethereum: { snapshots: [] } } });
+    expect(html).toContain("Activité on-chain");
+    expect(html).toContain("Historique insuffisant");
+    expect(html).not.toContain("Transactions en attente"); // carte "direct" spécifique BTC (fetchBtcOnchainLive), jamais pour un autre actif
+  });
+
+  it("renders real history points for a non-BTC own-chain asset when snapshots exist", () => {
+    const snapshots = [
+      { date: daysAgo(2), tvl_usd: 1, tx_per_day: 1900000, active_addresses: 500000 },
+      { date: daysAgo(1), tvl_usd: 1, tx_per_day: 2000000, active_addresses: 520000 },
+    ];
+    const html = renderOnchainSection("arbitrum", null, { assets: { arbitrum: { snapshots } } });
+    expect(html).toContain((2000000).toLocaleString("fr-FR"));
+  });
+
+  it("renders an honest explanation, not a chart, for a token with no chain of its own", () => {
+    const html = renderOnchainSection("chainlink", null, null);
+    expect(html).toContain("Activité on-chain");
+    expect(html).toContain("n'a pas de chaîne propre");
+    expect(html).not.toContain("onchain-history-chart");
+  });
+
+  it("does not classify fetch-ai either way (status genuinely unverified, not guessed)", () => {
+    expect(renderOnchainSection("fetch-ai", null, null)).toBe("");
+  });
+});
+
+describe("onchain.js — wireOnchainSection", () => {
+  const dom = loadOnchainPage();
+  const { document, wireOnchainSection, renderOnchainSection } = dom.window;
+
+  it("wires chart tabs using the given asset's own snapshots, not another asset's", () => {
+    const snapshots = [
+      { date: daysAgo(2), tvl_usd: 10, tx_per_day: 1, active_addresses: 1 },
+      { date: daysAgo(1), tvl_usd: 20, tx_per_day: 2, active_addresses: 2 },
+    ];
+    const container = document.createElement("div");
+    container.innerHTML = renderOnchainSection("ethereum", null, { assets: { ethereum: { snapshots } } });
+    document.body.appendChild(container);
+    expect(() => wireOnchainSection(container.querySelector(".detail-onchain"), "ethereum", { assets: { ethereum: { snapshots } } })).not.toThrow();
+  });
+
+  it("tolerates a missing section element", () => {
+    expect(() => wireOnchainSection(null, "bitcoin", null)).not.toThrow();
   });
 });

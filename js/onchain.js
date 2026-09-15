@@ -3,13 +3,18 @@
 // mêmes sources publiques gratuites que prices.js/detail.js, jamais de clé API, jamais une
 // valeur inventée si l'appel échoue. "Historique" (renderMetricHistoryChart) = lit
 // data/onchain-history.json, un snapshot réel par jour écrit par une routine (voir
-// docs/routines/favoris-quotidien-onchain-history.md) — jamais un historique fabriqué ici.
+// docs/routines/favoris-quotidien.md §2) — jamais un historique fabriqué ici.
 //
-// Bitcoin seulement pour l'instant : seul actif suivi avec des API publiques stables et
-// gratuites sans clé pour ces métriques précises (DefiLlama pour la TVL de la chaîne,
-// mempool.space pour les frais/mempool, Blockchain.com pour les tx/jour). Étendre à d'autres
-// actifs demanderait une source fiable par écosystème (ex. un explorateur Ethereum pour ETH) —
-// hors périmètre de cette première version, pas oublié.
+// Bitcoin seul a le niveau "direct" (navigateur) : seul actif avec des API publiques stables et
+// gratuites sans clé confirmées pour ces métriques précises (DefiLlama, mempool.space,
+// Blockchain.com). Étendu le 15/09/2026 à 7 actifs de plus (ETH, ARB, TIA, INJ, PEAQ, AIOZ, FLUX
+// — voir ONCHAIN_OWN_CHAIN_ASSETS ci-dessous) au niveau "historique" SEULEMENT : Blockscout, la
+// source la plus solide pour les chaînes EVM, exige maintenant une clé "PRO" pour un usage
+// programmatique — pas le genre d'API "stable et gratuite sans clé" que ce fichier exige pour un
+// fetch navigateur, donc écrit côté routine (qui a son propre accès Blockscout) plutôt que fetché
+// ici. Les 6 jetons sans chaîne propre (GRT, CTSI, LINK, ONDO, LPT, FET pas encore classé) n'ont
+// ni direct ni historique — voir ONCHAIN_NO_OWN_CHAIN_ASSETS, une explication plutôt qu'un chiffre
+// qui mesurerait Ethereum/Solana en général.
 //
 // Avertissement honnête : les formes de réponse ci-dessous viennent de la documentation connue
 // de ces API publiques, pas d'un test réseau réel depuis cet environnement (le proxy sortant de
@@ -197,17 +202,47 @@ function wireOnchainChartTabs(cardEl, title, snapshots, valueKey, formatValue) {
   });
 }
 
-// Section complète "Activité on-chain" pour la fiche BTC — direct (déjà résolu par
-// fetchBtcOnchainLive) + historique (snapshots déjà chargés depuis data/onchain-history.json,
-// voir latestOnchainHistory dans app.js). Retourne "" pour tout autre actif : cohérent avec le
-// reste de cette section de code, jamais une carte vide ou "non disponible" pour un actif où la
-// question ne se pose même pas.
+// Actifs avec une vraie chaîne à eux (la question "TVL du réseau / tx par jour / adresses
+// actives" a un sens) — vérifié projet par projet le 15/09/2026, pas une hypothèse générale sur
+// "a un jeton natif" :
+// - bitcoin : direct (fetchBtcOnchainLive) + historique, en place depuis le 14/09.
+// - ethereum, arbitrum : EVM, couverts par Blockscout — tx/jour confirmé réellement (appel direct
+//   /api/v2/stats/charts/transactions, chain_id 1, données réelles reçues) le 15/09/2026 ; arbitrum
+//   utilise le même produit Blockscout (chain_id 42161, non revérifié séparément) donc supposé pareil.
+//   Historique seulement pour l'instant (pas de niveau "direct" navigateur : Blockscout exige
+//   désormais une clé "PRO" pour son usage programmatique — voir docs/routines/favoris-quotidien.md
+//   §2 — donc écrit par la routine, pas fetché depuis le navigateur comme pour BTC).
+// - celestia, injective-protocol, peaq-2, aioz-network, zelcash : chaîne propre confirmée, mais
+//   aucune source précise vérifiée depuis cette session (proxy sortant bloqué sur ces domaines,
+//   voir docs/routines/favoris-quotidien.md §2) — recherche laissée à la routine (WebSearch réel).
+//   Historique vide ("Historique insuffisant") tant qu'aucun snapshot réel n'existe, jamais fabriqué.
+const ONCHAIN_OWN_CHAIN_ASSETS = ["bitcoin", "ethereum", "arbitrum", "celestia", "injective-protocol", "peaq-2", "aioz-network", "zelcash"];
+
+// Jetons SANS chaîne propre (circulent sur Ethereum ou Solana) : "l'activité on-chain" mesurerait
+// ce réseau hôte en général, pas ce projet précisément — un chiffre honnête mais trompeur si
+// présenté comme spécifique à ce jeton. Une explication est affichée à la place d'un graphique.
+// fetch-ai (FET) volontairement absent des deux listes : avait sa propre chaîne (fetchhub) mais
+// son statut a évolué depuis la fusion ASI Alliance — à reconfirmer par une vraie recherche avant
+// de classer, pas deviné ici (donc aucune section affichée pour FET pour l'instant).
+const ONCHAIN_NO_OWN_CHAIN_ASSETS = ["the-graph", "cartesi", "chainlink", "ondo-finance", "livepeer", "jupiter-exchange-solana"];
+
+// Section complète "Activité on-chain" — direct (fetchBtcOnchainLive, BTC uniquement) + historique
+// (snapshots déjà chargés depuis data/onchain-history.json, voir latestOnchainHistory dans
+// app.js) pour tout actif de ONCHAIN_OWN_CHAIN_ASSETS ; une explication pour un jeton sans chaîne
+// propre ; "" pour tout le reste (un actif hors des 15 favoris, ex. une opportunité, où cette
+// catégorisation n'a jamais été vérifiée) — jamais une carte vide ou une supposition non vérifiée.
 function renderOnchainSection(cgId, live, onchainHistory) {
-  if (cgId !== "bitcoin") return "";
-  const snapshots = (onchainHistory && onchainHistory.assets && onchainHistory.assets.bitcoin && onchainHistory.assets.bitcoin.snapshots) || [];
+  if (ONCHAIN_NO_OWN_CHAIN_ASSETS.includes(cgId)) {
+    return `<div class="detail-onchain">
+      <strong>Activité on-chain</strong>
+      <p class="hint">Ce jeton n'a pas de chaîne propre (il circule sur Ethereum ou Solana) : mesurer "l'activité on-chain" reviendrait à mesurer l'activité de ce réseau en général, pas celle de ce projet précisément — pas affiché ici pour cette raison, plutôt qu'un chiffre trompeur.</p>
+    </div>`;
+  }
+  if (!ONCHAIN_OWN_CHAIN_ASSETS.includes(cgId)) return "";
+  const snapshots = (onchainHistory && onchainHistory.assets && onchainHistory.assets[cgId] && onchainHistory.assets[cgId].snapshots) || [];
   return `<div class="detail-onchain">
     <strong>Activité on-chain</strong>
-    ${renderOnchainLiveCards(live)}
+    ${cgId === "bitcoin" ? renderOnchainLiveCards(live) : ""}
     <div class="onchain-history-grid">
       ${renderMetricHistoryChart("TVL du réseau", snapshots, "tvl_usd", (v) => formatMarketCap(v))}
       ${renderMetricHistoryChart("Transactions par jour", snapshots, "tx_per_day", (v) => v.toLocaleString("fr-FR"))}
@@ -216,9 +251,9 @@ function renderOnchainSection(cgId, live, onchainHistory) {
   </div>`;
 }
 
-function wireOnchainSection(sectionEl, onchainHistory) {
+function wireOnchainSection(sectionEl, cgId, onchainHistory) {
   if (!sectionEl) return;
-  const snapshots = (onchainHistory && onchainHistory.assets && onchainHistory.assets.bitcoin && onchainHistory.assets.bitcoin.snapshots) || [];
+  const snapshots = (onchainHistory && onchainHistory.assets && onchainHistory.assets[cgId] && onchainHistory.assets[cgId].snapshots) || [];
   const charts = [
     { key: "tvl_usd", title: "TVL du réseau", format: (v) => formatMarketCap(v) },
     { key: "tx_per_day", title: "Transactions par jour", format: (v) => v.toLocaleString("fr-FR") },
