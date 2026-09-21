@@ -136,19 +136,17 @@ révèle mauvaise (ACHAT/VENTE plus souvent faux qu'ATTENTE ne l'était), ce ser
 cette règle avant qu'un lot d'au moins ~10 verdicts émis sous elle ait atteint son horizon** (7-14
 jours) — même principe que `MIN_RESOLVED_FOR_SELF_ASSESSMENT` côté site (`js/engine.js`).
 
-**Anomalie de données non corrigée, signalée pour mémoire** : `v-20260807-btc` et `v-20260807-eth`
-ont un `signal_precoce.note` (déjà en place depuis leur émission) signalant que leur
-`price_at_issue` (55 800 $ BTC, 1 649,89 $ ETH) divergeait de ~16-17 % d'une double vérification
-indépendante faite au moment de l'émission — anomalie repérée par la routine elle-même mais jamais
-corrigée depuis ; `outcome` a été calculé depuis ce prix probablement erroné quand même. Impact
-mesuré : ≤2 points sur `accuracy_strict_pct` (2 verdicts sur 56), donc pas la cause du problème
-principal ci-dessus, mais un vrai résidu non tranché : soit corriger `price_at_issue` sur ces 2
-entrées avec `outcome` recalculé en conséquence (rupture ponctuelle et documentée du principe
-append-only, justifiable par une donnée connue comme fausse), soit les exclure explicitement des
-statistiques agrégées avec une note — jamais laisser les deux valeurs fausses continuer à peser
-silencieusement sur le bilan sans le dire. Décision non prise dans cette révision (nécessite une
-vraie source de prix historique pour confirmer avant de corriger quoi que ce soit, règle absolue
-en tête de ce document) — à trancher par la routine ou une session future avec l'outil adéquat.
+**Fausse alerte vérifiée et classée le 21/09/2026** : `v-20260807-btc` et `v-20260807-eth` portent
+un `signal_precoce.note` (déjà en place depuis leur émission) signalant un écart de ~16-17 % entre
+leur `price_at_issue` et une double vérification faite le 10/08. Revérifié le 21/09 via l'historique
+CoinGecko réel (`/coins/bitcoin/history` et `/coins/ethereum/history`, 07/08/2026) : BTC 55 764 €
+contre `price_at_issue` stocké 55 800 (écart 0,06 %), ETH 1 650,60 € contre 1 649,89 stocké (écart
+0,04 %) — **les deux prix stockés sont corrects**, l'écart était dans la note d'origine, pas dans
+la donnée. Cause : la note du 10/08 comparait `price_at_issue` en euros à des sources citées en
+dollars (~64-65k$, qui correspondent en fait à 64 262,75 $ confirmés par CoinGecko pour cette même
+date — cohérent, juste dans l'autre devise) sans convertir. Aucune correction de `price_at_issue`
+ou `outcome` nécessaire ; `signal_precoce.note` des deux verdicts complétée d'une ligne pointant
+vers cette réévaluation plutôt que réécrite, pour garder la trace de ce qui a été cru puis vérifié.
 
 ## 3. Horizon adaptatif — déjà en place, ne pas casser
 
