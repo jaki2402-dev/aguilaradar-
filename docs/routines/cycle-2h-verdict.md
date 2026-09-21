@@ -21,6 +21,21 @@ exactement le risque de "fausse précision" que ce projet s'interdit ailleurs. C
 ces deux points précis, pas une refonte totale — voir `docs/verdict-methodology.md` pour le cadre
 plus large (5 catégories) dont ce prompt n'implémente aujourd'hui que la partie Momentum.
 
+**Mise à jour du 21/09/2026, après cette révision — un 2e trou trouvé, distinct du premier.** La
+formule `confidence_pct` ci-dessus fonctionne (la concentration sur 50/60 a disparu : valeurs
+47-77 % observées sur les 15 verdicts émis depuis), mais l'exactitude n'a pas bougé et la
+couverture non plus — toujours ~25 % d'exactitude (56 résolus), toujours ~79-80 % d'ATTENTE avant
+ET après cette révision (44/56 puis 12/15). Analyse chiffrée sur les 56 verdicts résolus : quand
+`signal_consensus.technique = "baissier"`, le verdict final est ATTENTE dans 10 cas sur 10 (jamais
+VENTE) ; quand `accord_count = 1` (32 cas, le groupe le plus fréquent), le verdict est ATTENTE dans
+32 cas sur 32 — alors que la section 2 ci-dessous ne prévoit ce forçage que pour `accord_count = 0`.
+**La règle qui transforme `signal_consensus.technique` en ACHAT/ATTENTE/VENTE n'a jamais été
+spécifiée dans ce document** — seule la confiance associée l'était, en supposant le verdict déjà
+choisi. Dans les faits, un signal baissier ou un accord faible se voit systématiquement rabattu
+vers ATTENTE, un biais de prudence non écrit que la formule de confiance ne pouvait pas corriger
+puisqu'elle ne détermine que le chiffre, pas la direction. Voir la nouvelle sous-section à la fin
+de la section 2 pour la règle qui comble ce trou.
+
 ## Règle absolue (s'applique à tout ce document)
 
 **Ne jamais inventer un prix, un signal ou une donnée.** Un signal non confirmé par une vraie
@@ -73,6 +88,67 @@ Ne jamais sortir de ces fourchettes pour "faire un chiffre rond" — choisir une
 dans la fourchette selon la force réelle des signaux (ex. un mouvement de prix net + volume
 confirmé pèse plus qu'un mouvement de prix seul), documentée en une phrase dans `reasoning` si le
 choix dans la fourchette n'est pas évident.
+
+### Sélection ACHAT/ATTENTE/VENTE — le trou réel, pas juste `confidence_pct` (trouvé le 21/09/2026)
+
+**Ce document n'a jamais dit, explicitement, comment `signal_consensus.technique` devient le
+verdict final (`ACHAT`/`ATTENTE`/`VENTE`).** Seule la formule de confiance ci-dessus était
+spécifiée, en supposant le verdict déjà choisi. Dans les faits, ce choix non écrit s'est révélé
+systématiquement prudent, dans un sens qui ne colle pas à ce qui s'est réellement passé :
+
+- Sur les 56 verdicts résolus au 21/09/2026, `technique = "baissier"` a mené à ATTENTE 10 fois sur
+  10, **jamais** à VENTE — alors que 14 des 56 résolutions réelles (25 %) étaient effectivement une
+  baisse au-delà du seuil.
+- `accord_count = 1` (32 cas sur 56, le groupe le plus fréquent) a mené à ATTENTE 32 fois sur 32 —
+  alors que la section ci-dessus ne force ATTENTE qu'à `accord_count = 0`, jamais à 1.
+- Conséquence mesurée : 44 des 56 verdicts résolus (78,6 %) sont ATTENTE, alors que seulement 10
+  des 56 résolutions réelles (17,9 %) sont effectivement restées sous le seuil — le moteur
+  s'abrite dans ATTENTE près de 5x plus souvent que ce que le marché a réellement fait sur cette
+  période (couverture actuelle : 21 %).
+- Ce biais est **antérieur ET postérieur** à `corr-20260914-confidence-formule-reproductible`
+  (44/56 = 78,6 % avant, 12/15 = 80 % après) : la formule de confiance a résolu la concentration
+  sur 50/60 %, un vrai problème, mais n'a jamais touché ce mécanisme-ci — deux trous distincts.
+
+**Règle, à partir de cette révision** — un seul levier, directement branché sur
+`signal_consensus.technique` qui existe déjà, sans introduire de nouvelle donnée ni de formule
+numérique inventée :
+
+- `technique = "haussier"` et `accord_count ≥ 1` → le verdict **doit** être `ACHAT` (jamais ATTENTE
+  par prudence).
+- `technique = "baissier"` et `accord_count ≥ 1` → le verdict **doit** être `VENTE` (jamais ATTENTE
+  par prudence).
+- `technique` ∈ {"mixte", "neutre", "insuffisant", "a_risque_retournement", "peu_fiable"} →
+  ATTENTE, comme aujourd'hui (aucun changement ici, cette partie n'est pas le problème).
+- `accord_count = 0` → ATTENTE reste forcé (règle existante ci-dessus, inchangée).
+
+**Ne pas confondre avec la section 4** : le plafonnement d'`accord_count` à 1 en cas de
+contradiction avec `favoris-context.json`/`portfolio-thesis.json` reste inchangé et s'applique
+normalement AVANT cette règle — un `technique` haussier plafonné à `accord_count = 1` par la
+section 4 donne toujours ACHAT (accord_count ≥ 1), pas ATTENTE : seul `accord_count = 0`
+(contradiction totale entre les 3 dimensions) annule la direction.
+
+**Pourquoi ce choix et pas un autre** : c'est la lecture technique déjà calculée et déjà écrite
+(`signal_consensus.technique`) qui décide, jamais une nouvelle mesure inventée. Si cette règle se
+révèle mauvaise (ACHAT/VENTE plus souvent faux qu'ATTENTE ne l'était), ce sera visible dans
+`accuracy_strict_pct` du prochain lot résolu et devra être documenté honnêtement dans
+`correction_log` — comme `corr-20260906-test-horizon-adaptatif` puis
+`corr-20260913-biais-chasse-momentum` l'ont déjà fait pour l'horizon adaptatif. **Ne pas juger
+cette règle avant qu'un lot d'au moins ~10 verdicts émis sous elle ait atteint son horizon** (7-14
+jours) — même principe que `MIN_RESOLVED_FOR_SELF_ASSESSMENT` côté site (`js/engine.js`).
+
+**Anomalie de données non corrigée, signalée pour mémoire** : `v-20260807-btc` et `v-20260807-eth`
+ont un `signal_precoce.note` (déjà en place depuis leur émission) signalant que leur
+`price_at_issue` (55 800 $ BTC, 1 649,89 $ ETH) divergeait de ~16-17 % d'une double vérification
+indépendante faite au moment de l'émission — anomalie repérée par la routine elle-même mais jamais
+corrigée depuis ; `outcome` a été calculé depuis ce prix probablement erroné quand même. Impact
+mesuré : ≤2 points sur `accuracy_strict_pct` (2 verdicts sur 56), donc pas la cause du problème
+principal ci-dessus, mais un vrai résidu non tranché : soit corriger `price_at_issue` sur ces 2
+entrées avec `outcome` recalculé en conséquence (rupture ponctuelle et documentée du principe
+append-only, justifiable par une donnée connue comme fausse), soit les exclure explicitement des
+statistiques agrégées avec une note — jamais laisser les deux valeurs fausses continuer à peser
+silencieusement sur le bilan sans le dire. Décision non prise dans cette révision (nécessite une
+vraie source de prix historique pour confirmer avant de corriger quoi que ce soit, règle absolue
+en tête de ce document) — à trancher par la routine ou une session future avec l'outil adéquat.
 
 ## 3. Horizon adaptatif — déjà en place, ne pas casser
 

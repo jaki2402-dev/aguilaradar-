@@ -40,7 +40,34 @@ Ne pas retraiter les 15 favoris à chaque cycle (trop coûteux). À chaque exéc
 2. Trier les 15 tickers par `last_computed_at` croissant (un ticker jamais calculé = priorité maximale, traité comme plus ancien que tout).
 3. Retraiter entièrement (les 5 champs ci-dessus) les **3 tickers les plus anciens**.
 
-Cette règle garantit qu'aucun favori ne reste périmé plus de ~5 jours ouvrés. **Un audit du 14/09/2026 a trouvé 11 des 15 favoris avec un contexte vieux de 14 à 26 jours** — signe que la rotation réelle jusqu'ici n'a pas suivi cette règle stricte (ou n'existait pas formellement). Ce point est corrigé par cette spécification : appliquer la règle "3 plus anciens" à la lettre, sans exception, à chaque cycle.
+Cette règle garantit qu'aucun favori ne reste périmé plus de ~5 jours ouvrés **si le cycle
+s'exécute chaque jour comme prévu**. Un audit du 14/09/2026 a trouvé 11 des 15 favoris avec un
+contexte vieux de 14 à 26 jours — signe que la rotation réelle jusqu'ici n'a pas suivi cette règle
+stricte (ou n'existait pas formellement). Ce point a été corrigé par cette spécification :
+appliquer la règle "3 plus anciens" à la lettre, sans exception, à chaque cycle.
+
+**Re-constaté le 21/09/2026, cause différente cette fois — un vrai trou d'exécution, pas un bug de
+règle.** `git log` confirme une rotation le 15/09 puis le 16/09 (CTSI/PEAQ/LINK), puis **aucune
+avant celle du 21/09** (ONDO/AIOZ/FLUX) — 5 jours sans que ce cycle tourne, la même fenêtre que les
+cycles quotidiens manqués déjà documentés ailleurs (health-log, `verif-fraicheur-quotidien`) pour
+17-20/09. Conséquence directement mesurée dans `data/favoris-context.json` au 21/09 : BTC/ETH/ARB/
+INJ à 10,6 jours, JUP/LPT à 21,4 jours (ces deux-là visiblement jamais recalculés avant le 31/08,
+donc prioritaires par la règle "jamais calculé = plus ancien que tout" mais toujours en attente de
+leur tour). **La logique de rotation elle-même est correcte** (le bon calcul, les bons tickers
+choisis à chaque exécution vérifiée) — le problème est uniquement que le cycle ne s'est pas
+déclenché certains jours, ce qu'aucune règle dans ce document ne peut corriger (c'est une question
+de fiabilité du déclenchement Cowork, hors du périmètre d'un fichier de spec).
+
+**Mitigation possible en revanche : rattraper plus vite une fois que le cycle reprend**, plutôt que
+de re-parcourir tout le retard à 3 tickers par jour. Ajout à l'étape 3 ci-dessus : après avoir
+retraité les 3 tickers les plus anciens, si le **4e** ticker le plus ancien (par `last_computed_at`
+trié croissant) dépasse 7 jours d'âge, le retraiter aussi — et continuer ainsi ticker par ticker
+tant que le suivant dépasse 7 jours, jusqu'à un plafond de **8 tickers au total sur ce cycle**
+(au lieu de 3). Ce plafond garde un cycle normal (aucun retard) à son coût habituel de 3, et borne
+le coût d'un cycle de rattrapage à un peu plus du double plutôt que de retraiter les 15 d'un coup.
+Avec ce plafond, un retard de 5 jours (15 tickers en retard dans le pire cas) se résorbe en 2-3
+cycles de rattrapage au lieu de 5. Ne change rien quand tout est déjà à jour (le 4e ticker le plus
+ancien sera alors sous 7 jours, donc la règle des 3 s'applique normalement).
 
 ### Sourcing
 
