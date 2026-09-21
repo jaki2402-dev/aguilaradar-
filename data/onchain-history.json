@@ -1,7 +1,20 @@
 {
   "assets": {
     "bitcoin": {
-      "snapshots": []
+      "snapshots": [
+        {
+          "date": "2026-09-21",
+          "computed_at": "2026-09-21T08:26:00Z",
+          "tvl_usd": 4110000000,
+          "tx_per_day": null,
+          "active_addresses": null,
+          "source": {
+            "tvl_usd": "DefiLlama (résultat indexé via WebSearch, appel API direct à api.llama.fi bloqué par le proxy réseau) — chiffre daté d'environ le 1er septembre 2026 (article tapbit.com publié le 02/09/2026), pas une capture du jour même ; TVL étant une métrique lente, retenu avec cette réserve explicite plutôt que laissé à null.",
+            "tx_per_day": "non confirmé ce cycle — appel direct à api.blockchain.info bloqué par le proxy réseau ; les résultats WebSearch trouvés (ex. \"723 854 transactions\") se sont révélés, après vérification de la date de publication, se rapporter au 23 juin 2026 (article publié le 05/07/2026), donc bien trop périmés pour être présentés comme la valeur du 21 septembre 2026 — laissé à null conformément à la règle anti-invention plutôt que d'utiliser une donnée mal datée.",
+            "active_addresses": "non confirmé ce cycle — appel direct à api.blockchain.info bloqué par le proxy réseau ; aucun résultat WebSearch avec une date vérifiée pour le 21 septembre 2026 trouvé (les chiffres remontés provenaient d'articles non datés avec certitude ou de classements historiques) — laissé à null conformément à la règle anti-invention."
+          }
+        }
+      ]
     }
   }
 }
