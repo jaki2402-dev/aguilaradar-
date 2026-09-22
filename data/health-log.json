@@ -234,6 +234,12 @@
       "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h59)", "data/news.json (last_updated_at, ~0h59)", "data/opportunities.json (last_scan_at, ~5h06)"],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h59, actualités il y a 0h59, opportunités il y a 5h06 - rien à signaler. Note de transparence sur cette routine elle-même : les cycles quotidiens du 17/09 au 20/09 inclus n'ont pas pu s'exécuter (cette session persistante n'a pas été relancée sur ses déclenchements programmés de ces jours-là - les notifications correspondantes sont arrivées groupées au réveil de ce cycle du 21/09) - aucune entrée n'a donc été ajoutée à health-log.json pour ces jours-là, mais cela ne reflète aucun problème sur les données AguilaRadar elles-mêmes (confirmé rétrospectivement impossible à vérifier pour ces dates précises, les trois champs surveillés ayant depuis été rafraîchis), seulement une interruption de ce contrôle."
+    },
+    {
+      "checked_at": "2026-09-22T09:16:03Z",
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h56)", "data/news.json (last_updated_at, ~0h56)", "data/opportunities.json (last_scan_at, ~5h06)"],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h56, actualités il y a 0h56, opportunités il y a 5h06 - rien à signaler."
     }
   ]
 }
