@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-22T00:07:09Z",
-  "headline": "Le moteur corrige son biais ATTENTE trop fréquent",
-  "summary": "Une analyse à froid a mis au jour un biais du moteur : 78,6 % des verdicts résolus sont ATTENTE, alors que seulement 17,9 % des issues réelles restent réellement stables. Correction apportée : un signal technique net avec au moins un accord produira désormais un verdict directionnel plutôt qu'ATTENTE par défaut. Précision stricte inchangée à 23,64 % sur 55 verdicts, sous la baseline classe majoritaire (58,2 %). CTSI reste en attente de résolution malgré son échéance du 21/09 20h22 UTC.",
+  "generated_at": "2026-09-22T06:07:33Z",
+  "headline": "CTSI : l'ATTENTE échoue encore, nouveau verdict prudent",
+  "summary": "Le verdict ATTENTE du 14/09 sur Cartesi (CTSI) a été invalidé par un bond de +16,6 % en une semaine ; le nouveau verdict reste ATTENTE, la hausse récente étant requalifiée en signal mixte par la règle anti-momentum (mouvement 7j >15 %). Précision stricte du moteur inchangée à 23,64 % sur 55 verdicts résolus, toujours sous la baseline classe majoritaire (58,2 %). Contexte macro mélangé : Fed restrictive (taux 3,75-4,00 %, rendement 10 ans à 5,01 %) contre flux ETF et dominance stablecoin en repli, régime retenu neutre.",
   "tips": [
-    "Signal technique net + accord >=1 impose maintenant ACHAT/VENTE, fini l'ATTENTE par défaut.",
-    "Précision stricte du moteur à 23,64 % sur 55 verdicts, sous la baseline classe majoritaire (58,2 %).",
-    "Verdict CTSI (ATTENTE) toujours en attente de résolution, échéance du 21/09 déjà dépassée."
+    "CTSI : ATTENTE reconduite malgré +16,6 % sur 7j, requalifiée mixte par la règle anti-momentum.",
+    "Précision stricte du moteur à 23,64 % sur 55 verdicts, sous la baseline (58,2 %).",
+    "Aucune nouvelle alerte technique depuis le 14/09 ; les 15 favoris ont chacun un verdict actif."
   ],
-  "market_tone": "haussier"
+  "market_tone": "neutre"
 }
