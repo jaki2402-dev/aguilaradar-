@@ -1,23 +1,23 @@
 {
   "current_version": "v1",
   "global_stats": {
-    "last_computed_at": "2026-09-13T23:26:00Z",
-    "total_verdicts_issued": 56,
-    "total_verdicts_resolved": 41,
-    "accuracy_strict_pct": 26.83,
-    "coverage_pct": 24.39,
-    "baseline_majority_class_pct": 43.9,
+    "last_computed_at": "2026-09-20T23:28:00Z",
+    "total_verdicts_issued": 70,
+    "total_verdicts_resolved": 55,
+    "accuracy_strict_pct": 23.64,
+    "coverage_pct": 21.82,
+    "baseline_majority_class_pct": 58.18,
     "baseline_buy_hold_btc_pct": 18.59,
-    "f1_macro": 33.61,
-    "f1_weighted": 31.13,
+    "f1_macro": 22.28,
+    "f1_weighted": 17.14,
     "confusion_matrix": {
       "ACHAT": {
-        "ACHAT": 0,
+        "ACHAT": 2,
         "ATTENTE": 0,
         "VENTE": 6
       },
       "ATTENTE": {
-        "ACHAT": 16,
+        "ACHAT": 28,
         "ATTENTE": 9,
         "VENTE": 6
       },
@@ -29,17 +29,17 @@
     },
     "per_class": {
       "ACHAT": {
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": null,
-        "predictedTotal": 6,
-        "actualTotal": 18
+        "precision": 0.25,
+        "recall": 0.0625,
+        "f1": 0.1,
+        "predictedTotal": 8,
+        "actualTotal": 32
       },
       "ATTENTE": {
-        "precision": 0.2903,
+        "precision": 0.2093,
         "recall": 1.0,
-        "f1": 0.45,
-        "predictedTotal": 31,
+        "f1": 0.3462,
+        "predictedTotal": 43,
         "actualTotal": 9
       },
       "VENTE": {
@@ -61,9 +61,9 @@
     "average_move_pct": null
   },
   "routine_health": {
-    "last_success_at": "2026-09-15T16:16:27Z",
+    "last_success_at": "2026-09-22T12:35:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 15/09 ~16h16 UTC, exécution normale, suivi à la lettre de docs/routines/cycle-2h-verdict.md et docs/verdict-methodology.md. Portée de ce cycle : émission/résolution de verdicts + correction_log + routine_health + news.json (sections 1-9 du doc) — signal_precoce/alerts.json/opportunities.json/macro_regime/data_source_reliability non touchés, hors périmètre de cette routine telle que spécifiée. Champ last_failure_reason réécrit proprement ce cycle (il portait plusieurs narrations de cycles passés concaténées au lieu d'être remplacé — corrigé ici, aucun impact sur les données, uniquement ce champ texte).\n\nRésolution : vérification des 15 verdicts actifs (un par favori), aucun resolves_at dépassé (le plus proche : v-20260906-btc/eth/fet/lpt/flux et v-20260913-*, échéance 20/09 ; v-20260914-ctsi, échéance 21/09) — aucune résolution due ce cycle.\n\nÉmission : les 15 favoris ont chacun un verdict actif (pending), donc aucune nouvelle émission ce cycle (même constat que le cycle précédent de 12h19 UTC).\n\ncorrection_log : aucune entrée nouvelle (aucun changement de procédure/paramètre tenté ce cycle). corr-20260913-biais-chasse-momentum et corr-20260914-confidence-formule-reproductible restent 'accepted', validation_score_after_pct toujours null — verdicts concernés (v-20260913-aioz, v-20260913-inj, v-20260914-ctsi) toujours pending, lot insuffisant pour évaluer, à revisiter à leur résolution (20-21/09).\n\nContexte macro (data/market-context.json, lecture seule, section 4) : Fed toujours hawkish (taux 3,50-3,75 %, réunion FOMC 15-16/09, décision attendue le 16/09), rendement 10 ans à 4,96 % (a brièvement dépassé 5 % le 14/09, plus haut depuis 2023) → pression risk-off ; flux ETF spot nets positifs sur BTC (+159,9 M$) et ETH (+121,02 M$) au 14/09 → pression risk-on ; dominance stablecoins quasi stable (11,03 % contre 11,00 % au cycle précédent, +0,03 pt) → signal marginal risk-off. Signaux macro contradictoires, comme déjà anticipé dans la révision du 15/09 du présent document — régime retenu aurait été 'neutre' si un nouveau verdict avait été dû ce cycle ; non appliqué concrètement puisqu'aucune émission n'a eu lieu.\n\nVeille actualités (section 8) : fear&greed toujours dispersé entre sources (48 selon CFGI vs 69 selon un autre agrégateur, aucune ne fait autorité) ; dominance BTC via appel direct à l'API CoinGecko (/api/v3/global) = 58,38 % (58,30 % au cycle précédent, quasi stable, +0,08 pt) ; recherche générale « crypto news today » et recherche dédiée hack/exploit ont fait remonter deux développements réels et suffisamment significatifs, chacun confirmé par plusieurs sources indépendantes concordantes, ajoutés à news.json : le règlement européen Cyber Resilience Act (article 14, entré en vigueur le 11/09 — signalement des vulnérabilités de wallets crypto sous 24h, amendes jusqu'à 15 M€/17,3 M$) et la fuite de données Revolut confirmée le 12/09 (ingénierie sociale, usurpation d'une agence gouvernementale, ~680 clients affectés, données Bitcoin/IBAN/documents d'identité exposés, rançon de 10 000 BTC réclamée). Item le plus ancien et le moins significatif (déblocage mensuel Hyperliquid du 06/09, impact marché historiquement faible d'après sa propre source) retiré pour garder la liste à un nombre raisonnable d'entrées réellement notables (section 8.4). Vote de clôture du Sénat sur le CLARITY Act (15/09, 60 voix requises, prévu ~18h15 UTC, donc après l'heure de ce cycle) toujours non résulté au moment de la recherche — pas de nouvelle entrée tant que le résultat réel n'est pas confirmé, déjà anticipé dans l'item du 13/09. news.json : last_checked_at et last_updated_at avancés à ce cycle (items modifiés).\n\nFusion vers main : origin/main strictement à jour avec la branche de travail au début du cycle (branche recréée depuis origin/main, ancêtre confirmé, précédent PR déjà fusionné) ; commit sur la branche de travail puis fusion --no-ff vers main et push en fin de cycle."
+    "last_failure_reason": "Cycle du 22/09/2026 ~12h35 UTC, exécution normale, suivi à la lettre de docs/routines/cycle-2h-verdict.md et docs/verdict-methodology.md, aucun outil mcp__ utilisé (exclusivement Bash/curl/WebSearch/Read/Write/Edit/git, conformément à l'interdiction absolue pour cette routine).\n\nRésolution : aucun verdict pending n'a de resolves_at dépassé ce cycle (les 15 pending, dont v-20260922-ctsi émis au cycle 00h20 UTC, ont resolves_at entre le 27/09 et le 04/10, inchangé depuis le cycle 08h20) — rien à résoudre.\n\nÉmission : les 15 favoris ont chacun toujours un verdict pending actif (aucun résolu ce cycle pour libérer un ticker) — aucun nouveau verdict émis, conformément à la section 5 qui ne prévoit une résolution/émission que pour les verdicts effectivement échus.\n\ncorrection_log : aucune nouvelle entrée (aucun changement de procédure/paramètre tenté ce cycle, aucun verdict résolu pour mettre à jour un validation_score_after_pct existant). corr-20260921-biais-attente-asymetrique et corr-20260914-confidence-formule-reproductible restent ouvertes (validation_score_after_pct toujours null, pas assez de verdicts émis sous ces révisions encore résolus — le plus proche à échoir, le lot du 20/09, résout à partir du 27/09).\n\nVeille actualités (section 8) : dominance BTC relue via curl direct sur api.coingecko.com/api/v3/global (58,88 %, capitalisation totale ~2 921,8 Md$, -1,69 % sur 24h) — cohérent avec les 58,87 %/2 927,5 Md$ relevés par aguilaradar-marche-quotidien vers 08h40 UTC le même jour, aucune bascule. Indice peur/cupidité recoupé via WebSearch : toujours 78 Extreme Greed (identique au cycle 08h20, en hausse depuis 70 la veille et 69 la semaine dernière) — sentiment inchangé sur ce cycle de 4h, cohérent avec BTC désormais au-dessus de 86 000 $ (plus haut depuis fin janvier) rapporté par Cointelegraph/CoinDesk. Recherche générale : un développement neuf et suffisamment significatif retenu — avis conjoint FBI/police japonaise/cyber-autorités australiennes/renseignement allemand (18/09) sur le groupe nord-coréen WaterPlum, 30 000 appareils infectés dans 100+ pays via de fausses offres d'emploi crypto/IA, au moins 10,7 M$ dérobés depuis 7 000+ wallets entre décembre 2025 et juillet 2026 — ajouté à data/news.json (vol par ingénierie sociale ciblée, distinct des hacks d'infrastructure déjà documentés). Autres développements croisés jugés déjà couverts ou d'importance insuffisante pour cette liste : obligation digitale Hana Bank, prêt USDC collatéralisé BTC chez Circle, approbation OCC d'Agora (même lot que Bastion déjà documenté), recrutement crypto chez Google/Apple, arrêt d'activité de Genius Yield (15/10). Recherche hack/exploit dédiée : le WaterPlum ci-dessus est le seul nouveau résultat significatif ; rien d'autre au-delà de Liquid Network (320M$, 07/09) et Coldcard (116M$), déjà connus et documentés. last_checked_at et last_updated_at avancés ensemble à ce cycle (item ajouté).\n\nglobal_stats : non recalculé ce cycle (aucun verdict résolu ce cycle, rien de nouveau à agréger ; recomputation hors périmètre de ce document de référence de toute façon, voir cycles précédents).\n\nFusion vers main : commit normal sur la branche de travail courante suivi d'une fusion --no-ff explicite vers main et d'un push, vérifiés par checkout explicite de main avant fusion et confirmation post-fusion que main contient bien le commit de ce cycle."
   },
   "macro_regime": {
     "last_computed_at": "2026-09-14T16:20:00Z",
@@ -119,7 +119,7 @@
       "what": "Exactitude de ce lot : 11,1 % (1/9 correct : PEAQ ATTENTE confirmée ; 8 incorrects : GRT, TIA, LINK, ONDO, JUP, ARB — tous émis ACHAT et résolus VENTE — ainsi que AIOZ et INJ, émis ATTENTE et résolus ACHAT), contre 44,4 % pour la baseline « classe majoritaire » sur ce même lot — net recul par rapport au lot précédent (35,7 %) et pire encore que le tout premier lot du 23/08 (20,0 %). validation_score_after_pct de corr-20260906-test-horizon-adaptatif renseigné à 11,11 % : le raccourcissement de l'horizon à 7 jours n'a pas amélioré le score, il s'est aggravé.",
       "why": "Point commun aux 6 ACHAT erronés : chacun a été émis immédiatement après un rebond technique marqué consécutif à une chute antérieure (signal « technique haussier » fondé sur un rebond de courte durée après un creux, jamais sur une tendance de fond confirmée), avec un signal fondamental resté neutre dans les 9 cas — aucun n'a été confirmé par un catalyseur réel indépendant. Le raccourcissement de l'horizon, déjà testé par la correction précédente, ne corrige pas ce biais : il réduit le temps d'exposition mais pas la qualité du signal d'entrée, qui reste construit sur un rebond récent extrapolé plutôt que sur une confirmation indépendante — les retournements observés (ex. Arbitrum -29,7 %) se sont produits assez vite pour rester dans la fenêtre de 7 jours malgré tout.",
       "validation_score_before_pct": 11.11,
-      "validation_score_after_pct": null,
+      "validation_score_after_pct": 11.11,
       "action": "Aucun nouveau paramètre chiffré ajusté ce cycle (threshold_pct et l'horizon adaptatif restent inchangés, déjà testés deux fois). Changement procédural appliqué uniquement à l'émission des verdicts de ce cycle : pour tout favori affichant un mouvement sur 7 jours déjà extrême (>15 % en valeur absolue) au moment de l'émission, le signal technique n'est plus compté comme confirmé simplement parce que la tendance récente va dans ce sens — il est requalifié en mixte par prudence. Appliqué ce cycle à AIOZ (+19,0 % sur 7j, technique requalifié mixte plutôt que haussier, verdict ATTENTE plutôt qu'ACHAT) ; INJ (+13,0 % sur 7j, sous le seuil de 15 %, technique conservé haussier, verdict ACHAT). Hypothèse non encore validée par des données réelles — les prochains verdicts concernés serviront de premier test, pas un ajustement rétroactif sur ce lot déjà résolu.",
       "status": "accepted"
     },
@@ -132,6 +132,17 @@
       "validation_score_before_pct": 26.83,
       "validation_score_after_pct": null,
       "action": "threshold_pct (5 %, fixe) et l'horizon adaptatif (déjà en place depuis corr-20260906-test-horizon-adaptatif) ne sont pas modifiés par cette révision. Première application ce cycle, sur le seul verdict émis (CTSI, v-20260914-ctsi, résolution du verdict ATTENTE du 07/09 confirmée à +0,09 % — largement sous le seuil) : technique neutre (24h +0,26 %, 7j -1,35 %, 30j +1,09 %, aucune tendance nette) et fondamental neutre (portfolio-thesis.json « Attendre », conviction 4/10 ; favoris-context.json scénario de base sans catalyseur) alignés sans contradiction, macro haussier (régime risk-on) isolé → accord_count=2, confidence_pct=65 % (fourchette 60-70), verdict ATTENTE, horizon maintenu à 7 jours par cohérence avec le verdict précédent sur cet actif. Hypothèse non encore validée par des données réelles — la résolution des prochains verdicts émis sous cette formule sera le premier vrai test, pas ce verdict unique.",
+      "status": "accepted"
+    },
+    {
+      "id": "corr-20260921-biais-attente-asymetrique",
+      "logged_at": "2026-09-21T23:12:42Z",
+      "trigger": "Analyse à froid demandée par l'utilisateur (session de développement Claude Code, pas un cycle automatique de la routine) suite au constat -32 points vs référence affiché sur le site. 7 jours après corr-20260914-confidence-formule-reproductible, assez de nouveaux verdicts résolus sous cette révision pour commencer à juger si elle a eu l'effet espéré sur l'exactitude — ce n'était pas encore le cas au moment de sa création (validation_score_after_pct toujours null).",
+      "what": "confidence_pct est bien corrigé (concentration sur 50/60 % disparue, valeurs 47-77 % observées sur les 15 verdicts émis depuis le 14/09), mais l'exactitude stricte (25,0 % sur 56 résolus) et la couverture (21,4 %) n'ont pas bougé. Cause isolée par recomputation indépendante de la matrice de confusion depuis data/verdicts.json (pas seulement lue depuis le cache de ce fichier) : quand signal_consensus.technique=\"baissier\", le verdict final est ATTENTE 10 fois sur 10 (jamais VENTE) ; quand accord_count=1 (32 cas sur 56, le groupe le plus fréquent), le verdict est ATTENTE 32 fois sur 32, alors que docs/routines/cycle-2h-verdict.md ne force ce cas qu'à accord_count=0. 44/56 verdicts résolus (78,6 %) sont ATTENTE alors que seulement 10/56 résolutions réelles (17,9 %) sont effectivement restées sous le seuil directionnel. Ce biais est antérieur ET postérieur à corr-20260914 (78,6 % avant, 80 % après, 12/15) : cette révision n'a jamais touché ce mécanisme, seulement le chiffre de confiance.",
+      "why": "docs/routines/cycle-2h-verdict.md n'a jamais spécifié explicitement comment signal_consensus.technique devient le verdict ACHAT/ATTENTE/VENTE — seule la confiance associée l'était, en supposant le verdict déjà choisi. Le choix non écrit laissé au jugement du cycle s'est révélé systématiquement prudent (biais de couverture, pas de calibration) : un signal baissier net ou un accord faible se voyaient rabattus vers ATTENTE plutôt que vers une direction, sans que ce soit une règle documentée nulle part — donc invisible à toute revue qui ne relit que le document. C'est un angle mort distinct de celui corrigé le 14/09 (qui portait sur le chiffre de confiance, pas sur la direction), pas une régression de cette révision.",
+      "validation_score_before_pct": 25.0,
+      "validation_score_after_pct": null,
+      "action": "Ajout d'une règle explicite dans docs/routines/cycle-2h-verdict.md (fin de la section 2) : technique=\"haussier\" + accord_count≥1 → verdict doit être ACHAT ; technique=\"baissier\" + accord_count≥1 → verdict doit être VENTE ; technique mixte/neutre/insuffisant/a_risque_retournement/peu_fiable → ATTENTE inchangé ; accord_count=0 → ATTENTE forcé inchangé (règle existante). threshold_pct et l'horizon adaptatif ne sont pas modifiés. Anomalie signalée par v-20260807-btc/v-20260807-eth (signal_precoce, ~16-17 % d'écart évoqué le 10/08) revérifiée le 21/09 via l'historique CoinGecko réel : price_at_issue des deux verdicts est en fait correct (BTC 55 800 stocké vs 55 764 € CoinGecko, ETH 1 649,89 stocké vs 1 650,60 € CoinGecko, écarts <0,1 %) — la note du 10/08 comparait des euros à des dollars sans convertir, aucune correction de données nécessaire, accuracy_strict_pct déjà correcte sur ces 2 verdicts. Hypothèse ci-dessus non encore validée par des données réelles : la résolution des verdicts émis sous cette règle (à partir du prochain cycle qui lit ce document) sera le premier vrai test, pas un chiffre rétroactif sur ce lot déjà résolu — ne pas juger avant qu'au moins ~10 verdicts émis sous elle aient atteint leur horizon.",
       "status": "accepted"
     }
   ]

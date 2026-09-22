@@ -1,7 +1,64 @@
 {
   "assets": {
     "bitcoin": {
-      "snapshots": []
+      "snapshots": [
+        {
+          "date": "2026-09-21",
+          "computed_at": "2026-09-21T08:26:00Z",
+          "tvl_usd": 4110000000,
+          "tx_per_day": null,
+          "active_addresses": null,
+          "source": {
+            "tvl_usd": "DefiLlama (résultat indexé via WebSearch, appel API direct à api.llama.fi bloqué par le proxy réseau) — chiffre daté d'environ le 1er septembre 2026 (article tapbit.com publié le 02/09/2026), pas une capture du jour même ; TVL étant une métrique lente, retenu avec cette réserve explicite plutôt que laissé à null.",
+            "tx_per_day": "non confirmé ce cycle — appel direct à api.blockchain.info bloqué par le proxy réseau ; les résultats WebSearch trouvés (ex. \"723 854 transactions\") se sont révélés, après vérification de la date de publication, se rapporter au 23 juin 2026 (article publié le 05/07/2026), donc bien trop périmés pour être présentés comme la valeur du 21 septembre 2026 — laissé à null conformément à la règle anti-invention plutôt que d'utiliser une donnée mal datée.",
+            "active_addresses": "non confirmé ce cycle — appel direct à api.blockchain.info bloqué par le proxy réseau ; aucun résultat WebSearch avec une date vérifiée pour le 21 septembre 2026 trouvé (les chiffres remontés provenaient d'articles non datés avec certitude ou de classements historiques) — laissé à null conformément à la règle anti-invention."
+          }
+        },
+        {
+          "date": "2026-09-22",
+          "computed_at": "2026-09-22T08:28:00Z",
+          "tvl_usd": 4415000000,
+          "tx_per_day": null,
+          "active_addresses": null,
+          "source": {
+            "tvl_usd": "DefiLlama (résultat indexé via WebSearch — appel API direct à api.llama.fi bloqué par le proxy réseau de cet environnement) — chiffre daté du 21/09/2026, en hausse par rapport aux ~4,11 Md$ du 01/09/2026 déjà enregistrés ; TVL étant une métrique lente, retenu malgré le décalage d'un jour avec ce cycle.",
+            "tx_per_day": "non confirmé ce cycle — appel direct à api.blockchain.info bloqué par le proxy réseau (connect_rejected) ; accès à www.blockchain.com également bloqué (EGRESS_BLOCKED) ; les résultats WebSearch trouvés les plus récents avec une date vérifiée remontent au 7 septembre 2026 (893 391 tx, 4e record historique), trop périmés pour représenter le 21-22 septembre 2026 — laissé à null conformément à la règle anti-invention.",
+            "active_addresses": "non confirmé ce cycle — mêmes blocages réseau que tx_per_day ; aucun résultat WebSearch avec une date vérifiée pour le 20-22 septembre 2026 trouvé — laissé à null conformément à la règle anti-invention."
+          }
+        }
+      ]
+    },
+    "ethereum": {
+      "snapshots": [
+        {
+          "date": "2026-09-22",
+          "computed_at": "2026-09-22T08:28:00Z",
+          "tvl_usd": 52742000000,
+          "tx_per_day": 2084886,
+          "active_addresses": 613713,
+          "source": {
+            "tvl_usd": "DefiLlama (résultat indexé via WebSearch — appel API direct à defillama.com/api.llama.fi bloqué par le proxy réseau de cet environnement) — chiffre daté du 21/09/2026.",
+            "tx_per_day": "Blockscout MCP, appel API direct confirmé — direct_api_call(chain_id=\"1\", endpoint_path=\"/api/v2/stats/charts/transactions\"), dernier point du tableau chart_data (champ transactions_count), daté du 21/09/2026 (le point du 22/09 n'est pas encore disponible, journée en cours).",
+            "active_addresses": "Blockscout MCP, appel API direct confirmé — direct_api_call(chain_id=\"1\", endpoint_path=\"/stats-service/api/v1/lines/activeAccounts\", resolution=DAY, from=2026-09-18, to=2026-09-21), dernier point daté du 21/09/2026. Endpoint nouvellement confirmé ce cycle (non listé comme fonctionnel dans les cycles précédents) — /api/v2/stats/charts/active-eoa-accounts a été essayé d'abord et a renvoyé 404, avant de trouver ce catalogue de graphiques (/stats-service/api/v1/lines) qui expose bien 'activeAccounts'."
+          }
+        }
+      ]
+    },
+    "arbitrum": {
+      "snapshots": [
+        {
+          "date": "2026-09-22",
+          "computed_at": "2026-09-22T08:28:00Z",
+          "tvl_usd": 1390000000,
+          "tx_per_day": 2214284,
+          "active_addresses": 149603,
+          "source": {
+            "tvl_usd": "DefiLlama (résultat indexé via WebSearch — appel API direct bloqué par le proxy réseau) — chiffre daté du 19/09/2026, décalage de 3 jours avec ce cycle, retenu avec cette réserve (TVL = métrique lente).",
+            "tx_per_day": "Blockscout MCP, appel API direct confirmé — direct_api_call(chain_id=\"42161\", endpoint_path=\"/api/v2/stats/charts/transactions\"), dernier point du tableau chart_data (champ transactions_count), daté du 21/09/2026. Utilise le même produit Blockscout que ethereum, comme attendu.",
+            "active_addresses": "Blockscout MCP, appel API direct confirmé — direct_api_call(chain_id=\"42161\", endpoint_path=\"/stats-service/api/v1/lines/activeAccounts\", resolution=DAY, from=2026-09-18, to=2026-09-21), dernier point daté du 21/09/2026, même endpoint nouvellement confirmé que pour ethereum ce cycle."
+          }
+        }
+      ]
     }
   }
 }

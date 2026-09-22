@@ -110,6 +110,7 @@ describe("data-integrity.js — summarizeDataIntegrity", () => {
     expect(summary.totalIssues).toBe(0);
     expect(summary.staleFavoris).toEqual([]);
     expect(summary.plausibilityIssues).toEqual([]);
+    expect(summary.selectionViolations).toEqual([]);
   });
 
   it("excludes ok-status favoris from staleFavoris but counts warning/stale ones", () => {
@@ -131,7 +132,126 @@ describe("data-integrity.js — summarizeDataIntegrity", () => {
     expect(summarizeDataIntegrity(favorisContext, verdicts).totalIssues).toBe(2);
   });
 
+  it("also counts selection-rule violations into totalIssues", () => {
+    const verdicts = [
+      {
+        id: "v1",
+        ticker: "BTC",
+        issued_at: "2026-09-22T00:00:00Z",
+        verdict: "ATTENTE",
+        signal_consensus: { technique: "haussier", accord_count: 2 },
+      },
+    ];
+    const summary = summarizeDataIntegrity(undefined, verdicts);
+    expect(summary.selectionViolations).toHaveLength(1);
+    expect(summary.totalIssues).toBe(1);
+  });
+
   it("never throws on missing arguments", () => {
     expect(() => summarizeDataIntegrity(undefined, undefined)).not.toThrow();
+  });
+});
+
+describe("data-integrity.js — checkVerdictSelectionCompliance", () => {
+  const dom = loadPage(["data-integrity.js"]);
+  const { checkVerdictSelectionCompliance } = dom.window;
+
+  // Règle ajoutée le 21/09/2026 (PR #7, docs/routines/cycle-2h-verdict.md §2) : technique
+  // haussier/baissier + accord_count>=1 doit forcer un verdict directionnel. Cutoff du fichier :
+  // 2026-09-21T23:26:18Z — on teste juste avant/après.
+  const BEFORE_CUTOFF = "2026-09-20T00:00:00Z";
+  const AFTER_CUTOFF = "2026-09-22T00:00:00Z";
+
+  it("returns [] for an empty or undefined list", () => {
+    expect(checkVerdictSelectionCompliance([])).toEqual([]);
+    expect(checkVerdictSelectionCompliance(undefined)).toEqual([]);
+  });
+
+  it("skips a verdict with no signal_consensus at all (pre-11/08 verdicts)", () => {
+    expect(checkVerdictSelectionCompliance([{ id: "v1", verdict: "ATTENTE" }])).toEqual([]);
+  });
+
+  it("flags accord_count=0 with a non-ATTENTE verdict", () => {
+    const v = [{ id: "v1", ticker: "BTC", verdict: "ACHAT", signal_consensus: { technique: "haussier", accord_count: 0 } }];
+    const violations = checkVerdictSelectionCompliance(v);
+    expect(violations).toHaveLength(1);
+    expect(violations[0].expected).toBe("ATTENTE");
+  });
+
+  it("does not flag accord_count=0 with ATTENTE (correct, existing rule)", () => {
+    const v = [{ id: "v1", verdict: "ATTENTE", signal_consensus: { technique: "haussier", accord_count: 0 } }];
+    expect(checkVerdictSelectionCompliance(v)).toEqual([]);
+  });
+
+  it("does NOT flag a directional-technique/ATTENTE mismatch issued before the rule existed", () => {
+    const v = [
+      {
+        id: "v1",
+        ticker: "BTC",
+        issued_at: BEFORE_CUTOFF,
+        verdict: "ATTENTE",
+        signal_consensus: { technique: "baissier", accord_count: 2 },
+      },
+    ];
+    expect(checkVerdictSelectionCompliance(v)).toEqual([]);
+  });
+
+  it("flags technique=haussier + accord_count>=1 issued after the cutoff but verdict stayed ATTENTE", () => {
+    const v = [
+      {
+        id: "v1",
+        ticker: "BTC",
+        issued_at: AFTER_CUTOFF,
+        verdict: "ATTENTE",
+        signal_consensus: { technique: "haussier", accord_count: 2 },
+      },
+    ];
+    const violations = checkVerdictSelectionCompliance(v);
+    expect(violations).toHaveLength(1);
+    expect(violations[0].expected).toBe("ACHAT");
+  });
+
+  it("flags technique=baissier + accord_count>=1 issued after the cutoff but verdict stayed ATTENTE", () => {
+    const v = [
+      {
+        id: "v1",
+        ticker: "ETH",
+        issued_at: AFTER_CUTOFF,
+        verdict: "ATTENTE",
+        signal_consensus: { technique: "baissier", accord_count: 1 },
+      },
+    ];
+    const violations = checkVerdictSelectionCompliance(v);
+    expect(violations).toHaveLength(1);
+    expect(violations[0].expected).toBe("VENTE");
+  });
+
+  it("does not flag a compliant directional verdict after the cutoff", () => {
+    const v = [
+      {
+        id: "v1",
+        issued_at: AFTER_CUTOFF,
+        verdict: "ACHAT",
+        signal_consensus: { technique: "haussier", accord_count: 2 },
+      },
+    ];
+    expect(checkVerdictSelectionCompliance(v)).toEqual([]);
+  });
+
+  it("never flags a non-directional technique (mixte/neutre/etc.) regardless of verdict", () => {
+    const v = [
+      { id: "v1", issued_at: AFTER_CUTOFF, verdict: "ATTENTE", signal_consensus: { technique: "mixte", accord_count: 2 } },
+      { id: "v2", issued_at: AFTER_CUTOFF, verdict: "ATTENTE", signal_consensus: { technique: "neutre", accord_count: 1 } },
+      { id: "v3", issued_at: AFTER_CUTOFF, verdict: "ATTENTE", signal_consensus: { technique: "insuffisant", accord_count: 1 } },
+    ];
+    expect(checkVerdictSelectionCompliance(v)).toEqual([]);
+  });
+
+  it("can report multiple independent violations across different verdicts", () => {
+    const v = [
+      { id: "v1", issued_at: AFTER_CUTOFF, verdict: "ATTENTE", signal_consensus: { technique: "haussier", accord_count: 2 } },
+      { id: "v2", issued_at: AFTER_CUTOFF, verdict: "ATTENTE", signal_consensus: { technique: "baissier", accord_count: 1 } },
+    ];
+    expect(checkVerdictSelectionCompliance(v)).toHaveLength(2);
   });
 });

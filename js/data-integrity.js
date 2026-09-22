@@ -52,11 +52,79 @@ function checkVerdictPlausibility(verdicts) {
   return issues;
 }
 
+// Vérifie que le verdict écrit (ACHAT/ATTENTE/VENTE) suit bien la règle documentée dans
+// docs/routines/cycle-2h-verdict.md §2 — jamais un jugement sur la JUSTESSE du verdict (ça,
+// c'est outcome.verdict_correct une fois l'horizon atteint, des semaines plus tard) : seulement
+// "la routine a-t-elle suivi sa propre consigne écrite", vérifiable dès l'émission. Trouvé le
+// 21/09/2026 en enquêtant à la main sur -32 pts vs référence : la routine ne suivait pas
+// toujours sa consigne déjà écrite (accord_count=1 -> ATTENTE 32 fois sur 32, alors que seul
+// accord_count=0 le justifie) et n'avait jamais de règle écrite pour le reste (technique
+// "baissier" -> ATTENTE 10 fois sur 10, jamais VENTE). Ce contrôle existe pour que le prochain
+// écart soit visible ici, pas seulement lors d'une enquête ponctuelle. Signale, ne corrige
+// jamais — même principe que le reste de ce fichier.
+const SELECTION_RULE_CUTOFF = "2026-09-21T23:26:18Z"; // fusion PR #7 (commit bb89fcb) sur main
+const EXPECTED_DIRECTION_BY_TECHNIQUE = { haussier: "ACHAT", baissier: "VENTE" };
+
+function checkVerdictSelectionCompliance(verdicts) {
+  const violations = [];
+  (verdicts || []).forEach((v) => {
+    const sc = v.signal_consensus;
+    if (!sc || typeof sc.accord_count !== "number") return; // pas de signal_consensus (avant le 11/08) -> rien à vérifier
+
+    // Règle en place depuis le 14/09 : signaux totalement contradictoires -> ATTENTE obligatoire,
+    // quelle que soit la lecture technique. S'applique à tout verdict qui a un signal_consensus.
+    if (sc.accord_count === 0 && v.verdict !== "ATTENTE") {
+      violations.push({
+        id: v.id,
+        ticker: v.ticker,
+        issued_at: v.issued_at,
+        rule: "accord_count=0 doit forcer ATTENTE",
+        technique: sc.technique,
+        accord_count: sc.accord_count,
+        verdict: v.verdict,
+        expected: "ATTENTE",
+      });
+      return;
+    }
+
+    // Règle ajoutée le 21/09 : technique haussier/baissier + accord_count>=1 -> verdict
+    // directionnel obligatoire (plus de repli par défaut sur ATTENTE). Seulement pour les
+    // verdicts émis après que cette règle soit devenue lisible par la routine sur main —
+    // juger un verdict antérieur contre une règle qui n'existait pas encore serait injuste.
+    const expected = EXPECTED_DIRECTION_BY_TECHNIQUE[sc.technique];
+    if (
+      expected &&
+      sc.accord_count >= 1 &&
+      v.issued_at &&
+      new Date(v.issued_at).getTime() >= new Date(SELECTION_RULE_CUTOFF).getTime() &&
+      v.verdict !== expected
+    ) {
+      violations.push({
+        id: v.id,
+        ticker: v.ticker,
+        issued_at: v.issued_at,
+        rule: `technique ${sc.technique} + accord_count>=1 doit forcer ${expected}`,
+        technique: sc.technique,
+        accord_count: sc.accord_count,
+        verdict: v.verdict,
+        expected,
+      });
+    }
+  });
+  return violations;
+}
+
 // Résumé compact pour le panneau "Cohérence des données" (insights.js, à côté de la santé
 // technique du pipeline) — agrège les contrôles ci-dessus sans jamais en déduire une correction,
 // juste un décompte + le détail pour investigation manuelle côté routine concernée.
 function summarizeDataIntegrity(favorisContext, verdicts) {
   const staleFavoris = checkFavorisContextFreshness(favorisContext).filter((f) => f.status !== "ok");
   const plausibilityIssues = checkVerdictPlausibility(verdicts);
-  return { staleFavoris, plausibilityIssues, totalIssues: staleFavoris.length + plausibilityIssues.length };
+  const selectionViolations = checkVerdictSelectionCompliance(verdicts);
+  return {
+    staleFavoris,
+    plausibilityIssues,
+    selectionViolations,
+    totalIssues: staleFavoris.length + plausibilityIssues.length + selectionViolations.length,
+  };
 }
