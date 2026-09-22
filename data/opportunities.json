@@ -1489,8 +1489,13 @@
       "horizons": {
         "j1": {
           "check_at": "2026-09-22T04:09:23Z",
-          "status": "pending",
-          "outcome": null
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 82.0418023424997,
+            "move_pct": 0.89,
+            "validated": false,
+            "checked_at": "2026-09-22T06:40:00Z"
+          }
         },
         "j3": {
           "check_at": "2026-09-24T04:09:23Z",
@@ -1542,8 +1547,13 @@
       "horizons": {
         "j1": {
           "check_at": "2026-09-22T04:09:23Z",
-          "status": "pending",
-          "outcome": null
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 0.21375535602063347,
+            "move_pct": 6.21,
+            "validated": true,
+            "checked_at": "2026-09-22T06:40:00Z"
+          }
         },
         "j3": {
           "check_at": "2026-09-24T04:09:23Z",
