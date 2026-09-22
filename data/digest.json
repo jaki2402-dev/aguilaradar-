@@ -1,11 +1,11 @@
 {
-  "generated_at": "2026-09-21T16:30:00Z",
-  "headline": "CTSI se résout ce soir, marché inchangé depuis 12h",
-  "summary": "Rien de notable depuis le digest de 12h07 UTC : BTC reste autour de 83 562 $ (dominance 58,8 %, capitalisation totale 2 814,6 Md$), Fed toujours restrictive avec un rendement du Trésor à 10 ans proche de 5,01 %. Derniers flux ETF confirmés (séance du 18/09) toujours positifs pour BTC et ETH. Le verdict CTSI (ATTENTE) se résout ce soir à 20h22 UTC ; précision stricte du moteur stable à 23,64 % sur 55 verdicts résolus, sous la baseline classe majoritaire (58,2 %).",
+  "generated_at": "2026-09-22T00:07:09Z",
+  "headline": "Le moteur corrige son biais ATTENTE trop fréquent",
+  "summary": "Une analyse à froid a mis au jour un biais du moteur : 78,6 % des verdicts résolus sont ATTENTE, alors que seulement 17,9 % des issues réelles restent réellement stables. Correction apportée : un signal technique net avec au moins un accord produira désormais un verdict directionnel plutôt qu'ATTENTE par défaut. Précision stricte inchangée à 23,64 % sur 55 verdicts, sous la baseline classe majoritaire (58,2 %). CTSI reste en attente de résolution malgré son échéance du 21/09 20h22 UTC.",
   "tips": [
-    "Aucun évènement de marché notable depuis le digest précédent (12h07 UTC).",
-    "Verdict CTSI (ATTENTE) attendu à 20h22 UTC aujourd'hui.",
-    "Précision stricte du moteur toujours sous sa baseline classe majoritaire."
+    "Signal technique net + accord >=1 impose maintenant ACHAT/VENTE, fini l'ATTENTE par défaut.",
+    "Précision stricte du moteur à 23,64 % sur 55 verdicts, sous la baseline classe majoritaire (58,2 %).",
+    "Verdict CTSI (ATTENTE) toujours en attente de résolution, échéance du 21/09 déjà dépassée."
   ],
   "market_tone": "haussier"
 }
