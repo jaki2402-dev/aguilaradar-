@@ -138,7 +138,7 @@ function renderDataIntegritySummary(integrity) {
   if (integrity.totalIssues === 0) {
     return `<div class="journal-entry" style="margin-top:10px;">
       <div class="log-header"><span><strong>Cohérence des données</strong></span><span class="badge badge-success">Aucune anomalie</span></div>
-      <p class="hint">Fraîcheur du contexte par favori et plausibilité des verdicts vérifiées, rien à signaler.</p>
+      <p class="hint">Fraîcheur du contexte par favori, plausibilité et conformité des verdicts à la règle de sélection vérifiées, rien à signaler.</p>
     </div>`;
   }
   const staleList = integrity.staleFavoris
@@ -147,10 +147,17 @@ function renderDataIntegritySummary(integrity) {
   const plausList = integrity.plausibilityIssues
     .map((p) => `<li class="hint">${escapeHtml(p.ticker || p.id)} — ${escapeHtml(p.field)} : ${escapeHtml(p.issue)} (valeur ${escapeHtml(String(p.value))})</li>`)
     .join("");
+  const selectionList = (integrity.selectionViolations || [])
+    .map(
+      (s) =>
+        `<li class="hint">${escapeHtml(s.ticker || s.id)} (${s.issued_at ? new Date(s.issued_at).toLocaleDateString("fr-FR") : "?"}) — technique ${escapeHtml(s.technique || "?")}, accord_count=${s.accord_count}, verdict émis ${escapeHtml(s.verdict)} au lieu de ${escapeHtml(s.expected)} attendu</li>`
+    )
+    .join("");
   return `<div class="journal-entry" style="margin-top:10px;">
     <div class="log-header"><span><strong>Cohérence des données</strong></span><span class="badge badge-warning">${integrity.totalIssues} point${integrity.totalIssues > 1 ? "s" : ""} à vérifier</span></div>
     ${staleList ? `<p class="hint">Contexte favori pas mis à jour récemment : ${staleList}</p>` : ""}
     ${plausList ? `<ul class="hint" style="margin:4px 0 0 16px;">${plausList}</ul>` : ""}
+    ${selectionList ? `<p class="hint" style="margin-top:6px;">Verdicts qui ne suivent pas la règle de sélection ACHAT/ATTENTE/VENTE (docs/routines/cycle-2h-verdict.md §2) :</p><ul class="hint" style="margin:4px 0 0 16px;">${selectionList}</ul>` : ""}
   </div>`;
 }
 
