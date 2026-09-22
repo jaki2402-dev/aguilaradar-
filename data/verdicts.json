@@ -2127,13 +2127,13 @@
     "reasoning": "Le verdict ATTENTE du 07/09 est validé : mouvement de +0,09 % à l'échéance (0,021927 → 0,021947 euro), largement sous le seuil directionnel de 5 %. Nouveau cycle, formule de confiance reproductible (révision du 14/09) : lecture technique neutre, CTSI reste quasi plat sur les trois horizons (24h +0,26 %, 7j -1,35 %, 30j +1,09 %), sans tendance nette. Signal fondamental neutre, confirmé par croisement avec les données déjà écrites ailleurs (portfolio-thesis.json : recommandation Attendre, conviction 4/10, aucune annonce produit identifiée cette semaine, liquidité limitée ; favoris-context.json : scénario de base sans catalyseur fondamental nouveau) — technique et fondamental alignés, aucune contradiction à signaler. Signal macro haussier (régime risk-on, indice peur/cupidité à 58). Deux signaux sur trois convergent sur neutre (accord_count=2) : ATTENTE retenue, confiance 65 % (fourchette 60-70, accord modéré car macro seul insuffisant pour renverser la lecture), horizon maintenu à 7 jours par cohérence avec le verdict précédent sur cet actif.",
     "price_at_issue": 0.021947,
     "resolves_at": "2026-09-21T20:22:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.025592,
+      "actual_move_pct": 16.61,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-09-22T00:20:00Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on"
@@ -2606,6 +2606,39 @@
     "reasoning": "Le verdict ACHAT du 13/09 est confirme : INJ est passe de 5,09 $ a 7,77 $ (+52,65 %), tres au-dessus du seuil directionnel de 5 %, l'un des deux seuls verdicts corrects de ce lot (le mouvement sur 7 jours etait alors de +13,0 %, sous le seuil de 15 % de requalification, ce qui avait permis au signal technique de compter comme confirme). Nouveau cycle : le mouvement sur 7 jours atteint desormais +28,3 % (24h -4,82 %, 30j +56,0 %), cette fois au-dessus du seuil de 15 % - la regle de prudence corr-20260913 requalifie donc le signal technique en 'mixte' pour ce nouveau verdict, alors meme que le precedent appel haussier s'est revele juste. Signal fondamental fortement haussier : portfolio-thesis.json releve 'Renforcer' conviction 7/10, citant le plus haut historique de staking (58,8 M INJ verrouilles le 07/09) et la migration par Pineapple Financial de plus d'1 Md$ d'actifs immobiliers tokenises sur le reseau, mais ce signal reste isole du fait de la requalification technique ; le dossier ETF 'Canary Staked INJ' reste en instruction a la SEC, sans decision finale. Regime macro neutre. Aucun des trois signaux ne converge avec un autre : accord_count=1, confiance 53 % (fourchette 45-55, haut de fourchette vu la force reelle du signal fondamental malgre son isolement) ; ATTENTE retenue par defaut faute de majorite, horizon maintenu a 7 jours (groupe volatil).",
     "price_at_issue": 7.77,
     "resolves_at": "2026-09-27T23:28:00Z",
+    "status": "pending",
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    },
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre"
+  },
+  {
+    "id": "v-20260922-ctsi",
+    "issued_at": "2026-09-22T00:20:00Z",
+    "asset": "cartesi",
+    "ticker": "CTSI",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 62,
+    "signals_used": [
+      "24h +0.69%",
+      "7j +16.70%",
+      "30j +13.79%"
+    ],
+    "signal_consensus": {
+      "technique": "mixte",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "reasoning": "Le verdict ATTENTE du 14/09 est invalidé par le marché : mouvement de +16,61 % à l'échéance (0,021947 → 0,025592 euro), au-delà du seuil directionnel de 5 % (verdict_correct=false, aurait dû être ACHAT). Nouveau cycle : lecture technique brute nettement haussière (24h +0,69 %, 7j +16,70 %, 30j +13,79 %), mais le mouvement sur 7 jours dépasse le seuil de 15 % identifié par corr-20260913-biais-chasse-momentum — requalifiée en mixte par prudence plutôt que haussier, ce précédent (ex. Arbitrum -29,7 % après un rebond similaire) n'étant pas encore invalidé par des données réelles. Croisement (portfolio-thesis.json : recommandation Attendre, conviction 4/10, aucun catalyseur d'adoption identifié en septembre ; favoris-context.json : statut Stage 2 confirmé mais absence persistante de TVL DefiLlama et de traction économique mesurable) confirme un fondamental neutre, aligné avec la lecture technique prudente — aucune contradiction à signaler. Régime macro retenu neutre (data/market-context.json, dernier calcul 21/09 08h50 UTC) : flux ETF BTC/ETH nets positifs le 18/09 (+433 M$ / +144 M$) et dominance stablecoins en repli (10,33 % contre 11,22 % le 16/09) penchent risk-on, mais Fed toujours hawkish avec rendement du Trésor 10 ans à 5,01 % penche risk-off, et l'indice peur/cupidité est retombé à ~49-50 (Neutre) ce cycle contre 68-71 (Greed) au cycle précédent — signaux macro trop mélangés pour trancher, retenus tels quels. Deux signaux sur trois convergent sur neutre (fondamental et macro, accord_count=2) : ATTENTE retenue (technique=mixte, règle corr-20260921 inchangée pour ce cas), confiance 62 % (fourchette 60-70, accord modéré mais momentum réel sous-jacent non négligeable malgré la requalification prudente), horizon maintenu à 7 jours par cohérence avec les verdicts précédents sur cet actif (corr-20260906).",
+    "price_at_issue": 0.025592,
+    "resolves_at": "2026-09-29T00:20:00Z",
     "status": "pending",
     "outcome": {
       "price_at_resolution": null,
