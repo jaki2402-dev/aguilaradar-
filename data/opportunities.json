@@ -1,8 +1,8 @@
 {
-  "last_scan_at": "2026-09-22T04:09:29Z",
+  "last_scan_at": "2026-09-23T04:13:46Z",
   "scanned_count": 20,
   "excluded_meme_count": 22,
-  "methodology": "Cycle du 22/09/2026 : Top 20 CoinGecko via le connecteur MCP CoinGecko (limite connue : plafond 20 coins, USD natif converti en EUR via taux de change reel Alpha Vantage 0.87137661, variation 7j calculee depuis le sparkline 7 jours reel, ATH indisponible -> omis). Forte journee haussiere generalisee (BTC +5.3%, XRP +7.2%, ADA +8.7%, XLM +8.5% sur 24h) ; Dogecoin (+19.6%) exclu comme memecoin malgre le pump. Aucun candidat non deja suivi ne se distingue au-dela des actifs deja actifs ou deja evalues. Rain (archive le 14/09) reste legerement negatif sur 7j (-2.2%) : pas de reintegration. 8 des 20 coins etaient deja suivis, 0 nouvelle entree ce cycle. Revue optionnelle : toutes les 8 opportunites actives affichent une variation 7j positive dans ce marche haussier (Zcash +27.3%, Cardano +19.7%, Hyperliquid +16.6%, Monero +13.4%, Stellar +10.0%, WhiteBIT +7.3%, LEO stable) -> aucun retrait justifie.",
+  "methodology": "Cycle du 23/09/2026 : Top 20 CoinGecko via le connecteur MCP CoinGecko (limite connue : plafond 20 coins, USD natif converti en EUR via taux de change reel Alpha Vantage 0.87497399, variation 7j calculee depuis le sparkline 7 jours reel, ATH indisponible -> omis). Marche toujours haussier (BTC +1.4%, XRP +7.6%, Zcash +10.4% sur 24h). Aucun candidat non deja suivi ne se distingue : tous les coins du Top 20 sont mega-caps, stablecoins, Dogecoin (memecoin), Chainlink (position Portefeuille), deja actifs, ou Rain (archive le 14/09, reste negatif -6.25% sur 7j, pas de reintegration). 8 des 20 coins etaient deja suivis, 0 nouvelle entree ce cycle. Revue optionnelle : les 8 opportunites actives (incl. Unibase, hors Top 20, verifiee separement) affichent toutes une variation 7j positive (Zcash +43%, Cardano +31.6%, Hyperliquid +25.2%, Stellar +24%, Unibase +19.3%, WhiteBIT +11.5%, Monero +11.6%, LEO +1.2%) -> aucun retrait justifie.",
   "opportunities": [
     {
       "id": "opp-20260807-ub",
