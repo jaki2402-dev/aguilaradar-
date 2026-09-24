@@ -53,6 +53,18 @@
             "tx_per_day": "Non confirmé ce cycle — méthode habituelle (Blockscout MCP /api/v2/stats/charts/transactions) refusée par le système de permission de la session ('Auto-Mode Bypass'/'Safety Bypass Flag'), appel direct à eth.blockscout.com bloqué par le proxy réseau, et WebSearch n'a renvoyé qu'une fourchette non datée (1,7-2,2M tx/j, ancrée sur un point de juillet 2026) — trop imprécis pour être retenu.",
             "active_addresses": "Non confirmé ce cycle — mêmes blocages que tx_per_day (Blockscout MCP refusé, endpoint direct bloqué) ; aucun résultat WebSearch daté trouvé pour ce champ."
           }
+        },
+        {
+          "date": "2026-09-24",
+          "computed_at": "2026-09-24T08:27:00Z",
+          "tvl_usd": null,
+          "tx_per_day": 1820268,
+          "active_addresses": null,
+          "source": {
+            "tvl_usd": "Non confirmé ce cycle — DefiLlama (direct api.llama.fi et defillama.com bloqués par le proxy réseau) ; le seul chiffre trouvé via WebSearch (52,742 milliards $) est strictement identique à celui déjà enregistré au snapshot du 23/09/2026, sans nouvelle date associée — traité comme une page indexée en cache plutôt qu'une confirmation fraîche, conformément à la règle de détection de cache. Laissé à null plutôt que de dupliquer la même valeur sous une nouvelle date.",
+            "tx_per_day": "Blockscout MCP (direct_api_call, chain_id=1, /api/v2/stats/charts/transactions), dernier point complet du graphique daté du 2026-09-23 (transactions_count=1 820 268) — le point du 2026-09-24 lui-même affichait 0 (journée en cours, non close). Appel réellement effectué ce cycle (pas un résultat en cache).",
+            "active_addresses": "Non confirmé ce cycle — aucun endpoint Blockscout dédié identifié (catalogue /stats-service/api/v1/lines non consulté par manque de budget d'appels ce cycle) et aucun résultat WebSearch daté et fiable trouvé."
+          }
         }
       ]
     },
@@ -80,6 +92,18 @@
             "tvl_usd": "DefiLlama, chiffre daté du 18/09/2026 (~1,39 milliard $, Hyperliquid a rejoint Arbitrum au même niveau de TVL chaîne), rapporté via coin-turk.com citant DefiLlama — écart de 5 jours, à la limite haute de ce qui est acceptable pour une métrique lente ; à revérifier au prochain cycle si une source plus fraîche est disponible. Appel direct à api.llama.fi bloqué par le proxy réseau egress.",
             "tx_per_day": "Non confirmé ce cycle — méthode habituelle (Blockscout MCP) refusée par le système de permission de la session, appel direct à arbitrum.blockscout.com bloqué par le proxy réseau, et le seul chiffre trouvé via WebSearch datait d'août 2025 (bien trop périmé).",
             "active_addresses": "Non confirmé ce cycle — mêmes blocages que tx_per_day ; aucun résultat WebSearch exploitable et daté."
+          }
+        },
+        {
+          "date": "2026-09-24",
+          "computed_at": "2026-09-24T08:27:00Z",
+          "tvl_usd": null,
+          "tx_per_day": 1778119,
+          "active_addresses": null,
+          "source": {
+            "tvl_usd": "Non confirmé ce cycle — DefiLlama (direct api.llama.fi et defillama.com bloqués par le proxy réseau) ; le seul chiffre trouvé via WebSearch (1,39 milliard $, daté du 18/09/2026) est strictement identique à celui déjà enregistré au snapshot du 23/09/2026 — traité comme une page indexée en cache plutôt qu'une confirmation fraîche. Laissé à null plutôt que de dupliquer la même valeur sous une nouvelle date.",
+            "tx_per_day": "Blockscout MCP (direct_api_call, chain_id=42161, /api/v2/stats/charts/transactions), dernier point complet du graphique daté du 2026-09-22 (transactions_count=1 778 119) — le point du 2026-09-23 affichait 0 (journée en cours au moment de la capture précédente) et celui du 2026-09-24 n'existait pas encore dans le tableau. Appel réellement effectué ce cycle (pas un résultat en cache).",
+            "active_addresses": "Non confirmé ce cycle — mêmes raisons que pour ethereum (aucun endpoint Blockscout dédié confirmé, aucun résultat WebSearch daté et fiable)."
           }
         }
       ]
