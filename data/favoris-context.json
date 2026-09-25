@@ -1,66 +1,66 @@
 {
-  "last_computed_at": "2026-09-24T08:27:00Z",
+  "last_computed_at": "2026-09-25T08:20:00Z",
   "assets": {
     "BTC": {
-      "last_computed_at": "2026-09-22T08:28:00Z",
+      "last_computed_at": "2026-09-25T08:20:00Z",
       "competitor": {
         "ticker": "XAU",
         "name": "Or (marché de l'or investissable)",
-        "comparison_note": "Bitcoin affiche une capitalisation de ~1 720 Md$ et une dominance de 58,8 % du marché crypto total (données CoinGecko en direct, 22/09/2026), contre un marché de l'or investissable (stock hors-sol) estimé entre 29 000 et 30 000+ Md$ selon des estimations datées fin 2025/janvier 2026 (WebSearch, non revérifiées ce cycle). L'écart d'échelle reste d'un ordre de grandeur x17-18 ; Bitcoin n'a toujours pas de concurrent crypto direct sur le rôle de réserve de valeur numérique."
+        "comparison_note": "Bitcoin affiche une capitalisation de ~1 692 Md$ (prix 84 223$, CoinGecko en direct, 25/09/2026) et une dominance de 58,5 % du marché crypto total, contre un marché mondial de l'or hors-sol estimé à 31 000 Md$ selon un rapport du World Gold Council daté d'avril 2026 (WebSearch) — une estimation plus étroite, limitée à l'or réellement \"investissable\" hors bijouterie/industrie, tombe à environ 15 000 Md$ selon la même recherche. Avec la capitalisation actuelle de Bitcoin, l'écart reste d'un ordre de grandeur x18 face au marché total de l'or, et x9 face au sous-ensemble investissable ; Bitcoin n'a toujours pas de concurrent crypto direct sur le rôle de réserve de valeur numérique."
       },
       "long_term_thesis": {
-        "bull": "Les flux ETF spot américains se sont nettement redressés après le choc initial du FOMC : +999 M$ nets le 21/09/2026 (3e jour consécutif d'inflows ; IBIT +381,4 M$, ARKB +289,1 M$, FBTC +238,8 M$), dans un contexte de short squeeze ayant porté l'ensemble du marché crypto à son plus haut niveau en 8 mois. Le prix BTC est passé d'environ 76 000$ mi-septembre à 85 513$ le 22/09/2026 (+4,15% sur 24h, CoinGecko), et le funding rate reste positif sans excès (médiane 0,00594%/période sur les 24/25 plus gros perpétuels, 21/09/2026), signe d'un repositionnement long sans euphorie de levier extrême.",
-        "base": "Le FOMC a relevé ses taux de 25 pb le 16/09/2026 (vote 12-0, fourchette 3,75-4%) — une décision plus restrictive que ce que le marché anticipait (probabilités quasi 50/50 avant réunion) — et le dot plot montre 16 officiels sur 18 anticipant au moins une hausse supplémentaire en 2026. Ce choc hawkish a d'abord fait sortir 450,4 M$ des ETF BTC le 15/09/2026 (plus forte sortie journalière depuis juin), avant une réabsorption rapide et un retour en flux positifs dès le 19-21/09. Le marché semble aujourd'hui davantage piloté par la dynamique de positionnement post-FOMC/short squeeze que par une lecture macro univoque.",
-        "bear": "Le cycle de resserrement de la Fed n'est pas terminé : le dot plot pointe vers un taux terminal autour de 4,125-4,375% d'ici fin 2026, un contexte historiquement défavorable aux actifs risqués. Parallèlement, l'open interest agrégé sur futures BTC a bondi de +7,47% sur 30 jours pour atteindre ~61,6 Md$ au 22/09/2026, en hausse simultanée avec le prix — une combinaison qui peut précéder un débouclage de levier si les flux se retournent de nouveau comme cela s'est brièvement produit autour de la date du FOMC.",
-        "assumptions_note": "Ces scénarios supposent l'absence de nouveau choc macro majeur avant la prochaine réunion du FOMC (fin octobre/novembre 2026) et une poursuite du régime actuel de flux ETF au comptant comme principal moteur de la demande marginale ; ils n'intègrent aucun multiplicateur de prix ni projection chiffrée au-delà des données citées et sourcées ci-dessus."
+        "bull": "Les flux ETF spot américains restent nettement positifs : plus de 2 Md$ d'entrées nettes cumulées sur les séances du 18, 21 et 22/09/2026, et BTC a reconquis le seuil de 87 000$ le 24/09/2026 selon CryptoTimes, porté par le short squeeze du 21/09 qui a effacé environ 648 M$ de positions courtes (Coindesk) sans provoquer de rechute de l'open interest, signe d'un repositionnement long qui s'est maintenu plusieurs jours plutôt que de se retourner immédiatement.",
+        "base": "Le relèvement de taux de la Fed du 16/09/2026 (+25 pb, vote 12-0, dot plot pointant vers d'autres hausses en 2026) avait d'abord provoqué une sortie ETF de 450,4 M$ le 15/09, rapidement réabsorbée par les entrées des 18-22/09. Le 25/09/2026, le prix BTC est quasi stable sur 24h (84 223$, -0,01%, CoinGecko) alors que la capitalisation totale du marché crypto recule de -2,86% sur la même période — une divergence notable qui suggère que la rotation actuelle profite relativement à BTC au détriment d'autres actifs plus risqués, plutôt qu'un signal macro univoque.",
+        "bear": "L'open interest agrégé sur les 25 plus gros contrats perpétuels BTC atteignait environ 81,1 Md$ au 21/09/2026 (Coindesk/cryptoticker.io), en hausse simultanée avec le prix depuis le short squeeze — une combinaison qui reste propice à un débouclage de levier si les flux ETF se retournent à nouveau. Un mouvement de 842 BTC (~71 M$) transféré depuis Binance vers un portefeuille inconnu a été signalé par Whale Alert le 24/09/2026 (coinfomania) ; direction ambiguë (accumulation ou préparation de vente), à surveiller plutôt qu'à interpréter dans un sens ou l'autre.",
+        "assumptions_note": "Ces scénarios supposent l'absence de nouveau choc macro majeur avant la prochaine réunion du FOMC (fin octobre/novembre 2026) et une poursuite du régime actuel de flux ETF au comptant comme principal moteur de la demande marginale ; le funding rate (0,00594%/période, mesuré le 21/09/2026, aucune valeur plus fraîche confirmée ce cycle) et l'open interest cités datent tous deux du 21/09/2026, pas du jour de ce cycle — aucun chiffre plus récent n'a pu être confirmé via WebSearch ce 25/09/2026."
       },
       "open_interest": {
-        "value_usd": 61580000000,
+        "value_usd": 81100000000,
         "funding_rate_pct": 0.00594,
-        "source": "The Block / CoinGlass (résultats indexés via WebSearch)",
-        "note": "Open interest agrégé toutes plateformes (~61,58 Md$, +7,47% sur 30 jours) rapporté par The Block au 22/09/2026, retrouvé via WebSearch — pas d'appel API direct à CoinGlass/Binance depuis ce sandbox (accès bloqué). Funding rate: médiane de 0,00594% par période de règlement (~8h) sur les 24/25 plus gros contrats perpétuels BTC, positive, mesurée le 21/09/2026 dans un contexte de short squeeze (source: cryptoticker.io, résultat indexé via WebSearch, pas un appel API en direct)."
+        "source": "Coindesk / cryptoticker.io (résultats indexés via WebSearch, datés du 21/09/2026 — pas d'appel API direct à CoinGlass/Binance possible depuis cet environnement)",
+        "note": "Open interest agrégé sur les 25 plus gros contrats perpétuels BTC (~81,1 Md$), en hausse depuis les ~61,6 Md$ rapportés au cycle précédent (22/09) — chiffre daté du 21/09/2026, aucune valeur plus fraîche datée du 24-25/09 trouvée via WebSearch ce cycle. Funding rate inchangé par rapport au cycle précédent (0,00594%/période, même source datée du 21/09) — aucune mise à jour trouvée, conservé tel quel plutôt que supposé stable sans vérification."
       },
       "defi_tvl": {
         "value_usd": 8800000000,
         "change_7d_pct": null,
-        "source": "DefiLlama (résultat indexé via WebSearch, non requêté en direct)",
-        "note": "BTC natif n'a pas de DeFi/smart contracts propres. WBTC (le plus gros wrapped BTC par TVL, principalement sur Ethereum et ses L2) détenait ~8,8 Md$ verrouillés selon DefiLlama, chiffre daté d'avril 2026 retrouvé via WebSearch — PAS revérifié à la date du jour (pas d'appel direct à l'API DefiLlama possible depuis ce sandbox), donc probablement obsolète. Ceci mesure l'exposition BTC wrapped/bridged dans la DeFi (Ethereum/L2), jamais la TVL de la chaîne Bitcoin native elle-même. change_7d_pct non trouvé, laissé à null plutôt qu'estimé."
-      },
-      "onchain_signal": {
-        "available": false,
-        "note": "Recherche ciblée (WebSearch) de mouvements de baleines BTC ou transferts significatifs vers des exchanges datés du 20 au 22/09/2026 (fenêtre de 48h demandée) : aucun événement daté dans cette fenêtre n'a été trouvé. Les mouvements de baleines les plus significatifs identifiés sont hors fenêtre (2 931 BTC / ~188 M$ le 12/07/2026 après 7 ans de dormance ; 2 650 BTC / ~203 M$ vers FalconX/Cumberland en mai 2026). Les flux ETF (net +999 M$ le 21/09/2026) sont déjà couverts dans long_term_thesis et ne sont pas un signal on-chain de baleine individuelle.",
-        "source_url": null
-      }
-    },
-    "ETH": {
-      "last_computed_at": "2026-09-22T08:28:00Z",
-      "competitor": {
-        "ticker": "SOL",
-        "name": "Solana",
-        "comparison_note": "Ethereum conserve la 2e capitalisation crypto avec 333,5 Md$ (rang CoinGecko #2) contre 68,3 Md$ pour Solana (rang #7), soit un écart d'environ 4,9x en faveur d'ETH — données CoinGecko en direct du 22/09/2026. Sur les fenêtres récentes, Solana surperforme toutefois en momentum relatif : +15,2 % sur 7 jours et +26,1 % sur 30 jours, contre +9,6 % et +14,0 % pour Ethereum. Les deux actifs progressent en 24h (+2,15 % ETH, +2,75 % SOL), traduisant un contexte de marché haussier partagé plutôt qu'une divergence directionnelle."
-      },
-      "long_term_thesis": {
-        "bull": "L'adoption institutionnelle s'accélère : les ETF spot Ethereum cumulent environ 16,7 Md$ d'actifs (ratio ETF/capitalisation ETH de 5,2 %), et le produit de staking à effet de rendement de BlackRock (ETHB, lancé en mars 2026) donne aux investisseurs traditionnels un accès au rendement natif du staking sans opérer de validateur. Le taux de staking a franchi 35 % de l'offre en circulation (environ 43 M ETH) en septembre 2026, en hausse de près de 6 points sur un an, réduisant l'offre liquide disponible. La classification conjointe SEC/CFTC de mars 2026 rangeant ETH parmi les 16 « digital commodities » a levé une part significative de l'incertitude réglementaire pesant sur les produits institutionnels.",
-        "base": "Les flux ETF restent volatils à court terme : après quatre semaines consécutives d'entrées, la semaine se terminant le 18 septembre 2026 a enregistré une sortie nette de 140 M$ (BlackRock ETHA en tête avec -56 M$), signe que l'appétit institutionnel n'est pas encore unidirectionnel. Sur les L2, la compétition s'est déplacée des frais (déjà proches de zéro sur des réseaux comme Base) vers la sécurité et la liquidité, concentrant l'activité et les revenus sur un petit nombre de chaînes (Base, Arbitrum, un ZKSync en redressement) au détriment de la capture de valeur par la couche 1 elle-même.",
-        "bear": "La classification SEC/CFTC de mars 2026 reste une interprétation administrative, pas une loi : elle dépend du vote du CLARITY Act au Congrès pour être verrouillée durablement, ce qui laisse un risque de retournement réglementaire. La fragmentation croissante de l'écosystème L2 (Vitalik Buterin a appelé en septembre 2026 à une réforme des frais et des standards de wallet cross-L2) complique l'expérience utilisateur, tandis que des concurrents comme Solana affichent un momentum de prix relatif supérieur (+15,2 % sur 7 jours contre +9,6 % pour ETH) susceptible de détourner du capital spéculatif à court terme.",
-        "assumptions_note": "Ces scénarios s'appuient sur des recherches web datées de mi/fin septembre 2026 (flux ETF SoSoValue/Farside, données de staking The Block/Datawallet, classification SEC/CFTC, actualité L2) et non sur un modèle propriétaire ni une prédiction de prix ; ils supposent que le CLARITY Act reste en suspens et que la tendance de staking se poursuit — deux hypothèses à revérifier à chaque cycle."
-      },
-      "open_interest": {
-        "value_usd": 36686780580,
-        "funding_rate_pct": null,
-        "source": "CoinGlass (résultat indexé via WebSearch — accès API direct non tenté/non disponible dans ce sandbox)",
-        "note": "Aucun outil MCP CoinGlass n'existe dans cet environnement ; la valeur d'open interest agrégé provient d'un contenu de page CoinGlass indexé par WebSearch, sans horodatage exact confirmé pour le 22/09/2026. Aucun taux de financement (funding rate) daté de façon fiable n'a pu être extrait des résultats — laissé à null plutôt que deviné."
-      },
-      "defi_tvl": {
-        "value_usd": 52742000000,
-        "change_7d_pct": null,
-        "source": "DefiLlama (https://defillama.com/chain/ethereum), résultat indexé via WebSearch daté du 21/09/2026",
-        "note": "La TVL totale d'Ethereum (52,742 Md$ au 21/09/2026) provient d'un contenu de page DefiLlama indexé par WebSearch. La variation sur 7 jours est affichée sur la page mais sa valeur numérique n'était pas extractible du résultat de recherche — laissée à null plutôt qu'estimée."
+        "source": "DefiLlama (résultat indexé via WebSearch, non requêté en direct — api.llama.fi et defillama.com bloqués par le proxy réseau de cet environnement)",
+        "note": "Exposition BTC wrapped/bridged dans la DeFi (essentiellement WBTC sur Ethereum et ses L2), jamais la TVL native de la chaîne Bitcoin elle-même. Valeur strictement identique à celle déjà enregistrée au cycle précédent (22/09/2026) — probable page indexée en cache plutôt qu'une confirmation fraîche du 25/09, à vérifier dès qu'un appel direct à l'API DefiLlama sera possible. Un chiffre distinct de ~4,1-4,4 Md$ (\"BTCFi\", TVL native sur des L2/sidechains Bitcoin comme Babylon/Lombard) a été trouvé mais ne correspond pas à la définition de ce champ (exposition wrapped/bridged) — non utilisé ici, à ne pas confondre."
       },
       "onchain_signal": {
         "available": true,
-        "note": "Le MCP Blockscout a été tenté en premier (chain_id 1) mais l'initialisation de session (__unlock_blockchain_analysis__) a été refusée par la couche de permission de cet environnement lors de cette recherche, donc bascule sur WebSearch comme prévu par la consigne de repli. Deux mouvements de baleine datés et sourcés ont été trouvés dans la fenêtre des 48h précédant le 22/09/2026 : une rotation BTC→ETH d'environ 86,5 M$ avec mise en staking immédiate de 34 422 ETH (fenêtre de 5 jours se terminant le 21/09/2026), et un rachat distinct d'environ 20 M$ (7 567 ETH) le 21/09/2026 par un portefeuille ayant déjà réalisé 3,7 M$ de profit en août.",
-        "source_url": "https://www.kucoin.com/news/flash/mysterious-whale-rotates-86-76m-from-btc-into-eth-stakes-all-34-422-eth"
+        "note": "Whale Alert a signalé un transfert de 842 BTC (~71 M$) depuis Binance vers un portefeuille inconnu, daté du 24/09/2026 (coinfomania, résultat WebSearch) — dans la fenêtre des 48h précédant ce cycle. Direction du signal ambiguë (accumulation possible ou préparation d'une vente future) : présenté comme un fait daté et sourcé, pas comme une interprétation directionnelle.",
+        "source_url": "https://coinfomania.com/whale-alert-reports-842-btc-transferred-from-binance/"
+      }
+    },
+    "ETH": {
+      "last_computed_at": "2026-09-25T08:20:00Z",
+      "competitor": {
+        "ticker": "SOL",
+        "name": "Solana",
+        "comparison_note": "Ethereum conserve la 2e capitalisation crypto avec 327,5 Md$ (rang CoinGecko #2, prix 2 682,92$) contre 68,8 Md$ pour Solana (rang #7, prix 117,02$), soit un écart d'environ 4,76x en faveur d'ETH — données CoinGecko en direct du 25/09/2026. Solana continue de surperformer en momentum relatif : +10,34% sur 7 jours et +20,23% sur 30 jours, contre +7,50% et +8,61% pour Ethereum. Les deux actifs sont quasi stables en 24h (+0,03% ETH, +1,78% SOL) dans un contexte de repli du marché crypto global (-2,86% sur 24h)."
+      },
+      "long_term_thesis": {
+        "bull": "Le taux de staking a franchi 34,23% de l'offre totale (environ 41,7-42 M ETH, capitalisation de staking >77 Md$), réduisant l'offre liquide disponible. Les ETF spot Ethereum ont enchaîné 5 séances consécutives d'entrées nettes (19 au 23/09/2026 : 270 M$, 162,2 M$, 104,5 M$ et 66,1 M$, soit 746,5 M$ cumulés — KuCoin/Bitcoinist), effaçant la sortie de 140 M$ de la semaine précédente. Une baleine a ajouté 15 000 ETH à 2 751$ (~41,3 M$) le 23/09/2026, portant sa position totale à 52 000 ETH avec une plus-value latente de 31,1 M$ (KuCoin) — signal d'accumulation daté, pas de vente.",
+        "base": "Le flux ETF est redevenu positif mais reste sujet à des à-coups hebdomadaires : la semaine du 18/09 avait enregistré -140 M$, la semaine suivante +746,5 M$ sur 5 séances. Le staking à effet de rendement (ETHB de BlackRock, ETHE de Grayscale) continue de distribuer un rendement net d'environ 2% après frais, mécanisme encore récent (2026) dont la pérennité sur plusieurs cycles n'est pas démontrée à ce stade.",
+        "bear": "La classification SEC/CFTC de mars 2026 rangeant ETH parmi les \"digital commodities\" reste une interprétation administrative dépendant du vote du CLARITY Act pour être verrouillée durablement. La fragmentation de l'écosystème L2 (appel de Vitalik Buterin en septembre 2026 à une réforme des frais et standards cross-L2) complique l'expérience utilisateur, et Solana affiche un momentum de prix relatif nettement supérieur sur 30 jours (+20,23% contre +8,61% pour ETH), un narratif de rotation qui pourrait continuer à détourner du capital spéculatif à court terme.",
+        "assumptions_note": "Ces scénarios s'appuient sur des recherches web datées du 23-25 septembre 2026 (flux ETF KuCoin/Bitcoinist, données de staking, mouvement de baleine KuCoin) et non sur un modèle propriétaire ni une prédiction de prix ; ils supposent que le CLARITY Act reste en suspens et que la tendance de staking se poursuit — deux hypothèses à revérifier à chaque cycle."
+      },
+      "open_interest": {
+        "value_usd": 34810000000,
+        "funding_rate_pct": 0.0098,
+        "source": "CoinGlass (résultat indexé via WebSearch — accès API direct non disponible dans cet environnement)",
+        "note": "Open interest agrégé ~34,81 Md$ avec un ratio long/short d'environ 1,065 et un funding rate pondéré d'environ 0,0098%, résultat WebSearch sans horodatage exact confirmé (un autre résultat, daté du 20/09/2026, indiquait ~31,48 Md$ — cohérent avec une hausse progressive, mais aucune des deux valeurs n'a pu être datée avec certitude au jour de ce cycle). En repli par rapport aux ~36,69 Md$ rapportés au cycle du 22/09/2026 — plausible dans un contexte de recul du marché crypto global (-2,86% sur 24h ce 25/09), non confirmé comme une baisse réelle faute de dates exactes comparables."
+      },
+      "defi_tvl": {
+        "value_usd": null,
+        "change_7d_pct": null,
+        "source": "DefiLlama (accès direct à api.llama.fi et defillama.com bloqué par le proxy réseau de cet environnement)",
+        "note": "3e cycle consécutif (21, 23 et maintenant 25/09/2026) où le seul chiffre trouvé via WebSearch est strictement identique (52,742 Md$) sans nouvelle date associée — traité comme une page indexée en cache plutôt qu'une confirmation fraîche, conformément à la règle de détection de cache. Laissé à null plutôt que de dupliquer une 3e fois la même valeur."
+      },
+      "onchain_signal": {
+        "available": true,
+        "note": "Le MCP Blockscout ne fournit pas d'endpoint de détection générique de mouvements de baleines (seulement des requêtes par adresse déjà connue) ; recherche via WebSearch comme prévu par la consigne pour ce cas. Une baleine a ajouté 15 000 ETH à 2 751$ (~41,3 M$) le 23/09/2026, portant sa position à 52 000 ETH avec une plus-value latente de 31,1 M$ (KuCoin) — daté dans la fenêtre des 48h précédant ce cycle, distinct du mouvement BTC→ETH du 21/09 déjà utilisé au cycle précédent (non réutilisé ici pour éviter de présenter un événement vieux de 4 jours comme un signal frais).",
+        "source_url": "https://www.kucoin.com/news/flash/whale-adds-15-000-eth-at-2-751-booking-31-1m-profit"
       }
     },
     "FET": {
@@ -281,33 +281,33 @@
       }
     },
     "JUP": {
-      "last_computed_at": "2026-09-22T08:28:00Z",
+      "last_computed_at": "2026-09-25T08:20:00Z",
       "competitor": {
         "ticker": "RAY",
         "name": "Raydium",
-        "comparison_note": "Jupiter (JUP) cote à 0,2947 dollar (rang #81, capitalisation 977,6 M$, FDV 2,02 Md$) contre 1,77 dollar pour Raydium (RAY, rang #113, capitalisation 478,2 M$, FDV 983,9 M$) — JUP reste le plus gros acteur par capitalisation malgré un rang CoinGecko inférieur au sien en valeur absolue de prix. Sur 7 jours, JUP progresse de 24,8% et RAY de 27,8% ; sur 30 jours RAY surperforme nettement (+144,6% contre +49,7% pour JUP), signe que le narratif \"rotation DEX Solana\" a davantage profité à RAY récemment. Les deux protocoles restent loin de leur ATH respectif (JUP -85,3%, RAY -89,5%)."
+        "comparison_note": "Jupiter (JUP) cote à 0,3178 dollar (rang #76, capitalisation 1,055 Md$, FDV 2,18 Md$) contre 2,04 dollars pour Raydium (RAY, rang #106, capitalisation 550,3 M$, FDV 1,13 Md$) — données CoinGecko en direct du 25/09/2026. Sur 24h, JUP surperforme nettement (+9,98% contre -1,84% pour RAY) ; sur 7 jours les deux progressent de façon comparable (+23,06% JUP, +20,45% RAY), mais sur 30 jours RAY reste très en tête (+158,76% contre +46,38% pour JUP) — le narratif \"rotation DEX Solana\" continue de profiter davantage à RAY sur la durée, malgré le regain de momentum de JUP sur les dernières 24h."
       },
       "long_term_thesis": {
-        "bull": "Le mécanisme Litterbox (50% des revenus on-chain du protocole affectés au rachat de JUP, ~165,6 M de jetons accumulés début septembre 2026) continue de fonctionner, appuyé par le burn de 3 Md JUP annoncé en janvier 2026 (offre théorique ramenée de 10 à ~6,86 Md, à re-vérifier — CoinGecko affiche encore un max supply de 10 Md, possible non-mise à jour du champ). Une proposition de gouvernance active (discuss.jup.ag, \"Increase the Litterbox Buyback allocation from 50% to 70%\") viserait un rachat plus agressif si elle passe. JUP profite aussi du rallye plus large de l'écosystème Solana (rôle de \"high beta SOL play\") et de nouveaux produits (Jupiter Gacha, >50 M$ de volume cumulé annoncé le 21/09 ; Jupiter Universal Deposit cross-chain).",
-        "base": "La hausse récente (+24,8% sur 7 jours, +49,7% sur 30 jours selon CoinGecko) semble largement tirée par le bêta sur le rallye Solana et par un positionnement à effet de levier croissant sur les futures (volume futures très supérieur au volume spot selon les données indexées) plutôt que par un changement fondamental confirmé. Le rythme de rachat Litterbox reste à 50% des revenus pour l'instant ; la proposition à 70% n'a pas de résultat de vote confirmé trouvé en recherche.",
-        "bear": "Une partie du narratif haussier repose sur des rachats qui accumulent les jetons dans un multisig sans les détruire par défaut — un fil de gouvernance distinct (\"New DAO vote: Proposal to Burn the Litterbox\") propose explicitement de les brûler, mais son issue n'a pas été confirmée via recherche web ; tant que ce vote n'aboutit pas, l'effet déflationniste promis reste réversible (les jetons pourraient être redéployés plutôt que brûlés). Par ailleurs, un trading dominé par les futures à effet de levier sur un actif dont l'open interest serait proche de ses plus hauts de plusieurs mois expose à un dénouement rapide en cas de retournement du bêta Solana.",
-        "assumptions_note": "Les chiffres de rachat/burn Litterbox et l'état des votes de gouvernance proviennent de WebSearch (forum discuss.jup.ag, articles CoinMarketCap/OKX Ventures relayés), non d'un appel API direct ni d'une lecture de blockchain — non re-confirmés indépendamment. Le décalage entre le burn de 3 Md JUP annoncé (offre théorique ~6,86 Md) et le max_supply de 10 Md encore affiché par CoinGecko (compare-coins, appel direct) n'a pas pu être résolu dans cette recherche. Aucun résultat de vote définitif (ni pour le passage à 70%, ni pour le burn du Litterbox) n'a été trouvé — à traiter comme des propositions en cours, pas des faits acquis."
+        "bull": "Correction importante par rapport au cycle précédent : le burn de 130 M JUP (~4% de l'offre en circulation) détenus dans le \"Litterbox Trust\" n'était pas une simple proposition en cours — le vote de gouvernance correspondant a été approuvé à 86% et le burn a été exécuté fin novembre 2025, donc bien avant ce cycle (sources multiples : Bitget News, NullTX, Phemex, PANews, recherche WebSearch du 25/09/2026). Le mécanisme de rachat Litterbox (50% des revenus on-chain affectés au rachat de JUP) reste actif et continue d'accumuler des jetons. La TVL agrégée du protocole Jupiter (tous produits : Swap, Lend, Perps, Staked SOL) atteint 1,98 Md$ selon DefiLlama, en hausse de 14,9% sur 30 jours — une progression réelle par rapport aux 1,89 Md$ (+12,6% sur 30j) déjà enregistrés au cycle du 22/09/2026.",
+        "base": "La hausse de prix des dernières 24h (+9,98%) et 7 jours (+23,06%) semble portée par le rallye plus large de l'écosystème Solana (SOL +1,78% sur 24h, +10,34% sur 7j) plutôt que par une nouvelle spécifique à Jupiter datée de cette fenêtre — aucune actualité propre à JUP des dernières 48h n'a été trouvée pour expliquer la hausse au-delà du bêta Solana.",
+        "bear": "Une proposition de gouvernance plus récente (mai 2026, discuss.jup.ag) visant à faire passer l'allocation du Litterbox de 50% à 70% des revenus reste sans résultat de vote confirmé trouvé via recherche — traité comme non acquis, pas comme un fait. Par ailleurs, la concentration de détention reste élevée : les 10 plus gros portefeuilles (majoritairement trésorerie/équipe du projet, pas des baleines indépendantes) contrôlent 66,38% de l'offre suivie (~998 M$), un facteur de risque de dilution/vente si ces adresses libèrent des jetons.",
+        "assumptions_note": "Le statut résolu du burn Litterbox (130 M JUP, exécuté fin novembre 2025) corrige une incertitude maintenue à tort dans les cycles précédents de ce document — vérifié via plusieurs sources concordantes (Bitget, NullTX, Phemex, PANews) le 25/09/2026, aucune n'ayant été contredite. Le résultat du vote sur le passage à 70% (mai 2026) reste en revanche non confirmé et ne doit pas être présumé acquis avant une vérification positive future."
       },
       "open_interest": {
-        "value_usd": null,
+        "value_usd": 58000000,
         "funding_rate_pct": null,
-        "source": "CoinGlass / CoinGabbar (résultats indexés via WebSearch, pas d'appel API direct — CoinGlass est bloqué par le proxy réseau de cet environnement)",
-        "note": "Sources contradictoires et non datées avec certitude : un article indexé cite un open interest JUP de 94,70 M$ (proche d'un pic >100 M$ daté du 7 septembre), un autre cite ~56,46 M$, sans qu'on puisse établir laquelle correspond à l'instant présent (22/09) — écart trop important pour retenir un chiffre. Le funding rate est décrit qualitativement (\"bien en dessous du niveau ~0,03%/8h associé à un positionnement long surchargé\") mais aucune valeur numérique fiable et datée n'a été trouvée. Valeurs laissées à null plutôt que de choisir arbitrairement l'une des deux."
+        "source": "CoinGlass / Coinalyze (résultats indexés via WebSearch, pas d'appel API direct)",
+        "note": "Deux résultats concordants et proches trouvés (~59,55 M$ et ~56,71 M$ selon la source), non datés avec une précision suffisante pour établir lequel est le plus récent au 25/09/2026 — valeur retenue comme la moyenne arrondie (58 M$) des deux, à titre indicatif uniquement, en baisse par rapport aux valeurs contradictoires (56,46 M$ / 94,70 M$) du cycle du 22/09/2026 qui n'avaient pas pu être tranchées. Aucun funding rate numérique fiable et daté trouvé — laissé à null plutôt que deviné."
       },
       "defi_tvl": {
-        "value_usd": 1890000000,
+        "value_usd": 1980000000,
         "change_7d_pct": null,
-        "source": "DefiLlama (résultat indexé via WebSearch — accès direct à defillama.com bloqué par le proxy réseau de cet environnement, donc non vérifié par appel API)",
-        "note": "Jupiter est avant tout un agrégateur DEX sans TVL propre historiquement, mais le protocole a étendu son périmètre (Jupiter Perps/JLP, Jupiter Lend, JupSOL, jupUSD) qui sont bien trackés par DefiLlama sous des TVL propres. Le chiffre agrégé \"Jupiter\" trouvé est 1,89 Md$, avec une variation 30 jours de +12,6% rapportée — aucune variation à 7 jours n'a pu être retrouvée via recherche, donc laissée à null plutôt qu'estimée. Chiffre à re-confirmer par appel direct à l'API DefiLlama dès que l'accès réseau le permet."
+        "source": "DefiLlama (https://defillama.com/protocol/jupiter), résultat indexé via WebSearch daté du 25/09/2026",
+        "note": "TVL agrégée de l'écosystème Jupiter (Swap, Lend, Perps, Staked SOL, Prediction) : 1,98 Md$, +14,9% sur 30 jours — une progression réelle par rapport aux 1,89 Md$ (+12,6% sur 30j) du cycle précédent, pas une valeur identique/en cache. Variation à 7 jours toujours non trouvée via recherche, laissée à null plutôt qu'estimée."
       },
       "onchain_signal": {
         "available": false,
-        "note": "Recherche ciblée sur un mouvement baleine JUP daté des dernières 48h (depuis le 20/09/2026) : aucun événement daté dans cette fenêtre n'a été trouvé. Le mouvement baleine le plus documenté (wallet \"Emb5o\", 67 648 SOL + 6,2 M JUP après 7 mois de dormance) date en réalité du 9 mai 2026 — trop ancien pour être présenté comme un signal récent. L'actualité la plus récente relève surtout de produits (Jupiter Gacha, 50 M$ de volume cumulé annoncé le 21/09) et du bêta général sur le rallye Solana, pas d'un mouvement on-chain baleine spécifique et daté.",
+        "note": "Recherche ciblée sur un mouvement baleine JUP daté des dernières 48h (depuis le 23/09/2026) : aucun événement daté et spécifique à JUP trouvé dans cette fenêtre. L'activité baleine identifiée dans les résultats concerne surtout SOL/l'écosystème Solana en général, pas un mouvement JUP individuel daté. La hausse de prix récente est attribuée au bêta Solana (voir long_term_thesis), pas à un signal on-chain baleine spécifique.",
         "source_url": null
       }
     },
