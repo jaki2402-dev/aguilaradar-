@@ -65,6 +65,18 @@
             "tx_per_day": "Blockscout MCP (direct_api_call, chain_id=1, /api/v2/stats/charts/transactions), dernier point complet du graphique daté du 2026-09-23 (transactions_count=1 820 268) — le point du 2026-09-24 lui-même affichait 0 (journée en cours, non close). Appel réellement effectué ce cycle (pas un résultat en cache).",
             "active_addresses": "Non confirmé ce cycle — aucun endpoint Blockscout dédié identifié (catalogue /stats-service/api/v1/lines non consulté par manque de budget d'appels ce cycle) et aucun résultat WebSearch daté et fiable trouvé."
           }
+        },
+        {
+          "date": "2026-09-25",
+          "computed_at": "2026-09-25T08:20:00Z",
+          "tvl_usd": null,
+          "tx_per_day": 1831147,
+          "active_addresses": null,
+          "source": {
+            "tvl_usd": "Non confirmé ce cycle — DefiLlama (direct api.llama.fi et defillama.com bloqués par le proxy réseau) ; le seul chiffre trouvé via WebSearch (52,742 milliards $) est strictement identique à celui déjà enregistré aux snapshots du 23/09 et du 24/09/2026, 3e cycle consécutif sans nouvelle date associée — traité comme une page indexée en cache, laissé à null plutôt que de dupliquer une 3e fois la même valeur.",
+            "tx_per_day": "Blockscout MCP (direct_api_call, chain_id=1, /api/v2/stats/charts/transactions), dernier point complet du graphique daté du 2026-09-24 (transactions_count=1 831 147) — le point du 2026-09-25 lui-même affichait une valeur non close au moment de l'appel (journée en cours). Appel réellement effectué ce cycle (pas un résultat en cache) ; nouvelle donnée par rapport au snapshot du 24/09 qui utilisait le point du 23/09.",
+            "active_addresses": "Non confirmé ce cycle — aucun endpoint Blockscout dédié identifié (catalogue /stats-service/api/v1/lines non consulté par manque de budget d'appels ce cycle, budget de session limité à 8 appels) et aucun résultat WebSearch daté et fiable trouvé."
+          }
         }
       ]
     },
