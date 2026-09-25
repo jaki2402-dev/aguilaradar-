@@ -1,7 +1,12 @@
 {
-  "last_updated_at": "2026-09-25T00:35:00Z",
-  "last_checked_at": "2026-09-25T04:20:00Z",
+  "last_updated_at": "2026-09-25T08:20:00Z",
+  "last_checked_at": "2026-09-25T08:20:00Z",
   "items": [
+    {
+      "title": "Meter Passport (pont cross-chain BNB Chain) attaqué à partir du 23 septembre 18h14 UTC : exploitation d'une vulnérabilité de validation de bloc sur le mainnet Meter permettant de frapper environ 2,3 M$ de wMTRG/MTRG non collatéralisés en deux transactions, revendus notamment sur PancakeSwap ; jeton MTRG en chute de ~71,7 %, mainnet et pont suspendus par l'équipe, utilisateurs avertis de ne pas acheter MTR/MTRG le temps de l'incident, attaque toujours qualifiée d'en cours au moment des dernières sources consultées — hack distinct de Bitget (24/09, déjà logué ci-dessous) et sans lien avec les 15 favoris du site",
+      "url": "https://www.cryptotimes.io/2026/09/24/meter-passport-exploit-reportedly-mints-2-3-million-in-unbacked-mtrg/",
+      "source": "CryptoTimes (recoupé : KuCoin, Phemex)"
+    },
     {
       "title": "Bitget (exchange centralisé) victime le 24 septembre d'un piratage de ses hot wallets détecté à 18h31 UTC, environ 351,6 M$ déplacés (ETH, USDT, USDC, AVAX, BNB et autres) vers une adresse unique en un peu plus d'une heure — probablement le plus gros hack crypto de 2026, portant le cumul de septembre au-dessus de 684 M$, le plus élevé du mois sur l'année. Retraits temporairement suspendus le temps d'une revue de sécurité, dépôts/trading restés actifs ; cold wallets non touchés et fonds utilisateurs déclarés sûrs par la direction (fonds de protection utilisateurs >464 M$), rapport d'incident complet promis sous 24h, méthode d'intrusion non encore divulguée à ce cycle",
       "url": "https://www.coindesk.com/markets/2026/09/24/crypto-exchange-bitget-loses-usd352-million-in-hack-claims-user-funds-are-safe",
