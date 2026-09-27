@@ -1,7 +1,12 @@
 {
-  "last_updated_at": "2026-09-25T08:20:00Z",
-  "last_checked_at": "2026-09-25T12:17:00Z",
+  "last_updated_at": "2026-09-27T23:28:00Z",
+  "last_checked_at": "2026-09-27T23:28:00Z",
   "items": [
+    {
+      "title": "Clé de signature du pont cross-chain Ethereum-Cardano de SingularityNET (infrastructure partagée par les membres de l'alliance ASI) compromise entre le 19 et le 20 septembre : l'attaquant a drainé 8,7 M FET et frappé 260 M AGIX / 408,5 M NTX / 53,8 M WMTx non collatéralisés ; PeckShield estime les avoirs de l'attaquant à 16,77 M$ au 21/09, AGIX a chuté de ~99 % en 24h (-93 M$ de capitalisation). Cause : compromission opérationnelle d'une clé offline, pas une faille de smart contract — Fetch.ai (FET, favori du site) a suspendu les conversions AGIX-FET le temps de l'incident, 9e exploit de pont majeur de 2026",
+      "url": "https://www.kucoin.com/news/flash/hackers-exploit-singularitynet-vulnerability-mint-260m-agix-and-53-83m-wmtx",
+      "source": "KuCoin (recoupé : CryptoTimes, Crypto Economy, Metaverse Post)"
+    },
     {
       "title": "Meter Passport (pont cross-chain BNB Chain) attaqué à partir du 23 septembre 18h14 UTC : exploitation d'une vulnérabilité de validation de bloc sur le mainnet Meter permettant de frapper environ 2,3 M$ de wMTRG/MTRG non collatéralisés en deux transactions, revendus notamment sur PancakeSwap ; jeton MTRG en chute de ~71,7 %, mainnet et pont suspendus par l'équipe, utilisateurs avertis de ne pas acheter MTR/MTRG le temps de l'incident, attaque toujours qualifiée d'en cours au moment des dernières sources consultées — hack distinct de Bitget (24/09, déjà logué ci-dessous) et sans lien avec les 15 favoris du site",
       "url": "https://www.cryptotimes.io/2026/09/24/meter-passport-exploit-reportedly-mints-2-3-million-in-unbacked-mtrg/",
@@ -28,16 +33,6 @@
       "source": "The Crypto Basic"
     },
     {
-      "title": "La Banque de Russie propose le 18 septembre un plafond réglementaire limitant l'exposition crypto des banques à 1 % de leurs fonds propres (nouveaux ratios prudentiels N31/N32, couvrant investissements directs, dérivés liés aux cryptoactifs et prêts collatéralisés en crypto) ; publication officielle du projet visée au T4 2026, entrée en vigueur 10 jours après, premiers reportings bancaires attendus en janvier 2027",
-      "url": "https://cryptoslate.com/bank-of-russia-proposes-1-crypto-capital-cap-while-carving-out-some-client-custody/",
-      "source": "CryptoSlate"
-    },
-    {
-      "title": "Avis conjoint FBI / police japonaise / cyber-autorités australiennes / renseignement allemand publié le 18 septembre : le groupe nord-coréen WaterPlum (alias Contagious Interview / Deceptive Development) a infecté au moins 30 000 appareils dans plus de 100 pays via de fausses offres d'emploi (crypto/IA/NFT) entre décembre 2025 et juillet 2026, dérobant au moins 10,7 M$ depuis plus de 7 000 wallets crypto — vol par ingénierie sociale ciblant les chercheurs d'emploi, distinct des hacks d'infrastructure déjà documentés (Liquid Network, Coldcard)",
-      "url": "https://cointelegraph.com/news/north-korean-fake-recruiters-infect-30k-devices-steal-107m-in-crypto",
-      "source": "Cointelegraph"
-    },
-    {
       "title": "La BCE lance le 21 septembre Pontes, sa plateforme de règlement d'actifs tokenisés en monnaie banque centrale (obligations, fonds) pour les institutions de marché de gros, connectée à TARGET Services (Eurosystème) ; premiers participants Deutsche Bank, Santander, Société Générale, la Banque européenne d'investissement et 4 opérateurs DLT dont Clearstream, opérationnel visé pour 2028, distinct du pilote euro numérique de détail (2027) — développement pertinent pour la thématique RWA (Ondo Finance)",
       "url": "https://www.coindesk.com/business/2026/09/21/ecb-deploys-pontes-platform-to-settle-wholesale-tokenized-assets-in-central-bank-money",
       "source": "CoinDesk"
@@ -46,11 +41,6 @@
       "title": "Le vote de clôture du Sénat américain sur le CLARITY Act échoue le 15 septembre (46 voix pour, 43 contre, décompte non officiel — 60 requises), signant probablement la fin de toute législation de structure de marché crypto pour 2026 ; le marché a réagi à la baisse dans la foulée",
       "url": "https://www.coindesk.com/business/2026/09/15/live-updates-bitcoin-slides-from-nearly-usd80-000-as-senate-votes-on-clarity-act",
       "source": "CoinDesk"
-    },
-    {
-      "title": "La SEC propose le 18 août « Regulation Crypto Assets » (dossier S7-2026-27, distinct de l'« Innovation Exemption » du 17/09 déjà logué ci-dessous) : deux exemptions à l'enregistrement Section 5 pour des contrats d'investissement impliquant des crypto-actifs (dont une exemption « startup » jusqu'à 5 M$ sur 4 ans sans états financiers), régime de disclosure allégé propre à ces exemptions, sécurité juridique codifiant la doctrine « separate from » de mars 2026 (quand un token émis via un contrat d'investissement s'en détache), et clause de préemption des exigences d'enregistrement des États pour les offres couvertes ; ne couvre que l'émission, pas le trading/la garde (rulemakings séparés déjà à l'agenda 2026 de la SEC). Période de commentaires publics de 60 jours depuis publication au Federal Register, toujours ouverte à ce cycle — développement significatif non encore logué malgré son ancienneté relative",
-      "url": "https://www.sec.gov/newsroom/press-releases/2026-76-sec-proposes-new-regulation-crypto-assets",
-      "source": "SEC.gov"
     },
     {
       "title": "La Fed relève son taux directeur de 25 points de base à 3,75-4,00 % le 16 septembre (vote 12-0), première hausse depuis 2023 — décidée pour contrer une inflation persistante liée à l'énergie ; les projections publiées le même jour montrent 16 des 18 participants anticipant au moins une nouvelle hausse d'ici la fin de l'année, dont 4 en anticipant deux",
