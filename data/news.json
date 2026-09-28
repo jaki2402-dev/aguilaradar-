@@ -1,7 +1,12 @@
 {
-  "last_updated_at": "2026-09-27T23:28:00Z",
-  "last_checked_at": "2026-09-28T00:20:00Z",
+  "last_updated_at": "2026-09-28T04:20:00Z",
+  "last_checked_at": "2026-09-28T04:20:00Z",
   "items": [
+    {
+      "title": "La CFTC dépose le 17 septembre auprès de l'OIRA (White House) deux propositions réglementaires (« Regulation Crypto Asset Transactions » et « Regulation Crypto Asset Markets », RIN 3038-AF80), deux jours après l'échec du vote de clôture du Sénat sur le CLARITY Act (46/49 voix pour selon le décompte final, 60 requises) — la CFTC avance seule sans attendre le Congrès, contenu du dépôt confidentiel le temps de la revue OIRA (jusqu'à 60 jours, publication possible en novembre/décembre 2026). Créerait potentiellement une nouvelle catégorie d'exchange (« crypto asset markets ») pour le trading spot de commodités numériques (BTC, XRP) sous supervision CFTC — développement réglementaire distinct et postérieur à l'échec du CLARITY Act déjà logué ci-dessous",
+      "url": "https://www.coindesk.com/policy/2026/09/18/cftc-sends-crypto-rules-to-white-house-to-review-as-congress-stalls-on-clarity-act",
+      "source": "CoinDesk (recoupé : The Block, Yahoo Finance)"
+    },
     {
       "title": "Clé de signature du pont cross-chain Ethereum-Cardano de SingularityNET (infrastructure partagée par les membres de l'alliance ASI) compromise entre le 19 et le 20 septembre : l'attaquant a drainé 8,7 M FET et frappé 260 M AGIX / 408,5 M NTX / 53,8 M WMTx non collatéralisés ; PeckShield estime les avoirs de l'attaquant à 16,77 M$ au 21/09, AGIX a chuté de ~99 % en 24h (-93 M$ de capitalisation). Cause : compromission opérationnelle d'une clé offline, pas une faille de smart contract — Fetch.ai (FET, favori du site) a suspendu les conversions AGIX-FET le temps de l'incident, 9e exploit de pont majeur de 2026",
       "url": "https://www.kucoin.com/news/flash/hackers-exploit-singularitynet-vulnerability-mint-260m-agix-and-53-83m-wmtx",
