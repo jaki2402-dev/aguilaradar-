@@ -40,9 +40,10 @@ du portefeuille compris) sont exposés — choix délibéré.
   qu'afficher — ne calcule jamais verdicts/opportunités.
 - Base de données = ce dépôt git, en ajout seulement, jamais écrasée.
 - Cadence : prix/graphes en direct côté client ; verdicts/criblage/backtest en cycle profond
-  toutes les 8h (`REFRESH.deepCycleHours`, seuils de fraîcheur dérivés de lui). Réduction du
-  03/10/2026 pour le quota : watchdog désactivé (il tournait encore toutes les 2h malgré une note
-  disant le contraire), alertes e-mail 2×/jour, digest 2×/jour, horizons 1×/jour. Un cycle bloqué
+  cible toutes les 8h (`REFRESH.deepCycleHours`, seuils de fraîcheur dérivés de lui). Réduction
+  du 03/10/2026 pour le quota : digest 2×/jour et horizons 1×/jour appliqués ; watchdog (encore
+  actif toutes les 2h malgré une ancienne note), cycle-2h → `15 */8 * * *` et alertes e-mail
+  2×/jour refusés à l'agent → à faire par l'utilisateur dans claude.ai/code/routines. Un cycle bloqué
   ne se voit que via l'indicateur de fraîcheur. Toujours vérifier l'état réel via `list_triggers`
   (sortie volumineuse : l'extraire en `python3`, champs name/enabled/cron/last_run).
 
