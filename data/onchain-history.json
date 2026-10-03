@@ -89,6 +89,18 @@
             "tx_per_day": "Blockscout MCP (direct_api_call, chain_id=1, /api/v2/stats/charts/transactions), appel réellement effectué ce cycle. Dernier point complet du graphique daté du 2026-09-27 (transactions_count=1 605 264) — le point du 2026-09-28 lui-même n'apparaissait pas encore dans le tableau (journée en cours au moment de l'appel).",
             "active_addresses": "Blockscout MCP (direct_api_call, chain_id=1, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-09-24, to=2026-09-27), dernier point daté du 2026-09-27 (value=395 702). Appel réellement effectué ce cycle, endpoint déjà confirmé fonctionnel au cycle du 22/09/2026."
           }
+        },
+        {
+          "date": "2026-10-03",
+          "computed_at": "2026-10-03T08:20:00Z",
+          "tvl_usd": null,
+          "tx_per_day": 1871429,
+          "active_addresses": 502995,
+          "source": {
+            "tvl_usd": "Non confirmé ce cycle — DefiLlama (api.llama.fi et defillama.com toujours bloqués par le proxy réseau, testé via WebFetch et curl). Les résultats WebSearch donnent des chiffres contradictoires et mal datés pour la TVL chaîne Ethereum (39 Md$ fin juin 2026, 53,9 Md$ et 57,23 Md$ au 17/04/2026 selon d'autres résultats) — aucun consensus sur une valeur datée d'aujourd'hui ou d'un jour très récent. Laissé à null plutôt que de choisir arbitrairement.",
+            "tx_per_day": "Blockscout MCP (direct_api_call, chain_id=1, /api/v2/stats/charts/transactions), appel réellement effectué ce cycle. Dernier point complet du graphique daté du 2026-10-02 (transactions_count=1 871 429) — le point du 2026-10-03 lui-même n'apparaissait pas encore dans le tableau (journée en cours au moment de l'appel).",
+            "active_addresses": "Blockscout MCP (direct_api_call, chain_id=1, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-09-28, to=2026-10-02), dernier point daté du 2026-10-02 (value=502 995). Appel réellement effectué ce cycle."
+          }
         }
       ]
     },
@@ -140,6 +152,18 @@
             "tvl_usd": "Non confirmé ce cycle — DefiLlama (direct api.llama.fi et defillama.com toujours bloqués par le proxy réseau) ; deux chiffres incompatibles trouvés via WebSearch (~1,4 Md$ et ~1,5 Md$), sans date précise associée à l'un ou l'autre — conformément à la règle anti-invention, aucun des deux n'est retenu. Laissé à null plutôt que de choisir arbitrairement.",
             "tx_per_day": "Blockscout MCP (direct_api_call, chain_id=42161, /api/v2/stats/charts/transactions), appel réellement effectué ce cycle. Dernier point complet du graphique daté du 2026-09-27 (transactions_count=1 410 047) — les points du 2026-09-23 et 2026-09-24 apparaissent à 0 dans ce même appel (données manquantes côté Blockscout pour ces deux jours, pas une valeur réelle nulle) et celui du 2026-09-28 n'existait pas encore (journée en cours).",
             "active_addresses": "Non confirmé ce cycle — budget d'appels Blockscout de la session épuisé (8/8 utilisés, dont la confirmation d'ethereum ci-dessus a été priorisée) avant d'atteindre l'endpoint activeAccounts pour arbitrum ; aucun résultat WebSearch daté et fiable trouvé en repli. À retenter au prochain cycle où arbitrum sera de nouveau traité."
+          }
+        },
+        {
+          "date": "2026-10-03",
+          "computed_at": "2026-10-03T08:20:00Z",
+          "tvl_usd": null,
+          "tx_per_day": 1701228,
+          "active_addresses": 111448,
+          "source": {
+            "tvl_usd": "Non confirmé ce cycle — DefiLlama (api.llama.fi et defillama.com toujours bloqués par le proxy réseau). Chiffres WebSearch incohérents entre eux (~2,96 Md$ 'rang 4' dans un résultat, ~2,766 Md$ dans un autre), sans date fiable associée à l'un ou l'autre — aucun retenu.",
+            "tx_per_day": "Blockscout MCP (direct_api_call, chain_id=42161, /api/v2/stats/charts/transactions), appel réellement effectué ce cycle. Dernier point complet du graphique daté du 2026-10-02 (transactions_count=1 701 228) — le point du 2026-10-03 n'apparaissait pas encore dans le tableau (journée en cours au moment de l'appel).",
+            "active_addresses": "Blockscout MCP (direct_api_call, chain_id=42161, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-09-28, to=2026-10-02), dernier point daté du 2026-10-02 (value=111 448). Appel réellement effectué ce cycle."
           }
         }
       ]
