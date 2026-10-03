@@ -573,8 +573,9 @@ async function loadAllData() {
 // opportunities.last_scan_at est passé à un rythme hebdomadaire le 17/08 (routine dédiée
 // aguilaradar-opportunites-hebdo) — seuils en jours, pas en heures, pour ce champ précis.
 const FRESHNESS_SOURCES = [
-  { key: "routine", label: "Cycle profond", warnHours: 6, staleHours: 12 },
-  { key: "news", label: "Actualités", warnHours: 6, staleHours: 12 },
+  // Dérivé de la cadence réelle : "warning" = un cycle en retard, "stale" = deux cycles manqués.
+  { key: "routine", label: "Cycle profond", warnHours: REFRESH.deepCycleHours + 2, staleHours: REFRESH.deepCycleHours * 2 + 2 },
+  { key: "news", label: "Actualités", warnHours: REFRESH.deepCycleHours + 2, staleHours: REFRESH.deepCycleHours * 2 + 2 },
   { key: "opportunities", label: "Criblage opportunités", warnHours: 24 * 8, staleHours: 24 * 10 },
 ];
 
