@@ -3,366 +3,150 @@
     {
       "checked_at": "2026-08-11T08:45:00Z",
       "site_reachable": false,
-      "files_ok": [
-        "data/alerts.json",
-        "data/control-group.json",
-        "data/engine-history.json",
-        "data/favoris-context.json",
-        "data/health-log.json",
-        "data/market-context.json",
-        "data/news.json",
-        "data/opportunities.json",
-        "data/verdicts.json",
-        "index.html (11 scripts js/*.js tous présents et référencés correctement)"
-      ],
+      "files_ok": ["data/alerts.json", "data/control-group.json", "data/engine-history.json", "data/favoris-context.json", "data/health-log.json", "data/market-context.json", "data/news.json", "data/opportunities.json", "data/verdicts.json", "index.html (11 scripts js/*.js tous présents et référencés correctement)"],
       "files_broken": [],
       "note": "Premier check de ce fichier (tableau vide jusqu'ici). Site (https://jaki2402-dev.github.io/aguilaradar-/) non vérifiable ce cycle : WebFetch et curl direct échouent tous deux avec un rejet CONNECT 403 du proxy réseau de cet environnement (confirmé via /__agentproxy/status, host jaki2402-dev.github.io:443 explicitement bloqué), et non un code d'erreur renvoyé par GitHub Pages lui-même. site_reachable est donc mis à false par prudence car la disponibilité n'a pas pu être confirmée depuis cette session, mais cela ne signifie pas que le site est réellement hors ligne — à revérifier dans un environnement ou une session disposant d'un accès réseau moins restreint. Tous les fichiers data/*.json ont été validés comme JSON syntaxiquement correct (parsing Python réussi, aucun fichier vide ni tronqué) et index.html référence bien les 11 scripts js/*.js attendus (config/prices/charts/engine/cards/detail/insights/background-fx/search/app/auth.js), tous physiquement présents dans js/. Aucune réparation nécessaire ce cycle."
     },
     {
       "checked_at": "2026-08-12T10:39:26Z",
       "site_reachable": false,
-      "files_ok": [
-        "data/alerts.json",
-        "data/control-group.json",
-        "data/engine-history.json",
-        "data/favoris-context.json",
-        "data/health-log.json",
-        "data/market-context.json",
-        "data/news.json",
-        "data/opportunities.json",
-        "data/verdicts.json",
-        "index.html (12 scripts js/*.js tous présents et référencés correctement)"
-      ],
+      "files_ok": ["data/alerts.json", "data/control-group.json", "data/engine-history.json", "data/favoris-context.json", "data/health-log.json", "data/market-context.json", "data/news.json", "data/opportunities.json", "data/verdicts.json", "index.html (12 scripts js/*.js tous présents et référencés correctement)"],
       "files_broken": [],
-      "counts": {
-        "verdicts": 15,
-        "alerts": 54,
-        "opportunities": 8,
-        "news": 8,
-        "favoris_context_populated": 8
-      },
+      "counts": {"verdicts": 15, "alerts": 54, "opportunities": 8, "news": 8, "favoris_context_populated": 8},
       "note": "Site non vérifiable ce cycle : WebFetch échoue avec EGRESS_BLOCKED (host jaki2402-dev.github.io explicitement refusé par le proxy réseau) et curl direct échoue également par timeout de connexion — même limitation réseau que le cycle précédent du 11/08, pas une indication d'un GitHub Pages réellement hors ligne. site_reachable mis à false par prudence. Tous les fichiers data/*.json requis ont été validés comme JSON syntaxiquement correct, non vides, non tronqués. index.html référence bien les 12 scripts js/*.js attendus (config, prices, charts, engine, cards, detail, insights, background-fx, search, app, notify, auth) — notify.js s'est ajouté depuis le premier check du 11/08, tous physiquement présents dans js/. Premier remplissage du champ counts pour ce cycle (absent de l'entrée précédente, donc aucune comparaison de volume possible cette fois — sert de référence pour le prochain passage) : verdicts=15, alerts=54, opportunities=8, news=8, favoris_context_populated=8/15 (favoris avec last_computed_at renseigné : BTC, ETH, FET, TIA, GRT, CTSI, PEAQ, LINK ; les 7 autres — ONDO, JUP, LPT, AIOZ, FLUX, ARB, INJ — attendent encore leur premier approfondissement, ce qui est normal en phase de rotation progressive). Aucune anomalie détectée, aucune réparation nécessaire."
     },
     {
       "checked_at": "2026-08-17T12:04:18Z",
       "site_reachable": false,
-      "files_ok": [
-        "data/alerts.json",
-        "data/control-group.json",
-        "data/engine-history.json",
-        "data/favoris-context.json",
-        "data/health-log.json",
-        "data/market-context.json",
-        "data/news.json",
-        "data/opportunities.json",
-        "data/verdicts.json",
-        "index.html (13 scripts js/*.js tous présents et référencés correctement)"
-      ],
+      "files_ok": ["data/alerts.json", "data/control-group.json", "data/engine-history.json", "data/favoris-context.json", "data/health-log.json", "data/market-context.json", "data/news.json", "data/opportunities.json", "data/verdicts.json", "index.html (13 scripts js/*.js tous présents et référencés correctement)"],
       "files_broken": [],
-      "counts": {
-        "verdicts": 16,
-        "alerts": 58,
-        "opportunities": 8,
-        "news": 7,
-        "favoris_context_populated": 8
-      },
+      "counts": {"verdicts": 16, "alerts": 58, "opportunities": 8, "news": 7, "favoris_context_populated": 8},
       "note": "Site non vérifiable ce cycle : WebFetch échoue avec EGRESS_BLOCKED (host jaki2402-dev.github.io explicitement refusé par le proxy réseau) et curl direct échoue également, sans réponse (HTTP 000, timeout de connexion) — même limitation réseau que les cycles précédents du 11/08 et du 12/08, pas une indication d'un GitHub Pages réellement hors ligne. site_reachable mis à false par prudence. Tous les fichiers data/*.json requis ont été validés comme JSON syntaxiquement correct, non vides, non tronqués. index.html référence bien les 13 scripts js/*.js attendus (config, prices, charts, engine, cards, detail, insights, background-fx, search, app, notify, auth, assistant) — assistant.js s'est ajouté depuis le check du 12/08, tous physiquement présents dans js/. Comparaison de volume avec le passage précédent du 12/08 : verdicts 15→16 (+1), alerts 54→58 (+4), opportunities 8→8 (stable), news 7 (7 éléments dans items, non comparé au passage précédent car le champ counts du 12/08 utilisait déjà 8 — écart mineur de 1 sur un flux tournant, largement sous le seuil de 50%), favoris_context_populated 8→8 (stable, toujours BTC, ETH, FET, TIA, GRT, CTSI, PEAQ, LINK renseignés ; ONDO, JUP, LPT, AIOZ, FLUX, ARB, INJ toujours en attente de premier approfondissement). Aucune chute suspecte détectée sur verdicts ou alerts (les deux ont augmenté, cohérent avec un historique permanent qui s'accumule). Aucune anomalie, aucune réparation nécessaire."
     },
     {
       "checked_at": "2026-08-17T13:42:22Z",
       "site_reachable": false,
-      "files_ok": [
-        "data/alerts.json",
-        "data/control-group.json",
-        "data/engine-history.json",
-        "data/favoris-context.json",
-        "data/health-log.json",
-        "data/market-context.json",
-        "data/news.json",
-        "data/opportunities.json",
-        "data/verdicts.json",
-        "index.html (12 scripts js/*.js tous présents et référencés correctement)"
-      ],
+      "files_ok": ["data/alerts.json", "data/control-group.json", "data/engine-history.json", "data/favoris-context.json", "data/health-log.json", "data/market-context.json", "data/news.json", "data/opportunities.json", "data/verdicts.json", "index.html (12 scripts js/*.js tous présents et référencés correctement)"],
       "files_broken": [],
-      "counts": {
-        "verdicts": 16,
-        "alerts": 62,
-        "opportunities": 8,
-        "news": 7,
-        "favoris_context_populated": 8
-      },
+      "counts": {"verdicts": 16, "alerts": 62, "opportunities": 8, "news": 7, "favoris_context_populated": 8},
       "note": "Site non vérifiable ce cycle : WebFetch renvoie EGRESS_BLOCKED et curl direct échoue avec un rejet CONNECT 403 du proxy réseau (confirmé via /__agentproxy/status, host jaki2402-dev.github.io:443 explicitement refusé) — même limitation d'infrastructure que les cycles précédents des 11/08 et 12/08, pas une indication que GitHub Pages est réellement hors ligne. site_reachable mis à false par prudence, à revérifier depuis une session avec un accès réseau moins restreint. Tous les fichiers data/*.json (verdicts, opportunities, engine-history, alerts, news, control-group, market-context, favoris-context, health-log) ont été validés comme JSON syntaxiquement correct, non vides, non tronqués. index.html référence bien les 12 scripts js/*.js attendus (config, prices, charts, engine, cards, detail, insights, background-fx, search, app, notify, auth), tous physiquement présents dans js/. Comparaison de volume avec le dernier passage du 12/08 (verdicts=15, alerts=54, opportunities=8, news=8, favoris_context_populated=8) : verdicts 15→16 (hausse normale, nouvel enregistrement d'historique), alerts 54→62 (hausse normale), opportunities 8→8 (stable), news 8→7 (légère baisse de 1 élément, -12,5%, largement sous le seuil de 50% et sans passage à zéro — non significatif), favoris_context_populated 8→8 (stable, toujours BTC, ETH, FET, GRT, TIA, CTSI, PEAQ, LINK). Aucune chute suspecte détectée, aucune anomalie de volume, aucune réparation nécessaire ce cycle."
     },
     {
       "checked_at": "2026-08-17T21:50:41Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at)",
-        "data/news.json (last_updated_at)"
-      ],
-      "files_broken": [
-        "data/opportunities.json (last_scan_at figé depuis ~261h30, seuil de 36h dépassé)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at)", "data/news.json (last_updated_at)"],
+      "files_broken": ["data/opportunities.json (last_scan_at figé depuis ~261h30, seuil de 36h dépassé)"],
       "note": "ATTENTION FRAICHEUR : data/opportunities.json (last_scan_at = 2026-08-07T00:20:00Z) n'a pas été rafraîchi depuis environ 261h30 (~10,9 jours), très au-delà du seuil de 36h attendu pour la cadence quotidienne visée par le correctif du 17/08 — le criblage d'opportunités reste bloqué malgré ce correctif. Les deux autres sources sont dans les clous : data/engine-history.json (routine_health.last_success_at = 2026-08-17T21:34:00Z) et data/news.json (last_updated_at = 2026-08-17T21:34:00Z) datent toutes deux d'environ 0h16, bien sous leur seuil de 8h respectif. Cette routine de vérification de fraîcheur n'a pas les outils pour corriger le criblage d'opportunités elle-même ; une session avec accès réseau devra investiguer pourquoi opportunities.json reste figé."
     },
     {
       "checked_at": "2026-08-18T08:52:24Z",
       "site_reachable": false,
-      "files_ok": [
-        "data/alerts.json",
-        "data/control-group.json",
-        "data/engine-history.json",
-        "data/favoris-context.json",
-        "data/health-log.json",
-        "data/market-context.json",
-        "data/news.json",
-        "data/opportunities.json",
-        "data/verdicts.json",
-        "index.html (13 scripts js/*.js tous présents et référencés correctement)"
-      ],
+      "files_ok": ["data/alerts.json", "data/control-group.json", "data/engine-history.json", "data/favoris-context.json", "data/health-log.json", "data/market-context.json", "data/news.json", "data/opportunities.json", "data/verdicts.json", "index.html (13 scripts js/*.js tous présents et référencés correctement)"],
       "files_broken": [],
-      "counts": {
-        "verdicts": 16,
-        "alerts": 65,
-        "opportunities": 8,
-        "news": 8,
-        "favoris_context_populated": 15
-      },
+      "counts": {"verdicts": 16, "alerts": 65, "opportunities": 8, "news": 8, "favoris_context_populated": 15},
       "note": "Site non vérifiable ce cycle : WebFetch échoue avec EGRESS_BLOCKED et curl direct échoue avec un rejet CONNECT 403 du proxy réseau (confirmé via /__agentproxy/status, host jaki2402-dev.github.io:443 explicitement refusé) — même limitation d'infrastructure que tous les cycles précédents, pas une indication que GitHub Pages est réellement hors ligne. site_reachable mis à false par prudence, à revérifier depuis une session avec un accès réseau moins restreint. Tous les fichiers data/*.json (verdicts, opportunities, engine-history, alerts, news, control-group, market-context, favoris-context, health-log) ont été validés comme JSON syntaxiquement correct, non vides, non tronqués. index.html référence bien les 13 scripts js/*.js attendus (config, prices, charts, engine, cards, detail, insights, background-fx, search, app, notify, auth, assistant), tous physiquement présents dans js/. Comparaison de volume avec le dernier passage ayant un champ counts renseigné (17/08 13h42 UTC — l'entrée intermédiaire du 17/08 21h50 UTC, un simple contrôle de fraîcheur, n'avait pas ce champ et a donc été ignorée pour la comparaison) : verdicts 16→16 (stable), alerts 62→65 (+3, hausse normale d'un historique permanent), opportunities 8→8 (stable), news 7→8 (+1, hausse normale d'un flux tournant), favoris_context_populated 8→15 (progression attendue : les 7 favoris restants — ONDO, JUP, LPT, AIOZ, FLUX, ARB, INJ — ont désormais tous un premier approfondissement enregistré, rotation quotidienne complétée). Aucune chute suspecte détectée (aucun chiffre tombé à zéro ni en baisse de plus de 50 %), aucune anomalie de volume, aucune réparation nécessaire ce cycle."
     },
     {
       "checked_at": "2026-08-18T09:15:52Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at)",
-        "data/news.json (last_updated_at)"
-      ],
-      "files_broken": [
-        "data/opportunities.json (last_scan_at figé depuis ~272h55, seuil de 36h dépassé)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at)", "data/news.json (last_updated_at)"],
+      "files_broken": ["data/opportunities.json (last_scan_at figé depuis ~272h55, seuil de 36h dépassé)"],
       "note": "ATTENTION FRAICHEUR : data/opportunities.json (last_scan_at = 2026-08-07T00:20:00Z) n'a toujours pas été rafraîchi, environ 272h55 (~11,4 jours) depuis le dernier scan, très au-delà du seuil de 36h attendu pour la cadence quotidienne visée par le correctif du 17/08 — le criblage d'opportunités reste bloqué (aggravation depuis le dernier contrôle du 17/08 21h50 UTC, où l'écart était déjà de 261h30). Les deux autres sources sont dans les clous : data/engine-history.json (routine_health.last_success_at = 2026-08-18T08:18:00Z, soit environ 0h57) et data/news.json (last_updated_at = 2026-08-18T04:20:00Z, soit environ 4h55), toutes deux sous leur seuil de 8h respectif. Cette routine de vérification de fraîcheur n'a pas les outils pour corriger le criblage d'opportunités elle-même ; une session avec accès réseau devra investiguer pourquoi opportunities.json reste figé depuis le 07/08."
     },
     {
       "checked_at": "2026-08-19T08:54:10Z",
       "site_reachable": false,
-      "files_ok": [
-        "data/alerts.json",
-        "data/control-group.json",
-        "data/engine-history.json",
-        "data/favoris-context.json",
-        "data/health-log.json",
-        "data/market-context.json",
-        "data/news.json",
-        "data/opportunities.json",
-        "data/verdicts.json",
-        "index.html (16 scripts js/*.js tous présents et référencés correctement)"
-      ],
+      "files_ok": ["data/alerts.json", "data/control-group.json", "data/engine-history.json", "data/favoris-context.json", "data/health-log.json", "data/market-context.json", "data/news.json", "data/opportunities.json", "data/verdicts.json", "index.html (16 scripts js/*.js tous présents et référencés correctement)"],
       "files_broken": [],
-      "counts": {
-        "verdicts": 16,
-        "alerts": 65,
-        "opportunities": 12,
-        "news": 8,
-        "favoris_context_populated": 15
-      },
+      "counts": {"verdicts": 16, "alerts": 65, "opportunities": 12, "news": 8, "favoris_context_populated": 15},
       "note": "Site non vérifiable ce cycle : WebFetch échoue avec EGRESS_BLOCKED et curl direct échoue avec un rejet CONNECT 403 du proxy réseau (confirmé via /__agentproxy/status, host jaki2402-dev.github.io:443 explicitement refusé par la politique d'égress de cette session) — même limitation d'infrastructure que la plupart des cycles précédents, pas une indication que GitHub Pages est réellement hors ligne. site_reachable mis à false par prudence, à revérifier depuis une session avec un accès réseau moins restreint. Tous les fichiers data/*.json (verdicts, opportunities, engine-history, alerts, news, control-group, market-context, favoris-context, health-log) ont été validés comme JSON syntaxiquement correct, non vides, non tronqués. index.html référence bien les 16 scripts js/*.js attendus (config, prices, charts, engine, cards, detail, insights, background-fx, bg-galaxy-3d, theme, layout, search, app, notify, assistant, auth), tous physiquement présents dans js/. Comparaison de volume avec le dernier passage ayant un champ counts renseigné (18/08 08h52 UTC — l'entrée intermédiaire du 18/08 09h15 UTC, un simple contrôle de fraîcheur, n'avait pas ce champ et a donc été ignorée pour la comparaison) : verdicts 16→16 (stable), alerts 65→65 (stable), opportunities 8→12 (+4, hausse normale — le criblage a manifestement repris : last_scan_at est passé de 2026-08-07T00:20:00Z, figé pendant plus de 11 jours et signalé en anomalie de fraîcheur lors des deux cycles précédents, à 2026-08-18T09:44:50Z, soit environ 23h10 avant ce contrôle, bien sous le seuil de 36h — problème résolu), news 8→8 (stable), favoris_context_populated 15→15 (stable, les 15 favoris ont tous un last_computed_at renseigné). Aucune chute suspecte détectée (aucun chiffre tombé à zéro ni en baisse de plus de 50 %), aucune anomalie de volume, aucune réparation nécessaire ce cycle."
     },
     {
       "checked_at": "2026-08-23T23:03:04Z",
       "files_ok": [],
-      "files_broken": [
-        "data/engine-history.json (routine_health.last_success_at figé depuis ~110h46, seuil de 8h dépassé)",
-        "data/news.json (last_updated_at figé depuis ~112h45, seuil de 8h dépassé)",
-        "data/opportunities.json (last_scan_at figé depuis ~133h18, seuil de 36h dépassé)"
-      ],
+      "files_broken": ["data/engine-history.json (routine_health.last_success_at figé depuis ~110h46, seuil de 8h dépassé)", "data/news.json (last_updated_at figé depuis ~112h45, seuil de 8h dépassé)", "data/opportunities.json (last_scan_at figé depuis ~133h18, seuil de 36h dépassé)"],
       "note": "ATTENTION FRAICHEUR : les TROIS sources surveillées par cette routine sont figées depuis plusieurs jours, une régression bien plus large que les épisodes précédents (qui ne touchaient jusqu'ici que opportunities.json). data/engine-history.json (routine_health.last_success_at = 2026-08-19T08:17:00Z) n'a pas bougé depuis environ 110h46 (~4,6 jours), très au-delà du seuil de 8h attendu pour le cycle profond. data/news.json (last_updated_at = 2026-08-19T06:18:00Z) est figé depuis environ 112h45 (~4,7 jours), également au-delà du seuil de 8h. data/opportunities.json (last_scan_at = 2026-08-18T09:44:50Z) est figé depuis environ 133h18 (~5,6 jours), au-delà du seuil de 36h — alors que ce dernier point avait été explicitement corrigé et vérifié fonctionnel lors du contrôle précédent du 19/08 08h54 UTC (opportunities.json rafraîchi avec succès ce jour-là via le connecteur MCP CoinGecko d'une session persistante dédiée). L'arrêt quasi simultané des trois sources autour du 18-19/08 suggère une panne globale (routines désactivées, session persistante devenue indisponible, ou autre incident d'infrastructure partagé) plutôt que trois pannes indépendantes. Cette routine de vérification de fraîcheur n'a pas les outils pour investiguer ou corriger elle-même (pas d'accès réseau, pas d'accès aux outils de gestion des routines/triggers) ; une session humaine ou Claude Code avec les bons outils devra vérifier en priorité l'état des routines aguilaradar-cycle-2h, aguilaradar-opportunites-quotidien et de leurs sessions persistantes associées."
     },
     {
       "checked_at": "2026-08-24T08:52:34Z",
       "site_reachable": false,
-      "files_ok": [
-        "data/alerts.json",
-        "data/control-group.json",
-        "data/engine-history.json",
-        "data/favoris-context.json",
-        "data/health-log.json",
-        "data/market-context.json",
-        "data/news.json",
-        "data/opportunities.json",
-        "data/verdicts.json",
-        "index.html (16 scripts js/*.js tous présents et référencés correctement)"
-      ],
+      "files_ok": ["data/alerts.json", "data/control-group.json", "data/engine-history.json", "data/favoris-context.json", "data/health-log.json", "data/market-context.json", "data/news.json", "data/opportunities.json", "data/verdicts.json", "index.html (16 scripts js/*.js tous présents et référencés correctement)"],
       "files_broken": [],
-      "counts": {
-        "verdicts": 31,
-        "alerts": 66,
-        "opportunities": 13,
-        "news": 8,
-        "favoris_context_populated": 15
-      },
+      "counts": {"verdicts": 31, "alerts": 66, "opportunities": 13, "news": 8, "favoris_context_populated": 15},
       "note": "Site non vérifiable ce cycle : WebFetch échoue avec EGRESS_BLOCKED et curl direct échoue avec un rejet CONNECT 403 du proxy réseau (confirmé via /__agentproxy/status, host jaki2402-dev.github.io:443 explicitement refusé par la politique d'égress de cette session) — même limitation d'infrastructure que la quasi-totalité des cycles précédents, pas une indication que GitHub Pages est réellement hors ligne. site_reachable mis à false par prudence, à revérifier depuis une session avec un accès réseau moins restreint. Tous les fichiers data/*.json (verdicts, opportunities, engine-history, alerts, news, control-group, market-context, favoris-context, health-log) ont été validés comme JSON syntaxiquement correct, non vides, non tronqués. index.html référence bien les 16 scripts js/*.js attendus (config, prices, charts, engine, cards, detail, insights, background-fx, bg-galaxy-3d, theme, layout, search, app, notify, assistant, auth), tous physiquement présents dans js/ — aucun script manquant ni orphelin. Comparaison de volume avec le dernier passage ayant un champ counts renseigné (19/08 08h54 UTC — le check intermédiaire du 23/08 23h03 UTC, axé sur la fraîcheur de last_success_at/last_updated_at/last_scan_at, n'avait pas ce champ et a donc été ignoré pour la comparaison) : verdicts 16→31 (+15, hausse normale d'un historique permanent accumulé sur 5 jours), alerts 65→66 (+1, stable), opportunities 12→13 (+1, stable), news 8→8 (stable), favoris_context_populated 15→15 (stable, les 15 favoris ont toujours un last_computed_at renseigné). Aucune chute suspecte détectée (aucun chiffre tombé à zéro ni en baisse de plus de 50 %), aucune anomalie de volume, aucune réparation nécessaire ce cycle. Pour mémoire (hors périmètre strict de ce contrôle, mais pour assurer la continuité avec l'entrée du 23/08 qui signalait trois sources figées) : engine-history.routine_health.last_success_at (2026-08-24T08:17:40Z), opportunities.last_scan_at (2026-08-24T04:03:59Z) et news.last_updated_at (2026-08-23T23:20:00Z) sont désormais tous récents (respectivement environ 35 minutes, 4h49 et 9h32 avant ce contrôle) — la situation signalée le 23/08 semble résolue depuis. Fusion vers main : au moment de ce passage, origin/main (commit c4dae67) était déjà aligné sur le dernier commit de cette branche (fusion du 24/08 08h23 UTC déjà en place sur main) — aucune fusion supplémentaire n'a donc été nécessaire avant de pousser cette entrée."
     },
     {
       "checked_at": "2026-08-24T09:16:14Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~0h58)",
-        "data/opportunities.json (last_scan_at, ~5h12)"
-      ],
-      "files_broken": [
-        "data/news.json (last_updated_at figé depuis ~9h56, seuil de 8h dépassé)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h58)", "data/opportunities.json (last_scan_at, ~5h12)"],
+      "files_broken": ["data/news.json (last_updated_at figé depuis ~9h56, seuil de 8h dépassé)"],
       "note": "ATTENTION FRAICHEUR : la panne globale des trois sources signalée le 23/08 23h03 UTC est résolue pour deux d'entre elles — data/engine-history.json (routine_health.last_success_at = 2026-08-24T08:17:40Z, ~0h58) et data/opportunities.json (last_scan_at = 2026-08-24T04:03:59Z, ~5h12) sont désormais dans les clous. Reste un léger dépassement sur data/news.json (last_updated_at = 2026-08-23T23:20:00Z), figé depuis environ 9h56, soit ~1h56 au-delà du seuil de 8h attendu pour le cycle profond — un écart modéré, pas une panne prolongée comme celle du 23/08, mais réel. Cette routine n'a pas les outils pour investiguer ou corriger elle-même ; à surveiller au prochain cycle pour confirmer si la couverture actualités a repris normalement ou si le retard s'accumule."
     },
     {
       "checked_at": "2026-08-25T08:52:13Z",
       "site_reachable": false,
-      "files_ok": [
-        "data/alerts.json",
-        "data/control-group.json",
-        "data/digest.json",
-        "data/engine-history.json",
-        "data/favoris-context.json",
-        "data/health-log.json",
-        "data/market-context.json",
-        "data/news.json",
-        "data/opportunities.json",
-        "data/verdicts.json",
-        "index.html (17 scripts js/*.js tous présents et référencés correctement)"
-      ],
+      "files_ok": ["data/alerts.json", "data/control-group.json", "data/digest.json", "data/engine-history.json", "data/favoris-context.json", "data/health-log.json", "data/market-context.json", "data/news.json", "data/opportunities.json", "data/verdicts.json", "index.html (17 scripts js/*.js tous présents et référencés correctement)"],
       "files_broken": [],
-      "counts": {
-        "verdicts": 31,
-        "alerts": 69,
-        "opportunities": 13,
-        "news": 8,
-        "favoris_context_populated": 15
-      },
+      "counts": {"verdicts": 31, "alerts": 69, "opportunities": 13, "news": 8, "favoris_context_populated": 15},
       "note": "RAPPEL DU CORRECTIF DE FIABILITE DU 24/08 (revérifié applicable et respecté ce cycle) : aucun outil mcp__CoinGecko-, mcp__Alpha-Vantage-MCP-Server ou mcp__Anthropic-Economic-Index n'a été appelé pour cette vérification (uniquement lecture locale des fichiers data/*.json et de index.html, plus WebFetch/curl pour la disponibilité du site) — cette routine n'utilise de toute façon jamais ces connecteurs marché/prix pour sa tâche. Site non vérifiable ce cycle : WebFetch échoue avec EGRESS_BLOCKED (host jaki2402-dev.github.io explicitement refusé par le proxy réseau) et curl direct échoue également avec un rejet CONNECT 403 — même limitation d'infrastructure que la quasi-totalité des cycles précédents, pas une indication que GitHub Pages est réellement hors ligne. site_reachable mis à false par prudence, à revérifier depuis une session avec un accès réseau moins restreint. Tous les fichiers data/*.json présents dans le dépôt (verdicts, opportunities, engine-history, alerts, news, control-group, market-context, favoris-context, digest, health-log) ont été validés comme JSON syntaxiquement correct, non vides, non tronqués — digest.json est un nouveau fichier apparu depuis le dernier contrôle, absent des cycles précédents, ajouté ici par prudence même s'il ne figurait pas dans la liste explicite des fichiers à vérifier. index.html référence bien 17 scripts js/*.js (config, prices, charts, engine, cards, detail, insights, background-fx, bg-themes-extra, bg-galaxy-3d, theme, layout, search, app, notify, assistant, auth), tous physiquement présents dans js/ — aucun script manquant ni orphelin ; bg-themes-extra.js est un ajout légitime depuis le dernier contrôle du 24/08 08h52 UTC (qui comptait 16 scripts), portant le total de 16 à 17, une évolution normale du développement et non une anomalie. Comparaison de volume avec le dernier passage ayant un champ counts renseigné (24/08 08h52 UTC — l'entrée intermédiaire du 24/08 09h16 UTC, un simple contrôle de fraîcheur, n'avait pas ce champ et a donc été ignorée pour la comparaison) : verdicts 31→31 (stable, aucune nouvelle émission ni résolution due ce cycle selon engine-history.json), alerts 66→69 (+3, hausse normale d'un historique permanent), opportunities 13→13 (stable), news 8→8 (stable), favoris_context_populated 15→15 (stable, les 15 favoris ont toujours un last_computed_at renseigné). Aucune chute suspecte détectée (aucun chiffre tombé à zéro ni en baisse de plus de 50 %), aucune anomalie de volume, aucune réparation nécessaire ce cycle. Pour mémoire (hors périmètre strict de ce contrôle, fraîcheur des trois sources signalées par le passé) : engine-history.routine_health.last_success_at (2026-08-25T08:16:00Z, ~36 min avant ce contrôle), news.last_updated_at (2026-08-25T04:16:00Z, ~4h36) et opportunities.last_scan_at (2026-08-25T04:04:00Z, ~4h48) sont tous frais, bien sous leurs seuils respectifs de 8h/8h/36h — le léger retard signalé le 24/08 09h16 UTC sur news.json est résolu."
     },
     {
       "checked_at": "2026-08-25T09:15:54Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~0h59)",
-        "data/news.json (last_updated_at, ~4h59)",
-        "data/opportunities.json (last_scan_at, ~5h11)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h59)", "data/news.json (last_updated_at, ~4h59)", "data/opportunities.json (last_scan_at, ~5h11)"],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h59, actualités il y a 4h59, opportunités il y a 5h11 - rien à signaler. Le léger retard de news.json signalé hier (24/08, ~9h56) est résolu."
     },
     {
       "checked_at": "2026-08-26T08:52:03Z",
       "site_reachable": false,
-      "files_ok": [
-        "data/alerts.json",
-        "data/control-group.json",
-        "data/digest.json",
-        "data/engine-history.json",
-        "data/favoris-context.json",
-        "data/health-log.json",
-        "data/market-context.json",
-        "data/news.json",
-        "data/opportunities.json",
-        "data/portfolio.json",
-        "data/verdicts.json",
-        "index.html (18 scripts js/*.js tous présents et référencés correctement)"
-      ],
+      "files_ok": ["data/alerts.json", "data/control-group.json", "data/digest.json", "data/engine-history.json", "data/favoris-context.json", "data/health-log.json", "data/market-context.json", "data/news.json", "data/opportunities.json", "data/portfolio.json", "data/verdicts.json", "index.html (18 scripts js/*.js tous présents et référencés correctement)"],
       "files_broken": [],
-      "counts": {
-        "verdicts": 31,
-        "alerts": 82,
-        "opportunities": 12,
-        "news": 8,
-        "favoris_context_populated": 15
-      },
+      "counts": {"verdicts": 31, "alerts": 82, "opportunities": 12, "news": 8, "favoris_context_populated": 15},
       "note": "RAPPEL DU CORRECTIF DE FIABILITE DU 24/08 (revérifié applicable et respecté ce cycle) : aucun outil mcp__CoinGecko-, mcp__Alpha-Vantage-MCP-Server ou mcp__Anthropic-Economic-Index n'a été appelé pour cette vérification (uniquement lecture locale des fichiers data/*.json et de index.html, plus WebFetch/curl pour la disponibilité du site) — cette routine n'utilise de toute façon jamais ces connecteurs marché/prix pour sa tâche. Site non vérifiable ce cycle : WebFetch échoue avec EGRESS_BLOCKED (host jaki2402-dev.github.io explicitement refusé par le proxy réseau) et curl direct échoue également avec un rejet CONNECT 403 (confirmé via /__agentproxy/status, host jaki2402-dev.github.io:443 explicitement bloqué) — même limitation d'infrastructure que la quasi-totalité des cycles précédents, pas une indication que GitHub Pages est réellement hors ligne. site_reachable mis à false par prudence, à revérifier depuis une session avec un accès réseau moins restreint. Tous les fichiers data/*.json présents dans le dépôt (alerts, control-group, digest, engine-history, favoris-context, health-log, market-context, news, opportunities, portfolio, verdicts) ont été validés comme JSON syntaxiquement correct, non vides, non tronqués — portfolio.json est un fichier déjà connu (édité à la main, jamais par une routine) mais apparaît ici pour la première fois dans la liste files_ok, faute d'avoir été inclus explicitement dans un contrôle précédent ; aucune anomalie n'y a été trouvée. index.html référence bien 18 scripts js/*.js (config, prices, charts, engine, cards, detail, insights, portfolio, background-fx, bg-themes-extra, bg-galaxy-3d, theme, layout, search, app, notify, assistant, auth), tous physiquement présents dans js/ — aucun script manquant ni orphelin ; portfolio.js est un ajout légitime depuis le dernier contrôle du 25/08 08h52 UTC (qui comptait 17 scripts), portant le total de 17 à 18, une évolution normale du développement et non une anomalie. Comparaison de volume avec le dernier passage ayant un champ counts renseigné (25/08 08h52 UTC — l'entrée intermédiaire du 25/08 09h15 UTC, un simple contrôle de fraîcheur, n'avait pas ce champ et a donc été ignorée pour la comparaison) : verdicts 31→31 (stable, cohérent avec engine-history.json qui indique 15 verdicts encore en attente et aucune échéance atteinte ce cycle), alerts 69→82 (+13, hausse notable mais normale d'un historique permanent qui s'accumule — engine-history.json confirme plusieurs ajouts documentés sur les cycles récents, dont FLUX et ARB au dernier cycle profond de 08h21 UTC), opportunities 13→12 (-1, -7,7%, largement sous le seuil de 50% et sans passage à zéro — non significatif, la routine dédiée aguilaradar-opportunites-quotidien gère ce fichier séparément), news 8→8 (stable), favoris_context_populated 15→15 (stable, les 15 favoris ont toujours un last_computed_at renseigné). Aucune chute suspecte détectée (aucun chiffre tombé à zéro ni en baisse de plus de 50 %), aucune anomalie de volume, aucune réparation nécessaire ce cycle."
     },
     {
       "checked_at": "2026-08-26T09:16:13Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~0h55)",
-        "data/news.json (last_updated_at, ~2h49)",
-        "data/opportunities.json (last_scan_at, ~5h11)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h55)", "data/news.json (last_updated_at, ~2h49)", "data/opportunities.json (last_scan_at, ~5h11)"],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h55, actualités il y a 2h49, opportunités il y a 5h11 - rien à signaler."
     },
     {
       "checked_at": "2026-08-30T23:42:53Z",
       "files_ok": [],
-      "files_broken": [
-        "data/engine-history.json (routine_health.last_success_at figé depuis ~105h24, seuil de 8h dépassé)",
-        "data/news.json (last_updated_at figé depuis ~109h22, seuil de 8h dépassé)",
-        "data/opportunities.json (last_scan_at figé depuis ~115h37, seuil de 36h dépassé)"
-      ],
+      "files_broken": ["data/engine-history.json (routine_health.last_success_at figé depuis ~105h24, seuil de 8h dépassé)", "data/news.json (last_updated_at figé depuis ~109h22, seuil de 8h dépassé)", "data/opportunities.json (last_scan_at figé depuis ~115h37, seuil de 36h dépassé)"],
       "note": "ATTENTION FRAICHEUR : nouvelle panne globale des TROIS sources surveillées, du même type que celle déjà signalée le 23/08 (puis résolue le 24-25/08). data/engine-history.json (routine_health.last_success_at = 2026-08-26T14:18:00Z) est figé depuis environ 105h24 (~4,4 jours), très au-delà du seuil de 8h. data/news.json (last_updated_at = 2026-08-26T10:20:00Z) est figé depuis environ 109h22 (~4,6 jours), également au-delà du seuil de 8h. data/opportunities.json (last_scan_at = 2026-08-26T04:04:55Z) est figé depuis environ 115h37 (~4,8 jours), au-delà du seuil de 36h. Les trois se sont arrêtées quasi simultanément autour du 26/08 (dans les heures qui ont suivi le dernier contrôle réussi de cette routine ce jour-là à 09h16 UTC), et aucune entrée n'a été ajoutée à health-log.json par la routine de santé générale du site depuis non plus - signe d'une panne d'infrastructure large plutôt que de trois incidents isolés, comme lors de l'épisode du 23/08. Cette routine n'a pas les outils pour investiguer ou corriger elle-même (pas d'accès réseau, pas d'accès aux outils de gestion des routines/triggers) ; une session humaine ou Claude Code avec les bons outils devra vérifier en priorité l'état des routines aguilaradar-cycle-2h, aguilaradar-opportunites-quotidien, aguilaradar-sante-quotidien et de leurs sessions persistantes associées."
     },
     {
       "checked_at": "2026-08-31T09:15:46Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~0h55)",
-        "data/news.json (last_updated_at, ~0h55)",
-        "data/opportunities.json (last_scan_at, ~5h11)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h55)", "data/news.json (last_updated_at, ~0h55)", "data/opportunities.json (last_scan_at, ~5h11)"],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h55, actualités il y a 0h55, opportunités il y a 5h11 - rien à signaler. La panne globale signalée le 30/08 23h42 UTC est résolue (cause confirmée entre-temps : limite hebdomadaire d'usage du compte, reset le 30/08 à 23h00 UTC ; les routines ont repris naturellement dès leur cycle suivant)."
     },
     {
       "checked_at": "2026-09-01T09:16:28Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~0h59)",
-        "data/opportunities.json (last_scan_at, ~5h10)"
-      ],
-      "files_broken": [
-        "data/news.json (last_updated_at figé depuis ~11h00, seuil de 8h dépassé)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h59)", "data/opportunities.json (last_scan_at, ~5h10)"],
+      "files_broken": ["data/news.json (last_updated_at figé depuis ~11h00, seuil de 8h dépassé)"],
       "note": "ATTENTION FRAICHEUR : data/news.json (last_updated_at = 2026-08-31T22:16:00Z) est figé depuis environ 11h00, soit ~3h au-delà du seuil de 8h attendu pour le cycle profond - un dépassement modéré, pas une panne globale (les deux autres sources sont dans les clous : engine-history ~0h59, opportunities ~5h10). Cette routine n'a pas les outils pour investiguer ou corriger elle-même ; à surveiller au prochain cycle."
     },
     {
       "checked_at": "2026-09-02T09:17:00Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~1h00)",
-        "data/opportunities.json (last_scan_at, ~29h11)"
-      ],
-      "files_broken": [
-        "data/news.json (last_updated_at figé depuis ~18h56, seuil de 8h dépassé)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~1h00)", "data/opportunities.json (last_scan_at, ~29h11)"],
+      "files_broken": ["data/news.json (last_updated_at figé depuis ~18h56, seuil de 8h dépassé)"],
       "note": "ATTENTION FRAICHEUR : data/news.json (last_updated_at = 2026-09-01T14:21:00Z) est figé depuis environ 18h56, soit ~10h56 au-delà du seuil de 8h - en nette aggravation par rapport au cycle précédent du 01/09 (~11h00). Deux passages consécutifs en anomalie avec un écart croissant : à surveiller de près, pourrait indiquer un vrai blocage plutôt qu'un simple retard ponctuel. data/opportunities.json (last_scan_at = 2026-09-01T04:05:51Z, ~29h11) reste sous son seuil de 36h mais se rapproche - à surveiller aussi au prochain cycle. data/engine-history.json (routine_health.last_success_at, ~1h00) est dans les clous. Cette routine n'a pas les outils pour investiguer ou corriger elle-même."
     },
     {
       "checked_at": "2026-09-07T09:15:11Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~4h55)",
-        "data/opportunities.json (last_scan_at, ~5h09)"
-      ],
-      "files_broken": [
-        "data/news.json (last_updated_at figé depuis ~9h40, seuil de 8h dépassé)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~4h55)", "data/opportunities.json (last_scan_at, ~5h09)"],
+      "files_broken": ["data/news.json (last_updated_at figé depuis ~9h40, seuil de 8h dépassé)"],
       "note": "ATTENTION FRAICHEUR : data/news.json (last_updated_at = 2026-09-06T23:35:00Z) dépasse son seuil de 8h d'environ 1h40 (~9h40 au total) - dépassement modéré, nette amélioration par rapport à l'aggravation du 02/09 (~18h56), la tendance ne se dégrade plus. data/engine-history.json (routine_health.last_success_at, ~4h55) et data/opportunities.json (last_scan_at, ~5h09) sont dans les clous. Note de transparence sur cette routine elle-même : les cycles quotidiens du 03/09 au 06/09 inclus n'ont pas pu s'exécuter (Bash temporairement indisponible côté outils pour cette session, classifieur de sécurité en erreur de rate-limit) - aucune entrée n'a donc été ajoutée à health-log.json pour ces jours-là, mais cela ne reflète aucun problème sur les données AguilaRadar elles-mêmes, seulement une interruption de ce contrôle. Cette routine n'a pas les outils pour investiguer ou corriger elle-même le retard de news.json."
     },
     {
       "checked_at": "2026-09-08T09:16:45Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~0h59)",
-        "data/opportunities.json (last_scan_at, ~5h12)"
-      ],
-      "files_broken": [
-        "data/news.json (last_updated_at figé depuis ~16h56, seuil de 8h dépassé)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h59)", "data/opportunities.json (last_scan_at, ~5h12)"],
+      "files_broken": ["data/news.json (last_updated_at figé depuis ~16h56, seuil de 8h dépassé)"],
       "note": "ATTENTION FRAICHEUR : data/news.json (last_updated_at = 2026-09-07T16:20:00Z) est de nouveau nettement au-delà du seuil de 8h, figé depuis environ 16h56 - ce n'est plus un incident isolé : sur les contrôles récents de cette routine, news.json a dépassé son seuil le 01/09 (~11h), le 02/09 (~18h56), le 07/09 (~9h40) et maintenant le 08/09 (~16h56), avec des écarts qui oscillent sans se stabiliser durablement sous le seuil. Ce motif récurrent suggère un problème structurel sur la couverture actualités (élargie sur le cycle de 2h depuis le correctif du 17/08) plutôt qu'un simple retard ponctuel. data/engine-history.json (routine_health.last_success_at, ~0h59) et data/opportunities.json (last_scan_at, ~5h12) sont dans les clous. Cette routine n'a pas les outils pour investiguer ou corriger elle-même ; une session avec les bons outils devrait examiner pourquoi la veille actualités ne tient plus son rythme de façon fiable."
     },
     {
       "checked_at": "2026-09-09T08:54:35Z",
       "site_reachable": false,
-      "files_ok": [
-        "data/verdicts.json",
-        "data/opportunities.json",
-        "data/engine-history.json",
-        "data/alerts.json",
-        "data/news.json",
-        "data/control-group.json",
-        "data/market-context.json",
-        "data/favoris-context.json",
-        "data/health-log.json",
-        "index.html (19 scripts js/*.js tous présents et référencés correctement)"
-      ],
+      "files_ok": ["data/verdicts.json", "data/opportunities.json", "data/engine-history.json", "data/alerts.json", "data/news.json", "data/control-group.json", "data/market-context.json", "data/favoris-context.json", "data/health-log.json", "index.html (19 scripts js/*.js tous présents et référencés correctement)"],
       "files_broken": [],
       "counts": {
         "verdicts": 47,
@@ -375,34 +159,14 @@
     },
     {
       "checked_at": "2026-09-09T09:16:36Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~0h56)",
-        "data/opportunities.json (last_scan_at, ~5h11)"
-      ],
-      "files_broken": [
-        "data/news.json (last_updated_at figé depuis ~12h55, seuil de 8h dépassé)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h56)", "data/opportunities.json (last_scan_at, ~5h11)"],
+      "files_broken": ["data/news.json (last_updated_at figé depuis ~12h55, seuil de 8h dépassé)"],
       "note": "ATTENTION FRAICHEUR : data/news.json (last_updated_at = 2026-09-08T20:21:00Z) dépasse à nouveau le seuil de 8h, figé depuis environ 12h55 - léger mieux par rapport au 08/09 (~16h56) mais toujours au-dessus, motif récurrent depuis début septembre. Élément de contexte nouveau trouvé dans CLAUDE.md (mis à jour depuis le dernier contrôle) : le cycle profond a été volontairement réduit de 2h à 4h le 06/09 pour raison de coût token, ET le watchdog aguilaradar-watchdog-cycle-2h (auto-récupération) a été désactivé ce même jour (son seuil reste câblé sur l'ancien cycle de 2h et ne peut plus être modifié depuis l'extérieur) - un cycle bloqué ne se rattrape donc plus automatiquement, seul cet indicateur de fraîcheur le révèle désormais. Cela n'explique pas mécaniquement pourquoi news.json spécifiquement dérive au-delà de 8h (un cycle à 4h ne devrait pas à lui seul dépasser ce seuil), mais réduit la marge de sécurité globale et retire le filet de rattrapage qui existait avant le 06/09 - à garder en tête pour l'investigation. data/engine-history.json (routine_health.last_success_at, ~0h56) et data/opportunities.json (last_scan_at, ~5h11) sont dans les clous. Cette routine n'a pas les outils pour investiguer ou corriger elle-même."
     },
     {
       "checked_at": "2026-09-10T08:52:04Z",
       "site_reachable": false,
-      "files_ok": [
-        "data/alerts.json",
-        "data/control-group.json",
-        "data/digest.json",
-        "data/engine-history.json",
-        "data/favoris-context.json",
-        "data/health-log.json",
-        "data/market-context.json",
-        "data/news.json",
-        "data/opportunities.json",
-        "data/portfolio.json",
-        "data/portfolio-history.json",
-        "data/portfolio-thesis.json",
-        "data/verdicts.json",
-        "index.html (19 scripts js/*.js tous présents et référencés correctement)"
-      ],
+      "files_ok": ["data/alerts.json", "data/control-group.json", "data/digest.json", "data/engine-history.json", "data/favoris-context.json", "data/health-log.json", "data/market-context.json", "data/news.json", "data/opportunities.json", "data/portfolio.json", "data/portfolio-history.json", "data/portfolio-thesis.json", "data/verdicts.json", "index.html (19 scripts js/*.js tous présents et référencés correctement)"],
       "files_broken": [],
       "counts": {
         "verdicts": 47,
@@ -415,297 +179,121 @@
     },
     {
       "checked_at": "2026-09-10T09:15:58Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~0h55)",
-        "data/opportunities.json (last_scan_at, ~5h12)"
-      ],
-      "files_broken": [
-        "data/news.json (last_updated_at figé depuis ~20h55, seuil de 8h dépassé)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h55)", "data/opportunities.json (last_scan_at, ~5h12)"],
+      "files_broken": ["data/news.json (last_updated_at figé depuis ~20h55, seuil de 8h dépassé)"],
       "note": "ATTENTION FRAICHEUR : data/news.json (last_updated_at = 2026-09-09T12:20:00Z) est figé depuis environ 20h55, le pire écart observé par cette routine à ce jour (dépassait déjà le seuil sur les contrôles des 01/09, 02/09, 07/09, 08/09 et 09/09, avec des valeurs oscillant entre ~9h40 et ~18h56 - aujourd'hui dépasse ce record). Plus d'une semaine de dépassements récurrents sans stabilisation durable sous le seuil de 8h : ce n'est plus un aléa ponctuel, c'est un problème persistant sur la couverture actualités qui mérite une investigation prioritaire, d'autant que le watchdog d'auto-récupération a été désactivé le 06/09 (voir note du 09/09) et ne peut plus rattraper un cycle bloqué. data/engine-history.json (routine_health.last_success_at, ~0h55) et data/opportunities.json (last_scan_at, ~5h12) restent dans les clous - le problème semble spécifique à news.json, pas une panne globale du cycle. Cette routine n'a pas les outils pour investiguer ou corriger elle-même."
     },
     {
       "checked_at": "2026-09-11T09:15:48Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~0h55)",
-        "data/opportunities.json (last_scan_at, ~5h11)"
-      ],
-      "files_broken": [
-        "data/news.json (last_updated_at figé depuis ~16h57, seuil de 8h dépassé)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h55)", "data/opportunities.json (last_scan_at, ~5h11)"],
+      "files_broken": ["data/news.json (last_updated_at figé depuis ~16h57, seuil de 8h dépassé)"],
       "note": "ATTENTION FRAICHEUR : data/news.json (last_updated_at = 2026-09-10T16:18:00Z) reste au-dessus du seuil de 8h, figé depuis environ 16h57 - léger mieux que le record du 10/09 (~20h55) mais toujours largement hors seuil, 8e jour consécutif de dépassement depuis le 01/09 sans stabilisation durable. data/engine-history.json (routine_health.last_success_at, ~0h55) et data/opportunities.json (last_scan_at, ~5h11) restent dans les clous. Cette routine n'a pas les outils pour investiguer ou corriger elle-même le retard chronique de news.json ; le signal reste posé pour une session avec les bons outils."
     },
     {
       "checked_at": "2026-09-13T23:09:09Z",
       "files_ok": [],
-      "files_broken": [
-        "data/engine-history.json (routine_health.last_success_at figé depuis ~62h49, seuil de 8h dépassé)",
-        "data/news.json (last_updated_at figé depuis ~78h51, seuil de 8h dépassé)",
-        "data/opportunities.json (last_scan_at figé depuis ~67h05, seuil de 36h dépassé)"
-      ],
+      "files_broken": ["data/engine-history.json (routine_health.last_success_at figé depuis ~62h49, seuil de 8h dépassé)", "data/news.json (last_updated_at figé depuis ~78h51, seuil de 8h dépassé)", "data/opportunities.json (last_scan_at figé depuis ~67h05, seuil de 36h dépassé)"],
       "note": "ATTENTION FRAICHEUR : nouvelle panne globale des TROIS sources surveillées, du même type que les épisodes déjà signalés le 23/08 et le 30/08 (tous deux résolus en 1-2 jours après reset d'une limite d'usage du compte). data/engine-history.json (routine_health.last_success_at = 2026-09-11T08:20:00Z) est figé depuis environ 62h49 (~2,6 jours), au-delà du seuil de 8h. data/news.json (last_updated_at = 2026-09-10T16:18:00Z) est figé depuis environ 78h51 (~3,3 jours), déjà chroniquement en retard depuis le 01/09 mais maintenant complètement arrêté plutôt que simplement lent. data/opportunities.json (last_scan_at = 2026-09-11T04:04:04Z) est figé depuis environ 67h05 (~2,8 jours), au-delà du seuil de 36h. Aucun autre fichier data/*.json n'a bougé non plus depuis le 11/09 hormis digest.json - l'arrêt semble global et concerner l'ensemble des routines automatisées, pas seulement la couverture actualités. Cette routine n'a pas les outils pour investiguer ou corriger elle-même (pas d'accès réseau, pas d'accès aux outils de gestion des routines/triggers) ; une session humaine ou Claude Code avec les bons outils devra vérifier en priorité si une limite d'usage du compte est de nouveau en cause, comme lors des deux épisodes précédents."
     },
     {
       "checked_at": "2026-09-14T09:16:40Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~1h01)",
-        "data/opportunities.json (last_scan_at, ~5h11)"
-      ],
-      "files_broken": [
-        "data/news.json (last_updated_at figé depuis ~9h59, seuil de 8h dépassé)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~1h01)", "data/opportunities.json (last_scan_at, ~5h11)"],
+      "files_broken": ["data/news.json (last_updated_at figé depuis ~9h59, seuil de 8h dépassé)"],
       "note": "ATTENTION FRAICHEUR : la panne globale signalée le 13/09 23h09 UTC est résolue - les trois sources ont toutes produit de nouvelles données depuis (nombreux fichiers data/*.json mis à jour dans le dernier pull, pas seulement les trois surveillées ici). data/engine-history.json (routine_health.last_success_at, ~1h01) et data/opportunities.json (last_scan_at, ~5h11) sont dans les clous. data/news.json (last_updated_at = 2026-09-13T23:17:00Z) reste très légèrement au-dessus du seuil de 8h, figé depuis environ 9h59 - un dépassement mineur, sans commune mesure avec l'arrêt de plusieurs jours d'hier, cohérent avec le motif chronique déjà documenté depuis le 01/09 sur ce fichier spécifiquement. Cette routine n'a pas les outils pour investiguer ou corriger elle-même."
     },
     {
       "checked_at": "2026-09-15T08:52:28Z",
       "site_reachable": false,
-      "files_ok": [
-        "data/verdicts.json",
-        "data/opportunities.json",
-        "data/engine-history.json",
-        "data/alerts.json",
-        "data/news.json",
-        "data/control-group.json",
-        "data/market-context.json",
-        "data/favoris-context.json",
-        "data/health-log.json",
-        "index.html (21 scripts js/*.js tous présents et référencés correctement)"
-      ],
+      "files_ok": ["data/verdicts.json", "data/opportunities.json", "data/engine-history.json", "data/alerts.json", "data/news.json", "data/control-group.json", "data/market-context.json", "data/favoris-context.json", "data/health-log.json", "index.html (21 scripts js/*.js tous présents et référencés correctement)"],
       "files_broken": [],
-      "counts": {
-        "verdicts": 57,
-        "alerts": 151,
-        "opportunities": 7,
-        "news": 8,
-        "favoris_context_populated": 15
-      },
+      "counts": {"verdicts": 57, "alerts": 151, "opportunities": 7, "news": 8, "favoris_context_populated": 15},
       "note": "Vérification complète (points a-d) du 15/09. Rappel fiabilité : aucun outil mcp__CoinGecko, mcp__Alpha-Vantage-MCP-Server ou mcp__Anthropic-Economic-Index n'a été utilisé pour ce contrôle (cette routine ne s'en sert de toute façon jamais) ; site vérifié via WebFetch en appel direct, puis curl en repli. (a) Site : https://jaki2402-dev.github.io/aguilaradar-/ non vérifiable ce cycle - WebFetch échoue avec EGRESS_BLOCKED et curl direct échoue avec un rejet CONNECT 403 du proxy réseau (confirmé via /__agentproxy/status : host jaki2402-dev.github.io:443 explicitement rejeté par la politique d'égress de cette session), alors que api.coingecko.com reste joignable (HTTP 200) - la limitation est donc bien spécifique à ce domaine github.io et non une panne réseau générale ni une indication que GitHub Pages est réellement hors ligne ; site_reachable mis à false par prudence, même limitation d'infrastructure que la quasi-totalité des cycles précédents depuis le 11/08. (b) Les 9 fichiers data/*.json surveillés par cette routine (verdicts, opportunities, engine-history, alerts, news, control-group, market-context, favoris-context, health-log) ont tous été validés comme JSON syntaxiquement correct, non vides, non tronqués. (c) index.html référence bien les 21 scripts js/*.js attendus (config, data-integrity, prices, charts, engine, cards, onchain, detail, insights, portfolio, allocation, verdict-breakdown, background-fx, bg-themes-extra, bg-galaxy-3d, theme, layout, search, app, notify, assistant, auth), tous physiquement présents dans js/ (22 fichiers js/*.js au total, aucun manquant ni orphelin) ; index.html/css/js non modifiés, lecture seule respectée. (d) Comparaison de volume avec le dernier passage ayant un champ counts renseigné (10/09 08h52 UTC - les entrées intermédiaires du 10/09 09h15, 11/09, 13/09 et 14/09 sont des contrôles de fraîcheur allégés sans ce champ, donc ignorées pour la comparaison, comme la méthode déjà suivie le 09/09) : verdicts 47→57 (+10, hausse normale d'un historique permanent), alerts 141→151 (+10, hausse normale), opportunities 9→7 (-2, soit environ -22%, dans la marge normale d'un criblage activement géré par aguilaradar-opportunites-quotidien - ni chute à zéro ni chute de plus de 50%), news 8→8 (stable), favoris_context_populated 15→15 (stable, les 15 favoris ont toujours un last_computed_at renseigné). Aucune chute suspecte détectée (aucun chiffre tombé à zéro depuis un état >0, aucune chute de plus de 50% sur verdicts ou alerts), aucune anomalie de volume, aucun fichier ajouté à files_broken pour ce motif, aucune réparation nécessaire. Recherche de branches sœurs non fusionnées (suite au correctif du 17/08) : les branches claude/* les plus récentes au moment de ce passage (zen-sagan-daoegk, practical-babbage-iwk0ca, elegant-turing-toufkz, toutes du 15/09) sont déjà strictement fusionnées dans origin/main - aucun candidat non fusionné trouvé pour ce cycle. Note de transparence : le dépôt accumule un grand nombre d'anciennes branches claude/* (plusieurs centaines, dont une dizaine avec le préfixe eloquent-clarke comme celle de cette session) jamais nettoyées après fusion ; les deux vérifiées ponctuellement ici (eloquent-clarke-mwpn1b du 11/09, eloquent-clarke-dkw3cm du 03/09) contiennent déjà du contenu présent dans main via d'autres commits - ce sont des reliquats de dépôt, pas des travaux non fusionnés, et un audit exhaustif de toutes ces branches historiques dépasse le périmètre et les moyens de ce contrôle quotidien. Fusion vers main : ce passage effectue le commit+push sur la branche de session puis la fusion directe vers main comme décrit dans les consignes."
     },
     {
       "checked_at": "2026-09-15T09:16:11Z",
-      "files_ok": [
-        "data/opportunities.json (last_scan_at, ~5h11)"
-      ],
-      "files_broken": [
-        "data/engine-history.json (routine_health.last_success_at figé depuis ~16h56, seuil de 8h dépassé)",
-        "data/news.json (last_updated_at figé depuis ~33h59, seuil de 8h dépassé)"
-      ],
+      "files_ok": ["data/opportunities.json (last_scan_at, ~5h11)"],
+      "files_broken": ["data/engine-history.json (routine_health.last_success_at figé depuis ~16h56, seuil de 8h dépassé)", "data/news.json (last_updated_at figé depuis ~33h59, seuil de 8h dépassé)"],
       "note": "ATTENTION FRAICHEUR : régression depuis le contrôle d'hier (14/09, où routine_health était à ~1h01) - data/engine-history.json (routine_health.last_success_at = 2026-09-14T16:20:00Z) est maintenant figé depuis environ 16h56, au-delà du seuil de 8h. data/news.json (last_updated_at = 2026-09-13T23:17:00Z) est figé depuis environ 33h59 (~1,4 jour), en nette aggravation par rapport à hier (~9h59) et se rapprochant à nouveau de l'échelle de la panne globale du 13/09 (~79h) sans toutefois l'atteindre. data/opportunities.json (last_scan_at, ~5h11) reste dans les clous, ce qui suggère un problème partiel plutôt qu'un arrêt complet de toutes les routines. Aucun élément trouvé dans les changements récents de CLAUDE.md (mise à jour du 15/09, principalement des évolutions frontend on-chain/verdict-breakdown/densité UI) pour expliquer cette régression spécifique sur le cycle profond et les actualités. Cette routine n'a pas les outils pour investiguer ou corriger elle-même."
     },
     {
       "checked_at": "2026-09-16T08:51:31Z",
       "site_reachable": false,
-      "files_ok": [
-        "data/alerts.json",
-        "data/control-group.json",
-        "data/engine-history.json",
-        "data/favoris-context.json",
-        "data/health-log.json",
-        "data/market-context.json",
-        "data/news.json",
-        "data/opportunities.json",
-        "data/verdicts.json",
-        "index.html (22 scripts js/*.js tous présents et référencés correctement)"
-      ],
+      "files_ok": ["data/alerts.json", "data/control-group.json", "data/engine-history.json", "data/favoris-context.json", "data/health-log.json", "data/market-context.json", "data/news.json", "data/opportunities.json", "data/verdicts.json", "index.html (22 scripts js/*.js tous présents et référencés correctement)"],
       "files_broken": [],
-      "counts": {
-        "verdicts": 57,
-        "alerts": 151,
-        "opportunities": 6,
-        "news": 10,
-        "favoris_context_populated": 15
-      },
+      "counts": {"verdicts": 57, "alerts": 151, "opportunities": 6, "news": 10, "favoris_context_populated": 15},
       "note": "Vérification complète (points a-d) du 16/09. Rappel fiabilité (permanent) : aucun outil mcp__CoinGecko, mcp__Alpha-Vantage-MCP-Server ou mcp__Anthropic-Economic-Index n'a été utilisé pour ce contrôle - cette routine ne s'en sert de toute façon jamais, elle lit uniquement les fichiers data/*.json et index.html en local, plus WebFetch/curl pour la disponibilité du site. (a) Site https://jaki2402-dev.github.io/aguilaradar-/ non vérifiable ce cycle : WebFetch échoue avec EGRESS_BLOCKED et curl direct échoue avec un rejet CONNECT 403 du proxy réseau (confirmé via /__agentproxy/status : host jaki2402-dev.github.io:443 explicitement rejeté par la politique d'égress de cette session, recentRelayFailures le montre en connect_rejected), alors que api.coingecko.com reste joignable (HTTP 200) - la limitation est donc bien spécifique à ce domaine github.io et non une panne réseau générale ni une indication que GitHub Pages est réellement hors ligne, même limitation d'infrastructure que la quasi-totalité des cycles précédents depuis le 11/08. site_reachable mis à false par prudence. (b) Les 9 fichiers data/*.json surveillés par cette routine (verdicts, opportunities, engine-history, alerts, news, control-group, market-context, favoris-context, health-log) ont tous été validés comme JSON syntaxiquement correct, non vides, non tronqués (parsing Python réussi pour chacun) ; les fichiers hors périmètre strict (digest, portfolio, portfolio-history, portfolio-thesis, onchain-history) ont aussi été vérifiés par prudence et sont valides. (c) index.html référence bien 22 scripts js/*.js (config, data-integrity, prices, charts, engine, cards, onchain, detail, insights, portfolio, allocation, verdict-breakdown, background-fx, bg-themes-extra, bg-galaxy-3d, theme, layout, search, app, notify, assistant, auth), tous physiquement présents dans js/ - aucun script manquant ni orphelin ; index.html/css/js non modifiés, lecture seule respectée. (d) Comparaison de volume avec le dernier passage complet ayant un champ counts renseigné (15/09 08h52 UTC - l'entrée intermédiaire du 15/09 09h16 UTC est un contrôle de fraîcheur allégé sans ce champ, donc ignorée pour la comparaison, comme la méthode déjà suivie précédemment) : verdicts 57→57 (stable, cohérent avec engine-history.json qui confirme qu'aucune échéance resolves_at n'est due ce cycle et qu'aucune nouvelle émission n'a eu lieu, les 15 favoris ayant chacun déjà un verdict actif pending), alerts 151→151 (stable, aucun nouvel avis-jour/alerte seuil technique déclenché depuis), opportunities 7→6 (-1, environ -14%, largement sous le seuil de 50% et sans passage à zéro - dans la marge normale d'un criblage activement géré par la routine dédiée aguilaradar-opportunites-quotidien, cohérent avec last_scan_at = 2026-09-16T04:03:21Z), news 8→10 (+2, hausse normale d'un flux tournant, cohérent avec last_checked_at = 2026-09-16T08:20:00Z), favoris_context_populated 15→15 (stable, les 15 favoris ont toujours un last_computed_at renseigné, dernier à 2026-09-16T08:20:00Z). Aucune chute suspecte détectée (aucun chiffre tombé à zéro depuis un état >0, aucune chute de plus de 50% sur verdicts ou alerts), aucune anomalie de volume, aucun fichier ajouté à files_broken pour ce motif, aucune réparation nécessaire ce cycle. Contexte engine-history.routine_health.last_success_at = 2026-09-16T08:20:00Z (~0h31 avant ce contrôle) : cycle profond du 16/09 08h17 UTC exécuté normalement selon son propre journal (aucune résolution due, aucune nouvelle entrée correction_log, appels HTTP directs CoinGecko hors mcp__ uniquement) - hors périmètre strict des points a-d mais cohérent avec les chiffres ci-dessus. Fusion vers main : git fetch origin main effectué en isolation (piège documenté dans l'entrée engine-history du 16/09 lui-même : un fetch multi-refs dont une seule échoue ne met à jour aucune des autres) - origin/main (4962548) déjà strictement à jour avec cette branche de travail (claude/eloquent-clarke-mevufp), aucune autre branche claude/* non fusionnée trouvée sur le dépôt distant pour ce cycle ; un simple commit+push sur cette branche puis fusion directe vers main suffit donc, sans conflit ni entrée concurrente à réconcilier."
     },
     {
       "checked_at": "2026-09-16T09:15:29Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~0h55)",
-        "data/opportunities.json (last_scan_at, ~5h12)"
-      ],
-      "files_broken": [
-        "data/news.json (last_updated_at figé depuis ~8h55, seuil de 8h dépassé)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h55)", "data/opportunities.json (last_scan_at, ~5h12)"],
+      "files_broken": ["data/news.json (last_updated_at figé depuis ~8h55, seuil de 8h dépassé)"],
       "note": "ATTENTION FRAICHEUR : data/news.json (last_updated_at = 2026-09-16T00:20:00Z) dépasse le seuil de 8h de justesse, figé depuis environ 8h55 - net mieux par rapport à hier (15/09, ~33h59), qui approchait l'échelle d'une panne globale, mais toujours techniquement hors seuil. data/engine-history.json (routine_health.last_success_at, ~0h55) et data/opportunities.json (last_scan_at, ~5h12) sont tous deux revenus dans les clous, confirmant que la régression du cycle profond signalée hier est résolue. Problème désormais limité à un léger dépassement chronique sur news.json, dans la continuité du motif récurrent observé depuis début septembre. Cette routine n'a pas les outils pour investiguer ou corriger elle-même."
     },
     {
       "checked_at": "2026-09-21T09:15:39Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~0h59)",
-        "data/news.json (last_updated_at, ~0h59)",
-        "data/opportunities.json (last_scan_at, ~5h06)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h59)", "data/news.json (last_updated_at, ~0h59)", "data/opportunities.json (last_scan_at, ~5h06)"],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h59, actualités il y a 0h59, opportunités il y a 5h06 - rien à signaler. Note de transparence sur cette routine elle-même : les cycles quotidiens du 17/09 au 20/09 inclus n'ont pas pu s'exécuter (cette session persistante n'a pas été relancée sur ses déclenchements programmés de ces jours-là - les notifications correspondantes sont arrivées groupées au réveil de ce cycle du 21/09) - aucune entrée n'a donc été ajoutée à health-log.json pour ces jours-là, mais cela ne reflète aucun problème sur les données AguilaRadar elles-mêmes (confirmé rétrospectivement impossible à vérifier pour ces dates précises, les trois champs surveillés ayant depuis été rafraîchis), seulement une interruption de ce contrôle."
     },
     {
       "checked_at": "2026-09-22T09:16:03Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~0h56)",
-        "data/news.json (last_updated_at, ~0h56)",
-        "data/opportunities.json (last_scan_at, ~5h06)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h56)", "data/news.json (last_updated_at, ~0h56)", "data/opportunities.json (last_scan_at, ~5h06)"],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h56, actualités il y a 0h56, opportunités il y a 5h06 - rien à signaler."
     },
     {
       "checked_at": "2026-09-23T08:52:09Z",
       "site_reachable": false,
-      "files_ok": [
-        "data/alerts.json",
-        "data/control-group.json",
-        "data/digest.json",
-        "data/engine-history.json",
-        "data/favoris-context.json",
-        "data/health-log.json",
-        "data/market-context.json",
-        "data/news.json",
-        "data/onchain-history.json",
-        "data/opportunities.json",
-        "data/portfolio-history.json",
-        "data/portfolio-thesis.json",
-        "data/portfolio.json",
-        "data/verdicts.json",
-        "index.html (22 scripts js/*.js tous présents et référencés correctement)"
-      ],
+      "files_ok": ["data/alerts.json", "data/control-group.json", "data/digest.json", "data/engine-history.json", "data/favoris-context.json", "data/health-log.json", "data/market-context.json", "data/news.json", "data/onchain-history.json", "data/opportunities.json", "data/portfolio-history.json", "data/portfolio-thesis.json", "data/portfolio.json", "data/verdicts.json", "index.html (22 scripts js/*.js tous présents et référencés correctement)"],
       "files_broken": [],
-      "counts": {
-        "verdicts": 72,
-        "alerts": 151,
-        "opportunities": 8,
-        "news": 15,
-        "favoris_context_populated": 15
-      },
+      "counts": {"verdicts": 72, "alerts": 151, "opportunities": 8, "news": 15, "favoris_context_populated": 15},
       "note": "Vérification complète (points a-d) du 23/09. Rappel fiabilité (permanent) : aucun outil mcp__CoinGecko, mcp__Alpha-Vantage-MCP-Server ou mcp__Anthropic-Economic-Index n'a été utilisé pour ce contrôle - cette routine ne s'en sert de toute façon jamais, elle lit uniquement les fichiers data/*.json et index.html en local, plus WebFetch/curl pour la disponibilité du site. (a) Site https://jaki2402-dev.github.io/aguilaradar-/ non vérifiable ce cycle : WebFetch échoue avec EGRESS_BLOCKED et curl direct échoue également (HTTP_CODE 000, aucune réponse) - confirmé via /__agentproxy/status : host jaki2402-dev.github.io:443 explicitement rejeté par la politique d'égress de cette session (recentRelayFailures : connect_rejected, gateway 403 à la CONNECT), alors qu'un domaine tiers (api.coingecko.com) reste bien joignable (réponse HTTP reçue, même rate-limitée) - la limitation est donc bien spécifique à ce domaine github.io et non une panne réseau générale, ni une indication que GitHub Pages est réellement hors ligne. Même limitation d'infrastructure que la quasi-totalité des cycles précédents depuis le 11/08. site_reachable mis à false par prudence, à revérifier depuis une session avec un accès réseau moins restreint. (b) Les 14 fichiers data/*.json présents dans le dépôt (alerts, control-group, digest, engine-history, favoris-context, health-log, market-context, news, onchain-history, opportunities, portfolio, portfolio-history, portfolio-thesis, verdicts) ont tous été validés comme JSON syntaxiquement correct, non vides, non tronqués (parsing Python réussi pour chacun, tailles en octets cohérentes avec leur contenu habituel). (c) index.html référence bien les 22 scripts js/*.js attendus, dans le bon ordre de dépendance (config, data-integrity, prices, charts, engine, cards, onchain, detail, insights, portfolio, allocation, verdict-breakdown, background-fx, bg-themes-extra, bg-galaxy-3d [en type=\"module\", chargé après les scripts classiques mais avant DOMContentLoaded comme documenté en commentaire dans le fichier lui-même], theme, layout, search, app, notify, assistant, auth), tous physiquement présents dans js/ - aucun script manquant ni orphelin. index.html/css/js non modifiés, lecture seule respectée. (d) Comparaison de volume avec le dernier passage complet ayant un champ counts renseigné (16/09 08h51 UTC - les entrées intermédiaires du 16/09 09h15, 21/09 et 22/09 sont des contrôles de fraîcheur allégés sans ce champ, donc ignorées pour la comparaison, comme la méthode déjà suivie précédemment) : verdicts 57→72 (+15, hausse normale d'un historique permanent), alerts 151→151 (stable, aucune nouvelle alerte seuil technique/S-R/order-book déclenchée depuis 7 jours - une stagnation, pas une chute, donc pas une anomalie au sens de cette consigne, mais à garder à l'œil si elle se prolonge), opportunities 6→8 (+2, hausse normale, cohérent avec last_scan_at = 2026-09-23T04:13:46Z), news 10→15 (+5, hausse normale d'un flux tournant), favoris_context_populated 15→15 (stable, les 15 favoris ont toujours un last_computed_at renseigné). Aucune chute suspecte détectée (aucun chiffre tombé à zéro depuis un état >0, aucune chute de plus de 50% sur verdicts ou alerts), aucune anomalie de volume, aucun fichier ajouté à files_broken pour ce motif, aucune réparation nécessaire ce cycle. Fraîcheur (hors périmètre strict des points a-d, mais suivi de continuité) : engine-history.routine_health.last_success_at = 2026-09-23T08:20:00Z (~0h32 avant ce contrôle) et news.last_checked_at = 2026-09-23T08:20:00Z (~0h32, prouve que la veille actualités a bien tourné ce cycle) sont dans les clous ; news.last_updated_at = 2026-09-22T16:20:00Z (~16h32) est plus ancien mais c'est l'état normal attendu quand rien de nouveau n'a franchi le seuil de publication (distinction documentée depuis le 15/09 : last_checked_at prouve le contrôle, last_updated_at ne bouge que si items change réellement) - pas un signal de panne. opportunities.last_scan_at (~4h38) est bien sous le seuil de 36h. Recherche de branches sœurs non fusionnées : aucune autre branche claude/* trouvée sur le dépôt distant en dehors de celle de cette session (origin/claude/eloquent-clarke-8bd00b) - origin/main était déjà strictement à jour avec cette branche de travail au moment de ce passage (dernier commit main : 33f91bf, fusion du cycle 23/09 08h45 UTC), donc un simple commit+push sur cette branche puis fusion directe vers main a suffi, sans conflit ni entrée concurrente à réconcilier."
     },
     {
       "checked_at": "2026-09-23T09:15:49Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~0h55)",
-        "data/opportunities.json (last_scan_at, ~5h02)"
-      ],
-      "files_broken": [
-        "data/news.json (last_updated_at figé depuis ~16h55, seuil de 8h dépassé)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h55)", "data/opportunities.json (last_scan_at, ~5h02)"],
+      "files_broken": ["data/news.json (last_updated_at figé depuis ~16h55, seuil de 8h dépassé)"],
       "note": "ATTENTION FRAICHEUR : data/news.json (last_updated_at = 2026-09-22T16:20:00Z) est figé depuis environ 16h55, au-delà du seuil de 8h - régression nette par rapport à hier (22/09, ~0h56), motif déjà récurrent début septembre (oscillations entre ~9h et ~34h) qui refait surface après plusieurs jours calmes. data/engine-history.json (routine_health.last_success_at, ~0h55) et data/opportunities.json (last_scan_at, ~5h02) sont dans les clous - le problème semble limité à news.json, pas une panne globale du cycle. Cette routine n'a pas les outils pour investiguer ou corriger elle-même."
     },
     {
       "checked_at": "2026-09-24T08:52:27Z",
       "site_reachable": false,
-      "files_ok": [
-        "data/alerts.json",
-        "data/control-group.json",
-        "data/digest.json",
-        "data/engine-history.json",
-        "data/favoris-context.json",
-        "data/health-log.json",
-        "data/market-context.json",
-        "data/news.json",
-        "data/onchain-history.json",
-        "data/opportunities.json",
-        "data/portfolio-history.json",
-        "data/portfolio-thesis.json",
-        "data/portfolio.json",
-        "data/verdicts.json",
-        "index.html (22 scripts js/*.js tous présents et référencés correctement)"
-      ],
+      "files_ok": ["data/alerts.json", "data/control-group.json", "data/digest.json", "data/engine-history.json", "data/favoris-context.json", "data/health-log.json", "data/market-context.json", "data/news.json", "data/onchain-history.json", "data/opportunities.json", "data/portfolio-history.json", "data/portfolio-thesis.json", "data/portfolio.json", "data/verdicts.json", "index.html (22 scripts js/*.js tous présents et référencés correctement)"],
       "files_broken": [],
-      "counts": {
-        "verdicts": 72,
-        "alerts": 151,
-        "opportunities": 8,
-        "news": 16,
-        "favoris_context_populated": 15
-      },
+      "counts": {"verdicts": 72, "alerts": 151, "opportunities": 8, "news": 16, "favoris_context_populated": 15},
       "note": "Vérification complète (points a-d) du 24/09. Rappel fiabilité (permanent) : aucun outil mcp__CoinGecko, mcp__Alpha-Vantage-MCP-Server ou mcp__Anthropic-Economic-Index n'a été utilisé pour ce contrôle - cette routine ne s'en sert de toute façon jamais, elle lit uniquement les fichiers data/*.json et index.html en local, plus WebFetch/curl pour la disponibilité du site. (a) Site https://jaki2402-dev.github.io/aguilaradar-/ non vérifiable ce cycle : WebFetch échoue avec EGRESS_BLOCKED et curl direct échoue également (CONNECT tunnel failed, gateway 403, HTTP_CODE 000, aucune réponse) - un test complémentaire via api.github.com/repos/.../pages a aussi été rejeté explicitement par le proxy (\"Access to this GitHub API path is not permitted through this proxy\"), confirmant que la restriction porte spécifiquement sur ce domaine/chemin et non sur le réseau en général. Même limitation d'infrastructure que la quasi-totalité des cycles précédents depuis le 11/08, y compris hier (23/09). site_reachable mis à false par prudence, à revérifier depuis une session avec un accès réseau moins restreint - ceci ne doit pas être interprété comme une preuve que le site est réellement hors ligne. (b) Les 14 fichiers data/*.json présents dans le dépôt (alerts, control-group, digest, engine-history, favoris-context, health-log, market-context, news, onchain-history, opportunities, portfolio, portfolio-history, portfolio-thesis, verdicts) ont tous été validés comme JSON syntaxiquement correct, non vides, non tronqués (parsing Python réussi pour chacun, tailles en octets cohérentes avec leur contenu habituel). (c) index.html référence bien les 22 scripts js/*.js attendus, dans le bon ordre de dépendance (config, data-integrity, prices, charts, engine, cards, onchain, detail, insights, portfolio, allocation, verdict-breakdown, background-fx, bg-themes-extra, bg-galaxy-3d [en type=\"module\"], theme, layout, search, app, notify, assistant, auth), tous physiquement présents dans js/ - aucun script manquant ni orphelin. index.html/css/js non modifiés, lecture seule respectée. (d) Comparaison de volume avec le dernier passage ayant un champ counts renseigné (23/09 08h52 UTC) : verdicts 72→72 (stable, aucun verdict pending échu depuis, cohérent avec engine-history.routine_health qui confirme qu'aucun resolves_at n'était dépassé lors des derniers cycles), alerts 151→151 (stable, toujours aucune nouvelle alerte seuil technique/S-R/order-book depuis plusieurs jours - stagnation prolongée à surveiller mais pas une chute), opportunities 8→8 (stable, cohérent avec last_scan_at = 2026-09-24T04:13:38Z), news 15→16 (+1, hausse normale d'un flux tournant, cohérent avec last_checked_at = 2026-09-24T08:20:00Z = last_updated_at, un nouvel item réglementaire SEC a bien franchi le seuil de publication ce cycle selon routine_health.last_failure_reason), favoris_context_populated 15→15 (stable, les 15 favoris ont toujours un last_computed_at renseigné, top-level last_computed_at = 2026-09-24T08:27:00Z). Aucune chute suspecte détectée (aucun chiffre tombé à zéro depuis un état >0, aucune chute de plus de 50% sur verdicts ou alerts), aucune anomalie de volume, aucun fichier ajouté à files_broken pour ce motif, aucune réparation nécessaire ce cycle. Fraîcheur (hors périmètre strict des points a-d, suivi de continuité) : engine-history.routine_health.last_success_at = 2026-09-24T08:20:00Z (~0h32 avant ce contrôle) et news.last_checked_at = 2026-09-24T08:20:00Z (~0h32) sont dans les clous ; news.last_updated_at a également avancé au même horodatage ce cycle-ci (nouvel item ajouté, un item ancien retiré conformément à la section 8 point 4), donc pas de signal de panne. opportunities.last_scan_at (~4h38) est bien sous le seuil de 36h. Recherche de branches sœurs non fusionnées : les 5 branches historiques claude/gifted-brahmagupta-* trouvées sur le dépôt distant (f6ph24, fe817u, to5tr0, wu7srt, ycvmke) datent toutes de mi-août (17/08 au 24/08) et comptent chacune entre 116 et 260 commits d'écart avec origin/main - il ne s'agit pas de branches sœurs récentes au sens de la procédure de fusion (qui vise une branche du même jour, encore proche de main), mais de vieilles branches orphelines accumulées depuis des semaines, cohérent avec le constat déjà documenté dans CLAUDE.md (dizaines de branches claude/compassionate-ritchie-* dans le même état). Tenter une fusion --no-ff automatique de branches aussi divergentes (plusieurs centaines de commits, contenu potentiellement obsolète sur des fichiers append-only) présente un risque réel de conflits massifs ou de réintroduction de données périmées, hors de portée d'une routine en lecture seule sur ces fichiers et hors du cas simple et rapide prévu par cette consigne - non fusionnées par prudence, laissées à une décision humaine ou une session interactive dédiée. Aucune autre branche claude/* du dépôt (plus de 200 au total, tous préfixes confondus) n'a été auditée individuellement pour ce même motif de disproportion coût/risque. origin/main était déjà strictement à jour avec cette branche de travail (claude/eloquent-clarke-2y825s) avant ce passage (dernier commit main : e5f27da, fusion du cycle market-context 24/09 08h42 UTC), donc un simple commit+push sur cette branche puis fusion directe vers main suffira, sans conflit ni entrée concurrente à réconcilier."
     },
     {
       "checked_at": "2026-09-24T09:15:49Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~0h55)",
-        "data/news.json (last_updated_at, ~0h55)",
-        "data/opportunities.json (last_scan_at, ~5h02)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h55)", "data/news.json (last_updated_at, ~0h55)", "data/opportunities.json (last_scan_at, ~5h02)"],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h55, actualités il y a 0h55, opportunités il y a 5h02 - rien à signaler. Le retard de news.json signalé hier (23/09, ~16h55) est résolu."
     },
     {
       "checked_at": "2026-09-25T08:51:57Z",
       "site_reachable": false,
-      "files_ok": [
-        "data/alerts.json",
-        "data/control-group.json",
-        "data/digest.json",
-        "data/engine-history.json",
-        "data/favoris-context.json",
-        "data/health-log.json",
-        "data/market-context.json",
-        "data/news.json",
-        "data/onchain-history.json",
-        "data/opportunities.json",
-        "data/portfolio.json",
-        "data/portfolio-history.json",
-        "data/portfolio-thesis.json",
-        "data/verdicts.json",
-        "index.html (22 scripts js/*.js tous présents et référencés correctement)"
-      ],
+      "files_ok": ["data/alerts.json", "data/control-group.json", "data/digest.json", "data/engine-history.json", "data/favoris-context.json", "data/health-log.json", "data/market-context.json", "data/news.json", "data/onchain-history.json", "data/opportunities.json", "data/portfolio.json", "data/portfolio-history.json", "data/portfolio-thesis.json", "data/verdicts.json", "index.html (22 scripts js/*.js tous présents et référencés correctement)"],
       "files_broken": [],
-      "counts": {
-        "verdicts": 72,
-        "alerts": 151,
-        "opportunities": 8,
-        "news": 17,
-        "favoris_context_populated": 15
-      },
+      "counts": {"verdicts": 72, "alerts": 151, "opportunities": 8, "news": 17, "favoris_context_populated": 15},
       "note": "Vérification complète (points a-d) du 25/09. Rappel fiabilité (permanent) : aucun outil mcp__CoinGecko-, mcp__Alpha-Vantage-MCP-Server ou mcp__Anthropic-Economic-Index n'a été utilisé pour ce contrôle - cette routine ne s'en sert de toute façon jamais, elle lit uniquement les fichiers data/*.json et index.html en local, plus WebFetch pour la disponibilité du site. (a) Site https://jaki2402-dev.github.io/aguilaradar-/ non vérifiable ce cycle : WebFetch échoue avec EGRESS_BLOCKED (host jaki2402-dev.github.io explicitement refusé par le proxy réseau d'égress de cette session) - même limitation d'infrastructure que la quasi-totalité des cycles précédents depuis le 11/08, y compris hier (24/09). site_reachable mis à false par prudence, à revérifier depuis une session avec un accès réseau moins restreint - ceci ne doit pas être interprété comme une preuve que le site est réellement hors ligne. (b) Les 14 fichiers data/*.json présents dans le dépôt (alerts, control-group, digest, engine-history, favoris-context, health-log, market-context, news, onchain-history, opportunities, portfolio, portfolio-history, portfolio-thesis, verdicts) ont tous été validés comme JSON syntaxiquement correct, non vides, non tronqués (parsing Python réussi pour chacun, tailles en octets cohérentes avec leur contenu habituel). (c) index.html référence bien les 22 scripts js/*.js attendus (allocation, app, assistant, auth, background-fx, bg-galaxy-3d, bg-themes-extra, cards, charts, config, data-integrity, detail, engine, insights, layout, notify, onchain, portfolio, prices, search, theme, verdict-breakdown), tous physiquement présents dans js/ - comparaison automatisée (diff des deux listes triées, scripts référencés dans index.html vs fichiers réellement présents dans js/) confirme une correspondance stricte, aucun script manquant ni orphelin. index.html/css/js non modifiés, lecture seule respectée. (d) Comparaison de volume avec le dernier passage ayant un champ counts renseigné (24/09 08h52 UTC : verdicts=72, alerts=151, opportunities=8, news=16, favoris_context_populated=15) : verdicts 72→72 (stable, cohérent avec engine-history.json, aucune nouvelle échéance de résolution atteinte ce cycle), alerts 151→151 (stable, toujours aucune nouvelle alerte seuil technique/S-R/order-book depuis plusieurs jours - stagnation prolongée à surveiller mais pas une chute), opportunities 8→8 (stable, cohérent avec last_scan_at récent), news 16→17 (+1, hausse normale d'un flux tournant), favoris_context_populated 15→15 (stable, les 15 favoris ont toujours un last_computed_at renseigné dans favoris-context.json.assets). Aucune chute suspecte détectée (aucun chiffre tombé à zéro depuis un état >0, aucune chute de plus de 50% sur verdicts ou alerts), aucune anomalie de volume, aucun fichier ajouté à files_broken pour ce motif, aucune réparation nécessaire ce cycle. Recherche de branches sœurs non fusionnées (git ls-remote --heads origin, car ce clone est partiel et git branch -r seul ne montre pas toutes les branches distantes) : les 5 mêmes branches claude/gifted-brahmagupta-* déjà identifiées et documentées hier (f6ph24, fe817u, to5tr0, wu7srt, ycvmke, mi-août, des centaines de commits derrière origin/main) sont toujours présentes sur le dépôt distant, sans nouvelle branche du même préfixe apparue depuis le contrôle du 24/09 - aucune branche sœur récente du même jour à fusionner avant celle-ci. Pour la même raison documentée hier (risque réel de conflits massifs ou de réintroduction de données périmées sur des fichiers append-only, hors du cas simple et rapide prévu par cette consigne), ces 5 vieilles branches orphelines ne sont de nouveau pas fusionnées ce cycle, laissées à une décision humaine ou une session interactive dédiée. origin/main (commit 4e7556c, fusion du cycle marché du 25/09 ~08h43 UTC) était déjà strictement à jour avec cette branche de travail (claude/eloquent-clarke-incs1k) avant ce passage, donc un simple commit+push sur cette branche puis fusion directe vers main suffira, sans conflit ni entrée concurrente à réconcilier."
     },
     {
       "checked_at": "2026-09-25T09:16:16Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~0h56)",
-        "data/news.json (last_updated_at, ~0h56)",
-        "data/opportunities.json (last_scan_at, ~5h06)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h56)", "data/news.json (last_updated_at, ~0h56)", "data/opportunities.json (last_scan_at, ~5h06)"],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h56, actualités il y a 0h56, opportunités il y a 5h06 - rien à signaler."
     },
     {
       "checked_at": "2026-09-28T08:53:06Z",
       "site_reachable": false,
-      "files_ok": [
-        "data/alerts.json",
-        "data/control-group.json",
-        "data/digest.json",
-        "data/engine-history.json",
-        "data/favoris-context.json",
-        "data/health-log.json",
-        "data/market-context.json",
-        "data/news.json",
-        "data/onchain-history.json",
-        "data/opportunities.json",
-        "data/portfolio.json",
-        "data/portfolio-history.json",
-        "data/portfolio-thesis.json",
-        "data/verdicts.json",
-        "index.html (22 scripts js/*.js tous présents et référencés correctement)"
-      ],
+      "files_ok": ["data/alerts.json", "data/control-group.json", "data/digest.json", "data/engine-history.json", "data/favoris-context.json", "data/health-log.json", "data/market-context.json", "data/news.json", "data/onchain-history.json", "data/opportunities.json", "data/portfolio.json", "data/portfolio-history.json", "data/portfolio-thesis.json", "data/verdicts.json", "index.html (22 scripts js/*.js tous présents et référencés correctement)"],
       "files_broken": [],
-      "counts": {
-        "verdicts": 81,
-        "alerts": 151,
-        "opportunities": 8,
-        "news": 17,
-        "favoris_context_populated": 15
-      },
+      "counts": {"verdicts": 81, "alerts": 151, "opportunities": 8, "news": 17, "favoris_context_populated": 15},
       "note": "Vérification complète (points a-d) du 28/09. Rappel fiabilité (permanent) : aucun outil mcp__CoinGecko-, mcp__Alpha-Vantage-MCP-Server ou mcp__Anthropic-Economic-Index n'a été utilisé pour ce contrôle - cette routine ne s'en sert de toute façon jamais, elle lit uniquement les fichiers data/*.json et index.html en local, plus WebFetch pour la disponibilité du site. (a) Site https://jaki2402-dev.github.io/aguilaradar-/ non vérifiable ce cycle : WebFetch et curl direct échouent tous deux avec EGRESS_BLOCKED / connect_rejected (host jaki2402-dev.github.io explicitement refusé par le proxy réseau d'égress de cette session, confirmé via /__agentproxy/status) - même limitation d'infrastructure que la quasi-totalité des cycles précédents depuis le 11/08. site_reachable mis à false par prudence, à revoir depuis une session avec un accès réseau moins restreint - ceci ne doit pas être interprété comme une preuve que le site est réellement hors ligne. (b) Les 14 fichiers data/*.json présents dans le dépôt (alerts, control-group, digest, engine-history, favoris-context, health-log, market-context, news, onchain-history, opportunities, portfolio, portfolio-history, portfolio-thesis, verdicts) ont tous été validés comme JSON syntaxiquement correct (parsing Node réussi pour chacun), non vides, non tronqués (tailles en octets cohérentes : verdicts 151382o, alerts 150884o, opportunities 124005o, health-log 79110o, favoris-context 70907o, engine-history 24708o, market-context 10754o, news 12852o, control-group 3876o). (c) index.html référence bien les 22 scripts js/*.js attendus (allocation, app, assistant, auth, background-fx, bg-galaxy-3d, bg-themes-extra, cards, charts, config, data-integrity, detail, engine, insights, layout, notify, onchain, portfolio, prices, search, theme, verdict-breakdown) - comparaison automatisée (liste triée des src= référencées dans index.html, après normalisation du suffixe ?v=..., vs liste triée des fichiers réellement présents dans js/) confirme une correspondance stricte, aucun script manquant ni orphelin. index.html/css/js non modifiés, lecture seule respectée. (d) Comparaison de volume avec le dernier passage ayant un champ counts renseigné (25/09 08h51 UTC : verdicts=72, alerts=151, opportunities=8, news=17, favoris_context_populated=15) : verdicts 72→81 (+9, hausse normale - nouvelles échéances résolues/réémises par le cycle profond depuis le 25/09, cohérent avec engine-history.json), alerts 151→151 (stable, toujours aucune nouvelle alerte seuil technique/S-R/order-book depuis plusieurs jours - stagnation prolongée à surveiller mais pas une chute), opportunities 8→8 (stable, cohérent avec last_scan_at récent), news 17→17 (stable), favoris_context_populated 15→15 (stable, les 15 favoris ont toujours un last_computed_at renseigné dans favoris-context.json.assets). Aucune chute suspecte détectée (aucun chiffre tombé à zéro depuis un état >0, aucune chute de plus de 50% sur verdicts ou alerts), aucune anomalie de volume, aucun fichier ajouté à files_broken pour ce motif, aucune réparation nécessaire ce cycle. Recherche de branches sœurs non fusionnées (git ls-remote --heads origin) : les 5 mêmes branches claude/gifted-brahmagupta-* déjà identifiées et documentées les jours précédents (f6ph24, fe817u, to5tr0, wu7srt, ycvmke, toutes datées mi-août, entre 116 et 260 commits derrière origin/main) sont toujours présentes sur le dépôt distant, sans nouvelle branche sœur récente du même préfixe que celle de ce passage apparue depuis le dernier contrôle. Pour la même raison documentée précédemment (risque réel de conflits massifs ou de réintroduction de données périmées sur des fichiers append-only, hors du cas simple et rapide prévu par cette consigne), ces 5 vieilles branches orphelines ne sont de nouveau pas fusionnées ce cycle, laissées à une décision humaine ou une session interactive dédiée. origin/main (commit 2897825, fusion du cycle marché du 28/09 ~08h45 UTC) était déjà strictement à jour avec cette branche de travail (claude/eloquent-clarke-6vzfxt) avant ce passage, donc un simple commit+push sur cette branche puis fusion directe vers main suffira, sans conflit ni entrée concurrente à réconcilier."
     },
     {
       "checked_at": "2026-09-28T09:16:59Z",
-      "files_ok": [
-        "data/engine-history.json (routine_health.last_success_at, ~0h56)",
-        "data/news.json (last_updated_at, ~0h56)",
-        "data/opportunities.json (last_scan_at, ~5h07)"
-      ],
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h56)", "data/news.json (last_updated_at, ~0h56)", "data/opportunities.json (last_scan_at, ~5h07)"],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h56, actualités il y a 0h56, opportunités il y a 5h07 - rien à signaler. Note de transparence sur cette routine elle-même : les cycles quotidiens du 26/09 et du 27/09 n'ont pas pu s'exécuter (cette session persistante n'a pas été relancée sur ses déclenchements programmés de ces jours-là - les notifications correspondantes sont arrivées groupées au réveil de ce cycle du 28/09) - aucune entrée n'a donc été ajoutée à health-log.json pour ces jours-là, mais cela ne reflète aucun problème sur les données AguilaRadar elles-mêmes (les trois champs surveillés sont désormais tous frais), seulement une interruption de ce contrôle."
     },
