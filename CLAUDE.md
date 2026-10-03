@@ -27,6 +27,32 @@ Chaque token lu reste dans le contexte et est re-payé à chaque tour suivant. D
 6. **Ne pas relire `docs/journal-technique.md`** dans une routine ; seule la spec de la routine
    (`docs/routines/*.md`) est nécessaire.
 
+## Budget routines — garde-fous anti-régression (réduction du 03/10/2026)
+
+Le quota hebdo s'épuisait en ~3 jours. Causes réelles : ~38 exécutions/jour (dont un watchdog
+toutes les 2h qu'on croyait désactivé), et des prompts faisant `cat` de ~480 Ko de JSON. Règles :
+
+- **Plafond ~15 exécutions/jour** (état au 03/10 : ~14). Toute nouvelle routine ou cadence plus
+  rapide → calculer le total/jour et en retirer autant ailleurs. Pas de routine « juste au cas où ».
+- **Aucun prompt de routine ne lit un gros JSON en entier** : extraction `python3` ciblée en
+  lecture, script `python3` en écriture. Vérifier ce point à chaque nouveau prompt.
+- **Pas de rattrapage en rafale** après un quota épuisé : max 3 verdicts émis et 3 favoris par
+  cycle (sinon le redémarrage reconsomme tout le quota récupéré).
+- **Cadence ↔ code** : les seuils de fraîcheur (`FRESHNESS_SOURCES`, `app.js`) dérivent de
+  `REFRESH.deepCycleHours` — changer la cadence du cycle = changer cette constante, rien d'autre.
+- **Ne jamais croire la doc sur l'état d'une routine** : `list_triggers` (extraction `python3`)
+  fait foi. Le watchdog était noté « désactivé » depuis le 06/09 et tournait toujours.
+- **Modifier une routine** : un agent peut changer un horaire, mais le classifieur refuse en
+  général désactivation/prompt, et une routine créée hors agent (`created_via: http_api`, ex.
+  `alerte-crypto-quotidienne-cloud`) n'est modifiable que par l'utilisateur. Dans ce cas : fichier
+  prêt à coller (scratchpad) + lien `claude.ai/code/routines/<id>`, puis vérifier avec
+  `get_trigger`. Ne jamais dire « appliqué » sans cette relecture.
+- **Secrets** : certains prompts (digest : clé privée VAPID) contiennent des secrets → jamais dans
+  le dépôt (public). Clé publique du prompt digest ≠ celle de `js/notify.js` (changée le 23/09) :
+  push digest probablement en échec, non vérifié.
+- Vérifier l'effet : `/usage` en milieu de semaine. Piste suivante seulement si besoin : fusionner
+  `sante-quotidien` et `verif-fraicheur-quotidien`.
+
 ## Ce qu'est ce projet
 
 Radar crypto statique : analyse de marché, verdicts horodatés, moteur de backtest auto-correcteur,
@@ -133,8 +159,7 @@ vente.
 - Outils MCP CoinGecko/Alpha Vantage/Economic Index **interdits dans les routines one-shot**
   (bloquent la session) — WebFetch + WebSearch à la place. Exception : `opportunites-quotidien`.
   Un outil qui marche en session interactive ne prouve rien pour une routine.
-- Échec `rate_limit_info.status:"rejected"` = quota d'usage, pas un bug. 12 routines = proche du
-  plafond : ne pas en ajouter une 13e sans en retirer une.
+- Échec `rate_limit_info.status:"rejected"` = quota d'usage, pas un bug.
 - Indicateur de fraîcheur en alerte → vérifier les timestamps réels sur `origin/main` avant de
   conclure qu'une routine est bloquée.
 - Toujours re-vérifier une affirmation héritée (même écrite par une routine) contre une source

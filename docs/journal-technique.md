@@ -185,3 +185,24 @@ Fixed by adding an explicit rule to `cycle-2h-verdict.md` §2 (end): `technique`
 ### Favoris rotation catch-up (found 2026-09-21) — same missed-cycle pattern as elsewhere, not a rotation-logic bug
 
 Re-investigated the same "stale favoris" symptom as the 09-14 finding above (data-integrity.js flagged 6/15 again: BTC/ETH/ARB/INJ at 11 days, JUP/LPT at 21 days). This time the rotation logic itself is correct — verified against `data/favoris-context.json`'s actual `last_computed_at` values and `git log`, which shows rotation commits on 09-15 and 09-16 then **nothing until 09-21**, a 5-day gap matching the same missed-cycle window already on record for `verif-fraicheur-quotidien` elsewhere in this file. A scheduling/trigger-reliability gap, not something a spec file can fix. Added a bounded mitigation instead (`favoris-quotidien.md`, rotation section): once a cycle resumes, process up to 8 tickers (not just 3) while a 4th-oldest ticker is still >7 days stale, so a multi-day gap clears in 2-3 catch-up cycles instead of 5 — shortens recovery from a gap, doesn't prevent the next one.
+
+
+### Réduction des routines du 03/10/2026 (quota hebdo épuisé)
+
+Constat git : aucun commit de routine du 28/09 au 03/10, puis reprise par à-coups à chaque
+recharge de quota. `list_triggers` : 15 routines actives, ~38 exécutions/jour, dont
+`aguilaradar-watchdog-cycle-2h` (12/jour) toujours actif alors que CLAUDE.md le disait désactivé
+depuis le 06/09. Le prompt digest faisait `cat` de verdicts/opportunities/alerts/engine-history/
+news/market-context (~480 Ko, ~140k tokens par passage) ; horizons faisait `cat` de
+opportunities.json (~125 Ko). Au redémarrage du 28/09, le cycle a émis 9 verdicts d'un coup
+(pic qui revient tous les 14 jours, à l'échéance commune).
+
+Actions : CLAUDE.md 41 → ~10 Ko (historique déplacé ici) ; specs routines en lecture ciblée ;
+plafond de rattrapage (3 verdicts, 3 favoris) ; cycle 4h → 8h avec seuils de fraîcheur dérivés de
+`REFRESH.deepCycleHours` ; digest 2×/jour, horizons 1×/jour, alertes e-mail 2×/jour, watchdog
+désactivé ; prompts digest/horizons réécrits (seule l'étape de lecture/écriture change, ~10 Ko lus
+au lieu de ~480 Ko). L'agent a pu changer les horaires digest/horizons ; le classifieur a refusé
+la désactivation du watchdog, l'horaire du cycle et les réécritures de prompt, et
+`alerte-crypto-quotidienne-cloud` (créée via `http_api`) n'est pas modifiable par un agent →
+appliqués par l'utilisateur, relus via `get_trigger`/`list_triggers`. Le prompt horizons traite
+aussi `archived_opportunities` (horizon j14 d'`opp-20260904-ada` en attente depuis le 18/09).
