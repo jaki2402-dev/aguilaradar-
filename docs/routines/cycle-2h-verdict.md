@@ -1,6 +1,6 @@
 # Routine Cowork : `aguilaradar-cycle-2h`
 
-Cadence : toutes les 4h (le nom garde "2h", legacy — cadence réellement divisée par 2 le 06/09
+Cadence : toutes les 8h depuis le 03/10/2026 (00:15, 08:15, 16:15 UTC ; le nom garde "2h", legacy — 2h→4h le 06/09, 4h→8h le 03/10
 pour le coût IA, voir `REFRESH.deepCycleHours` dans `config.js`). Accès MCP : CoinGecko, Alpha
 Vantage, Cloudflare Developer Platform. Dépôt : `jaki2402-dev/aguilaradar-`, écrit et commite
 directement dans `data/verdicts.json` et `data/engine-history.json`.
