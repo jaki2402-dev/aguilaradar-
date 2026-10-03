@@ -31,6 +31,12 @@ EOF
 - Sinon : traiter uniquement les tickers concernés ; prix des tickers concernés en UN seul appel
   groupé ; lire seulement l'entrée du ticker dans `favoris-context.json`/`portfolio-thesis.json`
   (extraction `python3`), et `market-context.json` une seule fois par cycle.
+- **Plafond après une interruption (quota épuisé, cycles manqués)** : résoudre TOUS les verdicts
+  dus (peu coûteux : un seul appel de prix groupé), mais **émettre au plus 3 nouveaux verdicts par
+  cycle**, en priorité les tickers sans verdict pending depuis le plus longtemps. Les suivants
+  attendent les cycles d'après. Raison : le 28/09, 9 verdicts émis d'un coup au redémarrage ont
+  brûlé le quota juste récupéré, et des verdicts émis ensemble arrivent à échéance ensemble
+  (pic qui se reproduit tous les 14 jours) — étaler les émissions casse ce cycle.
 - Écrire toutes les modifications JSON par script `python3` (load → modifier → dump
   `ensure_ascii=False, indent=2`) puis `python3 -m json.tool <fichier> >/dev/null`. Ne jamais
   réafficher un fichier entier.

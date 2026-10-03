@@ -48,16 +48,10 @@ chaque jour** — l'appliquer à la lettre à chaque cycle. Les retards constat�
 de cycles non déclenchés (quota/trigger), pas de la logique de rotation (détail :
 `docs/journal-technique.md`).
 
-**Mitigation possible en revanche : rattraper plus vite une fois que le cycle reprend**, plutôt que
-de re-parcourir tout le retard à 3 tickers par jour. Ajout à l'étape 3 ci-dessus : après avoir
-retraité les 3 tickers les plus anciens, si le **4e** ticker le plus ancien (par `last_computed_at`
-trié croissant) dépasse 7 jours d'âge, le retraiter aussi — et continuer ainsi ticker par ticker
-tant que le suivant dépasse 7 jours, jusqu'à un plafond de **8 tickers au total sur ce cycle**
-(au lieu de 3). Ce plafond garde un cycle normal (aucun retard) à son coût habituel de 3, et borne
-le coût d'un cycle de rattrapage à un peu plus du double plutôt que de retraiter les 15 d'un coup.
-Avec ce plafond, un retard de 5 jours (15 tickers en retard dans le pire cas) se résorbe en 2-3
-cycles de rattrapage au lieu de 5. Ne change rien quand tout est déjà à jour (le 4e ticker le plus
-ancien sera alors sous 7 jours, donc la règle des 3 s'applique normalement).
+**Pas de rattrapage accéléré (retiré le 03/10/2026).** L'ancienne règle « jusqu'à 8 tickers si
+retard > 7 jours » se déclenchait précisément au redémarrage après un quota épuisé, et reconsommait
+d'un coup le quota juste récupéré (cercle vicieux). Toujours **3 tickers maximum par cycle**, même
+en retard : le retard se résorbe en ~5 jours, ce qui est acceptable pour un contexte de fond.
 
 ### Sourcing
 
