@@ -36,27 +36,17 @@ Clé = **ticker** (BTC, ETH, ...), jamais `cgId` — c'est le seul fichier de ce
 
 Ne pas retraiter les 15 favoris à chaque cycle (trop coûteux). À chaque exécution :
 
-1. Lire `data/favoris-context.json` existant.
+1. **Ne pas lire `data/favoris-context.json` en entier (~75 Ko).** Extraire seulement l'âge de
+   chaque ticker : `python3 -c "import json;d=json.load(open('data/favoris-context.json'))['assets'];[print(k,(v or {}).get('last_computed_at')) for k,v in sorted(d.items(),key=lambda kv:(kv[1] or {}).get('last_computed_at') or '')]"`
+   (sortie déjà triée du plus ancien au plus récent). Lire ensuite uniquement l'entrée des tickers
+   retenus, et écrire par script `python3` (load → modifier → dump `ensure_ascii=False, indent=2`).
 2. Trier les 15 tickers par `last_computed_at` croissant (un ticker jamais calculé = priorité maximale, traité comme plus ancien que tout).
 3. Retraiter entièrement (les 5 champs ci-dessus) les **3 tickers les plus anciens**.
 
-Cette règle garantit qu'aucun favori ne reste périmé plus de ~5 jours ouvrés **si le cycle
-s'exécute chaque jour comme prévu**. Un audit du 14/09/2026 a trouvé 11 des 15 favoris avec un
-contexte vieux de 14 à 26 jours — signe que la rotation réelle jusqu'ici n'a pas suivi cette règle
-stricte (ou n'existait pas formellement). Ce point a été corrigé par cette spécification :
-appliquer la règle "3 plus anciens" à la lettre, sans exception, à chaque cycle.
-
-**Re-constaté le 21/09/2026, cause différente cette fois — un vrai trou d'exécution, pas un bug de
-règle.** `git log` confirme une rotation le 15/09 puis le 16/09 (CTSI/PEAQ/LINK), puis **aucune
-avant celle du 21/09** (ONDO/AIOZ/FLUX) — 5 jours sans que ce cycle tourne, la même fenêtre que les
-cycles quotidiens manqués déjà documentés ailleurs (health-log, `verif-fraicheur-quotidien`) pour
-17-20/09. Conséquence directement mesurée dans `data/favoris-context.json` au 21/09 : BTC/ETH/ARB/
-INJ à 10,6 jours, JUP/LPT à 21,4 jours (ces deux-là visiblement jamais recalculés avant le 31/08,
-donc prioritaires par la règle "jamais calculé = plus ancien que tout" mais toujours en attente de
-leur tour). **La logique de rotation elle-même est correcte** (le bon calcul, les bons tickers
-choisis à chaque exécution vérifiée) — le problème est uniquement que le cycle ne s'est pas
-déclenché certains jours, ce qu'aucune règle dans ce document ne peut corriger (c'est une question
-de fiabilité du déclenchement Cowork, hors du périmètre d'un fichier de spec).
+Cette règle garantit qu'aucun favori ne reste périmé plus de ~5 jours **si le cycle s'exécute
+chaque jour** — l'appliquer à la lettre à chaque cycle. Les retards constatés (14/09, 21/09) venaient
+de cycles non déclenchés (quota/trigger), pas de la logique de rotation (détail :
+`docs/journal-technique.md`).
 
 **Mitigation possible en revanche : rattraper plus vite une fois que le cycle reprend**, plutôt que
 de re-parcourir tout le retard à 3 tickers par jour. Ajout à l'étape 3 ci-dessus : après avoir
@@ -110,7 +100,7 @@ ancien sera alors sous 7 jours, donc la règle des 3 s'applique normalement).
 
 Pour **chacun** des 8 `cgId` ci-dessus (pas seulement bitcoin) :
 
-1. Vérifier qu'aucun snapshot n'existe déjà pour ce `cgId` à la date du jour (UTC) — si oui, passer à l'actif suivant (jamais deux snapshots le même jour pour le même actif, jamais un doublon écrasé).
+1. Vérifier (par `python3`, sans lire le fichier : dernière `date` de `assets[cgId].snapshots`) qu'aucun snapshot n'existe déjà pour ce `cgId` à la date du jour (UTC) — si oui, passer à l'actif suivant (jamais deux snapshots le même jour pour le même actif, jamais un doublon écrasé).
 2. Pour chacune des 3 métriques, tenter une vraie source, **par famille de chaîne** (ne jamais réutiliser une méthode d'une famille pour une autre) :
    - **bitcoin** (déjà en place, ne pas modifier) : `tvl_usd` via DefiLlama `https://api.llama.fi/v2/historicalChainTvl/bitcoin` ; `tx_per_day`/`active_addresses` via Blockchain.com (`/stats?format=json` champ `n_tx`, `/charts/n-unique-addresses?timespan=2days&format=json` dernier point).
    - **ethereum, arbitrum** (EVM, Blockscout) : utiliser l'outil MCP Blockscout déjà accordé à cette routine — `direct_api_call(chain_id="1"` pour ethereum, `"42161"` pour arbitrum`, endpoint_path="/api/v2/stats/charts/transactions")`, dernier point du tableau `chart_data` (champ `transactions_count`) pour `tx_per_day`. **Confirmé réellement le 15/09/2026 pour ethereum** (données reçues, dates et volumes réalistes) — arbitrum utilise le même produit Blockscout donc attendu identique, non revérifié séparément à ce jour : si l'appel échoue pour arbitrum spécifiquement, le signaler (`source.tx_per_day` explique l'échec) plutôt que de supposer que la méthode entière est cassée. `active_addresses` : pas d'endpoint confirmé à ce jour — chercher dans `/stats-service/api/v1/lines` (catalogue de graphiques nommés) un nom lié aux adresses actives, sinon WebSearch ; si rien de fiable, laisser `null`. `tvl_usd` : DefiLlama `https://api.llama.fi/v2/historicalChainTvl/{chain}` avec `chain` = `Ethereum`/`Arbitrum` (nom exact à confirmer sur `https://defillama.com/chains` si le premier essai échoue).
