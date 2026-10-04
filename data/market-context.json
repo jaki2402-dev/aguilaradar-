@@ -1,10 +1,10 @@
 {
-  "last_computed_at": "2026-10-03T08:50:00Z",
+  "last_computed_at": "2026-10-04T08:50:00Z",
   "stablecoins": {
-    "total_market_cap_usd": 292940361493,
-    "dominance_pct": 10.14,
+    "total_market_cap_usd": 293047906031,
+    "dominance_pct": 10.16,
     "supply_trend_7d_pct": null,
-    "note": "Accès direct à l'API publique CoinGecko en HTTP brut via WebFetch (aucun outil mcp__CoinGecko, conformément à la règle de fiabilité permanente) : /api/v3/coins/categories (catégorie « Stablecoins », mise à jour 03/10 à 08h34 UTC) et /api/v3/global (03/10 vers 08h35 UTC). Capitalisation des stablecoins à 292,94 milliards de dollars (+0,12 % sur 24h selon l'API), quasi identique aux 292,79 milliards du 28/09. Capitalisation totale du marché crypto à 2 890,07 milliards de dollars (dominance BTC 58,70 %), en hausse par rapport aux 2 832,09 milliards du 28/09. Dominance = 292,94 / 2 890,07 = 10,14 %, en baisse par rapport aux 10,34 % du 28/09 : la capitalisation totale a progressé alors que celle des stablecoins est restée stable, leur poids relatif diminue donc mécaniquement. Variation de l'offre sur 7 jours toujours à null : l'endpoint /coins/categories n'expose qu'une variation 24h liée au prix, pas une tendance d'offre datée sur 7 jours ; aucune source fiable trouvée.",
+    "note": "Accès direct à l'API publique CoinGecko en HTTP brut via WebFetch (aucun outil mcp__CoinGecko, conformément à la règle de fiabilité permanente) : /api/v3/coins/categories (catégorie « Stablecoins », mise à jour 04/10 à 08h34 UTC) et /api/v3/global (04/10 vers 08h38 UTC). Capitalisation des stablecoins à 293,05 milliards de dollars (+0,04 % sur 24h selon l'API), quasi identique aux 292,94 milliards du 03/10. Capitalisation totale du marché crypto à 2 885,16 milliards de dollars (dominance BTC 59,08 %), contre 2 890,07 milliards le 03/10. Dominance = 293,05 / 2 885,16 = 10,16 %, contre 10,14 % le 03/10. Variation de l'offre sur 7 jours toujours à null : l'endpoint /coins/categories n'expose qu'une variation 24h liée au prix, pas une tendance d'offre datée sur 7 jours ; aucune source fiable trouvée.",
     "source": "https://api.coingecko.com/api/v3/global et https://api.coingecko.com/api/v3/coins/categories"
   },
   "employment_us": {
@@ -18,13 +18,13 @@
     "period": "Aucune séance récente confirmée de façon fiable ce cycle (dernière séance confirmée : 25 septembre 2026).",
     "btc_etf_net_flow_usd": null,
     "eth_etf_net_flow_usd": null,
-    "note": "Farside.co.uk inaccessible ce cycle (03/10) : WebFetch rejeté par le proxy sortant (EGRESS_BLOCKED), pas une erreur du site. Repli WebSearch : une seule source non attribuée de façon fiable évoque +627 M$ de flux net Bitcoin pour la séance du 02/10 (SoSoValue, IBIT +467 M$, FBTC +89,6 M$, « quatrième séance consécutive »), mais sans corroboration par une seconde source datée, ce qui est insuffisant pour l'écrire ; aucune donnée Ethereum fiable et datée du 02/10 trouvée (résultats mêlant plusieurs années). Les deux champs sont donc laissés à null plutôt que de reconduire les chiffres du 25/09 (BTC +134,46 M$, ETH +86,95 M$, dernière séance confirmée au cycle du 28/09) comme s'ils étaient frais ; ces valeurs restent consultables dans l'historique git.",
+    "note": "Cycle du 04/10 : la recherche WebSearch (flux ETF Bitcoin du 02/10, Farside) ne renvoie aucun chiffre daté et recoupé pour les séances récentes (résultats de juillet et septembre uniquement) ; Farside reste inaccessible via le proxy sortant. Les deux champs restent à null plutôt que de reconduire les chiffres du 25/09 (BTC +134,46 M$, ETH +86,95 M$) comme s'ils étaient frais ; ils restent consultables dans l'historique git.",
     "source": "WebSearch (aucune source datée et recoupée ce cycle)"
   },
   "gold": {
     "spot_usd_per_oz": null,
-    "note": "TradingEconomics, Kitco et JM Bullion directement inaccessibles (proxy sortant) et WebSearch n'a renvoyé aucun cours de l'or daté de façon fiable du 02-03/10/2026 (résultats mélangeant 2025, début septembre 2026 et d'autres dates). Cours laissé à null plutôt que de reconduire les 4 156,76 $/oz du 28/09. Ratio BTC/or omis : non calculable sans prix de l'or du même cycle que le prix BTC (84 596 $ relevé via CoinGecko /simple/price le 03/10 vers 08h38 UTC).",
-    "source": "WebSearch, aucune valeur retenue ce cycle"
+    "note": "Cycle du 04/10 : WebSearch renvoie un extrait Kitco (~4 294 $/oz) sans date de séance vérifiable (page non datée, autres résultats hors sujet), donc non retenu plutôt que présenté comme frais. Cours laissé à null. Ratio BTC/or omis : non calculable sans prix de l'or daté du même cycle que le prix BTC (85 036 $ relevé via CoinGecko /simple/price le 04/10 vers 08h38 UTC). Dernière valeur confirmée : 4 156,76 $/oz le 28/09 (historique git).",
+    "source": "WebSearch, aucune valeur datée retenue ce cycle"
   },
   "fed_policy": {
     "funds_rate_range": "3.75%-4.00%",
@@ -32,11 +32,11 @@
     "balance_sheet_trend": "stable",
     "next_fomc_date": "2026-10-28",
     "treasury_yield_10y_pct": null,
-    "note": "Aucune réunion FOMC depuis la décision du 16/09 (relèvement de 0,25 point à 3,75 %-4,00 %) ; prochaine réunion toujours le 28 octobre 2026. Stance maintenue à « hawkish » sur la base de cette décision, mais le rapport sur l'emploi du 02/10 (+29 000, chômage 4,2 %, voir bloc employment_us) est présenté par la presse comme un argument pour une Fed plus patiente : la probabilité de hausse en octobre (environ 66 %-76 % fin septembre) n'a pas pu être rafraîchie après ce rapport ce cycle (CME FedWatch et les pages CNBC inaccessibles ; résultats WebSearch non datés). Bilan de la Fed stable, rien de nouveau signalé. Rendement du Trésor à 10 ans laissé à null : dernière valeur fiable 5,17 % à la clôture du 25/09, ancienne de plusieurs séances et antérieure au rapport sur l'emploi, aucune clôture du 02/10 trouvée ; les sources de fin septembre le situent à ~5,2 %, plus haut niveau depuis 2007."
+    "note": "Aucune réunion FOMC depuis la décision du 16/09 (relèvement de 0,25 point à 3,75 %-4,00 %) ; prochaine réunion toujours le 28 octobre 2026. Stance maintenue à « hawkish » sur la base de cette décision, mais le rapport sur l'emploi du 02/10 (+29 000, chômage 4,2 %) est présenté comme un argument pour une Fed plus patiente. Probabilité de hausse en octobre : résultats WebSearch contradictoires et non datés de façon fiable (de ~8 % à ~70 %), donc non chiffrée ce cycle. Bilan de la Fed stable, rien de nouveau signalé. Rendement du Trésor à 10 ans laissé à null : aucune clôture datée fiable trouvée (dernière valeur fiable 5,17 % le 25/09 ; résultats évoquant ~5,23 %, plus haut depuis 2007, non datés précisément)."
   },
   "site_confidence": {
-    "last_computed_at": "2026-10-03T08:50:00Z",
+    "last_computed_at": "2026-10-04T08:50:00Z",
     "level": "faible",
-    "note": "Niveau maintenu à faible (03/10). routine_health (lecture seule) : 0 échec consécutif, dernier succès du cycle du 03/10 08h20 UTC. accuracy_strict_pct à 26,87 % (67 verdicts résolus sur 82 émis, calcul du 03/10 07h18 UTC), toujours très en dessous du référentiel de la classe majoritaire (59,7 %) et au-dessus du référentiel achat-conservation BTC (18,59 %) ; la révision corr-20260921-biais-attente-asymetrique n'a pas encore assez de verdicts résolus pour être jugée. Rien ne justifie de remonter le niveau à moyen."
+    "note": "Niveau maintenu à faible (04/10). routine_health (lecture seule) : 0 échec consécutif, dernier succès du cycle du 04/10 08h16 UTC. accuracy_strict_pct à 26,87 % (67 verdicts résolus sur 82 émis, calcul du 03/10 07h18 UTC), très en dessous du référentiel de la classe majoritaire (59,7 %) et au-dessus du référentiel achat-conservation BTC (18,59 %). Rien ne justifie de remonter le niveau à moyen."
   }
 }
