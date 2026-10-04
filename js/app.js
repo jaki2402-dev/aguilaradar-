@@ -349,7 +349,15 @@ function renderAvisDuJour(alerts) {
   const ageMs = Date.now() - new Date(latest.triggered_at).getTime();
   // >30h plutôt que >24h : marge pour un cycle qui écrit un peu tard dans la journée sans
   // déclencher un avertissement "pas d'aujourd'hui" trompeur pour un avis en réalité tout frais.
-  const staleHint = ageMs > 30 * 3600 * 1000 ? ` — dernière mise à jour il y a plus d'un jour, pas forcément celui d'aujourd'hui` : "";
+  // Au-delà de 3 jours, le dire franchement : l'avis du 14/09 est resté affiché 3 semaines en tête
+  // de l'Accueil avec la seule mention "plus d'un jour" (le digest a repris son écriture le 05/10/2026).
+  const ageDays = Math.floor(ageMs / 86400000);
+  const staleHint =
+    ageDays >= 3
+      ? ` — pas renouvelé depuis ${ageDays} jours : contexte passé, pas l'avis d'aujourd'hui`
+      : ageMs > 30 * 3600 * 1000
+        ? ` — dernière mise à jour il y a plus d'un jour, pas forcément celui d'aujourd'hui`
+        : "";
   // <div>, pas <p>, pour .avis-du-jour-text : renderClampableText produit déjà son propre <p>
   // (+ un <span> "Lire plus" quand le texte dépasse CLAMP_TEXT_THRESHOLD) — un <p> imbriqué dans
   // un <p> serait invalide. Le sélecteur ".avis-du-jour-text mark.hl-stat" (voir tests) matche

@@ -798,6 +798,12 @@ describe("app.js — renderAvisDuJour (synthèse quotidienne mise en avant + not
     dom.window.renderAvisDuJour([avisItem({ triggered_at: "2026-08-31T06:00:00Z" })]);
     expect(dom.window.document.getElementById("avis-du-jour").textContent).toContain("plus d'un jour");
   });
+
+  it("says plainly that a weeks-old avis is past context (the 14/09 avis stayed on top for 3 weeks)", () => {
+    dom.window.Date.now = () => new Date("2026-10-04T12:00:00Z").getTime();
+    dom.window.renderAvisDuJour([avisItem({ triggered_at: "2026-09-14T00:40:00Z" })]);
+    expect(dom.window.document.getElementById("avis-du-jour").textContent).toContain("pas renouvelé depuis 20 jours");
+  });
 });
 
 describe("app.js — couleur repère (verdict/type) et aperçu tronqué (renderClampableText)", () => {
