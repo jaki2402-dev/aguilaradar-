@@ -1,0 +1,39 @@
+name: Price alerts
+
+# Alertes "seuil_technique" (verdict actif dont le prix a franchi son seuil) dans
+# data/alerts.json — calcul pur, aucun quota Claude. Horaires choisis hors des créneaux des
+# routines Cowork (00:15/08:15/16:15, 04:00, 06:xx, 08:xx-09:xx, 18:xx) pour éviter les push
+# concurrents sur main.
+on:
+  schedule:
+    - cron: "40 2,10,14,22 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-commit
+  cancel-in-progress: false
+
+jobs:
+  alerts:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/price-alerts.mjs
+      - name: Commit si une alerte a été ajoutée
+        run: |
+          git diff --quiet -- data/alerts.json && exit 0
+          python3 -m json.tool data/alerts.json >/dev/null
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/alerts.json
+          git commit -m "Alertes de seuil du $(date -u +%d/%m/%Y %Hh%M) UTC"
+          for i in 1 2 3; do git pull --rebase -q origin main && git push origin HEAD:main && exit 0; sleep $((i*5)); done
+          exit 1

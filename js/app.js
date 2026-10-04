@@ -566,7 +566,7 @@ async function loadAllData() {
   renderFavorisSummary(verdicts || []);
   if (window.renderPortfolio) renderPortfolio(portfolio, verdicts || [], portfolioThesis, portfolioHistory);
 
-  updateFreshnessIndicator(engineHistory, opportunities, news);
+  updateFreshnessIndicator(engineHistory, opportunities, news, portfolioHistory);
 }
 
 // Sources suivies par l'indicateur de fraîcheur, chacune à SON PROPRE rythme attendu.
@@ -577,6 +577,9 @@ const FRESHNESS_SOURCES = [
   { key: "routine", label: "Cycle profond", warnHours: REFRESH.deepCycleHours + 2, staleHours: REFRESH.deepCycleHours * 2 + 2 },
   { key: "news", label: "Actualités", warnHours: REFRESH.deepCycleHours + 2, staleHours: REFRESH.deepCycleHours * 2 + 2 },
   { key: "opportunities", label: "Criblage opportunités", warnHours: 24 * 8, staleHours: 24 * 10 },
+  // GitHub Action quotidienne (portfolio-snapshot) : resté figé 20 jours sans que rien ne le
+  // signale avant le 04/10/2026. Un jour sauté (prix manquant) = "en retard", deux = bloqué.
+  { key: "portfolioHistory", label: "Historique portefeuille", warnHours: 30, staleHours: 54 },
 ];
 
 // Indicateur de fraîcheur bien visible : plusieurs routines à cadences différentes
@@ -587,8 +590,10 @@ const FRESHNESS_SOURCES = [
 // bloquée tant qu'une autre tournait normalement (ex: routine_health frais toutes les 2h
 // pendant qu'opportunities.last_scan_at restait figé 10 jours) — chaque source est donc
 // désormais jugée indépendamment contre son propre rythme, et on affiche la pire.
-function updateFreshnessIndicator(engineHistory, opportunities, news) {
+function updateFreshnessIndicator(engineHistory, opportunities, news, portfolioHistory) {
+  const snapshots = (portfolioHistory && portfolioHistory.snapshots) || [];
   const timestampsByKey = {
+    portfolioHistory: snapshots.map((s) => s.computed_at).filter(Boolean).sort().pop(),
     routine: engineHistory && engineHistory.routine_health && engineHistory.routine_health.last_success_at,
     news: news && (news.last_checked_at || news.last_updated_at),
     opportunities: opportunities && opportunities.last_scan_at,

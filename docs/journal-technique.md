@@ -218,3 +218,18 @@ backfill. Côté affichage : abscisse par date (le trou reste visible), mention 
 (la valeur totale mélangeait apports et performance), avertissement si le dernier point a ≥ 2 j.
 Même date d'arrêt constatée pour `data/alerts.json` (dernière alerte 14/09) — non corrigé, cause
 probable identique, à vérifier.
+
+### 04/10/2026 (suite) — alertes rétablies, fraîcheur de l'historique surveillée
+
+Cause confirmée via `list_triggers` : aucun prompt de routine actif n'écrit `alerts.json` (seuls
+digest/briefing/santé le *lisent*) ; le cycle-2h le faisait avant son allègement. Effet en
+cascade : plus de push (le Worker ne relaie que les nouvelles entrées), « rien de significatif »
+dans le mail quotidien, digest sans alertes. Correctif : `scripts/price-alerts.mjs` + workflow
+`price-alerts` (02:40/10:40/14:40/22:40 UTC, hors créneaux des routines) : verdict `pending` non
+échu dont le prix CoinGecko EUR s'écarte de `price_at_issue` d'au moins `threshold_pct` → une
+alerte (champ `verdict_id` = anti-doublon), max 3 par passage (anti-rafale de push). Les types
+`actualite_*`/`avis_du_jour` (jugement éditorial) ne sont PAS rétablis — ils demanderaient une
+modification du prompt cycle-2h (coût quota), à décider par l'utilisateur.
+Risque latent noté, non corrigé : le Worker garde 500 ids notifiés (`MAX_TRACKED_IDS`) ; quand
+alerts+opportunités dépasseront ~500 entrées, les plus anciennes seront re-notifiées en boucle.
+`FRESHNESS_SOURCES` inclut désormais `portfolioHistory` (30 h / 54 h).
