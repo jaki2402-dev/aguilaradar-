@@ -17,7 +17,7 @@ describe("app.js — updateFreshnessIndicator (régression 4d520ad, puis régres
   let dom, el;
 
   beforeEach(() => {
-    dom = loadPage(["app.js"], { html: `<!doctype html><html><body><div id="last-deep-cycle"></div></body></html>` });
+    dom = loadPage(["config.js", "app.js"], { html: `<!doctype html><html><body><div id="last-deep-cycle"></div></body></html>` });
     freezeNow(dom, NOW_ISO);
     el = dom.window.document.getElementById("last-deep-cycle");
   });
@@ -53,7 +53,7 @@ describe("app.js — updateFreshnessIndicator (régression 4d520ad, puis régres
     dom.window.updateFreshnessIndicator(
       { routine_health: { last_success_at: "2026-08-17T11:00:00Z" } }, // 1h — frais
       {},
-      { last_updated_at: "2026-08-16T22:00:00Z" } // 14h — obsolète pour une source ~4h
+      { last_updated_at: "2026-08-16T16:00:00Z" } // 20h — obsolète (> 2 cycles de 8h manqués)
     );
     expect(el.classList.contains("freshness-stale")).toBe(true);
     expect(el.textContent).toContain("Actualités");
@@ -75,7 +75,7 @@ describe("app.js — updateFreshnessIndicator (régression 4d520ad, puis régres
   });
 
   it("retombe sur last_updated_at si last_checked_at est absent (compatibilité avec les cycles avant le 25/08)", () => {
-    dom.window.updateFreshnessIndicator({}, {}, { last_updated_at: "2026-08-16T22:00:00Z" }); // 14h, pas de last_checked_at
+    dom.window.updateFreshnessIndicator({}, {}, { last_updated_at: "2026-08-16T16:00:00Z" }); // 20h, pas de last_checked_at
     expect(el.classList.contains("freshness-stale")).toBe(true);
   });
 
@@ -105,19 +105,19 @@ describe("app.js — updateFreshnessIndicator (régression 4d520ad, puis régres
     expect(el.textContent).toBe("Automatisation pas encore activée — routine programmée à configurer.");
   });
 
-  it("routine_health : 'ok' at exactly 6 hours, 'warning' just past it", () => {
-    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-17T06:00:00Z" } }, {}, {});
+  it("routine_health : 'ok' at exactly 10 hours (8h cadence + 2h margin), 'warning' just past it", () => {
+    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-17T02:00:00Z" } }, {}, {});
     expect(el.classList.contains("freshness-ok")).toBe(true);
 
-    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-17T05:59:00Z" } }, {}, {});
+    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-17T01:59:00Z" } }, {}, {});
     expect(el.classList.contains("freshness-warning")).toBe(true);
   });
 
-  it("routine_health : 'warning' at exactly 12 hours, 'stale' (with a warning glyph) just past it", () => {
-    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-17T00:00:00Z" } }, {}, {});
+  it("routine_health : 'warning' at exactly 18 hours (two missed 8h cycles), 'stale' (with a warning glyph) just past it", () => {
+    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-16T18:00:00Z" } }, {}, {});
     expect(el.classList.contains("freshness-warning")).toBe(true);
 
-    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-16T23:59:00Z" } }, {}, {});
+    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-16T17:59:00Z" } }, {}, {});
     expect(el.classList.contains("freshness-stale")).toBe(true);
     expect(el.textContent).toContain("⚠");
     expect(el.textContent).toContain("routine semble bloquée");
@@ -1024,7 +1024,7 @@ describe("app.js — initExclusiveAccordion", () => {
   let dom, accs;
 
   beforeEach(() => {
-    dom = loadPage(["app.js"], { html: ACCORDION_HTML });
+    dom = loadPage(["config.js", "app.js"], { html: ACCORDION_HTML });
     const container = dom.window.document.getElementById("engine-accordion");
     dom.window.initExclusiveAccordion(container);
     accs = Array.from(container.querySelectorAll(".engine-acc"));
