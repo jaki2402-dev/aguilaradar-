@@ -233,3 +233,11 @@ modification du prompt cycle-2h (coût quota), à décider par l'utilisateur.
 Risque latent noté, non corrigé : le Worker garde 500 ids notifiés (`MAX_TRACKED_IDS`) ; quand
 alerts+opportunités dépasseront ~500 entrées, les plus anciennes seront re-notifiées en boucle.
 `FRESHNESS_SOURCES` inclut désormais `portfolioHistory` (30 h / 54 h).
+**Devise de `price_at_issue` non homogène** (constaté le même jour en recoupant la 1re exécution) :
+aucun champ ne la porte ; verdicts des 20 et 28/09 en $, CTSI (22/09, 03/10) et août en €. Les
+3 premières alertes (FET/GRT/ONDO) comparaient € et $ → retirées puis réémises sous les mêmes ids.
+`issueCurrency()` lit la devise dans `reasoning` (nombre = `price_at_issue` + symbole) ; introuvable
+= pas d'alerte. **Non vérifié et probablement plus grave** : la résolution des verdicts par le
+cycle-2h (`docs/routines/cycle-2h-verdict.md` §5) compare-t-elle dans la même devise ? Sinon biais
+de ~11 % (EUR/USD) sur les issues et donc sur l'exactitude du moteur. La spec devrait imposer un
+champ `currency` à l'émission.
