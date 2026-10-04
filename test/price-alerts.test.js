@@ -4,7 +4,7 @@ import { buildPriceAlerts, issueCurrency } from "../scripts/price-alerts.mjs";
 const now = new Date("2026-10-04T22:40:00Z");
 const v = (over) => ({
   id: "v-20260928-inj", asset: "injective-protocol", ticker: "INJ", verdict: "ACHAT", status: "pending",
-  issued_at: "2026-09-28T08:00:00Z", resolves_at: "2026-10-12T08:00:00Z", price_at_issue: 10, threshold_pct: 5, reasoning: "émis à 10,00 € ce cycle", ...over,
+  issued_at: "2026-09-28T08:00:00Z", resolves_at: "2026-10-12T08:00:00Z", price_at_issue: 10, threshold_pct: 5, currency: "EUR", ...over,
 });
 
 describe("scripts/price-alerts.mjs — buildPriceAlerts", () => {
@@ -48,22 +48,23 @@ describe("scripts/price-alerts.mjs — buildPriceAlerts", () => {
   });
 
   it("formats small prices with their significant digits", () => {
-    const [a] = buildPriceAlerts([v({ price_at_issue: 0.026474, reasoning: "passé à 0,026474 €" })], [], { eur: { "injective-protocol": 0.028 } }, now);
+    const [a] = buildPriceAlerts([v({ price_at_issue: 0.026474 })], [], { eur: { "injective-protocol": 0.028 } }, now);
     expect(a.message).toContain("0,026474 € → 0,028 €");
   });
 
-  it("reads the verdict's own currency and compares like with like (verdicts mix € and $)", () => {
-    const usd = v({ price_at_issue: 0.03521363, reasoning: "GRT de 0,02232752 $ à 0,03521363 $ ce cycle" });
-    expect(issueCurrency(usd)).toBe("usd");
-    expect(issueCurrency(v({ price_at_issue: 81218, reasoning: "BTC à 81 218 $" }))).toBe("usd");
-    expect(issueCurrency(v({ price_at_issue: 0.025592, reasoning: "à 0,025592 euro" }))).toBe("eur");
+  it("uses the verdict's currency (field first, else the table verified on real CoinGecko history)", () => {
+    expect(issueCurrency(v({ currency: "USD", issued_at: "2026-09-01T00:00:00Z" }))).toBe("usd");
+    expect(issueCurrency(v({ currency: undefined, issued_at: "2026-09-28T00:20:00Z" }))).toBe("usd");
+    expect(issueCurrency(v({ currency: undefined, issued_at: "2026-09-13T23:26:00Z" }))).toBe("eur");
+    expect(issueCurrency(v({ currency: undefined, asset: "cartesi", issued_at: "2026-10-03T07:18:00Z" }))).toBe("eur");
+    const usd = v({ price_at_issue: 0.03521363, currency: undefined });
     const [a] = buildPriceAlerts([usd], [], { eur: { "injective-protocol": 0.0256 }, usd: { "injective-protocol": 0.0288 } }, now);
     expect(a.message).toContain("-18,21 %");
     expect(a.message).toContain("$");
   });
 
   it("skips a verdict whose currency cannot be established (never guessed)", () => {
-    expect(issueCurrency(v({ reasoning: "aucun prix cité" }))).toBe(null);
-    expect(buildPriceAlerts([v({ reasoning: "" })], [], { eur: { "injective-protocol": 20 }, usd: { "injective-protocol": 20 } }, now)).toEqual([]);
+    expect(issueCurrency(v({ currency: undefined, issued_at: undefined }))).toBe(null);
+    expect(buildPriceAlerts([v({ currency: undefined, issued_at: undefined })], [], { eur: { "injective-protocol": 20 }, usd: { "injective-protocol": 20 } }, now)).toEqual([]);
   });
 });

@@ -241,3 +241,20 @@ aucun champ ne la porte ; verdicts des 20 et 28/09 en $, CTSI (22/09, 03/10) et 
 cycle-2h (`docs/routines/cycle-2h-verdict.md` §5) compare-t-elle dans la même devise ? Sinon biais
 de ~11 % (EUR/USD) sur les issues et donc sur l'exactitude du moteur. La spec devrait imposer un
 champ `currency` à l'émission.
+
+### 04/10/2026 (fin) — devise des verdicts : diagnostic vérifié sur l'historique réel
+
+Correction de l'entrée précédente : le texte de `reasoning` **ment** sur la devise (ex. INJ 5,09
+écrit « € » dans une alerte du 14/09 et « $ » dans le verdict du 20/09). Vérifié via CoinGecko
+`/coins/{id}/history` (relevé 00:00 UTC ≈ émissions de 23h2x) : verdicts émis **jusqu'au 13/09 en
+EUR** (LINK 11,32 = 11,40 € ; ARB 0,1635 = 0,1630 €), **à partir du 20/09 en USD** (BTC 81 218 =
+81 169 $ ; FET, GRT, LINK, ARB, INJ, PEAQ idem à <0,5 %), **CTSI toujours en EUR**. Conséquence :
+les 14 verdicts émis les 06 et 13/09 (EUR) ont été **résolus le 20/09 avec un prix USD** (+~16 %
+fictifs ; ex. ARB +91,6 % enregistré pour +66,9 % réel). Recalcul au taux EUR/USD du 21/09
+(0,87116) : seules 2 issues changent (BTC faux→juste, FET juste→faux), exactitude inchangée
+(18/67) ; le diagnostic corr-20260921 (biais ATTENTE) tient. **Correction des données NON
+appliquée** (bloquée par le garde-fou, réécriture d'historique : décision utilisateur) — script
+prêt dans le résumé de session. Appliqué : spec cycle-2h (USD + champ `currency` obligatoire,
+résolution dans la devise du verdict, table pour les verdicts sans champ), `verdictCurrency`
+(`insights.js`, la tendance provisoire affichait ~−13 % fictifs sur les verdicts en $), même règle
+dans `scripts/price-alerts.mjs` (remplace la lecture du texte).

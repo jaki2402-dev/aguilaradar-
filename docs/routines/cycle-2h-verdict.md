@@ -28,8 +28,8 @@ EOF
 - **Rien de dû et aucun ticker sans verdict pending** → cycle court : seulement §7 (santé), §8
   en version courte (1 recherche hack/exploit + fear&greed, pas plus), §9 (commit). Pas de lecture
   de `favoris-context.json`/`market-context.json`, pas de recherche de prix.
-- Sinon : traiter uniquement les tickers concernés ; prix des tickers concernés en UN seul appel
-  groupé ; lire seulement l'entrée du ticker dans `favoris-context.json`/`portfolio-thesis.json`
+- Sinon : traiter uniquement les tickers concernés ; prix des tickers concernés en UN seul appel (`vs_currencies=usd,eur` :
+  USD pour émettre, la devise du verdict pour résoudre) groupé ; lire seulement l'entrée du ticker dans `favoris-context.json`/`portfolio-thesis.json`
   (extraction `python3`), et `market-context.json` une seule fois par cycle.
 - **Plafond après une interruption (quota épuisé, cycles manqués)** : résoudre TOUS les verdicts
   dus (peu coûteux : un seul appel de prix groupé), mais **émettre au plus 3 nouveaux verdicts par
@@ -70,7 +70,8 @@ Tableau au niveau racine, chaque entrée :
   "confidence_pct": <0-100, voir section 2 pour la règle de calcul>,
   "signals_used": ["<phrase courte et factuelle par signal réellement observé>"],
   "reasoning": "<3-6 phrases, cite les chiffres réels utilisés>",
-  "price_at_issue": <prix réel au moment de l'émission>,
+  "price_at_issue": <prix réel au moment de l'émission, en USD>,
+  "currency": "USD",
   "resolves_at": "issued_at + horizon_days jours",
   "status": "pending",
   "threshold_pct": 5,
@@ -78,6 +79,14 @@ Tableau au niveau racine, chaque entrée :
   "signal_consensus": { "technique": "haussier|baissier|mixte|neutre", "fondamental": "...", "macro": "...", "accord_count": <0-3> }
 }
 ```
+
+**Devise — règle absolue (bug réel du 20/09/2026)** : `price_at_issue` est **toujours en USD**
+(`vs_currencies=usd`) et `"currency": "USD"` est **obligatoire** sur chaque nouveau verdict. Avant
+le 20/09 les verdicts étaient émis en EUR, puis le cycle est passé à l'USD sans le dire : 14
+verdicts émis en € ont été résolus avec un prix en $, ce qui ajoutait ~16 % fictifs au mouvement
+mesuré. Le symbole écrit dans `reasoning` n'est **pas** une preuve de devise (des prix en € y ont été
+écrits « $ ») — seul le champ `currency` fait foi. Écrire dans `reasoning` le même symbole que
+`currency`.
 
 `threshold_pct` reste **toujours 5** (le défaut de `THRESHOLDS.directionalMovePct`, `config.js`)
 dans cette révision — **ne pas introduire de seuil variable par actif** : ça demanderait une
@@ -230,7 +239,12 @@ du cycle (le contexte macro est le même pour tous, pas la peine de le relire pa
 ## 5. Résolution des verdicts en attente
 
 À chaque cycle, pour tout verdict `status:"pending"` dont `resolves_at` est dépassé : calculer
-`actual_move_pct` depuis `price_at_issue` et le prix réel actuel, remplir `outcome` en entier
+`actual_move_pct` depuis `price_at_issue` et le prix réel actuel **dans la devise du champ
+`currency` du verdict** (USD → `vs_currencies=usd`, EUR → `eur` ; jamais un prix d'une devise
+comparé à un prix d'une autre). Verdict **sans** champ `currency` (émis avant cette règle) :
+devise établie le 04/10/2026 sur l'historique CoinGecko réel, pas sur le texte — émis **avant le
+20/09/2026 → EUR** ; émis **à partir du 20/09/2026 → USD**, **sauf CTSI (`cartesi`) → EUR**
+(`v-20260922-ctsi`, `v-20261003-ctsi`). Résoudre dans cette devise. Puis remplir `outcome` en entier
 (`price_at_resolution`, `actual_move_pct`, `actual_direction`, `verdict_correct`,
 `resolved_at`) — jamais un remplissage partiel (voir `test/data-fixtures.test.js`, qui rejette
 déjà un verdict résolu avec un `outcome` incomplet).
