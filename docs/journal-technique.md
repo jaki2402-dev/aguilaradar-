@@ -262,3 +262,19 @@ dans `scripts/price-alerts.mjs` (remplace la lecture du texte).
 (`corr-20261004-devise-resolution`, valeurs d'origine dans `outcome.currency_correction`, champ
 `currency` ajouté aux 14 + à tous les pending). Exactitude inchangée 26,87 % ; baseline classe
 majoritaire 59,7 → 56,7 % ; F1 macro 24,42 → 23,77.
+
+### 05/10/2026 — ce que l'allègement du cycle-2h (14-15/09) avait cassé en silence, et correctifs
+
+Audit des horodatages internes de tous les `data/*.json` : figés au 13-14/09 = `alerts.json`,
+`portfolio-history.json` (corrigés le 04/10), `engine-history.macro_regime` (bandeau Accueil,
+Assistant, mail quotidien affichaient « risk-on, F&G 58, dominance 58,6 % » du 14/09 comme
+actuels), `paper_portfolio_stats` et `global_stats.baseline_buy_hold_btc_pct` (onglet Moteur).
+Correctifs : (1) `scripts/market-gauges.mjs` dans le workflow `price-alerts` → `data/market-gauges.json`
+(peur/cupidité alternative.me, dominance BTC CoinGecko /global ; mesures brutes, aucun jugement) ;
+(2) `macroView()` (`app.js`) : jauges fraîches + régime **daté**, affiché « pas réévalué depuis »
+au-delà de 3 j ; (3) spec cycle §7 : le cycle recopie le régime qu'il calcule déjà pour ses verdicts ;
+(4) portefeuille fictif et buy&hold calculés en direct (`computePaperPortfolio`), formule de la
+routine retrouvée et **vérifiée sur ses deux valeurs publiées** (−3,24 % au 06/09 sur 31 verdicts,
+−5,10 % au 13/09 sur 41). Aussi : numéros `?v=` d'`index.html` mis à jour (oubliés le 04/10).
+Non corrigés (blocs morts, aucun lecteur visible) : `opportunities_stats` (12/08),
+`data_source_reliability` (14/09, lu seulement par la spec marche-quotidien).

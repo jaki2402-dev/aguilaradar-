@@ -59,8 +59,9 @@ async function ensureChatData() {
     loadJson(DATA_URLS.portfolio),
     loadJson(DATA_URLS.portfolioThesis),
     loadJson(DATA_URLS.favorisContext),
-  ]).then(([verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext]) => {
-    chatData = { verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext };
+    loadJson(DATA_URLS.marketGauges),
+  ]).then(([verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext, marketGauges]) => {
+    chatData = { verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext, marketGauges };
     return chatData;
   });
   return chatDataLoading;
@@ -493,12 +494,28 @@ function answerDigest() {
   return `${d.headline}\n\n${d.summary}${tips ? "\n\n" + tips : ""}\n\n(Résumé généré le ${new Date(d.generated_at).toLocaleString("fr-FR")}, ton du marché : ${d.market_tone}.)`;
 }
 
+// macroView/shortDate vivent dans app.js (chargé avant sur le site) ; ce repli garde l'Assistant
+// autonome (tests, ou app.js absent) avec le comportement d'origine : régime brut, sans date.
+function chatMacroView() {
+  if (typeof macroView === "function") return macroView(chatData.engineHistory, chatData.marketGauges);
+  const r = chatData.engineHistory && chatData.engineHistory.macro_regime;
+  if (!r || !r.regime) return null;
+  return { regime: r.regime, regimeAt: null, stale: false, note: r.note || "", fearGreed: r.fear_greed_value ?? null, fearGreedAt: null, dominance: r.btc_dominance_pct ?? null, dominanceAt: null };
+}
+
+function chatShortDate(iso) {
+  return iso ? new Date(iso).toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit" }) : "";
+}
+
 function answerMarketWhy() {
-  const regime = chatData.engineHistory && chatData.engineHistory.macro_regime;
-  if (!regime || !regime.regime) return "Le régime de marché n'a pas encore été calculé — ça se fait au premier cycle profond.";
-  const label = (typeof REGIME_LABELS !== "undefined" && REGIME_LABELS[regime.regime]) || regime.regime;
-  const dominance = regime.btc_dominance_pct !== null && regime.btc_dominance_pct !== undefined ? regime.btc_dominance_pct.toFixed(1) + " %" : "—";
-  let text = `Le régime de marché actuel est classé "${label}" (indice de peur et de cupidité ${regime.fear_greed_value ?? "—"}, dominance BTC ${dominance}).\n\n${regime.note || ""}`;
+  const m = chatMacroView();
+  if (!m) return "Le régime de marché n'a pas encore été calculé — ça se fait au premier cycle profond.";
+  const label = (typeof REGIME_LABELS !== "undefined" && REGIME_LABELS[m.regime]) || m.regime;
+  const dominance = m.dominance !== null && m.dominance !== undefined ? m.dominance.toFixed(1) + " %" : "—";
+  const regimeLine = m.stale
+    ? `Dernier régime de marché évalué : "${label}", le ${chatShortDate(m.regimeAt)} — pas réévalué depuis, donc à prendre comme un contexte passé.`
+    : `Le régime de marché actuel est classé "${label}"${m.regimeAt ? ` (évalué le ${chatShortDate(m.regimeAt)})` : ""}.`;
+  let text = `${regimeLine} Indice de peur et de cupidité ${m.fearGreed ?? "—"}${m.fearGreedAt ? ` (au ${chatShortDate(m.fearGreedAt)})` : ""}, dominance BTC ${dominance}${m.dominanceAt ? ` (au ${chatShortDate(m.dominanceAt)})` : ""}.${m.stale || !m.note ? "" : "\n\n" + m.note}`;
   const ctx = chatData.marketContext;
   if (ctx && ctx.employment_us && ctx.employment_us.market_reaction_note) {
     text += `\n\nContexte macro complémentaire : ${ctx.employment_us.market_reaction_note}`;
@@ -585,9 +602,11 @@ const CHAT_INTENTS = [
 // chatData est déjà chargé par ensureChatData au moment où ceci est appelé, aucun fetch de plus.
 function buildAiContext() {
   const parts = [];
-  const regime = chatData.engineHistory && chatData.engineHistory.macro_regime;
-  if (regime && regime.regime) {
-    parts.push(`Régime de marché : ${regime.regime} (peur/cupidité ${regime.fear_greed_value ?? "—"}, dominance BTC ${regime.btc_dominance_pct ?? "—"} %). ${regime.note || ""}`);
+  const m = chatMacroView();
+  if (m) {
+    parts.push(
+      `Régime de marché : ${m.regime}${m.regimeAt ? ` (évalué le ${chatShortDate(m.regimeAt)}${m.stale ? ", PAS réévalué depuis : contexte passé" : ""})` : ""}. Peur/cupidité ${m.fearGreed ?? "—"}${m.fearGreedAt ? ` au ${chatShortDate(m.fearGreedAt)}` : ""}, dominance BTC ${m.dominance ?? "—"} %${m.dominanceAt ? ` au ${chatShortDate(m.dominanceAt)}` : ""}.${m.stale ? "" : " " + m.note}`
+    );
   }
   const d = chatData.digest;
   if (d && d.generated_at) parts.push(`Résumé du moment : ${d.headline} — ${d.summary}`);

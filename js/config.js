@@ -244,5 +244,6 @@ const DATA_URLS = {
   portfolio: "data/portfolio.json",
   portfolioThesis: "data/portfolio-thesis.json",
   portfolioHistory: "data/portfolio-history.json",
+  marketGauges: "data/market-gauges.json",
   onchainHistory: "data/onchain-history.json",
 };

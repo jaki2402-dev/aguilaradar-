@@ -309,7 +309,7 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGrou
     matrixTableEl.innerHTML = "";
     classesEl.innerHTML = "";
   } else {
-    const buyHoldBtc = engineHistory && engineHistory.global_stats && engineHistory.global_stats.baseline_buy_hold_btc_pct;
+    const buyHoldBtc = computeBtcBuyHoldPct(verdicts);
     const edge = stats.accuracyPct - stats.baselineMajorityPct;
     const enoughForVerdict = stats.total >= MIN_RESOLVED_FOR_SELF_ASSESSMENT;
     const selfAssessment = !enoughForVerdict
@@ -394,8 +394,55 @@ function renderEngineTab(verdicts, engineHistory, opportunitiesData, controlGrou
   renderCalibrationByBucket(resolved);
   renderAccuracyByRegime(resolved);
   renderOpportunitiesEngineSection(opportunitiesData);
-  renderPaperPortfolio(engineHistory && engineHistory.paper_portfolio_stats);
+  renderPaperPortfolio(computePaperPortfolio(verdicts));
   renderControlGroupComparison(opportunitiesData, controlGroup);
+}
+
+// Portefeuille fictif et référence « garder du BTC », calculés EN DIRECT (comme l'exactitude) au
+// lieu d'être lus dans engine-history.json : la routine ne les recalculait plus depuis le 13/09/2026
+// (allègement du cycle) et le site affichait des chiffres figés comme actuels. Formule de la
+// routine, retrouvée et vérifiée le 04/10/2026 sur ses propres valeurs publiées (-3,24 % au 06/09
+// sur 31 verdicts, -5,10 % au 13/09 sur 41) : position par verdict résolu, taille proportionnelle à
+// confidence_pct, sens ACHAT +1 / VENTE -1 / ATTENTE 0 → Σ(confiance × sens × mouvement) / Σ confiance.
+const PAPER_PORTFOLIO_MIN_RESOLVED = 10;
+const PAPER_DIRECTION = { ACHAT: 1, VENTE: -1, ATTENTE: 0 };
+
+// Depuis le tout premier verdict BTC du moteur jusqu'au prix actuel, dans la devise de ce verdict
+// (verdictCurrency, insights.js). Prix actuel indisponible = null, jamais estimé.
+function computeBtcBuyHoldPct(verdicts) {
+  const btc = (verdicts || []).filter((v) => v.asset === "bitcoin" && typeof v.price_at_issue === "number" && v.issued_at);
+  if (btc.length === 0) return null;
+  const first = btc.reduce((a, b) => (a.issued_at <= b.issued_at ? a : b));
+  const cur = typeof verdictCurrency === "function" ? verdictCurrency(first) : "eur";
+  const live = typeof latestFavorisPrices !== "undefined" && latestFavorisPrices.bitcoin ? latestFavorisPrices.bitcoin[cur] : undefined;
+  if (typeof live !== "number" || !first.price_at_issue) return null;
+  return ((live - first.price_at_issue) / first.price_at_issue) * 100;
+}
+
+function computePaperPortfolio(verdicts) {
+  const resolved = (verdicts || []).filter(
+    (v) => v.status === "resolved" && v.outcome && typeof v.outcome.actual_move_pct === "number" && v.verdict in PAPER_DIRECTION && typeof v.confidence_pct === "number"
+  );
+  if (resolved.length < PAPER_PORTFOLIO_MIN_RESOLVED) {
+    return { min_resolved_required: PAPER_PORTFOLIO_MIN_RESOLVED, cumulative_return_pct: null };
+  }
+  const totalWeight = resolved.reduce((s, v) => s + v.confidence_pct, 0);
+  if (!totalWeight) return { min_resolved_required: PAPER_PORTFOLIO_MIN_RESOLVED, cumulative_return_pct: null };
+  const cumulative = resolved.reduce((s, v) => s + v.confidence_pct * PAPER_DIRECTION[v.verdict] * v.outcome.actual_move_pct, 0) / totalWeight;
+  const buyHold = computeBtcBuyHoldPct(verdicts);
+  return {
+    min_resolved_required: PAPER_PORTFOLIO_MIN_RESOLVED,
+    cumulative_return_pct: cumulative,
+    btc_buy_hold_return_pct: buyHold,
+    edge_pct: buyHold === null ? null : cumulative - buyHold,
+    method: `Calculé en direct sur les ${resolved.length} verdicts résolus : une position fictive par verdict, taille proportionnelle à sa confiance (ACHAT = achat, VENTE = vente à découvert, ATTENTE = rien), ouverte au prix d'émission et fermée au prix de résolution. « Juste garder du BTC » : du premier verdict BTC du moteur jusqu'au prix actuel.`,
+  };
+}
+
+// Prix BTC actuel pas encore chargé → "—" plutôt qu'un chiffre deviné.
+function fmtSigned(n, unit) {
+  if (n === null || n === undefined || !Number.isFinite(n)) return "—";
+  return (n >= 0 ? "+" : "") + n.toFixed(1) + unit;
 }
 
 function renderPaperPortfolio(stats) {
@@ -410,8 +457,8 @@ function renderPaperPortfolio(stats) {
   el.innerHTML = `
     <div class="stat-row">
       <div class="stat-card accent-teal"><div class="stat-label">Portefeuille fictif (suit mes verdicts)</div><div class="stat-value">${stats.cumulative_return_pct >= 0 ? "+" : ""}${stats.cumulative_return_pct.toFixed(1)} %</div></div>
-      <div class="stat-card accent-gold"><div class="stat-label">Juste garder du BTC</div><div class="stat-value">${stats.btc_buy_hold_return_pct >= 0 ? "+" : ""}${stats.btc_buy_hold_return_pct.toFixed(1)} %</div></div>
-      <div class="stat-card ${edge >= 0 ? "accent-teal" : "accent-gray"}"><div class="stat-label">Écart</div><div class="stat-value ${edge >= 0 ? "positive" : "negative"}">${edge >= 0 ? "+" : ""}${edge.toFixed(1)} pts</div></div>
+      <div class="stat-card accent-gold"><div class="stat-label">Juste garder du BTC</div><div class="stat-value">${fmtSigned(stats.btc_buy_hold_return_pct, " %")}</div></div>
+      <div class="stat-card ${edge !== null && edge >= 0 ? "accent-teal" : "accent-gray"}"><div class="stat-label">Écart</div><div class="stat-value ${edge === null ? "" : edge >= 0 ? "positive" : "negative"}">${fmtSigned(edge, " pts")}</div></div>
     </div>
     <p class="hint">${highlightKeyInfo(stats.method)}</p>`;
 }
