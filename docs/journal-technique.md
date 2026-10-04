@@ -258,3 +258,7 @@ prêt dans le résumé de session. Appliqué : spec cycle-2h (USD + champ `curre
 résolution dans la devise du verdict, table pour les verdicts sans champ), `verdictCurrency`
 (`insights.js`, la tendance provisoire affichait ~−13 % fictifs sur les verdicts en $), même règle
 dans `scripts/price-alerts.mjs` (remplace la lecture du texte).
+→ Correction des 14 résolutions **appliquée le 04/10 22h30 UTC** avec l'accord de l'utilisateur
+(`corr-20261004-devise-resolution`, valeurs d'origine dans `outcome.currency_correction`, champ
+`currency` ajouté aux 14 + à tous les pending). Exactitude inchangée 26,87 % ; baseline classe
+majoritaire 59,7 → 56,7 % ; F1 macro 24,42 → 23,77.
