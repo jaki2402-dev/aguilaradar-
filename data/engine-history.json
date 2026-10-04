@@ -1,15 +1,15 @@
 {
   "current_version": "v1",
   "global_stats": {
-    "last_computed_at": "2026-09-28T00:20:00Z",
-    "total_verdicts_issued": 81,
-    "total_verdicts_resolved": 66,
-    "accuracy_strict_pct": 25.76,
-    "coverage_pct": 19.7,
-    "baseline_majority_class_pct": 60.61,
+    "last_computed_at": "2026-10-03T07:18:00Z",
+    "total_verdicts_issued": 82,
+    "total_verdicts_resolved": 67,
+    "accuracy_strict_pct": 26.87,
+    "coverage_pct": 19.4,
+    "baseline_majority_class_pct": 59.7,
     "baseline_buy_hold_btc_pct": 18.59,
-    "f1_macro": 23.8,
-    "f1_weighted": 18.85,
+    "f1_macro": 24.42,
+    "f1_weighted": 19.48,
     "confusion_matrix": {
       "ACHAT": {
         "ACHAT": 3,
@@ -18,7 +18,7 @@
       },
       "ATTENTE": {
         "ACHAT": 35,
-        "ATTENTE": 12,
+        "ATTENTE": 13,
         "VENTE": 6
       },
       "VENTE": {
@@ -36,11 +36,11 @@
         "actualTotal": 40
       },
       "ATTENTE": {
-        "precision": 0.2264,
+        "precision": 0.2407,
         "recall": 1,
-        "f1": 0.3692,
-        "predictedTotal": 53,
-        "actualTotal": 12
+        "f1": 0.3881,
+        "predictedTotal": 54,
+        "actualTotal": 13
       },
       "VENTE": {
         "precision": 0.5,
@@ -61,9 +61,9 @@
     "average_move_pct": null
   },
   "routine_health": {
-    "last_success_at": "2026-09-28T08:20:00Z",
+    "last_success_at": "2026-10-04T08:16:55Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 28/09/2026 ~08h20 UTC, exécution normale, suivi de docs/routines/cycle-2h-verdict.md et docs/verdict-methodology.md, aucun outil mcp__ utilisé (Bash/curl/WebSearch/WebFetch/Read/Write/Edit/git uniquement).\n\nRésolution : aucun des 15 verdicts pending n'a dépassé resolves_at à l'heure de ce cycle (le plus proche reste v-20260922-ctsi, échéance 2026-09-29T00:20:00Z, encore ~16h). Aucune résolution effectuée, conformément à la section 5 (jamais de résolution anticipée).\n\nÉmission : les 15 favoris ont chacun toujours un verdict pending en cours (aucun changement depuis le cycle 04h20 UTC) — aucun slot disponible, donc aucun nouveau verdict émis ce cycle.\n\ncorrection_log : rien à ajouter (aucun changement de procédure/paramètre tenté ce cycle) ; corr-20260921-biais-attente-asymetrique et corr-20260914-confidence-formule-reproductible restent en observation (aucun verdict supplémentaire émis sous ces règles n'a résolu depuis le dernier cycle), validation_score_after_pct laissés inchangés à null.\n\nglobal_stats : non recalculé (aucune résolution ce cycle, total_verdicts_issued/total_verdicts_resolved inchangés depuis 00h20 UTC).\n\nVeille actualités (section 8) : recherche WebSearch dédiée (fear&greed, dominance BTC, actualité générale, hack/exploit) ce cycle. Fear&greed toujours dispersé selon la source (CFGI ~48-49 neutre vs Coinglass/KuCoin/CoinGabbar ~63-75 cupidité), dominance BTC ~57,1-60,7% selon la source — dispersion déjà connue, aucune bascule de régime tranchée sur cette seule base. Hack/exploit : rien de nouveau au-delà de Bitget (387,5M$, déjà logué) et Meter Passport/Payy Network (déjà logués/jugés insuffisants). Développement réellement nouveau et significatif trouvé : ouverture asiatique du 28/09, propos de Trump (dimanche 27/09) n'excluant pas de nouvelles frappes sur l'Iran malgré une fin de guerre attendue \"très bientôt\" — BTC -1,3 à -1,6% (~83 100-83 300$), Nasdaq-100 futures -0,7%, pétrole +~1%, capitalisation crypto totale -1,7% sur 24h, recul généralisé sur la plupart des favoris malgré des flux ETF spot BTC nets positifs la semaine précédente (déjà logués) — ajouté à items, last_updated_at et last_checked_at avancés à l'heure de ce cycle. Ce développement est un risque géopolitique ponctuel, pas encore assez confirmé/installé pour recalculer macro_regime ce cycle (aucun verdict émis de toute façon ce cycle) — à recroiser au cycle suivant via market-context.json avant tout nouveau verdict.\n\nFusion vers main : commit normal sur la branche de travail courante suivi d'une fusion --no-ff explicite vers main et d'un push, vérifiés par checkout explicite de main avant fusion et confirmation post-fusion que main contient bien le commit de ce cycle."
+    "last_failure_reason": "Cycle du 04/10/2026 ~08h16 UTC : exécution normale, suivi de docs/routines/cycle-2h-verdict.md et docs/verdict-methodology.md, aucun outil mcp__ utilisé (Bash/WebSearch/Read/Write/Edit/git uniquement, par règle explicite du prompt de cette exécution). Démarrage économe : aucun verdict pending dû (resolves_at le plus proche non dépassé) et 15/15 favoris déjà couverts par un verdict pending → cycle court, rien émis/résolu ce cycle. Veille actualités (section 8, version courte) : 2 recherches WebSearch (fear&greed, hack/exploit) — fear&greed toujours sans valeur datée fiable pour aujourd'hui trouvée (même limite que les cycles précédents) ; recherche hack/exploit ne renvoie rien de réellement nouveau et significatif non déjà présent dans data/news.json (résultats recoupent des exploits d'avril/juillet 2026 déjà anciens et moins significatifs que les items déjà logués). Aucun ajout à items ; last_checked_at avancé, last_updated_at inchangé. correction_log : rien à ajouter (aucun changement de procédure tenté, aucun lot nouvellement résolu)."
   },
   "macro_regime": {
     "last_computed_at": "2026-09-14T16:20:00Z",

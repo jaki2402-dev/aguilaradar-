@@ -77,7 +77,7 @@ function checkForNewOpportunities(opportunitiesData, alerts, isBaseline) {
   if (changed) saveSeenNotifIds(seen);
 }
 
-// Résumé périodique (data/digest.json, régénéré par une routine dédiée toutes les ~6h) :
+// Résumé périodique (data/digest.json, régénéré par une routine dédiée 2 fois par jour depuis le 03/10/2026) :
 // synthèse de toutes les données du site (verdicts, opportunités, contexte marché, favoris)
 // avec quelques conseils. On notifie dès qu'un nouveau digest apparaît (un seul à la fois,
 // pas de risque d'avalanche comme pour les opportunités).

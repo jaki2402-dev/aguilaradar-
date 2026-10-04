@@ -296,6 +296,36 @@
       "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h56)", "data/news.json (last_updated_at, ~0h56)", "data/opportunities.json (last_scan_at, ~5h07)"],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h56, actualités il y a 0h56, opportunités il y a 5h07 - rien à signaler. Note de transparence sur cette routine elle-même : les cycles quotidiens du 26/09 et du 27/09 n'ont pas pu s'exécuter (cette session persistante n'a pas été relancée sur ses déclenchements programmés de ces jours-là - les notifications correspondantes sont arrivées groupées au réveil de ce cycle du 28/09) - aucune entrée n'a donc été ajoutée à health-log.json pour ces jours-là, mais cela ne reflète aucun problème sur les données AguilaRadar elles-mêmes (les trois champs surveillés sont désormais tous frais), seulement une interruption de ce contrôle."
+    },
+    {
+      "checked_at": "2026-10-03T08:51:22Z",
+      "site_reachable": null,
+      "files_ok": [
+        "data/verdicts.json",
+        "data/opportunities.json",
+        "data/engine-history.json",
+        "data/alerts.json",
+        "data/news.json",
+        "data/control-group.json",
+        "data/market-context.json",
+        "data/favoris-context.json",
+        "data/health-log.json"
+      ],
+      "files_broken": [],
+      "counts": {
+        "verdicts": 82,
+        "alerts": 151,
+        "opportunities": 8,
+        "news": 13,
+        "favoris_context_populated": 15
+      },
+      "note": "Tous les fichiers data/*.json sont des JSON valides et non vides, et index.html référence bien tous les scripts js/*.js. Aucune anomalie de volume par rapport au passage précédent (verdicts 81→82, alertes 151→151, opportunités 8→8, actualités 17→13 : baisse de 24 %, sous le seuil de 50 %, cohérente avec l'élagage normal des items, favoris renseignés 15→15). Accessibilité du site non vérifiée (site_reachable à null) : le proxy de sortie de cette session bloque jaki2402-dev.github.io (EGRESS_BLOCKED), ce qui ne reflète pas un problème du site lui-même. Aucune alerte de fraîcheur de ma part."
+    },
+    {
+      "checked_at": "2026-10-03T09:16:08Z",
+      "files_ok": ["data/engine-history.json (routine_health.last_success_at, ~0h56)", "data/news.json (last_updated_at, ~1h58)"],
+      "files_broken": ["data/opportunities.json (last_scan_at figé depuis ~125h06, seuil de 36h dépassé)"],
+      "note": "ATTENTION FRAICHEUR : data/opportunities.json (last_scan_at = 2026-09-28T04:09:58Z) est figé depuis environ 125h06 (~5,2 jours), très au-delà du seuil de 36h attendu pour la cadence quotidienne. Ce scan était encore dans les clous au contrôle précédent de cette routine (28/09, ~5h07) - le criblage s'est donc arrêté juste après ce dernier contrôle et n'a pas repris depuis, malgré 2 cycles de cette routine manqués entre-temps (29/09-02/10, non couverts). data/engine-history.json (routine_health.last_success_at, ~0h56) et data/news.json (last_updated_at, ~1h58) sont dans les clous - le problème semble spécifique au criblage d'opportunités, pas une panne globale du cycle. Cette routine n'a pas les outils pour investiguer ou corriger elle-même."
     }
   ]
 }

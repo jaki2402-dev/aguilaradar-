@@ -1,283 +1,283 @@
 {
-  "last_computed_at": "2026-09-28T08:20:00Z",
+  "last_computed_at": "2026-10-04T08:26:00Z",
   "assets": {
     "BTC": {
-      "last_computed_at": "2026-09-25T08:20:00Z",
+      "last_computed_at": "2026-10-04T08:26:00Z",
       "competitor": {
         "ticker": "XAU",
         "name": "Or (marché de l'or investissable)",
-        "comparison_note": "Bitcoin affiche une capitalisation de ~1 692 Md$ (prix 84 223$, CoinGecko en direct, 25/09/2026) et une dominance de 58,5 % du marché crypto total, contre un marché mondial de l'or hors-sol estimé à 31 000 Md$ selon un rapport du World Gold Council daté d'avril 2026 (WebSearch) — une estimation plus étroite, limitée à l'or réellement \"investissable\" hors bijouterie/industrie, tombe à environ 15 000 Md$ selon la même recherche. Avec la capitalisation actuelle de Bitcoin, l'écart reste d'un ordre de grandeur x18 face au marché total de l'or, et x9 face au sous-ensemble investissable ; Bitcoin n'a toujours pas de concurrent crypto direct sur le rôle de réserve de valeur numérique."
+        "comparison_note": "Bitcoin cote 84 729,91$ avec une dominance de marché de 58,89% et une capitalisation crypto totale de 2,9 T$ (CoinMarketCap, résultat indexé via WebSearch le 04/10/2026) : la capitalisation BTC implicite (dominance x cap totale) est d'environ 1 708 Md$, un calcul dérivé de ces deux chiffres plutôt qu'une capitalisation directement citée par la source. Comparée au marché de l'or réellement investissable estimé à environ 15 000 Md$ par un rapport du World Gold Council d'avril 2026 (chiffre déjà utilisé aux cycles précédents, non revérifié ce cycle), l'écart reste de l'ordre de x8-9 ; le marché total de l'or hors-sol (bijouterie et industrie comprises) atteint environ 31 000 Md$ selon le même rapport. Bitcoin n'a toujours pas de concurrent crypto direct sur le rôle de réserve de valeur numérique."
       },
       "long_term_thesis": {
-        "bull": "Les flux ETF spot américains restent nettement positifs : plus de 2 Md$ d'entrées nettes cumulées sur les séances du 18, 21 et 22/09/2026, et BTC a reconquis le seuil de 87 000$ le 24/09/2026 selon CryptoTimes, porté par le short squeeze du 21/09 qui a effacé environ 648 M$ de positions courtes (Coindesk) sans provoquer de rechute de l'open interest, signe d'un repositionnement long qui s'est maintenu plusieurs jours plutôt que de se retourner immédiatement.",
-        "base": "Le relèvement de taux de la Fed du 16/09/2026 (+25 pb, vote 12-0, dot plot pointant vers d'autres hausses en 2026) avait d'abord provoqué une sortie ETF de 450,4 M$ le 15/09, rapidement réabsorbée par les entrées des 18-22/09. Le 25/09/2026, le prix BTC est quasi stable sur 24h (84 223$, -0,01%, CoinGecko) alors que la capitalisation totale du marché crypto recule de -2,86% sur la même période — une divergence notable qui suggère que la rotation actuelle profite relativement à BTC au détriment d'autres actifs plus risqués, plutôt qu'un signal macro univoque.",
-        "bear": "L'open interest agrégé sur les 25 plus gros contrats perpétuels BTC atteignait environ 81,1 Md$ au 21/09/2026 (Coindesk/cryptoticker.io), en hausse simultanée avec le prix depuis le short squeeze — une combinaison qui reste propice à un débouclage de levier si les flux ETF se retournent à nouveau. Un mouvement de 842 BTC (~71 M$) transféré depuis Binance vers un portefeuille inconnu a été signalé par Whale Alert le 24/09/2026 (coinfomania) ; direction ambiguë (accumulation ou préparation de vente), à surveiller plutôt qu'à interpréter dans un sens ou l'autre.",
-        "assumptions_note": "Ces scénarios supposent l'absence de nouveau choc macro majeur avant la prochaine réunion du FOMC (fin octobre/novembre 2026) et une poursuite du régime actuel de flux ETF au comptant comme principal moteur de la demande marginale ; le funding rate (0,00594%/période, mesuré le 21/09/2026, aucune valeur plus fraîche confirmée ce cycle) et l'open interest cités datent tous deux du 21/09/2026, pas du jour de ce cycle — aucun chiffre plus récent n'a pu être confirmé via WebSearch ce 25/09/2026."
+        "bull": "Les flux ETF spot américains se sont nettement redressés fin septembre : +2,4 Md$ sur la semaine se terminant le 25/09/2026 (plus forte semaine en presque un an, The Block), effaçant le trou de ~5,8 Md$ accumulé depuis le milieu de l'année ; la séance du 23/09 a elle seule apporté 998,95 M$ d'entrées nettes (TheBlock/CoinDesk), menée par IBIT (BlackRock, 381,4 M$), ARKB (289,1 M$) et FBTC (238,8 M$).",
+        "base": "Au 04/10/2026, le prix (84 729,91$) et la dominance (58,89%) restent proches des niveaux du cycle précédent, mais l'open interest agrégé affiche une baisse marquée à environ 53,3 Md$ (CoinGlass, résultat indexé via WebSearch) contre ~81,1 Md$ rapporté il y a trois cycles (21/09) — un dégonflement sensible du levier sur dérivés, concomitant avec le retour des flux ETF au comptant plutôt que sur dérivés à effet de levier.",
+        "bear": "Aucun signal de mouvement whale daté dans les 48h précédant ce cycle n'a pu être confirmé via WebSearch (les résultats retrouvés étaient des compilations non datées d'anciens transferts, ex. 4,5 Md$ Bitfinex, 608,8 M$ Xapo→Binance, sans date exploitable) — à la différence du cycle du 24-25/09 qui avait un signal daté. Le funding rate BTC n'a pas pu être confirmé sous forme chiffrée ce cycle (page CoinGlass retrouvée via WebSearch sans valeur numérique claire), laissé à null plutôt que reconduit sans vérification.",
+        "assumptions_note": "Sources : CoinMarketCap et CoinGlass via résultats indexés WebSearch (accès API direct bloqué par le proxy réseau de cet environnement, revérifié ce cycle : api.llama.fi, coinglass.com, blockchain.info tous rejetés). Les valeurs de prix/dominance/OI proviennent du contenu de page \"en direct\" tel qu'indexé au moment de la recherche, pas d'un appel API horodaté précisément — à traiter comme approximativement frais plutôt que comme un point exact daté à la seconde."
       },
       "open_interest": {
-        "value_usd": 81100000000,
-        "funding_rate_pct": 0.00594,
-        "source": "Coindesk / cryptoticker.io (résultats indexés via WebSearch, datés du 21/09/2026 — pas d'appel API direct à CoinGlass/Binance possible depuis cet environnement)",
-        "note": "Open interest agrégé sur les 25 plus gros contrats perpétuels BTC (~81,1 Md$), en hausse depuis les ~61,6 Md$ rapportés au cycle précédent (22/09) — chiffre daté du 21/09/2026, aucune valeur plus fraîche datée du 24-25/09 trouvée via WebSearch ce cycle. Funding rate inchangé par rapport au cycle précédent (0,00594%/période, même source datée du 21/09) — aucune mise à jour trouvée, conservé tel quel plutôt que supposé stable sans vérification."
-      },
-      "defi_tvl": {
-        "value_usd": 8800000000,
-        "change_7d_pct": null,
-        "source": "DefiLlama (résultat indexé via WebSearch, non requêté en direct — api.llama.fi et defillama.com bloqués par le proxy réseau de cet environnement)",
-        "note": "Exposition BTC wrapped/bridged dans la DeFi (essentiellement WBTC sur Ethereum et ses L2), jamais la TVL native de la chaîne Bitcoin elle-même. Valeur strictement identique à celle déjà enregistrée au cycle précédent (22/09/2026) — probable page indexée en cache plutôt qu'une confirmation fraîche du 25/09, à vérifier dès qu'un appel direct à l'API DefiLlama sera possible. Un chiffre distinct de ~4,1-4,4 Md$ (\"BTCFi\", TVL native sur des L2/sidechains Bitcoin comme Babylon/Lombard) a été trouvé mais ne correspond pas à la définition de ce champ (exposition wrapped/bridged) — non utilisé ici, à ne pas confondre."
-      },
-      "onchain_signal": {
-        "available": true,
-        "note": "Whale Alert a signalé un transfert de 842 BTC (~71 M$) depuis Binance vers un portefeuille inconnu, daté du 24/09/2026 (coinfomania, résultat WebSearch) — dans la fenêtre des 48h précédant ce cycle. Direction du signal ambiguë (accumulation possible ou préparation d'une vente future) : présenté comme un fait daté et sourcé, pas comme une interprétation directionnelle.",
-        "source_url": "https://coinfomania.com/whale-alert-reports-842-btc-transferred-from-binance/"
-      }
-    },
-    "ETH": {
-      "last_computed_at": "2026-09-25T08:20:00Z",
-      "competitor": {
-        "ticker": "SOL",
-        "name": "Solana",
-        "comparison_note": "Ethereum conserve la 2e capitalisation crypto avec 327,5 Md$ (rang CoinGecko #2, prix 2 682,92$) contre 68,8 Md$ pour Solana (rang #7, prix 117,02$), soit un écart d'environ 4,76x en faveur d'ETH — données CoinGecko en direct du 25/09/2026. Solana continue de surperformer en momentum relatif : +10,34% sur 7 jours et +20,23% sur 30 jours, contre +7,50% et +8,61% pour Ethereum. Les deux actifs sont quasi stables en 24h (+0,03% ETH, +1,78% SOL) dans un contexte de repli du marché crypto global (-2,86% sur 24h)."
-      },
-      "long_term_thesis": {
-        "bull": "Le taux de staking a franchi 34,23% de l'offre totale (environ 41,7-42 M ETH, capitalisation de staking >77 Md$), réduisant l'offre liquide disponible. Les ETF spot Ethereum ont enchaîné 5 séances consécutives d'entrées nettes (19 au 23/09/2026 : 270 M$, 162,2 M$, 104,5 M$ et 66,1 M$, soit 746,5 M$ cumulés — KuCoin/Bitcoinist), effaçant la sortie de 140 M$ de la semaine précédente. Une baleine a ajouté 15 000 ETH à 2 751$ (~41,3 M$) le 23/09/2026, portant sa position totale à 52 000 ETH avec une plus-value latente de 31,1 M$ (KuCoin) — signal d'accumulation daté, pas de vente.",
-        "base": "Le flux ETF est redevenu positif mais reste sujet à des à-coups hebdomadaires : la semaine du 18/09 avait enregistré -140 M$, la semaine suivante +746,5 M$ sur 5 séances. Le staking à effet de rendement (ETHB de BlackRock, ETHE de Grayscale) continue de distribuer un rendement net d'environ 2% après frais, mécanisme encore récent (2026) dont la pérennité sur plusieurs cycles n'est pas démontrée à ce stade.",
-        "bear": "La classification SEC/CFTC de mars 2026 rangeant ETH parmi les \"digital commodities\" reste une interprétation administrative dépendant du vote du CLARITY Act pour être verrouillée durablement. La fragmentation de l'écosystème L2 (appel de Vitalik Buterin en septembre 2026 à une réforme des frais et standards cross-L2) complique l'expérience utilisateur, et Solana affiche un momentum de prix relatif nettement supérieur sur 30 jours (+20,23% contre +8,61% pour ETH), un narratif de rotation qui pourrait continuer à détourner du capital spéculatif à court terme.",
-        "assumptions_note": "Ces scénarios s'appuient sur des recherches web datées du 23-25 septembre 2026 (flux ETF KuCoin/Bitcoinist, données de staking, mouvement de baleine KuCoin) et non sur un modèle propriétaire ni une prédiction de prix ; ils supposent que le CLARITY Act reste en suspens et que la tendance de staking se poursuit — deux hypothèses à revérifier à chaque cycle."
-      },
-      "open_interest": {
-        "value_usd": 34810000000,
-        "funding_rate_pct": 0.0098,
-        "source": "CoinGlass (résultat indexé via WebSearch — accès API direct non disponible dans cet environnement)",
-        "note": "Open interest agrégé ~34,81 Md$ avec un ratio long/short d'environ 1,065 et un funding rate pondéré d'environ 0,0098%, résultat WebSearch sans horodatage exact confirmé (un autre résultat, daté du 20/09/2026, indiquait ~31,48 Md$ — cohérent avec une hausse progressive, mais aucune des deux valeurs n'a pu être datée avec certitude au jour de ce cycle). En repli par rapport aux ~36,69 Md$ rapportés au cycle du 22/09/2026 — plausible dans un contexte de recul du marché crypto global (-2,86% sur 24h ce 25/09), non confirmé comme une baisse réelle faute de dates exactes comparables."
-      },
-      "defi_tvl": {
-        "value_usd": null,
-        "change_7d_pct": null,
-        "source": "DefiLlama (accès direct à api.llama.fi et defillama.com bloqué par le proxy réseau de cet environnement)",
-        "note": "3e cycle consécutif (21, 23 et maintenant 25/09/2026) où le seul chiffre trouvé via WebSearch est strictement identique (52,742 Md$) sans nouvelle date associée — traité comme une page indexée en cache plutôt qu'une confirmation fraîche, conformément à la règle de détection de cache. Laissé à null plutôt que de dupliquer une 3e fois la même valeur."
-      },
-      "onchain_signal": {
-        "available": true,
-        "note": "Le MCP Blockscout ne fournit pas d'endpoint de détection générique de mouvements de baleines (seulement des requêtes par adresse déjà connue) ; recherche via WebSearch comme prévu par la consigne pour ce cas. Une baleine a ajouté 15 000 ETH à 2 751$ (~41,3 M$) le 23/09/2026, portant sa position à 52 000 ETH avec une plus-value latente de 31,1 M$ (KuCoin) — daté dans la fenêtre des 48h précédant ce cycle, distinct du mouvement BTC→ETH du 21/09 déjà utilisé au cycle précédent (non réutilisé ici pour éviter de présenter un événement vieux de 4 jours comme un signal frais).",
-        "source_url": "https://www.kucoin.com/news/flash/whale-adds-15-000-eth-at-2-751-booking-31-1m-profit"
-      }
-    },
-    "FET": {
-      "last_computed_at": "2026-09-23T08:27:00Z",
-      "competitor": {
-        "ticker": "RENDER",
-        "name": "Render",
-        "comparison_note": "Au 23 septembre 2026 (CoinGecko API, appel direct) : FET (Artificial Superintelligence Alliance) cote 0,20936 dollar, capitalisation 483,97 millions de dollars (rang #115), en hausse de 2,87 % sur 24h, ~38,51 % sur 7 jours et ~27,26 % sur 30 jours — porté par la rotation générale vers les cryptos IA. Render (RENDER) cote 1,85 dollar, capitalisation 961,78 millions de dollars (rang #82), 24h +2,85 %, 7 jours ~+40,55 %, 30 jours ~+24,56 %. Les deux actifs progressent en tandem cette semaine, RENDER restant devant en capitalisation malgré une hausse hebdomadaire légèrement supérieure pour FET."
-      },
-      "long_term_thesis": {
-        "bull": "L'ASI Alliance (fusion Fetch.ai / SingularityNET / Ocean Protocol) avance sur sa feuille de route : la 15e mise à jour bi-hebdomadaire produit/développement (5-18 septembre 2026, source officielle fetch.ai/blog) confirme la progression vers l'ouverture en beta d'ASI:Create (plateforme de déploiement d'agents IA) et le lancement mainnet prévu fin 2026/début 2027 d'ASI:Chain, une L1 dédiée aux charges de travail IA. FET a gagné 11,7 % le 17 septembre 2026 dans un contexte de rotation sectorielle IA plus large (source : CoinMarketCap AI news), et le marché IA crypto pèse environ 22 milliards de dollars mi-2026 selon plusieurs analyses de marché.",
-        "base": "FET continue de suivre la narrative IA crypto au global (corrélé à TAO, RENDER, NEAR) plus qu'un cas d'usage isolé pour l'instant ; la valorisation dépendra de la capacité de l'Alliance à livrer des produits actifs (agents autonomes en production) plutôt que de rester une promesse de fusion. Les prévisions d'analystes évoquent une fourchette 3-5 dollars d'ici 2026 sous réserve d'exécution (source : AMBCrypto FET vs RENDER, DEXTools).",
-        "bear": "Incident de sécurité confirmé le 19 septembre 2026, 20:21:47 UTC (bloc Ethereum #26013913) : un attaquant a drainé environ 8,72 millions de FET (~2 millions de dollars combinés avec un exploit lié sur NuNet/NTX) du contrat TokenConversionManagerV3 via une faille du pont SingularityNET. Les conversions AGIX→FET ont été suspendues pour audit de sécurité (sources : Crowdfund Insider, CryptoTimes, Coinotag, Crypto-economy.com, toutes datées du 19-20 septembre 2026). Si l'Alliance ne matérialise pas de produits actifs, FET risque de se comporter comme un actif purement narratif plutôt qu'un token d'infrastructure.",
-        "assumptions_note": "Prix/capitalisation : CoinGecko API, appel direct, 23/09/2026. Catalyseurs et incident de sécurité : WebSearch, sources datées et citées ci-dessus, aucune extrapolation depuis la connaissance générale du modèle."
-      },
-      "open_interest": {
-        "value_usd": 73857101,
+        "value_usd": 53333553653,
         "funding_rate_pct": null,
-        "source": "CoinGlass (résultat indexé via WebSearch)",
-        "note": "Valeur 73 857 101 $ identique au chiffre exact du cycle précédent (15/09/2026), alors que FET a progressé d'environ 38 % sur 7 jours dans l'intervalle — forte suspicion de page indexée en cache par le moteur de recherche plutôt qu'un chiffre réellement rafraîchi ce cycle-ci ; à vérifier via un appel direct à CoinGlass. Funding rate FET non trouvé cette fois (aucune source datée distincte de l'OI)."
+        "source": "CoinGlass (résultat indexé via WebSearch — appel direct à coinglass.com bloqué par le proxy réseau de cet environnement, revérifié ce cycle)",
+        "note": "Open interest agrégé ~53,33 Md$, en baisse nette par rapport aux ~81,1 Md$ du cycle du 21/09/2026 — valeur nouvelle (pas de suspicion de cache, différente du cycle précédent). Funding rate non trouvé sous forme numérique fiable ce cycle (page CoinGlass retrouvée sans valeur chiffrée claire dans le résultat indexé) : laissé à null plutôt que de reconduire la valeur du cycle précédent (0,00594%) sans confirmation fraîche."
       },
       "defi_tvl": {
-        "value_usd": null,
+        "value_usd": 9788000000,
         "change_7d_pct": null,
-        "source": null,
-        "note": "Aucun protocole DefiLlama dédié type 'TVL' identifié pour FET/ASI Alliance (cohérent avec le cycle précédent). Une recherche a fait remonter une métrique différente — liquidité DEX totale ~2,18-2,52 M$ — mais datée du 6 janvier 2026 (WhatToFarm) donc trop ancienne et de nature différente (liquidité DEX, pas TVL de protocole) pour être présentée comme une TVL actuelle. Accès direct à api.llama.fi bloqué par la politique réseau de cette session (EGRESS_BLOCKED)."
+        "source": "DefiLlama, protocole WBTC (résultat indexé via WebSearch — api.llama.fi et defillama.com bloqués par le proxy réseau)",
+        "note": "Exposition BTC wrapped/bridged dans la DeFi (WBTC sur Ethereum et L2), jamais la TVL native de la chaîne Bitcoin elle-même (celle-ci, environ 4,52 Md$ via Babylon/Lightning Network, est suivie séparément dans data/onchain-history.json). Valeur en hausse par rapport aux 8,8 Md$ du cycle précédent (25/09) — pas une valeur identique, donc pas de suspicion de cache cette fois. Variation sur 7 jours non trouvée ; une variation de +11,2% sur 30 jours a été mentionnée dans le résultat WebSearch mais n'est pas substituée ici (périodes différentes)."
       },
       "onchain_signal": {
         "available": false,
-        "note": "FET est un ERC-20 sur Ethereum. Vérification réelle via Blockscout MCP (chain_id=1) : le coffre-fort Gnosis Safe de la Fetch.ai Foundation (0x8400ac235Ed4F139A3E05670A9A3C724e448129B, étiqueté 'Fetch.ai: Foundation' par Blockscout) n'a enregistré aucun transfert FET depuis le 21/09/2026 (résultat vide confirmé, pas une recherche non aboutie). Un mouvement on-chain réel et précisément daté existe par ailleurs (exploit du pont SingularityNET, 19/09/2026 20:21:47 UTC, bloc #26013913, ~8,72M FET) mais il a ~4 jours, hors de la fenêtre de fraîcheur ~48h exigée pour compter comme 'available: true'.",
-        "source_url": "https://www.crowdfundinsider.com/2026/09/311745-2-million-ai-crypto-exploit-8-72m-fet-drained-408-5m-ntx-minted/"
-      }
-    },
-    "GRT": {
-      "last_computed_at": "2026-09-23T08:27:00Z",
-      "competitor": {
-        "ticker": "SQD",
-        "name": "SQD (Subsquid)",
-        "comparison_note": "Au 23 septembre 2026 (CoinGecko API, appel direct) : GRT cote 0,026907 dollar, capitalisation 294,36 millions de dollars (rang #157), en forte hausse de 13,61 % sur 24h, ~53,56 % sur 7 jours et ~55,23 % sur 30 jours. SQD cote 0,030076 dollar, capitalisation 39,26 millions de dollars (rang #600), 24h +5,36 %. GRT surperforme nettement SQD cette semaine et reste très largement devant en capitalisation (id CoinGecko corrigé : 'subsquid', et non 'sqd-network' qui ne résout à aucun actif)."
-      },
-      "long_term_thesis": {
-        "bull": "The Graph a publié un rallye net : +15 % le 6 septembre 2026 (nouveau plus haut local, volume +180 % à plus de 37M$ ce jour-là) puis une poursuite haussière jusqu'au 23 septembre (source : cryptonews.net, 22/09/2026 citant un +2,78 % supplémentaire dans un marché risk-on porté par des entrées ETF Bitcoin records). Catalyseur structurel : support des paiements x402 permettant à des agents IA d'interroger des données en langage naturel et de payer en USDC, plus de 1,2 billion de requêtes traitées au total, et une feuille de route 2026 prévoyant des dérivés de staking liquide et des ponts cross-chain GRT vers Arbitrum, Base et Avalanche.",
-        "base": "GRT bénéficie largement de la rotation générale vers les alts/IA plutôt que d'un catalyseur isolé au token — la hausse de 53 % sur 7 jours a été qualifiée de possiblement excessive par au moins une analyse (cryptonews.net, 'GRT's rally could face a reversal', 22/09/2026), qui pointe un risque de correction technique après un mouvement aussi rapide.",
-        "bear": "Le principal risque identifié est justement ce risque de retournement après rallye : la même analyse note que la vitesse et l'ampleur de la hausse récente créent des conditions de surachat propices à une consolidation ou un repli, indépendamment des fondamentaux du protocole.",
-        "assumptions_note": "Prix/capitalisation : CoinGecko API, appel direct, 23/09/2026 (id 'subsquid' vérifié via search-coins, pas deviné). Catalyseurs et risque de retournement : WebSearch, sources datées et citées ci-dessus."
-      },
-      "open_interest": {
-        "value_usd": 12819930,
-        "funding_rate_pct": 0.01,
-        "source": "CoinGlass / Coinalyze (résultat indexé via WebSearch)",
-        "note": "12,82M$ — très proche des 12,81M$ du cycle précédent (15/09/2026) alors que GRT a progressé de plus de 50 % sur 7 jours dans l'intervalle : suspicion de cache à vérifier. Une source alternative (Coinalyze) donne un chiffre distinct pour l'OI perpétuel (552M GRT / ~10,88M$), incohérence entre sources non résolue ce cycle. Funding rate : moyenne +0,0100 % sur 7 exchanges (longs paient les shorts, positionnement légèrement haussier), fourchette -4,70 à +1,00 bps sur 11 venues (Coinalyze, via WebSearch)."
-      },
-      "defi_tvl": {
-        "value_usd": null,
-        "change_7d_pct": null,
-        "source": null,
-        "note": "DefiLlama référence bien une TVL de staking pour The Graph (GRT déposés dans les contrats de staking), mais aucun chiffre exact n'a pu être extrait des résultats de recherche ce cycle (cohérent avec le cycle précédent). Accès direct à api.llama.fi bloqué par la politique réseau de cette session (EGRESS_BLOCKED)."
-      },
-      "onchain_signal": {
-        "available": false,
-        "note": "GRT est un ERC-20 sur Ethereum. Vérification réelle via Blockscout MCP (chain_id=1) : le contrat L1 Staking de The Graph (0xF55041E37E12cD407ad00CE2910B8269B01263b9, étiqueté 'The Graph: Proxy 2' / 'Staking' par Blockscout, identifié via la liste réelle des plus gros détenteurs GRT) n'a enregistré aucun transfert GRT depuis le 21/09/2026 (résultat vide confirmé). Aucun événement whale daté <48h trouvé non plus via WebSearch (Whale Alert n'a rien retourné de spécifique à GRT sur la période).",
+        "note": "Recherche ciblée refaite ce cycle (whale alert BTC, fenêtre des 48h précédant le 04/10/2026) : les résultats WebSearch retrouvés (transferts de 4,5 Md$ Bitfinex, 608,8 M$ Xapo→Binance, 466,51 M$ Coinbase, etc.) sont des compilations d'événements passés sans date exploitable rattachable à ce cycle précis — non retenus pour éviter de présenter un fait ancien comme un signal frais.",
         "source_url": null
       }
     },
-    "TIA": {
-      "last_computed_at": "2026-09-23T08:27:00Z",
+    "ETH": {
+      "last_computed_at": "2026-10-04T08:26:00Z",
       "competitor": {
-        "ticker": "AVAIL",
-        "name": "Avail",
-        "comparison_note": "Au 23 septembre 2026 (CoinGecko API, appel direct) : TIA cote 0,529586 dollar, capitalisation 515,42 millions de dollars (rang #109), en forte hausse de 18,27 % sur 24h, ~58,23 % sur 7 jours et ~38,83 % sur 30 jours. Avail cote 0,00235195 dollar, capitalisation 9,44 millions de dollars (rang #1335), 24h +3,85 %, 7 jours ~+13,76 %, 30 jours ~+17,30 %. TIA surperforme très largement Avail sur toutes les fenêtres cette semaine."
+        "ticker": "SOL",
+        "name": "Solana",
+        "comparison_note": "Ethereum cote 2 687,53$ (CoinMarketCap, rang #2, capitalisation ~328,15 Md$) contre 119,23$ pour Solana (rang #7, capitalisation ~70,12 Md$) — résultats indexés via WebSearch le 04/10/2026, écart d'environ 4,68x en faveur d'ETH. Solana affiche un volume 24h de 2,48 Md$ (-2,23% sur 24h) ; volume 24h ETH non confirmé précisément ce cycle au-delà de 5,46 Md$ cité par un résultat distinct."
       },
       "long_term_thesis": {
-        "bull": "Celestia a publié une proposition révisée de 'Sustainable Blob Economy' le 22 septembre 2026 (Cryptopolitan) : engagements de capacité payante, services de données bondés ('bonded data services'), et pistes pour utiliser une partie des revenus du protocole afin de réduire à terme l'émission de TIA — un catalyseur tokenomics direct, coïncidant avec une hausse de 12,44 % à 0,4867$ le même jour. Sur le plan compétitif, données Growthepie datées du 22/09/2026 : coût moyen sur 30 jours de 0,0188$/Mo pour Celestia contre 0,0325$ pour les blobs Ethereum et 0,0363$ pour EigenDA — positionnement de leader en coût dans la disponibilité de données (DA).",
-        "base": "Le marché de la disponibilité de données modulaire (Celestia, Avail, EigenDA) se segmente par cas d'usage plutôt que de converger vers un seul gagnant : Celestia sert les rollups cherchant coût et décentralisation prouvée à l'échelle, EigenDA cible l'écosystème natif Ethereum, Avail vise l'infrastructure multichain neutre (source : BlockEden.xyz, analyses datées janvier-février 2026 — non re-confirmées cette semaine, donc à traiter comme contexte structurel plutôt que donnée fraîche).",
-        "bear": "TIA reste à -97,46 % de son ATH (CoinGecko, athChangePercentage au 23/09/2026) et fait face à une pression de déblocage régulière de la part de l'équipe/investisseurs — une vente de 2,03M$ de TIA par l'équipe a été rapportée en juillet 2026 (AMBCrypto/Bitget), illustrant un risque structurel d'offre récurrent qui peut peser sur les rallyes comme celui de cette semaine.",
-        "assumptions_note": "Prix/capitalisation : CoinGecko API, appel direct, 23/09/2026. Catalyseur tokenomics et données de coût : WebSearch, sources datées et citées ci-dessus. Le classement 'leader du marché DA' cité dans le bull case provient d'articles de janvier-février 2026 et n'a pas été re-vérifié à une date récente — présenté comme contexte, pas comme fait confirmé cette semaine."
+        "bull": "Le paysage du staking via ETF continue de se structurer : le split inversé 1-pour-3 de l'ETF ETHA (BlackRock) programmé en octobre 2026 (annoncé en août, consolide les parts sans changer la valeur détenue) s'ajoute à l'activation du staking chez Grayscale (ETHE, Mini Trust) et au projet de Fidelity (FETH, jusqu'à 100% de l'ETH du fonds stakable, 85% du rendement reversé) — accélération de l'offre de produits ETF générateurs de rendement plutôt qu'un simple véhicule de prix.",
+        "base": "Open interest agrégé ETH à environ 33,77 Md$ (CoinGlass, via WebSearch), en léger repli par rapport aux ~34,81 Md$ rapportés il y a trois cycles (25/09) — cohérent avec le dégonflement de levier observé en parallèle sur BTC ce même cycle plutôt qu'un mouvement spécifique à ETH.",
+        "bear": "La TVL DeFi sur la chaîne Ethereum ressort ce cycle à environ 92,14 Md$ (TVL native, page DefiLlama par chaîne, via WebSearch) — une valeur très supérieure aux ~52,74 Md$ reconduits identiques pendant trois cycles consécutifs (21, 23, 25/09) et déjà signalés comme suspects de cache : ce nouveau chiffre, obtenu par une requête différente (répartition par chaîne plutôt qu'une page agrégée), corrige probablement une valeur restée bloquée en cache plutôt que de représenter une vraie hausse soudaine — à confirmer sur un prochain cycle avant de lui faire confiance pleinement. Aucun signal de mouvement whale daté dans les 48h précédant ce cycle n'a été confirmé via WebSearch (résultats non datés).",
+        "assumptions_note": "Sources : CoinMarketCap, CoinGlass, DefiLlama via résultats indexés WebSearch (accès API/page direct bloqué par le proxy réseau, revérifié ce cycle) ; Cointelegraph/TheBlock pour le volet ETF/staking. Le chiffre de TVL de 92,14 Md$ est à revérifier au cycle suivant avant d'être considéré comme stable, conformément à la règle de prudence sur les écarts soudains non expliqués."
       },
       "open_interest": {
-        "value_usd": 50734503,
+        "value_usd": 33771285798,
         "funding_rate_pct": null,
-        "source": "CoinGlass (résultat indexé via WebSearch)",
-        "note": "50,73M$ — quasi identique aux 50,73M$ du cycle précédent (15/09/2026) malgré une hausse de ~58 % sur 7 jours dans l'intervalle : forte suspicion de page indexée en cache, à vérifier via un appel direct à CoinGlass. Funding rate TIA non trouvé cette fois (aucune source datée distincte de l'OI)."
+        "source": "CoinGlass (résultat indexé via WebSearch — accès direct non disponible dans cet environnement, revérifié ce cycle)",
+        "note": "Open interest agrégé ~33,77 Md$, en léger repli par rapport aux ~34,81 Md$ du cycle du 25/09/2026 — valeur nouvelle, pas identique au cycle précédent. Funding rate non trouvé sous forme chiffrée fiable ce cycle (page CoinGlass retrouvée sans valeur numérique claire) : laissé à null plutôt que de reconduire la valeur du cycle précédent (0,0098%) sans confirmation fraîche."
+      },
+      "defi_tvl": {
+        "value_usd": 92139000000,
+        "change_7d_pct": null,
+        "source": "DefiLlama, page chaîne Ethereum, métrique \"TVL native\" (résultat indexé via WebSearch — api.llama.fi et defillama.com bloqués par le proxy réseau)",
+        "note": "Rupture avec les ~52,742 Md$ reconduits identiques aux cycles du 21, 23 et 25/09/2026 (déjà signalés comme suspects de cache dans les notes précédentes) : ce cycle a interrogé la page de répartition par chaîne de DefiLlama (TVL native ~92,139 Md$, TVL \"bridged\" distincte à ~404,053 Md$ — non utilisée ici pour rester cohérent avec la définition \"TVL native/chaîne\"). Traiter cette nouvelle valeur avec prudence jusqu'à confirmation sur un cycle suivant : le saut pourrait refléter soit la correction d'un cache resté bloqué, soit une différence de méthodologie entre les deux pages DefiLlama interrogées."
+      },
+      "onchain_signal": {
+        "available": false,
+        "note": "Le MCP Blockscout ne fournit toujours pas d'endpoint de détection générique de mouvements de baleines (confirmé aux cycles précédents, non re-testé en détail ce cycle pour préserver le quota d'appels Blockscout du jour) ; recherche WebSearch ciblée (fenêtre 48h) : les résultats retrouvés (transferts de 154,58 M$, 504 M$, 375 M$, etc.) sont des compilations sans date exploitable rattachable à ce cycle précis — non retenus.",
+        "source_url": null
+      }
+    },
+    "FET": {
+      "last_computed_at": "2026-10-03T08:20:00Z",
+      "competitor": {
+        "ticker": "RENDER",
+        "name": "Render",
+        "comparison_note": "Au 03/10/2026 (CoinGecko, appel direct compare-coins) : FET cote 0,217789 $ (cap. 503,5 M$, rang #114, -8,38% 24h, -9,90% 7j, +41,10% 30j, -93,69% depuis son ATH) contre RENDER à 1,93 $ (cap. 1,0027 Md$, rang #79, -2,99% 24h, +0,45% 7j, +35,17% 30j). RENDER reste ~2x plus capitalisé et nettement plus stable sur 7 jours ; les deux ont un fort rebond sur 30 jours mais FET a corrigé bien plus violemment ces derniers jours."
+      },
+      "long_term_thesis": {
+        "bull": "ASI:Chain (nouvelle L1 BlockDAG dédiée aux agents IA) a sa DevNet bêta en ligne, mainnet visé fin 2026 (BlockEden, 10/03/2026 ; MEXC news). La plateforme ASI:Create (lancement/déploiement d'agents IA autonomes) est en bêta ouverte. Un mécanisme \"Earn & Burn\" est cité par Benzinga comme catalyseur potentiel de hausse. FET reste classé parmi les tout premiers tokens IA par capitalisation (derrière RENDER/TAO/ICP selon plusieurs sources agrégées via WebSearch), avec un rebond de +41,1% sur 30 jours (CoinGecko, 03/10/2026).",
+        "base": "L'Artificial Superintelligence Alliance poursuit l'intégration opérationnelle de Fetch.ai, SingularityNET (et anciennement Ocean Protocol/CUDOS) autour du token FET unique ; la stratégie 2026 mise sur une expansion agressive hors-crypto (éducation, interopérabilité entreprise) plutôt que sur un seul narratif DeFi/compute. Le prix reste très volatil à court terme (-8,38% 24h, -9,90% 7j au 03/10/2026) tout en étant loin de son ATH (-93,69%).",
+        "bear": "Ocean Protocol a quitté l'Alliance pour des raisons idéologiques, avec un litige juridique portant sur ~120 M$ encore en cours (Cointelegraph, repéré via WebSearch) — signal réel de fragilité de gouvernance au sein de l'Alliance. KuCoin rapporte un épisode de -56% sur un mois durant 2026, illustrant le risque de queue. Des déblocages de tokens réguliers liés à la migration AGIX (ex. 2,51 M FET débloqués le 28/08/2026, ~0,092% de l'offre) ajoutent une pression vendeuse incrémentale, même individuellement faible.",
+        "assumptions_note": "Synthèse basée sur des recherches web réelles datées (BlockEden 10/03/2026 sur ASI:Chain ; Benzinga sur \"Earn & Burn\" ; Cointelegraph sur le litige Ocean Protocol ; KuCoin/MEXC sur les déblocages et la baisse de prix ; CoinGecko compare-coins en direct pour les chiffres de prix/cap du 03/10/2026). Aucune extrapolation depuis la connaissance générale du modèle — tout fait daté cité ci-dessus provient d'une recherche de ce cycle, pas d'une reconduction du cycle précédent (23/09/2026). Ne constitue pas un conseil d'investissement."
+      },
+      "open_interest": {
+        "value_usd": null,
+        "funding_rate_pct": null,
+        "source": "CoinGlass / Coinalyze (résultats indexés via WebSearch, aucun appel API direct possible — coinglass.com et coinranking.com bloqués par le proxy réseau)",
+        "note": "Détection de cache / incohérence : 3 requêtes WebSearch distinctes le même jour (03/10/2026) ont renvoyé 3 valeurs différentes pour l'OI total FET — 52,51 M$ (funding moyen 0,00295%), 60,83 M$, et 72,01 M$ (détail par exchange : MEXC 22,24 M$, Binance 20,24 M$, Bitget 10,42 M$, KuCoin 9,88 M$). Aucune de ces pages n'affiche d'horodatage fiable et aucune n'a pu être confirmée par un appel direct. La valeur 72,01 M$ est proche (±2,5%) du chiffre déjà enregistré au cycle précédent (73 857 101$, 23/09/2026) suspecté d'être mis en cache — plutôt que de reconduire un chiffre potentiellement périmé ou d'arbitrer entre 3 résultats contradictoires non vérifiés, la valeur est laissée à null."
       },
       "defi_tvl": {
         "value_usd": null,
         "change_7d_pct": null,
         "source": null,
-        "note": "DefiLlama référence bien une page chain/celestia (TVL, frais, protocoles), mais aucun chiffre exact n'a pu être extrait des résultats de recherche ce cycle (cohérent avec le cycle précédent). Accès direct à api.llama.fi bloqué par la politique réseau de cette session (EGRESS_BLOCKED)."
+        "note": "Aucun protocole DefiLlama dédié identifié pour FET/Fetch.ai/ASI Alliance (recherche WebSearch ciblée le 03/10/2026, aucune page DefiLlama référencée pour ce token) ; api.llama.fi également inaccessible en appel direct (bloqué par le proxy réseau). Cohérent avec le cycle précédent (23/09/2026) qui concluait de même — confirmé à nouveau, pas une reconduction aveugle."
+      },
+      "onchain_signal": {
+        "available": true,
+        "note": "ERC-20 sur Ethereum (contrat 0xaea46A60368A7bD060eec7DF8CBa43b7EF41Ad85, vérifié via Blockscout lookup_token_by_symbol, chain_id=1 ; exchange_rate on-chain 0,218179$ cohérent avec le prix CoinGecko 0,217789$ du même jour). Mouvement réellement daté dans la fenêtre de 48h : série de transferts FET depuis/vers le hot wallet Binance (0x28C6c06298d514Db089934071355E5743bf21d60) le 03/10/2026 entre 07:54 et 08:18 UTC, le plus important étant un retrait de 149 996,35 FET (~32 724 $ au cours du jour) vers 0x64e47D59676548A92De8BE9a1e64f92Ea8fEbc0c. À noter honnêtement : il s'agit de flux de retrait/dépôt de taille modeste et récurrente (~3k-150k FET par transfert), pas d'un mouvement de 'whale' au sens fort — un flux d'échange ordinaire confirmé, pas un signal directionnel marquant.",
+        "source_url": "https://eth.blockscout.com/tx/0x8a62acbbd2ade46ef9d24ec20373612915128c7dab135f51733f3fb472e1ca02"
+      }
+    },
+    "GRT": {
+      "last_computed_at": "2026-10-03T08:20:00Z",
+      "competitor": {
+        "ticker": "SQD",
+        "name": "SQD (Subsquid)",
+        "comparison_note": "Comparaison CoinGecko en direct (compare-coins, 03/10/2026) : GRT cote $0,02804, cap. $306,85M (rang #151), -4,12% 24h / +1,46% 7j / +69,43% 30j. SQD cote $0,02827, cap. $36,96M (rang #612, ~8x plus petit), -3,77% 24h / -7,84% 7j / -16,36% 30j. Le Graph a nettement surperformé SQD sur 30 jours malgré une baisse commune sur 24h. Sur le plan produit, la doc officielle SQD (docs.sqd.dev/sdk/subsquid-vs-thegraph, consultée 03/10/2026) revendique une indexation 10 à 50x plus rapide que The Graph pour la donnée historique (1k-50k blocs/s contre 100-150 blocs/s), et The Graph a définitivement fermé son 'Hosted Service' en 2026, poussant les utilisateurs vers le réseau décentralisé ou vers des alternatives comme SQD."
+      },
+      "long_term_thesis": {
+        "bull": "Narratif 'couche de données pour l'IA agentique' en construction (ex. article Hackernoon sur un marché agentique IA estimé $47 milliards citant The Graph) combiné à la fermeture définitive du Hosted Service en 2026, qui force la migration vers le réseau décentralisé payant en GRT et pourrait soutenir la demande de requêtes/staking à moyen terme. Forte reprise de prix sur 30 jours (+69,43%, CoinGecko 03/10/2026) signalant un regain d'intérêt spéculatif.",
+        "base": "Protocole mature mais revenus de requêtes encore modestes (frais trimestriels ~$154k au Q3 2025 selon un chiffre indexé DefiLlama, donc déjà daté et non confirmé pour 2026) ; coexistence probable avec des concurrents plus rapides sur des niches spécifiques (multi-chaînes non-EVM, latence temps réel) sans perte de la base d'indexeurs/curateurs existante.",
+        "bear": "Désavantage technique documenté par le concurrent lui-même (débit d'indexation 100-150 blocs/s vs 1k-50k blocs/s pour SQD, docs.sqd.dev), risque de perte de parts de marché sur les subgraphs nécessitant de la donnée historique lourde. Jeton toujours à -99,01% de son ATH (CoinGecko, athChangePercentage), traçant une tendance de fond très dégradée malgré les rebonds ponctuels.",
+        "assumptions_note": "Bull/base/bear construits à partir de WebSearch (sqd.dev/docs.sqd.dev comparatif officiel SQD vs The Graph, article Hackernoon sur la thèse IA agentique, chiffre de frais Q3 2025 indexé DefiLlama) et des métriques CoinGecko live du 03/10/2026 ; aucune extrapolation non sourcée. Le chiffre de frais trimestriels est signalé comme potentiellement obsolète (Q3 2025, pas 2026) et ne doit pas être traité comme une donnée de ce cycle."
+      },
+      "open_interest": {
+        "value_usd": null,
+        "funding_rate_pct": null,
+        "source": "CoinGlass (résultat indexé via WebSearch, non confirmé en direct)",
+        "note": "Détection de cache probable : trois requêtes WebSearch sur CoinGlass renvoient des snapshots incohérents entre eux et avec les données live — un résultat cite GRT à $0,01796-0,01786 et une cap. de marché $195,68M/$181,89M, alors que l'appel CoinGecko direct de ce cycle (03/10/2026) donne $0,02804 et une cap. de $306,85M. Les valeurs d'OI associées ($13,45M-$13,65M) sont donc probablement liées à une page indexée ancienne, pas à aujourd'hui (l'OI du cycle précédent était $12 819 930, proche mais non identique — insuffisant pour confirmer la fraîcheur). Accès direct à l'API CoinGlass non disponible (hors liste autorisée). Par prudence, valeur mise à null plutôt que reconduite."
+      },
+      "defi_tvl": {
+        "value_usd": null,
+        "change_7d_pct": null,
+        "source": "DefiLlama (résultat indexé via WebSearch, non confirmé en direct)",
+        "note": "Trois requêtes WebSearch distinctes sur defillama.com/protocol/the-graph (TVL de staking GRT) donnent trois chiffres incompatibles : $0 (mcap citée $181,89M), $91,46M/23,86% de la cap (mcap citée $383,32M), et $62,99M/21,22% de la cap (mcap non précisée) — aucune cohérente avec la cap. de marché réelle du jour ($306,85M, CoinGecko direct 03/10/2026). Appel direct à api.llama.fi bloqué par le proxy réseau de cette session (EGRESS_BLOCKED). Aucun chiffre n'est fiable à ce stade ; laissé à null plutôt que de choisir arbitrairement l'une des trois valeurs périmées."
       },
       "onchain_signal": {
         "available": false,
-        "note": "TIA vit sur sa propre chaîne Cosmos-SDK (non-EVM), hors du périmètre de Blockscout — vérification via WebSearch uniquement. Trouvé : une tendance générale d'accumulation ('adresses détenant >100k TIA en hausse de 12 % sur 30 jours') mais sans date précise <48h ni transaction individuelle chiffrée — ne remplit pas le critère du protocole (mouvement daté et chiffré). Aucun événement whale spécifique et récent trouvé.",
+        "note": "Contrat de Staking GraphProxy (0xF55041E37E12cD407ad00CE2910B8269B01263b9, Ethereum, vérifié via Blockscout get_address_info : proxy EIP-1967 'GraphProxy', implémentation 'L1Staking', tag officiel the-graph) interrogé via get_token_transfers_by_address sur la fenêtre 01-03/10/2026 : 0 transfert retourné. Recherche WebSearch ciblée sur un mouvement whale/exchange daté <48h n'a trouvé aucun événement récent, seulement des articles historiques (2021-2024).",
+        "source_url": "https://eth.blockscout.com/address/0xF55041E37E12cD407ad00CE2910B8269B01263b9"
+      }
+    },
+    "TIA": {
+      "last_computed_at": "2026-10-03T08:20:00Z",
+      "competitor": {
+        "ticker": "AVAIL",
+        "name": "Avail",
+        "comparison_note": "Au 03/10/2026 (CoinGecko, appel direct compare-coins) : TIA cote 0,444 $ (cap. 433,5 M$, rang #123, -4,66% 24h, -8,88% 7j, +23,18% 30j) contre AVAIL 0,0026 $ (cap. 10,5 M$, rang #1245, +1,52% 24h, +7,38% 7j, +21,39% 30j) — TIA reste ~41x plus gros par capitalisation mais a sous-performé AVAIL sur 24h/7j malgré un meilleur mois. Sur le plan narratif (blockeden.xyz, analyses datées janvier/février 2026), Celestia détiendrait ~50% du marché de la data availability avec 56+ rollups déployés, tandis qu'Avail mise sur l'unification cross-écosystème (70+ partenariats, Avail Nexus lancé nov. 2025) plutôt que sur la part de marché DA pure."
+      },
+      "long_term_thesis": {
+        "bull": "Position de leader technique maintenue : ~50% de part de marché DA et 56+ rollups sur Celestia (blockeden.xyz, article daté 24/02/2026 et 08/01/2026) ; mise à niveau Matcha visant à doubler la taille de bloc (128MB) et protocole expérimental Fibre Blockspace annoncé pour viser jusqu'à 1 Tbit/s (même source) — si la demande de blobspace des rollups L2 suit, cela pourrait soutenir les frais/l'usage réel de TIA.",
+        "base": "L'usage réel sur la chaîne reste minuscule comparé à l'ambition technique : frais de chaîne ~69$/24h et capacité utilisée ~0,15-0,18% d'après un snapshot indexé DefiLlama/throughput (daté de façon incertaine, trouvé via WebSearch le 03/10/2026) — le prix de TIA (-4,66% 24h / -8,88% 7j / +23,18% 30j, CoinGecko 03/10/2026) semble davantage piloté par le cycle narratif altcoins/modulaire que par une traction fondamentale mesurable sur la chaîne elle-même.",
+        "bear": "Concurrence qui s'intensifie sur deux fronts : EigenDA capte le segment Ethereum-loyaliste avec un débit déjà supérieur (15-100 MB/s, cible 'plusieurs centaines de MB/s' au T1 2026 selon blockeden.xyz) et profite de la sécurité du restaking Ethereum ; Avail multiplie les partenariats (70+) et son produit d'unification Nexus. En parallèle, l'écosystème DeFi natif sur la chaîne Celestia reste quasi inexistant (TVL proche de 0$, voir note defi_tvl ci-dessous) — peu de \"stickiness\" au-delà du rôle de simple couche DA.",
+        "assumptions_note": "Bull/base/bear construits à partir de blockeden.xyz (comparatif DA 2026, daté 08/01/2026 et 24/02/2026) et des chiffres de marché CoinGecko compare-coins du 03/10/2026 (appel direct). Le chiffre de frais de chaîne/throughput vient d'un résultat indexé via WebSearch dont la date exacte du snapshot n'est pas certaine — traité comme indicatif, pas comme une mesure \"aujourd'hui\"."
+      },
+      "open_interest": {
+        "value_usd": 52090000,
+        "funding_rate_pct": null,
+        "source": "CoinGlass (résultat indexé via WebSearch)",
+        "note": "52,09 M$ d'OI trouvé via WebSearch sur coinglass.com/currencies/TIA — différent du chiffre du cycle précédent (50 734 503$, +~2,7%), donc pas de suspicion de cache identique cette fois. MAIS le prix TIA cité dans ce même résultat indexé (0,4102$) ne correspond pas au prix live CoinGecko du 03/10/2026 (0,444$, -4,66% 24h) : l'indexation WebSearch peut donc refléter un snapshot plus ancien que le jour présent, pas forcément les dernières 24h. Funding rate : aucune valeur numérique datée trouvée, seulement une fourchette de référence générique (0,005%-0,02%/8h) sans date précise — laissé à null plutôt que d'extrapoler cette fourchette comme valeur actuelle."
+      },
+      "defi_tvl": {
+        "value_usd": null,
+        "change_7d_pct": null,
+        "source": "DefiLlama (résultat indexé via WebSearch)",
+        "note": "Résultats WebSearch contradictoires sur la page chain/celestia de DefiLlama : un extrait indique 0$ de TVL DeFi, un autre cite 3,1K$, un troisième (associé à un prix TIA de 0,31$ et une cap. de 287,28M$ — donc clairement un snapshot ancien, pas celui d'aujourd'hui) cite Stride (liquid staking) à 244 106$. Aucun chiffre daté et cohérent avec le marché du 03/10/2026 n'a pu être confirmé ; valeur laissée à null plutôt que de choisir arbitrairement l'un des trois chiffres incohérents entre eux."
+      },
+      "onchain_signal": {
+        "available": false,
+        "note": "Aucun signal whale/exchange daté <48h trouvé pour TIA au 03/10/2026. Le seul mouvement de grande taille identifié est l'accord Celestia Foundation / Polychain Capital (43 451 616,09 TIA, 62,5 M$, déblocage échelonné 16/08-14/11) mais il date de juillet 2025, hors fenêtre. Un chiffre de netflow spot négatif (~-254,50K$) existe mais provient d'un contexte daté février 2026, non d'aujourd'hui. Des données de débit réseau (blobs/throughput, ~827,63 MiB/jour, contributeurs Eclipse/LightLink/Orderly/Lyra-Zenith/B3) existent via l2beat/The Block mais sans date de snapshot certaine ni lien avec un mouvement whale/exchange précis — insuffisant pour un signal on-chain daté et fiable.",
         "source_url": null
       }
     },
     "CTSI": {
-      "last_computed_at": "2026-09-23T08:27:00Z",
+      "last_computed_at": "2026-10-03T08:20:00Z",
       "competitor": {
         "ticker": "FUEL",
         "name": "Fuel Network",
-        "comparison_note": "Au 23 septembre 2026 (CoinGecko API, appel direct) : CTSI cote 0,02955$, cap 27,99M$ (rang #749), 24h +1,21%, 7j +21,66%, 30j +11,54% — nette reprise depuis le creux du 16/09 (~0,0239$). FUEL cote 0,000801$, cap 7,50M$ (rang #1485), 7j +1,51%, 30j -7,40%. CTSI surperforme nettement son comparateur ce cycle-ci."
+        "comparison_note": "Au 2026-10-03 (CoinGecko compare-coins, appel direct) : CTSI cote 0,02947 $ (cap. 28,06 M$, rang #738, +19,31% sur 30j, -1,01% sur 7j) contre FUEL à 0,00075387 $ (cap. 7,13 M$, rang #1478, -3,98% sur 30j, -18,52% sur 7j) — la capitalisation de CTSI est environ 3,9x celle de FUEL et sa dynamique récente est nettement plus favorable (FUEL a perdu -18,5% en 7 jours contre -1% pour CTSI)."
       },
       "long_term_thesis": {
-        "bull": "Cartesi a atteint le statut Stage 2 sur L2BEAT (un des rares rollups à ce niveau de maturité/décentralisation), avec le \"PRT Honeypot\" — une bug-bounty live sur mainnet Ethereum testant le système de fraud-proof permissionless. Rollups V2 introduit une architecture multi-dApp qui doit réduire les coûts, et \"Cartesi Skills\" (toolkit dev) abaisse la barrière à l'entrée pour construire avec des outils mainstream (Linux dans la VM). Le prix reflète cette dynamique technique : +21,7% sur 7 jours, +11,5% sur 30 jours (CoinGecko, appel direct, 23/09/2026).",
-        "base": "Progrès techniques réels et documentés (affinement de l'API JSON-RPC, intégrations DA avec Espresso et Avail, retraits d'urgence désormais live en test) mais l'adoption reste naissante — rang #749 par cap. de marché, et la thèse d'un \"execution layer\" généraliste pour dApps reste à valider à l'échelle réelle plutôt que sur des démonstrations techniques.",
-        "bear": "Le rapport 200 jours moyenne mobile était en baisse depuis fin juin 2026 selon plusieurs sources techniques (signal de faiblesse long terme malgré le rebond récent). Autre risque structurel, non re-vérifié ce cycle mais dateant d'avril 2026 (WebSearch) : une concentration élevée des tokens — les 10 plus gros wallets détiendraient ~67% de l'offre, un seul wallet non-identifié ~25% — un facteur de risque de vente massive si ce wallet bouge, à surveiller plutôt qu'un fait confirmé pour ce cycle.",
-        "assumptions_note": "Sources : CoinGecko API (comparaison prix/cap datée du 23/09/2026), WebSearch daté (L2BEAT Stage 2, Rollups V2, Cartesi Skills — blog Cartesi et CoinMarketCap AI, consultés le 23/09/2026), et un chiffre de concentration de wallets non re-confirmé ce cycle (dernière source datée avril 2026)."
+        "bull": "Le protocole PRT (Permissionless Refereed Tournaments) couplé à l'algorithme Dave, qui rend la résolution de litiges (fraud proofs) permissionless sans comité de validateurs désigné, est en cours de déploiement 2025-2026 ; la pile technique (Machine Emulator v0.21.0, Rollups Contracts v3.0.0-alpha.9, nouveaux outils TypeScript @cartesi/client/@cartesi/react/@cartesi/wagmi-plugin) a continué d'avancer mois après mois jusqu'en août 2026 selon le blog officiel Cartesi — l'exécution technique reste sur les rails et le positionnement unique ('Linux complet on-chain', langages mainstream) reste un vrai différenciateur face à des rollups plus étroits comme Fuel.",
+        "base": "Le développement continue de façon régulière (mises à jour écosystème mensuelles confirmées jusqu'à août 2026) mais le prix reste très affaibli (-98,3% depuis l'ATH, CoinGecko) et la plupart des agrégateurs tiers de prévision de prix (coincheckup, mudrex, finst) anticipent une poursuite de la faiblesse ou une stagnation sur l'horizon 2026 — l'avancement technique ne s'est pas encore traduit en traction de marché.",
+        "bear": "Le contexte technique reste baissier (indice Fear & Greed à 28, 'Fear', cité sur la page de prévision MEXC) et la concurrence des récits 'app-specific rollup' (Fuel et d'autres L2/L3) continue de fragmenter l'attention et la liquidité entre de nombreux tokens d'infrastructure similaires ; en tant qu'ERC-20, CTSI reste exposé aux flux de vente génériques des exchanges — confirmé concrètement aujourd'hui par de la donnée on-chain réelle (voir onchain_signal) montrant un mouvement inter-exchange vers Binance, cohérent avec un rebalancement/vente ordinaire plutôt qu'une accumulation.",
+        "assumptions_note": "Thèses ancrées sur sources réelles et datées du 2026-10-03 : blog officiel Cartesi (ecosystem updates), CoinGecko (prix/variations/ATH), MEXC (citation Fear&Greed), Blockscout (flux on-chain réel). Aucune extrapolation au-delà de ce que ces sources affirment explicitement."
       },
       "open_interest": {
-        "value_usd": 2720000,
-        "funding_rate_pct": null,
-        "source": "Loris Tools, agrégat 6 venues (résultat indexé via WebSearch)",
-        "note": "CoinGlass affiche toujours exactement 4 883 375$ — 5e cycle consécutif avec cette valeur identique au centime près, confirmation forte qu'il s'agit d'une page en cache, pas d'une donnée fraîche ; donc écarté comme source principale ce cycle. Repli sur Loris Tools : OI agrégé 2,72M$ sur 6 venues (BINANCE dominant, ~1,96M$ OI / 786,12K$ volume 24h), volume 24h agrégé 944,48K$. Funding rate laissé à null : signes mixtes selon les venues (de -24,20 bps sur CRYPTOCOM à +1,00 bps sur BINANCE, 4 positifs/2 négatifs) — aucun chiffre agrégé unique fiable trouvé, choisir une seule venue aurait été arbitraire."
+        "value_usd": 2186745,
+        "funding_rate_pct": 0.01,
+        "source": "CoinGlass (via WebSearch, confirmé de façon indépendante à deux reprises le 2026-10-03)",
+        "note": "La valeur CoinGlass a enfin bougé : 2 186 745$ aujourd'hui, contre 4 883 375$ figé sur les cycles précédents (cache CoinGlass) et contre 2 720 000$ du repli Loris Tools utilisé le 23/09/2026 — confirmée deux fois indépendamment le même jour, donc fraîcheur retrouvée, plus besoin de repli alternatif cette fois. Funding rate retenu : Binance +0,0100% (vs Kraken -0,1125%/-0,1409% prévu, exchange moins liquide pour CTSI, non retenu comme référence)."
       },
       "defi_tvl": {
         "value_usd": null,
         "change_7d_pct": null,
         "source": "Non applicable",
-        "note": "Reconfirmé ce cycle (WebSearch, 23/09/2026) : Cartesi est un rollup d'exécution générale (app-specific, L2/L3 selon déploiement), pas un protocole DeFi avec valeur verrouillée propre. Les rollups Cartesi ne sont pas suivis de manière significative dans les classements de chaînes de DefiLlama. Toujours non applicable, pas une absence de recherche."
+        "note": "Cartesi est un rollup d'exécution générale (app-specific rollups, machine Linux complète on-chain), pas un protocole DeFi avec une TVL propre — reconfirmé par WebSearch le 2026-10-03 via le blog officiel Cartesi, qui se positionne comme 'The Execution Layer DeFi Has Been Waiting For' (un fournisseur d'infrastructure pour la DeFi, pas lui-même un protocole DeFi à verrouillage de capital)."
       },
       "onchain_signal": {
-        "available": false,
-        "note": "Blockscout MCP (chain_id=1, contrat CTSI principal 0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D) : l'appel direct_api_call sur /api/v2/tokens/{addr}/transfers a échoué (réponse >130k caractères, au-delà de la limite de sécurité de 100k de l'outil) ; pas de nouvelle tentative avec filtrage/pagination pour préserver le budget de session Blockscout (8 appels gratuits au total, très limité). Repli WebSearch : aucun mouvement whale daté <48h de 2026-09-23 trouvé — le seul événement notable retrouvé (dépôt de ~24M CTSI sur Binance) date d'avril 2026, trop ancien pour compter.",
-        "source_url": null
+        "available": true,
+        "note": "Confirmé via Blockscout (direct_api_call, /api/v2/tokens/{contrat}/transfers, chain_id=1, contrat 0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D). La réponse complète (89 398 caractères) dépassait à nouveau la limite de 100k caractères de l'outil comme documenté au cycle précédent, mais cette fois le résultat a été sauvegardé en fichier local par l'outil et lu via jq plutôt que ré-essayé en boucle. Résultat réel et daté : environ 837 500 CTSI (~24 700$ au cours actuel) transférés en 8 transactions entre 04:22 et 08:06 UTC le 2026-10-03, depuis le wallet exchange tagué on-chain 'BtcTurk 17' (0xb334A61a6209F14b5fA5f1684a4eD7621f66e1eF) via des adresses intermédiaires jusqu'au hot wallet Binance (0x28C6c06298d514Db089934071355E5743bf21d60, tag confirmé 'Binance: Hot Wallet / Binance 14'). C'est un mouvement inter-exchange réel et chiffré sur les dernières heures, pas un signal net d'accumulation ou de retrait d'un wallet privé.",
+        "source_url": "https://eth.blockscout.com/token/0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D"
       }
     },
     "PEAQ": {
-      "last_computed_at": "2026-09-23T08:27:00Z",
+      "last_computed_at": "2026-10-03T08:20:00Z",
       "competitor": {
         "ticker": "IOTX",
         "name": "IoTeX",
-        "comparison_note": "Au 23 septembre 2026 (CoinGecko API, appel direct) : PEAQ cote 0,03666$, cap 93,02M$ (rang #311), 24h +5,05%, 7j +51,67%, 30j +87,62% — rally de septembre qui s'accélère encore (30j en hausse par rapport aux +44,8% déjà notés au cycle précédent). IOTX cote 0,003847$, cap 36,30M$ (rang #634), 7j +31,16%, 30j +35,62%. PEAQ surperforme largement IOTX ce mois-ci."
+        "comparison_note": "Au 03/10/2026 (CoinGecko, compare-coins, appel direct), PEAQ capitalise 105 996 638 $ (rang #282, prix 0,04143 $) contre 32 180 393 $ pour IOTX (rang #673, prix 0,0034085 $) — PEAQ vaut donc environ 3,3x IOTX en capitalisation. Sur 30 jours PEAQ a progressé de +85,53% contre +11,91% pour IOTX, creusant nettement l'écart ; sur 24h les deux reculent (PEAQ -1,26%, IOTX -5,79%)."
       },
       "long_term_thesis": {
-        "bull": "Les contrats \"Economics 2.0\" sont live sur le mainnet peaq depuis le 1er septembre 2026. Le partenariat CoinList pour les \"Initial Machine Offerings\" (IMO, tokenisation de robots en actifs générateurs de rendement) cible une base de 12,5M+ utilisateurs revendiqués. Solana a annoncé le 21 mai 2026 que son service de paiement pay.sh est directement consommable par les robots/machines sur peaq. Un MoU signé avec la VARA de Dubaï vise un cadre réglementaire dédié à la robotique on-chain (Machine Economy Free Zone). Le prix confirme cette dynamique : +87,6% sur 30 jours (CoinGecko, 23/09/2026).",
-        "base": "Progrès d'infrastructure réels, mais la thèse dépend entièrement de l'onboarding effectif de fabricants d'appareils, d'intégrateurs système et d'opérateurs DePIN à grande échelle — à ce stade plutôt des partenariats et annonces que des revenus récurrents générés par des machines en production. Un déblocage de tokens a eu lieu le 12 septembre 2026 : 96 430 358 tokens (2,3% de l'offre totale, ~4,5% de la cap. de marché au moment du déblocage) — un événement de dilution réel et récent à intégrer dans l'analyse.",
-        "bear": "Le calendrier de vesting continue de créer une pression de vente récurrente et prévisible. L'EU Data Act est jugé plutôt favorable au secteur, mais la variance réglementaire entre juridictions pourrait ralentir le déploiement international. Point d'infrastructure notable trouvé ce cycle (WebSearch, 23/09/2026) : peaqscan.xyz et l'instance Blockscout native de peaq (scout.peaq.xyz) ont été retirées en août 2026, peaqscan.xyz redirigeant désormais vers Subscan — une réduction des outils d'observabilité on-chain disponibles pour cette chaîne, qui explique aussi pourquoi elle reste hors du périmètre Blockscout MCP de ce projet.",
-        "assumptions_note": "Sources : CoinGecko API (comparaison datée du 23/09/2026), WebSearch daté (annonces peaq/CoinList/Solana/VARA, blog peaq et Bitget News, consultés le 23/09/2026), retrait de peaqscan/Blockscout confirmé via WebSearch (docs.peaq.xyz + X officiel peaq)."
+        "bull": "Catalyseurs réels récents cités par plusieurs sources datées (blockeden.xyz, avril 2026 ; mexc.com news #146891) : MOU d'octobre 2025 avec la VARA de Dubaï créant une \"Machine Economy Free Zone\" pour la robotique/machines tokenisées, intégrations Mastercard et Bosch, et une traction réseau mesurée (transactions quotidiennes passées d'environ 30 000 à 150 000 entre juillet et fin septembre/début octobre, période Q3 2025 selon la source). Le prix CoinGecko est en hausse de +85,5% sur 30 jours (au 03/10/2026).",
+        "base": "La narrative DePIN/robotique progresse mais reste à un stade précoce : seulement 2,558 Md PEAQ en circulation sur un plafond de 5,667 Md (≈45%), et le prix reste à -94,5% de son ATH (CoinGecko, athChangePercentage). Le token oscille entre rallyes liés aux annonces d'adoption et pression de déblocages mensuels qui plafonnent les hausses, selon les analyses trouvées (onekey.so deep research, techflowpost).",
+        "bear": "Plusieurs sources (onekey.so, techflowpost, markets.financialcontent.com) décrivent un calendrier de déblocage \"brutal et prévisible\" : allocation investisseurs = 34% de l'offre totale, 84,84M PEAQ débloqués en janvier 2026, puis des déblocages mensuels documentés par tokenomist.ai courant 2026 (avril ≈5,8% de la cap, mai ≈5,5%, juin ≈5,2%, juillet ≈5,0% / ~96,4M tokens aux Core Contributors, août ≈4,7%, septembre ≈4,5%, octobre 2026 ≈4,3%). Le risque cité est que ces injections d'offre dépassent durablement la demande organique liée à l'usage réel, plus la concurrence d'autres réseaux/infrastructures DePIN spécialisées.",
+        "assumptions_note": "Thèse construite sur CoinGecko (compare-coins, données live 03/10/2026) et WebSearch réel (tokenomist.ai calendrier de déblocage, blockeden.xyz avril 2026, onekey.so, techflowpost, mexc.com news #146891) — jamais extrapolée depuis la connaissance générale du modèle. Les dates de déblocage 2026 sont telles que rapportées par tokenomist.ai au moment de la recherche (03/10/2026) ; non re-vérifiées sur la page source elle-même (accès direct bloqué dans cet environnement)."
       },
       "open_interest": {
-        "value_usd": 1155106,
+        "value_usd": null,
         "funding_rate_pct": null,
-        "source": "CoinGlass (résultat indexé via WebSearch)",
-        "note": "ATTENTION — valeur IDENTIQUE au centime près au cycle précédent (16/09/2026 : 1 155 106$), alors que le prix PEAQ a bondi de +87,6% sur 30 jours dans l'intervalle : très probablement une page CoinGlass indexée en cache plutôt qu'une donnée fraîche, à vérifier par un appel direct dès que l'accès réseau le permettra. Valeur conservée telle quelle (pas de correction silencieuse) mais à traiter avec une forte réserve ce cycle. Funding rate non trouvé, laissé à null."
+        "source": "CoinGlass / Coinalyze (WebSearch)",
+        "note": "Donnée écartée volontairement : CoinGlass indique désormais 1,02M$ (donc enfin différent des 1 155 106$ identiques des deux cycles précédents — le gel apparent a cessé), mais Coinalyze donne 701,8k$ pour le même instrument au même moment (écart ~30-45%). Plus grave : le résultat CoinGlass associe ce 1,02M$ à une capitalisation de marché de 45,19M$, alors que la cap réelle PEAQ au 03/10/2026 (CoinGecko) est de 105,99M$ — un facteur ~2,3x d'écart qui correspond à peu près au niveau de cap d'avant le rallye de +85,5% sur 30j, ce qui suggère que la page CoinGlass retournée est elle-même une snapshot obsolète, pas une lecture temps réel. Faute de pouvoir confirmer une valeur fraîche et cohérente, champ laissé à null plutôt que de reconduire un chiffre non fiable une 3e fois."
       },
       "defi_tvl": {
-        "value_usd": null,
+        "value_usd": 0,
         "change_7d_pct": null,
-        "source": "DefiLlama (tentative directe bloquée par la politique réseau de cette session — EGRESS_BLOCKED sur defillama.com)",
-        "note": "Aucun chiffre frais trouvé ce cycle malgré plusieurs requêtes WebSearch ciblées — seul le rang #218 des chaînes par TVL a pu être re-confirmé indirectement, identique au cycle précédent (autre indice possible de cache, pas de certitude). Le chiffre du cycle précédent (568 647$) n'est PAS reconfirmé ce cycle et n'est donc pas repris ici — laissé à null plutôt que réutilisé comme s'il était à jour."
+        "source": "DefiLlama (defillama.com/protocols/depin/peaq, via WebSearch)",
+        "note": "Recherche ciblée (incluant piste wrapped/bridged) confirme un TVL quasi nul : la page DefiLlama \"DePIN Protocols\" de la chaîne peaq ne liste qu'un seul protocole (\"Silencio\") affiché à 0$, cohérent avec le constat du cycle précédent (rang #218 des chaînes par TVL). Une première requête WebSearch avait renvoyé un chiffre contradictoire (~561k$ avec des frais 24h/30j) mais ce résultat mélangeait manifestement du contenu sans rapport (ForkLog, restaking Ethereum) et a été écarté comme non fiable. change_7d_pct non disponible (TVL nul, pas de série exploitable)."
       },
       "onchain_signal": {
         "available": false,
-        "note": "peaq est une chaîne L1 Substrate non-EVM, hors périmètre Blockscout MCP (confirmé à nouveau ce cycle : son propre explorateur EVM natif, scout.peaq.xyz, a d'ailleurs été retiré en août 2026). WebSearch ciblé (Subscan, whale wallet peaq) n'a trouvé aucun mouvement de gros porteur daté <48h de 2026-09-23 avec un montant précis — seulement des informations générales sur le fonctionnement des wallets peaq et la liste des explorateurs disponibles.",
+        "note": "Aucun mouvement whale ou signal on-chain daté <48h trouvé via WebSearch (Subscan, explorateur peaq). Seule donnée réseau trouvée (Dune Analytics, dashboard dune.com/blockchains/peaq) : ~267,74k transactions et ~2,08k adresses actives sur une semaine, mais sans horodatage précis permettant de confirmer qu'elle couvre les dernières 48h — jugée insuffisante pour satisfaire l'exigence de précision (montant+date) de la méthodologie. Chaîne Substrate non-EVM, hors périmètre Blockscout comme prévu.",
         "source_url": null
       }
     },
     "LINK": {
-      "last_computed_at": "2026-09-23T08:27:00Z",
+      "last_computed_at": "2026-10-03T08:20:00Z",
       "competitor": {
         "ticker": "PYTH",
         "name": "Pyth Network",
-        "comparison_note": "Au 23 septembre 2026 (CoinGecko API, appel direct) : LINK cote 13,01$, cap 9,73Md$ (rang #15), 24h +1,06%, 7j +19,62%, 30j +11,94% — poursuite du rally après le repli mi-septembre déjà noté au cycle précédent. PYTH cote 0,06671$, cap 525,36M$ (rang #107), 7j +24,35%, 30j +30,15% — PYTH surperforme LINK en relatif ce mois-ci malgré la base bien plus petite."
+        "comparison_note": "Au 3 octobre 2026 (CoinGecko, appel direct compare-coins) : LINK cote 13,99$, cap. 10,47Md$ (rang #13), -3,17% sur 24h, +24,64% sur 30j, -73,45% depuis son ATH. PYTH cote 0,0783$, cap. 616,2M$ (rang #104), +1,41% sur 24h, +36,07% sur 30j, -93,46% depuis son ATH. La cap. de LINK reste ~17x celle de PYTH, mais PYTH progresse plus vite sur 30j (modèle 'pull', adopté par les perps/dérivés) alors que Chainlink (modèle 'push', dominant chez les DeFi blue-chips comme Aave/Compound) perd des parts de marché face à Pyth et RedStone selon la comparaison d'oracles de RedStone (30/03/2026, cointelegraph.com)."
       },
       "long_term_thesis": {
-        "bull": "Partenariat stratégique avec Bottomline annoncé le 3 septembre 2026 pour des paiements cross-chain destinés à 600+ banques, via CCIP et CRE (Chainlink Runtime Environment) — les banques gardent leurs standards de messagerie existants. 16 nouvelles intégrations annoncées le 21 septembre 2026 sur 7 chaînes, incluant Arc et Monad. La Strategic Reserve de Chainlink a atteint 70,5M$ le 21 septembre 2026, après un ajout de 91 100 LINK (~1,06M$) portant ses avoirs totaux à ~5,86M LINK — le protocole achète son propre token avec ses revenus. Chainlink reste dominant sur le marché des oracles avec ~70% de part de marché et 33,1Md$ de valeur sécurisée (TVS), loin devant Chronicle (7,49Md$) et Pyth (3,08Md$). Sergey Nazarov (fondateur) a participé à une réunion de la Réserve fédérale avec de grandes institutions financières le 24 septembre 2026 — signal de pertinence institutionnelle/réglementaire croissante.",
-        "base": "Momentum de prix réel (7j +19,6%, 30j +11,9%, CoinGecko 23/09/2026) porté par ces annonces, mais la concurrence oracle s'intensifie sur les marges : RedStone est passé de sa première intégration DeFi début 2023 à 9Md$ de TVS en septembre 2025 (+1400% en un an), et Pyth/RedStone ciblent spécifiquement les chaînes à haut débit et coût sensible (Solana, L2 rapides) où la \"prime de certification\" de Chainlink pèse moins — un risque estimé de 20-30% de part de marché DeFi cédée sur ces segments précis, pas sur l'ensemble du marché.",
-        "bear": "Les attaques par manipulation d'oracle de prix ont causé plus de 165,8M$ de pertes DeFi entre janvier 2023 et mai 2025 (17,3% des exploits majeurs) — un risque systémique auquel LINK est directement exposé en tant que plus gros oracle du marché. Comportement des gros porteurs mixte ce mois : dépôts vers les exchanges (620 420 LINK, ~7,6M$, vers Coinbase le 7 septembre 2026 ; 2,41M LINK/~26M$ sur trois semaines) en parallèle d'une accumulation par d'autres gros porteurs (~10,36M LINK/~120M$ sur 96h mi-septembre) — signal de distribution non totalement résolu malgré le rally.",
-        "assumptions_note": "Sources : CoinGecko API (comparaison datée du 23/09/2026), WebSearch daté (partenariat Bottomline, intégrations, Strategic Reserve, réunion Fed — Chainlink newsroom et CoinMarketCap AI ; parts de marché oracle — CoinLaw/bex.co ; mouvements whale — Parameter.io/crypto.news/CoinCentral, consultés le 23/09/2026)."
+        "bull": "CCIP 2.0 lancé en septembre 2026, avec adoption citée par ANZ et Fidelity International ; partenariat avec Infosys pour étendre le Cross-Chain Interoperability Protocol à 600+ banques. La Strategic Reserve de Chainlink a ajouté 373 791 LINK en septembre 2026 (total ~6,05M LINK, ~90M$ à l'époque, KuCoin News). Accumulation de plus de 2,5M LINK par des baleines sur une fenêtre de 10 jours fin septembre 2026, LINK touchant alors un plus haut annuel à 14,89$ (cryptobriefing.com).",
+        "base": "Chainlink reste l'oracle dominant par valeur sécurisée (~70% de part de marché selon la comparaison RedStone du 30/03/2026) mais cède du terrain à Pyth (modèle pull, +36% sur 30j au 03/10/2026) et RedStone (9Md$ de TVS en sept. 2025, +1400% en un an, architecture hybride push/pull). Le prix a évolué en range volatil (13-15$) tout au long de septembre 2026, avec un open interest dérivés très instable (650-846M$ selon les dates) plutôt qu'une tendance nette.",
+        "bear": "Le repli de -3,17% sur 24h au 03/10/2026 malgré un +24,64% sur 30j, et un prix toujours -73,45% sous l'ATH, illustrent une rallye récente en grande partie portée par le levier : l'open interest a doublé puis reculé de ~25% en quelques semaines en septembre 2026 (sources CoinGlass via presse spécialisée), donc vulnérable à un déleveraging rapide. Structurellement, le modèle 'push' conservateur de Chainlink perd du terrain face aux oracles 'pull' plus rapides (Pyth, RedStone) sur le segment dérivés/perps, le plus dynamique du secteur.",
+        "assumptions_note": "Recherche web réelle (WebSearch), dates citées explicitement (06-07/09, 24/09, 25/09, 30/03/2026) + un appel CoinGecko live du 03/10/2026. Les chiffres d'open interest et de part de marché sont des instantanés datés, pas des valeurs live : volatilité confirmée, cohérence temporelle vérifiée entre plusieurs sources avant retenue (cf. champ open_interest ci-dessous)."
       },
       "open_interest": {
-        "value_usd": 682790000,
+        "value_usd": 650700000,
         "funding_rate_pct": null,
-        "source": "CoinGlass (résultat indexé via WebSearch)",
-        "note": "Chiffre le plus récemment daté trouvé ce cycle : ~682,79M$ au 21 septembre 2026 (2 jours avant ce cycle), cohérent avec un autre relevé proche (~682,54M$, fin août/CoinGlass). Forte dispersion de valeurs sur le mois selon la date exacte de capture — 626,67M$ (02/09), 750M$ (06/09), 784M$ (07/09, pic sur ~11 mois) — donc l'OI de LINK a réellement bougé tout le mois, contrairement à CTSI/PEAQ ci-dessus. Une valeur de 551 368 505$ réapparaît aussi via WebSearch, identique à l'une des 3 valeurs déjà jugées incohérentes au cycle précédent (16/09) — écartée ce cycle au profit du chiffre du 21/09, le plus récent et le mieux corroboré. Funding rate non trouvé avec une valeur fiable et datée, laissé à null plutôt que deviné."
+        "source": "CoinGlass (via WebSearch, coin-turk.com, 24/09/2026)",
+        "note": "CoinGlass direct (www.coinglass.com) bloqué par le proxy réseau de cette session (EGRESS_BLOCKED) — valeur reprise d'un repli WebSearch explicitement daté. L'OI de LINK a réellement beaucoup bougé en septembre 2026 : ~750-784M$ (06-07/09, coingape.com/coin-turk.com), recul à ~650,7M$ (24/09), puis +25% supplémentaires le 25/09 (cryptoticker.io) sans chiffre absolu confirmé pour cette dernière étape ni pour début octobre. Retenu le dernier chiffre absolu daté et vérifiable plutôt qu'une estimation dérivée. funding_rate_pct laissé null : aucune valeur ponctuelle datée trouvée pour aujourd'hui, seulement une indication qualitative 'au niveau de base, pas de surchauffe' (cryptoticker.io, 25/09/2026) et une fourchette générique 0,005-0,015%/8h (chain.link)."
       },
       "defi_tvl": {
         "value_usd": null,
         "change_7d_pct": null,
         "source": "Non applicable",
-        "note": "Reconfirmé ce cycle : Chainlink est un réseau d'oracles, pas un protocole avec TVL propre (33,1Md$ cité plus haut est une \"valeur sécurisée\" (TVS) — un concept différent, pour d'autres protocoles utilisant ses flux de prix — pas une TVL propre à Chainlink)."
+        "note": "Chainlink est un réseau d'oracles, pas un protocole avec TVL propre (le chiffre souvent cité est une 'valeur sécurisée' / Total Value Secured, un concept différent de la TVL DeFi — non ré-mesuré ce cycle pour éviter de citer un chiffre non revérifié)."
       },
       "onchain_signal": {
         "available": false,
-        "note": "Blockscout MCP (chain_id=1, contrat LINK 0x514910771AF9Ca656af840dff83E8264EcF986CA) : même échec que pour CTSI — /api/v2/tokens/{addr}/transfers a dépassé la limite de 100k caractères de l'outil ; pas de nouvelle tentative filtrée pour préserver le budget de session Blockscout très restreint (8 appels gratuits au total, déjà largement consommés). Repli WebSearch : l'épisode d'accumulation de 96h (~10,36M LINK, ~120M$, mi-septembre) déjà cité au cycle précédent (14-16/09) ressort à nouveau à l'identique — ce n'est PAS une confirmation fraîche, juste le même résultat indexé retrouvé, donc ne compte pas comme événement <48h. Le mouvement le plus récent avec une date et un montant précis (620 420 LINK vers Coinbase, 7 septembre 2026) est également trop ancien (>48h). Aucun événement onchain réellement daté <48h de 2026-09-23 trouvé ce cycle — changement par rapport au cycle précédent où `available` était `true` sur la base du même repli WebSearch de second rang, ici jugé trop périmé pour être retenu.",
-        "source_url": null
+        "note": "Blockscout (chain_id=1, contrat LINK 0x514910771AF9Ca656af840dff83E8264EcF986CA) interrogé sur une fenêtre resserrée (01-03/10/2026) pour éviter la limite de 100k caractères déjà documentée : la requête ne renvoie que 2 transferts, mais d'un token sans rapport (ALPHA, pas LINK) envoyés vers l'adresse du contrat LINK — confirme que /transfers sur l'adresse du contrat lui-même ne donne pas de signal LINK exploitable, pas seulement un problème de taille. Repli WebSearch ciblé whale/exchange LINK <48h : aucun mouvement confirmé avec montant+date précis sur 01-03/10/2026. Le signal le plus récent et sourcé trouvé est antérieur à la fenêtre de 48h : une baleine a déposé 620 420 LINK (~7,6M$) sur Coinbase le 07/09/2026, portant ses dépôts cumulés sur 3 semaines à ~26,04M$ (cryptometer.io) — trop ancien pour être présenté comme un signal actuel.",
+        "source_url": "https://www.cryptometer.io/news/chainlink-whale-deposits-7-6-million-in-link-to-coinbase-as-exchange-transfers-mount/"
       }
     },
     "ONDO": {
-      "last_computed_at": "2026-09-24T08:27:00Z",
+      "last_computed_at": "2026-10-03T08:20:00Z",
       "competitor": {
         "ticker": "BUIDL",
         "name": "BlackRock USD Institutional Digital Liquidity Fund (BUIDL)",
-        "comparison_note": "BUIDL, le fonds monétaire tokenisé de BlackRock, détenait environ 2,14 milliards de dollars d'actifs sous gestion fin février 2026 et sert de référence institutionnelle sur les bons du Trésor tokenisés. Mi-2026, l'AUM cumulé d'Ondo sur ses produits de Trésorerie tokenisée aurait dépassé celui de BUIDL selon une source, franchissant 1,5 milliard de dollars. Relation à la fois concurrentielle et partenariale : BUIDL peut aussi servir de collatéral/source de liquidité sous-jacente pour l'OUSG d'Ondo."
+        "comparison_note": "Au 03/10/2026 (CoinGecko, compare-coins, appel direct), ONDO cote 0,4807$ (cap ~2,34Md$, rang #48, -5,20%/24h, -12,10%/7j, +36,81%/30j) contre BUIDL à 1,00$ pile (cap ~2,26Md$, rang #50, 0% de variation sur 1h/24h/7j/30j). Capitalisations quasi identiques mais nature opposée : BUIDL est la part tokenisée (NAV stable) du fonds monétaire BlackRock, non négociée sur un marché ouvert, alors qu'ONDO est le token spéculatif et volatil du protocole qui distribue justement ce type de fonds via sa filiale régulée Oasis Pro."
       },
       "long_term_thesis": {
-        "bull": "La SEC a accordé le 17 septembre 2026 un cadre temporaire de cinq ans (\"Innovation Exemption\") aux plateformes de titres tokenisés ; le 21 septembre 2026, Ondo Finance a lancé la conversion en nature permettant aux institutions agréées d'échanger directement des actions sous-jacentes contre des actions/ETF tokenisés Ondo — deux catalyseurs réglementaires très récents. OUSG/USDY apparaissent comme collatéral ou source de rendement dans plus de 30 protocoles DeFi distincts mi-2026, contre moins de 5 début 2024, un moat de distribution jugé durable par les sources consultées.",
-        "base": "Ondo reste en concurrence directe avec des acteurs bien mieux capitalisés et distribués (BlackRock/BUIDL, Franklin Templeton/BENJI, WisdomTree, Backed Finance) ; le secteur RWA reste minuscule face aux marchés obligataires/fonds traditionnels, et le jeton ONDO ne donne qu'un droit de gouvernance, pas un droit direct sur le rendement des produits tokenisés.",
-        "bear": "Un mouvement whale significatif a été identifié ce cycle (voir onchain_signal) : environ 150 millions de jetons ONDO (≈49,56 millions de dollars) transférés depuis un wallet multisig lié à Ondo vers une adresse fraîche, un schéma qui, selon la source, a par le passé précédé des dépôts sur exchange — signal de distribution potentielle à surveiller. Les chiffres de TVL trouvés pour \"Ondo Finance\" sont par ailleurs fortement contradictoires selon la page/le résumé consulté (voir defi_tvl), signe d'une immaturité de reporting du secteur RWA plutôt qu'un problème propre à Ondo.",
-        "assumptions_note": "Ces scénarios supposent : (1) que le cadre SEC du 17/09/2026 et la conversion en nature du 21/09/2026 se traduisent par une adoption institutionnelle mesurable au-delà de l'annonce ; (2) que le mouvement de 150 millions d'ONDO identifié ce cycle reflète effectivement une distribution et non un simple réarrangement de trésorerie interne — non confirmé indépendamment ; (3) que la demande institutionnelle pour la tokenisation d'actifs réels continue de croître en 2026-2027. Aucun multiplicateur de prix n'est avancé."
+        "bull": "23/07/2026 : la filiale broker-dealer d'Ondo, Oasis Pro Markets, a reçu de nouvelles autorisations FINRA couvrant actions, ETF et autres produits tokenisés ; Ondo Global Markets a dépassé 1Md$ de TVL moins de 8 mois après son lancement de sept. 2025, avec 260+ actions/ETF tokenisés sur Ethereum/Solana/BNB Chain et >70% de part de marché de l'émission d'actions tokenisées (unchainedcrypto.com, mexc.com). Le 09/12/2025, Ondo a annoncé la clôture sans charge de l'enquête SEC ouverte sous l'administration Biden sur la qualification de son token (theblock.co, decrypt.co).",
+        "base": "Narratif RWA institutionnel toujours porteur (adossement BlackRock/BUIDL, cadre SEC clos sans charge), mais aucune mesure fraîche et cohérente de la TVL Ondo n'a pu être confirmée ce cycle (voir defi_tvl) — les chiffres publiés vont de 970M$ à 3,76Md$ selon la source et la date (thedefiant.io, mobee.com, fin 2025-août 2026), donc le scénario central retenu est une poursuite de la croissance institutionnelle sans confirmation d'accélération ou de ralentissement récent.",
+        "bear": "ONDO affiche -12,10% sur 7 jours et -5,20% sur 24h au 03/10/2026 (CoinGecko) après un rebond de +36,81% sur 30 jours — volatilité typique d'un token encore largement spéculatif malgré l'adossement institutionnel. fxstreet.com notait déjà le 13/05/2026 un risque de repli sous 0,40$ 'as retail demand wanes', signe que l'intérêt retail peut se retirer indépendamment de la croissance du produit institutionnel sous-jacent.",
+        "assumptions_note": "Thèse construite sur recherche web réelle et datée (theblock.co, decrypt.co, unchainedcrypto.com, mexc.com, fxstreet.com) + CoinGecko compare-coins appelé en direct le 03/10/2026. Aucun fait extrapolé depuis la connaissance générale du modèle."
       },
       "open_interest": {
         "value_usd": null,
         "funding_rate_pct": null,
-        "source": null,
-        "note": "Deux chiffres incompatibles trouvés ce cycle : 219 031 233 dollars (identique, au dollar près, à la valeur déjà retrouvée aux au moins trois cycles précédents consécutifs — quasiment certainement une page indexée figée en cache) et environ 132,99 millions de dollars (issu d'un extrait distinct semblant provenir de la page /futures dédiée, avec un volume futures 24h cohérent d'environ 141,06 millions de dollars). Impossible de confirmer lequel reflète l'état réel actuel sans accès direct à coinglass.com (bloqué par le proxy réseau ce cycle). Conformément à la règle anti-invention, aucun des deux chiffres n'est retenu comme valeur courante — laissé à null plutôt que de choisir arbitrairement."
+        "source": "aucune — tentatives d'appel direct bloquées",
+        "note": "Appels directs à CoinGlass (coinglass.com/zh/FundingRate/ONDO) et Hyperliquid (buildix.trade/hyperliquid/ONDO) rejetés par le proxy réseau (EGRESS_BLOCKED). Les résultats WebSearch sont mutuellement incompatibles et non datés précisément : OI total 162,36M$ selon sharpe.ai vs 232,95M$ selon un autre agrégat, vs ~104,16M$ en sommant Binance (39,48M$) + Bybit (35,93M$) + Bitmart (28,75M$) cité dans le même résultat — trois totaux différents d'une même recherche. Conformément à la règle anti-invention, aucun chiffre retenu."
       },
       "defi_tvl": {
         "value_usd": null,
         "change_7d_pct": null,
-        "source": null,
-        "note": "Trois chiffres incompatibles trouvés ce cycle pour \"Ondo Finance\" sur DefiLlama : environ 970,1 millions de dollars (page protocole spécifique, en baisse de 0,2 % sur 30 jours), environ 3,53 milliards de dollars (agrégat cité dans un résumé de recherche, chiffre strictement identique à celui déjà retenu au cycle du 21/09/2026) et environ 3,60 milliards de dollars (chiffre affiché sur le site d'Ondo lui-même, hors DefiLlama). Le chiffre de 3,53 milliards étant désormais identique à celui du cycle précédent malgré le temps écoulé, il est traité avec la même suspicion de cache que l'open interest ci-dessus plutôt que d'être reconduit une nouvelle fois. Accès direct à defillama.com bloqué par le proxy réseau ce cycle (impossible de trancher entre les trois chiffres) — laissé à null conformément à la règle anti-invention plutôt que de choisir arbitrairement l'un des trois."
+        "source": "aucune — tentatives d'appel direct bloquées",
+        "note": "Appel direct à l'API DefiLlama (api.llama.fi/protocol/ondo-finance) et à defillama.com/rwa/platform/ondo rejetés par le proxy réseau (EGRESS_BLOCKED). WebSearch renvoie des chiffres incompatibles entre eux et non actualisés à aujourd'hui : 970M$ (thedefiant.io), puis 2Md$, puis 3,53-3,76Md$ selon la source, la plupart datés juillet-août 2026, aucun confirmé pour début octobre 2026. Laissé à null comme au cycle précédent (24/09), même constat de chiffres incompatibles."
       },
       "onchain_signal": {
-        "available": true,
-        "note": "Mouvement whale identifié ce cycle : un wallet multisig lié à Ondo Finance a transféré 150 millions de jetons ONDO (environ 49,56 millions de dollars) vers une adresse fraîche. Selon la source, des transferts similaires lors de cycles précédents ont fini par arriver sur Coinbase, augmentant l'offre en circulation sur exchange par la suite — mouvement notable mais pas encore confirmé comme un dépôt sur exchange à ce stade (adresse fraîche, pas un exchange identifié directement).",
-        "source_url": "https://www.bitget.com/news/detail/12560605477074"
+        "available": false,
+        "note": "Aucun événement on-chain ONDO distinct et frais (<48h par rapport au 03/10/2026) n'a pu être confirmé. Les mouvements de whale trouvés via WebSearch sont soit anciens (dépôt de 6M ONDO/2,13M$ lié à Wintermute vers Bybit : daté du 31/05/2026 ; retrait de 6,53M ONDO de Bybit et de 1,98M ONDO de Gate.io : non datés précisément mais présentés comme 's'étalant sur le mois écoulé'), soit identiques à l'événement déjà documenté au cycle précédent (150M ONDO multisig→adresse fraîche du 24/09/2026, désormais >48h). Côté Blockscout : le contrat ONDO (0xfAbA6f8e4a5E8Ab82F62fe7C39859FA577269BE3, chain_id=1) a été identifié via lookup_token_by_symbol, mais l'appel direct_api_call à /api/v2/tokens/{address}/transfers a dépassé la limite de taille de réponse (136k car. > 100k) sans paramètre disponible pour la restreindre, empêchant un balayage complet des transferts du jour. Conformément à la règle anti-invention, pas d'événement retenu ce cycle.",
+        "source_url": null
       }
     },
     "JUP": {
@@ -343,64 +343,64 @@
       }
     },
     "AIOZ": {
-      "last_computed_at": "2026-09-24T08:27:00Z",
+      "last_computed_at": "2026-10-03T08:20:00Z",
       "competitor": {
         "ticker": "RNDR",
         "name": "Render Network",
-        "comparison_note": "Recherche de septembre 2026 : Render (RNDR) et Bittensor (TAO) sont cités comme les rivaux qu'AIOZ doit distancer pour justifier une réévaluation, Filecoin (FIL) et Arweave (AR) étant plutôt positionnés sur le stockage Web3 seul. Aucun chiffre de prix/capitalisation daté de septembre 2026 pour Render n'a été retrouvé avec une source fiable ce cycle — comparaison volontairement qualitative plutôt que d'estimer un ratio non vérifié. AIOZ se distingue par une approche full-stack (stockage + CDN + streaming + calcul IA en un seul réseau) que ni Render (calcul GPU seul) ni Filecoin/Arweave (stockage seul) ne couvrent isolément."
+        "comparison_note": "Comparaison CoinGecko en direct, 03/10/2026 : AIOZ $0,108336, market cap $138,9M (rang #235), 30j +99,52%, 7j -11,91% ; RNDR $1,93, market cap $1,002Md (rang #79), 30j +35,17%, 7j +0,45%. AIOZ reste ~7x plus petit en capitalisation que RNDR mais a surperformé sur 30 jours tout en étant plus volatil sur 7 jours."
       },
       "long_term_thesis": {
-        "bull": "Vision Paper V2 (\"Unified DePIN Layer Vision\", 26/03/2026) coordonnant stockage/streaming/calcul IA sur un réseau unique ; mise à niveau DePIN v5.0 annoncée pour 2026 avec inflation du token en baisse vers 5 % ; nouveaux partenariats écosystème cités avec Conflux et Neo. Positionnement recherché face à la demande de calcul IA décentralisé, en concurrence directe avec AWS/GCP sur le narratif DePIN.",
-        "base": "AIOZ reste un acteur de niche par rapport à Render/Bittensor (calcul) et Filecoin/Arweave (stockage), sans différenciation mesurée indépendamment ce cycle au-delà des annonces de la feuille de route ; prix en baisse d'environ 1,66 % sur 24h et 11,23 % sur 7 jours au moment de la recherche.",
-        "bear": "Open interest dérivé toujours marginal et suspecté figé en cache depuis plusieurs cycles consécutifs (voir champ dédié) — signe d'un marché à effet de levier quasi inexistant sur ce token ; AIOZ doit rivaliser avec des projets bien mieux capitalisés (Render, Bittensor) sans qu'un avantage de traction mesurable (usage réel, pas seulement l'annonce) soit confirmé ce cycle.",
-        "assumptions_note": "Ces scénarios supposent que la \"Unified DePIN Layer Vision\" et la mise à niveau DePIN v5.0 se traduisent par un usage mesurable au-delà de l'annonce, ce qui n'est pas confirmé indépendamment ce cycle. Comparaison face à Render volontairement qualitative (aucun chiffre de capitalisation daté et fiable retrouvé pour Render ce cycle). Aucun multiplicateur de prix n'est avancé."
+        "bull": "AIOZ élargit son positionnement DePIN au-delà du stockage/streaming vers le compute IA : AIOZ AI v1 (marketplace décentralisée de modèles/datasets IA) officiellement lancé le 21/05/2025 (CoinMarketCal, Blockworks, Barchart), et partenariat Alibaba Cloud Innovation Accelerator annoncé en mars 2024 (blog AIOZ, TechBullion) avec une alliance DePIN visée en Asie du Sud-Est — profil multi-vertical (stockage + streaming + IA) plutôt qu'un DePIN mono-usage.",
+        "base": "Micro-cap DePIN ($138,9M de market cap, rang CoinGecko ~#235 au 03/10/2026) dont le cours reste très corrélé au narratif IA/DePIN et au bêta BTC ; +99,5% sur 30j mais -11,9% sur 7j (CoinGecko, 03/10/2026) illustrent une volatilité typique d'un actif encore spéculatif malgré une traction produit réelle mais jeune.",
+        "bear": "Aucune métrique d'usage datée et publique trouvée (jobs IA réellement traités, clients payants, revenus réseau) permettant de confirmer une adoption d'AIOZ AI au-delà du stade annonce ; liquidité DeFi/TVL on-chain très ténue et quasi invérifiable (voir defi_tvl) ; cours toujours à -95,91% de son ATH (CoinGecko athChangePercentage, 03/10/2026).",
+        "assumptions_note": "Faute de métriques d'usage vérifiables et datées (jobs IA traités, revenus réseau, adresses actives compute), la thèse repose uniquement sur des annonces produit confirmées par des sources tierces (AIOZ AI v1, partenariat Alibaba Cloud), pas sur une traction mesurée indépendamment."
       },
       "open_interest": {
         "value_usd": null,
         "funding_rate_pct": null,
-        "source": null,
-        "note": "CoinGlass (WebSearch) a de nouveau renvoyé exactement 1 635 278 dollars — désormais identique sur (au moins) trois cycles consécutifs (31/08, 21/09, 24/09), ce qui dépasse le seuil de simple coïncidence et confirme une page indexée figée en cache plutôt qu'une valeur réellement rafraîchie. Conformément à la règle anti-invention, ce chiffre n'est plus présenté comme une donnée courante ce cycle et est laissé à null plutôt que d'être reconduit une quatrième fois comme s'il était frais. Accès direct à coinglass.com bloqué par le proxy réseau de cet environnement (retenté ce cycle, toujours refusé)."
+        "source": "WebSearch (résumés de pages CoinGlass/Coinalyze/Coinranking) — accès direct bloqué",
+        "note": "WebFetch vers coinglass.com, coinalyze.net et coinranking.com a retourné EGRESS_BLOCKED (proxy réseau) : impossible de lire la page source directement. Les résumés WebSearch donnent des chiffres incohérents entre eux (≈1,57-1,58M$ selon un résumé CoinGlass, contre 328 121$ \"au 03/10/2026\" selon un résumé citant coinranking.com) sans qu'aucun ne soit confirmable avec une date/heure précise — écart trop grand pour retenir une valeur. Laissé à null comme au cycle précédent ; toujours pas de confirmation que le chiffre figé à 1 635 278$ a bien changé."
       },
       "defi_tvl": {
         "value_usd": null,
         "change_7d_pct": null,
-        "source": null,
-        "note": "Non applicable, reconfirmé ce cycle avec une nouvelle recherche incluant la piste wrapped/bridged demandée par la spécification : AIOZ Network n'apparaît pas avec une TVL chain-level fiable sur DefiLlama. Une estimation non officielle de liquidité DEX cross-chain (environ 2 à 4 millions de dollars sur des pools Ethereum/BNB Chain, datée de façon imprécise \"début 2026\") a été mentionnée dans les résultats mais jugée trop vague et non datée pour être retenue comme TVL — laissé à null plutôt que d'utiliser une fourchette imprécise. Accès direct à defillama.com bloqué par le proxy réseau."
+        "source": "DefiLlama / recherche WebSearch — accès direct bloqué",
+        "note": "AIOZ n'apparaît pas comme chain avec une TVL chiffrée exploitable sur DefiLlama ; tentative WebFetch vers defillama.com également bloquée par le proxy réseau (EGRESS_BLOCKED). Seule donnée trouvée est une estimation non précisément datée de liquidité DEX des versions wrapped (AIOZ ERC-20 / BEP-20) de l'ordre de 2-4M$ \"début 2026\" sur Ethereum/BSC — jugée trop vague pour être retenue, même raisonnement qu'au cycle précédent."
       },
       "onchain_signal": {
         "available": false,
-        "note": "Recherche ciblée refaite ce cycle (whale alert / mouvement exchange AIOZ, septembre 2026) : aucun mouvement whale significatif et daté trouvé, seulement des données de prix/volume générales (hausse de volume le 8 septembre). AIOZ n'étant pas un actif EVM couvert par Blockscout (chaîne propre non-EVM), la méthode reste la recherche web ciblée, conformément à la spécification.",
+        "note": "Recherche WebSearch ciblée sur un mouvement whale/exchange AIOZ daté des 48 dernières heures : aucun événement avec montant et date précis trouvé. Les résultats ne remontent que des pages génériques sur les dépôts/retraits supportés par les exchanges (listes statiques), pas une transaction ou un flux spécifique récent.",
         "source_url": null
       }
     },
     "FLUX": {
-      "last_computed_at": "2026-09-24T08:27:00Z",
+      "last_computed_at": "2026-10-04T08:26:00Z",
       "competitor": {
         "ticker": "AKT",
         "name": "Akash Network",
-        "comparison_note": "Comparaison de modèle refaite ce cycle (pas de nouveau point de prix/capitalisation daté trouvé pour les deux actifs, donc non reconduit pour éviter de présenter un chiffre non revérifié comme courant) : Akash opère un marketplace de capacité de calcul décentralisé (GPU/CPU à la demande), tandis que Flux propose une plateforme cloud gérée (FluxCloud) sur des FluxNodes répartis dans plus de 50 pays, avec une tarification à l'usage dès 0,99 dollar/mois pour une instance de base. Les deux visent à concurrencer les clouds centralisés mais avec des modèles d'accès différents (marketplace vs plateforme gérée)."
+        "comparison_note": "Comparaison quantitative rétablie ce cycle (CoinMarketCap, résultats indexés via WebSearch le 04/10/2026) : Flux cote 0,07437$ (capitalisation ~31,3 M$, rang #556) contre 0,678631$ pour Akash (capitalisation ~202,5 M$, rang #146) — Akash pèse environ 6,47x la capitalisation de Flux. Akash opère un marketplace de calcul décentralisé (GPU/CPU à la demande) tandis que Flux propose une plateforme cloud gérée (FluxCloud) sur des FluxNodes répartis dans plus de 50 pays ; modèles d'accès différents (marketplace vs plateforme gérée) pour un objectif similaire de cloud décentralisé."
       },
       "long_term_thesis": {
-        "bull": "Transition obligatoire vers Proof-of-Useful-Work v2 achevée en octobre 2025 (seuls les nœuds exécutant de vraies applications ou charges IA gagnent désormais les récompenses de bloc, plus le minage GPU pur) ; réseaux privés superposés (VPON) prévus au T2 2026 pour renforcer la confidentialité et la sécurité de niveau entreprise des dApps.",
-        "base": "Flux reste un acteur de niche du cloud décentralisé face à Akash et aux clouds centralisés ; aucun nouveau développement daté de septembre 2026 trouvé ce cycle au-delà de la feuille de route déjà connue (PoUW v2, VPON T2 2026).",
-        "bear": "La transition PoUW v2 modifie la trajectoire d'incitation des opérateurs de nœuds (seules les charges réelles rémunèrent désormais) d'une façon dont l'impact sur la sécurité/participation du réseau à moyen terme n'a pas été mesuré indépendamment ici ; open interest désormais confirmé mais sur un marché dérivé qui reste de très petite taille (voir champ dédié), signe d'un intérêt institutionnel limité.",
-        "assumptions_note": "Ces scénarios supposent que le lancement des VPON au T2 2026 se traduit par une adoption entreprise mesurable, ce qui reste à confirmer. Comparaison face à Akash volontairement qualitative ce cycle (aucun point de prix/capitalisation daté et fiable retrouvé pour les deux actifs). Aucun multiplicateur de prix n'est avancé."
+        "bull": "Feuille de route technique confirmée pour les VPON (Virtual Private Overlay Networks) au T2 2026, et une annonce de mai 2026 (non nouvelle ce cycle mais confirmée toujours active) d'un nouveau système de benchmark pour mieux adapter les charges IA/HPC au matériel des nœuds FluxNode — développement incrémental de l'infrastructure, pas de catalyseur daté nouveau ce cycle.",
+        "base": "Prix très volatil sur fond de faible capitalisation : +3,60% le 28/09/2026 porté par des mises à jour développeur sur les capacités IA, puis -10,29% sur une fenêtre 24h ultérieure lors d'un repli généralisé des altcoins (CoinMarketCap AI, via WebSearch) — mouvements de sentiment plutôt qu'une tendance de fond identifiable ce cycle.",
+        "bear": "L'open interest retrouvé ce cycle (2 327 473$) est strictement identique à la valeur du cycle du 24/09/2026 — voir note dédiée, probable résultat de cache plutôt qu'une confirmation fraîche. Toujours aucune exposition DeFi wrapped/bridged trouvée pour le FLUX de zelcash (seuls des protocoles homonymes sans rapport apparaissent sur DefiLlama), et aucun signal whale daté trouvé ce cycle.",
+        "assumptions_note": "Comparaison face à Akash désormais quantitative (prix/capitalisation confirmés des deux côtés ce cycle, contrairement aux cycles précédents où seule une comparaison qualitative avait été possible). Aucun multiplicateur de prix n'est avancé pour FLUX lui-même."
       },
       "open_interest": {
         "value_usd": 2327473,
         "funding_rate_pct": null,
         "source": "CoinGlass (résultat indexé via WebSearch — appel direct à coinglass.com bloqué par le proxy réseau)",
-        "note": "Première valeur numérique trouvée pour l'open interest FLUX depuis plusieurs cycles (les cycles précédents n'avaient rien retrouvé de chiffré et fiable) : environ 2 327 473 dollars, avec un volume spot 24h d'environ 595 002 dollars et un volume futures 24h d'environ 13 396 098 dollars — cette valeur diffère des cycles précédents (qui étaient à null), donc pas de suspicion de cache ici. Funding rate non trouvé sous forme chiffrée fiable ce cycle."
+        "note": "Valeur strictement identique à celle déjà enregistrée au cycle du 24/09/2026 (2 327 473$) alors que le marché a bougé entre-temps (OI BTC et ETH ont, eux, changé ce cycle) — probable page indexée en cache plutôt qu'une confirmation fraîche pour FLUX spécifiquement, à vérifier dès qu'un accès direct à l'API sera possible. Funding rate toujours non trouvé sous forme chiffrée fiable."
       },
       "defi_tvl": {
         "value_usd": null,
         "change_7d_pct": null,
         "source": null,
-        "note": "Non applicable, reconfirmé ce cycle avec une recherche ciblée sur la piste wrapped/bridged demandée par la spécification (dont une recherche dédiée \"wrapped FLUX bridged liquidity\", sans résultat exploitable) : DefiLlama référence uniquement des protocoles homonymes sans rapport avec le token FLUX de zelcash suivi ici (un protocole \"Flux\" de prêt sur la chaîne Radix à environ 1 467 dollars de TVL, \"Flux Finance\" sur Ethereum à environ 44,46 millions de dollars — projet de l'écosystème Ondo, sans rapport — et \"FluxBeam\" sur Solana à environ 2,7 millions de dollars). Aucune exposition wrapped/bridgée spécifique au FLUX de zelcash trouvée. Flux (réseau zelcash) reste un réseau de calcul décentralisé, pas un protocole DeFi."
+        "note": "Non applicable, reconfirmé ce cycle avec une nouvelle recherche ciblée sur la piste wrapped/bridged (\"wrapped FLUX bridged liquidity\") : DefiLlama ne référence toujours que des protocoles homonymes sans rapport (Flux Finance sur Ethereum, ~44,46 M$ de TVL, projet de l'écosystème Ondo). Aucune exposition wrapped/bridgée spécifique au FLUX de zelcash trouvée. Flux (réseau zelcash) reste un réseau de calcul décentralisé, pas un protocole DeFi."
       },
       "onchain_signal": {
         "available": false,
-        "note": "Recherche ciblée refaite ce cycle (whale alert / mouvement exchange FLUX, septembre 2026) : aucun résultat spécifique à FLUX trouvé, les résultats remontés concernant l'activité whale générale de Bitcoin/Ethereum ou d'autres actifs. FLUX (zelcash) n'étant pas un actif EVM couvert par Blockscout, la méthode reste la recherche web ciblée, conformément à la spécification.",
+        "note": "Recherche ciblée refaite ce cycle (whale alert / mouvement exchange FLUX) : aucun résultat spécifique et daté trouvé, uniquement des pages génériques sur le suivi de whales en crypto. FLUX (zelcash) n'étant pas un actif EVM couvert par Blockscout, la méthode reste la recherche web ciblée, conformément à la spécification.",
         "source_url": null
       }
     },
