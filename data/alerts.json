@@ -1256,5 +1256,35 @@
     "triggered_at": "2026-09-14T16:20:00Z",
     "message": "Injective (INJ) : +6,09 % depuis l'émission du verdict ACHAT du 13/09 (5,09 € → 5,40 €), seuil de mouvement directionnel de 5 % désormais franchi à la hausse, dans le sens du verdict. Mouvement modéré, sous le seuil de prudence renforcée de 15 % retenu pour le biais chasse-momentum. Aucune actualité nouvelle identifiée ce cycle pour expliquer ce mouvement au-delà des points de vigilance déjà connus (exploit du 31 août, suspension Upbit). Signal précoce enregistré, ne préjuge pas de l'issue à l'échéance.",
     "source": "criblage technique interne"
+  },
+  {
+    "id": "alert-20261004-fet-seuil",
+    "ticker_ou_theme": "FET",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-04T22:21:41Z",
+    "verdict_id": "v-20260920-fet",
+    "sentiment": "positif",
+    "message": "FET : +43,85 % depuis l'émission du verdict ATTENTE du 20/09 (0,17508 $ → 0,25186 $), seuil de mouvement directionnel de 5 % franchi à la hausse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261004-flux-seuil",
+    "ticker_ou_theme": "FLUX",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-04T22:21:41Z",
+    "verdict_id": "v-20260920-flux",
+    "sentiment": "positif",
+    "message": "FLUX : +30,96 % depuis l'émission du verdict ATTENTE du 20/09 (0,058565 $ → 0,076698 $), seuil de mouvement directionnel de 5 % franchi à la hausse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261004-grt-seuil",
+    "ticker_ou_theme": "GRT",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-04T22:21:41Z",
+    "verdict_id": "v-20260928-grt",
+    "sentiment": "négatif",
+    "message": "GRT : -18,10 % depuis l'émission du verdict ATTENTE du 28/09 (0,035214 $ → 0,028838 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
   }
 ]
