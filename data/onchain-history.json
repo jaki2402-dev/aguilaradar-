@@ -25,6 +25,18 @@
             "tx_per_day": "non confirmé ce cycle — appel direct à api.blockchain.info bloqué par le proxy réseau (connect_rejected) ; accès à www.blockchain.com également bloqué (EGRESS_BLOCKED) ; les résultats WebSearch trouvés les plus récents avec une date vérifiée remontent au 7 septembre 2026 (893 391 tx, 4e record historique), trop périmés pour représenter le 21-22 septembre 2026 — laissé à null conformément à la règle anti-invention.",
             "active_addresses": "non confirmé ce cycle — mêmes blocages réseau que tx_per_day ; aucun résultat WebSearch avec une date vérifiée pour le 20-22 septembre 2026 trouvé — laissé à null conformément à la règle anti-invention."
           }
+        },
+        {
+          "date": "2026-10-04",
+          "computed_at": "2026-10-04T08:40:00Z",
+          "tvl_usd": 4524000000,
+          "tx_per_day": 594000,
+          "active_addresses": 549000,
+          "source": {
+            "tvl_usd": "DefiLlama, page chaine Bitcoin (resultat indexe via WebSearch - api.llama.fi bloque par le proxy reseau) ; TVL native (Babylon Protocol, Lightning Network, etc.), distincte de l'exposition wrapped/bridgee WBTC suivie dans favoris-context.json",
+            "tx_per_day": "Blockchain.com explorer, 'last 24h' (resultat indexe via WebSearch - api.blockchain.info bloque par le proxy reseau) ; valeur arrondie '594K+' telle qu'affichee, pas un chiffre exact a l'unite",
+            "active_addresses": "Blockchain.com, chart n-unique-addresses (resultat indexe via WebSearch - api.blockchain.info bloque par le proxy reseau) ; valeur arrondie '549K' telle qu'affichee, pas un chiffre exact a l'unite"
+          }
         }
       ]
     },
@@ -101,6 +113,18 @@
             "tx_per_day": "Blockscout MCP (direct_api_call, chain_id=1, /api/v2/stats/charts/transactions), appel réellement effectué ce cycle. Dernier point complet du graphique daté du 2026-10-02 (transactions_count=1 871 429) — le point du 2026-10-03 lui-même n'apparaissait pas encore dans le tableau (journée en cours au moment de l'appel).",
             "active_addresses": "Blockscout MCP (direct_api_call, chain_id=1, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-09-28, to=2026-10-02), dernier point daté du 2026-10-02 (value=502 995). Appel réellement effectué ce cycle."
           }
+        },
+        {
+          "date": "2026-10-04",
+          "computed_at": "2026-10-04T08:40:00Z",
+          "tvl_usd": 92139000000,
+          "tx_per_day": 1560546,
+          "active_addresses": null,
+          "source": {
+            "tvl_usd": "DefiLlama, page chaine Ethereum, metrique 'TVL native' (resultat indexe via WebSearch - defillama.com bloque par le proxy reseau)",
+            "tx_per_day": "Blockscout MCP, direct_api_call chain_id=1, /api/v2/stats/charts/transactions, dernier point du tableau chart_data date 2026-10-03 (jour le plus recent completement clos a l'heure de ce cycle)",
+            "active_addresses": "non confirme ce cycle - aucun endpoint Blockscout dedie identifie (deja constate aux cycles precedents) ; budget d'appels Blockscout du jour preserve pour ne pas tout consommer avant les actifs non-EVM"
+          }
         }
       ]
     },
@@ -164,6 +188,18 @@
             "tvl_usd": "Non confirmé ce cycle — DefiLlama (api.llama.fi et defillama.com toujours bloqués par le proxy réseau). Chiffres WebSearch incohérents entre eux (~2,96 Md$ 'rang 4' dans un résultat, ~2,766 Md$ dans un autre), sans date fiable associée à l'un ou l'autre — aucun retenu.",
             "tx_per_day": "Blockscout MCP (direct_api_call, chain_id=42161, /api/v2/stats/charts/transactions), appel réellement effectué ce cycle. Dernier point complet du graphique daté du 2026-10-02 (transactions_count=1 701 228) — le point du 2026-10-03 n'apparaissait pas encore dans le tableau (journée en cours au moment de l'appel).",
             "active_addresses": "Blockscout MCP (direct_api_call, chain_id=42161, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-09-28, to=2026-10-02), dernier point daté du 2026-10-02 (value=111 448). Appel réellement effectué ce cycle."
+          }
+        },
+        {
+          "date": "2026-10-04",
+          "computed_at": "2026-10-04T08:40:00Z",
+          "tvl_usd": 2238000000,
+          "tx_per_day": 1335338,
+          "active_addresses": null,
+          "source": {
+            "tvl_usd": "DefiLlama, page chaine Arbitrum, metrique 'TVL native' (resultat indexe via WebSearch - defillama.com bloque par le proxy reseau)",
+            "tx_per_day": "Blockscout MCP, direct_api_call chain_id=42161, /api/v2/stats/charts/transactions, dernier point du tableau chart_data date 2026-10-03 (jour le plus recent completement clos a l'heure de ce cycle)",
+            "active_addresses": "non confirme ce cycle - meme limite que pour ethereum"
           }
         }
       ]
