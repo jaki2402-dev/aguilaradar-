@@ -278,3 +278,15 @@ routine retrouvée et **vérifiée sur ses deux valeurs publiées** (−3,24 % a
 −5,10 % au 13/09 sur 41). Aussi : numéros `?v=` d'`index.html` mis à jour (oubliés le 04/10).
 Non corrigés (blocs morts, aucun lecteur visible) : `opportunities_stats` (12/08),
 `data_source_reliability` (14/09, lu seulement par la spec marche-quotidien).
+Suite (même jour) : **Avis du jour** (Accueil) figé au 14/09 → mention explicite « pas renouvelé
+depuis N jours » au-delà de 3 j ; **push du digest en échec** depuis le 23/09 (clé VAPID et
+abonnement codés en dur dans le prompt digest, ≠ `js/notify.js`) → nouveau prompt digest (à coller
+par l'utilisateur, l'API refuse la modification depuis une autre session) : plus de web-push ni de
+clé privée dans le prompt, le digest ajoute 1 entrée `avis_du_jour`/jour à `alerts.json` et le
+Worker (bonnes clés) la notifie. **verif-fraicheur** jugeait les news sur `last_updated_at` (fausse
+alerte quasi quotidienne) et faisait `cat` d'engine-history → nouveau prompt (extraction python,
+`last_checked_at`, + historique portefeuille et jauges). **briefing-email** lisait F&G/dominance
+figés → nouveau prompt (`market-gauges.json`, régime daté). **Worker** : `slice(-500)` des ids
+notifiés aurait re-notifié en boucle au-delà de 500 entrées → ids encore présents jamais oubliés
+(code corrigé ici, **pas encore déployé** sur `aguilaradar-assistant-ia` : connecteur Cloudflare non
+autorisé pour vérifier le déploiement).
