@@ -918,6 +918,46 @@ describe("app.js — renderMacroRegime", () => {
   });
 });
 
+describe("app.js — renderMacroRegime : jauges fraîches et régime daté (figé du 14/09 au 04/10/2026)", () => {
+  let dom;
+  beforeEach(() => {
+    dom = loadPage(["config.js", "app.js"], { html: APP_FIXTURE_HTML });
+    dom.window.Date.now = () => new Date("2026-10-05T12:00:00Z").getTime();
+  });
+  const eh = { macro_regime: { last_computed_at: "2026-09-14T16:20:00Z", regime: "risk-on", fear_greed_value: 58, btc_dominance_pct: 58.6, note: "Note du 14/09" } };
+  const gauges = { updated_at: "2026-10-05T10:40:00Z", fear_greed: { value: 41, as_of: "2026-10-05T00:00:00Z" }, btc_dominance: { pct: 57.21, as_of: "2026-10-05T10:39:00Z" } };
+
+  it("shows the fresh gauges, not the frozen values", () => {
+    dom.window.renderMacroRegime(eh, gauges);
+    const t = dom.window.document.getElementById("macro-regime-banner").textContent;
+    expect(t).toContain("41");
+    expect(t).toContain("57.2 %");
+    expect(t).not.toContain("58.6");
+  });
+
+  it("labels an old regime as past context and hides its stale note and colour", () => {
+    dom.window.renderMacroRegime(eh, gauges);
+    const el = dom.window.document.getElementById("macro-regime-banner");
+    expect(el.textContent).toContain("pas réévalué depuis");
+    expect(el.textContent).not.toContain("Note du 14/09");
+    expect(el.querySelector(".hero-stat-value").className).not.toContain("positive");
+  });
+
+  it("falls back to the regime's own values, with their date, when gauges are missing", () => {
+    dom.window.renderMacroRegime(eh, null);
+    const t = dom.window.document.getElementById("macro-regime-banner").textContent;
+    expect(t).toContain("58");
+    expect(t).toContain("14/09");
+  });
+
+  it("treats a recent regime as current (colour and note kept)", () => {
+    dom.window.renderMacroRegime({ macro_regime: { ...eh.macro_regime, last_computed_at: "2026-10-05T08:15:00Z" } }, gauges);
+    const el = dom.window.document.getElementById("macro-regime-banner");
+    expect(el.textContent).toContain("Note du 14/09");
+    expect(el.querySelector(".hero-stat-value").className).toContain("positive");
+  });
+});
+
 describe("app.js — renderNews", () => {
   let dom;
 

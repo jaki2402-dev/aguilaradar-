@@ -272,6 +272,19 @@ cycle sans erreur — y compris un cycle court sans rien de dû — mettre `last
 de fin et `consecutive_failures` à 0.** `last_failure_reason` peut porter un résumé court (1-2
 phrases) du cycle.
 
+**`engine-history.json.macro_regime` — seulement dans un cycle qui émet au moins un verdict**
+(le régime vient d'y être déterminé pour `regime_at_issue`, §4 : aucun appel ni recherche en plus).
+Recopier par script `python3` : `last_computed_at` (heure du cycle), `regime` (le même que
+`regime_at_issue`), `note` (1-2 phrases : pourquoi ce régime). Ne pas toucher à `fear_greed_value`
+ni `btc_dominance_pct` : le site lit ces jauges dans `data/market-gauges.json` (GitHub Action
+`price-alerts`, 4×/jour). Cycle court : ne rien écrire ici — le site affiche alors le régime comme
+« évalué le JJ/MM », c'est voulu. (Bloc resté figé du 14/09 au 04/10/2026 parce que cette étape
+avait disparu de la spec.)
+
+**Ne plus écrire** `paper_portfolio_stats` ni `global_stats.baseline_buy_hold_btc_pct` : le site
+les calcule désormais en direct (`computePaperPortfolio`, `js/engine.js`, même formule que celle
+que la routine utilisait).
+
 ## 8. `data/news.json` — veille actualités
 
 ### Forme exacte
