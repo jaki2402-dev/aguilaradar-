@@ -7,10 +7,22 @@
 // jamais un résultat final, jamais compté dans le backtest officiel (qui attend toujours
 // le vrai horizon). Sert juste à montrer que le moteur travaille avec ce qu'il a déjà,
 // pas à remplacer la vérification honnête qui vient plus tard.
+// Devise de price_at_issue : le champ `currency` s'il existe ; sinon la table établie le 04/10/2026
+// sur l'historique CoinGecko réel (le symbole écrit dans reasoning n'est pas fiable) — émis avant le
+// 20/09/2026 en EUR, à partir du 20/09 en USD, sauf CTSI resté en EUR. Même règle que
+// scripts/price-alerts.mjs et docs/routines/cycle-2h-verdict.md §5. Sans elle, un verdict émis en $
+// comparé au prix actuel en € paraissait ~13 % plus bas qu'en réalité.
+function verdictCurrency(verdict) {
+  if (verdict.currency === "USD" || verdict.currency === "EUR") return verdict.currency.toLowerCase();
+  if (verdict.issued_at && verdict.issued_at >= "2026-09-20" && verdict.asset !== "cartesi") return "usd";
+  return "eur";
+}
+
 function computeProvisionalStanding(verdict) {
   const current = latestFavorisPrices[verdict.asset];
-  if (!current || current.eur === undefined) return null;
-  const currentPrice = current.eur;
+  const cur = verdictCurrency(verdict);
+  if (!current || typeof current[cur] !== "number") return null;
+  const currentPrice = current[cur];
   const interimMovePct = ((currentPrice - verdict.price_at_issue) / verdict.price_at_issue) * 100;
   const threshold = verdict.threshold_pct || THRESHOLDS.directionalMovePct;
   let onTrack;

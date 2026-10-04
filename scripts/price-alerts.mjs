@@ -15,24 +15,22 @@ const DEFAULT_THRESHOLD_PCT = 5;
 // sans alertes). Les plus forts mouvements d'abord ; les autres sortent aux passages suivants.
 const MAX_ALERTS_PER_RUN = 3;
 
-const nbsp = (s) => s.replace(/[  ]/g, " ");
+const nbsp = (s) => s.replace(/[\u202f\u00a0]/g, " ");
 const fmtPct = (n) => nbsp((n > 0 ? "+" : "") + n.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })) + " %";
 const SYMBOL = { eur: "€", usd: "$" };
 const fmtPrice = (n, cur) =>
   nbsp(n >= 1 ? n.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : n.toLocaleString("fr-FR", { maximumSignificantDigits: 5 })) + " " + SYMBOL[cur];
 
-// Devise de price_at_issue : AUCUN champ ne la porte et le cycle-2h a mélangé (verdicts d'août et
-// CTSI en €, ceux des 20 et 28/09 en $ — constaté le 04/10/2026). On la lit dans le texte du
-// verdict : le nombre égal à price_at_issue, suivi de son symbole. Introuvable = null = pas d'alerte.
+// Devise de price_at_issue : champ `currency` s'il existe ; sinon table établie le 04/10/2026 sur
+// l'historique CoinGecko réel (le symbole écrit dans reasoning s'est révélé faux : prix en €
+// étiquetés « $ ») — avant le 20/09/2026 EUR, à partir du 20/09 USD, sauf CTSI resté en EUR.
+// Même règle que js/insights.js (verdictCurrency) et docs/routines/cycle-2h-verdict.md §5.
 export function issueCurrency(v) {
   if (v.currency === "EUR" || v.currency === "USD") return v.currency.toLowerCase();
-  const re = /(\d[\d\u00a0\u202f ]*(?:,\d+)?)\s?(€|euros?\b|\$|USD\b|EUR\b|dollars?\b)/gi;
-  for (const m of String(v.reasoning || "").matchAll(re)) {
-    const n = parseFloat(m[1].replace(/[\u00a0\u202f ]/g, "").replace(",", "."));
-    if (Math.abs(n - v.price_at_issue) <= Math.abs(v.price_at_issue) * 1e-6) return /\$|usd|dollar/i.test(m[2]) ? "usd" : "eur";
-  }
-  return null;
+  if (!v.issued_at) return null;
+  return v.issued_at >= "2026-09-20" && v.asset !== "cartesi" ? "usd" : "eur";
 }
+
 const fmtDay = (iso) => `${iso.slice(8, 10)}/${iso.slice(5, 7)}`;
 
 // Fonction pure (testée dans test/price-alerts.test.js). Retourne les nouvelles alertes à ajouter.

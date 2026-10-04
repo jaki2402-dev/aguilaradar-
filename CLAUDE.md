@@ -135,6 +135,8 @@ vente.
 
 Écrits par les routines, **ajout seulement** :
 - `verdicts.json` : `pending` → `resolved` seulement après `resolves_at`. Jamais d'issue inventée.
+  Devise : champ `currency` (USD depuis le 20/09/2026 ; sans champ → table de la spec cycle §5).
+  Le symbole écrit dans `reasoning` n'est PAS fiable. Jamais comparer un prix € à un prix $.
 - `engine-history.json` : `correction_log` = mémoire du moteur ; `global_stats` recalculé ;
   `routine_health.last_success_at` touché à **chaque** cycle réussi, même sans verdict.
 - `news.json` : `last_checked_at` à chaque cycle ; `last_updated_at` seulement si `items` change.
