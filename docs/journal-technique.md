@@ -206,3 +206,15 @@ la désactivation du watchdog, l'horaire du cycle et les réécritures de prompt
 `alerte-crypto-quotidienne-cloud` (créée via `http_api`) n'est pas modifiable par un agent →
 appliqués par l'utilisateur, relus via `get_trigger`/`list_triggers`. Le prompt horizons traite
 aussi `archived_opportunities` (horizon j14 d'`opp-20260904-ada` en attente depuis le 18/09).
+
+### 04/10/2026 — historique du portefeuille figé depuis le 14/09
+
+`data/portfolio-history.json` était écrit « en passant » par le cycle-2h sans que la spec
+(`docs/routines/cycle-2h-verdict.md`) ne le mentionne ; la réécriture économe du prompt l'a fait
+disparaître et le graphique est resté à 13 points (31/08 → 14/09). Correctif : GitHub Action
+`portfolio-snapshot` (quotidienne 20:40 UTC, `scripts/portfolio-snapshot.mjs`, CoinGecko
+`/simple/price`), donc aucun coût de quota. Jour sauté si un seul prix/qty manque, jamais de
+backfill. Côté affichage : abscisse par date (le trou reste visible), mention des apports nets
+(la valeur totale mélangeait apports et performance), avertissement si le dernier point a ≥ 2 j.
+Même date d'arrêt constatée pour `data/alerts.json` (dernière alerte 14/09) — non corrigé, cause
+probable identique, à vérifier.

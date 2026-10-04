@@ -140,6 +140,8 @@ vente.
 - `news.json` : `last_checked_at` à chaque cycle ; `last_updated_at` seulement si `items` change.
 - `onchain-history.json` : un jour sans aucune métrique confirmée est sauté (jamais de ligne
   nulle), jamais de backfill.
+- `portfolio-history.json` : 1 point/jour écrit par la GitHub Action `portfolio-snapshot`
+  (`scripts/portfolio-snapshot.mjs`, zéro quota Claude) — aucune routine ne l'écrivait depuis le 14/09.
 - `portfolio.json` : **édité à la main uniquement** ; `null` + `pending: true` = à afficher en
   attente, jamais deviné.
 - `portfolio-thesis.json` (`constat` + badge) ≠ `favoris-context.json` (`bull/base/bear`, **clé =
