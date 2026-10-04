@@ -1,24 +1,24 @@
 {
   "current_version": "v1",
   "global_stats": {
-    "last_computed_at": "2026-10-03T07:18:00Z",
+    "last_computed_at": "2026-10-04T22:30:00Z",
     "total_verdicts_issued": 82,
     "total_verdicts_resolved": 67,
     "accuracy_strict_pct": 26.87,
     "coverage_pct": 19.4,
-    "baseline_majority_class_pct": 59.7,
+    "baseline_majority_class_pct": 56.7,
     "baseline_buy_hold_btc_pct": 18.59,
-    "f1_macro": 24.42,
-    "f1_weighted": 19.48,
+    "f1_macro": 23.77,
+    "f1_weighted": 18.55,
     "confusion_matrix": {
       "ACHAT": {
-        "ACHAT": 3,
-        "ATTENTE": 0,
+        "ACHAT": 2,
+        "ATTENTE": 1,
         "VENTE": 6
       },
       "ATTENTE": {
-        "ACHAT": 35,
-        "ATTENTE": 13,
+        "ACHAT": 34,
+        "ATTENTE": 14,
         "VENTE": 6
       },
       "VENTE": {
@@ -29,18 +29,18 @@
     },
     "per_class": {
       "ACHAT": {
-        "precision": 0.3333,
-        "recall": 0.075,
-        "f1": 0.1224,
+        "precision": 0.2222,
+        "recall": 0.0526,
+        "f1": 0.0851,
         "predictedTotal": 9,
-        "actualTotal": 40
+        "actualTotal": 38
       },
       "ATTENTE": {
-        "precision": 0.2407,
-        "recall": 1,
-        "f1": 0.3881,
+        "precision": 0.2593,
+        "recall": 0.9333,
+        "f1": 0.4058,
         "predictedTotal": 54,
-        "actualTotal": 13
+        "actualTotal": 15
       },
       "VENTE": {
         "precision": 0.5,
@@ -144,6 +144,17 @@
       "validation_score_after_pct": null,
       "action": "Ajout d'une règle explicite dans docs/routines/cycle-2h-verdict.md (fin de la section 2) : technique=\"haussier\" + accord_count≥1 → verdict doit être ACHAT ; technique=\"baissier\" + accord_count≥1 → verdict doit être VENTE ; technique mixte/neutre/insuffisant/a_risque_retournement/peu_fiable → ATTENTE inchangé ; accord_count=0 → ATTENTE forcé inchangé (règle existante). threshold_pct et l'horizon adaptatif ne sont pas modifiés. Anomalie signalée par v-20260807-btc/v-20260807-eth (signal_precoce, ~16-17 % d'écart évoqué le 10/08) revérifiée le 21/09 via l'historique CoinGecko réel : price_at_issue des deux verdicts est en fait correct (BTC 55 800 stocké vs 55 764 € CoinGecko, ETH 1 649,89 stocké vs 1 650,60 € CoinGecko, écarts <0,1 %) — la note du 10/08 comparait des euros à des dollars sans convertir, aucune correction de données nécessaire, accuracy_strict_pct déjà correcte sur ces 2 verdicts. Hypothèse ci-dessus non encore validée par des données réelles : la résolution des verdicts émis sous cette règle (à partir du prochain cycle qui lit ce document) sera le premier vrai test, pas un chiffre rétroactif sur ce lot déjà résolu — ne pas juger avant qu'au moins ~10 verdicts émis sous elle aient atteint leur horizon.\n\nNote du 28/09/2026 : les 9 verdicts émis le 20/09 (avant la mise en place formelle de cette règle le 21/09) ont résolu ce cycle. Un seul exerçait réellement le mécanisme haussier/baissier + accord_count≥1 → direction forcée (LINK, technique haussier, accord_count=2 → ACHAT, confirmé correct à +11,76 %) ; les 8 autres relevaient du mécanisme distinct de requalification 'mixte' (corr-20260913, voir son propre journal) ou d'un accord_count=1 sans technique haussier/baissier, non concernés par cette règle-ci. Un seul cas résolu reste très insuffisant pour juger (le document lui-même demande ~10 verdicts émis SOUS la règle) — validation_score_after_pct laissé à null, aucun jugement tiré de ce point unique au-delà de le noter honnêtement.",
       "status": "accepted"
+    },
+    {
+      "id": "corr-20261004-devise-resolution",
+      "logged_at": "2026-10-04T22:30:00Z",
+      "trigger": "Session de développement Claude Code (pas un cycle automatique), correction validée par l'utilisateur : prix d'émission reconnus en USD depuis le 20/09 alors qu'ils étaient en EUR avant, vérifié sur l'historique CoinGecko réel.",
+      "what": "14 verdicts émis en EUR (06 et 13/09) résolus le 20/09 avec un prix USD → price_at_resolution reconverti en EUR, issue recalculée (valeurs d'origine conservées dans outcome.currency_correction). Seules 2 issues changent : v-20260906-btc devient correct (+2,43 % réel au lieu de +17,57 %), v-20260906-fet devient incorrect (+1,16 % au lieu de +16,12 %). Champ currency ajouté à ces 14 verdicts et à tous les pending (USD, CTSI EUR).",
+      "why": "Le change EUR/USD (~1,16) ajoutait ~16 % fictifs à chaque mouvement mesuré. Le symbole écrit dans reasoning n'est pas fiable (prix EUR étiquetés $).",
+      "validation_score_before_pct": 26.87,
+      "validation_score_after_pct": 26.87,
+      "action": "Spec cycle-2h : champ currency obligatoire (USD), résolution toujours dans la devise du verdict. Le diagnostic corr-20260921 (biais vers ATTENTE) reste valable : la semaine du 13 au 20/09 a réellement été une forte hausse, même corrigée.",
+      "status": "applied"
     }
   ]
 }

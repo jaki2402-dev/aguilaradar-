@@ -1208,11 +1208,19 @@
     "resolves_at": "2026-09-20T23:25:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 81218,
-      "actual_move_pct": 17.57,
-      "actual_direction": "ACHAT",
-      "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "price_at_resolution": 70753.9,
+      "actual_move_pct": 2.43,
+      "actual_direction": "ATTENTE",
+      "verdict_correct": true,
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 81218,
+        "original_actual_move_pct": 17.57,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1223,7 +1231,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Bitcoin (BTC) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 69078.0 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 67960 euro, soit -1.62 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260906-eth",
@@ -1248,11 +1257,19 @@
     "resolves_at": "2026-09-20T23:25:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 2640.08,
-      "actual_move_pct": 22.03,
+      "price_at_resolution": 2299.93,
+      "actual_move_pct": 6.3,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 2640.08,
+        "original_actual_move_pct": 22.03,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1263,7 +1280,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Ethereum (ETH) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 2163.54 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 2173.69 euro, soit +0.47 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260906-fet",
@@ -1288,11 +1306,19 @@
     "resolves_at": "2026-09-20T23:25:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 0.175082,
-      "actual_move_pct": 16.12,
-      "actual_direction": "ACHAT",
-      "verdict_correct": true,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "price_at_resolution": 0.152524,
+      "actual_move_pct": 1.16,
+      "actual_direction": "ATTENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 0.175082,
+        "original_actual_move_pct": 16.12,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": true,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1303,7 +1329,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Fetch.ai (FET) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 2026-09-06 à 0.150781 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.14555 euro, soit -3.47 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260906-grt",
@@ -1568,11 +1595,19 @@
     "resolves_at": "2026-09-20T23:25:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 1.58,
-      "actual_move_pct": 27.42,
+      "price_at_resolution": 1.37643,
+      "actual_move_pct": 11.0,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 1.58,
+        "original_actual_move_pct": 27.42,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1583,7 +1618,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Livepeer (LPT) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 1.24 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 1.22 euro, soit -1.61 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260906-aioz",
@@ -1648,11 +1684,19 @@
     "resolves_at": "2026-09-20T23:25:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 0.058565,
-      "actual_move_pct": 32.05,
+      "price_at_resolution": 0.0510195,
+      "actual_move_pct": 15.03,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 0.058565,
+        "original_actual_move_pct": 32.05,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1663,7 +1707,8 @@
       "threshold_pct": 5,
       "threshold_crossed": true,
       "note": "Flux (FLUX) : franchit le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 0.04435153 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.050257 euro, soit +13.32 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260906-arb",
@@ -1768,11 +1813,19 @@
     "resolves_at": "2026-09-20T23:26:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 0.02232752,
-      "actual_move_pct": 41.61,
+      "price_at_resolution": 0.0194508,
+      "actual_move_pct": 23.36,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 0.02232752,
+        "original_actual_move_pct": 41.61,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1783,7 +1836,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "The Graph (GRT) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-13 à 0.01576705 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.01608675 euro, soit +2.03 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260913-tia",
@@ -1808,11 +1862,19 @@
     "resolves_at": "2026-09-20T23:26:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 0.420165,
-      "actual_move_pct": 38.87,
+      "price_at_resolution": 0.366031,
+      "actual_move_pct": 20.98,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 0.420165,
+        "original_actual_move_pct": 38.87,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1823,7 +1885,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Celestia (TIA) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-13 à 0.302559 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.310503 euro, soit +2.63 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260913-peaq",
@@ -1848,11 +1911,19 @@
     "resolves_at": "2026-09-20T23:26:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 0.03367987,
-      "actual_move_pct": 58.44,
+      "price_at_resolution": 0.0293406,
+      "actual_move_pct": 38.03,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 0.03367987,
+        "original_actual_move_pct": 58.44,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1863,7 +1934,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Peaq (PEAQ) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-13 à 0.02125716 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.02126744 euro, soit +0.05 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260913-link",
@@ -1888,11 +1960,19 @@
     "resolves_at": "2026-09-20T23:26:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 12.5,
-      "actual_move_pct": 29.27,
+      "price_at_resolution": 10.8895,
+      "actual_move_pct": 12.61,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 12.5,
+        "original_actual_move_pct": 29.27,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1903,7 +1983,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Chainlink (LINK) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-13 à 9.67 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 9.95 euro, soit +2.90 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260913-ondo",
@@ -1928,11 +2009,19 @@
     "resolves_at": "2026-09-20T23:26:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 0.431932,
-      "actual_move_pct": 45.9,
+      "price_at_resolution": 0.376282,
+      "actual_move_pct": 27.1,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 0.431932,
+        "original_actual_move_pct": 45.9,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1943,7 +2032,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Ondo Finance (ONDO) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-13 à 0.296049 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.305565 euro, soit +3.21 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260913-jup",
@@ -1968,11 +2058,19 @@
     "resolves_at": "2026-09-20T23:26:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 0.289772,
-      "actual_move_pct": 46.18,
+      "price_at_resolution": 0.252438,
+      "actual_move_pct": 27.35,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 0.289772,
+        "original_actual_move_pct": 46.18,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1983,7 +2081,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Jupiter (JUP) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-13 à 0.198231 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.206204 euro, soit +4.02 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260913-aioz",
@@ -2008,11 +2107,19 @@
     "resolves_at": "2026-09-20T23:26:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 0.091345,
-      "actual_move_pct": 47.3,
+      "price_at_resolution": 0.0795761,
+      "actual_move_pct": 28.32,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 0.091345,
+        "original_actual_move_pct": 47.3,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -2023,7 +2130,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "AIOZ Network (AIOZ) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-13 à 0.062013 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.062627 euro, soit +0.99 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260913-arb",
@@ -2048,11 +2156,19 @@
     "resolves_at": "2026-09-20T23:26:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 0.220306,
-      "actual_move_pct": 91.62,
+      "price_at_resolution": 0.191922,
+      "actual_move_pct": 66.93,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 0.220306,
+        "original_actual_move_pct": 91.62,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -2063,7 +2179,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Arbitrum (ARB) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-13 à 0.114969 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.117436 euro, soit +2.15 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260913-inj",
@@ -2088,11 +2205,19 @@
     "resolves_at": "2026-09-20T23:26:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 7.77,
-      "actual_move_pct": 52.65,
+      "price_at_resolution": 6.76891,
+      "actual_move_pct": 32.98,
       "actual_direction": "ACHAT",
       "verdict_correct": true,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 7.77,
+        "original_actual_move_pct": 52.65,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": true,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -2103,7 +2228,8 @@
       "threshold_pct": 5,
       "threshold_crossed": true,
       "note": "Injective (INJ) : franchit le seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 2026-09-13 à 5.09 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 5.4 euro, soit +6.09 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260914-ctsi",
@@ -2170,7 +2296,8 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260920-eth",
@@ -2204,7 +2331,8 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260920-fet",
@@ -2238,7 +2366,8 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260920-lpt",
@@ -2272,7 +2401,8 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260920-flux",
@@ -2306,7 +2436,8 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260920-grt",
@@ -2682,7 +2813,8 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260928-tia",
@@ -2716,7 +2848,8 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260928-peaq",
@@ -2750,7 +2883,8 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260928-link",
@@ -2785,7 +2919,8 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260928-ondo",
@@ -2820,7 +2955,8 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260928-jup",
@@ -2854,7 +2990,8 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260928-aioz",
@@ -2888,7 +3025,8 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260928-arb",
@@ -2922,7 +3060,8 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260928-inj",
@@ -2956,7 +3095,8 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20261003-ctsi",
@@ -2990,6 +3130,7 @@
       "fondamental": "neutre",
       "macro": "neutre",
       "accord_count": 3
-    }
+    },
+    "currency": "EUR"
   }
 ]
