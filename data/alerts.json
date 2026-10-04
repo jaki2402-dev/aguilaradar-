@@ -1286,5 +1286,35 @@
     "sentiment": "négatif",
     "message": "GRT : -18,10 % depuis l'émission du verdict ATTENTE du 28/09 (0,035214 $ → 0,028838 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
     "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261004-ondo-seuil",
+    "ticker_ou_theme": "ONDO",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-04T22:38:58Z",
+    "verdict_id": "v-20260928-ondo",
+    "sentiment": "négatif",
+    "message": "ONDO : -13,88 % depuis l'émission du verdict ATTENTE du 28/09 (0,57665 $ → 0,49659 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261004-aioz-seuil",
+    "ticker_ou_theme": "AIOZ",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-04T22:38:58Z",
+    "verdict_id": "v-20260928-aioz",
+    "sentiment": "négatif",
+    "message": "AIOZ : -11,85 % depuis l'émission du verdict ATTENTE du 28/09 (0,12833 $ → 0,11312 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261004-arb-seuil",
+    "ticker_ou_theme": "ARB",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-04T22:38:58Z",
+    "verdict_id": "v-20260928-arb",
+    "sentiment": "négatif",
+    "message": "ARB : -9,98 % depuis l'émission du verdict ATTENTE du 28/09 (0,22623 $ → 0,20365 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
   }
 ]
