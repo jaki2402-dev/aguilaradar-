@@ -53,7 +53,7 @@
       "computed_at": "2026-09-07T04:20:00Z",
       "total_value_eur": 6224.7,
       "total_invested_eur": 9292.7,
-      "total_pnl_eur": -3068.0,
+      "total_pnl_eur": -3068,
       "total_pnl_pct": -33.02
     },
     {
@@ -103,6 +103,15 @@
       "total_invested_eur": 9309.35,
       "total_pnl_eur": -3368.89,
       "total_pnl_pct": -36.19
+    },
+    {
+      "date": "2026-10-04",
+      "computed_at": "2026-10-04T18:47:24Z",
+      "total_value_eur": 7834.62,
+      "total_invested_eur": 9309.35,
+      "total_pnl_eur": -1474.73,
+      "total_pnl_pct": -15.84,
+      "source": "CoinGecko /simple/price (GitHub Action portfolio-snapshot)"
     }
   ]
 }
