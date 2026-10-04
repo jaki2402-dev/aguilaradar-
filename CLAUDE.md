@@ -142,6 +142,8 @@ vente.
   nulle), jamais de backfill.
 - `portfolio-history.json` : 1 point/jour écrit par la GitHub Action `portfolio-snapshot`
   (`scripts/portfolio-snapshot.mjs`, zéro quota Claude) — aucune routine ne l'écrivait depuis le 14/09.
+- `alerts.json` (`seuil_technique`) : GitHub Action `price-alerts` (4×/jour, max 3/passage, 1 par
+  verdict) — le cycle-2h ne les écrit plus depuis le 14/09. Chaque alerte = 1 push (Worker).
 - `portfolio.json` : **édité à la main uniquement** ; `null` + `pending: true` = à afficher en
   attente, jamais deviné.
 - `portfolio-thesis.json` (`constat` + badge) ≠ `favoris-context.json` (`bull/base/bear`, **clé =

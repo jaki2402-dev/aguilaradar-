@@ -94,6 +94,17 @@ describe("app.js — updateFreshnessIndicator (régression 4d520ad, puis régres
     expect(el.textContent).toContain("j");
   });
 
+  it("flags a frozen portfolio history (the 14/09 → 04/10/2026 gap went unnoticed)", () => {
+    dom.window.updateFreshnessIndicator(
+      { routine_health: { last_success_at: "2026-08-17T11:00:00Z" } },
+      {},
+      {},
+      { snapshots: [{ date: "2026-08-13", computed_at: "2026-08-13T20:40:00Z" }, { date: "2026-08-14", computed_at: "2026-08-14T20:40:00Z" }] }
+    );
+    expect(el.classList.contains("freshness-stale")).toBe(true);
+    expect(el.textContent).toContain("Historique portefeuille");
+  });
+
   it("does not read engineHistory.global_stats.last_computed_at at all (that was the original bug: it stays stale across cycles that resolved nothing)", () => {
     dom.window.updateFreshnessIndicator(
       { global_stats: { last_computed_at: "2026-08-17T11:59:00Z" } }, // tres frais mais ne doit pas etre lu
