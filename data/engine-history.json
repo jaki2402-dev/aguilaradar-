@@ -1,23 +1,23 @@
 {
   "current_version": "v1",
   "global_stats": {
-    "last_computed_at": "2026-10-04T22:30:00Z",
-    "total_verdicts_issued": 82,
-    "total_verdicts_resolved": 67,
-    "accuracy_strict_pct": 26.87,
-    "coverage_pct": 19.4,
-    "baseline_majority_class_pct": 56.7,
+    "last_computed_at": "2026-10-05T00:35:00Z",
+    "total_verdicts_issued": 85,
+    "total_verdicts_resolved": 72,
+    "accuracy_strict_pct": 26.39,
+    "coverage_pct": 20.83,
+    "baseline_majority_class_pct": 58.33,
     "baseline_buy_hold_btc_pct": 18.59,
-    "f1_macro": 23.77,
-    "f1_weighted": 18.55,
+    "f1_macro": 23.97,
+    "f1_weighted": 19.45,
     "confusion_matrix": {
       "ACHAT": {
-        "ACHAT": 2,
-        "ATTENTE": 1,
+        "ACHAT": 3,
+        "ATTENTE": 2,
         "VENTE": 6
       },
       "ATTENTE": {
-        "ACHAT": 34,
+        "ACHAT": 37,
         "ATTENTE": 14,
         "VENTE": 6
       },
@@ -29,18 +29,18 @@
     },
     "per_class": {
       "ACHAT": {
-        "precision": 0.2222,
-        "recall": 0.0526,
-        "f1": 0.0851,
-        "predictedTotal": 9,
-        "actualTotal": 38
+        "precision": 0.2727,
+        "recall": 0.0714,
+        "f1": 0.1132,
+        "predictedTotal": 11,
+        "actualTotal": 42
       },
       "ATTENTE": {
-        "precision": 0.2593,
-        "recall": 0.9333,
-        "f1": 0.4058,
-        "predictedTotal": 54,
-        "actualTotal": 15
+        "precision": 0.2456,
+        "recall": 0.875,
+        "f1": 0.3836,
+        "predictedTotal": 57,
+        "actualTotal": 16
       },
       "VENTE": {
         "precision": 0.5,
@@ -61,17 +61,17 @@
     "average_move_pct": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-04T16:16:36Z",
+    "last_success_at": "2026-10-05T00:35:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 04/10/2026 ~16h16 UTC : exécution normale, suivi de docs/routines/cycle-2h-verdict.md et docs/verdict-methodology.md, aucun outil mcp__ utilisé (Bash/WebSearch/Read/Write/Edit/git uniquement, par règle explicite du prompt de cette exécution). Démarrage économe : aucun verdict pending dû (resolves_at le plus proche non dépassé) et 15/15 favoris déjà couverts par un verdict pending → cycle court, rien émis/résolu ce cycle. Veille actualités (section 8, version courte) : 2 recherches WebSearch (fear&greed, hack/exploit) — fear&greed sans valeur datée fiable pour aujourd'hui trouvée (résultats mélangent plusieurs dates 2025/2026) ; recherche hack/exploit ne renvoie rien de réellement nouveau et significatif non déjà présent dans data/news.json (résultats recoupent des rapports H1/aout 2026 déjà anciens et moins significatifs que les items déjà logués, aucun incident daté du 04/10 trouvé). Aucun ajout à items ; last_checked_at avancé, last_updated_at inchangé. correction_log : rien à ajouter (aucun changement de procédure tenté, aucun lot nouvellement résolu)."
+    "last_failure_reason": "Cycle du 05/10/2026 ~00h35 UTC : exécution normale, suivi de docs/routines/cycle-2h-verdict.md et docs/verdict-methodology.md, aucun outil mcp__ utilisé (Bash/WebSearch/Read/Write/Edit/git uniquement, par règle explicite du prompt de cette exécution). 5 verdicts dus résolus (BTC, ETH, FET, LPT, FLUX, lot émis le 20/09) via un seul appel groupé CoinGecko /coins/markets (curl direct, vs_currency=usd). 3 nouveaux verdicts émis (BTC, ETH, FET) — plafond de 3/cycle appliqué pour étaler l'émission plutôt que ré-émettre les 5 d'un coup et reformer un pic de résolution à 14 jours (FLUX et LPT attendent le prochain cycle). Règle de sélection ACHAT/ATTENTE/VENTE du §2 (technique haussier + accord_count≥1 → ACHAT) appliquée aux 3 nouveaux verdicts, tous ACHAT (technique haussier, accord_count=2 via fondamental+macro neutres alignés). Régime macro retenu neutre (Fed hawkish mais rapport emploi du 02/10 faible, ETF flows/10 ans non confirmés ce cycle, fear & greed en zone de peur extrême relevé mais non daté de façon fiable). Veille actualités : 3 recherches WebSearch (hack/exploit, fear&greed, actualité générale/régulation) — aucun développement réellement nouveau et significatif non déjà présent dans data/news.json trouvé ; aucun ajout à items, last_checked_at avancé. correction_log : rien à ajouter (aucun changement de procédure tenté) ; lot de verdicts émis sous corr-20260921 toujours à seulement 1/~10 résolus, trop tôt pour juger."
   },
   "macro_regime": {
-    "last_computed_at": "2026-09-14T16:20:00Z",
-    "regime": "risk-on",
+    "last_computed_at": "2026-10-05T00:35:00Z",
+    "regime": "neutre",
     "fear_greed_value": 58,
     "btc_dominance_pct": 58.6,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Cycle du 14/09, ~16h20 UTC. Indice de peur et de cupidité toujours dispersé entre sources (57, 52, 66 selon la source consultée), moyenne ~58, identique au cycle précédent (12h20 UTC) — pas de bascule de régime retenue, même dispersion déjà observée les cycles précédents. Dominance BTC 58,60 % par lecture chiffrée directe (API CoinGecko /api/v3/global), légère hausse par rapport aux 58,39 % du cycle précédent (+0,21 pt), pas assez marqué pour signaler une bascule. Capitalisation totale du marché en repli de -0,50 % sur 24h. Régime maintenu « risk-on » : aucune bascule confirmée (F&G toujours au-dessus de 50 en moyenne, dominance BTC stable) — aucun regime_change_impact déclenché. Aucun mouvement isolé >15 % sur 24h détecté parmi les 22 actifs suivis (15 favoris + 7 opportunités) via les données CoinGecko directes ; le mouvement le plus marqué reste Flux (FLUX, favori, +13,32 % depuis l'émission du verdict, signal précoce déjà connu, pas un mouvement sur 24h) et Unibase (opportunité, +10,90 % sur 24h)."
+    "note": "Cycle du 05/10, ~00h35 UTC. Régime retenu neutre : Fed toujours hawkish (taux 3,75-4,00 %, prochain FOMC le 28/10) mais le rapport sur l'emploi US du 02/10 est nettement sous consensus (+29 000 créations vs ~85 000 attendus, chômage en hausse à 4,2 %), un argument pour une Fed plus patiente qui atténue la lecture hawkish sans la renverser. Flux ETF spot BTC/ETH non confirmés chiffrés ce cycle (market-context.json, champs à null depuis le 25/09) et rendement du Trésor à 10 ans également à null — aucun signal risk-on chiffré disponible pour contrebalancer. Dominance des stablecoins en très légère hausse (10,16 % contre 10,14 % le 03/10, +0,02 pt), signal risk-off trop faible pour trancher seul. Indice fear & greed relevé en zone de peur extrême (~23) via WebSearch, mais sans source datée et recoupée de façon fiable (même réserve que les cycles précédents sur la dispersion de cet indicateur) — non retenu comme déterminant. Signaux insuffisamment alignés pour trancher risk-on ou risk-off : régime maintenu neutre plutôt que forcé."
   },
   "paper_portfolio_stats": {
     "last_computed_at": "2026-09-13T23:26:00Z",

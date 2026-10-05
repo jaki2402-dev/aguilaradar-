@@ -2287,13 +2287,13 @@
     "reasoning": "Le verdict ATTENTE du 06/09 est invalide : BTC est passe de 69 078 $ a 81 218 $ (+17,57 %), largement au-dessus du seuil directionnel de 5 %, une hausse que le signal technique alors juge insuffisant n'avait pas anticipee. Nouveau cycle : prix desormais au-dessus de la zone de resistance 79 000-80 000 $ documentee dans la these long terme, signal technique haussier modere (24h -0,04 %, 7j +5,1 %, 30j +3,4 %, sous le seuil de 15 % qui declencherait la requalification prudente en mixte). Signal fondamental aligne : portfolio-thesis.json maintient 'Conserver' conviction 7/10, citant la reprise des flux ETF spot (+770,2 M$ sur les quatre premieres seances de septembre) ; les flux ETF restent positifs le 18/09 (+433 M$). Regime macro retenu neutre : la Fed a releve son taux de 25 points de base a 3,75-4,00 % le 16/09 (vote 12-0, dot plot pointant vers une nouvelle hausse), un signal restrictif, alors que les flux ETF BTC/ETH restent nets positifs sur plusieurs seances recentes - deux lectures macro contradictoires, retenues comme telles plutot que tranchees arbitrairement. Deux signaux sur trois convergent (technique et fondamental) : ACHAT retenu, confiance 63 % (fourchette 60-70), horizon maintenu a 14 jours (groupe stable etabli le 06/09).",
     "price_at_issue": 81218,
     "resolves_at": "2026-10-04T23:28:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 86402,
+      "actual_move_pct": 6.38,
+      "actual_direction": "ACHAT",
+      "verdict_correct": true,
+      "resolved_at": "2026-10-05T00:35:00Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "neutre",
@@ -2322,13 +2322,13 @@
     "reasoning": "Le verdict ATTENTE du 06/09 est invalide : ETH est passe de 2 163,54 $ a 2 640,08 $ (+22,03 %), bien au-dessus du seuil directionnel de 5 %. Nouveau cycle : signal technique haussier modere (24h +0,19 %, 7j +5,3 %, 30j +5,0 %, sous le seuil de 15 % de requalification prudente), le prix depasse desormais la resistance 2 500-2 560 $ documentee dans la these long terme. Signal fondamental aligne : portfolio-thesis.json maintient 'Conserver' conviction 7/10, citant le taux de staking ETH a environ 34,23 % de l'offre et les flux ETF nets positifs (+144 M$ le 18/09, dont les ETF a staking ETHB) ; la scission Consensys/MetaMask (annoncee, effective fin 2026) reste un facteur structurel a surveiller sans impact confirme ce cycle. Regime macro retenu neutre pour les memes raisons contradictoires que pour BTC (Fed hawkish apres la hausse de taux du 16/09 vs flux ETF positifs). Deux signaux sur trois convergent (technique et fondamental) : ACHAT retenu, confiance 62 % (fourchette 60-70), horizon maintenu a 14 jours (groupe stable).",
     "price_at_issue": 2640.08,
     "resolves_at": "2026-10-04T23:28:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 2725.67,
+      "actual_move_pct": 3.24,
+      "actual_direction": "ATTENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-05T00:35:00Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "neutre",
@@ -2357,13 +2357,13 @@
     "reasoning": "Le verdict ACHAT du 06/09 est confirme : FET est passe de 0,150781 $ a 0,175082 $ (+16,12 %), au-dessus du seuil directionnel de 5 %, l'un des deux seuls verdicts corrects de ce lot de resolution. Nouveau cycle : signal technique redevenu neutre apres ce mouvement, la dynamique recente s'etant nettement calmee (24h -0,92 %, 7j +2,6 %, 30j +5,1 %), sans tendance nette a court terme. Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction modeste de 5/10, la these agents IA on-chain restant intacte sur le fond (beta publique ASI:Create attendue) mais l'execution et la structure de l'Alliance ASI demeurent incertaines (retrait litigieux d'Ocean Protocol non resolu, rebranding FET vers ASI toujours pas effectif mi-septembre). Regime macro neutre (signaux Fed/ETF contradictoires). Trois signaux sur trois s'accordent sur une lecture non directionnelle : ATTENTE retenue, confiance 77 % (fourchette 75-85, accord complet), horizon maintenu a 14 jours (groupe stable).",
     "price_at_issue": 0.175082,
     "resolves_at": "2026-10-04T23:28:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.257967,
+      "actual_move_pct": 47.34,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-05T00:35:00Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "neutre",
@@ -2392,13 +2392,13 @@
     "reasoning": "Le verdict ATTENTE du 06/09 est invalide : LPT est passe de 1,24 $ a 1,58 $ (+27,42 %), bien au-dessus du seuil directionnel de 5 %. Nouveau cycle : signal technique haussier isole (24h -2,13 %, 7j +13,1 %, 30j +10,2 %, sous le seuil de 15 % de requalification mais sans confirmation ailleurs), la these Livepeer Agent (beta ouverte visee debut septembre) n'a pas ete reconfirmee ce cycle. Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 5/10, citant en parallele le retrait de LPT par la bourse turque CoinTR (paires LPT/USDT et LPT/TRY, retraits possibles jusqu'au 30/09), un signal de liquidite degradee qui contrebalance les annonces produit. Regime macro neutre. Le signal fondamental et le regime macro s'accordent sur une lecture neutre, le signal technique reste isole sans confirmation independante : ATTENTE retenue, confiance 61 % (fourchette 60-70), horizon maintenu a 14 jours (groupe stable).",
     "price_at_issue": 1.58,
     "resolves_at": "2026-10-04T23:28:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 1.72,
+      "actual_move_pct": 8.86,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-05T00:35:00Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "neutre",
@@ -2427,13 +2427,13 @@
     "reasoning": "Le verdict ATTENTE du 06/09 est invalide : FLUX est passe de 0,04435153 $ a 0,058565 $ (+32,05 %), largement au-dessus du seuil directionnel de 5 %. Nouveau cycle : signal technique haussier modere mais isole (24h -1,64 %, 7j +5,2 %, 30j +24,7 % - la hausse sur 30 jours est nettement plus marquee que sur 7 jours, signe d'un mouvement qui s'essouffle plutot que de s'accelerer). Signal fondamental neutre : portfolio-thesis.json maintient 'Attendre' conviction 4/10, aucun catalyseur date et confirme identifie cette semaine au-dela de mentions generales deja connues (reseau de plus de 15 000 noeuds, partenariats gaming/IA), capitalisation et volume toujours faibles (~22,4 M$ / 2,1 M$ sur 24h). Regime macro neutre. Le signal fondamental et le regime macro s'accordent sur une lecture neutre, le signal technique reste isole : ATTENTE retenue, confiance 60 % (bas de la fourchette 60-70 vu la liquidite limitee de l'actif), horizon maintenu a 14 jours (groupe stable).",
     "price_at_issue": 0.058565,
     "resolves_at": "2026-10-04T23:28:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.077574,
+      "actual_move_pct": 32.46,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-05T00:35:00Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "neutre",
@@ -3132,5 +3132,110 @@
       "accord_count": 3
     },
     "currency": "EUR"
+  },
+  {
+    "id": "v-20261005-btc",
+    "issued_at": "2026-10-05T00:35:00Z",
+    "asset": "bitcoin",
+    "ticker": "BTC",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 64,
+    "signals_used": [
+      "24h +1,89%",
+      "7j +2,72%",
+      "30j +8,56%",
+      "flux ETF spot +2,4 Md$ sur la semaine du 25/09 (plus forte semaine en ~1 an, favoris-context.json)"
+    ],
+    "reasoning": "Resolution du verdict ACHAT du 20/09 confirmee : BTC est passe de 81 218 $ a 86 402 $ (+6,38 %), au-dessus du seuil directionnel de 5 %. Nouveau cycle : signal technique haussier modere (24h +1,89 %, 7j +2,72 %, 30j +8,56 %), coherent avec le retour des flux ETF spot (+2,4 Md$ sur la semaine se terminant le 25/09, plus forte semaine en pres d'un an selon favoris-context.json). Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 6/10, le prix restant nettement sous son niveau d'il y a un an malgre le rebond recent, pas de contradiction franche avec la lecture technique. Regime macro retenu neutre : Fed toujours hawkish (taux 3,75-4,00 %) mais rapport sur l'emploi du 02/10 nettement sous consensus (+29 000 vs ~85 000 attendus, chomage a 4,2 %) qui plaide pour une Fed plus patiente ; flux ETF/rendement 10 ans non confirmes chiffres ce cycle, indice fear & greed en zone de peur extreme releve via WebSearch mais sans source datee fiable (meme reserve que les cycles precedents) - signaux macro non alignes, retenus neutres plutot que forces. Technique haussier et accord_count=2 (fondamental et macro alignes neutres) : verdict ACHAT retenu par la regle de selection du paragraphe 2, confiance 64 % (fourchette 60-70), horizon maintenu a 14 jours (groupe stable).",
+    "price_at_issue": 86402,
+    "currency": "USD",
+    "resolves_at": "2026-10-19T00:35:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261005-eth",
+    "issued_at": "2026-10-05T00:35:00Z",
+    "asset": "ethereum",
+    "ticker": "ETH",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 63,
+    "signals_used": [
+      "24h +1,43%",
+      "7j +1,91%",
+      "30j +11,19%",
+      "portfolio-thesis Conserver conviction 6/10"
+    ],
+    "reasoning": "Resolution du verdict ACHAT du 20/09 invalidee : ETH est passe de 2 640,08 $ a 2 725,67 $ (+3,24 %), sous le seuil directionnel de 5 % (mouvement reste ATTENTE). Nouveau cycle : signal technique haussier modere (24h +1,43 %, 7j +1,91 %, 30j +11,19 %, la hausse sur 30 jours est nettement plus marquee que sur 7 jours). Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 6/10 ; la resistance des 2 550 $ (moyenne mobile 50 semaines) a de nouveau tenu et la Commission europeenne a ouvert le 25/09 une reflexion sur l'encadrement du staking, facteur a surveiller sans impact confirme ce cycle. Regime macro retenu neutre, memes raisons que BTC ce cycle (Fed hawkish mais rapport sur l'emploi faible, ETF/10 ans non confirmes, fear & greed non fiable). Technique haussier et accord_count=2 (fondamental et macro alignes neutres) : verdict ACHAT retenu par la regle de selection du paragraphe 2, confiance 63 % (fourchette 60-70), horizon maintenu a 14 jours (groupe stable).",
+    "price_at_issue": 2725.67,
+    "currency": "USD",
+    "resolves_at": "2026-10-19T00:35:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261005-fet",
+    "issued_at": "2026-10-05T00:35:00Z",
+    "asset": "fetch-ai",
+    "ticker": "FET",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 67,
+    "signals_used": [
+      "24h +14,74%",
+      "7j +2,54%",
+      "30j +64,68%",
+      "exploit pont SingularityNET ~1,56M$ FET detournes le 20/09 (contrats coeur Fetch.ai non touches)"
+    ],
+    "reasoning": "Resolution du verdict ATTENTE du 20/09 invalidee : FET est passe de 0,175082 $ a 0,257967 $ (+47,34 %), largement au-dessus du seuil directionnel de 5 %. Nouveau cycle : signal technique nettement haussier (24h +14,74 %, 7j +2,54 %, 30j +64,68 % - la hausse sur 30 jours domine, le mouvement 7j plus calme suggere une consolidation plutot qu'un essoufflement). Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 5/10 - narratif IA porteur (ASI:Chain DevNet, ASI:Create en beta ouverte) mais l'exploit du pont SingularityNET du 20/09 (~1,56 M$ de FET detournes lors d'une conversion AGIX->FET, contrats coeur Fetch.ai non touches) reste un risque d'infrastructure reel pour l'ecosysteme ASI Alliance encore en consolidation. Regime macro retenu neutre, memes raisons que BTC/ETH ce cycle. Technique haussier et accord_count=2 (fondamental et macro alignes neutres) : verdict ACHAT retenu par la regle de selection du paragraphe 2, confiance 67 % (fourchette 60-70, mouvement technique parmi les plus nets du lot), horizon maintenu a 14 jours (groupe stable).",
+    "price_at_issue": 0.257967,
+    "currency": "USD",
+    "resolves_at": "2026-10-19T00:35:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
   }
 ]
