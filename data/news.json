@@ -1,27 +1,7 @@
 {
-  "last_updated_at": "2026-10-03T07:18:00Z",
-  "last_checked_at": "2026-10-05T00:35:00Z",
+  "last_updated_at": "2026-10-05T08:40:00Z",
+  "last_checked_at": "2026-10-05T08:40:00Z",
   "items": [
-    {
-      "title": "Ouverture asiatique du 28 septembre : les actifs à risque reculent après des propos de Trump sur l'Iran (dimanche 27/09), qui dit s'attendre à ce que la guerre avec l'Iran se termine « très bientôt » mais n'exclut pas de nouvelles frappes américaines avant les élections de mi-mandat de novembre — BTC recule d'environ 1,3-1,6 % à ~83 100-83 300 $, futures Nasdaq-100 en baisse d'environ 0,7 %, pétrole brut en hausse de près de 1 % (risque d'inflation accru en cas de conflit prolongé). Capitalisation crypto totale -1,7 % sur 24h, recul généralisé sur la plupart des favoris malgré des flux ETF spot BTC nets positifs et robustes la semaine précédente (~2,4 Md$ du 21 au 25/09, plus forte semaine depuis octobre 2025, déjà logué ci-dessous) — risque géopolitique qui l'emporte ponctuellement sur un flux institutionnel par ailleurs favorable, à recouper au prochain cycle plutôt que tranché maintenant",
-      "url": "https://www.coindesk.com/markets/2026/09/28/bitcoin-and-nasdaq-futures-decline-as-trump-won-t-rule-out-more-iran-strikes",
-      "source": "CoinDesk (recoupé : Rio Times, Blockhead, crypto.news, Cryptonews.net)"
-    },
-    {
-      "title": "La CFTC dépose le 17 septembre auprès de l'OIRA (White House) deux propositions réglementaires (« Regulation Crypto Asset Transactions » et « Regulation Crypto Asset Markets », RIN 3038-AF80), deux jours après l'échec du vote de clôture du Sénat sur le CLARITY Act (46/49 voix pour selon le décompte final, 60 requises) — la CFTC avance seule sans attendre le Congrès, contenu du dépôt confidentiel le temps de la revue OIRA (jusqu'à 60 jours, publication possible en novembre/décembre 2026). Créerait potentiellement une nouvelle catégorie d'exchange (« crypto asset markets ») pour le trading spot de commodités numériques (BTC, XRP) sous supervision CFTC — développement réglementaire distinct et postérieur à l'échec du CLARITY Act déjà logué ci-dessous",
-      "url": "https://www.coindesk.com/policy/2026/09/18/cftc-sends-crypto-rules-to-white-house-to-review-as-congress-stalls-on-clarity-act",
-      "source": "CoinDesk (recoupé : The Block, Yahoo Finance)"
-    },
-    {
-      "title": "Clé de signature du pont cross-chain Ethereum-Cardano de SingularityNET (infrastructure partagée par les membres de l'alliance ASI) compromise entre le 19 et le 20 septembre : l'attaquant a drainé 8,7 M FET et frappé 260 M AGIX / 408,5 M NTX / 53,8 M WMTx non collatéralisés ; PeckShield estime les avoirs de l'attaquant à 16,77 M$ au 21/09, AGIX a chuté de ~99 % en 24h (-93 M$ de capitalisation). Cause : compromission opérationnelle d'une clé offline, pas une faille de smart contract — Fetch.ai (FET, favori du site) a suspendu les conversions AGIX-FET le temps de l'incident, 9e exploit de pont majeur de 2026",
-      "url": "https://www.kucoin.com/news/flash/hackers-exploit-singularitynet-vulnerability-mint-260m-agix-and-53-83m-wmtx",
-      "source": "KuCoin (recoupé : CryptoTimes, Crypto Economy, Metaverse Post)"
-    },
-    {
-      "title": "Meter Passport (pont cross-chain BNB Chain) attaqué à partir du 23 septembre 18h14 UTC : exploitation d'une vulnérabilité de validation de bloc sur le mainnet Meter permettant de frapper environ 2,3 M$ de wMTRG/MTRG non collatéralisés en deux transactions, revendus notamment sur PancakeSwap ; jeton MTRG en chute de ~71,7 %, mainnet et pont suspendus par l'équipe, utilisateurs avertis de ne pas acheter MTR/MTRG le temps de l'incident, attaque toujours qualifiée d'en cours au moment des dernières sources consultées — hack distinct de Bitget (24/09, déjà logué ci-dessous) et sans lien avec les 15 favoris du site",
-      "url": "https://www.cryptotimes.io/2026/09/24/meter-passport-exploit-reportedly-mints-2-3-million-in-unbacked-mtrg/",
-      "source": "CryptoTimes (recoupé : KuCoin, Phemex)"
-    },
     {
       "title": "Bitget (exchange centralisé) victime le 24 septembre d'un piratage de ses hot wallets détecté à 18h31 UTC, environ 351,6 M$ déplacés (ETH, USDT, USDC, AVAX, BNB et autres) vers une adresse unique en un peu plus d'une heure — probablement le plus gros hack crypto de 2026, portant le cumul de septembre au-dessus de 684 M$, le plus élevé du mois sur l'année. Retraits temporairement suspendus le temps d'une revue de sécurité, dépôts/trading restés actifs ; cold wallets non touchés et fonds utilisateurs déclarés sûrs par la direction (fonds de protection utilisateurs >464 M$), rapport d'incident complet promis sous 24h, méthode d'intrusion non encore divulguée à ce cycle",
       "url": "https://www.coindesk.com/markets/2026/09/24/crypto-exchange-bitget-loses-usd352-million-in-hack-claims-user-funds-are-safe",
@@ -66,6 +46,11 @@
       "title": "Bitget (hack du 24/09, 387,5 M$ déjà logué) : le CEO Gracy Chen déclare le 2 octobre à CNBC ne pas s'attendre à récupérer une part significative des fonds volés — seulement 1,1 M$ gelés à ce jour sur les ~388 M$, l'exchange ayant reconstitué son fonds de protection utilisateurs à 300 M$ sur ses propres réserves plutôt que d'attendre un recouvrement on-chain.",
       "url": "https://www.cnbc.com/2026/10/02/bitget-crypto-stolen-hack-recovery.html",
       "source": "CNBC"
+    },
+    {
+      "title": "Mise a jour Ethereum Glamsterdam : activation prevue sur le testnet Sepolia le 6 octobre 2026 (~13h53 UTC, epoch 353024), integrant EIP-7732 (separation proposeur/constructeur, ePBS) et EIP-7928 (listes d'acces au niveau bloc) — plus gros changement d'architecture depuis The Merge selon plusieurs sources ; date de mainnet non fixee (Q4 2026 vise), des equipes clientes signalent encore des bugs critiques (finalite, comptabilite du gas d'etat) a resoudre avant un deploiement public plus large.",
+      "url": "https://www.kucoin.com/news/flash/ethereum-s-glamsterdam-upgrade-to-launch-on-sepolia-testnet-on-october-6",
+      "source": "KuCoin News"
     }
   ]
 }
