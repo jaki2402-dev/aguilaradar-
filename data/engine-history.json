@@ -1,8 +1,8 @@
 {
   "current_version": "v1",
   "global_stats": {
-    "last_computed_at": "2026-10-05T08:40:00Z",
-    "total_verdicts_issued": 87,
+    "last_computed_at": "2026-10-05T16:25:00Z",
+    "total_verdicts_issued": 90,
     "total_verdicts_resolved": 81,
     "accuracy_strict_pct": 25.93,
     "coverage_pct": 19.75,
@@ -61,17 +61,17 @@
     "average_move_pct": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-05T08:40:00Z",
+    "last_success_at": "2026-10-05T16:30:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 05/10/2026 ~08h40 UTC : execution normale, suivi de docs/routines/cycle-2h-verdict.md et docs/verdict-methodology.md, aucun outil mcp__ utilise (Bash/WebSearch/Read/Write/Edit/git uniquement, par regle explicite du prompt de cette execution). 9 verdicts dus resolus (GRT, TIA, PEAQ, LINK, ONDO, JUP, AIOZ, ARB, INJ, lot emis le 28/09) via un seul appel groupe CoinGecko /coins/markets (curl direct, vs_currency=usd, price_change_percentage=24h,7d,30d). 2 nouveaux verdicts emis (FLUX, LPT — seuls tickers sans verdict pending ce cycle, sous le plafond de 3/cycle). Regle de selection ACHAT/ATTENTE/VENTE du paragraphe 2 appliquee aux 2 nouveaux verdicts (technique haussier + accord_count=2 -> ACHAT pour les deux). Regime macro retenu neutre (meme lecture que le cycle 00h35 du meme jour, data/market-context.json inchange depuis le 04/10 08h50 UTC : Fed hawkish mais rapport emploi du 02/10 faible, ETF flows/10 ans toujours non confirmes, dominance stablecoins quasi stable). correction_log : 2 entrees mises a jour avec les resultats de ce lot (corr-20260913-biais-chasse-momentum, 3e lot teste, validation_score_after_pct=16,67% ; corr-20260921-biais-attente-asymetrique, 2e point de donnee, toujours insuffisant pour juger). global_stats recalcule sur 87 verdicts emis / 81 resolus : accuracy_strict_pct 25,93%, coverage_pct 19,75%. Veille actualites : recherches WebSearch effectuees (hack/exploit, actualite generale) — voir data/news.json pour le detail."
+    "last_failure_reason": "Cycle du 05/10/2026 ~16h30 UTC : execution normale, suivi de docs/routines/cycle-2h-verdict.md et docs/verdict-methodology.md, aucun outil mcp__ utilise (Bash/WebSearch/Read/Write/Edit/git uniquement, par regle explicite du prompt de cette execution). Aucun verdict pending du : resolves_at de tous les pending (CTSI, BTC, ETH, FET, FLUX, LPT) encore dans le futur. 9 tickers sans verdict pending (AIOZ, ARB, GRT, INJ, JUP, LINK, ONDO, PEAQ, TIA, lot resolu au cycle precedent de 08h40) : 3 nouveaux verdicts emis sous le plafond de 3/cycle, priorite a l'ordre FAVORIS de config.js (GRT, TIA, PEAQ) — les 6 autres (LINK, ONDO, JUP, AIOZ, ARB, INJ) attendent les cycles suivants. Prix via un seul appel groupe CoinGecko /coins/markets (curl direct, vs_currency=usd, price_change_percentage=24h,7d,30d). Regle de selection ACHAT/ATTENTE/VENTE du paragraphe 2 appliquee : TIA et PEAQ technique haussier + accord_count=2 -> ACHAT, GRT technique mixte (7j -6,00% contre 30j +67,76%) -> ATTENTE. Croisement avec portfolio-thesis.json pour les 3 (tous Attendre conviction 3-4/10, aucun ne franchit le seuil Reduire/Renforcer >=7 qui forcerait un plafonnement de l'accord selon la section 4) ; aucune entree favoris-context.json pour ces 3 tickers. Regime macro retenu neutre (Fed hawkish temperee par l'emploi faible du 02/10, ETF/10 ans toujours non confirmes dans data/market-context.json mis a jour 05/10 08h55 UTC par une autre routine, dominance stablecoins en leger recul 10,16%->10,04%, fear & greed remonte a 70/Greed dans data/market-gauges.json — signaux insuffisamment alignes pour trancher risk-on, retenu neutre). Veille actualites : 2 recherches WebSearch (hack/exploit, actualite generale) + 1 verification de date sur un resultat ambigu (Drift Protocol, exploit d'avril 2026, pas nouveau) ; aucun developpement reellement nouveau et significatif trouve ce cycle, last_checked_at mis a jour, items inchanges."
   },
   "macro_regime": {
-    "last_computed_at": "2026-10-05T08:40:00Z",
+    "last_computed_at": "2026-10-05T16:30:00Z",
     "regime": "neutre",
-    "fear_greed_value": 58,
-    "btc_dominance_pct": 58.6,
+    "fear_greed_value": 70,
+    "btc_dominance_pct": 59.18,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Cycle du 05/10, ~08h40 UTC. Regime retenu neutre, meme lecture que le cycle precedent du meme jour (00h35) : data/market-context.json n'a pas ete mis a jour depuis le 04/10 08h50 UTC (routine quotidienne marche-quotidien non encore repassee), donc meme donnees sous-jacentes. Fed toujours hawkish (taux 3,75-4,00%, prochain FOMC le 28/10) mais rapport sur l'emploi US du 02/10 nettement sous consensus (+29 000 creations vs ~85 000 attendus, chomage en hausse a 4,2%), argument pour une Fed plus patiente qui attenue la lecture hawkish sans la renverser. Flux ETF spot BTC/ETH non confirmes chiffres (champs a null depuis le 25/09) et rendement du Tresor a 10 ans egalement a null — aucun signal risk-on chiffre disponible pour contrebalancer. Dominance des stablecoins quasi stable (10,16%). Signaux insuffisamment alignes pour trancher risk-on ou risk-off : regime maintenu neutre plutot que force."
+    "note": "Cycle du 05/10, ~16h30 UTC. Regime retenu neutre. data/market-context.json (mis a jour 05/10 08h55 UTC par aguilaradar-marche-quotidien, inchange depuis) : Fed toujours hawkish (taux 3,75-4,00%, prochain FOMC le 28/10) mais le rapport sur l'emploi US du 02/10 (+29 000 creations vs ~85 000 attendus, chomage 4,2%) tempere cette lecture sans la renverser. Flux ETF spot BTC/ETH toujours non confirmes (champs a null depuis le 25/09) et rendement du Tresor a 10 ans egalement a null : aucun signal risk-on/risk-off chiffre de ce cote. Dominance des stablecoins en leger recul (10,16% le 04/10 -> 10,04% le 05/10, signal risk-on faible). Fear & greed remonte nettement a 70 (Greed, contre 58 au cycle precedent de 08h40 le meme jour, data/market-gauges.json) — signal de sentiment plus risk-on, mais reste un signal parmi d'autres, jamais le seul. Signaux encore insuffisamment alignes (Fed formellement hawkish vs sentiment/dominance stablecoins plus risk-on) pour trancher franchement : regime maintenu neutre plutot que force, comme les cycles precedents du meme jour."
   },
   "paper_portfolio_stats": {
     "last_computed_at": "2026-09-13T23:26:00Z",

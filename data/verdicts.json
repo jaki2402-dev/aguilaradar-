@@ -3307,5 +3307,110 @@
       "verdict_correct": null,
       "resolved_at": null
     }
+  },
+  {
+    "id": "v-20261005-tia",
+    "issued_at": "2026-10-05T16:20:00Z",
+    "asset": "celestia",
+    "ticker": "TIA",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 63,
+    "signals_used": [
+      "24h -0,56%",
+      "7j +5,25%",
+      "30j +27,78%",
+      "portfolio-thesis Attendre conviction 4/10"
+    ],
+    "reasoning": "Aucun verdict pending sur TIA avant ce cycle (lot du 28/09 resolu le 05/10, voir correction_log corr-20260913). Nouveau verdict : signal technique haussier (24h -0,56% quasi plat, 7j +5,25% deja au-dessus du seuil directionnel de 5%, 30j +27,78% - tendance de fond nettement positive malgre une pause sur 24h, 7j sous le seuil des 15% de la regle de requalification corr-20260913, pas de mixte force). Signal fondamental neutre : portfolio-thesis.json maintient 'Attendre' conviction faible (4/10, aucune actualite d'octobre 2026 confirmee, concurrence EigenDA/Avail et deblocages de tokens notes mais pas de catalyseur verifie) - conviction trop faible pour plafonner accord_count selon la section 4. Pas d'entree favoris-context.json pour TIA (long_term_thesis/onchain_signal absents, rien a croiser de ce cote). Regime macro retenu neutre : Fed toujours hawkish (taux 3,75-4,00%, prochain FOMC le 28/10) mais rapport sur l'emploi du 02/10 faible (+29 000, chomage 4,2%) qui tempere la lecture, flux ETF et rendement 10 ans toujours non confirmes, dominance stablecoins en leger recul (10,16% -> 10,04%) et fear & greed remonte a 70 (Greed) - signaux insuffisamment alignes pour trancher risk-on, retenu neutre plutot que force. Technique haussier et accord_count=2 (fondamental et macro alignes neutres) : verdict ACHAT retenu par la regle de selection du paragraphe 2, confiance 63% (fourchette 60-70, mouvement 7j deja au-dessus du seuil et tendance 30j tres nette), horizon maintenu a 7 jours (groupe volatil identifie par corr-20260906, inchange).",
+    "price_at_issue": 0.466773,
+    "currency": "USD",
+    "resolves_at": "2026-10-12T16:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261005-grt",
+    "issued_at": "2026-10-05T16:20:00Z",
+    "asset": "the-graph",
+    "ticker": "GRT",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 62,
+    "signals_used": [
+      "24h +1,81%",
+      "7j -6,00%",
+      "30j +67,76%",
+      "portfolio-thesis Attendre conviction 3/10"
+    ],
+    "reasoning": "Aucun verdict pending sur GRT avant ce cycle (lot du 28/09 resolu le 05/10, voir correction_log corr-20260913). Nouveau verdict : signal technique mixte (24h +1,81%, 7j -6,00% au-dela du seuil directionnel de 5% mais en sens inverse du 30j +67,76% tres fortement positif - les trois fenetres se contredisent, ni haussier net ni baissier net, 7j sous le seuil des 15% de corr-20260913 donc pas de requalification supplementaire necessaire, le signal brut est deja mixte). Signal fondamental neutre : portfolio-thesis.json maintient 'Attendre' conviction faible (3/10) ; le constat note une pression de marche negative (suspension de la paire GRT-BTC sur Coinbase le 15/09, retraits de paires sur Bitget/CoinTR, prix proche de plus bas pluriannuels) mais la recommandation reste 'Attendre' sans franchir le seuil 'Reduire' conviction >=7 qui forcerait un plafonnement de l'accord selon la section 4 - signal retenu neutre, pas invente en baissier au-dela de ce que dit le champ recommendation. Pas d'entree favoris-context.json pour GRT. Regime macro retenu neutre, memes raisons que les autres verdicts de ce cycle (Fed hawkish temperee par l'emploi faible du 02/10, ETF/10 ans non confirmes, dominance stablecoins en leger recul, fear & greed a 70). Technique mixte : ATTENTE retenu directement par la regle de selection du paragraphe 2 (aucune direction forcee hors haussier/baissier net), accord_count=2 (fondamental et macro alignes neutres, technique isole) donne confiance 62% (fourchette 60-70).",
+    "price_at_issue": 0.02920356,
+    "currency": "USD",
+    "resolves_at": "2026-10-12T16:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "mixte",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261005-peaq",
+    "issued_at": "2026-10-05T16:20:00Z",
+    "asset": "peaq-2",
+    "ticker": "PEAQ",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 61,
+    "signals_used": [
+      "24h -4,95%",
+      "7j +9,77%",
+      "30j +68,94%",
+      "portfolio-thesis Attendre conviction 3/10"
+    ],
+    "reasoning": "Aucun verdict pending sur PEAQ avant ce cycle (lot du 28/09 resolu le 05/10, voir correction_log corr-20260913). Nouveau verdict : signal technique haussier (24h -4,95% proche du seuil sans le franchir, 7j +9,77% au-dessus du seuil directionnel de 5%, 30j +68,94% - tendance de fond tres nette malgre une pause sur 24h, 7j sous le seuil des 15% de corr-20260913 donc pas de requalification en mixte). Signal fondamental neutre : portfolio-thesis.json maintient 'Attendre' conviction faible (3/10) et signale explicitement une 'petite position a haut risque, a ne pas renforcer sans signal verifie' (prix autour de 0,018 $ au moment de cette thèse, proche du plus bas de mars 2026, tres loin du pic de decembre 2024) - conviction a 3/10 reste sous le seuil 'Reduire >=7' qui forcerait un plafonnement de l'accord selon la section 4, mais cette prudence est notee ici explicitement car elle va a l'encontre du signal technique haussier, a surveiller. Pas d'entree favoris-context.json pour PEAQ. Volume 24h (3,78 M$) rapporte a la capitalisation (108,7 M$) reste faible (~3,5%), liquidite plus mince que les autres favoris - element de prudence supplementaire. Regime macro retenu neutre, memes raisons que les autres verdicts de ce cycle. Technique haussier et accord_count=2 (fondamental et macro alignes neutres) : verdict ACHAT retenu par la regle de selection du paragraphe 2, confiance 61% (fourchette 60-70, bas de fourchette en raison de la liquidite plus mince et de la mise en garde explicite de la these hebdo), horizon maintenu a 7 jours (groupe volatil identifie par corr-20260906, inchange).",
+    "price_at_issue": 0.04236474,
+    "currency": "USD",
+    "resolves_at": "2026-10-12T16:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
   }
 ]
