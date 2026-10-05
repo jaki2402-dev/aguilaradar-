@@ -1316,5 +1316,15 @@
     "sentiment": "négatif",
     "message": "ARB : -9,98 % depuis l'émission du verdict ATTENTE du 28/09 (0,22623 $ → 0,20365 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
     "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261005-flux-seuil",
+    "ticker_ou_theme": "FLUX",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-05T19:23:12Z",
+    "verdict_id": "v-20261005-flux",
+    "sentiment": "positif",
+    "message": "FLUX : +5,75 % depuis l'émission du verdict ACHAT du 05/10 (0,078783 $ → 0,083311 $), seuil de mouvement directionnel de 5 % franchi à la hausse, dans le sens du verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
   }
 ]
