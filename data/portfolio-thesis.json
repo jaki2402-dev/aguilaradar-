@@ -1,80 +1,80 @@
 {
-  "generated_at": "2026-09-28T05:04:40Z",
+  "generated_at": "2026-10-05T05:04:04Z",
   "positions": {
     "bitcoin": {
       "recommendation": "Conserver",
       "conviction": 6,
-      "constat": "BTC a oscillé entre ~76 600 $ et ~86 000 $ en septembre 2026 (Fortune, Yahoo Finance), sans catalyseur propre marquant cette semaine — le mouvement suit surtout le contexte macro général. Le prix reste nettement sous son niveau d'il y a un an (environ -26 680 $ au 22/09 selon Fortune), signe d'un marché encore fragile malgré le récent rebond vers 84-86 000 $."
+      "constat": "Les flux des ETF spot restent le principal moteur : 6,34 Md$ d'entrées au T3 2026 selon Cryptobriefing, avec un BTC en hausse d'environ 43 % sur le trimestre. Prix actuel de la semaine : donnée non confirmée (les sources trouvées datent d'août). Pas de catalyseur propre cette semaine, la position reste le socle du portefeuille."
     },
     "ethereum": {
       "recommendation": "Conserver",
       "conviction": 6,
-      "constat": "ETH a cassé fin août/début septembre la ligne de tendance baissière qui plafonnait chaque rebond depuis le pic d'août 2025 (Yahoo Finance/CryptoRank), avec un objectif haussier vers 2 920 $ tant que 2 438 $ tient. Mais la résistance des 2 550 $ (moyenne mobile 50 semaines) a de nouveau tenu, et la Commission européenne a ouvert le 25/09 une réflexion sur l'encadrement du staking qui pourrait renchérir le coût des validateurs — risque réglementaire à surveiller, pas encore matérialisé."
+      "constat": "La mise à jour Glamsterdam (parallélisation, EIP-7928) entre en phase finale : fork testnet Sepolia annoncé le 06/10 et mainnet visé au T4 2026 (Pluang), un catalyseur technique à surveiller. Le prix cité (~2 900 $) vient d'une seule source, donnée non confirmée. Risque : retards de calendrier fréquents sur les hard forks."
     },
     "fetch-ai": {
       "recommendation": "Conserver",
-      "conviction": 5,
-      "constat": "FET a progressé de 11,7% le 17/09 porté par le narratif IA (CoinMarketCap), mais le pont SingularityNET a subi le 20/09 une exploitation d'environ 1,56 M$ en FET détournés lors d'une conversion AGIX->FET — les contrats cœur de Fetch.ai n'ont pas été touchés (CoinMarketCap, Phemex), mais l'incident rappelle un risque d'infrastructure réel sur l'écosystème ASI Alliance encore en consolidation post-fusion."
+      "conviction": 4,
+      "constat": "Le token FET fait partie de l'Alliance ASI (Fetch.ai, SingularityNET, Ocean, CUDOS) avec une feuille de route 2026 (ASI:One, ASI:Cloud, ASI:Chain), environ 2,31 Md de FET en circulation (KuCoin). Aucune actualité datée de la semaine confirmée : donnée non confirmée. Exécution de la feuille de route et concurrence des autres projets IA restent les risques clés."
     },
     "celestia": {
-      "recommendation": "Conserver",
-      "conviction": 6,
-      "constat": "TIA a bondi de plus de 21% le 23/09 vers ~0,53 $ avec un open interest dépassant 100 M$ (Bitget), porté par le narratif d'infrastructure modulaire. Un déblocage annuel de tokens est attendu autour du 30/10 (Binance/Tokenomist) — non négligeable vu l'ampleur habituelle de ces déblocages Celestia, donc prudence à maintenir la position plutôt que renforcer avant cette échéance."
+      "recommendation": "Attendre",
+      "conviction": 4,
+      "constat": "Aucune actualité récente de octobre 2026 n'a pu être confirmée ; les résultats trouvés datent de 2024-2025 (donnée non confirmée). La thèse de couche de disponibilité de données (rollups intégrés) reste valide mais soumise à la concurrence d'EigenDA et Avail, et aux déblocages de tokens. Pas de raison de renforcer sans catalyseur vérifié."
     },
     "chainlink": {
       "recommendation": "Renforcer",
       "conviction": 7,
-      "constat": "Mois particulièrement dense en adoption institutionnelle confirmée : Chainlink est devenu oracle officiel du mainnet d'Arc (Circle) le 16/09, un partenariat avec Bottomline (600+ banques, 16 000 Md$ traités/an) a fait grimper LINK à ~13,64 $ le 07/09, et la DTCC prévoit un déploiement d'une plateforme de gestion de collatéral propulsée par Chainlink au T4 2026 (CoinMarketCap, sources croisées). L'annonce Infosys du 24/09 a paradoxalement fait baisser LINK de 4,4%, les traders réclamant des échéances concrètes — signal que le marché veut désormais des preuves d'exécution, pas seulement des annonces."
+      "constat": "Fort flux de nouvelles institutionnelles : lancement de Fulcrum le 30/09 (prêts/repos sur actifs tokenisés inter-chaînes), BitGo a choisi CCIP pour l'écosystème WBTC (CoinDesk/Coinedition), production du DTCC Collateral AppChain prévue au T4 et SmartCon en novembre. Le prix reste volatil mais le fondamental progresse plus vite que la moyenne du portefeuille."
     },
     "the-graph": {
-      "recommendation": "Conserver",
-      "conviction": 5,
-      "constat": "GRT a bondi de plus de 31% le 28/09 après que The Graph Foundation a commencé à router les requêtes de Subgraph Studio directement on-chain, une demande réellement liée à l'usage (CoinMarketCap/Interactive Crypto). Mais le token cumule des vents contraires sur la liquidité : retrait de la paire GRT-BTC par Coinbase (15/09) et de GRT/USDT par Bitget (11/09), plus une inflation annuelle de 3% qui pèse sur le prix à long terme — catalyseur d'usage réel mais accès au marché qui se dégrade."
+      "recommendation": "Attendre",
+      "conviction": 3,
+      "constat": "Pression nette côté marché : Coinbase a suspendu la paire GRT-BTC le 15/09, Bitget et CoinTR ont retiré des paires GRT (CoinMarketCap), et le prix est proche de plus bas pluriannuels. Côté produit, l'Eligibility Oracle (26/08), Token API, Substreams et les fonctions MCP pour agents IA progressent. Fondamentaux en construction mais sentiment dégradé."
     },
     "peaq-2": {
-      "recommendation": "Renforcer",
-      "conviction": 7,
-      "constat": "PEAQ a grimpé d'environ 90% depuis début septembre (BeInCrypto, CoinMarketCap), porté par un narratif DePIN/robotique concret : partenariat avec Doosan Robotics annoncé le 17/09 pour déployer des cobots sur la stack peaqOS Pro, et mise à jour \"Economics 2.0\" (07/09) qui lie la demande du token à l'activité machine réelle (l'écosystème revendique 2,1 M d'utilisateurs et ~3 M de machines). Un déblocage de 1,9% de l'offre totale (~3,67 M$) est prévu le 12/10 — modeste au vu du volume actuel, donc pas de raison d'attendre avant de renforcer."
+      "recommendation": "Attendre",
+      "conviction": 3,
+      "constat": "Le token se négocie autour de 0,018 $ (une seule source, donnée non confirmée), proche de son plus bas historique de mars 2026 (0,012 $) et très loin du pic de 0,75 $ de décembre 2024. Aucune actualité ou catalyseur de la semaine confirmé. Petite position à haut risque, à ne pas renforcer sans signal vérifié."
     },
     "livepeer": {
       "recommendation": "Conserver",
       "conviction": 5,
-      "constat": "Livepeer avance sur deux fronts produit réels : la bêta ouverte de \"Livepeer Agent\" (génération/édition vidéo par IA) devait démarrer début septembre après une bêta fermée le 13/08, et le protocole Livepeer 2.0 (modèle Burn-Mint Equilibrium, validateurs élus) est en cours de spécification. À l'inverse, une plateforme d'échange a retiré les paires LPT/USDT et LPT/TRY avec retraits possibles jusqu'au 30/09 — un vrai risque de liquidité à court terme qui contrebalance les avancées produit."
+      "constat": "Livepeer s'oriente vers le calcul GPU pour la vidéo IA : usage réseau +72 % au T1 2026 et lancement de Punch Compute le 30/06 (CoinMarketCap/MEXC). Prix autour de 1,39 $ selon une source, donnée non confirmée. Aucun catalyseur daté de la semaine ; thèse intéressante mais concurrence forte des fournisseurs GPU décentralisés."
     },
     "injective-protocol": {
-      "recommendation": "Renforcer",
-      "conviction": 8,
-      "constat": "Mois exceptionnellement chargé en catalyseurs vérifiés : mise à niveau Meridian (IIP-701) activée le 24/09 pour l'émission conforme d'actifs réels tokenisés sur l'EVM Injective, dépôt d'un livre blanc MiCA auprès de l'UE le 25/09 pour un accès régulé à 30 marchés européens, clarification de la SEC sur le rachat de tokens le 26/09 réduisant le risque réglementaire du mécanisme de buyback-and-burn, et intégration avec Jupiter le 27/09 pour échanger tout actif Solana contre INJ (CoinGabbar, CoinMarketCap, sources croisées). INJ a progressé de 9,59% le 24/09 sur cet ensemble de nouvelles concrètes, pas seulement du sentiment."
+      "recommendation": "Conserver",
+      "conviction": 5,
+      "constat": "Injective avance sur l'institutionnel : dépôt d'enregistrement SEC comme agent de transfert, dossier MiCA en juillet, support natif Coinbase depuis le 24/07 et lien IBC testnet vers Cardano (CoinMarketCap). Un ETF spot reste une possibilité fin 2026, sans confirmation. Pas de nouvelle marquante cette semaine confirmée."
     },
     "cartesi": {
       "recommendation": "Attendre",
-      "conviction": 4,
-      "constat": "Flux d'actualités très faible ce mois-ci — aucune annonce majeure confirmée pour septembre 2026 au-delà de communication communautaire sur les réseaux sociaux (MEXC, CoinLore). L'analyse technique évoque une phase baissière avec un range d'accumulation (TradingView), et le catalyseur technique attendu (adoption des rollups via Mainnet Honeypot v2) n'est pas encore confirmé avec une date. Position à faible conviction en l'absence de nouvelle concrète — attendre un signal plus net avant de bouger."
+      "conviction": 3,
+      "constat": "Aucune actualité Cartesi (CTSI) trouvée pour octobre 2026 : la recherche ne renvoie que des homonymes non crypto, donc donnée non confirmée. Sans catalyseur ni information vérifiée, on n'ajoute pas. Petite position en suivi."
     },
     "jupiter-exchange-solana": {
-      "recommendation": "Renforcer",
-      "conviction": 7,
-      "constat": "JUP a grimpé de 15% le 21/09 à 0,31 $, son plus haut niveau en 10 mois, repassant au-dessus d'1 Md$ de capitalisation (KuCoin, CoinMarketCap). Le narratif est porté par une dynamique Solana réelle et mesurée : les DEX Solana ont traité environ 208 millions de trades spot la semaine du 13/09, dépassant le NYSE, et Jupiter capte 18% du volume sur les actions tokenisées. Les changements de protocole sur Jupiter Lend et l'extension des marchés perpétuels (26/09) ajoutent un catalyseur produit propre au token, pas seulement un effet de halo Solana."
+      "recommendation": "Conserver",
+      "conviction": 5,
+      "constat": "Pas d'actualité d'octobre 2026 confirmée ; les éléments trouvés concernent le rachat de tokens financé par 50 % des frais et les événements Jupuary de 2025-2026 (The Block). Jupiter reste un agrégateur central de Solana, mais dépend du volume DeFi sur Solana et des déblocages futurs. Donnée récente non confirmée."
     },
     "arbitrum": {
-      "recommendation": "Renforcer",
-      "conviction": 7,
-      "constat": "Standard Chartered a initié une couverture haussière sur ARB avec un objectif de 10 $ d'ici 2030 (0,50 $ visé fin 2026), qualifiant Arbitrum de \"blockchain pour la finance traditionnelle\" (Crowdfund Insider). Le déblocage de ~92,6 M ARB le 16/09 a été absorbé sans casser le rallye (+26,2% le 18/09), et le partenariat avec Robinhood Chain (testnet + 1 M$ pour l'écosystème développeurs) ajoute une validation institutionnelle concrète en plus de la mise à niveau ArbOS Elara déjà live."
+      "recommendation": "Attendre",
+      "conviction": 3,
+      "constat": "Déblocage mensuel d'environ 92,65 M d'ARB le 16/10 (1,99 % de l'offre circulante, ~28 M$ selon Coindar/TradingView), soit une pression vendeuse récurrente. Aucun catalyseur positif confirmé cette semaine. Attendre une meilleure visibilité sur l'usage de la couche 2 avant de renforcer."
     },
     "ondo-finance": {
       "recommendation": "Conserver",
       "conviction": 6,
-      "constat": "Ondo a lancé le 24/09 des \"Ondo Intelligent Portfolios\" tokenisés basés sur des stratégies BlackRock, ce qui a fait bondir ONDO de 26,7% avec un volume en hausse de 277% (CoinMarketCap, GlobalBanking&Finance) — un vrai catalyseur produit sur la tokenisation d'actifs réels. Mais un risque de gouvernance réel pèse en parallèle : des batailles juridiques sur le contrôle de l'entreprise font suite au décès du fondateur Nathan Allman, avec des rumeurs (démenties par la société) de recherche d'un acheteur — motif de prudence malgré la bonne nouvelle produit."
+      "constat": "Ondo est la plus grande plateforme d'actifs réels tokenisés (~3,76 Md$ d'encours, USDY ~2,1 Md$ selon DataWallet) ; le DTCC prévoit un service de tokenisation en octobre, possible soutien. Le prix reste faible malgré un TVL record (KuCoin). Risque : le fondamental ne se traduit pas encore en valeur du token."
     },
     "aioz-network": {
-      "recommendation": "Conserver",
-      "conviction": 5,
-      "constat": "AIOZ se traite autour de 0,12-0,13 $ avec une hausse d'environ 44% sur 7 jours au 26-28/09 (CoinGecko), mais reste 95% sous son plus haut historique. Aucune actualité spécifique au projet n'a pu être confirmée par au moins deux sources cette semaine — la hausse récente semble surtout liée au narratif DePIN/stockage général plutôt qu'à un catalyseur propre à AIOZ, et le blocage au Sénat américain du \"Digital Asset Market Clarity Act\" le 16/09 ajoute une incertitude réglementaire sur l'ensemble du secteur."
+      "recommendation": "Attendre",
+      "conviction": 3,
+      "constat": "Dernières nouvelles confirmées datant de début 2026 (AIOZ AI Playgrounds, hébergement statique sur AIOZ Storage, testnet faucet) ; rien de vérifiable pour octobre : donnée non confirmée. Écosystème CDN/stockage/IA décentralisé mais faible traction visible face aux acteurs établis."
     },
     "zelcash": {
       "recommendation": "Attendre",
-      "conviction": 4,
-      "constat": "FLUX se traite autour de 0,069 $ pour une capitalisation d'environ 28,9 M$ (CoinGecko), sur un narratif de cloud computing décentralisé toujours actif (transition vers le Proof-of-Useful-Work v2 avec réduction d'émission de 10%/an). Aucun catalyseur spécifique à septembre 2026 n'a pu être confirmé par deux sources indépendantes — les dernières mises à jour substantielles identifiées datent de mai/juin 2026, ce qui traduit un flux d'actualités faible en ce moment plutôt qu'un signal négatif."
+      "conviction": 3,
+      "constat": "Aucune actualité Flux datée de 2026 confirmée ; les sources évoquent surtout 2025 (passage de la production de blocs aux FluxNodes, blocs de 30 s, FluxEdge pour le calcul GPU). Donnée récente non confirmée. Sans catalyseur vérifié, position à conserver en suivi sans renfort."
     }
   }
 }
