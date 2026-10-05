@@ -1,6 +1,6 @@
 {
-  "last_sampled_at": "2026-08-12T10:45:00Z",
-  "sample_size": 8,
+  "last_sampled_at": "2026-10-04T09:10:14Z",
+  "sample_size": 16,
   "items": [
     {
       "id": "cg-20260812-rain",
@@ -120,6 +120,126 @@
         "move_pct": -10.54,
         "validated": false,
         "resolved_at": "2026-08-26T14:18:00Z"
+      }
+    },
+    {
+      "id": "cg-20261004-bnb",
+      "ticker": "BNB",
+      "cgId": "binancecoin",
+      "sampled_at": "2026-10-04T09:10:14Z",
+      "price_at_issue": 701.7710064676548,
+      "resolves_at": "2026-10-18T09:10:14Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20261004-aave",
+      "ticker": "AAVE",
+      "cgId": "aave",
+      "sampled_at": "2026-10-04T09:10:14Z",
+      "price_at_issue": 161.06117058563925,
+      "resolves_at": "2026-10-18T09:10:14Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20261004-kcs",
+      "ticker": "KCS",
+      "cgId": "kucoin-shares",
+      "sampled_at": "2026-10-04T09:10:14Z",
+      "price_at_issue": 6.557586867359179,
+      "resolves_at": "2026-10-18T09:10:14Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20261004-sei",
+      "ticker": "SEI",
+      "cgId": "sei-network",
+      "sampled_at": "2026-10-04T09:10:14Z",
+      "price_at_issue": 0.06390456806981618,
+      "resolves_at": "2026-10-18T09:10:14Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20261004-op",
+      "ticker": "OP",
+      "cgId": "optimism",
+      "sampled_at": "2026-10-04T09:10:14Z",
+      "price_at_issue": 0.11839365915606262,
+      "resolves_at": "2026-10-18T09:10:14Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20261004-shfl",
+      "ticker": "SHFL",
+      "cgId": "shuffle-2",
+      "sampled_at": "2026-10-04T09:10:14Z",
+      "price_at_issue": 0.38641104252291314,
+      "resolves_at": "2026-10-18T09:10:14Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20261004-bat",
+      "ticker": "BAT",
+      "cgId": "basic-attention-token",
+      "sampled_at": "2026-10-04T09:10:14Z",
+      "price_at_issue": 0.09184748174647019,
+      "resolves_at": "2026-10-18T09:10:14Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20261004-plume",
+      "ticker": "PLUME",
+      "cgId": "plume",
+      "sampled_at": "2026-10-04T09:10:14Z",
+      "price_at_issue": 0.01607293389294848,
+      "resolves_at": "2026-10-18T09:10:14Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
       }
     }
   ],

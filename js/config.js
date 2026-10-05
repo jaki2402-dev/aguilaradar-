@@ -153,8 +153,8 @@ const SECTOR_FAMILIES = {
 
 const REFRESH = {
   quantCycleMinutes: 10, // pouls rapide : prix / seuils / alertes, sans raisonnement IA
-  deepCycleHours: 4,     // cycle profond : verdicts, actus, mise à jour du moteur (passé de 2h à 4h le 06/09,
-  // pour diviser par ~2 la conso IA du poste le plus coûteux du projet — voir aguilaradar-cycle-2h)
+  deepCycleHours: 8,     // cycle profond : verdicts, actus, mise à jour du moteur (2h → 4h le 06/09, 4h → 8h
+  // le 03/10/2026 : quota hebdo épuisé, verdicts à horizon ~14 j donc 3 cycles/jour suffisent)
 };
 
 // Seuil UNIQUE de "mouvement directionnel", utilisé partout (backtest, confusion matrix,
@@ -244,5 +244,6 @@ const DATA_URLS = {
   portfolio: "data/portfolio.json",
   portfolioThesis: "data/portfolio-thesis.json",
   portfolioHistory: "data/portfolio-history.json",
+  marketGauges: "data/market-gauges.json",
   onchainHistory: "data/onchain-history.json",
 };

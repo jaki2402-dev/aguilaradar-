@@ -167,3 +167,17 @@ describe("insights.js — initDayReplay (régression 3caff5e : accumulation d'é
     expect(calls).toBe(1); // avant le correctif : 3
   });
 });
+
+describe("insights.js — verdictCurrency (prix d'émission en $ ou en €)", () => {
+  it("compares a USD-issued verdict with the USD price, not the EUR one", async () => {
+    const { loadPage, setGlobal } = await import("./helpers/loadPage.js");
+    const dom = loadPage(["config.js", "prices.js", "cards.js", "insights.js"]);
+    setGlobal(dom, "latestFavorisPrices", { "the-graph": { usd: 0.0352, eur: 0.0306 } });
+    const v = { asset: "the-graph", verdict: "ATTENTE", price_at_issue: 0.0352, threshold_pct: 5, issued_at: "2026-09-28T00:20:00Z" };
+    expect(dom.window.verdictCurrency(v)).toBe("usd");
+    expect(dom.window.computeProvisionalStanding(v).interimMovePct).toBeCloseTo(0, 5);
+    expect(dom.window.verdictCurrency({ issued_at: "2026-09-13T23:26:00Z" })).toBe("eur");
+    expect(dom.window.verdictCurrency({ asset: "cartesi", issued_at: "2026-10-03T07:18:00Z" })).toBe("eur");
+    expect(dom.window.verdictCurrency({ currency: "USD" })).toBe("usd");
+  });
+});

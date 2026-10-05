@@ -14,6 +14,12 @@ déjà bien (flux ETF avec réconciliation multi-sources réelle, ratio BTC/or c
 `fed_policy` bien sourcé) : ce document formalise ce qui marche pour éviter qu'il se perde ou
 dérive à une future révision, ce n'est pas une réparation de quelque chose de cassé.
 
+## Économie de tokens
+
+Lire `data/market-context.json` (~6 Ko) une fois, pas plus. Recherche web : 1 recherche ciblée par
+bloc à confirmer (mode standard), pas de recherche de confort. Écrire par script `python3`, valider
+avec `python3 -m json.tool`, ne jamais réafficher le fichier ni un `git diff` complet.
+
 ## Règle fiabilité — permanente, ne jamais retirer, la plus importante de ce document
 
 **N'utilise JAMAIS un outil dont le nom commence par `mcp__CoinGecko`, `mcp__Alpha` (Alpha

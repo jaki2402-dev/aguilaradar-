@@ -1208,11 +1208,19 @@
     "resolves_at": "2026-09-20T23:25:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 81218,
-      "actual_move_pct": 17.57,
-      "actual_direction": "ACHAT",
-      "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "price_at_resolution": 70753.9,
+      "actual_move_pct": 2.43,
+      "actual_direction": "ATTENTE",
+      "verdict_correct": true,
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 81218,
+        "original_actual_move_pct": 17.57,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1223,7 +1231,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Bitcoin (BTC) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 69078.0 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 67960 euro, soit -1.62 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260906-eth",
@@ -1248,11 +1257,19 @@
     "resolves_at": "2026-09-20T23:25:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 2640.08,
-      "actual_move_pct": 22.03,
+      "price_at_resolution": 2299.93,
+      "actual_move_pct": 6.3,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 2640.08,
+        "original_actual_move_pct": 22.03,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1263,7 +1280,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Ethereum (ETH) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 2163.54 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 2173.69 euro, soit +0.47 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260906-fet",
@@ -1288,11 +1306,19 @@
     "resolves_at": "2026-09-20T23:25:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 0.175082,
-      "actual_move_pct": 16.12,
-      "actual_direction": "ACHAT",
-      "verdict_correct": true,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "price_at_resolution": 0.152524,
+      "actual_move_pct": 1.16,
+      "actual_direction": "ATTENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 0.175082,
+        "original_actual_move_pct": 16.12,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": true,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1303,7 +1329,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Fetch.ai (FET) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 2026-09-06 à 0.150781 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.14555 euro, soit -3.47 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260906-grt",
@@ -1568,11 +1595,19 @@
     "resolves_at": "2026-09-20T23:25:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 1.58,
-      "actual_move_pct": 27.42,
+      "price_at_resolution": 1.37643,
+      "actual_move_pct": 11.0,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 1.58,
+        "original_actual_move_pct": 27.42,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1583,7 +1618,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Livepeer (LPT) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 1.24 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 1.22 euro, soit -1.61 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260906-aioz",
@@ -1648,11 +1684,19 @@
     "resolves_at": "2026-09-20T23:25:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 0.058565,
-      "actual_move_pct": 32.05,
+      "price_at_resolution": 0.0510195,
+      "actual_move_pct": 15.03,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 0.058565,
+        "original_actual_move_pct": 32.05,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1663,7 +1707,8 @@
       "threshold_pct": 5,
       "threshold_crossed": true,
       "note": "Flux (FLUX) : franchit le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-06 à 0.04435153 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.050257 euro, soit +13.32 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260906-arb",
@@ -1768,11 +1813,19 @@
     "resolves_at": "2026-09-20T23:26:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 0.02232752,
-      "actual_move_pct": 41.61,
+      "price_at_resolution": 0.0194508,
+      "actual_move_pct": 23.36,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 0.02232752,
+        "original_actual_move_pct": 41.61,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1783,7 +1836,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "The Graph (GRT) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-13 à 0.01576705 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.01608675 euro, soit +2.03 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260913-tia",
@@ -1808,11 +1862,19 @@
     "resolves_at": "2026-09-20T23:26:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 0.420165,
-      "actual_move_pct": 38.87,
+      "price_at_resolution": 0.366031,
+      "actual_move_pct": 20.98,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 0.420165,
+        "original_actual_move_pct": 38.87,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1823,7 +1885,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Celestia (TIA) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-13 à 0.302559 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.310503 euro, soit +2.63 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260913-peaq",
@@ -1848,11 +1911,19 @@
     "resolves_at": "2026-09-20T23:26:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 0.03367987,
-      "actual_move_pct": 58.44,
+      "price_at_resolution": 0.0293406,
+      "actual_move_pct": 38.03,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 0.03367987,
+        "original_actual_move_pct": 58.44,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1863,7 +1934,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Peaq (PEAQ) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-13 à 0.02125716 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.02126744 euro, soit +0.05 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260913-link",
@@ -1888,11 +1960,19 @@
     "resolves_at": "2026-09-20T23:26:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 12.5,
-      "actual_move_pct": 29.27,
+      "price_at_resolution": 10.8895,
+      "actual_move_pct": 12.61,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 12.5,
+        "original_actual_move_pct": 29.27,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1903,7 +1983,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Chainlink (LINK) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-13 à 9.67 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 9.95 euro, soit +2.90 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260913-ondo",
@@ -1928,11 +2009,19 @@
     "resolves_at": "2026-09-20T23:26:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 0.431932,
-      "actual_move_pct": 45.9,
+      "price_at_resolution": 0.376282,
+      "actual_move_pct": 27.1,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 0.431932,
+        "original_actual_move_pct": 45.9,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1943,7 +2032,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Ondo Finance (ONDO) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-13 à 0.296049 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.305565 euro, soit +3.21 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260913-jup",
@@ -1968,11 +2058,19 @@
     "resolves_at": "2026-09-20T23:26:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 0.289772,
-      "actual_move_pct": 46.18,
+      "price_at_resolution": 0.252438,
+      "actual_move_pct": 27.35,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 0.289772,
+        "original_actual_move_pct": 46.18,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -1983,7 +2081,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Jupiter (JUP) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-13 à 0.198231 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.206204 euro, soit +4.02 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260913-aioz",
@@ -2008,11 +2107,19 @@
     "resolves_at": "2026-09-20T23:26:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 0.091345,
-      "actual_move_pct": 47.3,
+      "price_at_resolution": 0.0795761,
+      "actual_move_pct": 28.32,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 0.091345,
+        "original_actual_move_pct": 47.3,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -2023,7 +2130,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "AIOZ Network (AIOZ) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-13 à 0.062013 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.062627 euro, soit +0.99 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260913-arb",
@@ -2048,11 +2156,19 @@
     "resolves_at": "2026-09-20T23:26:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 0.220306,
-      "actual_move_pct": 91.62,
+      "price_at_resolution": 0.191922,
+      "actual_move_pct": 66.93,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 0.220306,
+        "original_actual_move_pct": 91.62,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": false,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -2063,7 +2179,8 @@
       "threshold_pct": 5,
       "threshold_crossed": false,
       "note": "Arbitrum (ARB) : reste sous le seuil de mouvement directionnel (5 %) sur le verdict ATTENTE actif (émis le 2026-09-13 à 0.114969 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 0.117436 euro, soit +2.15 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260913-inj",
@@ -2088,11 +2205,19 @@
     "resolves_at": "2026-09-20T23:26:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 7.77,
-      "actual_move_pct": 52.65,
+      "price_at_resolution": 6.76891,
+      "actual_move_pct": 32.98,
       "actual_direction": "ACHAT",
       "verdict_correct": true,
-      "resolved_at": "2026-09-20T23:28:00Z"
+      "resolved_at": "2026-09-20T23:28:00Z",
+      "currency_correction": {
+        "corrected_at": "2026-10-04T22:30:00Z",
+        "original_price_at_resolution_usd": 7.77,
+        "original_actual_move_pct": 52.65,
+        "original_actual_direction": "ACHAT",
+        "original_verdict_correct": true,
+        "note": "Émis en EUR, résolu le 20/09 avec un prix en USD (bascule de devise du cycle-2h) : mouvement gonflé de ~16 % par le change. Prix de résolution reconverti en EUR au taux du moment (EUR/USD CoinGecko 21/09/2026 00:00 UTC : BTC 70 711,46 € / 81 169,04 $ = 0,871160 ; LINK 10,9031 € / 12,5156 $ = 0,871162). Devise vérifiée sur l'historique CoinGecko réel (LINK, ARB, BTC), pas sur le symbole écrit dans reasoning, qui était faux."
+      }
     },
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
@@ -2103,7 +2228,8 @@
       "threshold_pct": 5,
       "threshold_crossed": true,
       "note": "Injective (INJ) : franchit le seuil de mouvement directionnel (5 %) sur le verdict ACHAT actif (émis le 2026-09-13 à 5.09 euros). Prix vérifié par appel direct groupé à l'API CoinGecko : 5.4 euro, soit +6.09 % depuis l'émission."
-    }
+    },
+    "currency": "EUR"
   },
   {
     "id": "v-20260914-ctsi",
@@ -2161,16 +2287,17 @@
     "reasoning": "Le verdict ATTENTE du 06/09 est invalide : BTC est passe de 69 078 $ a 81 218 $ (+17,57 %), largement au-dessus du seuil directionnel de 5 %, une hausse que le signal technique alors juge insuffisant n'avait pas anticipee. Nouveau cycle : prix desormais au-dessus de la zone de resistance 79 000-80 000 $ documentee dans la these long terme, signal technique haussier modere (24h -0,04 %, 7j +5,1 %, 30j +3,4 %, sous le seuil de 15 % qui declencherait la requalification prudente en mixte). Signal fondamental aligne : portfolio-thesis.json maintient 'Conserver' conviction 7/10, citant la reprise des flux ETF spot (+770,2 M$ sur les quatre premieres seances de septembre) ; les flux ETF restent positifs le 18/09 (+433 M$). Regime macro retenu neutre : la Fed a releve son taux de 25 points de base a 3,75-4,00 % le 16/09 (vote 12-0, dot plot pointant vers une nouvelle hausse), un signal restrictif, alors que les flux ETF BTC/ETH restent nets positifs sur plusieurs seances recentes - deux lectures macro contradictoires, retenues comme telles plutot que tranchees arbitrairement. Deux signaux sur trois convergent (technique et fondamental) : ACHAT retenu, confiance 63 % (fourchette 60-70), horizon maintenu a 14 jours (groupe stable etabli le 06/09).",
     "price_at_issue": 81218,
     "resolves_at": "2026-10-04T23:28:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 86402,
+      "actual_move_pct": 6.38,
+      "actual_direction": "ACHAT",
+      "verdict_correct": true,
+      "resolved_at": "2026-10-05T00:35:00Z"
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260920-eth",
@@ -2195,16 +2322,17 @@
     "reasoning": "Le verdict ATTENTE du 06/09 est invalide : ETH est passe de 2 163,54 $ a 2 640,08 $ (+22,03 %), bien au-dessus du seuil directionnel de 5 %. Nouveau cycle : signal technique haussier modere (24h +0,19 %, 7j +5,3 %, 30j +5,0 %, sous le seuil de 15 % de requalification prudente), le prix depasse desormais la resistance 2 500-2 560 $ documentee dans la these long terme. Signal fondamental aligne : portfolio-thesis.json maintient 'Conserver' conviction 7/10, citant le taux de staking ETH a environ 34,23 % de l'offre et les flux ETF nets positifs (+144 M$ le 18/09, dont les ETF a staking ETHB) ; la scission Consensys/MetaMask (annoncee, effective fin 2026) reste un facteur structurel a surveiller sans impact confirme ce cycle. Regime macro retenu neutre pour les memes raisons contradictoires que pour BTC (Fed hawkish apres la hausse de taux du 16/09 vs flux ETF positifs). Deux signaux sur trois convergent (technique et fondamental) : ACHAT retenu, confiance 62 % (fourchette 60-70), horizon maintenu a 14 jours (groupe stable).",
     "price_at_issue": 2640.08,
     "resolves_at": "2026-10-04T23:28:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 2725.67,
+      "actual_move_pct": 3.24,
+      "actual_direction": "ATTENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-05T00:35:00Z"
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260920-fet",
@@ -2229,16 +2357,17 @@
     "reasoning": "Le verdict ACHAT du 06/09 est confirme : FET est passe de 0,150781 $ a 0,175082 $ (+16,12 %), au-dessus du seuil directionnel de 5 %, l'un des deux seuls verdicts corrects de ce lot de resolution. Nouveau cycle : signal technique redevenu neutre apres ce mouvement, la dynamique recente s'etant nettement calmee (24h -0,92 %, 7j +2,6 %, 30j +5,1 %), sans tendance nette a court terme. Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction modeste de 5/10, la these agents IA on-chain restant intacte sur le fond (beta publique ASI:Create attendue) mais l'execution et la structure de l'Alliance ASI demeurent incertaines (retrait litigieux d'Ocean Protocol non resolu, rebranding FET vers ASI toujours pas effectif mi-septembre). Regime macro neutre (signaux Fed/ETF contradictoires). Trois signaux sur trois s'accordent sur une lecture non directionnelle : ATTENTE retenue, confiance 77 % (fourchette 75-85, accord complet), horizon maintenu a 14 jours (groupe stable).",
     "price_at_issue": 0.175082,
     "resolves_at": "2026-10-04T23:28:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.257967,
+      "actual_move_pct": 47.34,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-05T00:35:00Z"
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260920-lpt",
@@ -2263,16 +2392,17 @@
     "reasoning": "Le verdict ATTENTE du 06/09 est invalide : LPT est passe de 1,24 $ a 1,58 $ (+27,42 %), bien au-dessus du seuil directionnel de 5 %. Nouveau cycle : signal technique haussier isole (24h -2,13 %, 7j +13,1 %, 30j +10,2 %, sous le seuil de 15 % de requalification mais sans confirmation ailleurs), la these Livepeer Agent (beta ouverte visee debut septembre) n'a pas ete reconfirmee ce cycle. Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 5/10, citant en parallele le retrait de LPT par la bourse turque CoinTR (paires LPT/USDT et LPT/TRY, retraits possibles jusqu'au 30/09), un signal de liquidite degradee qui contrebalance les annonces produit. Regime macro neutre. Le signal fondamental et le regime macro s'accordent sur une lecture neutre, le signal technique reste isole sans confirmation independante : ATTENTE retenue, confiance 61 % (fourchette 60-70), horizon maintenu a 14 jours (groupe stable).",
     "price_at_issue": 1.58,
     "resolves_at": "2026-10-04T23:28:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 1.72,
+      "actual_move_pct": 8.86,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-05T00:35:00Z"
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260920-flux",
@@ -2297,16 +2427,17 @@
     "reasoning": "Le verdict ATTENTE du 06/09 est invalide : FLUX est passe de 0,04435153 $ a 0,058565 $ (+32,05 %), largement au-dessus du seuil directionnel de 5 %. Nouveau cycle : signal technique haussier modere mais isole (24h -1,64 %, 7j +5,2 %, 30j +24,7 % - la hausse sur 30 jours est nettement plus marquee que sur 7 jours, signe d'un mouvement qui s'essouffle plutot que de s'accelerer). Signal fondamental neutre : portfolio-thesis.json maintient 'Attendre' conviction 4/10, aucun catalyseur date et confirme identifie cette semaine au-dela de mentions generales deja connues (reseau de plus de 15 000 noeuds, partenariats gaming/IA), capitalisation et volume toujours faibles (~22,4 M$ / 2,1 M$ sur 24h). Regime macro neutre. Le signal fondamental et le regime macro s'accordent sur une lecture neutre, le signal technique reste isole : ATTENTE retenue, confiance 60 % (bas de la fourchette 60-70 vu la liquidite limitee de l'actif), horizon maintenu a 14 jours (groupe stable).",
     "price_at_issue": 0.058565,
     "resolves_at": "2026-10-04T23:28:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.077574,
+      "actual_move_pct": 32.46,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-05T00:35:00Z"
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260920-grt",
@@ -2639,13 +2770,13 @@
     "reasoning": "Le verdict ATTENTE du 14/09 est invalidé par le marché : mouvement de +16,61 % à l'échéance (0,021947 → 0,025592 euro), au-delà du seuil directionnel de 5 % (verdict_correct=false, aurait dû être ACHAT). Nouveau cycle : lecture technique brute nettement haussière (24h +0,69 %, 7j +16,70 %, 30j +13,79 %), mais le mouvement sur 7 jours dépasse le seuil de 15 % identifié par corr-20260913-biais-chasse-momentum — requalifiée en mixte par prudence plutôt que haussier, ce précédent (ex. Arbitrum -29,7 % après un rebond similaire) n'étant pas encore invalidé par des données réelles. Croisement (portfolio-thesis.json : recommandation Attendre, conviction 4/10, aucun catalyseur d'adoption identifié en septembre ; favoris-context.json : statut Stage 2 confirmé mais absence persistante de TVL DefiLlama et de traction économique mesurable) confirme un fondamental neutre, aligné avec la lecture technique prudente — aucune contradiction à signaler. Régime macro retenu neutre (data/market-context.json, dernier calcul 21/09 08h50 UTC) : flux ETF BTC/ETH nets positifs le 18/09 (+433 M$ / +144 M$) et dominance stablecoins en repli (10,33 % contre 11,22 % le 16/09) penchent risk-on, mais Fed toujours hawkish avec rendement du Trésor 10 ans à 5,01 % penche risk-off, et l'indice peur/cupidité est retombé à ~49-50 (Neutre) ce cycle contre 68-71 (Greed) au cycle précédent — signaux macro trop mélangés pour trancher, retenus tels quels. Deux signaux sur trois convergent sur neutre (fondamental et macro, accord_count=2) : ATTENTE retenue (technique=mixte, règle corr-20260921 inchangée pour ce cas), confiance 62 % (fourchette 60-70, accord modéré mais momentum réel sous-jacent non négligeable malgré la requalification prudente), horizon maintenu à 7 jours par cohérence avec les verdicts précédents sur cet actif (corr-20260906).",
     "price_at_issue": 0.025592,
     "resolves_at": "2026-09-29T00:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.026474,
+      "actual_move_pct": 3.45,
+      "actual_direction": "ATTENTE",
+      "verdict_correct": true,
+      "resolved_at": "2026-10-03T07:18:00Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "neutre"
@@ -2673,16 +2804,17 @@
     "reasoning": "Le verdict ATTENTE du 20/09 est invalidé par le marché : GRT est passé de 0,02232752 $ à 0,03521363 $ (+57,71 %), très au-dessus du seuil directionnel de 5 %, poursuite du rallye déjà noté au cycle précédent (favoris-context.json signalait un risque de retournement après un mouvement jugé excessif, non matérialisé jusqu'ici). Nouveau cycle : mouvement sur 7 jours désormais de +62,40 % (24h +28,55 %, 30j +115,36 %), toujours largement au-dessus du seuil de 15 % qui déclenche la requalification prudente en 'mixte' (règle corr-20260913-biais-chasse-momentum, dont ce même actif a déjà démontré deux fois l'échec ce mois-ci). Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 5/10, le token restant proche de ses plus bas historiques (~-99 % depuis le pic de 2021) malgré plus de 1 200 milliards de requêtes traitées, un décalage usage/valorisation qui ne justifie pas un renforcement même après ce rallye. Régime macro neutre (Fed toujours hawkish, rendement du Trésor 10 ans à 5,12 %, mais flux ETF BTC/ETH nets positifs plusieurs séances consécutives — signaux contradictoires retenus comme tels). Deux signaux sur trois convergent sur neutre (fondamental et macro) : ATTENTE retenue par la règle de prudence sur le technique, confiance 62 % (fourchette 60-70), horizon maintenu à 7 jours (groupe volatil).",
     "price_at_issue": 0.03521363,
     "resolves_at": "2026-10-05T00:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.03030694,
+      "actual_move_pct": -13.93,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-05T08:40:00Z"
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260928-tia",
@@ -2707,16 +2839,17 @@
     "reasoning": "Le verdict ATTENTE du 20/09 est invalidé : TIA est passé de 0,420165 $ à 0,506385 $ (+20,52 %), au-dessus du seuil directionnel de 5 %. Nouveau cycle : mouvement sur 7 jours de +21,28 % (24h +3,25 %, 30j +49,55 %), toujours au-dessus du seuil de 15 % qui déclenche la requalification prudente en 'mixte'. Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 5/10 ; favoris-context.json documente un vrai catalyseur récent (proposition 'Sustainable Blob Economy' du 22/09, pistes de réduction d'émission de TIA) mais aussi un déblocage massif d'environ 175 M TIA prévu le 30 octobre, un risque d'offre à venir qui contrebalance le catalyseur. Régime macro neutre (mêmes signaux contradictoires Fed/ETF que pour les autres favoris ce cycle). Deux signaux sur trois convergent sur neutre (fondamental et macro) : ATTENTE retenue, confiance 61 % (fourchette 60-70), horizon maintenu à 7 jours (groupe volatil).",
     "price_at_issue": 0.506385,
     "resolves_at": "2026-10-05T00:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.482204,
+      "actual_move_pct": -4.78,
+      "actual_direction": "ATTENTE",
+      "verdict_correct": true,
+      "resolved_at": "2026-10-05T08:40:00Z"
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260928-peaq",
@@ -2741,16 +2874,17 @@
     "reasoning": "Le verdict ATTENTE du 20/09 est invalidé : PEAQ est passé de 0,03367987 $ à 0,0423347 $ (+25,70 %), au-dessus du seuil directionnel de 5 %. Nouveau cycle : mouvement sur 7 jours de +26,02 % (30j +84,80 %) toujours au-dessus du seuil de 15 %, malgré un repli de -5,20 % sur les dernières 24h qui suggère un essoufflement du rallye 'robotique' déjà documenté. Signal fondamental neutre : portfolio-thesis.json maintient 'Attendre' conviction 5/10, signalant un nouveau déblocage d'environ 84,84 M PEAQ (~2,56 M$, 1,9 % de l'offre) prévu le 12 octobre, une pression de vente réelle qui s'ajoute au déblocage du 12/09 déjà digéré. Régime macro neutre. Deux signaux sur trois convergent sur neutre (fondamental et macro), le technique reste écarté par la règle de prudence vu l'ampleur du mouvement et le début de retournement en 24h : ATTENTE retenue, confiance 60 % (bas de la fourchette 60-70 vu le repli récent et le déblocage à venir), horizon maintenu à 7 jours (groupe volatil).",
     "price_at_issue": 0.0423347,
     "resolves_at": "2026-10-05T00:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.04478529,
+      "actual_move_pct": 5.79,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-05T08:40:00Z"
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260928-link",
@@ -2776,16 +2910,17 @@
     "reasoning": "Le verdict ACHAT du 20/09 est confirmé : LINK est passé de 12,50 $ à 13,97 $ (+11,76 %), au-dessus du seuil directionnel de 5 %. Nouveau cycle : signal technique toujours haussier (24h -0,85 %, 7j +12,13 %, 30j +22,57 %), sous le seuil de 15 % de requalification prudente. Signal fondamental fortement aligné : portfolio-thesis.json maintient 'Renforcer' conviction 8/10, citant la Strategic Reserve de Chainlink qui a atteint 70,5 M$ le 21/09 (le protocole rachète son propre token avec ses revenus), le partenariat Bottomline (600+ banques) et une part de marché oracle dominante (~70 %, 33,1 Md$ de valeur sécurisée). Régime macro neutre (Fed hawkish/rendement élevé vs flux ETF positifs, signaux contradictoires retenus comme tels). Deux signaux sur trois convergent nettement (technique et fondamental) : ACHAT retenu, confiance 68 % (haut de la fourchette 60-70 vu la convergence répétée sur cet actif), horizon maintenu à 7 jours (groupe volatil).",
     "price_at_issue": 13.97,
     "resolves_at": "2026-10-05T00:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 14.23,
+      "actual_move_pct": 1.86,
+      "actual_direction": "ATTENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-05T08:40:00Z"
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260928-ondo",
@@ -2811,16 +2946,17 @@
     "reasoning": "Le verdict ATTENTE du 20/09 est invalidé : ONDO est passé de 0,431932 $ à 0,576647 $ (+33,50 %), très au-dessus du seuil directionnel de 5 %. Nouveau cycle : mouvement sur 7 jours de +35,62 % (24h +7,63 %, 30j +65,69 %), toujours au-dessus du seuil de 15 % qui déclenche la requalification prudente en 'mixte'. Signal fondamental cette fois nettement haussier : portfolio-thesis.json relève désormais 'Renforcer' conviction 7/10 (mise à jour depuis le 20/09), citant l'Innovation Exemption accordée par la SEC le 17/09, l'adhésion au DTCC Fund/SERV le 16/09 et plus de 440 instruments tokenisés au 18/09 — la validation institutionnelle la plus tangible du portefeuille. Un mouvement whale réel (150 M ONDO, ~49,56 M$, transférés depuis un multisig lié à Ondo vers une adresse fraîche) est à surveiller sans être encore confirmé comme un dépôt sur exchange. Régime macro neutre. Aucun des trois signaux ne converge avec un autre (technique écarté par la règle de prudence, fondamental haussier isolé, macro neutre isolé) : accord_count=1, confiance 55 % (haut de la fourchette 45-55 vu la force réelle des catalyseurs fondamentaux malgré leur isolement) ; ATTENTE retenue par défaut faute de majorité, horizon maintenu à 7 jours (groupe volatil).",
     "price_at_issue": 0.576647,
     "resolves_at": "2026-10-05T00:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.508717,
+      "actual_move_pct": -11.78,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-05T08:40:00Z"
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260928-jup",
@@ -2845,16 +2981,17 @@
     "reasoning": "Le verdict ATTENTE du 20/09 est invalidé : JUP est passé de 0,289772 $ à 0,368248 $ (+27,08 %), au-dessus du seuil directionnel de 5 %. Nouveau cycle : mouvement sur 7 jours de +28,88 % (24h +8,85 %, 30j +68,44 %), toujours au-dessus du seuil de 15 % qui déclenche la requalification prudente en 'mixte' — la hausse récente reste attribuée au bêta Solana plus qu'à une actualité propre à Jupiter (favoris-context.json). Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 6/10 (sous le seuil de 7 requis pour une lecture pleinement positive) ; le burn Litterbox de 130 M JUP s'avère en réalité déjà exécuté fin novembre 2025 (information corrigée dans favoris-context.json, pas une actualité fraîche de ce cycle), et la concentration de détention reste élevée (10 plus gros wallets ~66 % de l'offre). Régime macro neutre. Deux signaux sur trois convergent sur neutre (fondamental et macro) : ATTENTE retenue, confiance 62 % (fourchette 60-70), horizon maintenu à 7 jours (groupe volatil).",
     "price_at_issue": 0.368248,
     "resolves_at": "2026-10-05T00:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.33956,
+      "actual_move_pct": -7.79,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-05T08:40:00Z"
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260928-aioz",
@@ -2879,16 +3016,17 @@
     "reasoning": "Le verdict ATTENTE du 20/09 (déjà sous la règle de prudence corr-20260913) est invalidé une nouvelle fois : AIOZ est passé de 0,091345 $ à 0,128331 $ (+40,49 %), très au-dessus du seuil directionnel de 5 % — deuxième cycle consécutif où la prudence sur cet actif n'est pas récompensée par le marché. Nouveau cycle : mouvement sur 7 jours de +38,63 % (24h +6,71 %, 30j +124,36 %), toujours très au-dessus du seuil de 15 % qui maintient la requalification 'mixte'. Signal fondamental redevenu neutre : portfolio-thesis.json est passé de 'Renforcer' (20/09) à 'Conserver' conviction 5/10, le Vision Paper V2 et la réduction d'inflation programmée restant des catalyseurs réels mais non encore traduits en traction commerciale mesurée. Régime macro neutre. Deux signaux sur trois convergent sur neutre (fondamental et macro), le technique reste écarté par la règle de prudence malgré deux cycles consécutifs où cette prudence a coûté en exactitude sur cet actif précis : ATTENTE retenue, confiance 63 % (fourchette 60-70), horizon maintenu à 7 jours (groupe volatil).",
     "price_at_issue": 0.128331,
     "resolves_at": "2026-10-05T00:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.117429,
+      "actual_move_pct": -8.49,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-05T08:40:00Z"
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260928-arb",
@@ -2913,16 +3051,17 @@
     "reasoning": "Le verdict ATTENTE du 20/09 est confirmé : ARB est passé de 0,220306 $ à 0,22623 $ (+2,69 %), sous le seuil directionnel de 5 % — contrairement au cycle précédent où le rallye était extrême, la hausse s'est ici nettement calmée. Nouveau cycle : lecture technique redevenue neutre (24h +2,08 %, 7j +4,00 %, sous le seuil de 15 % qui aurait déclenché une requalification), le 30j (+158,09 %) restant élevé mais reflétant un mouvement déjà largement réalisé mi-septembre plutôt qu'une dynamique fraîche. Signal fondamental neutre : portfolio-thesis.json maintient 'Attendre' conviction 5/10, les deux déblocages de tokens (92,6 M ARB le 16/09, 139,15 M ARB le 23/09, majoritairement équipe/investisseurs) ayant été absorbés sans choc mais la concentration des baleines (~64 % de l'offre) restant un risque structurel non résolu. Régime macro neutre. Les trois signaux convergent pour la première fois ce cycle sur une lecture neutre (technique, fondamental et macro) : accord_count=3, confiance 76 % (fourchette 75-85, accord complet mais sur une accalmie plutôt qu'une conviction directionnelle forte) ; ATTENTE retenue (technique neutre, aucune direction forcée), horizon maintenu à 7 jours (groupe volatil).",
     "price_at_issue": 0.22623,
     "resolves_at": "2026-10-05T00:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.207603,
+      "actual_move_pct": -8.23,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-05T08:40:00Z"
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "currency": "USD"
   },
   {
     "id": "v-20260928-inj",
@@ -2947,6 +3086,35 @@
     "reasoning": "Le verdict ATTENTE du 20/09 est confirmé : INJ est passé de 7,77 $ à 7,79 $ (+0,26 %), largement sous le seuil directionnel de 5 % — le rallye du mois s'est arrêté net cette semaine (7j -0,34 %) après le bond de +52,65 % validé au cycle précédent. Nouveau cycle : lecture technique redevenue neutre (24h +0,33 %, 7j -0,34 %, sous le seuil de 15 %), le 30j (+50,47 %) reflétant un mouvement déjà réalisé plutôt qu'une dynamique fraîche. Signal fondamental toujours nettement haussier : portfolio-thesis.json maintient 'Renforcer' conviction 7/10, citant le lancement natif sur Solana via le bridge Sunrise, le dossier ETF Canary Capital toujours en instruction à la SEC, le record de staking (58,8 M INJ) et la migration Pineapple Financial (>1 Md$ d'actifs immobiliers tokenisés) — ce signal reste isolé, le technique et le macro étant tous deux neutres. Régime macro neutre. Le technique et le macro convergent sur neutre (accord_count=2), le fondamental reste isolé malgré sa force réelle : ATTENTE retenue (le technique neutre ne déclenche jamais de direction forcée, seul haussier/baissier le fait), confiance 65 % (haut de la fourchette 60-70 vu la solidité du signal fondamental isolé malgré son isolement), horizon maintenu à 7 jours (groupe volatil).",
     "price_at_issue": 7.79,
     "resolves_at": "2026-10-05T00:20:00Z",
+    "status": "resolved",
+    "outcome": {
+      "price_at_resolution": 7.63,
+      "actual_move_pct": -2.05,
+      "actual_direction": "ATTENTE",
+      "verdict_correct": true,
+      "resolved_at": "2026-10-05T08:40:00Z"
+    },
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "currency": "USD"
+  },
+  {
+    "id": "v-20261003-ctsi",
+    "issued_at": "2026-10-03T07:18:00Z",
+    "asset": "cartesi",
+    "ticker": "CTSI",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 78,
+    "signals_used": [
+      "24h +1,77%",
+      "7j +0,06%",
+      "30j +20,68%",
+      "portfolio-thesis Attendre conviction 4/10"
+    ],
+    "reasoning": "Le verdict ATTENTE du 22/09 est confirmé : CTSI est passé de 0,025592 à 0,026474 € (+3,45 %), sous le seuil directionnel de 5 % — la forte hausse sur 7 jours qui avait justifié une requalification prudente en « mixte » (corr-20260913) ne s'est pas prolongée au-delà du seuil. Nouveau cycle : lecture technique redevenue neutre (24h +1,77 %, 7j +0,06 % quasiment plat — le +20,68 % sur 30 jours reflète une hausse déjà réalisée mi-septembre, pas une dynamique fraîche, et reste sous le seuil de 15 % qui aurait déclenché une requalification). Croisement : portfolio-thesis.json (28/09) maintient « Attendre » conviction 4/10 (flux d'actualités faible, catalyseur rollups/adoption non confirmé avec une date) ; favoris-context.json (23/09) conserve un scénario de base sans catalyseur (statut Stage 2 confirmé mais adoption encore naissante, risque de concentration des wallets non re-vérifié ce cycle) — fondamental neutre, aligné avec la lecture technique, aucune contradiction à signaler. Régime macro retenu neutre (data/market-context.json, dernier calcul 28/09 08h45 UTC — fichier non rafraîchi depuis, la routine marche-quotidien n'ayant pas tourné depuis cette date, signalé ici par transparence plutôt que recalculé avec un nouvel appel réseau) : Fed toujours hawkish, rendement du Trésor 10 ans à 5,17 % (plus haut depuis 2007) penche risk-off, mais flux ETF BTC/ETH nets positifs pour la 7e/6e séance consécutive penchent risk-on, et la hausse de la dominance stablecoins (10,34 % vs 10,13 %) est mécanique (recul de la capitalisation totale, pas un vrai mouvement vers les stablecoins) donc non retenue comme signal supplémentaire — signaux macro toujours trop mélangés pour trancher, retenus tels quels. Les trois dimensions convergent cette fois sur une lecture neutre (technique, fondamental, macro) : accord_count=3, confiance 78 % (fourchette 75-85, accord complet mais sur une accalmie plutôt qu'une conviction directionnelle forte) ; ATTENTE retenue (technique neutre, aucune direction forcée par la règle de la section 2), horizon maintenu à 7 jours (groupe volatil, corr-20260906).",
+    "price_at_issue": 0.026474,
+    "resolves_at": "2026-10-10T07:18:00Z",
     "status": "pending",
     "outcome": {
       "price_at_resolution": null,
@@ -2956,6 +3124,293 @@
       "resolved_at": null
     },
     "threshold_pct": 5,
-    "regime_at_issue": "neutre"
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "neutre",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 3
+    },
+    "currency": "EUR"
+  },
+  {
+    "id": "v-20261005-btc",
+    "issued_at": "2026-10-05T00:35:00Z",
+    "asset": "bitcoin",
+    "ticker": "BTC",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 64,
+    "signals_used": [
+      "24h +1,89%",
+      "7j +2,72%",
+      "30j +8,56%",
+      "flux ETF spot +2,4 Md$ sur la semaine du 25/09 (plus forte semaine en ~1 an, favoris-context.json)"
+    ],
+    "reasoning": "Resolution du verdict ACHAT du 20/09 confirmee : BTC est passe de 81 218 $ a 86 402 $ (+6,38 %), au-dessus du seuil directionnel de 5 %. Nouveau cycle : signal technique haussier modere (24h +1,89 %, 7j +2,72 %, 30j +8,56 %), coherent avec le retour des flux ETF spot (+2,4 Md$ sur la semaine se terminant le 25/09, plus forte semaine en pres d'un an selon favoris-context.json). Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 6/10, le prix restant nettement sous son niveau d'il y a un an malgre le rebond recent, pas de contradiction franche avec la lecture technique. Regime macro retenu neutre : Fed toujours hawkish (taux 3,75-4,00 %) mais rapport sur l'emploi du 02/10 nettement sous consensus (+29 000 vs ~85 000 attendus, chomage a 4,2 %) qui plaide pour une Fed plus patiente ; flux ETF/rendement 10 ans non confirmes chiffres ce cycle, indice fear & greed en zone de peur extreme releve via WebSearch mais sans source datee fiable (meme reserve que les cycles precedents) - signaux macro non alignes, retenus neutres plutot que forces. Technique haussier et accord_count=2 (fondamental et macro alignes neutres) : verdict ACHAT retenu par la regle de selection du paragraphe 2, confiance 64 % (fourchette 60-70), horizon maintenu a 14 jours (groupe stable).",
+    "price_at_issue": 86402,
+    "currency": "USD",
+    "resolves_at": "2026-10-19T00:35:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261005-eth",
+    "issued_at": "2026-10-05T00:35:00Z",
+    "asset": "ethereum",
+    "ticker": "ETH",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 63,
+    "signals_used": [
+      "24h +1,43%",
+      "7j +1,91%",
+      "30j +11,19%",
+      "portfolio-thesis Conserver conviction 6/10"
+    ],
+    "reasoning": "Resolution du verdict ACHAT du 20/09 invalidee : ETH est passe de 2 640,08 $ a 2 725,67 $ (+3,24 %), sous le seuil directionnel de 5 % (mouvement reste ATTENTE). Nouveau cycle : signal technique haussier modere (24h +1,43 %, 7j +1,91 %, 30j +11,19 %, la hausse sur 30 jours est nettement plus marquee que sur 7 jours). Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 6/10 ; la resistance des 2 550 $ (moyenne mobile 50 semaines) a de nouveau tenu et la Commission europeenne a ouvert le 25/09 une reflexion sur l'encadrement du staking, facteur a surveiller sans impact confirme ce cycle. Regime macro retenu neutre, memes raisons que BTC ce cycle (Fed hawkish mais rapport sur l'emploi faible, ETF/10 ans non confirmes, fear & greed non fiable). Technique haussier et accord_count=2 (fondamental et macro alignes neutres) : verdict ACHAT retenu par la regle de selection du paragraphe 2, confiance 63 % (fourchette 60-70), horizon maintenu a 14 jours (groupe stable).",
+    "price_at_issue": 2725.67,
+    "currency": "USD",
+    "resolves_at": "2026-10-19T00:35:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261005-fet",
+    "issued_at": "2026-10-05T00:35:00Z",
+    "asset": "fetch-ai",
+    "ticker": "FET",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 67,
+    "signals_used": [
+      "24h +14,74%",
+      "7j +2,54%",
+      "30j +64,68%",
+      "exploit pont SingularityNET ~1,56M$ FET detournes le 20/09 (contrats coeur Fetch.ai non touches)"
+    ],
+    "reasoning": "Resolution du verdict ATTENTE du 20/09 invalidee : FET est passe de 0,175082 $ a 0,257967 $ (+47,34 %), largement au-dessus du seuil directionnel de 5 %. Nouveau cycle : signal technique nettement haussier (24h +14,74 %, 7j +2,54 %, 30j +64,68 % - la hausse sur 30 jours domine, le mouvement 7j plus calme suggere une consolidation plutot qu'un essoufflement). Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 5/10 - narratif IA porteur (ASI:Chain DevNet, ASI:Create en beta ouverte) mais l'exploit du pont SingularityNET du 20/09 (~1,56 M$ de FET detournes lors d'une conversion AGIX->FET, contrats coeur Fetch.ai non touches) reste un risque d'infrastructure reel pour l'ecosysteme ASI Alliance encore en consolidation. Regime macro retenu neutre, memes raisons que BTC/ETH ce cycle. Technique haussier et accord_count=2 (fondamental et macro alignes neutres) : verdict ACHAT retenu par la regle de selection du paragraphe 2, confiance 67 % (fourchette 60-70, mouvement technique parmi les plus nets du lot), horizon maintenu a 14 jours (groupe stable).",
+    "price_at_issue": 0.257967,
+    "currency": "USD",
+    "resolves_at": "2026-10-19T00:35:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261005-flux",
+    "issued_at": "2026-10-05T08:40:00Z",
+    "asset": "zelcash",
+    "ticker": "FLUX",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 68,
+    "signals_used": [
+      "24h +2,48%",
+      "7j +9,73%",
+      "30j +55,34%",
+      "portfolio-thesis Attendre conviction 3/10"
+    ],
+    "reasoning": "Resolution du verdict ATTENTE du 20/09 invalidee ce cycle : FLUX est passe de 0,058565 $ a 0,077574 $ (+32,46 %), largement au-dessus du seuil directionnel de 5 %. Nouveau verdict : signal technique haussier (24h +2,48 %, 7j +9,73 % deja au-dessus du seuil, 30j +55,34 % - mouvement soutenu sur les trois fenetres, pas un simple rebond isole). Signal fondamental neutre : portfolio-thesis.json maintient 'Attendre' conviction faible (3/10), sans catalyseur 2026 confirme ni contradiction franche avec la lecture technique (conviction trop faible pour plafonner accord_count selon la section 4). long_term_thesis (favoris-context.json) confirme une feuille de route VPON/benchmark IA en developpement incremental, sans catalyseur date nouveau ce cycle. Regime macro retenu neutre, memes raisons que les autres verdicts de ce cycle (Fed hawkish mais rapport sur l'emploi faible, ETF/10 ans non confirmes, fear & greed non fiable). Technique haussier et accord_count=2 (fondamental et macro alignes neutres) : verdict ACHAT retenu par la regle de selection du paragraphe 2, confiance 68 % (fourchette 60-70, mouvement 7j deja au-dessus du seuil directionnel), horizon maintenu a 14 jours (groupe stable, non concerne par l'horizon adaptatif).",
+    "price_at_issue": 0.078783,
+    "currency": "USD",
+    "resolves_at": "2026-10-19T08:40:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261005-lpt",
+    "issued_at": "2026-10-05T08:40:00Z",
+    "asset": "livepeer",
+    "ticker": "LPT",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 61,
+    "signals_used": [
+      "24h +0,16%",
+      "7j +1,56%",
+      "30j +18,10%",
+      "portfolio-thesis Conserver conviction 5/10"
+    ],
+    "reasoning": "Resolution du verdict ATTENTE du 20/09 invalidee ce cycle : LPT est passe de 1,58 $ a 1,72 $ (+8,86 %), au-dessus du seuil directionnel de 5 %. Nouveau verdict : signal technique haussier modere (24h +0,16 %, 7j +1,56 %, 30j +18,10 % - la hausse se concentre sur le mois, mouvement recent quasi plat plutot qu'un emballement). Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 5/10 (Livepeer Agent vise une beta ouverte, Livepeer 2.0 formalise une refonte tokenomics, mais aucun catalyseur date cette semaine ni contradiction franche avec la lecture technique). Regime macro retenu neutre, memes raisons que les autres verdicts de ce cycle. Technique haussier et accord_count=2 (fondamental et macro alignes neutres) : verdict ACHAT retenu par la regle de selection du paragraphe 2, confiance 61 % (fourchette 60-70, signal technique le plus faible du lot : mouvements 24h/7j proches de zero), horizon maintenu a 14 jours (groupe stable, non concerne par l'horizon adaptatif).",
+    "price_at_issue": 1.74,
+    "currency": "USD",
+    "resolves_at": "2026-10-19T08:40:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261005-tia",
+    "issued_at": "2026-10-05T16:20:00Z",
+    "asset": "celestia",
+    "ticker": "TIA",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 63,
+    "signals_used": [
+      "24h -0,56%",
+      "7j +5,25%",
+      "30j +27,78%",
+      "portfolio-thesis Attendre conviction 4/10"
+    ],
+    "reasoning": "Aucun verdict pending sur TIA avant ce cycle (lot du 28/09 resolu le 05/10, voir correction_log corr-20260913). Nouveau verdict : signal technique haussier (24h -0,56% quasi plat, 7j +5,25% deja au-dessus du seuil directionnel de 5%, 30j +27,78% - tendance de fond nettement positive malgre une pause sur 24h, 7j sous le seuil des 15% de la regle de requalification corr-20260913, pas de mixte force). Signal fondamental neutre : portfolio-thesis.json maintient 'Attendre' conviction faible (4/10, aucune actualite d'octobre 2026 confirmee, concurrence EigenDA/Avail et deblocages de tokens notes mais pas de catalyseur verifie) - conviction trop faible pour plafonner accord_count selon la section 4. Pas d'entree favoris-context.json pour TIA (long_term_thesis/onchain_signal absents, rien a croiser de ce cote). Regime macro retenu neutre : Fed toujours hawkish (taux 3,75-4,00%, prochain FOMC le 28/10) mais rapport sur l'emploi du 02/10 faible (+29 000, chomage 4,2%) qui tempere la lecture, flux ETF et rendement 10 ans toujours non confirmes, dominance stablecoins en leger recul (10,16% -> 10,04%) et fear & greed remonte a 70 (Greed) - signaux insuffisamment alignes pour trancher risk-on, retenu neutre plutot que force. Technique haussier et accord_count=2 (fondamental et macro alignes neutres) : verdict ACHAT retenu par la regle de selection du paragraphe 2, confiance 63% (fourchette 60-70, mouvement 7j deja au-dessus du seuil et tendance 30j tres nette), horizon maintenu a 7 jours (groupe volatil identifie par corr-20260906, inchange).",
+    "price_at_issue": 0.466773,
+    "currency": "USD",
+    "resolves_at": "2026-10-12T16:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261005-grt",
+    "issued_at": "2026-10-05T16:20:00Z",
+    "asset": "the-graph",
+    "ticker": "GRT",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 62,
+    "signals_used": [
+      "24h +1,81%",
+      "7j -6,00%",
+      "30j +67,76%",
+      "portfolio-thesis Attendre conviction 3/10"
+    ],
+    "reasoning": "Aucun verdict pending sur GRT avant ce cycle (lot du 28/09 resolu le 05/10, voir correction_log corr-20260913). Nouveau verdict : signal technique mixte (24h +1,81%, 7j -6,00% au-dela du seuil directionnel de 5% mais en sens inverse du 30j +67,76% tres fortement positif - les trois fenetres se contredisent, ni haussier net ni baissier net, 7j sous le seuil des 15% de corr-20260913 donc pas de requalification supplementaire necessaire, le signal brut est deja mixte). Signal fondamental neutre : portfolio-thesis.json maintient 'Attendre' conviction faible (3/10) ; le constat note une pression de marche negative (suspension de la paire GRT-BTC sur Coinbase le 15/09, retraits de paires sur Bitget/CoinTR, prix proche de plus bas pluriannuels) mais la recommandation reste 'Attendre' sans franchir le seuil 'Reduire' conviction >=7 qui forcerait un plafonnement de l'accord selon la section 4 - signal retenu neutre, pas invente en baissier au-dela de ce que dit le champ recommendation. Pas d'entree favoris-context.json pour GRT. Regime macro retenu neutre, memes raisons que les autres verdicts de ce cycle (Fed hawkish temperee par l'emploi faible du 02/10, ETF/10 ans non confirmes, dominance stablecoins en leger recul, fear & greed a 70). Technique mixte : ATTENTE retenu directement par la regle de selection du paragraphe 2 (aucune direction forcee hors haussier/baissier net), accord_count=2 (fondamental et macro alignes neutres, technique isole) donne confiance 62% (fourchette 60-70).",
+    "price_at_issue": 0.02920356,
+    "currency": "USD",
+    "resolves_at": "2026-10-12T16:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "mixte",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261005-peaq",
+    "issued_at": "2026-10-05T16:20:00Z",
+    "asset": "peaq-2",
+    "ticker": "PEAQ",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 61,
+    "signals_used": [
+      "24h -4,95%",
+      "7j +9,77%",
+      "30j +68,94%",
+      "portfolio-thesis Attendre conviction 3/10"
+    ],
+    "reasoning": "Aucun verdict pending sur PEAQ avant ce cycle (lot du 28/09 resolu le 05/10, voir correction_log corr-20260913). Nouveau verdict : signal technique haussier (24h -4,95% proche du seuil sans le franchir, 7j +9,77% au-dessus du seuil directionnel de 5%, 30j +68,94% - tendance de fond tres nette malgre une pause sur 24h, 7j sous le seuil des 15% de corr-20260913 donc pas de requalification en mixte). Signal fondamental neutre : portfolio-thesis.json maintient 'Attendre' conviction faible (3/10) et signale explicitement une 'petite position a haut risque, a ne pas renforcer sans signal verifie' (prix autour de 0,018 $ au moment de cette thèse, proche du plus bas de mars 2026, tres loin du pic de decembre 2024) - conviction a 3/10 reste sous le seuil 'Reduire >=7' qui forcerait un plafonnement de l'accord selon la section 4, mais cette prudence est notee ici explicitement car elle va a l'encontre du signal technique haussier, a surveiller. Pas d'entree favoris-context.json pour PEAQ. Volume 24h (3,78 M$) rapporte a la capitalisation (108,7 M$) reste faible (~3,5%), liquidite plus mince que les autres favoris - element de prudence supplementaire. Regime macro retenu neutre, memes raisons que les autres verdicts de ce cycle. Technique haussier et accord_count=2 (fondamental et macro alignes neutres) : verdict ACHAT retenu par la regle de selection du paragraphe 2, confiance 61% (fourchette 60-70, bas de fourchette en raison de la liquidite plus mince et de la mise en garde explicite de la these hebdo), horizon maintenu a 7 jours (groupe volatil identifie par corr-20260906, inchange).",
+    "price_at_issue": 0.04236474,
+    "currency": "USD",
+    "resolves_at": "2026-10-12T16:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
   }
 ]

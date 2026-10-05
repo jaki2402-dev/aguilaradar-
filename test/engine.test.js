@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { loadPage } from "./helpers/loadPage.js";
+import { loadPage, setGlobal } from "./helpers/loadPage.js";
 
 // Fixture de 5 verdicts résolus, vérifiée à la main ET recoupée avec la vraie fonction
 // avant d'écrire ces assertions (voir la session de travail) :
@@ -344,5 +344,37 @@ describe("engine.js — renderEngineTab (journal des corrections)", () => {
     expect(html).toContain("badge-success");
     expect(html).toContain("40 %");
     expect(html).toContain("55 %");
+  });
+});
+
+describe("engine.js — computePaperPortfolio (calculé en direct, plus lu dans engine-history)", () => {
+  const mk = (verdict, conf, move, over = {}) => ({ status: "resolved", verdict, confidence_pct: conf, outcome: { actual_move_pct: move }, ...over });
+
+  it("reproduces the routine's own published figures (-5,10 % on the 41 verdicts resolved by 13/09/2026)", async () => {
+    const { readFileSync } = await import("node:fs");
+    const all = JSON.parse(readFileSync("data/verdicts.json", "utf8"));
+    const asOf = all
+      .filter((v) => v.status === "resolved" && v.outcome.resolved_at <= "2026-09-14T00:00")
+      .map((v) => (v.outcome.currency_correction ? { ...v, outcome: { ...v.outcome, actual_move_pct: v.outcome.currency_correction.original_actual_move_pct } } : v));
+    expect(asOf.length).toBe(41);
+    const dom = loadPage(["config.js", "prices.js", "engine.js", "insights.js"]);
+    expect(dom.window.computePaperPortfolio(asOf).cumulative_return_pct).toBeCloseTo(-5.1, 1);
+  });
+
+  it("weights each position by confidence, ATTENTE counts as no position", () => {
+    const dom = loadPage(["config.js", "prices.js", "engine.js", "insights.js"]);
+    const vs = [mk("ACHAT", 60, 10), mk("VENTE", 40, 10), ...Array.from({ length: 8 }, () => mk("ATTENTE", 50, 30))];
+    // (60*10 - 40*10 + 0) / (60+40+400) = 0.4
+    expect(dom.window.computePaperPortfolio(vs).cumulative_return_pct).toBeCloseTo(0.4, 6);
+  });
+
+  it("returns no figure below 10 resolved verdicts, and no BTC benchmark without a live price", () => {
+    const dom = loadPage(["config.js", "prices.js", "engine.js", "insights.js"]);
+    expect(dom.window.computePaperPortfolio([mk("ACHAT", 60, 10)]).cumulative_return_pct).toBeNull();
+    const vs = Array.from({ length: 10 }, () => mk("ACHAT", 50, 5));
+    vs.push({ asset: "bitcoin", issued_at: "2026-08-07T10:00:00Z", price_at_issue: 55800, status: "pending" });
+    expect(dom.window.computePaperPortfolio(vs).btc_buy_hold_return_pct).toBeNull();
+    setGlobal(dom, "latestFavorisPrices", { bitcoin: { eur: 66173, usd: 77000 } });
+    expect(dom.window.computeBtcBuyHoldPct(vs)).toBeCloseTo(18.59, 2); // même chiffre que la routine au 13/09
   });
 });

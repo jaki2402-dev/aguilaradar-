@@ -248,11 +248,10 @@ function renderPortfolioPerformanceChart(positions) {
 }
 
 // Évolution réelle de la valeur totale (data/portfolio-history.json, 1 point réel par jour
-// écrit par aguilaradar-cycle-2h à partir de prix réellement récupérés ce cycle-là — jamais un
+// écrit par la GitHub Action portfolio-snapshot depuis le 04/10/2026, à partir de prix réellement récupérés ce cycle-là — jamais un
 // point interpolé, deviné ou rétro-daté ici, cohérent avec le "jamais halluciner" appliqué
 // partout ailleurs sur le site). Moins de 2 points : message d'attente plutôt qu'un graphique
-// vide ou trompeur (même discipline que renderConfidenceHistory, insights.js). Réutilise
-// sparklinePoints (cards.js, chargé avant portfolio.js) pour le tracé.
+// vide ou trompeur (même discipline que renderConfidenceHistory, insights.js).
 function renderPortfolioHistoryChart(history) {
   const snapshots = (history && history.snapshots) || [];
   if (snapshots.length < 2) {
@@ -266,14 +265,21 @@ function renderPortfolioHistoryChart(history) {
   const values = sorted.map((s) => s.total_value_eur);
   const w = 100;
   const h = 40;
-  const linePoints = sparklinePoints(values, w, h);
   const min = Math.min(...values);
   const max = Math.max(...values);
   const range = max - min || 1;
-  const circles = sorted
-    .map((s, i) => {
-      const x = (i / (sorted.length - 1)) * w;
-      const y = h - ((s.total_value_eur - min) / range) * h;
+  // Abscisse proportionnelle à la DATE, pas à l'index : un trou de 20 jours sans point doit se
+  // voir comme un trou (régression du 04/10/2026 : 14/09 → 04/10 aurait été dessiné comme 1 jour).
+  const t0 = new Date(sorted[0].date).getTime();
+  const span = new Date(sorted[sorted.length - 1].date).getTime() - t0 || 1;
+  const coords = sorted.map((s) => ({
+    s,
+    x: ((new Date(s.date).getTime() - t0) / span) * w,
+    y: h - ((s.total_value_eur - min) / range) * h,
+  }));
+  const linePoints = coords.map((c) => `${c.x.toFixed(1)},${c.y.toFixed(1)}`).join(" ");
+  const circles = coords
+    .map(({ s, x, y }) => {
       const dateLabel = new Date(s.date).toLocaleDateString("fr-FR");
       return `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="1.6" class="hist-point"><title>${escapeHtml(dateLabel)} : ${escapeHtml(formatPrice(s.total_value_eur, "EUR"))}</title></circle>`;
     })
@@ -283,6 +289,22 @@ function renderPortfolioHistoryChart(history) {
   const evolution = first.total_value_eur ? ((last.total_value_eur - first.total_value_eur) / first.total_value_eur) * 100 : null;
   const evoClass = evolution === null ? "" : evolution >= 0 ? "positive" : "negative";
   const evoSign = evolution !== null && evolution >= 0 ? "+" : "";
+  // La valeur totale mélange performance et nouveaux apports : si le montant investi a changé
+  // sur la fenêtre, on le dit et on donne l'évolution hors apports (approximation simple,
+  // pas un rendement pondéré dans le temps). Rien n'est affiché si l'investi n'est pas connu.
+  let depositsNote = "";
+  if (typeof first.total_invested_eur === "number" && typeof last.total_invested_eur === "number" && first.total_value_eur) {
+    const deposits = last.total_invested_eur - first.total_invested_eur;
+    if (Math.abs(deposits) >= 1) {
+      const perf = ((last.total_value_eur - first.total_value_eur - deposits) / first.total_value_eur) * 100;
+      depositsNote = `<p class="hint">Dont ${deposits > 0 ? "+" : ""}${escapeHtml(formatPrice(deposits, "EUR"))} d'apports nets sur la période — hors apports : <span class="${perf >= 0 ? "positive" : "negative"}">${perf >= 0 ? "+" : ""}${perf.toFixed(1)} %</span> (approximatif).</p>`;
+    }
+  }
+  // Historique figé = à dire, pas à laisser deviner (le dernier point affiché comme « actuel »).
+  const daysSinceLast = Math.floor((Date.now() - new Date(last.date).getTime()) / 86400000);
+  const staleNote = daysSinceLast >= 2
+    ? `<p class="hint negative">Dernier point il y a ${daysSinceLast} jours — l'historique n'a pas été mis à jour depuis.</p>`
+    : "";
   return `
     <div class="portfolio-chart-card">
       <span class="hint">Évolution de la valeur totale (${sorted.length} points réels)</span>
@@ -296,6 +318,8 @@ function renderPortfolioHistoryChart(history) {
         ${evolution !== null ? `<span class="hint ${evoClass}">${evoSign}${evolution.toFixed(1)} %</span>` : ""}
         <span class="hint">${new Date(last.date).toLocaleDateString("fr-FR")} · ${formatPrice(last.total_value_eur, "EUR")}</span>
       </div>
+      ${depositsNote}
+      ${staleNote}
     </div>`;
 }
 
