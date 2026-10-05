@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-05T01:14:38Z",
+  "updated_at": "2026-10-05T09:34:59Z",
   "fear_greed": {
     "value": 70,
     "classification": "Greed",
@@ -7,8 +7,8 @@
     "source": "alternative.me /fng (Crypto Fear & Greed Index)"
   },
   "btc_dominance": {
-    "pct": 59.32,
-    "as_of": "2026-10-05T01:09:59Z",
+    "pct": 59.18,
+    "as_of": "2026-10-05T09:31:06Z",
     "source": "CoinGecko /api/v3/global (market_cap_percentage.btc)"
   },
   "errors": []
