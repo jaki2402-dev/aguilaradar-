@@ -1,8 +1,8 @@
 {
-  "last_scan_at": "2026-10-04T04:03:32Z",
+  "last_scan_at": "2026-10-05T04:09:53Z",
   "scanned_count": 20,
   "excluded_meme_count": 22,
-  "methodology": "Cycle de rattrapage du 04/10/2026 (session inactive du 29/09 au 03/10, declenchements en attente consolides en un seul cycle avec donnees fraiches reelles, jamais de reconstitution retroactive par jour manque). Top 20 CoinGecko via le connecteur MCP CoinGecko (limite connue : plafond 20 coins, USD natif converti en EUR via taux de change reel Alpha Vantage 0.88838955, variation 7j calculee depuis le sparkline 7 jours reel, ATH indisponible -> omis). Marche globalement stable (BTC +0.2%, ETH +0.5% sur 24h). Aucun nouveau candidat ne se distingue : mega-caps, stablecoins, Dogecoin (memecoin), Chainlink (position Portefeuille), deja actifs, ou Rain (archive le 14/09) qui montre un pump brutal de +34.8% sur 24h mais seulement +4.9% sur 7j apres des semaines de baisse -> mouvement d'un seul jour, pas une reprise confirmee, pas de reintegration ce cycle. 8 des 20 coins etaient deja suivis, 0 nouvelle entree. Revue optionnelle (commit separe) : Zcash archive pour declin soutenu et regulier sur 7j (-20.1%, visible sur l'ensemble du sparkline, pas un accident d'un jour). Les autres opportunites actives (Hyperliquid -3.9%, Cardano -3.4%, Unibase hors Top 20 -6.1%, Monero -2.5%, LEO -0.8%, WhiteBIT +0.3%, Stellar +0.3%) montrent des mouvements modestes sur une seule verification -> conservees, a resurveiller.",
+  "methodology": "Cycle du 05/10/2026 : Top 20 CoinGecko via connecteur MCP, taux EUR reel Alpha Vantage 0.89497852, variation 7j via sparkline, ATH indisponible -> omis. Marche globalement haussier (BTC +1.4%, ADA +10.2%, XLM +4.1%). 0 nouvelle entree : mega-caps/stablecoins/Dogecoin/Chainlink/deja actifs, ou archives sans reprise confirmee (Zcash toujours -13.9% sur 7j ; Rain -14.7% sur 24h aujourd'hui, retombe apres son pump, -9.1% sur 7j). Revue optionnelle : actives toutes saines ou en reprise (Cardano +7.3%, Stellar +6.5%, WhiteBIT +3.7%, Hyperliquid/Monero repasses positifs) -> aucun retrait.",
   "opportunities": [
     {
       "id": "opp-20260807-ub",
