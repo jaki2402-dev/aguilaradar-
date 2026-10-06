@@ -4,7 +4,8 @@ import json
 import re
 
 now = dt.datetime.now(dt.timezone.utc)
-match = re.search(r"deepCycleHours:\s*(\d+(?:\.\d+)?)", open("js/config.js", encoding="utf-8").read())
+with open("js/config.js", encoding="utf-8") as config:
+    match = re.search(r"deepCycleHours:\s*(\d+(?:\.\d+)?)", config.read())
 cycle_h = float(match.group(1)) if match else None
 
 # Jamais news.last_updated_at ni opportunities.last_checked_at : voir docs/routines/verif-fraicheur-quotidien.md
@@ -15,14 +16,19 @@ CHECKS = [
 ]
 
 for label, path, keys, limit_h in CHECKS:
-    value = json.load(open(path, encoding="utf-8"))
-    for key in keys:
-        value = value.get(key) if isinstance(value, dict) else None
     field = f"{path} {'.'.join(keys)}"
-    if not value:
-        print(f"{label} : {field} ABSENT")
+    try:
+        with open(path, encoding="utf-8") as source:
+            value = json.load(source)
+        for key in keys:
+            value = value.get(key) if isinstance(value, dict) else None
+        if not value:
+            print(f"{label} : {field} ABSENT")
+            continue
+        stamp = dt.datetime.fromisoformat(str(value).replace("Z", "+00:00"))
+    except (OSError, ValueError) as error:
+        print(f"{label} : {field} ILLISIBLE ({error.__class__.__name__} : {error})")
         continue
-    stamp = dt.datetime.fromisoformat(str(value).replace("Z", "+00:00"))
     if stamp.tzinfo is None:
         stamp = stamp.replace(tzinfo=dt.timezone.utc)
     minutes = int((now - stamp).total_seconds() // 60)

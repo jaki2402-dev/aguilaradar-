@@ -11,7 +11,8 @@ python3 scripts/verif-fraicheur.py
 ```
 
 Pour chaque source : horodatage, âge (`XhYY`), seuil, puis `OK` ou `ATTENTION`. Reprendre ces âges
-tels quels dans la note de l'étape 4 ou 5 ; `ABSENT` se signale tel quel, sans rien deviner. Ne lire
+tels quels dans la note de l'étape 4 ou 5 ; `ABSENT` ou `ILLISIBLE` se signalent tels quels, sans
+rien deviner (un fichier illisible n'empêche pas de vérifier les deux autres). Ne lire
 aucun de ces fichiers en entier (`Read`/`cat`) : `opportunities.json` pèse ~125 Ko pour 3 dates utiles.
 
 | Source | Champ qui fait foi | Seuil |
