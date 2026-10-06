@@ -290,3 +290,31 @@ figés → nouveau prompt (`market-gauges.json`, régime daté). **Worker** : `s
 notifiés aurait re-notifié en boucle au-delà de 500 entrées → ids encore présents jamais oubliés
 (code corrigé ici, **pas encore déployé** sur `aguilaradar-assistant-ia` : connecteur Cloudflare non
 autorisé pour vérifier le déploiement).
+
+### 06/10/2026 — corr-20260921 (biais ATTENTE) : encore trop tôt pour juger, conformité intacte
+
+Rappel programmé 14 jours après la fusion de la règle de sélection ACHAT/ATTENTE/VENTE (PR #7) et
+du vérificateur `checkVerdictSelectionCompliance` (PR #8, `js/data-integrity.js`). 19 verdicts émis
+après le cutoff formel (21/09 23h26 UTC), 10 résolus. **Conformité : 0 violation** — chaque fois que
+`signal_consensus.technique` a été lu haussier/baissier avec `accord_count≥1` depuis, le verdict a
+bien été directionnel, sans exception, y compris sur les 7 verdicts haussier→ACHAT émis d'affilée le
+05/10 (encore pending, échéance 12-19/10).
+
+Mais le mécanisme n'a été réellement **exercé** qu'une seule fois dans la fenêtre stricte post-fusion
+(`v-20260928-link`, incorrect : ACHAT émis, +1,86 % réel, resté sous le seuil directionnel). Un
+deuxième cas pré-existe juste avant la fusion (`v-20260920-link`, correct, +11,76 %) mais ne teste
+pas la règle elle-même (émis ~23h avant qu'elle soit en vigueur) — à distinguer, la note du 28/09
+dans `correction_log` l'avait compté un peu vite comme un test. Aucun cas baissier→VENTE ne s'est
+présenté du tout depuis le 20/09 : la moitié de la règle n'a encore jamais été mise à l'épreuve.
+
+Les 9 autres résolutions du lot (mixte/neutre → ATTENTE, non concernées par cette règle précise)
+donnent 3/10 corrects au global du lot (30 %, sous la baseline 50 % du même lot) — un chiffre qui ne
+dit rien sur l'efficacité de la règle testée ici, seulement que « mixte/neutre → ATTENTE » a mal
+performé sur ce lot particulier (3/9). Noté comme angle à surveiller, pas corrigé maintenant : une
+seule variable à la fois, cf. la discipline déjà établie par `corr-20260906`/`corr-20260913`.
+
+`validation_score_after_pct` de `corr-20260921-biais-attente-asymetrique` laissé à `null` (3e fois
+de suite, même discipline que les notes du 28/09 et du 05/10) — le seuil du document (~10 cas où le
+mécanisme se déclenche réellement) est loin d'être atteint avec n=1. Prochain rappel : 20/10/2026,
+après résolution du lot du 05/10 (le premier échantillon vraiment informatif, 7 cas haussier→ACHAT
+d'un coup).
