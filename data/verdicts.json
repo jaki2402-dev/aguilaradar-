@@ -3412,5 +3412,113 @@
       "verdict_correct": null,
       "resolved_at": null
     }
+  },
+  {
+    "id": "v-20261006-link",
+    "issued_at": "2026-10-06T00:30:00Z",
+    "asset": "chainlink",
+    "ticker": "LINK",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 54,
+    "signals_used": [
+      "24h -2,35%",
+      "7j -9,22%",
+      "30j +15,49%",
+      "portfolio-thesis Renforcer conviction 7/10",
+      "Lancement Fulcrum le 30/09, BitGo a choisi CCIP pour l'écosystème WBTC"
+    ],
+    "reasoning": "Le verdict ACHAT du 28/09 a ete resolu le 05/10 (prix 14,23 $, +1,86 %) : mouvement reste sous le seuil directionnel de 5 %, verdict juge incorrect. Nouveau cycle : LINK est retombe a 13,89 $, lecture technique mixte - repli de -9,22 % sur 7 jours qui contredit la tendance encore positive sur 30 jours (+15,49 %), sous le seuil de 15 % qui aurait force une requalification mais insuffisant pour trancher une direction nette. Signal fondamental reste nettement haussier et isole : portfolio-thesis.json maintient 'Renforcer' conviction 7/10, citant le lancement de Fulcrum (30/09), le choix de CCIP par BitGo pour l'ecosysteme WBTC et la production prevue du DTCC Collateral AppChain au T4 - le repli de prix est attribue a du deleveraging de levier (open interest en recul d'environ 25 % en septembre selon favoris-context.json) plutot qu'a une deterioration fondamentale. Regime macro neutre (Fed hawkish temperee par l'emploi faible du 02/10, flux ETF et rendement 10 ans toujours non confirmes dans market-context.json). Les trois dimensions divergent (technique mixte, fondamental haussier isole, macro neutre) : accord_count=1, confiance 54 % (haut de la fourchette 45-55 vu la solidite reelle du signal fondamental malgre son isolement) ; ATTENTE retenue (technique mixte, aucune direction forcee), horizon maintenu a 7 jours (groupe volatil).",
+    "price_at_issue": 13.89,
+    "currency": "USD",
+    "resolves_at": "2026-10-13T00:30:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "mixte",
+      "fondamental": "haussier",
+      "macro": "neutre",
+      "accord_count": 1
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261006-ondo",
+    "issued_at": "2026-10-06T00:30:00Z",
+    "asset": "ondo-finance",
+    "ticker": "ONDO",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 76,
+    "signals_used": [
+      "24h +0,68%",
+      "7j -3,14%",
+      "30j +34,80%",
+      "portfolio-thesis Conserver conviction 6/10",
+      "TVL record (~3,76 Md$ d'encours, USDY ~2,1 Md$) sans traduction en valeur du token"
+    ],
+    "reasoning": "Le verdict ATTENTE du 28/09 a ete resolu le 05/10 (prix 0,508717 $, -11,78 %) : mouvement reel au-dela du seuil directionnel a la baisse (VENTE), ATTENTE juge incorrect. Nouveau cycle : ONDO s'est stabilise a 0,50008 $, lecture technique redevenue neutre (24h +0,68 %, 7j -3,14 %, sous le seuil directionnel de 5 %), le 30j (+34,80 %) refletant un rebond deja largement realise plutot qu'une dynamique fraiche. Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 6/10, citant un TVL record (encours tokenises ~3,76 Md$, USDY ~2,1 Md$) qui ne se traduit toujours pas en valeur du token - pas de contradiction franche avec la lecture technique. Regime macro neutre (memes raisons que les autres verdicts de ce cycle). Les trois dimensions convergent sur une lecture neutre (technique, fondamental, macro) : accord_count=3, confiance 76 % (fourchette 75-85, accord complet mais sur une accalmie plutot qu'une conviction directionnelle forte) ; ATTENTE retenue (technique neutre, aucune direction forcee), horizon maintenu a 7 jours (groupe volatil).",
+    "price_at_issue": 0.50008,
+    "currency": "USD",
+    "resolves_at": "2026-10-13T00:30:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "neutre",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 3
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261006-jup",
+    "issued_at": "2026-10-06T00:30:00Z",
+    "asset": "jupiter-exchange-solana",
+    "ticker": "JUP",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 63,
+    "signals_used": [
+      "24h +4,58%",
+      "7j +7,58%",
+      "30j +57,69%",
+      "portfolio-thesis Conserver conviction 5/10",
+      "Aucune actualite d'octobre confirmee, dependance au volume DeFi Solana"
+    ],
+    "reasoning": "Le verdict ATTENTE du 28/09 a ete resolu le 05/10 (prix 0,33956 $, -7,79 %) : mouvement reel au-dela du seuil directionnel a la baisse (VENTE), ATTENTE juge incorrect dans le sens inverse. Nouveau cycle : JUP a rebondi a 0,3487 $, lecture technique haussiere coherente sur les trois fenetres (24h +4,58 %, 7j +7,58 %, 30j +57,69 %), sous le seuil de 15 % qui aurait force une requalification prudente. Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 5/10, aucune actualite d'octobre confirmee, dependance au volume DeFi Solana et aux deblocages futurs - pas de contradiction franche avec la lecture technique. Regime macro neutre (memes raisons que les autres verdicts de ce cycle). Technique haussier et accord_count=2 (fondamental et macro alignes neutres) : verdict ACHAT retenu par la regle de selection du paragraphe 2, confiance 63 % (fourchette 60-70), horizon maintenu a 7 jours (groupe volatil).",
+    "price_at_issue": 0.3487,
+    "currency": "USD",
+    "resolves_at": "2026-10-13T00:30:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
   }
 ]
