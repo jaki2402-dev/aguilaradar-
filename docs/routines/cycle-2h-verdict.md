@@ -1,6 +1,6 @@
 # Routine Cowork : `aguilaradar-cycle-2h`
 
-Cadence : toutes les 4h (le nom garde "2h", legacy — cadence réellement divisée par 2 le 06/09
+Cadence : toutes les 8h depuis le 03/10/2026 (00:15, 08:15, 16:15 UTC ; le nom garde "2h", legacy — 2h→4h le 06/09, 4h→8h le 03/10
 pour le coût IA, voir `REFRESH.deepCycleHours` dans `config.js`). Accès MCP : CoinGecko, Alpha
 Vantage, Cloudflare Developer Platform. Dépôt : `jaki2402-dev/aguilaradar-`, écrit et commite
 directement dans `data/verdicts.json` et `data/engine-history.json`.
@@ -9,32 +9,44 @@ Spécification de référence versionnée (même principe que `docs/routines/fav
 modifier CE fichier + committer avant toute nouvelle révision du prompt de cette routine, jamais
 un `update_trigger` à l'aveugle sans passer par ici d'abord.
 
-## État réel des performances (2026-09-14, avant cette révision) — à connaître avant de continuer
+## Démarrage économe — à faire en PREMIER (quota hebdo épuisé fin septembre 2026)
 
-**Exactitude stricte actuelle : 26,83 % sur 41 verdicts résolus, contre 42,9 % pour la baseline
-"deviner la classe majoritaire à chaque fois".** Le moteur fait actuellement **moins bien que le
-hasard structuré** — un vrai problème, pas un détail (voir `engine-history.json.global_stats` et
-`correction_log`, qui documente déjà 3 tentatives de correction, 1 rejetée). `confidence_pct` sur
-les 56 verdicts est à 88 % concentré sur deux valeurs rondes (50 et 60) — signe d'une confiance
-fixée à l'instinct plutôt que dérivée d'une vraie mesure de désaccord/agrément entre signaux :
-exactement le risque de "fausse précision" que ce projet s'interdit ailleurs. Cette révision vise
-ces deux points précis, pas une refonte totale — voir `docs/verdict-methodology.md` pour le cadre
-plus large (5 catégories) dont ce prompt n'implémente aujourd'hui que la partie Momentum.
+Ne jamais lire `data/verdicts.json` (~156 Ko) ni `engine-history.json` en entier. Commencer par :
 
-**Mise à jour du 21/09/2026, après cette révision — un 2e trou trouvé, distinct du premier.** La
-formule `confidence_pct` ci-dessus fonctionne (la concentration sur 50/60 a disparu : valeurs
-47-77 % observées sur les 15 verdicts émis depuis), mais l'exactitude n'a pas bougé et la
-couverture non plus — toujours ~25 % d'exactitude (56 résolus), toujours ~79-80 % d'ATTENTE avant
-ET après cette révision (44/56 puis 12/15). Analyse chiffrée sur les 56 verdicts résolus : quand
-`signal_consensus.technique = "baissier"`, le verdict final est ATTENTE dans 10 cas sur 10 (jamais
-VENTE) ; quand `accord_count = 1` (32 cas, le groupe le plus fréquent), le verdict est ATTENTE dans
-32 cas sur 32 — alors que la section 2 ci-dessous ne prévoit ce forçage que pour `accord_count = 0`.
-**La règle qui transforme `signal_consensus.technique` en ACHAT/ATTENTE/VENTE n'a jamais été
-spécifiée dans ce document** — seule la confiance associée l'était, en supposant le verdict déjà
-choisi. Dans les faits, un signal baissier ou un accord faible se voit systématiquement rabattu
-vers ATTENTE, un biais de prudence non écrit que la formule de confiance ne pouvait pas corriger
-puisqu'elle ne détermine que le chiffre, pas la direction. Voir la nouvelle sous-section à la fin
-de la section 2 pour la règle qui comble ce trou.
+```bash
+python3 - <<'EOF'
+import json, datetime
+now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+v = json.load(open("data/verdicts.json"))
+pending = [x for x in v if x.get("status") == "pending"]
+due = [x["id"] for x in pending if x["resolves_at"] <= now]
+covered = {x["ticker"] for x in pending}
+print("dus:", due); print("tickers sans verdict pending:", sorted({x["ticker"] for x in v} - covered))
+EOF
+```
+
+- **Rien de dû et aucun ticker sans verdict pending** → cycle court : seulement §7 (santé), §8
+  en version courte (1 recherche hack/exploit + fear&greed, pas plus), §9 (commit). Pas de lecture
+  de `favoris-context.json`/`market-context.json`, pas de recherche de prix.
+- Sinon : traiter uniquement les tickers concernés ; prix des tickers concernés en UN seul appel (`vs_currencies=usd,eur` :
+  USD pour émettre, la devise du verdict pour résoudre) groupé ; lire seulement l'entrée du ticker dans `favoris-context.json`/`portfolio-thesis.json`
+  (extraction `python3`), et `market-context.json` une seule fois par cycle.
+- **Plafond après une interruption (quota épuisé, cycles manqués)** : résoudre TOUS les verdicts
+  dus (peu coûteux : un seul appel de prix groupé), mais **émettre au plus 3 nouveaux verdicts par
+  cycle**, en priorité les tickers sans verdict pending depuis le plus longtemps. Les suivants
+  attendent les cycles d'après. Raison : le 28/09, 9 verdicts émis d'un coup au redémarrage ont
+  brûlé le quota juste récupéré, et des verdicts émis ensemble arrivent à échéance ensemble
+  (pic qui se reproduit tous les 14 jours) — étaler les émissions casse ce cycle.
+- Écrire toutes les modifications JSON par script `python3` (load → modifier → dump
+  `ensure_ascii=False, indent=2`) puis `python3 -m json.tool <fichier> >/dev/null`. Ne jamais
+  réafficher un fichier entier.
+
+## Contexte de performance (résumé — détail dans `docs/journal-technique.md`)
+
+Au 14/09/2026 l'exactitude stricte (26,8 %) était sous la baseline « classe majoritaire » (42,9 %)
+et `confidence_pct` concentré à 88 % sur 50/60 : corrigé par la formule du §2. Au 21/09, la
+sélection ACHAT/ATTENTE/VENTE restait biaisée vers ATTENTE (~79 % des verdicts, jamais VENTE sur
+signal baissier) : corrigé par la sous-section « Sélection » du §2.
 
 ## Règle absolue (s'applique à tout ce document)
 
@@ -58,7 +70,8 @@ Tableau au niveau racine, chaque entrée :
   "confidence_pct": <0-100, voir section 2 pour la règle de calcul>,
   "signals_used": ["<phrase courte et factuelle par signal réellement observé>"],
   "reasoning": "<3-6 phrases, cite les chiffres réels utilisés>",
-  "price_at_issue": <prix réel au moment de l'émission>,
+  "price_at_issue": <prix réel au moment de l'émission, en USD>,
+  "currency": "USD",
   "resolves_at": "issued_at + horizon_days jours",
   "status": "pending",
   "threshold_pct": 5,
@@ -66,6 +79,14 @@ Tableau au niveau racine, chaque entrée :
   "signal_consensus": { "technique": "haussier|baissier|mixte|neutre", "fondamental": "...", "macro": "...", "accord_count": <0-3> }
 }
 ```
+
+**Devise — règle absolue (bug réel du 20/09/2026)** : `price_at_issue` est **toujours en USD**
+(`vs_currencies=usd`) et `"currency": "USD"` est **obligatoire** sur chaque nouveau verdict. Avant
+le 20/09 les verdicts étaient émis en EUR, puis le cycle est passé à l'USD sans le dire : 14
+verdicts émis en € ont été résolus avec un prix en $, ce qui ajoutait ~16 % fictifs au mouvement
+mesuré. Le symbole écrit dans `reasoning` n'est **pas** une preuve de devise (des prix en € y ont été
+écrits « $ ») — seul le champ `currency` fait foi. Écrire dans `reasoning` le même symbole que
+`currency`.
 
 `threshold_pct` reste **toujours 5** (le défaut de `THRESHOLDS.directionalMovePct`, `config.js`)
 dans cette révision — **ne pas introduire de seuil variable par actif** : ça demanderait une
@@ -218,7 +239,12 @@ du cycle (le contexte macro est le même pour tous, pas la peine de le relire pa
 ## 5. Résolution des verdicts en attente
 
 À chaque cycle, pour tout verdict `status:"pending"` dont `resolves_at` est dépassé : calculer
-`actual_move_pct` depuis `price_at_issue` et le prix réel actuel, remplir `outcome` en entier
+`actual_move_pct` depuis `price_at_issue` et le prix réel actuel **dans la devise du champ
+`currency` du verdict** (USD → `vs_currencies=usd`, EUR → `eur` ; jamais un prix d'une devise
+comparé à un prix d'une autre). Verdict **sans** champ `currency` (émis avant cette règle) :
+devise établie le 04/10/2026 sur l'historique CoinGecko réel, pas sur le texte — émis **avant le
+20/09/2026 → EUR** ; émis **à partir du 20/09/2026 → USD**, **sauf CTSI (`cartesi`) → EUR**
+(`v-20260922-ctsi`, `v-20261003-ctsi`). Résoudre dans cette devise. Puis remplir `outcome` en entier
 (`price_at_resolution`, `actual_move_pct`, `actual_direction`, `verdict_correct`,
 `resolved_at`) — jamais un remplissage partiel (voir `test/data-fixtures.test.js`, qui rejette
 déjà un verdict résolu avec un `outcome` incomplet).
@@ -232,7 +258,7 @@ verdicts affectés par une correction précédente se résout, **revenir sur l'e
 et renseigner son `validation_score_after_pct` plutôt que de créer une entrée séparée — c'est ce
 qui a déjà été fait pour `corr-20260906` (fermé par `corr-20260913`), continuer sur ce modèle.
 
-Vu l'exactitude actuelle sous la baseline (section "État réel des performances" ci-dessus), une
+Vu l'exactitude actuelle sous la baseline (section "Contexte de performance" ci-dessus), une
 fois un lot de verdicts émis sous cette révision (croisement + confidence_pct reproductible)
 résolu en nombre suffisant, logger honnêtement si l'exactitude s'est améliorée, dégradée, ou n'a
 pas bougé de façon significative — jamais présenter une amélioration qui ne serait pas
@@ -240,37 +266,26 @@ statistiquement confirmée par les chiffres réels.
 
 ## 7. `engine-history.json.routine_health` — à jour à CHAQUE cycle, même sans verdict émis
 
-**Constat du 15/09/2026** : le bandeau de fraîcheur du site (`updateFreshnessIndicator`, `app.js`)
-lit `routine_health.last_success_at` et affiche "la routine semble bloquée" si ce champ dépasse
-12h. Ce champ était resté figé à 16h20 UTC le 14/09 alors que des cycles réels et corrects avaient
-tourné après (dont celui de 20h22 UTC qui a résolu `v-20260907-ctsi` et émis `v-20260914-ctsi`,
-fusionné vers `main` correctement) — le site affichait donc une fausse alerte pendant qu'il
-fonctionnait normalement. Cause : ce champ n'a jamais été formellement spécifié ici, donc mis à
-jour de façon incohérente d'un cycle à l'autre plutôt qu'à chaque fois.
+Le bandeau de fraîcheur du site lit `routine_health.last_success_at` (alerte au-delà de 12h) ; un
+champ figé a déjà produit une fausse alerte « routine bloquée » (15/09). **À la fin de CHAQUE
+cycle sans erreur — y compris un cycle court sans rien de dû — mettre `last_success_at` à l'heure
+de fin et `consecutive_failures` à 0.** `last_failure_reason` peut porter un résumé court (1-2
+phrases) du cycle.
 
-**Mettre à jour `routine_health.last_success_at` (et remettre `consecutive_failures` à 0) à la fin
-de CHAQUE cycle qui s'exécute sans erreur — y compris un cycle qui ne fait "rien" parce qu'aucun
-verdict n'est dû et aucune résolution n'est en retard.** `last_failure_reason` peut continuer à
-porter un résumé texte du cycle (utile pour le debug) même quand il n'y a pas eu d'échec — mais ne
-jamais laisser `last_success_at` immobile simplement parce que rien de nouveau n'a été émis. C'est
-la seule façon pour l'indicateur de fraîcheur de distinguer "routine vivante, rien à signaler ce
-cycle" de "routine réellement bloquée" — les deux ont l'air identiques de l'extérieur si ce champ
-n'avance pas.
+**`engine-history.json.macro_regime` — seulement dans un cycle qui émet au moins un verdict**
+(le régime vient d'y être déterminé pour `regime_at_issue`, §4 : aucun appel ni recherche en plus).
+Recopier par script `python3` : `last_computed_at` (heure du cycle), `regime` (le même que
+`regime_at_issue`), `note` (1-2 phrases : pourquoi ce régime). Ne pas toucher à `fear_greed_value`
+ni `btc_dominance_pct` : le site lit ces jauges dans `data/market-gauges.json` (GitHub Action
+`price-alerts`, 4×/jour). Cycle court : ne rien écrire ici — le site affiche alors le régime comme
+« évalué le JJ/MM », c'est voulu. (Bloc resté figé du 14/09 au 04/10/2026 parce que cette étape
+avait disparu de la spec.)
 
-## 8. `data/news.json` — veille actualités, jamais documentée avant cette révision
+**Ne plus écrire** `paper_portfolio_stats` ni `global_stats.baseline_buy_hold_btc_pct` : le site
+les calcule désormais en direct (`computePaperPortfolio`, `js/engine.js`, même formule que celle
+que la routine utilisait).
 
-**Constat du 15/09/2026** : cette routine fait réellement une veille actualités à chaque cycle
-(recherche fear&greed, dominance BTC, recherche générique "crypto news today", recherche dédiée
-hack/exploit — confirmé en lisant `routine_health.last_failure_reason` de plusieurs cycles
-récents) et écrit dans `data/news.json`, mais **cette responsabilité n'avait jamais été spécifiée
-dans ce document** — un vrai trou, pas juste un oubli cosmétique : le contenu réel (8 items
-sourcés et datés fin août-mi septembre 2026, ex. scission Consensys, projet de loi fiscal allemand,
-vote CLARITY Act) est correct, mais **`last_checked_at` était figé à 2026-09-14T16:20:00Z alors
-que le cycle a tourné avec succès plusieurs fois depuis** (même cause que `routine_health` ci-dessus
-— confirmé le 15/09 par la routine `aguilaradar-verif-fraicheur-quotidien` elle-même :
-`data/news.json` à ~34h de retard, en aggravation). Le bandeau de fraîcheur du site
-(`updateFreshnessIndicator`, `app.js`) lit `last_checked_at` en priorité, donc ce champ figé fait
-croire à une veille interrompue même quand elle tourne normalement.
+## 8. `data/news.json` — veille actualités
 
 ### Forme exacte
 
@@ -282,45 +297,28 @@ croire à une veille interrompue même quand elle tourne normalement.
 }
 ```
 
-**Ces deux champs ont un sens différent, ne jamais les confondre** : `last_checked_at` prouve que
-la veille a eu lieu ce cycle (même si rien de neuf n'a été retenu) ; `last_updated_at` marque la
-dernière fois où `items` a réellement changé. Un `last_checked_at` récent avec un `last_updated_at`
-plus ancien est un état normal et attendu (pas d'actualité neuve jugée assez significative
-récemment) — **mais `last_checked_at` lui-même ne doit jamais rester figé plus d'un cycle**.
+`last_checked_at` prouve que la veille a eu lieu ; `last_updated_at` date le dernier vrai
+changement d'`items`. Un `last_updated_at` plus ancien est normal ; un `last_checked_at` figé ne
+l'est jamais (fausse alerte du 15/09).
 
 ### Procédure, une fois par exécution
 
-1. Faire la recherche (fear&greed, dominance, actualité générale, hack/exploit dédié — déjà la
-   pratique réelle, formalisée ici) : chercher un développement réellement nouveau et significatif
-   (lancement produit majeur, hack, régulation, mouvement institutionnel) — jamais une reformulation
-   d'un item déjà présent dans `items`.
-2. Si un développement neuf et suffisamment significatif est trouvé : l'ajouter à `items` (`title`
-   factuel et sourcé, `url` réelle, `source`) et mettre à jour `last_updated_at`.
-3. **Que l'étape 2 ait ajouté quelque chose ou non, toujours mettre à jour `last_checked_at`** à
-   l'heure de fin de ce cycle — c'est la partie manquée jusqu'ici, celle qui casse le bandeau de
-   fraîcheur si elle est sautée.
-4. `items` n'est pas strictement append-only comme `verdicts.json`/`onchain-history.json` : retirer
-   les entrées les plus anciennes/plus pertinentes si la liste devient longue (pas de taille cible
-   fixée ici — garder un jugement raisonnable, quelques items réellement notables plutôt qu'un flux
-   exhaustif).
+1. Recherche ciblée (fear&greed, dominance, actualité générale, hack/exploit) — **2 à 4 recherches
+   maximum** (2 en cycle court) : chercher un développement réellement nouveau et significatif
+   (produit majeur, hack, régulation, mouvement institutionnel), jamais une reformulation d'un item
+   existant (comparer aux seuls `title` via `python3`, pas en lisant le fichier).
+2. Si trouvé : l'ajouter à `items` (`title` factuel, `url` réelle, `source`) et mettre à jour
+   `last_updated_at`.
+3. **Toujours** mettre à jour `last_checked_at` à l'heure de fin du cycle.
+4. `items` n'est pas append-only : garder au plus ~10 items réellement notables, retirer les plus
+   anciens.
 
 ## 9. Commit — deux étapes obligatoires, pas juste "push"
 
-**Constat du 14/09/2026** : le premier cycle exécuté sous cette révision a produit un commit
-correct (confidence_pct=65, croisement bien appliqué, `correction_log` correctement mis à jour)
-mais **s'est arrêté après le commit sur sa propre branche de sortie, sans jamais atteindre
-`main`** — resté invisible sur le site en ligne jusqu'à une fusion manuelle. Vérifié en comparant
-avec un cycle antérieur réussi (`0101615`/`8a0e2b3`, 14/09 16h20 UTC) : la même session y avait
-fait exactement 2 commits, 39 secondes d'écart, tous deux signés `Claude <noreply@anthropic.com>`
-— un commit normal sur sa branche, PUIS un commit de fusion sur `main` dont les 2 parents sont
-l'ancien HEAD de `main` et ce commit. **"Pousse-le sur main" ne suffit pas comme instruction** si
-l'étape de fusion n'est pas explicitement nommée.
-
-Procédure en 2 étapes, obligatoires toutes les deux à chaque cycle :
-1. Commit normal (un seul, sur la branche de travail courante) couvrant les deux fichiers
-   modifiés, message clair (ex. "Cycle du &lt;date&gt; : N verdicts émis, M résolus").
+Un cycle s'est déjà arrêté après le commit sur sa branche de sortie, invisible sur le site
+jusqu'à fusion manuelle (14/09). Les 2 étapes sont obligatoires à chaque cycle :
+1. Commit normal (un seul, sur la branche de travail courante) couvrant les fichiers modifiés,
+   message clair (ex. "Cycle du &lt;date&gt; : N verdicts émis, M résolus").
 2. **Fusionner explicitement cette branche dans `main` et pousser `main`** — `git checkout main`
    (ou équivalent), `git merge --no-ff &lt;ta-branche&gt; -m "Merge cycle &lt;date&gt; into main"`,
-   `git push origin main`. Ne pas considérer le cycle terminé tant que cette 2e étape n'a pas
-   réussi — un commit qui reste seulement sur une branche de sortie, jamais fusionné, équivaut à
-   ne rien avoir écrit du point de vue du site en ligne.
+   `git push origin main`. Le cycle n'est pas terminé tant que cette 2e étape n'a pas réussi.

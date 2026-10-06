@@ -17,7 +17,7 @@ describe("app.js — updateFreshnessIndicator (régression 4d520ad, puis régres
   let dom, el;
 
   beforeEach(() => {
-    dom = loadPage(["app.js"], { html: `<!doctype html><html><body><div id="last-deep-cycle"></div></body></html>` });
+    dom = loadPage(["config.js", "app.js"], { html: `<!doctype html><html><body><div id="last-deep-cycle"></div></body></html>` });
     freezeNow(dom, NOW_ISO);
     el = dom.window.document.getElementById("last-deep-cycle");
   });
@@ -53,7 +53,7 @@ describe("app.js — updateFreshnessIndicator (régression 4d520ad, puis régres
     dom.window.updateFreshnessIndicator(
       { routine_health: { last_success_at: "2026-08-17T11:00:00Z" } }, // 1h — frais
       {},
-      { last_updated_at: "2026-08-16T22:00:00Z" } // 14h — obsolète pour une source ~4h
+      { last_updated_at: "2026-08-16T16:00:00Z" } // 20h — obsolète (> 2 cycles de 8h manqués)
     );
     expect(el.classList.contains("freshness-stale")).toBe(true);
     expect(el.textContent).toContain("Actualités");
@@ -75,7 +75,7 @@ describe("app.js — updateFreshnessIndicator (régression 4d520ad, puis régres
   });
 
   it("retombe sur last_updated_at si last_checked_at est absent (compatibilité avec les cycles avant le 25/08)", () => {
-    dom.window.updateFreshnessIndicator({}, {}, { last_updated_at: "2026-08-16T22:00:00Z" }); // 14h, pas de last_checked_at
+    dom.window.updateFreshnessIndicator({}, {}, { last_updated_at: "2026-08-16T16:00:00Z" }); // 20h, pas de last_checked_at
     expect(el.classList.contains("freshness-stale")).toBe(true);
   });
 
@@ -94,6 +94,17 @@ describe("app.js — updateFreshnessIndicator (régression 4d520ad, puis régres
     expect(el.textContent).toContain("j");
   });
 
+  it("flags a frozen portfolio history (the 14/09 → 04/10/2026 gap went unnoticed)", () => {
+    dom.window.updateFreshnessIndicator(
+      { routine_health: { last_success_at: "2026-08-17T11:00:00Z" } },
+      {},
+      {},
+      { snapshots: [{ date: "2026-08-13", computed_at: "2026-08-13T20:40:00Z" }, { date: "2026-08-14", computed_at: "2026-08-14T20:40:00Z" }] }
+    );
+    expect(el.classList.contains("freshness-stale")).toBe(true);
+    expect(el.textContent).toContain("Historique portefeuille");
+  });
+
   it("does not read engineHistory.global_stats.last_computed_at at all (that was the original bug: it stays stale across cycles that resolved nothing)", () => {
     dom.window.updateFreshnessIndicator(
       { global_stats: { last_computed_at: "2026-08-17T11:59:00Z" } }, // tres frais mais ne doit pas etre lu
@@ -105,19 +116,19 @@ describe("app.js — updateFreshnessIndicator (régression 4d520ad, puis régres
     expect(el.textContent).toBe("Automatisation pas encore activée — routine programmée à configurer.");
   });
 
-  it("routine_health : 'ok' at exactly 6 hours, 'warning' just past it", () => {
-    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-17T06:00:00Z" } }, {}, {});
+  it("routine_health : 'ok' at exactly 10 hours (8h cadence + 2h margin), 'warning' just past it", () => {
+    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-17T02:00:00Z" } }, {}, {});
     expect(el.classList.contains("freshness-ok")).toBe(true);
 
-    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-17T05:59:00Z" } }, {}, {});
+    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-17T01:59:00Z" } }, {}, {});
     expect(el.classList.contains("freshness-warning")).toBe(true);
   });
 
-  it("routine_health : 'warning' at exactly 12 hours, 'stale' (with a warning glyph) just past it", () => {
-    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-17T00:00:00Z" } }, {}, {});
+  it("routine_health : 'warning' at exactly 18 hours (two missed 8h cycles), 'stale' (with a warning glyph) just past it", () => {
+    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-16T18:00:00Z" } }, {}, {});
     expect(el.classList.contains("freshness-warning")).toBe(true);
 
-    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-16T23:59:00Z" } }, {}, {});
+    dom.window.updateFreshnessIndicator({ routine_health: { last_success_at: "2026-08-16T17:59:00Z" } }, {}, {});
     expect(el.classList.contains("freshness-stale")).toBe(true);
     expect(el.textContent).toContain("⚠");
     expect(el.textContent).toContain("routine semble bloquée");
@@ -787,6 +798,12 @@ describe("app.js — renderAvisDuJour (synthèse quotidienne mise en avant + not
     dom.window.renderAvisDuJour([avisItem({ triggered_at: "2026-08-31T06:00:00Z" })]);
     expect(dom.window.document.getElementById("avis-du-jour").textContent).toContain("plus d'un jour");
   });
+
+  it("says plainly that a weeks-old avis is past context (the 14/09 avis stayed on top for 3 weeks)", () => {
+    dom.window.Date.now = () => new Date("2026-10-04T12:00:00Z").getTime();
+    dom.window.renderAvisDuJour([avisItem({ triggered_at: "2026-09-14T00:40:00Z" })]);
+    expect(dom.window.document.getElementById("avis-du-jour").textContent).toContain("pas renouvelé depuis 20 jours");
+  });
 });
 
 describe("app.js — couleur repère (verdict/type) et aperçu tronqué (renderClampableText)", () => {
@@ -907,6 +924,46 @@ describe("app.js — renderMacroRegime", () => {
   });
 });
 
+describe("app.js — renderMacroRegime : jauges fraîches et régime daté (figé du 14/09 au 04/10/2026)", () => {
+  let dom;
+  beforeEach(() => {
+    dom = loadPage(["config.js", "app.js"], { html: APP_FIXTURE_HTML });
+    dom.window.Date.now = () => new Date("2026-10-05T12:00:00Z").getTime();
+  });
+  const eh = { macro_regime: { last_computed_at: "2026-09-14T16:20:00Z", regime: "risk-on", fear_greed_value: 58, btc_dominance_pct: 58.6, note: "Note du 14/09" } };
+  const gauges = { updated_at: "2026-10-05T10:40:00Z", fear_greed: { value: 41, as_of: "2026-10-05T00:00:00Z" }, btc_dominance: { pct: 57.21, as_of: "2026-10-05T10:39:00Z" } };
+
+  it("shows the fresh gauges, not the frozen values", () => {
+    dom.window.renderMacroRegime(eh, gauges);
+    const t = dom.window.document.getElementById("macro-regime-banner").textContent;
+    expect(t).toContain("41");
+    expect(t).toContain("57.2 %");
+    expect(t).not.toContain("58.6");
+  });
+
+  it("labels an old regime as past context and hides its stale note and colour", () => {
+    dom.window.renderMacroRegime(eh, gauges);
+    const el = dom.window.document.getElementById("macro-regime-banner");
+    expect(el.textContent).toContain("pas réévalué depuis");
+    expect(el.textContent).not.toContain("Note du 14/09");
+    expect(el.querySelector(".hero-stat-value").className).not.toContain("positive");
+  });
+
+  it("falls back to the regime's own values, with their date, when gauges are missing", () => {
+    dom.window.renderMacroRegime(eh, null);
+    const t = dom.window.document.getElementById("macro-regime-banner").textContent;
+    expect(t).toContain("58");
+    expect(t).toContain("14/09");
+  });
+
+  it("treats a recent regime as current (colour and note kept)", () => {
+    dom.window.renderMacroRegime({ macro_regime: { ...eh.macro_regime, last_computed_at: "2026-10-05T08:15:00Z" } }, gauges);
+    const el = dom.window.document.getElementById("macro-regime-banner");
+    expect(el.textContent).toContain("Note du 14/09");
+    expect(el.querySelector(".hero-stat-value").className).toContain("positive");
+  });
+});
+
 describe("app.js — renderNews", () => {
   let dom;
 
@@ -1024,7 +1081,7 @@ describe("app.js — initExclusiveAccordion", () => {
   let dom, accs;
 
   beforeEach(() => {
-    dom = loadPage(["app.js"], { html: ACCORDION_HTML });
+    dom = loadPage(["config.js", "app.js"], { html: ACCORDION_HTML });
     const container = dom.window.document.getElementById("engine-accordion");
     dom.window.initExclusiveAccordion(container);
     accs = Array.from(container.querySelectorAll(".engine-acc"));

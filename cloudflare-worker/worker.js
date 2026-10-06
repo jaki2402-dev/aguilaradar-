@@ -588,7 +588,13 @@ async function runPushCycle(env) {
       }
     }
   }
-  await env.PUSH_STATE.put(PUSH_NOTIFIED_IDS_KV_KEY, JSON.stringify(Array.from(seen).slice(-MAX_TRACKED_IDS)));
+  // Jamais oublier un id encore présent dans les fichiers : avec un simple slice(-500), dès que
+  // alerts.json + opportunités dépassent 500 entrées, les plus anciennes sortaient de la mémoire et
+  // étaient re-notifiées à chaque passage. Seuls les ids disparus des fichiers sont plafonnés.
+  const currentIds = new Set(items.map((i) => i.id));
+  const all = Array.from(seen);
+  const kept = all.filter((id) => currentIds.has(id)).concat(all.filter((id) => !currentIds.has(id)).slice(-MAX_TRACKED_IDS));
+  await env.PUSH_STATE.put(PUSH_NOTIFIED_IDS_KV_KEY, JSON.stringify(kept));
   return { total: items.length, sent, isBaseline };
 }
 

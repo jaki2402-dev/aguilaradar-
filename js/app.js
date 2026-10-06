@@ -349,7 +349,15 @@ function renderAvisDuJour(alerts) {
   const ageMs = Date.now() - new Date(latest.triggered_at).getTime();
   // >30h plutôt que >24h : marge pour un cycle qui écrit un peu tard dans la journée sans
   // déclencher un avertissement "pas d'aujourd'hui" trompeur pour un avis en réalité tout frais.
-  const staleHint = ageMs > 30 * 3600 * 1000 ? ` — dernière mise à jour il y a plus d'un jour, pas forcément celui d'aujourd'hui` : "";
+  // Au-delà de 3 jours, le dire franchement : l'avis du 14/09 est resté affiché 3 semaines en tête
+  // de l'Accueil avec la seule mention "plus d'un jour" (le digest a repris son écriture le 05/10/2026).
+  const ageDays = Math.floor(ageMs / 86400000);
+  const staleHint =
+    ageDays >= 3
+      ? ` — pas renouvelé depuis ${ageDays} jours : contexte passé, pas l'avis d'aujourd'hui`
+      : ageMs > 30 * 3600 * 1000
+        ? ` — dernière mise à jour il y a plus d'un jour, pas forcément celui d'aujourd'hui`
+        : "";
   // <div>, pas <p>, pour .avis-du-jour-text : renderClampableText produit déjà son propre <p>
   // (+ un <span> "Lire plus" quand le texte dépasse CLAMP_TEXT_THRESHOLD) — un <p> imbriqué dans
   // un <p> serait invalide. Le sélecteur ".avis-du-jour-text mark.hl-stat" (voir tests) matche
@@ -420,24 +428,60 @@ function renderNotificationsPage() {
 
 const REGIME_LABELS = { "risk-on": "Appétit pour le risque", "neutre": "Neutre", "risk-off": "Aversion au risque" };
 
-function renderMacroRegime(engineHistory) {
+// Au-delà, le régime (jugement du cycle-2h) est affiché comme daté, pas comme actuel : il était
+// resté figé au 14/09/2026 pendant 3 semaines sans que le site le dise.
+const MACRO_REGIME_STALE_DAYS = 3;
+
+// Vue unique du contexte macro, partagée par le bandeau et l'Assistant. Régime = engine-history
+// (jugement du cycle-2h, daté). Peur/cupidité et dominance BTC = data/market-gauges.json (mesures
+// brutes 4×/jour, GitHub Action) si disponibles, sinon les valeurs du régime avec SA date.
+function macroView(engineHistory, gauges) {
+  const r = engineHistory && engineHistory.macro_regime;
+  if (!r || !r.regime) return null;
+  const regimeAt = r.last_computed_at || null;
+  const ageDays = regimeAt ? (Date.now() - new Date(regimeAt).getTime()) / 86400000 : null;
+  const fgLive = gauges && gauges.fear_greed && typeof gauges.fear_greed.value === "number" ? gauges.fear_greed : null;
+  const domLive = gauges && gauges.btc_dominance && typeof gauges.btc_dominance.pct === "number" ? gauges.btc_dominance : null;
+  return {
+    regime: r.regime,
+    regimeAt,
+    stale: ageDays !== null && ageDays > MACRO_REGIME_STALE_DAYS,
+    note: r.note || "",
+    fearGreed: fgLive ? fgLive.value : r.fear_greed_value ?? null,
+    fearGreedAt: fgLive ? fgLive.as_of || gauges.updated_at : regimeAt,
+    dominance: domLive ? domLive.pct : r.btc_dominance_pct ?? null,
+    dominanceAt: domLive ? domLive.as_of || gauges.updated_at : regimeAt,
+  };
+}
+
+function shortDate(iso) {
+  return iso ? new Date(iso).toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit" }) : "";
+}
+
+function renderMacroRegime(engineHistory, gauges) {
   const el = document.getElementById("macro-regime-banner");
   if (!el) return;
-  const regime = engineHistory && engineHistory.macro_regime;
-  if (!regime || !regime.regime) {
+  const m = macroView(engineHistory, gauges);
+  if (!m) {
     el.innerHTML = `<p class="empty-state">Régime de marché pas encore classifié — calculé au premier cycle profond (Fear &amp; Greed + dominance BTC).</p>`;
     return;
   }
-  const cls = regime.regime === "risk-on" ? "positive" : regime.regime === "risk-off" ? "negative" : "";
+  const cls = m.stale ? "" : m.regime === "risk-on" ? "positive" : m.regime === "risk-off" ? "negative" : "";
+  const dated = (iso) => (iso ? ` · ${escapeHtml(shortDate(iso))}` : "");
+  const noteHtml = m.stale
+    ? `<div class="hint macro-regime-note" style="margin-top:10px;">Régime évalué pour la dernière fois le ${escapeHtml(shortDate(m.regimeAt))} et pas réévalué depuis — à lire comme un contexte passé, pas comme l'état actuel du marché. Les deux jauges, elles, sont relevées automatiquement.</div>`
+    : m.note
+      ? `<div class="hint macro-regime-note" style="margin-top:10px;">${renderClampableText(m.note)}</div>`
+      : "";
   el.innerHTML = `
     <div class="hero-card">
-      <div class="hint">Régime de marché actuel${glossaryTipHtml("Régime de marché")}</div>
+      <div class="hint">Régime de marché${m.regimeAt ? ` (évalué le ${escapeHtml(shortDate(m.regimeAt))})` : " actuel"}${glossaryTipHtml("Régime de marché")}</div>
       <div class="hero-stats">
-        <div><div class="hero-stat-value ${cls}">${REGIME_LABELS[regime.regime] || regime.regime}</div><div class="hero-stat-label">Contexte macro</div></div>
-        <div><div class="hero-stat-value">${regime.fear_greed_value ?? "—"}</div><div class="hero-stat-label">Fear &amp; Greed${glossaryTipHtml("Indice de peur et de cupidité")}</div></div>
-        <div><div class="hero-stat-value">${regime.btc_dominance_pct !== null && regime.btc_dominance_pct !== undefined ? regime.btc_dominance_pct.toFixed(1) + " %" : "—"}</div><div class="hero-stat-label">Dominance BTC${glossaryTipHtml("Dominance BTC")}</div></div>
+        <div><div class="hero-stat-value ${cls}">${REGIME_LABELS[m.regime] || escapeHtml(m.regime)}</div><div class="hero-stat-label">Contexte macro</div></div>
+        <div><div class="hero-stat-value">${m.fearGreed ?? "—"}</div><div class="hero-stat-label">Fear &amp; Greed${dated(m.fearGreedAt)}${glossaryTipHtml("Indice de peur et de cupidité")}</div></div>
+        <div><div class="hero-stat-value">${m.dominance !== null && m.dominance !== undefined ? m.dominance.toFixed(1) + " %" : "—"}</div><div class="hero-stat-label">Dominance BTC${dated(m.dominanceAt)}${glossaryTipHtml("Dominance BTC")}</div></div>
       </div>
-      ${regime.note ? `<div class="hint macro-regime-note" style="margin-top:10px;">${renderClampableText(regime.note)}</div>` : ""}
+      ${noteHtml}
     </div>`;
   wireClampToggles(el);
 }
@@ -520,7 +564,7 @@ function updateHeroStats(verdicts, alerts) {
 }
 
 async function loadAllData() {
-  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory] = await Promise.all([
+  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory, marketGauges] = await Promise.all([
     loadJson(DATA_URLS.verdicts),
     loadJson(DATA_URLS.engineHistory),
     loadJson(DATA_URLS.opportunities),
@@ -535,6 +579,7 @@ async function loadAllData() {
     loadJson(DATA_URLS.portfolioThesis),
     loadJson(DATA_URLS.portfolioHistory),
     loadJson(DATA_URLS.onchainHistory),
+    loadJson(DATA_URLS.marketGauges),
   ]);
   latestFavorisContext = favorisContext;
   // data/onchain-history.json est neuf (voir docs/routines/favoris-quotidien-onchain-history.md) :
@@ -543,7 +588,7 @@ async function loadAllData() {
   latestOnchainHistory = onchainHistory && onchainHistory.assets ? onchainHistory : { assets: {} };
   // Expose les données déjà chargées pour que d'autres fonctionnalités (l'Assistant) les
   // réutilisent sans refaire les mêmes fetch — toujours les données du dernier rafraîchissement.
-  window.aguilaradarData = { verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory: latestOnchainHistory };
+  window.aguilaradarData = { verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory: latestOnchainHistory, marketGauges };
   if (window.renderDigestPanel) renderDigestPanel(digest);
 
   renderEngineTab(verdicts || [], engineHistory, opportunities, controlGroup);
@@ -553,7 +598,7 @@ async function loadAllData() {
   renderAvisDuJour(alerts);
   if (window.updateNotifBellFromAlerts) updateNotifBellFromAlerts(alerts);
   renderNews(news);
-  renderMacroRegime(engineHistory);
+  renderMacroRegime(engineHistory, marketGauges);
   renderMarketContext(marketContext);
   renderHealthStatus(healthLog, favorisContext, verdicts || []);
   renderSectorBreakdown(verdicts || []);
@@ -566,16 +611,22 @@ async function loadAllData() {
   renderFavorisSummary(verdicts || []);
   if (window.renderPortfolio) renderPortfolio(portfolio, verdicts || [], portfolioThesis, portfolioHistory);
 
-  updateFreshnessIndicator(engineHistory, opportunities, news);
+  updateFreshnessIndicator(engineHistory, opportunities, news, portfolioHistory, marketGauges);
 }
 
 // Sources suivies par l'indicateur de fraîcheur, chacune à SON PROPRE rythme attendu.
 // opportunities.last_scan_at est passé à un rythme hebdomadaire le 17/08 (routine dédiée
 // aguilaradar-opportunites-hebdo) — seuils en jours, pas en heures, pour ce champ précis.
 const FRESHNESS_SOURCES = [
-  { key: "routine", label: "Cycle profond", warnHours: 6, staleHours: 12 },
-  { key: "news", label: "Actualités", warnHours: 6, staleHours: 12 },
+  // Dérivé de la cadence réelle : "warning" = un cycle en retard, "stale" = deux cycles manqués.
+  { key: "routine", label: "Cycle profond", warnHours: REFRESH.deepCycleHours + 2, staleHours: REFRESH.deepCycleHours * 2 + 2 },
+  { key: "news", label: "Actualités", warnHours: REFRESH.deepCycleHours + 2, staleHours: REFRESH.deepCycleHours * 2 + 2 },
   { key: "opportunities", label: "Criblage opportunités", warnHours: 24 * 8, staleHours: 24 * 10 },
+  // GitHub Action quotidienne (portfolio-snapshot) : resté figé 20 jours sans que rien ne le
+  // signale avant le 04/10/2026. Un jour sauté (prix manquant) = "en retard", deux = bloqué.
+  { key: "portfolioHistory", label: "Historique portefeuille", warnHours: 30, staleHours: 54 },
+  // GitHub Action price-alerts, 4×/jour (jauges peur/cupidité + dominance BTC).
+  { key: "marketGauges", label: "Jauges de marché", warnHours: 14, staleHours: 26 },
 ];
 
 // Indicateur de fraîcheur bien visible : plusieurs routines à cadences différentes
@@ -586,8 +637,11 @@ const FRESHNESS_SOURCES = [
 // bloquée tant qu'une autre tournait normalement (ex: routine_health frais toutes les 2h
 // pendant qu'opportunities.last_scan_at restait figé 10 jours) — chaque source est donc
 // désormais jugée indépendamment contre son propre rythme, et on affiche la pire.
-function updateFreshnessIndicator(engineHistory, opportunities, news) {
+function updateFreshnessIndicator(engineHistory, opportunities, news, portfolioHistory, marketGauges) {
+  const snapshots = (portfolioHistory && portfolioHistory.snapshots) || [];
   const timestampsByKey = {
+    marketGauges: marketGauges && marketGauges.updated_at,
+    portfolioHistory: snapshots.map((s) => s.computed_at).filter(Boolean).sort().pop(),
     routine: engineHistory && engineHistory.routine_health && engineHistory.routine_health.last_success_at,
     news: news && (news.last_checked_at || news.last_updated_at),
     opportunities: opportunities && opportunities.last_scan_at,

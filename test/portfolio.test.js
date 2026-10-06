@@ -1056,6 +1056,38 @@ describe("portfolio.js — renderPortfolioHistoryChart", () => {
     expect(html).toContain("-10.0 %");
     expect(html).toContain("negative");
   });
+
+  it("places points by date, so a gap in the history shows as a gap", () => {
+    const html = dom.window.renderPortfolioHistoryChart({
+      snapshots: [
+        { date: "2026-09-01", total_value_eur: 1000 },
+        { date: "2026-09-02", total_value_eur: 1100 },
+        { date: "2026-09-11", total_value_eur: 1200 },
+      ],
+    });
+    expect(html).toContain('cx="10.0"'); // jour 1 sur 10, pas le milieu (index 1/2)
+  });
+
+  it("says when the last point is old instead of passing it off as current", () => {
+    const html = dom.window.renderPortfolioHistoryChart({
+      snapshots: [
+        { date: "2020-01-01", total_value_eur: 1000 },
+        { date: "2020-01-02", total_value_eur: 1100 },
+      ],
+    });
+    expect(html).toContain("n'a pas été mis à jour");
+  });
+
+  it("separates new deposits from performance when total_invested changed", () => {
+    const html = dom.window.renderPortfolioHistoryChart({
+      snapshots: [
+        { date: "2026-09-01", total_value_eur: 1000, total_invested_eur: 2000 },
+        { date: "2026-09-02", total_value_eur: 1200, total_invested_eur: 2100 },
+      ],
+    });
+    expect(html).toContain("apports nets");
+    expect(html).toContain("+10.0 %"); // (1200-1000-100)/1000
+  });
 });
 
 describe("portfolio.js — renderPortfolioCharts (assembly)", () => {

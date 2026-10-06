@@ -1,25 +1,25 @@
 {
   "current_version": "v1",
   "global_stats": {
-    "last_computed_at": "2026-09-28T00:20:00Z",
-    "total_verdicts_issued": 81,
-    "total_verdicts_resolved": 66,
-    "accuracy_strict_pct": 25.76,
-    "coverage_pct": 19.7,
-    "baseline_majority_class_pct": 60.61,
+    "last_computed_at": "2026-10-05T16:25:00Z",
+    "total_verdicts_issued": 90,
+    "total_verdicts_resolved": 81,
+    "accuracy_strict_pct": 25.93,
+    "coverage_pct": 19.75,
+    "baseline_majority_class_pct": 53.09,
     "baseline_buy_hold_btc_pct": 18.59,
-    "f1_macro": 23.8,
-    "f1_weighted": 18.85,
+    "f1_macro": 22.13,
+    "f1_weighted": 18.81,
     "confusion_matrix": {
       "ACHAT": {
         "ACHAT": 3,
-        "ATTENTE": 0,
+        "ATTENTE": 3,
         "VENTE": 6
       },
       "ATTENTE": {
-        "ACHAT": 35,
-        "ATTENTE": 12,
-        "VENTE": 6
+        "ACHAT": 38,
+        "ATTENTE": 16,
+        "VENTE": 11
       },
       "VENTE": {
         "ACHAT": 2,
@@ -29,25 +29,25 @@
     },
     "per_class": {
       "ACHAT": {
-        "precision": 0.3333,
-        "recall": 0.075,
-        "f1": 0.1224,
-        "predictedTotal": 9,
-        "actualTotal": 40
+        "precision": 0.25,
+        "recall": 0.0698,
+        "f1": 0.1091,
+        "predictedTotal": 12,
+        "actualTotal": 43
       },
       "ATTENTE": {
-        "precision": 0.2264,
-        "recall": 1,
-        "f1": 0.3692,
-        "predictedTotal": 53,
-        "actualTotal": 12
+        "precision": 0.2462,
+        "recall": 0.8421,
+        "f1": 0.381,
+        "predictedTotal": 65,
+        "actualTotal": 19
       },
       "VENTE": {
         "precision": 0.5,
-        "recall": 0.1429,
-        "f1": 0.2222,
+        "recall": 0.1053,
+        "f1": 0.1739,
         "predictedTotal": 4,
-        "actualTotal": 14
+        "actualTotal": 19
       }
     },
     "calibration_by_confidence_bucket": null,
@@ -61,17 +61,17 @@
     "average_move_pct": null
   },
   "routine_health": {
-    "last_success_at": "2026-09-28T08:20:00Z",
+    "last_success_at": "2026-10-06T00:35:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 28/09/2026 ~08h20 UTC, exécution normale, suivi de docs/routines/cycle-2h-verdict.md et docs/verdict-methodology.md, aucun outil mcp__ utilisé (Bash/curl/WebSearch/WebFetch/Read/Write/Edit/git uniquement).\n\nRésolution : aucun des 15 verdicts pending n'a dépassé resolves_at à l'heure de ce cycle (le plus proche reste v-20260922-ctsi, échéance 2026-09-29T00:20:00Z, encore ~16h). Aucune résolution effectuée, conformément à la section 5 (jamais de résolution anticipée).\n\nÉmission : les 15 favoris ont chacun toujours un verdict pending en cours (aucun changement depuis le cycle 04h20 UTC) — aucun slot disponible, donc aucun nouveau verdict émis ce cycle.\n\ncorrection_log : rien à ajouter (aucun changement de procédure/paramètre tenté ce cycle) ; corr-20260921-biais-attente-asymetrique et corr-20260914-confidence-formule-reproductible restent en observation (aucun verdict supplémentaire émis sous ces règles n'a résolu depuis le dernier cycle), validation_score_after_pct laissés inchangés à null.\n\nglobal_stats : non recalculé (aucune résolution ce cycle, total_verdicts_issued/total_verdicts_resolved inchangés depuis 00h20 UTC).\n\nVeille actualités (section 8) : recherche WebSearch dédiée (fear&greed, dominance BTC, actualité générale, hack/exploit) ce cycle. Fear&greed toujours dispersé selon la source (CFGI ~48-49 neutre vs Coinglass/KuCoin/CoinGabbar ~63-75 cupidité), dominance BTC ~57,1-60,7% selon la source — dispersion déjà connue, aucune bascule de régime tranchée sur cette seule base. Hack/exploit : rien de nouveau au-delà de Bitget (387,5M$, déjà logué) et Meter Passport/Payy Network (déjà logués/jugés insuffisants). Développement réellement nouveau et significatif trouvé : ouverture asiatique du 28/09, propos de Trump (dimanche 27/09) n'excluant pas de nouvelles frappes sur l'Iran malgré une fin de guerre attendue \"très bientôt\" — BTC -1,3 à -1,6% (~83 100-83 300$), Nasdaq-100 futures -0,7%, pétrole +~1%, capitalisation crypto totale -1,7% sur 24h, recul généralisé sur la plupart des favoris malgré des flux ETF spot BTC nets positifs la semaine précédente (déjà logués) — ajouté à items, last_updated_at et last_checked_at avancés à l'heure de ce cycle. Ce développement est un risque géopolitique ponctuel, pas encore assez confirmé/installé pour recalculer macro_regime ce cycle (aucun verdict émis de toute façon ce cycle) — à recroiser au cycle suivant via market-context.json avant tout nouveau verdict.\n\nFusion vers main : commit normal sur la branche de travail courante suivi d'une fusion --no-ff explicite vers main et d'un push, vérifiés par checkout explicite de main avant fusion et confirmation post-fusion que main contient bien le commit de ce cycle."
+    "last_failure_reason": "Cycle du 06/10/2026 ~00h30 UTC : execution normale, suivi de docs/routines/cycle-2h-verdict.md et docs/verdict-methodology.md, aucun outil mcp__ utilise (Bash/WebSearch/Read/Write/Edit/git uniquement, regle explicite du prompt de cette execution). Aucun verdict pending du (resolves_at de CTSI/BTC/ETH/FET/FLUX/LPT/TIA/GRT/PEAQ encore dans le futur). 6 tickers sans verdict pending (AIOZ, ARB, INJ, JUP, LINK, ONDO) : plafond de 3 nouveaux verdicts/cycle applique, priorite a l'ordre FAVORIS de config.js (LINK, ONDO, JUP) - AIOZ, ARB, INJ attendent les cycles suivants. Prix via un seul appel groupe CoinGecko /coins/markets (curl direct, vs_currency=usd, price_change_percentage=24h,7d,30d). Regle de selection ACHAT/ATTENTE/VENTE du paragraphe 2 appliquee : JUP technique haussier coherent sur 24h/7j/30j + accord_count=2 -> ACHAT ; LINK technique mixte (7j -9,22% contre 30j +15,49%) avec fondamental haussier isole (Renforcer conviction 7/10) -> ATTENTE, accord_count=1 ; ONDO technique/fondamental/macro tous neutres -> ATTENTE, accord_count=3. Croisement avec portfolio-thesis.json pour les 3 (LINK Renforcer 7/10, ONDO Conserver 6/10, JUP Conserver 5/10 - aucun ne franchit le seuil Reduire/Renforcer>=7 qui forcerait un plafonnement de l'accord selon la section 4, sauf LINK deja compte haussier isole sans contradiction franche). Favoris-context.json lu pour les 3 (bull/base/bear), aucune contradiction franche trouvee. Regime macro retenu neutre (market-context.json inchange depuis le 05/10 08h55 UTC : Fed hawkish temperee par l'emploi faible du 02/10, ETF/10 ans toujours non confirmes, dominance stablecoins quasi stable a 10,04%). Veille actualites : recherches WebSearch cibles (hack/exploit, actualite generale crypto), last_checked_at mis a jour."
   },
   "macro_regime": {
-    "last_computed_at": "2026-09-14T16:20:00Z",
-    "regime": "risk-on",
-    "fear_greed_value": 58,
-    "btc_dominance_pct": 58.6,
+    "last_computed_at": "2026-10-06T00:35:00Z",
+    "regime": "neutre",
+    "fear_greed_value": 70,
+    "btc_dominance_pct": 59.18,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Cycle du 14/09, ~16h20 UTC. Indice de peur et de cupidité toujours dispersé entre sources (57, 52, 66 selon la source consultée), moyenne ~58, identique au cycle précédent (12h20 UTC) — pas de bascule de régime retenue, même dispersion déjà observée les cycles précédents. Dominance BTC 58,60 % par lecture chiffrée directe (API CoinGecko /api/v3/global), légère hausse par rapport aux 58,39 % du cycle précédent (+0,21 pt), pas assez marqué pour signaler une bascule. Capitalisation totale du marché en repli de -0,50 % sur 24h. Régime maintenu « risk-on » : aucune bascule confirmée (F&G toujours au-dessus de 50 en moyenne, dominance BTC stable) — aucun regime_change_impact déclenché. Aucun mouvement isolé >15 % sur 24h détecté parmi les 22 actifs suivis (15 favoris + 7 opportunités) via les données CoinGecko directes ; le mouvement le plus marqué reste Flux (FLUX, favori, +13,32 % depuis l'émission du verdict, signal précoce déjà connu, pas un mouvement sur 24h) et Unibase (opportunité, +10,90 % sur 24h)."
+    "note": "Cycle du 06/10, ~00h30 UTC. Regime retenu neutre, inchange par rapport au cycle precedent (05/10 16h30) : data/market-context.json n'a pas ete rafraichi depuis le 05/10 08h55 UTC par la routine marche-quotidien, signale ici par transparence plutot que recalcule avec un nouvel appel reseau (regle de cette routine : lecture seule de ce fichier). Fed toujours hawkish (taux 3,75-4,00%, prochain FOMC le 28/10) mais le rapport sur l'emploi US du 02/10 (+29 000 creations vs ~85 000 attendus, chomage 4,2%) tempere cette lecture. Flux ETF spot BTC/ETH et rendement du Tresor a 10 ans toujours non confirmes (champs a null depuis le 25/09). Dominance des stablecoins quasi stable (10,04% le 05/10). fear_greed_value et btc_dominance_pct non retouches ici (lus dans data/market-gauges.json par une autre routine, regle de ce document). Signaux toujours insuffisamment alignes pour trancher franchement : regime maintenu neutre."
   },
   "paper_portfolio_stats": {
     "last_computed_at": "2026-09-13T23:26:00Z",
@@ -119,8 +119,8 @@
       "what": "Exactitude de ce lot : 11,1 % (1/9 correct : PEAQ ATTENTE confirmée ; 8 incorrects : GRT, TIA, LINK, ONDO, JUP, ARB — tous émis ACHAT et résolus VENTE — ainsi que AIOZ et INJ, émis ATTENTE et résolus ACHAT), contre 44,4 % pour la baseline « classe majoritaire » sur ce même lot — net recul par rapport au lot précédent (35,7 %) et pire encore que le tout premier lot du 23/08 (20,0 %). validation_score_after_pct de corr-20260906-test-horizon-adaptatif renseigné à 11,11 % : le raccourcissement de l'horizon à 7 jours n'a pas amélioré le score, il s'est aggravé.",
       "why": "Point commun aux 6 ACHAT erronés : chacun a été émis immédiatement après un rebond technique marqué consécutif à une chute antérieure (signal « technique haussier » fondé sur un rebond de courte durée après un creux, jamais sur une tendance de fond confirmée), avec un signal fondamental resté neutre dans les 9 cas — aucun n'a été confirmé par un catalyseur réel indépendant. Le raccourcissement de l'horizon, déjà testé par la correction précédente, ne corrige pas ce biais : il réduit le temps d'exposition mais pas la qualité du signal d'entrée, qui reste construit sur un rebond récent extrapolé plutôt que sur une confirmation indépendante — les retournements observés (ex. Arbitrum -29,7 %) se sont produits assez vite pour rester dans la fenêtre de 7 jours malgré tout.",
       "validation_score_before_pct": 11.11,
-      "validation_score_after_pct": 25,
-      "action": "Aucun nouveau paramètre chiffré ajusté ce cycle (threshold_pct et l'horizon adaptatif restent inchangés, déjà testés deux fois). Changement procédural appliqué uniquement à l'émission des verdicts de ce cycle : pour tout favori affichant un mouvement sur 7 jours déjà extrême (>15 % en valeur absolue) au moment de l'émission, le signal technique n'est plus compté comme confirmé simplement parce que la tendance récente va dans ce sens — il est requalifié en mixte par prudence. Appliqué ce cycle à AIOZ (+19,0 % sur 7j, technique requalifié mixte plutôt que haussier, verdict ATTENTE plutôt qu'ACHAT) ; INJ (+13,0 % sur 7j, sous le seuil de 15 %, technique conservé haussier, verdict ACHAT). Hypothèse non encore validée par des données réelles — les prochains verdicts concernés serviront de premier test, pas un ajustement rétroactif sur ce lot déjà résolu.\n\nMise à jour du 28/09/2026 (2e lot réellement testé depuis la mise en place du 13/09, le 1er n'ayant fait que reporter le score du lot déclencheur) : les 9 verdicts émis le 20/09 à horizon 7 jours ont résolu ce cycle. Sur les 8 concernés par la règle de requalification 'mixte' (GRT, TIA, PEAQ, ONDO, JUP, AIOZ, ARB, INJ — LINK restait sous le seuil de 15 % et n'était pas concerné), seuls 2 se sont révélés correctement écartés (ARB +2,69 %, INJ +0,26 %, tous deux réellement restés sous le seuil malgré un mouvement technique brut hors-limite) ; les 6 autres (GRT +57,71 %, TIA +20,52 %, PEAQ +25,70 %, ONDO +33,50 %, JUP +27,08 %, AIOZ +40,49 %) ont bien continué leur mouvement directionnel réel, confirmant une deuxième fois que la prudence de cette règle coûte plus qu'elle ne protège sur ce type de rallye prolongé. validation_score_after_pct renseigné à 25 % (2/8) sur ce lot précis — deuxième résultat négatif consécutif depuis la mise en place (11,11 % puis 25 %), aucun des deux tests réels n'ayant validé l'hypothèse de prudence. Documenté honnêtement comme un signal de plus en plus clair que cette règle mériterait une révision ; aucune modification décidée ce cycle (hors périmètre — ce cycle suit le document existant sans improviser au-delà, une révision de règle nécessiterait d'éditer docs/routines/cycle-2h-verdict.md explicitement, pas un ajustement silencieux ici).",
+      "validation_score_after_pct": 16.67,
+      "action": "Aucun nouveau paramètre chiffré ajusté ce cycle (threshold_pct et l'horizon adaptatif restent inchangés, déjà testés deux fois). Changement procédural appliqué uniquement à l'émission des verdicts de ce cycle : pour tout favori affichant un mouvement sur 7 jours déjà extrême (>15 % en valeur absolue) au moment de l'émission, le signal technique n'est plus compté comme confirmé simplement parce que la tendance récente va dans ce sens — il est requalifié en mixte par prudence. Appliqué ce cycle à AIOZ (+19,0 % sur 7j, technique requalifié mixte plutôt que haussier, verdict ATTENTE plutôt qu'ACHAT) ; INJ (+13,0 % sur 7j, sous le seuil de 15 %, technique conservé haussier, verdict ACHAT). Hypothèse non encore validée par des données réelles — les prochains verdicts concernés serviront de premier test, pas un ajustement rétroactif sur ce lot déjà résolu.\n\nMise à jour du 28/09/2026 (2e lot réellement testé depuis la mise en place du 13/09, le 1er n'ayant fait que reporter le score du lot déclencheur) : les 9 verdicts émis le 20/09 à horizon 7 jours ont résolu ce cycle. Sur les 8 concernés par la règle de requalification 'mixte' (GRT, TIA, PEAQ, ONDO, JUP, AIOZ, ARB, INJ — LINK restait sous le seuil de 15 % et n'était pas concerné), seuls 2 se sont révélés correctement écartés (ARB +2,69 %, INJ +0,26 %, tous deux réellement restés sous le seuil malgré un mouvement technique brut hors-limite) ; les 6 autres (GRT +57,71 %, TIA +20,52 %, PEAQ +25,70 %, ONDO +33,50 %, JUP +27,08 %, AIOZ +40,49 %) ont bien continué leur mouvement directionnel réel, confirmant une deuxième fois que la prudence de cette règle coûte plus qu'elle ne protège sur ce type de rallye prolongé. validation_score_after_pct renseigné à 25 % (2/8) sur ce lot précis — deuxième résultat négatif consécutif depuis la mise en place (11,11 % puis 25 %), aucun des deux tests réels n'ayant validé l'hypothèse de prudence. Documenté honnêtement comme un signal de plus en plus clair que cette règle mériterait une révision ; aucune modification décidée ce cycle (hors périmètre — ce cycle suit le document existant sans improviser au-delà, une révision de règle nécessiterait d'éditer docs/routines/cycle-2h-verdict.md explicitement, pas un ajustement silencieux ici).\n\nMise a jour du 05/10/2026 (3e lot teste) : les 9 verdicts emis le 28/09 a horizon 7 jours ont resolu ce cycle. Sur les 6 concernes par la requalification 'mixte' (GRT, TIA, PEAQ, ONDO, JUP, AIOZ — 7j deja >15% en valeur absolue au moment de l'emission), un seul est reste correctement dans le seuil (TIA, -4,78%) ; les 5 autres ont franchi le seuil directionnel (GRT -13,93%, PEAQ +5,79%, ONDO -11,78%, JUP -7,79%, AIOZ -8,49% — majoritairement dans le sens inverse du rebond qui avait declenche la requalification, pas une poursuite manquee du mouvement haussier initial comme sur les lots precedents). validation_score_after_pct renseigne a 16,67 % (1/6) sur ce lot precis — troisieme resultat consecutif sous la baseline classe majoritaire depuis la mise en place (11,11 % puis 25 % puis 16,67 %). Documente honnetement ; aucune modification de regle decidee ce cycle (hors perimetre, suit le document existant sans improviser).",
       "status": "accepted"
     },
     {
@@ -142,8 +142,19 @@
       "why": "docs/routines/cycle-2h-verdict.md n'a jamais spécifié explicitement comment signal_consensus.technique devient le verdict ACHAT/ATTENTE/VENTE — seule la confiance associée l'était, en supposant le verdict déjà choisi. Le choix non écrit laissé au jugement du cycle s'est révélé systématiquement prudent (biais de couverture, pas de calibration) : un signal baissier net ou un accord faible se voyaient rabattus vers ATTENTE plutôt que vers une direction, sans que ce soit une règle documentée nulle part — donc invisible à toute revue qui ne relit que le document. C'est un angle mort distinct de celui corrigé le 14/09 (qui portait sur le chiffre de confiance, pas sur la direction), pas une régression de cette révision.",
       "validation_score_before_pct": 25,
       "validation_score_after_pct": null,
-      "action": "Ajout d'une règle explicite dans docs/routines/cycle-2h-verdict.md (fin de la section 2) : technique=\"haussier\" + accord_count≥1 → verdict doit être ACHAT ; technique=\"baissier\" + accord_count≥1 → verdict doit être VENTE ; technique mixte/neutre/insuffisant/a_risque_retournement/peu_fiable → ATTENTE inchangé ; accord_count=0 → ATTENTE forcé inchangé (règle existante). threshold_pct et l'horizon adaptatif ne sont pas modifiés. Anomalie signalée par v-20260807-btc/v-20260807-eth (signal_precoce, ~16-17 % d'écart évoqué le 10/08) revérifiée le 21/09 via l'historique CoinGecko réel : price_at_issue des deux verdicts est en fait correct (BTC 55 800 stocké vs 55 764 € CoinGecko, ETH 1 649,89 stocké vs 1 650,60 € CoinGecko, écarts <0,1 %) — la note du 10/08 comparait des euros à des dollars sans convertir, aucune correction de données nécessaire, accuracy_strict_pct déjà correcte sur ces 2 verdicts. Hypothèse ci-dessus non encore validée par des données réelles : la résolution des verdicts émis sous cette règle (à partir du prochain cycle qui lit ce document) sera le premier vrai test, pas un chiffre rétroactif sur ce lot déjà résolu — ne pas juger avant qu'au moins ~10 verdicts émis sous elle aient atteint leur horizon.\n\nNote du 28/09/2026 : les 9 verdicts émis le 20/09 (avant la mise en place formelle de cette règle le 21/09) ont résolu ce cycle. Un seul exerçait réellement le mécanisme haussier/baissier + accord_count≥1 → direction forcée (LINK, technique haussier, accord_count=2 → ACHAT, confirmé correct à +11,76 %) ; les 8 autres relevaient du mécanisme distinct de requalification 'mixte' (corr-20260913, voir son propre journal) ou d'un accord_count=1 sans technique haussier/baissier, non concernés par cette règle-ci. Un seul cas résolu reste très insuffisant pour juger (le document lui-même demande ~10 verdicts émis SOUS la règle) — validation_score_after_pct laissé à null, aucun jugement tiré de ce point unique au-delà de le noter honnêtement.",
+      "action": "Ajout d'une règle explicite dans docs/routines/cycle-2h-verdict.md (fin de la section 2) : technique=\"haussier\" + accord_count≥1 → verdict doit être ACHAT ; technique=\"baissier\" + accord_count≥1 → verdict doit être VENTE ; technique mixte/neutre/insuffisant/a_risque_retournement/peu_fiable → ATTENTE inchangé ; accord_count=0 → ATTENTE forcé inchangé (règle existante). threshold_pct et l'horizon adaptatif ne sont pas modifiés. Anomalie signalée par v-20260807-btc/v-20260807-eth (signal_precoce, ~16-17 % d'écart évoqué le 10/08) revérifiée le 21/09 via l'historique CoinGecko réel : price_at_issue des deux verdicts est en fait correct (BTC 55 800 stocké vs 55 764 € CoinGecko, ETH 1 649,89 stocké vs 1 650,60 € CoinGecko, écarts <0,1 %) — la note du 10/08 comparait des euros à des dollars sans convertir, aucune correction de données nécessaire, accuracy_strict_pct déjà correcte sur ces 2 verdicts. Hypothèse ci-dessus non encore validée par des données réelles : la résolution des verdicts émis sous cette règle (à partir du prochain cycle qui lit ce document) sera le premier vrai test, pas un chiffre rétroactif sur ce lot déjà résolu — ne pas juger avant qu'au moins ~10 verdicts émis sous elle aient atteint leur horizon.\n\nNote du 28/09/2026 : les 9 verdicts émis le 20/09 (avant la mise en place formelle de cette règle le 21/09) ont résolu ce cycle. Un seul exerçait réellement le mécanisme haussier/baissier + accord_count≥1 → direction forcée (LINK, technique haussier, accord_count=2 → ACHAT, confirmé correct à +11,76 %) ; les 8 autres relevaient du mécanisme distinct de requalification 'mixte' (corr-20260913, voir son propre journal) ou d'un accord_count=1 sans technique haussier/baissier, non concernés par cette règle-ci. Un seul cas résolu reste très insuffisant pour juger (le document lui-même demande ~10 verdicts émis SOUS la règle) — validation_score_after_pct laissé à null, aucun jugement tiré de ce point unique au-delà de le noter honnêtement.\n\nNote du 05/10/2026 : le lot du 28/09 a resolu ce cycle. Un seul verdict exercait reellement le mecanisme haussier/baissier + accord_count>=1 -> direction forcee (LINK, technique haussier, accord_count=2 -> ACHAT), cette fois incorrect (+1,86%, reste sous le seuil directionnel de 5% -> resolution reelle ATTENTE). Deuxieme point de donnee depuis la mise en place de la regle (1 correct le 28/09 sur le lot du 20/09, 1 incorrect ce cycle sur le lot du 28/09) — toujours tres insuffisant pour juger (le document exige ~10 verdicts emis SOUS la regle), validation_score_after_pct laisse a null.",
       "status": "accepted"
+    },
+    {
+      "id": "corr-20261004-devise-resolution",
+      "logged_at": "2026-10-04T22:30:00Z",
+      "trigger": "Session de développement Claude Code (pas un cycle automatique), correction validée par l'utilisateur : prix d'émission reconnus en USD depuis le 20/09 alors qu'ils étaient en EUR avant, vérifié sur l'historique CoinGecko réel.",
+      "what": "14 verdicts émis en EUR (06 et 13/09) résolus le 20/09 avec un prix USD → price_at_resolution reconverti en EUR, issue recalculée (valeurs d'origine conservées dans outcome.currency_correction). Seules 2 issues changent : v-20260906-btc devient correct (+2,43 % réel au lieu de +17,57 %), v-20260906-fet devient incorrect (+1,16 % au lieu de +16,12 %). Champ currency ajouté à ces 14 verdicts et à tous les pending (USD, CTSI EUR).",
+      "why": "Le change EUR/USD (~1,16) ajoutait ~16 % fictifs à chaque mouvement mesuré. Le symbole écrit dans reasoning n'est pas fiable (prix EUR étiquetés $).",
+      "validation_score_before_pct": 26.87,
+      "validation_score_after_pct": 26.87,
+      "action": "Spec cycle-2h : champ currency obligatoire (USD), résolution toujours dans la devise du verdict. Le diagnostic corr-20260921 (biais vers ATTENTE) reste valable : la semaine du 13 au 20/09 a réellement été une forte hausse, même corrigée.",
+      "status": "applied"
     }
   ]
 }
