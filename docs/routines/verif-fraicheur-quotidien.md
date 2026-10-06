@@ -1,64 +1,39 @@
 # `aguilaradar-verif-fraicheur-quotidien` — vérification de fraîcheur, quotidienne
 
-Routine Cowork (09:15 UTC), session persistante. Vérifie que les cycles automatisés tournent
-réellement et committe une alerte `ATTENTION FRAICHEUR` sur `main` quand ce n'est pas le cas.
-Lecture seule sur toutes les données qu'elle inspecte — aucun outil de correction, seulement un
-signal pour qu'un humain (ou une autre routine/session) intervienne.
+Routine Cowork (09:15 UTC), session persistante. Lecture seule ; n'écrit qu'une entrée dans
+`data/health-log.json`. **Ce fichier remplace les étapes 2 et 3 du prompt stocké** (version du
+17/08, jamais réécrite) partout où ils se contredisent.
 
-## Bug corrigé ici (06/10/2026)
+## Étapes 2 et 3 : une seule commande, depuis la racine du dépôt
 
-Un correctif du 05/10/2026 avait déjà identifié que cette routine jugeait `data/news.json` sur
-`last_updated_at` au lieu de `last_checked_at`, produisant une fausse alerte quasi quotidienne
-(`last_updated_at` reste normalement figé plusieurs jours — c'est attendu, voir
-`cycle-2h-verdict.md` §8 — tant qu'aucune actualité réellement nouvelle ne passe le seuil de
-sélectivité du cycle profond). Le correctif a été appliqué au prompt de cette session persistante
-mais ne s'est pas reflété dans le comportement observé le lendemain : l'alerte du 06/10 09h16 UTC
-(`ATTENTION FRAICHEUR : news.json figé depuis ~24h36`) a été vérifiée a posteriori contre
-`data/news.json` et `data/engine-history.json.routine_health` à l'horodatage exact du commit —
-`last_checked_at` était alors vieux de 21 minutes (parfaitement frais), seul `last_updated_at`
-correspondait aux ~24h36 annoncées. Fausse alerte confirmée, pas une supposition.
+```bash
+python3 scripts/verif-fraicheur.py
+```
 
-Cause probable : un correctif de prompt ajouté à une session déjà longue (plusieurs semaines
-d'historique de conversation) ne garantit pas que l'instruction soit suivie de façon fiable à
-chaque nouvelle exécution — contrairement à une session fraîche qui lit son prompt complet à
-chaque fois. D'où ce fichier : la règle vit maintenant dans un spec versionné, relu en entier à
-chaque passage (même pattern déjà adopté pour `aguilaradar-cycle-2h`, voir `cycle-2h-verdict.md`),
-plutôt que dans une correction ponctuelle ajoutée en cours de conversation.
+Pour chaque source : horodatage, âge (`XhYY`), seuil, puis `OK` ou `ATTENTION`. Reprendre ces âges
+tels quels dans la note de l'étape 4 ou 5 ; `ABSENT` se signale tel quel, sans rien deviner. Ne lire
+aucun de ces fichiers en entier (`Read`/`cat`) : `opportunities.json` pèse ~125 Ko pour 3 dates utiles.
 
-## Règle, pour CHAQUE source vérifiée
+| Source | Champ qui fait foi | Seuil |
+|---|---|---|
+| Cycle profond | `engine-history.json` → `routine_health.last_success_at` | 8 h |
+| Actualités | `news.json` → `last_checked_at` | 1,5 × `REFRESH.deepCycleHours` (`js/config.js`), actuellement 12 h |
+| Opportunités | `opportunities.json` → `last_scan_at` | 36 h |
 
-Deux familles de champs, jamais confondues :
+Champs à ne **jamais** utiliser, anciens par nature :
+- `news.json` → `last_updated_at` : ne bouge que si une actualité nouvelle passe le filtre du cycle
+  profond ; plusieurs jours sans changement est normal. Cause des fausses alertes du 15/09 et du 06/10.
+- `opportunities.json` → `last_checked_at` : champ mort, figé au 14/09/2026.
 
-- **"la vérification a eu lieu"** (ex. `news.json.last_checked_at`,
-  `engine-history.json.routine_health.last_success_at`) — un champ figé est TOUJOURS un vrai
-  problème, à signaler.
-- **"la dernière fois qu'un changement réel est survenu"** (ex. `news.json.last_updated_at`,
-  la date du dernier item réellement ajouté à une liste) — un champ ancien est NORMAL et ATTENDU
-  tant que rien de nouveau ne mérite d'être ajouté. Ne JAMAIS l'utiliser seul pour juger une
-  fraîcheur — seulement le champ "vérification a eu lieu" correspondant en fait foi.
+Ne pas appeler `list_triggers`, même si le correctif collé le 06/10 le mentionne : ~110 000
+caractères qui resteraient dans le contexte de cette session persistante, alors que la cadence se
+lit dans `js/config.js` (ce que fait le script).
 
-Calculer l'écart par extraction `python3` directe sur le JSON (comparer un champ nommé à l'heure
-réelle via `datetime`), jamais en lisant/estimant le texte à l'œil — même discipline que
-`cycle-2h-verdict.md` §8 pour la même raison (fiabilité, pas de supposition sur une date).
+## Historique
 
-### `data/news.json`
-
-Champ qui prouve la vérification : **`last_checked_at`** (pas `last_updated_at` — piège déjà
-documenté deux fois, 15/09 et 06/10, voir ci-dessus). Seuil d'alerte : au-delà de l'intervalle du
-cycle profond (`aguilaradar-cycle-2h`, actuellement 8h — vérifier via `list_triggers` plutôt que
-de supposer, le cadencement a déjà changé plusieurs fois) + une marge raisonnable pour un cycle
-manqué (ex. 1,5× l'intervalle), jamais un seuil fixe codé en dur qui redeviendrait faux au
-prochain changement de cadencement.
-
-### `engine-history.json.routine_health.last_success_at`
-
-Champ qui prouve la vérification : lui-même — déjà la bonne pratique en place (voir
-`cycle-2h-verdict.md` §7, mis à jour à chaque cycle sans erreur). Aucun changement nécessaire ici,
-mentionné pour mémoire.
-
-### Autres sources déjà suivies par cette routine (opportunités, etc.)
-
-Non ré-auditées dans ce correctif — seul le cas news.json a été vérifié avec des horodatages
-exacts. Si une autre source suit le même motif à deux champs (vérification vs dernier changement
-réel), appliquer la même règle plutôt que d'attendre une fausse alerte supplémentaire pour la
-remarquer.
+- 15/09 et 06/10 : fausses alertes `news.json`, jugé sur `last_updated_at`.
+- 05/10 : prompt corrigé préparé « à coller » (extraction python, `last_checked_at`) mais **jamais
+  collé** — constaté le 06/10 via `list_triggers`/`get_trigger` : prompt stocké encore en version 17/08.
+- 06/10 au soir : correctif collé en fin de prompt, renvoyant ici ; les étapes 2-3 d'origine
+  (`news.last_updated_at > 8h`, lecture « Read ou cat ») n'ont pas été réécrites, d'où la règle de
+  priorité en tête de ce fichier.
