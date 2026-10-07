@@ -872,6 +872,16 @@
         "favoris_context_populated": 15
       },
       "note": "Site non vérifiable depuis cet environnement : le proxy de sortie bloque jaki2402-dev.github.io (EGRESS_BLOCKED), ce qui ne prouve pas une panne du site. Tous les fichiers data/*.json sont des JSON valides et non vides ; index.html référence bien tous les scripts js/*.js. Aucune anomalie de volume : verdicts 96 (96), alerts 160 (158), opportunities 7 (7), news 10 (10), favoris renseignés 15 (15). ATTENTION FRAICHEUR : data/news.json (last_updated_at = 2026-10-05T08:40:00Z) est figé depuis environ 48h, motif récurrent déjà documenté ; last_checked_at est à jour (2026-10-07T08:17:09Z) et engine-history (last_success_at 08:17Z) et opportunities (last_scan_at 04:10Z) sont dans les clous."
+    },
+    {
+      "checked_at": "2026-10-07T09:16:00Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~0h58)",
+        "data/news.json (last_checked_at, ~0h58)",
+        "data/opportunities.json (last_scan_at, ~5h06)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h58, actualités (last_checked_at) il y a 0h58, opportunités il y a 5h06 - rien à signaler. Première exécution suivant docs/routines/verif-fraicheur-quotidien.md (correctif du 06/10) : fraîcheur actualités jugée sur last_checked_at, plus sur last_updated_at (source des fausses alertes du 15/09 et du 06/10)."
     }
   ]
 }
