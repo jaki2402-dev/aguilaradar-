@@ -847,6 +847,31 @@
         "data/news.json (last_updated_at figé depuis ~24h36, seuil de 8h dépassé)"
       ],
       "note": "ATTENTION FRAICHEUR : data/news.json (last_updated_at = 2026-10-05T08:40:00Z) est figé depuis environ 24h36, au-delà du seuil de 8h - motif récurrent déjà documenté depuis début septembre. data/engine-history.json (routine_health.last_success_at, ~0h21) et data/opportunities.json (last_scan_at, ~5h06) sont dans les clous. Cette routine n'a pas les outils pour investiguer ou corriger elle-même."
+    },
+    {
+      "checked_at": "2026-10-07T08:51:00Z",
+      "site_reachable": false,
+      "files_ok": [
+        "data/verdicts.json",
+        "data/opportunities.json",
+        "data/engine-history.json",
+        "data/alerts.json",
+        "data/control-group.json",
+        "data/market-context.json",
+        "data/favoris-context.json",
+        "data/health-log.json"
+      ],
+      "files_broken": [
+        "data/news.json (last_updated_at figé depuis ~48h, seuil de 8h dépassé)"
+      ],
+      "counts": {
+        "verdicts": 96,
+        "alerts": 160,
+        "opportunities": 7,
+        "news": 10,
+        "favoris_context_populated": 15
+      },
+      "note": "Site non vérifiable depuis cet environnement : le proxy de sortie bloque jaki2402-dev.github.io (EGRESS_BLOCKED), ce qui ne prouve pas une panne du site. Tous les fichiers data/*.json sont des JSON valides et non vides ; index.html référence bien tous les scripts js/*.js. Aucune anomalie de volume : verdicts 96 (96), alerts 160 (158), opportunities 7 (7), news 10 (10), favoris renseignés 15 (15). ATTENTION FRAICHEUR : data/news.json (last_updated_at = 2026-10-05T08:40:00Z) est figé depuis environ 48h, motif récurrent déjà documenté ; last_checked_at est à jour (2026-10-07T08:17:09Z) et engine-history (last_success_at 08:17Z) et opportunities (last_scan_at 04:10Z) sont dans les clous."
     }
   ]
 }
