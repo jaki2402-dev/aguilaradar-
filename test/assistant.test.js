@@ -705,6 +705,12 @@ describe("assistant.js — detectResponseMode + routage d'une comparaison entre 
 
   it("détecte allocation / comparaison / thèse / portfolio / market / quick à partir du seul texte de la question", () => {
     expect(dom.window.detectResponseMode("Je devrais renforcer Cartesi ?")).toBe("allocation");
+    // Régression 06/10/2026 : "acheter" était absent d'ALLOCATION_INTENT_RE alors que c'est le
+    // verbe le plus direct pour ce type de question (et le nom du verdict "ACHAT" lui-même) —
+    // tombait en "quick" (llama-3.3-70b, 320 tokens) au lieu de "allocation" (gpt-oss-120b, 1600
+    // tokens, format comparatif) : exemple réel remonté par l'utilisateur (capture d'écran).
+    expect(dom.window.detectResponseMode("Donc pour toi c'est BTC qui mérite d'être acheté malgré la hausse, il n'y a pas d'autre opportunité plus attractive ?")).toBe("allocation");
+    expect(dom.window.detectResponseMode("Tu penses que je devrais acheter du Bitcoin maintenant ?")).toBe("allocation");
     expect(dom.window.detectResponseMode("INJ ou LINK, lequel recharger ?")).toBe("comparison");
     expect(dom.window.detectResponseMode("Fais-moi une thèse d'investissement sur Celestia")).toBe("thesis");
     expect(dom.window.detectResponseMode("Pourquoi ça monte ?")).toBe("quick"); // pas "marché" explicite

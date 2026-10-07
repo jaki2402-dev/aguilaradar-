@@ -1326,5 +1326,25 @@
     "sentiment": "positif",
     "message": "FLUX : +5,75 % depuis l'émission du verdict ACHAT du 05/10 (0,078783 $ → 0,083311 $), seuil de mouvement directionnel de 5 % franchi à la hausse, dans le sens du verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
     "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261007-fet-seuil",
+    "ticker_ou_theme": "FET",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-07T01:47:17Z",
+    "verdict_id": "v-20261005-fet",
+    "sentiment": "négatif",
+    "message": "FET : -7,62 % depuis l'émission du verdict ACHAT du 05/10 (0,25797 $ → 0,23831 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261007-ctsi-seuil",
+    "ticker_ou_theme": "CTSI",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-07T01:47:17Z",
+    "verdict_id": "v-20261003-ctsi",
+    "sentiment": "positif",
+    "message": "CTSI : +5,37 % depuis l'émission du verdict ATTENTE du 03/10 (0,026474 € → 0,027896 €), seuil de mouvement directionnel de 5 % franchi à la hausse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
   }
 ]

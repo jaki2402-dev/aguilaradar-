@@ -44,9 +44,15 @@ toutes les 2h qu'on croyait désactivé), et des prompts faisant `cat` de ~480 K
   fait foi. Le watchdog était noté « désactivé » depuis le 06/09 et tournait toujours.
 - **Modifier une routine** : un agent peut changer un horaire, mais le classifieur refuse en
   général désactivation/prompt, et une routine créée hors agent (`created_via: http_api`, ex.
-  `alerte-crypto-quotidienne-cloud`) n'est modifiable que par l'utilisateur. Dans ce cas : fichier
-  prêt à coller (scratchpad) + lien `claude.ai/code/routines/<id>`, puis vérifier avec
-  `get_trigger`. Ne jamais dire « appliqué » sans cette relecture.
+  `alerte-crypto-quotidienne-cloud`) n'est modifiable que par l'utilisateur. Dans ce cas : **relire
+  d'abord le prompt complet** (`get_trigger` — un ajout en fin de prompt ne neutralise pas une
+  étape contradictoire), puis fichier prêt à coller (scratchpad) + lien
+  `claude.ai/code/routines/<id>`, puis re-vérifier avec `get_trigger`. Ne jamais dire « appliqué »
+  sans cette relecture : les 3 prompts « à coller » du 05/10 n'ont jamais été collés.
+- **Session persistante = contexte qui grossit à chaque exécution** (coût par exécution bien
+  supérieur à une session fraîche, mesures du 06/10 dans le journal) : toute nouvelle routine en
+  session fraîche. Les 3 persistantes actives (verif-fraicheur, opportunités, briefing-email) :
+  conversion à planifier une par une (MCP en session fraîche non vérifié).
 - **Secrets** : certains prompts (digest : clé privée VAPID) contiennent des secrets → jamais dans
   le dépôt (public). Clé publique du prompt digest ≠ celle de `js/notify.js` (changée le 23/09) :
   push digest probablement en échec, non vérifié.
