@@ -1346,5 +1346,35 @@
     "sentiment": "positif",
     "message": "CTSI : +5,37 % depuis l'émission du verdict ATTENTE du 03/10 (0,026474 € → 0,027896 €), seuil de mouvement directionnel de 5 % franchi à la hausse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
     "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261007-arb-seuil",
+    "ticker_ou_theme": "ARB",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-07T09:12:41Z",
+    "verdict_id": "v-20261006-arb",
+    "sentiment": "négatif",
+    "message": "ARB : -8,24 % depuis l'émission du verdict ATTENTE du 06/10 (0,2034 $ → 0,18663 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261007-ondo-seuil",
+    "ticker_ou_theme": "ONDO",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-07T09:12:41Z",
+    "verdict_id": "v-20261006-ondo",
+    "sentiment": "négatif",
+    "message": "ONDO : -6,40 % depuis l'émission du verdict ATTENTE du 06/10 (0,50008 $ → 0,46807 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261007-jup-seuil",
+    "ticker_ou_theme": "JUP",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-07T09:12:41Z",
+    "verdict_id": "v-20261006-jup",
+    "sentiment": "négatif",
+    "message": "JUP : -6,21 % depuis l'émission du verdict ACHAT du 06/10 (0,3487 $ → 0,32706 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
   }
 ]
