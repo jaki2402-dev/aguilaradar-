@@ -61,9 +61,9 @@
     "average_move_pct": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-07T00:17:33Z",
+    "last_success_at": "2026-10-07T08:17:09Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 07/10/2026 ~00h16 UTC : cycle court (verification econome en premier, docs/routines/cycle-2h-verdict.md section demarrage econome). Aucun verdict pending du (tous les resolves_at encore dans le futur) et aucun ticker sans verdict pending (15 verdicts pending couvrant les 15 favoris). Aucun appel mcp__ utilise (regle explicite du prompt de cette execution, Bash/WebSearch/Read/Write/Edit/git uniquement). Veille actualites version courte : 2 recherches WebSearch (hack/exploit crypto, fear&greed) - rien de nouveau et significatif au-dela des items deja presents (hack Bitget de septembre toujours le plus recent incident majeur confirme, rien en octobre) ; fear&greed sans lecture fiable datee du jour dans les resultats de recherche, non invente. last_checked_at de news.json mis a jour, items inchanges. macro_regime non retouche (cycle sans verdict emis, regle section 7)."
+    "last_failure_reason": "Cycle du 07/10/2026 ~08h16 UTC : cycle court (verification econome en premier, docs/routines/cycle-2h-verdict.md section demarrage econome). Aucun verdict pending du (tous les resolves_at encore dans le futur) et aucun ticker sans verdict pending (15 verdicts pending couvrant les 15 favoris). Aucun appel mcp__ utilise (regle explicite du prompt de cette execution, Bash/WebSearch/Read/Write/Edit/git uniquement). Veille actualites version courte : 2 recherches WebSearch (hack/exploit crypto, fear&greed) - resultats centres sur le hack Bitget de septembre deja present et des recaps agreges (total hacks septembre 766M$, dont un hack Liquid Network ~320M$ mentionne sans source primaire datee ni detail verifiable), rien de suffisamment confirme pour un nouvel item (regle 'jamais inventer' section absolue) ; fear&greed toujours sans lecture fiable datee du jour dans les resultats de recherche. last_checked_at de news.json mis a jour, items inchanges. macro_regime non retouche (cycle sans verdict emis, regle section 7)."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-06T08:55:00Z",
