@@ -1376,5 +1376,35 @@
     "sentiment": "négatif",
     "message": "JUP : -6,21 % depuis l'émission du verdict ACHAT du 06/10 (0,3487 $ → 0,32706 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
     "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261007-tia-seuil",
+    "ticker_ou_theme": "TIA",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-07T17:31:54Z",
+    "verdict_id": "v-20261005-tia",
+    "sentiment": "négatif",
+    "message": "TIA : -6,48 % depuis l'émission du verdict ACHAT du 05/10 (0,46677 $ → 0,43652 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261007-grt-seuil",
+    "ticker_ou_theme": "GRT",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-07T17:31:54Z",
+    "verdict_id": "v-20261005-grt",
+    "sentiment": "négatif",
+    "message": "GRT : -6,40 % depuis l'émission du verdict ATTENTE du 05/10 (0,029204 $ → 0,027336 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261007-eth-seuil",
+    "ticker_ou_theme": "ETH",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-07T17:31:54Z",
+    "verdict_id": "v-20261005-eth",
+    "sentiment": "négatif",
+    "message": "ETH : -6,10 % depuis l'émission du verdict ACHAT du 05/10 (2 725,67 $ → 2 559,34 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
   }
 ]
