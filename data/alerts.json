@@ -1416,5 +1416,35 @@
     "sentiment": "négatif",
     "message": "LINK : -5,69 % depuis l'émission du verdict ATTENTE du 06/10 (13,89 $ → 13,10 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
     "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261008-inj-seuil",
+    "ticker_ou_theme": "INJ",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-08T17:35:18Z",
+    "verdict_id": "v-20261006-inj",
+    "sentiment": "négatif",
+    "message": "INJ : -15,21 % depuis l'émission du verdict ATTENTE du 06/10 (7,69 $ → 6,52 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261008-peaq-seuil",
+    "ticker_ou_theme": "PEAQ",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-08T17:35:18Z",
+    "verdict_id": "v-20261005-peaq",
+    "sentiment": "négatif",
+    "message": "PEAQ : -11,21 % depuis l'émission du verdict ACHAT du 05/10 (0,042365 $ → 0,037614 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261008-aioz-seuil",
+    "ticker_ou_theme": "AIOZ",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-08T17:35:18Z",
+    "verdict_id": "v-20261006-aioz",
+    "sentiment": "négatif",
+    "message": "AIOZ : -8,69 % depuis l'émission du verdict ATTENTE du 06/10 (0,11107 $ → 0,10142 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
   }
 ]
