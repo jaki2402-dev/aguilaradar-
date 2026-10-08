@@ -882,6 +882,30 @@
       ],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h58, actualités (last_checked_at) il y a 0h58, opportunités il y a 5h06 - rien à signaler. Première exécution suivant docs/routines/verif-fraicheur-quotidien.md (correctif du 06/10) : fraîcheur actualités jugée sur last_checked_at, plus sur last_updated_at (source des fausses alertes du 15/09 et du 06/10)."
+    },
+    {
+      "checked_at": "2026-10-08T08:51:22Z",
+      "site_reachable": false,
+      "files_ok": [
+        "data/verdicts.json",
+        "data/opportunities.json",
+        "data/engine-history.json",
+        "data/alerts.json",
+        "data/news.json",
+        "data/control-group.json",
+        "data/market-context.json",
+        "data/favoris-context.json",
+        "data/health-log.json"
+      ],
+      "files_broken": [],
+      "counts": {
+        "verdicts": 96,
+        "alerts": 166,
+        "opportunities": 7,
+        "news": 10,
+        "favoris_context_populated": 15
+      },
+      "note": "Site non vérifiable depuis cet environnement : WebFetch en échec DNS (ENOTFOUND) et curl bloqué par le proxy (403 sur le tunnel CONNECT) — limite réseau de la session, pas une panne constatée du site (site_reachable=false par défaut, à confirmer). Les 9 fichiers data/*.json sont valides et non vides ; tous les js/*.js sont référencés par index.html. Volumes stables par rapport au passage précédent (verdicts 96→96, alerts 160→166, opportunités 7→7, actualités 10→10, favoris 15→15) : aucune anomalie d'effacement."
     }
   ]
 }
