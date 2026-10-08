@@ -61,9 +61,9 @@
     "average_move_pct": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-08T08:20:00Z",
+    "last_success_at": "2026-10-08T16:17:08Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 08/10/2026 ~08h15 UTC : cycle court (verification econome en premier, docs/routines/cycle-2h-verdict.md section demarrage econome). Aucun verdict pending du (15 pending, tous resolves_at encore dans le futur) et aucun ticker sans verdict pending (15 verdicts pending couvrant les 15 favoris). Aucun outil mcp__ utilise (regle absolue du prompt de cette execution). Veille actualites version courte : 2 recherches WebSearch (hack/exploit crypto, fear&greed) - rien de nouveau et date avec fiabilite trouve : le hack le plus recent reste Bitget (24/09, deja present dans news.json), aucune lecture fear&greed datee du 08/10 trouvee - rien ajoute a items (regle 'jamais inventer', section absolue du doc). last_checked_at de news.json mis a jour, items inchanges. macro_regime non retouche (cycle sans verdict emis, regle section 7)."
+    "last_failure_reason": "Cycle du 08/10/2026 ~16h17 UTC : cycle court (verification econome en premier, docs/routines/cycle-2h-verdict.md section demarrage econome). Aucun verdict pending du (15 pending, resolves_at tous dans le futur) et aucun ticker sans verdict pending (15 verdicts pending couvrant les 15 favoris). Aucun outil mcp__ utilise (regle absolue du prompt de cette execution, curl/WebSearch uniquement). Veille actualites version courte : 2 recherches WebSearch (hack/exploit crypto, fear&greed) - rien de nouveau et date avec fiabilite trouve (couverture web la plus recente s'arrete a septembre/debut octobre pour les hacks, Bitget 24/09 reste le plus gros et deja present dans news.json ; aucune lecture fear&greed datee du 08/10 trouvee) - rien ajoute a items (regle 'jamais inventer'). last_checked_at de news.json mis a jour, items et last_updated_at inchanges. macro_regime non retouche (cycle sans verdict emis, regle section 7)."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-06T08:55:00Z",
