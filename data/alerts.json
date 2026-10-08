@@ -1406,5 +1406,15 @@
     "sentiment": "négatif",
     "message": "ETH : -6,10 % depuis l'émission du verdict ACHAT du 05/10 (2 725,67 $ → 2 559,34 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
     "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261008-link-seuil",
+    "ticker_ou_theme": "LINK",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-08T09:25:59Z",
+    "verdict_id": "v-20261006-link",
+    "sentiment": "négatif",
+    "message": "LINK : -5,69 % depuis l'émission du verdict ATTENTE du 06/10 (13,89 $ → 13,10 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
   }
 ]
