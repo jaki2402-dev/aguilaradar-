@@ -286,7 +286,13 @@ clé privée dans le prompt, le digest ajoute 1 entrée `avis_du_jour`/jour à `
 Worker (bonnes clés) la notifie. **verif-fraicheur** jugeait les news sur `last_updated_at` (fausse
 alerte quasi quotidienne) et faisait `cat` d'engine-history → nouveau prompt (extraction python,
 `last_checked_at`, + historique portefeuille et jauges). **briefing-email** lisait F&G/dominance
-figés → nouveau prompt (`market-gauges.json`, régime daté). **Worker** : `slice(-500)` des ids
+figés → nouveau prompt (`market-gauges.json`, régime daté). **Constat du 06/10 : aucun de ces 3
+prompts n'a été collé** (`list_triggers` : digest modifié la dernière fois le 03/10, toujours
+web-push/VAPID ; briefing-email le 31/08 ; verif-fraicheur encore en version 17/08 jusqu'au
+correctif partiel collé le 06/10 au soir). Même jour, `get_session` sur les 3 routines en session
+persistante : contexte 443 k tokens (verif-fraicheur), 491 k (opportunités), 274 k (briefing-email),
+coût cumulé ~99 $, ~88 $ et ~95 $ d'équivalent API depuis mi-août — contre 0,17 $ pour une
+exécution d'horizons en session fraîche. **Worker** : `slice(-500)` des ids
 notifiés aurait re-notifié en boucle au-delà de 500 entrées → ids encore présents jamais oubliés
 (code corrigé ici, **pas encore déployé** sur `aguilaradar-assistant-ia` : connecteur Cloudflare non
 autorisé pour vérifier le déploiement).
