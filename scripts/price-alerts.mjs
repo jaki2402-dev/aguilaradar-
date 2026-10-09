@@ -75,7 +75,7 @@ export function buildPriceAlerts(verdicts, alerts, prices, now = new Date()) {
         `(${fmtPrice(issue, cur)} → ${fmtPrice(price, cur)}), seuil de mouvement directionnel de ${threshold} % franchi ` +
         `à la ${up ? "hausse" : "baisse"}${sens}. Calcul automatique sur le prix, sans analyse d'actualité — ` +
         `le verdict reste à juger à son échéance.`,
-      source: "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})",
+      source: `Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})`,
     });
   }
   return out;

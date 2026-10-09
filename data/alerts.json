@@ -1265,7 +1265,7 @@
     "verdict_id": "v-20260920-fet",
     "sentiment": "positif",
     "message": "FET : +43,85 % depuis l'émission du verdict ATTENTE du 20/09 (0,17508 $ → 0,25186 $), seuil de mouvement directionnel de 5 % franchi à la hausse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261004-flux-seuil",
@@ -1275,7 +1275,7 @@
     "verdict_id": "v-20260920-flux",
     "sentiment": "positif",
     "message": "FLUX : +30,96 % depuis l'émission du verdict ATTENTE du 20/09 (0,058565 $ → 0,076698 $), seuil de mouvement directionnel de 5 % franchi à la hausse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261004-grt-seuil",
@@ -1285,7 +1285,7 @@
     "verdict_id": "v-20260928-grt",
     "sentiment": "négatif",
     "message": "GRT : -18,10 % depuis l'émission du verdict ATTENTE du 28/09 (0,035214 $ → 0,028838 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261004-ondo-seuil",
@@ -1295,7 +1295,7 @@
     "verdict_id": "v-20260928-ondo",
     "sentiment": "négatif",
     "message": "ONDO : -13,88 % depuis l'émission du verdict ATTENTE du 28/09 (0,57665 $ → 0,49659 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261004-aioz-seuil",
@@ -1305,7 +1305,7 @@
     "verdict_id": "v-20260928-aioz",
     "sentiment": "négatif",
     "message": "AIOZ : -11,85 % depuis l'émission du verdict ATTENTE du 28/09 (0,12833 $ → 0,11312 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261004-arb-seuil",
@@ -1315,7 +1315,7 @@
     "verdict_id": "v-20260928-arb",
     "sentiment": "négatif",
     "message": "ARB : -9,98 % depuis l'émission du verdict ATTENTE du 28/09 (0,22623 $ → 0,20365 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261005-flux-seuil",
@@ -1325,7 +1325,7 @@
     "verdict_id": "v-20261005-flux",
     "sentiment": "positif",
     "message": "FLUX : +5,75 % depuis l'émission du verdict ACHAT du 05/10 (0,078783 $ → 0,083311 $), seuil de mouvement directionnel de 5 % franchi à la hausse, dans le sens du verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261007-fet-seuil",
@@ -1335,7 +1335,7 @@
     "verdict_id": "v-20261005-fet",
     "sentiment": "négatif",
     "message": "FET : -7,62 % depuis l'émission du verdict ACHAT du 05/10 (0,25797 $ → 0,23831 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261007-ctsi-seuil",
@@ -1345,7 +1345,7 @@
     "verdict_id": "v-20261003-ctsi",
     "sentiment": "positif",
     "message": "CTSI : +5,37 % depuis l'émission du verdict ATTENTE du 03/10 (0,026474 € → 0,027896 €), seuil de mouvement directionnel de 5 % franchi à la hausse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (EUR)"
   },
   {
     "id": "alert-20261007-arb-seuil",
@@ -1355,7 +1355,7 @@
     "verdict_id": "v-20261006-arb",
     "sentiment": "négatif",
     "message": "ARB : -8,24 % depuis l'émission du verdict ATTENTE du 06/10 (0,2034 $ → 0,18663 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261007-ondo-seuil",
@@ -1365,7 +1365,7 @@
     "verdict_id": "v-20261006-ondo",
     "sentiment": "négatif",
     "message": "ONDO : -6,40 % depuis l'émission du verdict ATTENTE du 06/10 (0,50008 $ → 0,46807 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261007-jup-seuil",
@@ -1375,7 +1375,7 @@
     "verdict_id": "v-20261006-jup",
     "sentiment": "négatif",
     "message": "JUP : -6,21 % depuis l'émission du verdict ACHAT du 06/10 (0,3487 $ → 0,32706 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261007-tia-seuil",
@@ -1385,7 +1385,7 @@
     "verdict_id": "v-20261005-tia",
     "sentiment": "négatif",
     "message": "TIA : -6,48 % depuis l'émission du verdict ACHAT du 05/10 (0,46677 $ → 0,43652 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261007-grt-seuil",
@@ -1395,7 +1395,7 @@
     "verdict_id": "v-20261005-grt",
     "sentiment": "négatif",
     "message": "GRT : -6,40 % depuis l'émission du verdict ATTENTE du 05/10 (0,029204 $ → 0,027336 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261007-eth-seuil",
@@ -1405,7 +1405,7 @@
     "verdict_id": "v-20261005-eth",
     "sentiment": "négatif",
     "message": "ETH : -6,10 % depuis l'émission du verdict ACHAT du 05/10 (2 725,67 $ → 2 559,34 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261008-link-seuil",
@@ -1415,7 +1415,7 @@
     "verdict_id": "v-20261006-link",
     "sentiment": "négatif",
     "message": "LINK : -5,69 % depuis l'émission du verdict ATTENTE du 06/10 (13,89 $ → 13,10 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261008-inj-seuil",
@@ -1425,7 +1425,7 @@
     "verdict_id": "v-20261006-inj",
     "sentiment": "négatif",
     "message": "INJ : -15,21 % depuis l'émission du verdict ATTENTE du 06/10 (7,69 $ → 6,52 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261008-peaq-seuil",
@@ -1435,7 +1435,7 @@
     "verdict_id": "v-20261005-peaq",
     "sentiment": "négatif",
     "message": "PEAQ : -11,21 % depuis l'émission du verdict ACHAT du 05/10 (0,042365 $ → 0,037614 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261008-aioz-seuil",
@@ -1445,7 +1445,7 @@
     "verdict_id": "v-20261006-aioz",
     "sentiment": "négatif",
     "message": "AIOZ : -8,69 % depuis l'émission du verdict ATTENTE du 06/10 (0,11107 $ → 0,10142 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261009-btc-seuil",
@@ -1455,7 +1455,7 @@
     "verdict_id": "v-20261005-btc",
     "sentiment": "négatif",
     "message": "BTC : -5,24 % depuis l'émission du verdict ACHAT du 05/10 (86 402,00 $ → 81 875,00 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   },
   {
     "id": "alert-20261009-lpt-seuil",
@@ -1465,6 +1465,6 @@
     "verdict_id": "v-20261005-lpt",
     "sentiment": "positif",
     "message": "LPT : +5,17 % depuis l'émission du verdict ACHAT du 05/10 (1,74 $ → 1,83 $), seuil de mouvement directionnel de 5 % franchi à la hausse, dans le sens du verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
-    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   }
 ]
