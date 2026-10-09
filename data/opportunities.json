@@ -1,8 +1,8 @@
 {
-  "last_scan_at": "2026-10-08T04:09:57Z",
+  "last_scan_at": "2026-10-09T04:10:05Z",
   "scanned_count": 20,
   "excluded_meme_count": 22,
-  "methodology": "Cycle du 08/10/2026 : Top 20 CoinGecko, taux EUR reel Alpha Vantage 0.89239414, variation 7j via sparkline, variation 30j via get-coin-history au 08/09/2026, ATH omis. Repli persistant du marche (BTC -1.6%, ETH -1.8%, XRP -3.2%, HYPE -3.1%, LINK -3.2%). 1 nouvelle entree : NEAR Protocol (rang 20, +132% sur 30j, +8.0% sur 24h, 7j quasi stable) -> rallye reel et soutenu, pas un pic isole. Tous les autres candidats etaient deja suivis/exclus, ou archives sans reprise (Zcash -7.6% sur 7j, Rain -10.6%). Revue optionnelle (commit separe) : Stellar archive pour declin soutenu confirme sur 3 verifications consecutives en aggravation (-5.4% -> -7.0% -> -12.3% sur 7j).",
+  "methodology": "Cycle du 09/10/2026 : Top 20 CoinGecko, taux EUR reel Alpha Vantage 0.89051453, variation 7j via sparkline, ATH omis. Repli de marche large et marque (BNB -3.6%, SOL -4.4%, ADA -7.4%, ZEC -5.8%, DOGE -4.1%, Rain -5.7%, NEAR -10.5% hors Top 20, verifie separement). 0 nouvelle entree : tous deja suivis/exclus, ou archives sans reprise (Zcash -9.4% sur 7j, Rain -14.6%, Stellar -12.2%, cette derniere de retour au Top 20 au rang 20 mais toujours negative). Revue optionnelle : Cardano -6.3%, Hyperliquid -4.6%, WhiteBIT -5.3%, NEAR -4.9% affichent leur 1ere lecture 7j negative, dans un repli generalise touchant presque tous les actifs du marche simultanement -> pas une degradation isolee a un actif, conserves, a resurveiller.",
   "opportunities": [
     {
       "id": "opp-20260807-ub",
