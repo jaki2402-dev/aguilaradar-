@@ -3520,5 +3520,113 @@
       "verdict_correct": null,
       "resolved_at": null
     }
+  },
+  {
+    "id": "v-20261006-aioz",
+    "issued_at": "2026-10-06T08:17:00Z",
+    "asset": "aioz-network",
+    "ticker": "AIOZ",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 63,
+    "signals_used": [
+      "24h -5,56%",
+      "7j -5,33%",
+      "30j +85,03%",
+      "portfolio-thesis Attendre conviction 3/10",
+      "Pas de metrique d'usage verifiee pour AIOZ AI au-dela du stade annonce"
+    ],
+    "reasoning": "Aucun verdict pending n'existait pour AIOZ ce cycle (dernier resolu le 05/10, incorrect). Lecture technique contradictoire : repli de -5,56% sur 24h et -5,33% sur 7 jours, les deux au-dela du seuil directionnel de 5% a la baisse, alors que le 30j reste a +85,03%, un pic largement anterieur qui n'efface pas le retournement recent - aucune direction nette ne peut en etre tiree, technique classee mixte. Signal fondamental neutre : portfolio-thesis.json maintient 'Attendre' conviction 3/10, aucune metrique d'usage datee et verifiable trouvee pour AIOZ AI au-dela du stade annonce (favoris-context.json). Regime macro neutre (Fed hawkish tempere par l'emploi faible du 02/10, dominance stablecoins en leger recul a 10,04% mais flux ETF non confirmes ce cycle dans market-context.json - signaux macro contradictoires, retenus comme tels). Technique mixte, fondamental et macro alignes neutres : accord_count=2, mais la regle de selection impose ATTENTE quand technique est mixte, quel que soit accord_count - aucune direction forcee sur un signal technique contradictoire. Confiance 63% (fourchette 60-70, choisie dans le haut vu l'accord net entre fondamental et macro malgre la technique contradictoire). Horizon maintenu a 7 jours (groupe volatil, corr-20260906).",
+    "price_at_issue": 0.111071,
+    "currency": "USD",
+    "resolves_at": "2026-10-13T08:17:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "mixte",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261006-arb",
+    "issued_at": "2026-10-06T08:17:00Z",
+    "asset": "arbitrum",
+    "ticker": "ARB",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 79,
+    "signals_used": [
+      "24h -2,16%",
+      "7j +0,94%",
+      "30j +4,32%",
+      "portfolio-thesis Attendre conviction 3/10",
+      "Deblocage mensuel ~92,65M ARB prevu le 16/10 (pression vendeuse recurrente)"
+    ],
+    "reasoning": "Aucun verdict pending n'existait pour ARB ce cycle (dernier resolu le 05/10, incorrect). Lecture technique neutre : les trois fenetres restent sous le seuil directionnel de 5% (24h -2,16%, 7j +0,94%, 30j +4,32%), consolidation sans dynamique nette apres le rallye lie a l'annonce Standard Chartered du 18/09. Signal fondamental neutre : portfolio-thesis.json maintient 'Attendre' conviction 3/10, citant un deblocage mensuel d'environ 92,65M ARB le 16/10 (~2% de l'offre circulante, pression vendeuse recurrente) et aucun catalyseur positif confirme cette semaine - pas de contradiction franche avec la lecture technique neutre, le risque de deblocage n'etant pas (encore) visible dans le prix. Regime macro neutre (memes raisons que les autres verdicts de ce cycle). Les trois dimensions convergent sur une lecture neutre : accord_count=3, confiance 79% (fourchette 75-85, accord complet mais sur une accalmie plutot qu'une conviction directionnelle forte). ATTENTE retenue (technique neutre, aucune direction forcee), horizon maintenu a 7 jours (groupe volatil, corr-20260906).",
+    "price_at_issue": 0.2034,
+    "currency": "USD",
+    "resolves_at": "2026-10-13T08:17:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "neutre",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 3
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261006-inj",
+    "issued_at": "2026-10-06T08:17:00Z",
+    "asset": "injective-protocol",
+    "ticker": "INJ",
+    "verdict": "ATTENTE",
+    "horizon_days": 7,
+    "confidence_pct": 79,
+    "signals_used": [
+      "24h +0,88%",
+      "7j +2,29%",
+      "30j +50,19%",
+      "portfolio-thesis Conserver conviction 5/10",
+      "Upgrade Meridian en direct depuis le 24/09, depot S-1 ETF 21Shares (INJ) en instruction"
+    ],
+    "reasoning": "Aucun verdict pending n'existait pour INJ ce cycle (dernier resolu le 05/10, incorrect). Lecture technique neutre : 24h +0,88% et 7j +2,29% restent sous le seuil directionnel de 5%, le 30j (+50,19%) reflete un rallye deja largement realise (lancement Solana/Phantom, depot 21Shares mi-septembre) plutot qu'une dynamique fraiche sur ce cycle - meme lecture que les precedents cycles sur cet actif. Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 5/10, citant l'upgrade Meridian (en direct depuis le 24/09, standard de token regule pour RWA) et le dossier S-1 21Shares toujours en instruction a la SEC, sans nouvelle marquante confirmee cette semaine - pas de contradiction franche avec la lecture technique. Regime macro neutre (memes raisons que les autres verdicts de ce cycle). Les trois dimensions convergent sur une lecture neutre : accord_count=3, confiance 79% (fourchette 75-85, accord complet mais sur une accalmie post-rallye plutot qu'une conviction directionnelle forte). ATTENTE retenue (technique neutre, aucune direction forcee), horizon maintenu a 7 jours (groupe volatil, corr-20260906).",
+    "price_at_issue": 7.69,
+    "currency": "USD",
+    "resolves_at": "2026-10-13T08:17:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "neutre",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 3
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
   }
 ]
