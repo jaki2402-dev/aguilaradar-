@@ -346,3 +346,34 @@ Au passage, trouvé que `data-integrity.js?v=` dans `index.html` n'avait jamais 
 14/09 malgré l'ajout de `checkVerdictSelectionCompliance` le 21/09 (PR #8) — un navigateur ayant mis
 ce fichier en cache avant le 21/09 pouvait donc servir une version sans le vérificateur de
 conformité. Bumpé avec `app.js` dans le même commit.
+
+### 09/10/2026 (suite) — revue générale demandée par l'utilisateur : 1 vrai bug de plus trouvé et corrigé
+
+Demande explicite de repasser sur tout ce qui restait pour une version finalisée. Démarche :
+chercher la même CLASSE de bug ailleurs plutôt qu'un audit non ciblé (coûteux en tokens, voir
+règles d'économie en tête de `CLAUDE.md`).
+
+- **`renderOpportunities`/`renderOpportunityTiles`** (affiche `opportunities.json`, lui aussi en
+  ajout — vérifié `flagged_at` croissant du premier au dernier élément) : pas le même bug que
+  `news.json` — trié par `computeConfidence()` décroissant (`cards.js`), un choix voulu (meilleures
+  pépites d'abord, pas les plus récentes). Vérifié avant de conclure, rien à corriger.
+- **`scripts/price-alerts.mjs` ligne 78** : `source: "...${cur.toUpperCase()})"` entre guillemets
+  droits, pas des backticks — `${...}` ne s'interpole jamais hors template literal, donc ce texte
+  s'affichait tel quel, littéralement, sur l'onglet Alertes (`<p class="hint">Source : ...`,
+  `app.js`). **Confirmé sur les vraies données** : 21 des 97 alertes `seuil_technique` de
+  `data/alerts.json` portaient ce texte cassé. Corrigé : backticks dans le script (prouvé non
+  isolé par `grep -rnE '^\s*[a-zA-Z_]+:\s*"[^"]*\$\{'` sur `js/`+`scripts/`+`cloudflare-worker/`,
+  aucune autre occurrence), test de régression ajouté (`source` ne doit jamais contenir `${`), et
+  les 21 entrées déjà écrites corrigées en place (devise réelle retrouvée via `issueCurrency()` sur
+  le verdict lié, jamais devinée) — seul le texte de citation changeait, jamais `message` (déjà
+  correct, interpolé via backticks) ni aucune valeur de prix/mouvement.
+- **`engine-history.json.opportunities_stats`** : figé au 12/08/2026 (`total_flagged: 8`, contre 7
+  opportunités réelles aujourd'hui), aucun lecteur nulle part (`grep` sur `js/`/`test/`/`docs/`) —
+  bloc mort, supprimé. `data_source_reliability`, en apparence similaire, a un vrai lecteur
+  (`docs/routines/marche-quotidien.md`) — laissé tel quel.
+- Vérifié que le correctif anti-boucle du Worker (`MAX_TRACKED_IDS`, ids encore présents jamais
+  évincés) est bien présent dans `cloudflare-worker/worker.js` ici — toujours pas déployé sur
+  `aguilaradar-assistant-ia` (accès Cloudflare non autorisé dans cette session, et ce 2e dépôt n'est
+  de toute façon pas dans le périmètre accordé à cette session).
+
+npm test : 677/677 après ce passage.
