@@ -916,6 +916,30 @@
       ],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h56, actualités (last_checked_at) il y a 0h56, opportunités il y a 5h06 - rien à signaler."
+    },
+    {
+      "checked_at": "2026-10-09T08:52:24Z",
+      "site_reachable": false,
+      "files_ok": [
+        "verdicts.json",
+        "opportunities.json",
+        "engine-history.json",
+        "alerts.json",
+        "news.json",
+        "control-group.json",
+        "market-context.json",
+        "favoris-context.json",
+        "health-log.json"
+      ],
+      "files_broken": [],
+      "counts": {
+        "verdicts": 96,
+        "alerts": 171,
+        "opportunities": 7,
+        "news": 10,
+        "favoris_context_populated": 15
+      },
+      "note": "Les 9 fichiers JSON sont valides et non vides ; index.html référence tous les scripts js/ attendus (seul le dossier vendor/ n'est pas un script). Volumes stables par rapport au passage précédent (verdicts 96→96, alertes 166→171, opportunités 7→7, actualités 10→10, favoris renseignés 15→15) : aucune anomalie. Site non vérifiable depuis cet environnement (résolution DNS de jaki2402-dev.github.io impossible, erreur réseau du bac à sable) : site_reachable=false signifie « non vérifié », pas forcément hors ligne."
     }
   ]
 }
