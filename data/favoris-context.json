@@ -1,65 +1,65 @@
 {
-  "last_computed_at": "2026-10-08T08:40:00Z",
+  "last_computed_at": "2026-10-09T08:25:00Z",
   "assets": {
     "BTC": {
-      "last_computed_at": "2026-10-04T08:26:00Z",
+      "last_computed_at": "2026-10-09T08:25:00Z",
       "competitor": {
         "ticker": "XAU",
         "name": "Or (marché de l'or investissable)",
-        "comparison_note": "Bitcoin cote 84 729,91$ avec une dominance de marché de 58,89% et une capitalisation crypto totale de 2,9 T$ (CoinMarketCap, résultat indexé via WebSearch le 04/10/2026) : la capitalisation BTC implicite (dominance x cap totale) est d'environ 1 708 Md$, un calcul dérivé de ces deux chiffres plutôt qu'une capitalisation directement citée par la source. Comparée au marché de l'or réellement investissable estimé à environ 15 000 Md$ par un rapport du World Gold Council d'avril 2026 (chiffre déjà utilisé aux cycles précédents, non revérifié ce cycle), l'écart reste de l'ordre de x8-9 ; le marché total de l'or hors-sol (bijouterie et industrie comprises) atteint environ 31 000 Md$ selon le même rapport. Bitcoin n'a toujours pas de concurrent crypto direct sur le rôle de réserve de valeur numérique."
+        "comparison_note": "Aucune lecture de prix/dominance BTC fraîchement datée au 09/10/2026 n'a pu être confirmée ce cycle : plusieurs requêtes WebSearch sur le prix et la dominance n'ont renvoyé que des résultats non datés, contradictoires (ex. 83 800$ vs 123 500$ pour une même date selon deux pages de prédiction) ou trop anciens (mai/février 2026) — aucun n'a été retenu. Dernière donnée réellement datée retrouvée : BTC a évolué dans la fourchette 83 000-84 000$ fin septembre 2026, après un plus haut de 8 mois à environ 87 000$ le 21/09/2026 (Crypto.com, bilan de fin septembre, via WebSearch) ; comparé au marché de l'or investissable estimé à environ 15 000 Md$ (World Gold Council, avril 2026, chiffre déjà utilisé aux cycles précédents, non revérifié ce cycle), l'écart reste de l'ordre de x8-9 sur cette base ancienne. Bitcoin n'a toujours pas de concurrent crypto direct sur le rôle de réserve de valeur numérique."
       },
       "long_term_thesis": {
-        "bull": "Les flux ETF spot américains se sont nettement redressés fin septembre : +2,4 Md$ sur la semaine se terminant le 25/09/2026 (plus forte semaine en presque un an, The Block), effaçant le trou de ~5,8 Md$ accumulé depuis le milieu de l'année ; la séance du 23/09 a elle seule apporté 998,95 M$ d'entrées nettes (TheBlock/CoinDesk), menée par IBIT (BlackRock, 381,4 M$), ARKB (289,1 M$) et FBTC (238,8 M$).",
-        "base": "Au 04/10/2026, le prix (84 729,91$) et la dominance (58,89%) restent proches des niveaux du cycle précédent, mais l'open interest agrégé affiche une baisse marquée à environ 53,3 Md$ (CoinGlass, résultat indexé via WebSearch) contre ~81,1 Md$ rapporté il y a trois cycles (21/09) — un dégonflement sensible du levier sur dérivés, concomitant avec le retour des flux ETF au comptant plutôt que sur dérivés à effet de levier.",
-        "bear": "Aucun signal de mouvement whale daté dans les 48h précédant ce cycle n'a pu être confirmé via WebSearch (les résultats retrouvés étaient des compilations non datées d'anciens transferts, ex. 4,5 Md$ Bitfinex, 608,8 M$ Xapo→Binance, sans date exploitable) — à la différence du cycle du 24-25/09 qui avait un signal daté. Le funding rate BTC n'a pas pu être confirmé sous forme chiffrée ce cycle (page CoinGlass retrouvée via WebSearch sans valeur numérique claire), laissé à null plutôt que reconduit sans vérification.",
-        "assumptions_note": "Sources : CoinMarketCap et CoinGlass via résultats indexés WebSearch (accès API direct bloqué par le proxy réseau de cet environnement, revérifié ce cycle : api.llama.fi, coinglass.com, blockchain.info tous rejetés). Les valeurs de prix/dominance/OI proviennent du contenu de page \"en direct\" tel qu'indexé au moment de la recherche, pas d'un appel API horodaté précisément — à traiter comme approximativement frais plutôt que comme un point exact daté à la seconde."
+        "bull": "Les flux ETF spot américains restent positifs en entrée d'octobre : +134,4 M$ nets sur les deux premières séances d'octobre (102,7 M$ le 01/10, 31,7 M$ le 02/10 — ce dernier chiffre encore incomplet au moment de la publication), effaçant les retraits de la veille, après un mois de septembre à +2,65 Md$ net (deuxième meilleur mois depuis octobre 2025) ; IBIT (BlackRock) a mené la séance du 01/10 avec 195,6 M$ d'entrées (Decrypt/idnfinancials, via WebSearch).",
+        "base": "Open interest et funding rate BTC non confirmés ce cycle : les résultats CoinGlass retrouvés via WebSearch dataient au mieux de mars 2026 (environ 52,4 Md$) ou étaient non datés, donc trop anciens pour être comparés de façon fiable à la valeur de 53,33 Md$ déjà enregistrée au cycle du 04/10/2026 — laissés à null plutôt que reconduits ou estimés.",
+        "bear": "Aucun mouvement whale daté dans les 48h précédant ce cycle (06-09/10/2026) n'a été trouvé via WebSearch : les résultats retrouvés (ex. transferts historiques de 4,5 Md$ Bitfinex, 2 697 BTC vers Gemini en février, 300 BTC vers Binance en avril) sont tous antérieurs à la fenêtre ou non datés avec précision.",
+        "assumptions_note": "Sources : Decrypt/idnfinancials (flux ETF, datés), Crypto.com (contexte de prix fin septembre, daté) via WebSearch ; accès API direct toujours bloqué ce cycle (api.llama.fi, coinglass.com, blockchain.info — testés par curl direct, tous en échec réseau). Recherche web nettement moins concluante que les cycles précédents sur les chiffres de prix/dominance/OI en temps réel (résultats majoritairement non datés ou contradictoires malgré plusieurs reformulations) — à signaler si la tendance se confirme aux cycles suivants."
       },
       "open_interest": {
-        "value_usd": 53333553653,
+        "value_usd": null,
         "funding_rate_pct": null,
-        "source": "CoinGlass (résultat indexé via WebSearch — appel direct à coinglass.com bloqué par le proxy réseau de cet environnement, revérifié ce cycle)",
-        "note": "Open interest agrégé ~53,33 Md$, en baisse nette par rapport aux ~81,1 Md$ du cycle du 21/09/2026 — valeur nouvelle (pas de suspicion de cache, différente du cycle précédent). Funding rate non trouvé sous forme numérique fiable ce cycle (page CoinGlass retrouvée sans valeur chiffrée claire dans le résultat indexé) : laissé à null plutôt que de reconduire la valeur du cycle précédent (0,00594%) sans confirmation fraîche."
+        "source": "CoinGlass — tentative via WebSearch ce cycle, aucun résultat daté d'octobre 2026 trouvé (le plus récent retrouvé datait de mars 2026, ~52,4 Md$)",
+        "note": "Non confirmé ce cycle : écart de plus de 6 mois entre le résultat WebSearch le plus récent et aujourd'hui, donc non comparable de façon fiable à la valeur de 53,33 Md$ du cycle du 04/10/2026 — laissé à null plutôt que reconduit. Funding rate toujours non trouvé sous forme chiffrée fiable."
       },
       "defi_tvl": {
-        "value_usd": 9788000000,
+        "value_usd": null,
         "change_7d_pct": null,
-        "source": "DefiLlama, protocole WBTC (résultat indexé via WebSearch — api.llama.fi et defillama.com bloqués par le proxy réseau)",
-        "note": "Exposition BTC wrapped/bridged dans la DeFi (WBTC sur Ethereum et L2), jamais la TVL native de la chaîne Bitcoin elle-même (celle-ci, environ 4,52 Md$ via Babylon/Lightning Network, est suivie séparément dans data/onchain-history.json). Valeur en hausse par rapport aux 8,8 Md$ du cycle précédent (25/09) — pas une valeur identique, donc pas de suspicion de cache cette fois. Variation sur 7 jours non trouvée ; une variation de +11,2% sur 30 jours a été mentionnée dans le résultat WebSearch mais n'est pas substituée ici (périodes différentes)."
+        "source": null,
+        "note": "Exposition BTC wrapped/bridgée (WBTC) non reconfirmée ce cycle : deux chiffres candidats trouvés via WebSearch se contredisent et aucun n'est clairement daté d'octobre 2026 — un article (non daté précisément) cite ~2,5 Md$ (DefiLlama, BitGo/WBTC) tandis qu'une page agrégée OAK Research (également non datée) affiche ~7,29 Md$, à comparer aux 9,788 Md$ déjà enregistrés au cycle du 04/10/2026. Aucun des trois n'est retenu comme confirmation fraîche fiable — laissé à null plutôt que de choisir arbitrairement entre des sources contradictoires."
       },
       "onchain_signal": {
         "available": false,
-        "note": "Recherche ciblée refaite ce cycle (whale alert BTC, fenêtre des 48h précédant le 04/10/2026) : les résultats WebSearch retrouvés (transferts de 4,5 Md$ Bitfinex, 608,8 M$ Xapo→Binance, 466,51 M$ Coinbase, etc.) sont des compilations d'événements passés sans date exploitable rattachable à ce cycle précis — non retenus pour éviter de présenter un fait ancien comme un signal frais.",
+        "note": "Recherche ciblée refaite ce cycle (whale alert BTC, fenêtre des 48h précédant le 09/10/2026) : aucun résultat daté dans cette fenêtre trouvé via WebSearch, uniquement des événements plus anciens (février, avril 2026) ou des compilations non datées.",
         "source_url": null
       }
     },
     "ETH": {
-      "last_computed_at": "2026-10-04T08:26:00Z",
+      "last_computed_at": "2026-10-09T08:25:00Z",
       "competitor": {
         "ticker": "SOL",
         "name": "Solana",
-        "comparison_note": "Ethereum cote 2 687,53$ (CoinMarketCap, rang #2, capitalisation ~328,15 Md$) contre 119,23$ pour Solana (rang #7, capitalisation ~70,12 Md$) — résultats indexés via WebSearch le 04/10/2026, écart d'environ 4,68x en faveur d'ETH. Solana affiche un volume 24h de 2,48 Md$ (-2,23% sur 24h) ; volume 24h ETH non confirmé précisément ce cycle au-delà de 5,46 Md$ cité par un résultat distinct."
+        "comparison_note": "Aucune lecture de prix/capitalisation ETH vs SOL fraîchement datée d'octobre 2026 n'a pu être confirmée ce cycle (résultats WebSearch les plus récents et datés remontaient à fin mars 2026 — ETH ~2 004$, SOL ~83-89$ — bien antérieurs et non comparables à la comparaison déjà enregistrée au cycle du 04/10/2026, ETH 2 687,53$/SOL 119,23$). Comparaison qualitative maintenue : Ethereum reste le leader incontesté en capitalisation et en TVL DeFi face à Solana, sans chiffre frais à citer ce cycle."
       },
       "long_term_thesis": {
-        "bull": "Le paysage du staking via ETF continue de se structurer : le split inversé 1-pour-3 de l'ETF ETHA (BlackRock) programmé en octobre 2026 (annoncé en août, consolide les parts sans changer la valeur détenue) s'ajoute à l'activation du staking chez Grayscale (ETHE, Mini Trust) et au projet de Fidelity (FETH, jusqu'à 100% de l'ETH du fonds stakable, 85% du rendement reversé) — accélération de l'offre de produits ETF générateurs de rendement plutôt qu'un simple véhicule de prix.",
-        "base": "Open interest agrégé ETH à environ 33,77 Md$ (CoinGlass, via WebSearch), en léger repli par rapport aux ~34,81 Md$ rapportés il y a trois cycles (25/09) — cohérent avec le dégonflement de levier observé en parallèle sur BTC ce même cycle plutôt qu'un mouvement spécifique à ETH.",
-        "bear": "La TVL DeFi sur la chaîne Ethereum ressort ce cycle à environ 92,14 Md$ (TVL native, page DefiLlama par chaîne, via WebSearch) — une valeur très supérieure aux ~52,74 Md$ reconduits identiques pendant trois cycles consécutifs (21, 23, 25/09) et déjà signalés comme suspects de cache : ce nouveau chiffre, obtenu par une requête différente (répartition par chaîne plutôt qu'une page agrégée), corrige probablement une valeur restée bloquée en cache plutôt que de représenter une vraie hausse soudaine — à confirmer sur un prochain cycle avant de lui faire confiance pleinement. Aucun signal de mouvement whale daté dans les 48h précédant ce cycle n'a été confirmé via WebSearch (résultats non datés).",
-        "assumptions_note": "Sources : CoinMarketCap, CoinGlass, DefiLlama via résultats indexés WebSearch (accès API/page direct bloqué par le proxy réseau, revérifié ce cycle) ; Cointelegraph/TheBlock pour le volet ETF/staking. Le chiffre de TVL de 92,14 Md$ est à revérifier au cycle suivant avant d'être considéré comme stable, conformément à la règle de prudence sur les écarts soudains non expliqués."
+        "bull": "Nouveau détail confirmé ce cycle sur l'offre ETF à rendement (daté mais antérieur à octobre) : l'ETF ETHB de BlackRock (lancé au Nasdaq le 12/03/2026) a capté 155 M$ en 24h et stake environ 80% de son ether via Coinbase Prime, pour un rendement net reversé aux porteurs d'environ 1,9-2,6%/an après frais ; un avis interprétatif conjoint SEC/CFTC du 17/03/2026 a par ailleurs qualifié les récompenses de staking de non-titres, levant un obstacle réglementaire structurant pour ce type de produit (Everstake/Börse Express, via WebSearch) — vient compléter plutôt que remplacer les éléments déjà notés (ETHA, ETHE, FETH).",
+        "base": "Open interest ETH non confirmé ce cycle : les résultats CoinGlass retrouvés via WebSearch les plus récents dataient de mars 2026 (environ 27-30 Md$), trop anciens pour être comparés de façon fiable aux 33,77 Md$ déjà enregistrés au cycle du 04/10/2026 — laissé à null plutôt que reconduit.",
+        "bear": "La TVL DeFi native Ethereum reste non reconfirmée pour un second cycle consécutif : le chiffre de 92,14 Md$ du 04/10/2026 avait déjà été signalé comme à vérifier (rupture avec ~52,74 Md$ reconduits trois cycles de suite) ; ce cycle, aucune page DefiLlama datée d'octobre 2026 n'a pu être retrouvée via WebSearch (résultats 2023/2021 ou page Statista sans valeur affichée) — écart toujours non résolu, laissé à null plutôt que de reconduire l'un ou l'autre chiffre sans confirmation. Aucun mouvement whale daté dans les 48h précédant ce cycle n'a été trouvé (résultats non datés ou antérieurs).",
+        "assumptions_note": "Sources : Everstake, Börse Express (volet ETF/staking, daté mais de mars 2026) via WebSearch. Accès Blockscout MCP bloqué ce cycle par le classificateur de permissions en mode automatique de la session (l'outil d'initialisation __unlock_blockchain_analysis__ a été refusé) — impossible de vérifier tx/adresses actives ou un signal whale via Blockscout ce cycle malgré l'accès normalement accordé à cette routine ; repli WebSearch seul, lui-même peu concluant ce cycle sur les chiffres temps réel (voir note BTC)."
       },
       "open_interest": {
-        "value_usd": 33771285798,
+        "value_usd": null,
         "funding_rate_pct": null,
-        "source": "CoinGlass (résultat indexé via WebSearch — accès direct non disponible dans cet environnement, revérifié ce cycle)",
-        "note": "Open interest agrégé ~33,77 Md$, en léger repli par rapport aux ~34,81 Md$ du cycle du 25/09/2026 — valeur nouvelle, pas identique au cycle précédent. Funding rate non trouvé sous forme chiffrée fiable ce cycle (page CoinGlass retrouvée sans valeur numérique claire) : laissé à null plutôt que de reconduire la valeur du cycle précédent (0,0098%) sans confirmation fraîche."
+        "source": "CoinGlass — tentative via WebSearch ce cycle, résultats les plus récents datés de mars 2026 (~27-30 Md$)",
+        "note": "Non confirmé ce cycle, écart de plus de 6 mois avec la donnée disponible la plus récente — non comparable de façon fiable aux 33,77 Md$ du cycle du 04/10/2026."
       },
       "defi_tvl": {
-        "value_usd": 92139000000,
+        "value_usd": null,
         "change_7d_pct": null,
-        "source": "DefiLlama, page chaîne Ethereum, métrique \"TVL native\" (résultat indexé via WebSearch — api.llama.fi et defillama.com bloqués par le proxy réseau)",
-        "note": "Rupture avec les ~52,742 Md$ reconduits identiques aux cycles du 21, 23 et 25/09/2026 (déjà signalés comme suspects de cache dans les notes précédentes) : ce cycle a interrogé la page de répartition par chaîne de DefiLlama (TVL native ~92,139 Md$, TVL \"bridged\" distincte à ~404,053 Md$ — non utilisée ici pour rester cohérent avec la définition \"TVL native/chaîne\"). Traiter cette nouvelle valeur avec prudence jusqu'à confirmation sur un cycle suivant : le saut pourrait refléter soit la correction d'un cache resté bloqué, soit une différence de méthodologie entre les deux pages DefiLlama interrogées."
+        "source": "DefiLlama, page chaîne Ethereum — tentative via WebSearch ce cycle, aucune page datée d'octobre 2026 trouvée",
+        "note": "Toujours non reconfirmé (voir thèse bear ci-dessus) : le saut du 04/10/2026 (92,14 Md$ vs ~52,74 Md$ reconduits avant) reste non résolu après ce second cycle d'essai infructueux. Les deux valeurs restent possibles sans confirmation fraîche — laissé à null plutôt que de trancher arbitrairement."
       },
       "onchain_signal": {
         "available": false,
-        "note": "Le MCP Blockscout ne fournit toujours pas d'endpoint de détection générique de mouvements de baleines (confirmé aux cycles précédents, non re-testé en détail ce cycle pour préserver le quota d'appels Blockscout du jour) ; recherche WebSearch ciblée (fenêtre 48h) : les résultats retrouvés (transferts de 154,58 M$, 504 M$, 375 M$, etc.) sont des compilations sans date exploitable rattachable à ce cycle précis — non retenus.",
+        "note": "Accès Blockscout MCP bloqué ce cycle (initialisation de session refusée par le classificateur de permissions en mode automatique) malgré l'accès normalement accordé à cette routine — audit du 14/09 visant à vérifier Blockscout pour chaque ticker EVM retraité non réalisable ce cycle pour ETH. Repli WebSearch (fenêtre 48h précédant le 09/10/2026) : aucun mouvement whale daté dans cette fenêtre trouvé, uniquement des événements non datés ou antérieurs (ex. ~505 M$ vers Binance, >1 Md$ sur une semaine via Whale Alert, non datés précisément).",
         "source_url": null
       }
     },
@@ -374,33 +374,33 @@
       }
     },
     "FLUX": {
-      "last_computed_at": "2026-10-04T08:26:00Z",
+      "last_computed_at": "2026-10-09T08:25:00Z",
       "competitor": {
         "ticker": "AKT",
         "name": "Akash Network",
-        "comparison_note": "Comparaison quantitative rétablie ce cycle (CoinMarketCap, résultats indexés via WebSearch le 04/10/2026) : Flux cote 0,07437$ (capitalisation ~31,3 M$, rang #556) contre 0,678631$ pour Akash (capitalisation ~202,5 M$, rang #146) — Akash pèse environ 6,47x la capitalisation de Flux. Akash opère un marketplace de calcul décentralisé (GPU/CPU à la demande) tandis que Flux propose une plateforme cloud gérée (FluxCloud) sur des FluxNodes répartis dans plus de 50 pays ; modèles d'accès différents (marketplace vs plateforme gérée) pour un objectif similaire de cloud décentralisé."
+        "comparison_note": "Comparaison quantitative fraîche partiellement possible ce cycle côté Akash seulement : AKT cote environ 0,51$ avec une capitalisation d'environ 152,4 M$ au 05/09/2026 (Delta, via WebSearch, dernière lecture clairement datée trouvée) — plus ancienne qu'idéal (~1 mois) mais la seule datée retrouvée, à préférer à une page Coinglass/Block non datée affichant des chiffres plus élevés (0,53$/155,1 M$) sans date vérifiable. Côté FLUX, aucune lecture de prix fraîche et fiable datée d'octobre 2026 n'a été retrouvée ce cycle (seule donnée datée trouvée : ~0,04$/41,08 M$ au 27/07/2026, trop ancienne et incohérente avec les 0,07437$/~31,3 M$ déjà enregistrés au 04/10/2026 pour servir de base de comparaison) — ratio de capitalisation non recalculé ce cycle plutôt que combiner une donnée FLUX obsolète avec une donnée AKT plus récente."
       },
       "long_term_thesis": {
-        "bull": "Feuille de route technique confirmée pour les VPON (Virtual Private Overlay Networks) au T2 2026, et une annonce de mai 2026 (non nouvelle ce cycle mais confirmée toujours active) d'un nouveau système de benchmark pour mieux adapter les charges IA/HPC au matériel des nœuds FluxNode — développement incrémental de l'infrastructure, pas de catalyseur daté nouveau ce cycle.",
-        "base": "Prix très volatil sur fond de faible capitalisation : +3,60% le 28/09/2026 porté par des mises à jour développeur sur les capacités IA, puis -10,29% sur une fenêtre 24h ultérieure lors d'un repli généralisé des altcoins (CoinMarketCap AI, via WebSearch) — mouvements de sentiment plutôt qu'une tendance de fond identifiable ce cycle.",
-        "bear": "L'open interest retrouvé ce cycle (2 327 473$) est strictement identique à la valeur du cycle du 24/09/2026 — voir note dédiée, probable résultat de cache plutôt qu'une confirmation fraîche. Toujours aucune exposition DeFi wrapped/bridged trouvée pour le FLUX de zelcash (seuls des protocoles homonymes sans rapport apparaissent sur DefiLlama), et aucun signal whale daté trouvé ce cycle.",
-        "assumptions_note": "Comparaison face à Akash désormais quantitative (prix/capitalisation confirmés des deux côtés ce cycle, contrairement aux cycles précédents où seule une comparaison qualitative avait été possible). Aucun multiplicateur de prix n'est avancé pour FLUX lui-même."
+        "bull": "Aucun nouveau catalyseur daté trouvé ce cycle au-delà de la feuille de route VPON/benchmark déjà notée (non datée précisément, développement incrémental toujours présenté comme en cours) ; la seule mention trouvée datée d'août 2026 (05/08, CoinMarketCap, contenu généré par IA) décrit des vents contraires sur le marché des altcoins plutôt qu'un catalyseur positif — non retenue comme catalyseur bull faute de fiabilité (contenu explicitement signalé comme généré par IA par la source elle-même).",
+        "base": "Prix FLUX non reconfirmé ce cycle (voir note comparaison ci-dessus) : aucune lecture fiable et datée d'octobre 2026 trouvée via WebSearch, la volatilité court terme déjà notée aux cycles précédents (±3 à 10% sur 24h fin septembre) n'a pas pu être mise à jour.",
+        "bear": "L'open interest retrouvé ce cycle via une page CoinGlass non datée (7 444 997$, avec un prix affiché de 0,04535$ très proche du prix daté du 27/07/2026 ~0,04$) est probablement une page indexée en cache ancienne plutôt qu'une lecture fraîche d'octobre — non retenu comme confirmation. Un second candidat (2 327 473$, valeur déjà signalée comme suspecte de cache depuis le 24/09/2026) n'a pas été retrouvé ce cycle. Aucun des deux n'est fiable : laissé à null. Toujours aucune exposition DeFi wrapped/bridgée trouvée pour le FLUX de zelcash ce cycle (reconfirmé), et aucun signal whale daté trouvé.",
+        "assumptions_note": "Recherche FLUX globalement peu concluante ce cycle : la plupart des résultats WebSearch pour ce micro-cap étaient non datés ou dataient de juillet-août 2026, cohérent avec la difficulté déjà observée aux cycles précédents pour cet actif à faible couverture médiatique."
       },
       "open_interest": {
-        "value_usd": 2327473,
+        "value_usd": null,
         "funding_rate_pct": null,
-        "source": "CoinGlass (résultat indexé via WebSearch — appel direct à coinglass.com bloqué par le proxy réseau)",
-        "note": "Valeur strictement identique à celle déjà enregistrée au cycle du 24/09/2026 (2 327 473$) alors que le marché a bougé entre-temps (OI BTC et ETH ont, eux, changé ce cycle) — probable page indexée en cache plutôt qu'une confirmation fraîche pour FLUX spécifiquement, à vérifier dès qu'un accès direct à l'API sera possible. Funding rate toujours non trouvé sous forme chiffrée fiable."
+        "source": null,
+        "note": "Deux candidats trouvés ce cycle, tous deux rejetés : 7 444 997$ (CoinGlass, page non datée, prix affiché ~0,04535$ suspect de cache car quasi identique au prix daté du 27/07/2026) et aucune reconfirmation du chiffre de 2 327 473$ déjà suspecté de cache depuis le 24/09/2026. Laissé à null plutôt que de choisir l'un des deux sans confirmation fraîche fiable."
       },
       "defi_tvl": {
         "value_usd": null,
         "change_7d_pct": null,
         "source": null,
-        "note": "Non applicable, reconfirmé ce cycle avec une nouvelle recherche ciblée sur la piste wrapped/bridged (\"wrapped FLUX bridged liquidity\") : DefiLlama ne référence toujours que des protocoles homonymes sans rapport (Flux Finance sur Ethereum, ~44,46 M$ de TVL, projet de l'écosystème Ondo). Aucune exposition wrapped/bridgée spécifique au FLUX de zelcash trouvée. Flux (réseau zelcash) reste un réseau de calcul décentralisé, pas un protocole DeFi."
+        "note": "Non applicable, reconfirmé ce cycle avec une nouvelle recherche ciblée (\"wrapped FLUX zelcash bridged DeFi TVL\") : DefiLlama ne référence toujours que des protocoles homonymes sans rapport (Flux Finance sur Ethereum ~13,47 M$, Flux Protocol sur OKTChain/BSC ~71,63$, Flux sur Radix ~1 647$). Aucune exposition wrapped/bridgée spécifique au FLUX de zelcash trouvée. Flux (réseau zelcash) reste un réseau de calcul décentralisé, pas un protocole DeFi."
       },
       "onchain_signal": {
         "available": false,
-        "note": "Recherche ciblée refaite ce cycle (whale alert / mouvement exchange FLUX) : aucun résultat spécifique et daté trouvé, uniquement des pages génériques sur le suivi de whales en crypto. FLUX (zelcash) n'étant pas un actif EVM couvert par Blockscout, la méthode reste la recherche web ciblée, conformément à la spécification.",
+        "note": "Recherche ciblée refaite ce cycle (whale alert / mouvement exchange FLUX, fenêtre 48h précédant le 09/10/2026) : aucun résultat spécifique et daté trouvé. FLUX (zelcash) n'étant pas un actif EVM couvert par Blockscout, la méthode reste la recherche web ciblée, conformément à la spécification.",
         "source_url": null
       }
     },
