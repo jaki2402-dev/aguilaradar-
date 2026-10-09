@@ -940,6 +940,16 @@
         "favoris_context_populated": 15
       },
       "note": "Les 9 fichiers JSON sont valides et non vides ; index.html référence tous les scripts js/ attendus (seul le dossier vendor/ n'est pas un script). Volumes stables par rapport au passage précédent (verdicts 96→96, alertes 166→171, opportunités 7→7, actualités 10→10, favoris renseignés 15→15) : aucune anomalie. Site non vérifiable depuis cet environnement (résolution DNS de jaki2402-dev.github.io impossible, erreur réseau du bac à sable) : site_reachable=false signifie « non vérifié », pas forcément hors ligne."
+    },
+    {
+      "checked_at": "2026-10-09T09:16:30Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~0h57)",
+        "data/news.json (last_checked_at, ~0h57)",
+        "data/opportunities.json (last_scan_at, ~5h06)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h57, actualités (last_checked_at) il y a 0h57, opportunités il y a 5h06 - rien à signaler."
     }
   ]
 }
