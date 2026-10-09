@@ -121,7 +121,20 @@ function countDistinctAssetMentions(text) {
 // Volontairement AVANT le routage "un seul actif nommé" de answerQuestion : une question du
 // type "je devrais renforcer Cartesi avec 100€ ?" nomme un seul favori mais appelle quand même
 // le format allocation, pas la simple fiche verdict.
-const ALLOCATION_INTENT_RE = /\b(recharge\w*|renforce\w*|placer|replacer|investir|ajouter|allou\w*|mettre)\b/i;
+// "achet\w*" ajouté le 06/10/2026 : absent jusqu'ici alors que c'est le verbe français le plus
+// direct pour une question d'achat ("tu penses que je devrais acheter BTC ?") — et que le site
+// nomme lui-même son verdict d'achat "ACHAT". Sans ce mot, une telle question ne matchait aucun
+// des intents prioritaires (comparison : un seul actif nommé ; portfolio/market : hors sujet),
+// tombait par défaut en mode "quick" — le SEUL mode qui utilise encore llama-3.3-70b au lieu du
+// modèle de raisonnement gpt-oss-120b (voir modelForMode, cloudflare-worker/worker.js) et un
+// budget de 320 tokens au lieu de 1600 (maxTokensForMode) — exactement le defaut (réponse plate,
+// non comparative) déjà diagnostiqué et corrigé ailleurs le 10/09/2026 pour les autres modes, mais
+// qui restait possible via cet angle mort précis. Bug réel remonté par l'utilisateur (capture
+// d'écran) : "donc pour toi c'est btc qui mérite d'être acheter... il y'a pas d'autre opportunité
+// plus attractive ?" a réellement pris ce chemin. CHAT_INTENTS (plus bas, filet de repli
+// keyword-only) contenait déjà "acheter" — l'absence ici était une vraie incohérence entre les
+// deux listes, pas un choix délibéré.
+const ALLOCATION_INTENT_RE = /\b(recharge\w*|renforce\w*|placer|replacer|investir|ajouter|allou\w*|mettre|achet\w*)\b/i;
 const THESIS_INTENT_RE = /\bthèses?\b|\bthese\b|\bthesis\b/i;
 
 // Question sur la santé GLOBALE du portefeuille ("comment va mon portefeuille ?", "analyse mes
@@ -725,10 +738,24 @@ async function requestAiRelayOnce(question, context, responseMode) {
       body: JSON.stringify({ question, context, responseMode }),
       signal: controller.signal,
     });
-    if (!res.ok) return null;
+    // Échec silencieux voulu pour l'UTILISATEUR (repli factuel/mot-clé déjà correct, voir
+    // fetchLiveAiFallback) — mais totalement invisible aussi pour nous jusqu'ici, y compris en
+    // console : un relais qui échoue systématiquement (mauvais déploiement, modèle qui refuse,
+    // réponse hors format) ne laissait AUCUNE trace pour diagnostiquer "l'IA ne répond jamais
+    // vraiment" après coup. console.warn seul (jamais throw/jamais changer la valeur renvoyée) :
+    // ne doit rien changer au comportement utilisateur, juste rendre l'échec observable.
+    if (!res.ok) {
+      console.warn(`Relais IA : HTTP ${res.status} (mode ${responseMode})`);
+      return null;
+    }
     const data = await res.json();
-    return (data && data.answer) || null;
+    if (!data || !data.answer) {
+      console.warn(`Relais IA : réponse sans champ "answer" (mode ${responseMode})`, data);
+      return null;
+    }
+    return data.answer;
   } catch (e) {
+    console.warn(`Relais IA : requête échouée (mode ${responseMode}) —`, e);
     return null;
   } finally {
     clearTimeout(timeoutId);
