@@ -1446,5 +1446,15 @@
     "sentiment": "négatif",
     "message": "AIOZ : -8,69 % depuis l'émission du verdict ATTENTE du 06/10 (0,11107 $ → 0,10142 $), seuil de mouvement directionnel de 5 % franchi à la baisse. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
     "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
+  },
+  {
+    "id": "alert-20261009-btc-seuil",
+    "ticker_ou_theme": "BTC",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-09T02:32:22Z",
+    "verdict_id": "v-20261005-btc",
+    "sentiment": "négatif",
+    "message": "BTC : -5,24 % depuis l'émission du verdict ACHAT du 05/10 (86 402,00 $ → 81 875,00 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (${cur.toUpperCase()})"
   }
 ]
