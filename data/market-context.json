@@ -1,29 +1,29 @@
 {
-  "last_computed_at": "2026-10-08T08:50:00Z",
+  "last_computed_at": "2026-10-09T08:50:00Z",
   "stablecoins": {
-    "total_market_cap_usd": 292954303481,
+    "total_market_cap_usd": 292249118824,
     "dominance_pct": 10.4,
     "supply_trend_7d_pct": null,
-    "note": "Cycle du 08/10 : accès direct à l'API publique CoinGecko en HTTP brut (aucun outil mcp__CoinGecko) : /api/v3/coins/categories (catégorie « Stablecoins », mise à jour 08/10 à 08h38 UTC) et /api/v3/global. Capitalisation des stablecoins à 292,95 milliards de dollars (-0,17 % sur 24h selon l'API), contre 293,46 milliards le 07/10. Capitalisation totale du marché crypto à 2 821,6 milliards de dollars (dominance BTC 58,77 %). Dominance = 292,95 / 2 821,6 ≈ 10,4 %. Variation de l'offre sur 7 jours toujours à null : l'endpoint /coins/categories n'expose qu'une variation 24h liée au prix ; aucune source fiable trouvée.",
+    "note": "Cycle du 09/10 : accès direct à l'API publique CoinGecko en HTTP brut (aucun outil mcp__CoinGecko) : /api/v3/coins/categories (catégorie « Stablecoins », mise à jour 09/10 à 08h36 UTC) et /api/v3/global. Capitalisation des stablecoins à 292,25 milliards de dollars (-0,24 % sur 24h selon l'API), contre 292,95 milliards le 08/10. Capitalisation totale du marché crypto à 2 798,6 milliards de dollars (dominance BTC 59,09 %). Dominance = 292,25 / 2 798,6 ≈ 10,4 %. Variation de l'offre sur 7 jours toujours à null : l'endpoint /coins/categories n'expose qu'une variation 24h liée au prix ; aucune source fiable trouvée.",
     "source": "https://api.coingecko.com/api/v3/global et https://api.coingecko.com/api/v3/coins/categories"
   },
   "employment_us": {
     "last_report_date": "2026-10-02",
     "unemployment_rate_pct": 4.2,
     "nonfarm_payrolls_change_k": 29,
-    "market_reaction_note": "Nouveau rapport publié le vendredi 2 octobre 2026 (données de septembre, BLS, 8h30 heure de l'Est) : +29 000 créations nettes d'emplois non agricoles, très en dessous du consensus (environ +84 000 à +88 000 selon les sources), et taux de chômage en hausse à 4,2 % (contre 4,1 % en août). Révisions à la baisse de 60 000 emplois sur les deux mois précédents ; août révisé à +133 000 (contre +162 000 publié initialement). Salaire horaire moyen +0,1 % sur un mois et +3,0 % sur un an, la plus faible progression annuelle depuis 2021. Sources concordantes (titres CNBC, CNN, Yahoo Finance, Bloomberg, Fox Business, NBC News consultés via WebSearch ; les pages elles-mêmes sont bloquées par le proxy sortant). Lecture de marché : les médias y voient un argument pour que la Fed reste patiente, sans que ce cycle ait pu confirmer une probabilité chiffrée à jour pour la réunion d'octobre. Prochain rapport (données d'octobre) attendu début novembre 2026 : date exacte non vérifiée ce cycle. Cycle du 08/10 : aucun nouveau rapport depuis celui du 02/10, bloc inchangé.",
+    "market_reaction_note": "Nouveau rapport publié le vendredi 2 octobre 2026 (données de septembre, BLS, 8h30 heure de l'Est) : +29 000 créations nettes d'emplois non agricoles, très en dessous du consensus (environ +84 000 à +88 000 selon les sources), et taux de chômage en hausse à 4,2 % (contre 4,1 % en août). Révisions à la baisse de 60 000 emplois sur les deux mois précédents ; août révisé à +133 000 (contre +162 000 publié initialement). Salaire horaire moyen +0,1 % sur un mois et +3,0 % sur un an, la plus faible progression annuelle depuis 2021. Sources concordantes (titres CNBC, CNN, Yahoo Finance, Bloomberg, Fox Business, NBC News consultés via WebSearch ; les pages elles-mêmes sont bloquées par le proxy sortant). Lecture de marché : les médias y voient un argument pour que la Fed reste patiente, sans que ce cycle ait pu confirmer une probabilité chiffrée à jour pour la réunion d'octobre. Prochain rapport (données d'octobre) attendu début novembre 2026 : date exacte non vérifiée ce cycle. Cycle du 09/10 : aucun nouveau rapport depuis celui du 02/10 (confirmé : BLS +29 000, chômage 4,2 %), bloc inchangé. Prochain : CPI de septembre le 14/10.",
     "source": "https://www.cnbc.com/2026/10/02/jobs-report-september-2026.html ; https://www.cnn.com/2026/10/02/economy/us-jobs-report-september-final ; https://www.bls.gov/news.release/empsit.nr0.htm"
   },
   "etf_flows": {
     "period": "Aucune séance récente confirmée de façon fiable ce cycle (dernière séance confirmée : 25 septembre 2026).",
     "btc_etf_net_flow_usd": null,
     "eth_etf_net_flow_usd": null,
-    "note": "Cycle du 08/10 : WebSearch ne renvoie aucun chiffre Farside daté et recoupé pour la séance la plus récente (chiffres SoSoValue/médias : +102,7 M$ BTC le 01/10, ~+31,7 M$ le 02/10 provisoire, non confirmés par Farside, inaccessible via le proxy sortant). Les deux champs restent à null plutôt que de reconduire les chiffres du 25/09 (BTC +134,46 M$, ETH +86,95 M$) comme frais ; ils restent consultables dans l'historique git.",
+    "note": "Cycle du 09/10 : WebSearch ne renvoie toujours aucun chiffre Farside daté et recoupé pour une séance récente (Farside inaccessible via le proxy sortant). Les deux champs restent à null plutôt que de reconduire d'anciens chiffres comme frais.",
     "source": "WebSearch (aucune source datée et recoupée ce cycle)"
   },
   "gold": {
     "spot_usd_per_oz": null,
-    "note": "Cycle du 08/10 : aucun cours spot daté du jour trouvé via WebSearch (indications d'environ 4 140-4 160 $/oz au 06/10, sources divergentes et non datées de façon fiable), donc cours laissé à null. Ratio BTC/or omis : non calculable sans prix spot de l'or daté du même cycle que le prix BTC.",
+    "note": "Cycle du 09/10 : aucun cours spot daté du jour trouvé via WebSearch (indications d'environ 4 140-4 170 $/oz début octobre, sources divergentes et non datées de façon fiable), donc cours laissé à null. Ratio BTC/or omis : non calculable sans prix spot de l'or daté du même cycle que le prix BTC (BTC ≈ 82 472 $ au 09/10).",
     "source": "WebSearch, aucune valeur spot datée retenue ce cycle"
   },
   "fed_policy": {
@@ -32,11 +32,11 @@
     "balance_sheet_trend": "stable",
     "next_fomc_date": "2026-10-28",
     "treasury_yield_10y_pct": null,
-    "note": "Aucune réunion FOMC depuis la décision du 16/09 (relèvement de 0,25 point à 3,75 %-4,00 %) ; prochaine réunion toujours le 28 octobre 2026. Stance maintenue à « hawkish » sur la base de cette décision, mais le rapport sur l'emploi du 02/10 (+29 000, chômage 4,2 %) est présenté comme un argument pour une Fed plus patiente. Probabilité de hausse en octobre : résultats WebSearch contradictoires et non datés de façon fiable (de ~8 % à ~70 %), donc non chiffrée ce cycle. Bilan de la Fed stable, rien de nouveau signalé. Rendement du Trésor à 10 ans laissé à null : aucune clôture datée fiable trouvée (dernière valeur fiable 5,17 % le 25/09 ; résultats évoquant ~5,23 %, plus haut depuis 2007, non datés précisément). Cycle du 08/10 : aucun nouvel élément confirmé (pas de réunion FOMC, rendement 10 ans toujours non confirmé), champs inchangés."
+    "note": "Cycle du 09/10 : aucune réunion FOMC depuis la décision du 16/09 (relèvement de 0,25 point à 3,75 %-4,00 %, vote 12-0) ; prochaine réunion les 27-28 octobre 2026, décision le 28. Stance « hawkish » maintenue sur la base de cette décision ; le rapport emploi du 02/10 est présenté comme un argument pour la patience (CME FedWatch : ~77 % de maintien en octobre selon une source secondaire). Bilan : réduction passive signalée en août 2026 (~7,4 billions de dollars) mais sources contradictoires sur la fin du runoff, donc tendance « stable » inchangée, non confirmée. Rendement du Trésor à 10 ans laissé à null : aucune valeur datée récente trouvée."
   },
   "site_confidence": {
-    "last_computed_at": "2026-10-08T08:50:00Z",
+    "last_computed_at": "2026-10-09T08:50:00Z",
     "level": "faible",
-    "note": "Niveau maintenu à faible (08/10). routine_health (lecture seule) : 0 échec consécutif, dernier succès du cycle du 08/10 08h20 UTC. accuracy_strict_pct à 25,93 % (81 verdicts résolus sur 90 émis, calcul du 05/10 16h25 UTC), très en dessous du référentiel de la classe majoritaire (53,09 %) et au-dessus du référentiel achat-conservation BTC (18,59 %). Rien ne justifie de remonter le niveau à moyen."
+    "note": "Niveau maintenu à faible (09/10). routine_health (lecture seule) : 0 échec consécutif, dernier succès du cycle du 09/10 08h19 UTC. accuracy_strict_pct à 25,93 % (81 verdicts résolus sur 90 émis, calcul du 05/10 16h25 UTC), très en dessous du référentiel de la classe majoritaire (53,09 %) et au-dessus du référentiel achat-conservation BTC (18,59 %). Rien ne justifie de remonter le niveau à moyen."
   }
 }
