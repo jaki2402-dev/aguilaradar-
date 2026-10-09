@@ -119,6 +119,13 @@ Pas de build/lint. CI : `npm ci && npm test` sur push `main` et PR.
   → « Offre non plafonnée ». Doit rester synchro avec `docs/verdict-methodology.md`.
 - **Panneaux dépliables** : jamais de `max-height` fixe ; mesurer `scrollHeight` juste après le
   lancement du rendu async (même tick) et re-mesurer après la promesse, succès OU échec.
+- **Tableau en ajout** (`correction_log`, `alerts.json`, `news.json`) : le plus récent est en
+  DERNIER dans le fichier — toujours `.slice().reverse()` avant affichage, sinon le plus ancien
+  item reste en tête indéfiniment (trouvé sur `news.json` le 09/10, resté 2 semaines figé).
+- **`?v=` sur `index.html`** : à bumper sur CHAQUE fichier JS/CSS modifié, pas seulement celui
+  qu'on croit avoir changé — un fichier touché sans son `?v=` bumpé peut rester en cache
+  navigateur (trouvé le 09/10 : `data-integrity.js` jamais bumpé depuis le 14/09 malgré un ajout
+  le 21/09).
 - **Grilles** : `min-width: 0` sur les items contenant un `<table>` ; vérifier à 390px
   (`document.body.scrollWidth`). Colonnes plus étroites ≠ page plus courte pour du texte long.
 - **WCAG AA** vérifié par calcul (`--text-faint #7e8ba3`, badge cloche `#c22a22`) : vérifier le

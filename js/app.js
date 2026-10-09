@@ -516,19 +516,35 @@ function renderNews(newsData) {
     el.innerHTML = `<p class="empty-state">Aucune actualité récupérée pour l'instant — alimenté par la routine à chaque cycle profond.</p>`;
     return;
   }
-  el.innerHTML = items
-    .map((n) => {
-      const url = safeUrl(n.url);
-      const title = highlightKeyInfo(n.title);
-      const important = isNewsImportant(n.title);
-      return `
+  // items est en ajout (le plus récent en dernier, comme correction_log/alerts ailleurs sur le
+  // site) — jamais le bon ordre d'affichage tel quel, sinon le plus ancien item reste en tête
+  // indéfiniment. Trouvé le 09/10/2026 : un hack du 24/09 restait affiché en premier alors que
+  // last_updated_at avait bien avancé au 05/10 — même idiome que renderNotifications ci-dessous.
+  const ordered = items.slice().reverse();
+  const updatedAt = newsData && newsData.last_updated_at;
+  const ageDays = updatedAt ? Math.floor((Date.now() - new Date(updatedAt).getTime()) / 86400000) : null;
+  // Même seuil que renderAvisDuJour (3 jours) : la veille ne touche items que sur une actualité
+  // jugée vraiment significative, pas à chaque cycle — rester correct plusieurs jours est normal,
+  // mais le dire plutôt que laisser croire que la liste vient d'être renouvelée aujourd'hui.
+  const staleHint =
+    ageDays !== null && ageDays >= 3
+      ? `<p class="hint" style="margin-bottom:8px;">Dernière actualité réellement nouvelle ajoutée il y a ${ageDays} jours — la liste reste correcte, juste pas forcément celle d'aujourd'hui.</p>`
+      : "";
+  el.innerHTML =
+    staleHint +
+    ordered
+      .map((n) => {
+        const url = safeUrl(n.url);
+        const title = highlightKeyInfo(n.title);
+        const important = isNewsImportant(n.title);
+        return `
       <div class="news-item${important ? " important" : ""}">
         ${important ? `<span class="news-important-flag" title="Contient un mot-clé associé à une actualité potentiellement majeure">⚡ À surveiller</span>` : ""}
         ${url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${title}</a>` : `<span>${title}</span>`}
         <span class="hint">${escapeHtml(n.source || "")}</span>
       </div>`;
-    })
-    .join("");
+      })
+      .join("");
 }
 
 // Anime un chiffre de sa valeur affichée actuelle vers sa nouvelle valeur, plutôt qu'un

@@ -296,3 +296,53 @@ exécution d'horizons en session fraîche. **Worker** : `slice(-500)` des ids
 notifiés aurait re-notifié en boucle au-delà de 500 entrées → ids encore présents jamais oubliés
 (code corrigé ici, **pas encore déployé** sur `aguilaradar-assistant-ia` : connecteur Cloudflare non
 autorisé pour vérifier le déploiement).
+
+### 06/10/2026 — corr-20260921 (biais ATTENTE) : encore trop tôt pour juger, conformité intacte
+
+Rappel programmé 14 jours après la fusion de la règle de sélection ACHAT/ATTENTE/VENTE (PR #7) et
+du vérificateur `checkVerdictSelectionCompliance` (PR #8, `js/data-integrity.js`). 19 verdicts émis
+après le cutoff formel (21/09 23h26 UTC), 10 résolus. **Conformité : 0 violation** — chaque fois que
+`signal_consensus.technique` a été lu haussier/baissier avec `accord_count≥1` depuis, le verdict a
+bien été directionnel, sans exception, y compris sur les 7 verdicts haussier→ACHAT émis d'affilée le
+05/10 (encore pending, échéance 12-19/10).
+
+Mais le mécanisme n'a été réellement **exercé** qu'une seule fois dans la fenêtre stricte post-fusion
+(`v-20260928-link`, incorrect : ACHAT émis, +1,86 % réel, resté sous le seuil directionnel). Un
+deuxième cas pré-existe juste avant la fusion (`v-20260920-link`, correct, +11,76 %) mais ne teste
+pas la règle elle-même (émis ~23h avant qu'elle soit en vigueur) — à distinguer, la note du 28/09
+dans `correction_log` l'avait compté un peu vite comme un test. Aucun cas baissier→VENTE ne s'est
+présenté du tout depuis le 20/09 : la moitié de la règle n'a encore jamais été mise à l'épreuve.
+
+Les 9 autres résolutions du lot (mixte/neutre → ATTENTE, non concernées par cette règle précise)
+donnent 3/10 corrects au global du lot (30 %, sous la baseline 50 % du même lot) — un chiffre qui ne
+dit rien sur l'efficacité de la règle testée ici, seulement que « mixte/neutre → ATTENTE » a mal
+performé sur ce lot particulier (3/9). Noté comme angle à surveiller, pas corrigé maintenant : une
+seule variable à la fois, cf. la discipline déjà établie par `corr-20260906`/`corr-20260913`.
+
+`validation_score_after_pct` de `corr-20260921-biais-attente-asymetrique` laissé à `null` (3e fois
+de suite, même discipline que les notes du 28/09 et du 05/10) — le seuil du document (~10 cas où le
+mécanisme se déclenche réellement) est loin d'être atteint avec n=1. Prochain rappel : 20/10/2026,
+après résolution du lot du 05/10 (le premier échantillon vraiment informatif, 7 cas haussier→ACHAT
+d'un coup).
+
+### 09/10/2026 — "Ce qui bouge" affichait un hack du 24/09 en premier : bug d'affichage, pas de donnée figée
+
+Signalé par l'utilisateur (capture d'écran) : le hack Bitget du 24/09 restait affiché en tête de
+"Ce qui bouge" (Accueil) 2 semaines plus tard, l'air d'une actualité qui ne se met plus à jour.
+Vérifié sur `data/news.json` réel (`origin/main`) avant toute conclusion : `last_checked_at` était
+à l'heure du cycle du jour même (la veille tourne normalement, aucun cycle manqué) et
+`last_updated_at` au 05/10 (4 jours, pas 2 semaines) — le contenu n'était donc pas figé, seul
+l'Ethereum Glamsterdam ajouté le 05/10 était le dernier élément du tableau `items`.
+
+Cause réelle : `renderNews()` (`js/app.js`) affichait `items` dans l'ordre brut du fichier — un
+tableau en ajout, le plus récent en DERNIER (même convention que `correction_log`/`alerts.json`,
+déjà gérée correctement ailleurs par `.slice().reverse()` dans `renderNotifications` et
+`renderEngineTab`, mais oubliée ici). L'item du 24/09, ajouté en premier, restait donc toujours en
+tête. Corrigé : même `.slice().reverse()`, plus un indicateur de fraîcheur (`last_updated_at`
+≥3 jours → "ajoutée il y a N jours", même seuil et même ton que `renderAvisDuJour`) pour que la
+liste dise elle-même quand elle n'a pas été renouvelée récemment, plutôt que de laisser deviner.
+
+Au passage, trouvé que `data-integrity.js?v=` dans `index.html` n'avait jamais été bumpé depuis le
+14/09 malgré l'ajout de `checkVerdictSelectionCompliance` le 21/09 (PR #8) — un navigateur ayant mis
+ce fichier en cache avant le 21/09 pouvait donc servir une version sans le vérificateur de
+conformité. Bumpé avec `app.js` dans le même commit.
