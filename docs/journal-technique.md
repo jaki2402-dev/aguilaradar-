@@ -318,3 +318,25 @@ de suite, même discipline que les notes du 28/09 et du 05/10) — le seuil du d
 mécanisme se déclenche réellement) est loin d'être atteint avec n=1. Prochain rappel : 20/10/2026,
 après résolution du lot du 05/10 (le premier échantillon vraiment informatif, 7 cas haussier→ACHAT
 d'un coup).
+
+### 09/10/2026 — "Ce qui bouge" affichait un hack du 24/09 en premier : bug d'affichage, pas de donnée figée
+
+Signalé par l'utilisateur (capture d'écran) : le hack Bitget du 24/09 restait affiché en tête de
+"Ce qui bouge" (Accueil) 2 semaines plus tard, l'air d'une actualité qui ne se met plus à jour.
+Vérifié sur `data/news.json` réel (`origin/main`) avant toute conclusion : `last_checked_at` était
+à l'heure du cycle du jour même (la veille tourne normalement, aucun cycle manqué) et
+`last_updated_at` au 05/10 (4 jours, pas 2 semaines) — le contenu n'était donc pas figé, seul
+l'Ethereum Glamsterdam ajouté le 05/10 était le dernier élément du tableau `items`.
+
+Cause réelle : `renderNews()` (`js/app.js`) affichait `items` dans l'ordre brut du fichier — un
+tableau en ajout, le plus récent en DERNIER (même convention que `correction_log`/`alerts.json`,
+déjà gérée correctement ailleurs par `.slice().reverse()` dans `renderNotifications` et
+`renderEngineTab`, mais oubliée ici). L'item du 24/09, ajouté en premier, restait donc toujours en
+tête. Corrigé : même `.slice().reverse()`, plus un indicateur de fraîcheur (`last_updated_at`
+≥3 jours → "ajoutée il y a N jours", même seuil et même ton que `renderAvisDuJour`) pour que la
+liste dise elle-même quand elle n'a pas été renouvelée récemment, plutôt que de laisser deviner.
+
+Au passage, trouvé que `data-integrity.js?v=` dans `index.html` n'avait jamais été bumpé depuis le
+14/09 malgré l'ajout de `checkVerdictSelectionCompliance` le 21/09 (PR #8) — un navigateur ayant mis
+ce fichier en cache avant le 21/09 pouvait donc servir une version sans le vérificateur de
+conformité. Bumpé avec `app.js` dans le même commit.
