@@ -44,7 +44,7 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | P7 | **3 routines gardent toute leur mémoire d'une exécution à l'autre** (verif-fraicheur, opportunités, briefing-email) : 274 k à 491 k tokens de contexte mesurés le 06/10, bien plus coûteux qu'une session neuve. | Session avec l'outil routines + **Toi** | Convertir une par une, en vérifiant après chaque conversion. |
 | P8 | **Seuls 4 prompts de routines sur environ 11 sont recopiés dans `docs/routines/`** : les autres sont invisibles pour une session qui n'a pas l'outil routines. C'est le principal trou de mémoire entre sessions. | Session avec l'outil routines | Recopier chaque prompt actuel (`get_trigger`) dans `docs/routines/<nom>.md`, sans secret (clé privée exclue). |
 | P9 | **Mail du matin** : le prompt corrigé du 05/10 (jauges fraîches) n'a probablement pas été collé. Non vérifié : le mail ne laisse aucune trace dans le dépôt. | Session avec l'outil routines | Vérifier avec `get_trigger`. |
-| P10 | **CoinMarketCap : pilote prêt, pas encore actif.** Site, Assistant et script de conversion prêts et testés ; il manque l'activation dans la routine `marche-quotidien`. | **Toi** | Les 2 gestes de `docs/coinmarketcap.md` (ajouter le connecteur à cette routine, coller le texte en fin d'instructions). Puis une session vérifie 3 jours de suite avant d'étendre à d'autres routines. |
+| P10 | **CoinMarketCap : routine dédiée prête, pas encore créée.** Site, Assistant et script prêts et testés ; la routine écrira `data/crypto-global.json` (levier, saison des altcoins, encours ETF). | **Toi** | Créer la routine `aguilaradar-coinmarketcap-quotidien` avec le texte et les réglages de `docs/routines/coinmarketcap-quotidien.md`. Ensuite une session vérifie 3 jours de suite. |
 
 ## Rendez-vous
 
@@ -73,7 +73,9 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 - **10/10/2026 (soir)** — Cloudflare et CoinMarketCap connectés par l'utilisateur. CoinMarketCap testé
   (outils gratuits vs analyses facturées), règle MCP de `CLAUDE.md` corrigée (Blockscout marche en
   routine, prouvé ; CoinMarketCap seulement en pilote). Site/Assistant prêts pour `crypto_global`,
-  script `scripts/write-crypto-global.py` testé. Reste : P10 (toi), P5 (prochaine session).
+  script `scripts/write-crypto-global.py` testé. Sur proposition de l'utilisateur : routine
+  CoinMarketCap dédiée avec son propre fichier plutôt qu'une étape ajoutée à `marche-quotidien`.
+  Reste : P10 (toi), P5 (prochaine session).
 - **10/10/2026** — Création de ce tableau de bord et du lien depuis `CLAUDE.md`. État vérifié sur
   `origin/main`. Corrigés : stats du moteur dans l'Assistant, cours de l'or (robot GitHub),
   synchronisation du relais IA. Vérifié sans suite : la page ne défile pas horizontalement à

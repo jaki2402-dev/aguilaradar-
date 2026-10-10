@@ -104,7 +104,7 @@ function signedPct(value, digits) {
   return `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(value).toLocaleString("fr-FR", { minimumFractionDigits: digits, maximumFractionDigits: digits })} %`;
 }
 
-// Bloc crypto_global (routine marche-quotidien, connecteur CoinMarketCap — voir
+// data/crypto-global.json (routine dédiée coinmarketcap-quotidien, connecteur CoinMarketCap — voir
 // docs/coinmarketcap.md) : rien n'est affiché tant que la routine ne l'a pas écrit.
 function renderCryptoGlobalRow(cg) {
   if (!cg || !cg.as_of) return "";
@@ -122,7 +122,7 @@ function renderCryptoGlobalRow(cg) {
     <p class="hint">Levier et rotation : CoinMarketCap, relevé le ${formatUtcStamp(cg.as_of)} UTC${num(cg.btc_liquidations_24h_usd) ? ` — liquidations BTC sur 24 h : ${formatUsdAmount(cg.btc_liquidations_24h_usd)}` : ""}.${cg.note ? ` ${highlightKeyInfo(cg.note)}` : ""}</p>`;
 }
 
-function renderMarketContext(ctx, gauges) {
+function renderMarketContext(ctx, gauges, cryptoGlobal) {
   const el = document.getElementById("market-context-body");
   if (!el) return;
   if (!ctx || !ctx.last_computed_at) {
@@ -145,7 +145,7 @@ function renderMarketContext(ctx, gauges) {
       <div class="stat-card accent-violet"><div class="stat-label">Taux Fed (cible)${glossaryTipHtml("Taux Fed (cible)")}</div><div class="stat-value">${fed.funds_rate_range ? escapeHtml(fed.funds_rate_range) : "—"}</div></div>
       <div class="stat-card accent-indigo"><div class="stat-label">Trésor US 10 ans${glossaryTipHtml("Trésor US 10 ans")}</div><div class="stat-value">${fed.treasury_yield_10y_pct !== null && fed.treasury_yield_10y_pct !== undefined ? fed.treasury_yield_10y_pct.toFixed(2) + " %" : "—"}</div></div>
     </div>
-    ${renderCryptoGlobalRow(ctx.crypto_global)}
+    ${renderCryptoGlobalRow(cryptoGlobal)}
     ${sc.note ? `<p class="hint">Stablecoins : ${highlightKeyInfo(sc.note)}</p>` : ""}
     ${emp.market_reaction_note ? `<p class="hint">Emploi : ${highlightKeyInfo(emp.market_reaction_note)}</p>` : ""}
     ${etf.note ? `<p class="hint">ETF : ${highlightKeyInfo(etf.note)}</p>` : ""}

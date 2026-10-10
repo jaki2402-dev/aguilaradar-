@@ -60,8 +60,9 @@ async function ensureChatData() {
     loadJson(DATA_URLS.portfolioThesis),
     loadJson(DATA_URLS.favorisContext),
     loadJson(DATA_URLS.marketGauges),
-  ]).then(([verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext, marketGauges]) => {
-    chatData = { verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext, marketGauges };
+    loadJson(DATA_URLS.cryptoGlobal),
+  ]).then(([verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext, marketGauges, cryptoGlobal]) => {
+    chatData = { verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext, marketGauges, cryptoGlobal };
     return chatData;
   });
   return chatDataLoading;
@@ -664,7 +665,7 @@ function buildAiContext() {
   if (ctx && ctx.fed_policy && ctx.fed_policy.funds_rate_range) {
     parts.push(`Taux Fed cible : ${ctx.fed_policy.funds_rate_range}${ctx.fed_policy.stance ? ` (biais ${ctx.fed_policy.stance})` : ""}${ctx.fed_policy.balance_sheet_trend ? `, bilan en ${ctx.fed_policy.balance_sheet_trend}` : ""}.`);
   }
-  const cg = ctx && ctx.crypto_global;
+  const cg = chatData.cryptoGlobal;
   if (cg && cg.as_of) {
     const bits = [];
     if (Number.isFinite(cg.altcoin_season_index)) bits.push(`saison des altcoins ${cg.altcoin_season_index}/100`);

@@ -144,9 +144,9 @@ describe("insights.js — renderMarketContext (contexte macro : stablecoins/empl
     source: "CoinMarketCap get_global_metrics_latest",
   };
 
-  it("affiche la rangée levier/rotation (CoinMarketCap) quand la routine l'a écrite", () => {
+  it("affiche la rangée levier/rotation (data/crypto-global.json) quand la routine l'a écrite", () => {
     const dom = pageWithContext();
-    dom.window.renderMarketContext({ last_computed_at: "2026-10-10T08:50:00Z", crypto_global: cmcBlock });
+    dom.window.renderMarketContext({ last_computed_at: "2026-10-10T08:50:00Z" }, null, cmcBlock);
     const html = dom.window.document.getElementById("market-context-body").innerHTML;
     expect(html).toContain("64/100");
     expect(html).toMatch(/378,07\sMd\$/);
@@ -158,9 +158,9 @@ describe("insights.js — renderMarketContext (contexte macro : stablecoins/empl
     expect(html).toContain('data-tip="Indice CoinMarketCap de 0 à 100'); // bulle glossaire
   });
 
-  it("n'affiche rien de CoinMarketCap tant que le bloc n'existe pas", () => {
+  it("n'affiche rien de CoinMarketCap tant que data/crypto-global.json n'existe pas (chargé comme null)", () => {
     const dom = pageWithContext();
-    dom.window.renderMarketContext({ last_computed_at: "2026-10-10T08:50:00Z" });
+    dom.window.renderMarketContext({ last_computed_at: "2026-10-10T08:50:00Z" }, null, null);
     expect(dom.window.document.getElementById("market-context-body").innerHTML).not.toContain("Saison des altcoins");
   });
 

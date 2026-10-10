@@ -1,5 +1,6 @@
-# Bloc data/market-context.json.crypto_global, écrit par la routine marche-quotidien à partir du
-# connecteur CoinMarketCap (voir docs/coinmarketcap.md). Lancé depuis la racine du dépôt.
+# data/crypto-global.json, écrit par la routine dédiée aguilaradar-coinmarketcap-quotidien à partir
+# du connecteur CoinMarketCap (voir docs/coinmarketcap.md). Fichier d'état courant (écrasé à chaque
+# passage), possédé par cette seule routine. Lancé depuis la racine du dépôt.
 # Usage : python3 scripts/write-crypto-global.py SAISON OI OI_7J FINANCEMENT LIQ_BTC_24H ETF_BTC ETF_ETH
 # Chaque argument = la valeur affichée TELLE QUELLE par get_global_metrics_latest (ex. "378.07 B",
 # "-12.34%", "+0.0042474%", "64"), ou "" si absente. Le script convertit, jamais la routine.
@@ -18,10 +19,9 @@ a = (sys.argv[1:] + [""] * 7)[:7]
 season = num(a[0])
 values = [num(v) for v in a]
 if all(v is None for v in values):
-    sys.exit("Aucune valeur CoinMarketCap exploitable : crypto_global laissé tel quel.")
-path = "data/market-context.json"
-data = json.load(open(path, encoding="utf-8"))
-data["crypto_global"] = {
+    sys.exit("Aucune valeur CoinMarketCap exploitable : data/crypto-global.json laissé tel quel.")
+path = "data/crypto-global.json"
+block = {
     "as_of": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
     "altcoin_season_index": int(season) if season is not None and 0 <= season <= 100 else None,
     "open_interest_usd": num(a[1]),
@@ -33,5 +33,7 @@ data["crypto_global"] = {
     "source": "CoinMarketCap, outil get_global_metrics_latest (connecteur MCP)",
     "note": "Saison des altcoins et encours ETF : relevé quotidien de 00:00 UTC ; positions ouvertes et financement : instantané au moment du relevé.",
 }
-json.dump(data, open(path, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-print(json.dumps(data["crypto_global"], ensure_ascii=False))
+with open(path, "w", encoding="utf-8") as f:
+    json.dump(block, f, ensure_ascii=False, indent=2)
+    f.write("\n")
+print(json.dumps(block, ensure_ascii=False))

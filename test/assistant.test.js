@@ -986,21 +986,19 @@ describe("assistant.js — or : relevé du robot en repli quand la routine n'a p
 });
 
 describe("assistant.js — levier/rotation CoinMarketCap dans le contexte de l'IA", () => {
-  async function contextWith(marketContext) {
+  async function contextWith(cryptoGlobal) {
     const dom = loadPage(["config.js", "assistant.js"]);
-    dom.window.aguilaradarData = { verdicts: [], engineHistory: {}, marketContext };
+    dom.window.aguilaradarData = { verdicts: [], engineHistory: {}, marketContext: {}, cryptoGlobal };
     await dom.window.ensureChatData();
     return dom.window.buildAiContext();
   }
 
-  it("transmet les chiffres du bloc crypto_global, l'encours ETF étiqueté comme encours et non flux", async () => {
-    const ctx = await contextWith({
-      crypto_global: { as_of: "2026-10-10T22:30:00Z", altcoin_season_index: 64, open_interest_usd: 378.07e9, open_interest_change_7d_pct: -12.34, funding_rate_avg_pct: 0.0042474, btc_liquidations_24h_usd: 3.67e6, btc_etf_aum_usd: 108.82e9 },
-    });
+  it("transmet les chiffres de data/crypto-global.json, l'encours ETF étiqueté comme encours et non flux", async () => {
+    const ctx = await contextWith({ as_of: "2026-10-10T22:30:00Z", altcoin_season_index: 64, open_interest_usd: 378.07e9, open_interest_change_7d_pct: -12.34, funding_rate_avg_pct: 0.0042474, btc_liquidations_24h_usd: 3.67e6, btc_etf_aum_usd: 108.82e9 });
     expect(ctx).toContain("Levier et rotation (CoinMarketCap, relevé le 10/10) : saison des altcoins 64/100, positions ouvertes 378.1 Md$ (-12.34 % sur 7 j), financement moyen 0.0042474 %, liquidations BTC 24 h 3.7 M$, encours ETF BTC 108.8 Md$ (un encours, pas un flux).");
   });
 
-  it("rien quand le bloc est absent", async () => {
-    expect(await contextWith({})).not.toContain("CoinMarketCap");
+  it("rien quand le fichier est absent", async () => {
+    expect(await contextWith(null)).not.toContain("CoinMarketCap");
   });
 });

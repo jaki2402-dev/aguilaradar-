@@ -427,3 +427,8 @@ du connecteur/de l'autorisation. Seul un essai en automatique tranche pour CoinM
   que la valeur est en USD → `formatUsdAmount`.
 - Cloudflare autorisé par l'utilisateur, mais outils non chargés dans une session démarrée avant :
   vérification du déploiement du Worker reportée à la prochaine session.
+- Même soir, sur proposition de l'utilisateur : **routine dédiée** `coinmarketcap-quotidien` au lieu
+  d'une étape ajoutée à `marche-quotidien`, et **fichier dédié** `data/crypto-global.json` au lieu
+  d'un bloc dans `market-context.json` (un fichier = une routine propriétaire : un blocage
+  CoinMarketCap ne touche aucune autre routine, et `marche-quotidien` ne peut pas l'écraser).
+  +1 exécution/jour (~15, le plafond) ; compensation possible : fusion santé + fraîcheur.
