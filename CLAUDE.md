@@ -5,6 +5,12 @@ volontairement. Le *pourquoi* détaillé et l'historique des incidents : `docs/j
 (ne le lire que si une règle ci-dessous ne suffit pas). **Ne pas regonfler ce fichier** : un
 nouveau constat va dans `docs/journal-technique.md`, ici seulement la règle en 1-3 lignes.
 
+## Session interactive : commencer par `docs/feuille-de-route.md`
+
+Tableau de bord unique (état vérifié, problèmes ouverts, qui agit). Le lire en début de session,
+mettre à jour statuts + journal en fin de session ; n'y inscrire qu'un constat vérifié (preuve +
+date). **Routines : ne pas le lire** (hors de leur rôle, coût en tokens).
+
 ## Économie de tokens — OBLIGATOIRE pour toute routine et toute session
 
 Le quota hebdo a été épuisé en fin de semaine (aucun commit de routine du 28/09 au 03/10/2026).
