@@ -3628,5 +3628,41 @@
       "verdict_correct": null,
       "resolved_at": null
     }
+  },
+  {
+    "id": "v-20261010-ctsi",
+    "issued_at": "2026-10-10T16:20:00Z",
+    "asset": "cartesi",
+    "ticker": "CTSI",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 65,
+    "signals_used": [
+      "24h +5,06%",
+      "7j +15,83%",
+      "30j +44,27%",
+      "portfolio-thesis Attendre conviction 3/10",
+      "Aucune actualite recente confirmee (derniere mise a jour officielle Cartesi trouvee : juillet 2026)"
+    ],
+    "reasoning": "Aucun verdict pending n'existait pour CTSI ce cycle : le precedent (v-20261003-ctsi, ATTENTE) a ete resolu au cycle du 10/10 08h26 UTC avec un mouvement reel de +12,56% (EUR), au-dela du seuil directionnel de 5% a la hausse - ACHAT aurait ete correct, ATTENTE juge incorrect. Nouveau cycle : CTSI cote 0,035283 $ (CoinGecko, 10/10 16h17 UTC), lecture technique haussiere coherente sur les trois fenetres (24h +5,06%, 7j +15,83%, 30j +44,27%), toutes au-dela du seuil directionnel de 5% dans le meme sens. Signal fondamental neutre : portfolio-thesis.json maintient 'Attendre' conviction 3/10 (aucun catalyseur confirme en octobre), et favoris-context.json decrit une these mitigee (execution technique reelle mais traction de marche encore faible, derniere mise a jour officielle de l'ecosysteme datee de juillet 2026) - pas de contradiction franche avec la lecture technique, juste l'absence de confirmation. Regime macro neutre (Fed toujours hawkish - taux 3,75-4,00%, prochain FOMC le 28/10 - mais rapport sur l'emploi du 02/10 tempere cette lecture ; flux ETF spot BTC/ETH toujours non confirmes). Technique haussier et accord_count=2 (fondamental et macro alignes neutres) : verdict ACHAT retenu par la regle de selection du paragraphe 2, confiance 65% (fourchette 60-70, mouvement 7j plus de 3x le seuil et volume 24h ~19M$ confirmant la hausse), horizon maintenu a 7 jours (groupe volatil, horizon adaptatif inchange).",
+    "price_at_issue": 0.0352827,
+    "currency": "USD",
+    "resolves_at": "2026-10-17T16:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
   }
 ]
