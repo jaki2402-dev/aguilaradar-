@@ -553,13 +553,28 @@ function answerAlerts() {
   return `Dernières alertes :\n\n${lines.join("\n\n")}\n\nHistorique complet dans l'onglet Alertes.`;
 }
 
-function answerEngine() {
-  const stats = chatData.engineHistory && chatData.engineHistory.global_stats;
-  if (!stats) return `Pas encore de statistiques du moteur disponibles.\n\n${correctionLogSummary()}`;
-  if (stats.accuracy_strict_pct === null || stats.accuracy_strict_pct === undefined) {
-    return `Le moteur a émis ${stats.total_verdicts_issued} verdict(s) au total, mais aucun n'a encore atteint son échéance — impossible de mesurer un vrai taux de réussite avant ça (rien n'est inventé entre-temps).\n\n${correctionLogSummary()}\n\nDétail dans l'onglet Moteur.`;
+// Même calcul en direct que l'onglet Moteur (computeEngineStats, engine.js) : global_stats
+// n'est recalculé que par certains cycles et a été trouvé figé (10/10/2026 : 81 vérifiés et
+// 25,93 % cités ici, contre 82 et 25,61 % sur l'onglet Moteur). Repli sur global_stats si
+// engine.js n'est pas chargé.
+function chatEngineStats() {
+  const verdicts = chatData.verdicts || [];
+  if (typeof computeEngineStats === "function" && verdicts.length) {
+    const live = computeEngineStats(verdicts.filter((v) => v.status === "resolved"));
+    return { issued: verdicts.length, resolved: live ? live.total : 0, accuracyPct: live ? live.accuracyPct : null };
   }
-  return `Le moteur a émis ${stats.total_verdicts_issued} verdicts, dont ${stats.total_verdicts_resolved} vérifiés, avec une exactitude de ${stats.accuracy_strict_pct.toFixed(1)} %.\n\n${correctionLogSummary()}\n\nDétail complet dans l'onglet Moteur.`;
+  const gs = chatData.engineHistory && chatData.engineHistory.global_stats;
+  if (!gs) return null;
+  return { issued: gs.total_verdicts_issued, resolved: gs.total_verdicts_resolved, accuracyPct: gs.accuracy_strict_pct ?? null };
+}
+
+function answerEngine() {
+  const stats = chatEngineStats();
+  if (!stats) return `Pas encore de statistiques du moteur disponibles.\n\n${correctionLogSummary()}`;
+  if (stats.accuracyPct === null) {
+    return `Le moteur a émis ${stats.issued} verdict(s) au total, mais aucun n'a encore atteint son échéance — impossible de mesurer un vrai taux de réussite avant ça (rien n'est inventé entre-temps).\n\n${correctionLogSummary()}\n\nDétail dans l'onglet Moteur.`;
+  }
+  return `Le moteur a émis ${stats.issued} verdicts, dont ${stats.resolved} vérifiés, avec une exactitude de ${stats.accuracyPct.toFixed(1)} %.\n\n${correctionLogSummary()}\n\nDétail complet dans l'onglet Moteur.`;
 }
 
 // Filet de secours (CHAT_INTENTS) pour une question générale sur LE portefeuille de l'utilisateur
@@ -669,9 +684,9 @@ function buildAiContext() {
   // contrairement aux thèses bull/base/bear ciblées uniquement sur les actifs nommés plus bas.
   parts.push(`Utilité et capture de valeur du token (fait factuel, jamais un avis) pour les 15 favoris :\n${favorisUtilityBlock()}`);
 
-  const stats = chatData.engineHistory && chatData.engineHistory.global_stats;
-  if (stats && stats.accuracy_strict_pct != null) {
-    parts.push(`Fiabilité mesurée du moteur : ${stats.accuracy_strict_pct.toFixed(1)} % d'exactitude sur ${stats.total_verdicts_resolved} verdicts vérifiés.`);
+  const stats = chatEngineStats();
+  if (stats && stats.accuracyPct !== null) {
+    parts.push(`Fiabilité mesurée du moteur : ${stats.accuracyPct.toFixed(1)} % d'exactitude sur ${stats.resolved} verdicts vérifiés.`);
   }
 
   // Liste complète des opportunités suivies (pas seulement les 3 meilleures, ancien comportement)

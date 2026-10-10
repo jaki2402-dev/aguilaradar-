@@ -928,3 +928,39 @@ describe("assistant.js — appendChatMessage (surlignage des chiffres-clés dans
     expect(p.innerHTML).toContain('<mark class="hl-stat">50%</mark>');
   });
 });
+
+describe("assistant.js — statistiques du moteur : même calcul en direct que l'onglet Moteur", () => {
+  // Régression réelle (10/10/2026) : l'Assistant citait engine-history.global_stats, figé au
+  // 05/10 (81 vérifiés, 25,93 %), alors que l'onglet Moteur calcule en direct depuis verdicts.json
+  // (82 vérifiés, 25,61 %). Les deux doivent désormais dire la même chose.
+  const resolved = (verdict, actual) => ({ status: "resolved", verdict, outcome: { actual_direction: actual, verdict_correct: verdict === actual } });
+  const staleGlobalStats = { total_verdicts_issued: 2, total_verdicts_resolved: 1, accuracy_strict_pct: 99.9 };
+
+  async function setup(scripts, verdicts) {
+    const dom = loadPage(scripts);
+    dom.window.aguilaradarData = { verdicts, engineHistory: { global_stats: staleGlobalStats } };
+    await dom.window.ensureChatData();
+    return dom;
+  }
+
+  it("cite le calcul en direct (computeEngineStats) et ignore un global_stats figé", async () => {
+    const verdicts = [resolved("ACHAT", "ACHAT"), resolved("ACHAT", "VENTE"), resolved("ATTENTE", "ATTENTE"), resolved("VENTE", "ACHAT"), { status: "pending", verdict: "ACHAT" }];
+    const dom = await setup(["config.js", "engine.js", "assistant.js"], verdicts);
+    const answer = dom.window.answerEngine();
+    expect(answer).toContain("a émis 5 verdicts, dont 4 vérifiés, avec une exactitude de 50.0 %");
+    expect(answer).not.toContain("99.9");
+    expect(dom.window.buildAiContext()).toContain("50.0 % d'exactitude sur 4 verdicts vérifiés");
+  });
+
+  it("aucun verdict encore résolu : ne donne pas de taux, même si global_stats en contient un", async () => {
+    const dom = await setup(["config.js", "engine.js", "assistant.js"], [{ status: "pending", verdict: "ACHAT" }]);
+    const answer = dom.window.answerEngine();
+    expect(answer).toContain("a émis 1 verdict(s) au total, mais aucun n'a encore atteint son échéance");
+    expect(answer).not.toMatch(/exactitude de/);
+  });
+
+  it("repli sur global_stats quand engine.js n'est pas chargé", async () => {
+    const dom = await setup(["config.js", "assistant.js"], [resolved("ACHAT", "ACHAT")]);
+    expect(dom.window.answerEngine()).toContain("a émis 2 verdicts, dont 1 vérifiés, avec une exactitude de 99.9 %");
+  });
+});
