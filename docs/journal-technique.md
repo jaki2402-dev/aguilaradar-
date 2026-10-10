@@ -377,3 +377,30 @@ règles d'économie en tête de `CLAUDE.md`).
   de toute façon pas dans le périmètre accordé à cette session).
 
 npm test : 677/677 après ce passage.
+
+### 10/10/2026 — tableau de bord unique, stats moteur de l'Assistant, or sans quota, relais IA
+
+Demande utilisateur : un « responsable » qui coordonne les agents pour éviter l'éparpillement.
+Constat : aucun agent ne se souvient des autres, la seule mémoire partagée est ce dépôt. Créé
+`docs/feuille-de-route.md` (état vérifié, problèmes ouverts avec preuve et responsable, journal
+des sessions), pointé depuis `CLAUDE.md` pour les sessions interactives (pas les routines).
+Notion écarté comme mémoire : les routines n'y ont pas accès (outils MCP bloquants en routine).
+
+- **Assistant / stats du moteur** : `answerEngine` et `buildAiContext` lisaient
+  `engine-history.global_stats`, recalculé seulement par certains cycles et figé au 05/10
+  (90 émis, 81 vérifiés, 25,93 %) alors que l'onglet Moteur calcule en direct (97, 82, 25,61 %).
+  `chatEngineStats` réutilise `computeEngineStats` (engine.js), repli sur `global_stats`.
+- **Or** : `market-context.gold` à null depuis ≥08/10 (la routine ne trouve pas de cours daté).
+  `scripts/market-gauges.mjs` relève PAX Gold + Tether Gold (`pax-gold`, `tether-gold`, vérifiés
+  via CoinGecko /search ; 4183,38 $ et 4181,51 $ le 10/10, cohérent avec les ~4130-4160 $ cités
+  par la routine les 6-8/10). Moyenne publiée seulement si écart ≤ 2 %. Site (`goldSpotView`,
+  insights.js) et Assistant : valeur de la routine prioritaire, relevé du robot en repli,
+  toujours présenté comme approximation datée. Taux 10 ans : FRED et home.treasury.gov
+  injoignables depuis la session (proxy et WebFetch), donc non branché — format non vérifiable.
+- **Relais IA** : la seule différence entre `cloudflare-worker/worker.js` et
+  `aguilaradar-assistant-ia/worker.js` était le correctif `MAX_TRACKED_IDS` du 05/10. Test ajouté
+  (`test/worker-push.test.js`) : échoue sur la version de l'autre dépôt, passe ici. Poussé
+  (`d0115fa`) ; mise en ligne Cloudflare non vérifiée (connecteur non autorisé).
+- Piège rencontré : la copie locale de la session était superficielle (historique depuis le 24/09),
+  `git merge-base` concluait à tort à un historique réécrit. `git fetch --unshallow` avant toute
+  conclusion sur l'ascendance des branches.
