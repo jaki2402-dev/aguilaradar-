@@ -183,7 +183,11 @@ vente.
   `git merge-base --is-ancestor` avant de conclure à un oubli.
 - Outils MCP CoinGecko/Alpha Vantage/Economic Index **interdits dans les routines one-shot**
   (bloquent la session) — WebFetch + WebSearch à la place. Exception : `opportunites-quotidien`.
-  Un outil qui marche en session interactive ne prouve rien pour une routine.
+  Un outil qui marche en session interactive ne prouve rien pour une routine. Validés en
+  exécution automatique : Blockscout (`favoris-quotidien`, prouvé sur données le 10/10).
+  **CoinMarketCap** : uniquement `get_global_metrics_latest` dans `marche-quotidien`, en toute
+  dernière étape (pilote, `docs/coinmarketcap.md`) ; interdit ailleurs tant que le pilote n'a pas
+  réussi 3 jours de suite. `execute_skill` (facturé) : jamais sans accord de l'utilisateur.
 - Échec `rate_limit_info.status:"rejected"` = quota d'usage, pas un bug.
 - Indicateur de fraîcheur en alerte → vérifier les timestamps réels sur `origin/main` avant de
   conclure qu'une routine est bloquée.

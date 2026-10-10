@@ -404,3 +404,26 @@ Notion écarté comme mémoire : les routines n'y ont pas accès (outils MCP blo
 - Piège rencontré : la copie locale de la session était superficielle (historique depuis le 24/09),
   `git merge-base` concluait à tort à un historique réécrit. `git fetch --unshallow` avant toute
   conclusion sur l'ascendance des branches.
+
+### 10/10/2026 (soir) — connecteur CoinMarketCap : pilote préparé, règle MCP corrigée
+
+Demande utilisateur : brancher CoinMarketCap sur toutes les routines. Non fait d'un coup : un outil
+de connecteur peut bloquer une routine automatique (incidents CoinGecko d'août). **Constat qui
+corrige la règle** : `favoris-quotidien` (session fraîche) a bien utilisé l'outil Blockscout en
+automatique le 10/10 08h27 (`onchain-history.json` : `tx_per_day` sourcé « Blockscout MCP,
+direct_api_call chain_id=1 … 2026-10-09 ») — l'interdiction n'est donc pas universelle, elle dépend
+du connecteur/de l'autorisation. Seul un essai en automatique tranche pour CoinMarketCap.
+
+- Testé en session interactive : `get_global_metrics_latest` (~5,5 Ko, valeurs en texte « 378.07 B »,
+  saison des altcoins 64, positions ouvertes 378,07 Md$, financement +0,0042 %, encours ETF BTC
+  108,82 Md$ — un encours, pas un flux) ; `find_skill` gratuit, mais `execute_skill` facturé (taux
+  10 ans et flux ETF nets seulement par cette voie).
+- Pilote : `marche-quotidien`, appel en dernière étape après le commit habituel, conversion par
+  `scripts/write-crypto-global.py` (testé : valeurs réelles, valeur illisible → null, rien écrit si
+  tout est vide). Site (`renderCryptoGlobalRow`) et Assistant prêts. Activation = 2 gestes de
+  l'utilisateur (`docs/coinmarketcap.md`) ; aucune modification de routine possible depuis cette
+  session (outil routines absent).
+- Au passage : carte « Flux ETF BTC » formatée par `formatMarketCap` (« Md€ », signe perdu) alors
+  que la valeur est en USD → `formatUsdAmount`.
+- Cloudflare autorisé par l'utilisateur, mais outils non chargés dans une session démarrée avant :
+  vérification du déploiement du Worker reportée à la prochaine session.

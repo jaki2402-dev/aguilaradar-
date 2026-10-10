@@ -42,6 +42,13 @@ ces outils précis — c'est exactement l'erreur qui a causé le blocage confirm
 sur WebFetch/WebSearch pour ces champs tant que le mode d'exécution automatisée n'a pas lui-même
 été testé avec succès plusieurs cycles de suite.
 
+**Exception pilote CoinMarketCap (10/10/2026)** : l'outil `get_global_metrics_latest` du
+connecteur CoinMarketCap, en **toute dernière étape** après le commit et la fusion habituels, pour
+écrire le bloc `crypto_global` via `scripts/write-crypto-global.py`. Texte exact, critère de
+réussite et retour arrière : `docs/coinmarketcap.md`. **État : préparé, actif seulement une fois
+le connecteur ajouté à la routine et le texte collé par l'utilisateur** — vérifier
+`crypto_global.as_of` sur `origin/main` avant de le considérer comme actif.
+
 ## Règle absolue (s'applique à tout ce document, comme les 2 autres routines)
 
 **Ne jamais inventer un chiffre.** Un champ non confirmé par une vraie source ce cycle reste `null`
@@ -68,9 +75,13 @@ chacune indépendamment des 2 autres). Lecture seule autorisée sur `engine-hist
   "etf_flows": { "period": "...", "btc_etf_net_flow_usd": <number|null>, "eth_etf_net_flow_usd": <number|null>, "note": "...", "source": "..." },
   "gold": { "spot_usd_per_oz": <number|null>, "btc_to_gold_oz_ratio": <number|null omis si non calculable>, "note": "...", "source": "..." },
   "fed_policy": { "funds_rate_range": "...", "stance": "hawkish|dovish|neutre", "balance_sheet_trend": "expansion|reduction|stable", "next_fomc_date": "YYYY-MM-DD (omis si non trouvée)", "treasury_yield_10y_pct": <number|null>, "note": "..." },
-  "site_confidence": { "last_computed_at": "<ISO 8601 UTC>", "level": "élevé|moyen|faible", "note": "..." }
+  "site_confidence": { "last_computed_at": "<ISO 8601 UTC>", "level": "élevé|moyen|faible", "note": "..." },
+  "crypto_global": { "as_of": "<ISO 8601 UTC>", "altcoin_season_index": <0-100|null>, "open_interest_usd": <number|null>, "open_interest_change_7d_pct": <number|null>, "funding_rate_avg_pct": <number|null>, "btc_liquidations_24h_usd": <number|null>, "btc_etf_aum_usd": <number|null>, "eth_etf_aum_usd": <number|null>, "source": "...", "note": "..." }
 }
 ```
+
+`crypto_global` : écrit UNIQUEMENT par `scripts/write-crypto-global.py` (pilote CoinMarketCap,
+voir plus haut) — absent tant que le pilote n'est pas actif, et jamais rempli à la main.
 
 - **`stablecoins`** : dominance via `get-categories`/`coins/markets?category=stablecoins`
   (capitalisation stablecoins ÷ capitalisation totale globale), WebSearch en repli.
