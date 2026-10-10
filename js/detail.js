@@ -520,7 +520,7 @@ async function renderDetailPanel(panelEl, asset) {
     ${renderFavorisContextSection(asset.ticker)}
     ${asset.skipOpinionBlock ? "" : `<div class="detail-opinion">
       <strong>Mon avis</strong>
-      ${renderClampableText(asset.reasoning || asset.reason || "Analyse pas encore disponible pour cet actif — en attente du prochain cycle.")}
+      ${asset.reasoning ? renderReasoningFor(asset.cgId, asset.reasoning) : renderClampableText(asset.reason || "Analyse pas encore disponible pour cet actif — en attente du prochain cycle.")}
       ${asset.verdict ? `<p class="hint">Verdict actuel : <span class="badge badge-${asset.verdict.toLowerCase()}">${asset.verdict}</span> — vérifié automatiquement à son échéance, jamais avant.</p>` : ""}
     </div>`}
     ${breakdownHtml}

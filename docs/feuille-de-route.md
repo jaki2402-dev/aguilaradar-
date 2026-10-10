@@ -30,7 +30,7 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | Thèse hebdo du portefeuille | 05/10 | OK (hebdomadaire) |
 | Groupe témoin | 04/10 | OK — objectif 8 en attente atteint |
 | Actualités | vérifiées 10/10, contenu inchangé depuis le 05/10 | À surveiller (P2) |
-| Tests (`npm test`) | 10/10 | 697/697 |
+| Tests (`npm test`) | 10/10 | 705/705 |
 
 ## Problèmes ouverts
 
@@ -45,6 +45,7 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | P8 | **Seuls 4 prompts de routines sur environ 11 sont recopiés dans `docs/routines/`** : les autres sont invisibles pour une session qui n'a pas l'outil routines. C'est le principal trou de mémoire entre sessions. | Session avec l'outil routines | Recopier chaque prompt actuel (`get_trigger`) dans `docs/routines/<nom>.md`, sans secret (clé privée exclue). |
 | P9 | **Mail du matin** : le prompt corrigé du 05/10 (jauges fraîches) n'a probablement pas été collé. Non vérifié : le mail ne laisse aucune trace dans le dépôt. | Session avec l'outil routines | Vérifier avec `get_trigger`. |
 | P10 | **CoinMarketCap : routine dédiée prête, pas encore créée.** Site, Assistant et script prêts et testés ; la routine écrira `data/crypto-global.json` (levier, saison des altcoins, encours ETF). | **Toi** | Créer la routine `aguilaradar-coinmarketcap-quotidien` avec le texte et les réglages de `docs/routines/coinmarketcap-quotidien.md`. Ensuite une session vérifie 3 jours de suite. |
+| P11 | **Textes encore longs là où aucun résumé fiable n'existe** (actualités ~500 caractères, notes du contexte marché jusqu'à 1 140, thèses des favoris ~1 600) : affichés en aperçu + « Lire plus » depuis le 10/10, mais l'aperçu montre le début du texte, pas forcément l'essentiel. | Session + **Toi** | Demander aux routines (cycle des verdicts, marché, favoris) d'écrire en plus un champ `resume` d'une phrase (l'essentiel d'abord) ; le site l'afficherait en tête. Texte à préparer, puis à coller par toi. |
 
 ## Rendez-vous
 
@@ -67,9 +68,13 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | 10/10 | Cours de l'or vide sur le site et pour l'IA. | Le robot GitHub (sans quota) relève PAX Gold + Tether Gold, publié seulement s'ils concordent à 2 % près, affiché comme approximation datée. 6 tests + exécution simulée du script. Premier relevé réel au prochain passage du robot (02h40, 10h40, 14h40 ou 22h40 UTC). |
 | 10/10 | Correctif du relais IA jamais poussé vers le dépôt surveillé par Cloudflare. | Poussé ; nouveau test qui échoue sur l'ancienne version et passe sur la nouvelle. Mise en ligne : voir P5. |
 | 10/10 | Carte « Flux ETF BTC » : montant en dollars affiché en « Md€ / M€ » et sans signe négatif (invisible tant que la donnée était vide). | Formateur en dollars dédié ; test de régression. |
+| 10/10 | Textes trop longs : le raisonnement d'un verdict commençait par de la tenue de compte, l'essentiel n'apparaissait pas. | Résumé exact tiré des données du verdict (lectures technique/fondamentale/macro + 3 signaux clés), analyse complète derrière « Lire l'analyse complète » (Journal, Portefeuille, fiche détaillée). Actualités et notes en aperçu + « Lire plus ». Date du Journal lisible. Vérifié dans Chromium à 390 px sur les vraies données. |
+| 10/10 | Badge VENTE sous le seuil d'accessibilité (4,11-4,52 pour 4,5). | Rouge `#f87171` : 5,08 au pire. |
 
 ## Journal des sessions (le plus récent en haut)
 
+- **10/10/2026 (fin de soirée)** — Demande : textes plus courts, l'essentiel en avant. Résumés de verdicts
+  tirés des données (rien d'inventé), aperçus partout ailleurs ; suite proposée : P11.
 - **10/10/2026 (soir)** — Cloudflare et CoinMarketCap connectés par l'utilisateur. CoinMarketCap testé
   (outils gratuits vs analyses facturées), règle MCP de `CLAUDE.md` corrigée (Blockscout marche en
   routine, prouvé ; CoinMarketCap seulement en pilote). Site/Assistant prêts pour `crypto_global`,

@@ -146,12 +146,18 @@ function renderMarketContext(ctx, gauges, cryptoGlobal) {
       <div class="stat-card accent-indigo"><div class="stat-label">Trésor US 10 ans${glossaryTipHtml("Trésor US 10 ans")}</div><div class="stat-value">${fed.treasury_yield_10y_pct !== null && fed.treasury_yield_10y_pct !== undefined ? fed.treasury_yield_10y_pct.toFixed(2) + " %" : "—"}</div></div>
     </div>
     ${renderCryptoGlobalRow(cryptoGlobal)}
-    ${sc.note ? `<p class="hint">Stablecoins : ${highlightKeyInfo(sc.note)}</p>` : ""}
-    ${emp.market_reaction_note ? `<p class="hint">Emploi : ${highlightKeyInfo(emp.market_reaction_note)}</p>` : ""}
-    ${etf.note ? `<p class="hint">ETF : ${highlightKeyInfo(etf.note)}</p>` : ""}
-    ${goldView && goldView.approx ? `<p class="hint">Or : cours approché à partir de deux jetons adossés à l'or (PAX Gold, Tether Gold)${goldView.asOf ? `, relevé le ${formatUtcStamp(goldView.asOf)} UTC` : ""} — la routine n'a pas trouvé de cours officiel daté.</p>` : gold.note ? `<p class="hint">Or : ${highlightKeyInfo(gold.note)}</p>` : ""}
-    ${fed.note ? `<p class="hint">Fed (taux, bilan QE/QT, prochaine réunion) : ${highlightKeyInfo(fed.note)}</p>` : ""}
-    ${conf.level ? `<p class="hint" style="margin-top:8px;"><strong>Confiance globale du site : ${escapeHtml(conf.level)}</strong> — ${highlightKeyInfo(conf.note || "")}</p>` : ""}`;
+    ${contextNote("Stablecoins", sc.note)}
+    ${contextNote("Emploi", emp.market_reaction_note)}
+    ${contextNote("ETF", etf.note)}
+    ${goldView && goldView.approx ? `<p class="hint">Or : cours approché à partir de deux jetons adossés à l'or (PAX Gold, Tether Gold)${goldView.asOf ? `, relevé le ${formatUtcStamp(goldView.asOf)} UTC` : ""} — la routine n'a pas trouvé de cours officiel daté.</p>` : contextNote("Or", gold.note)}
+    ${contextNote("Fed (taux, bilan QE/QT, prochaine réunion)", fed.note)}
+    ${conf.level ? `<div class="hint context-note" style="margin-top:8px;"><strong>Confiance globale du site : ${escapeHtml(conf.level)}</strong>${renderClampableText(conf.note || "")}</div>` : ""}`;
+  wireClampToggles(el);
+}
+
+// Notes du contexte macro : souvent 400-1 100 caractères, aperçu de 3 lignes + « Lire plus ».
+function contextNote(label, note) {
+  return note ? `<div class="hint context-note"><strong>${escapeHtml(label)}</strong>${renderClampableText(note)}</div>` : "";
 }
 
 function renderHealthStatus(healthLog, favorisContext, verdicts) {

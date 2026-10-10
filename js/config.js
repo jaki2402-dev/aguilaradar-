@@ -251,3 +251,83 @@ const DATA_URLS = {
   cryptoGlobal: "data/crypto-global.json",
   onchainHistory: "data/onchain-history.json",
 };
+
+// Rend un div.clickable navigable et activable au clavier (Entrée/Espace), sans changer son
+// comportement au clic — pour les actions "voir plus" qui n'ont pas de vrai <button>.
+function makeKeyboardClickable(el) {
+  if (!el) return;
+  el.setAttribute("tabindex", "0");
+  el.setAttribute("role", "button");
+  el.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    e.preventDefault();
+    el.click();
+  });
+}
+
+// Aperçu tronqué (3 lignes) + "Lire plus" pour un texte long — Journal (raisonnement) et
+// Alertes (message) partagent ce motif : sans lui, un texte de 500+ caractères (fréquent côté
+// alertes) rendait ces deux onglets illisibles au scroll. Sous le seuil, retourne un <p> nu —
+// forme strictement identique à l'ancien rendu, donc aucun texte court n'est jamais affecté.
+const CLAMP_TEXT_THRESHOLD = 200;
+let clampTextUid = 0;
+
+function renderClampableText(text) {
+  const safe = highlightKeyInfo(text || "");
+  if (!text || text.length <= CLAMP_TEXT_THRESHOLD) return `<p>${safe}</p>`;
+  const id = `clamp-text-${++clampTextUid}`;
+  return `<p class="clamp-text" id="${id}">${safe}</p><span class="expand-hint expand-hint-inline clickable" data-clamp-target="${id}">Lire plus <span class="chevron">▾</span></span>`;
+}
+
+// stopPropagation : le "Lire plus" vit à l'intérieur d'une .journal-entry.clickable qui a son
+// propre clic (attachDetailToggle, voir detail.js) — sans ça, déplier le texte ouvrirait aussi
+// la grosse fiche d'analyse en dessous, deux actions pour un seul clic.
+function wireClampToggles(root) {
+  root.querySelectorAll("[data-clamp-target]").forEach((btn) => {
+    makeKeyboardClickable(btn);
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const p = document.getElementById(btn.dataset.clampTarget);
+      if (!p) return;
+      const isOpen = p.classList.toggle("clamp-open");
+      btn.classList.toggle("expanded", isOpen);
+    });
+  });
+}
+
+// Résumé d'un verdict tiré de ses champs structurés (signal_consensus, signals_used) : exact par
+// construction, rien n'est interprété ni reformulé. Le raisonnement complet commence souvent par
+// de la tenue de compte (« le verdict précédent a été résolu… ») et non par le pourquoi : il reste
+// accessible derrière « Lire l'analyse complète ». Signaux de plus de 70 caractères ignorés (ce
+// sont des phrases, pas des points clés).
+const CONSENSUS_DIRECTIONS = ["haussier", "baissier", "mixte", "neutre"];
+
+function renderVerdictSummary(v) {
+  const sc = (v && v.signal_consensus) || {};
+  const chips = [["Technique", sc.technique], ["Fondamental", sc.fondamental], ["Macro", sc.macro]]
+    .filter(([, dir]) => typeof dir === "string" && dir)
+    .map(([label, dir]) => {
+      const cls = CONSENSUS_DIRECTIONS.includes(dir) ? dir : "neutre";
+      return `<span class="consensus-chip consensus-${cls}">${label} : ${escapeHtml(dir)}</span>`;
+    });
+  const signals = ((v && v.signals_used) || []).filter((s) => typeof s === "string" && s.trim() && s.length <= 70).slice(0, 3);
+  if (!chips.length && !signals.length) return "";
+  return `<div class="verdict-summary">${chips.length ? `<div class="verdict-chips">${chips.join("")}</div>` : ""}${
+    signals.length ? `<ul class="verdict-signals">${signals.map((s) => `<li>${highlightKeyInfo(s)}</li>`).join("")}</ul>` : ""
+  }</div>`;
+}
+
+function renderVerdictText(v) {
+  const summary = renderVerdictSummary(v);
+  if (!summary || !v.reasoning) return summary + renderClampableText(v && v.reasoning);
+  const id = `clamp-text-${++clampTextUid}`;
+  return `${summary}<p class="clamp-text clamp-hidden" id="${id}">${highlightKeyInfo(v.reasoning)}</p><span class="expand-hint expand-hint-inline clickable" data-clamp-target="${id}">Lire l'analyse complète <span class="chevron">▾</span></span>`;
+}
+
+// Pour un affichage qui n'a que le texte du raisonnement (tuile Portefeuille, fiche détaillée) :
+// retrouve le verdict complet seulement s'il correspond exactement à ce texte, sinon aperçu simple.
+function renderReasoningFor(cgId, reasoning) {
+  const verdicts = (typeof window !== "undefined" && window.aguilaradarData && window.aguilaradarData.verdicts) || [];
+  const v = typeof latestVerdictFor === "function" && reasoning ? latestVerdictFor(cgId, verdicts) : null;
+  return v && v.reasoning === reasoning ? renderVerdictText(v) : renderClampableText(reasoning);
+}

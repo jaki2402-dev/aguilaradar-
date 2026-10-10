@@ -432,3 +432,25 @@ du connecteur/de l'autorisation. Seul un essai en automatique tranche pour CoinM
   d'un bloc dans `market-context.json` (un fichier = une routine propriétaire : un blocage
   CoinMarketCap ne touche aucune autre routine, et `marche-quotidien` ne peut pas l'écraser).
   +1 exécution/jour (~15, le plafond) ; compensation possible : fusion santé + fraîcheur.
+
+### 10/10/2026 (fin de soirée) — textes plus courts, l'essentiel en avant
+
+Demande utilisateur : résumer les textes du site en quelques phrases. Mesuré sur `origin/main` :
+raisonnement des verdicts ~1 200 caractères (max 2 100), « titres » d'actualités ~500, notes du
+contexte marché jusqu'à 1 140, thèses des favoris ~1 600. Le début des textes n'est souvent pas
+l'essentiel (verdict : « le précédent a été résolu… » ; régime : « market-context.json rafraîchi…
+lu en lecture seule ici »), donc une simple troncature montrait la mauvaise partie.
+- Verdicts : `renderVerdictSummary` (config.js) affiche `signal_consensus` (3 pastilles) et les
+  3 premiers `signals_used` de ≤ 70 caractères — exact par construction, aucune reformulation ;
+  raisonnement complet masqué derrière « Lire l'analyse complète ». `accord_count` volontairement
+  non affiché (sémantique ambiguë dans la spec cycle). Repli : aperçu 3 lignes si champs absents.
+- Actualités : 2 lignes + « Lire plus » (bouton hors du lien) ; notes du contexte marché :
+  `contextNote` (insights.js), aperçu + « Lire plus ».
+- Helpers d'aperçu (`renderClampableText`, `wireClampToggles`, `makeKeyboardClickable`) déplacés
+  de app.js vers config.js pour être utilisables par insights.js (chargé avant app.js, et testé
+  sans app.js).
+- Contraste : pastille baissière en `#f87171` (`--loss` sur fond teinté = 4,11-4,52 < 4,5) ; le
+  badge VENTE existant avait le même défaut : corrigé de la même façon.
+- Vrai résumé des textes libres (actualités, notes, thèses) : seulement possible si les routines
+  écrivent un champ `resume` (P11, à décider).
+

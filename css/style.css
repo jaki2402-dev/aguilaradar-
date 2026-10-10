@@ -902,6 +902,22 @@ th { color: var(--text-dim); font-weight: 600; font-size: 0.76rem; text-transfor
    Journal (raisonnement) et Alertes (message) partagent ce motif. ---- */
 .clamp-text { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .clamp-text.clamp-open { display: block; -webkit-line-clamp: unset; overflow: visible; }
+.clamp-text.clamp-2 { -webkit-line-clamp: 2; }
+.clamp-text.clamp-hidden:not(.clamp-open) { display: none; }
+
+/* Résumé d'un verdict (renderVerdictSummary, config.js). Contraste calculé : neutre 5,17-5,68,
+   haussier 6,37-7,13 sur les fonds de carte sombres. */
+.verdict-summary { margin: 6px 0 4px; }
+.verdict-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.consensus-chip { font-size: 0.74rem; font-weight: 600; padding: 2px 8px; border-radius: 999px; background: rgba(147, 160, 180, 0.12); color: var(--text-dim); }
+.consensus-haussier { background: rgba(52, 211, 153, 0.15); color: var(--gain); }
+/* #f87171 et non var(--loss) : --loss sur ce fond teinté = 4,11-4,52 (sous WCAG AA 4,5) ;
+   #f87171 = 5,08-5,58 sur --card-2/--card/--bg-elevated (calcul du 10/10/2026). */
+.consensus-baissier { background: rgba(241, 85, 76, 0.15); color: #f87171; }
+.verdict-signals { margin: 6px 0 0; padding-left: 18px; font-size: 0.82rem; }
+.verdict-signals li { margin: 1px 0; }
+.context-note { margin-top: 6px; }
+.context-note > strong { display: block; }
 .expand-hint-inline {
   display: inline-flex; text-align: left; border-top: none; margin-top: 2px; padding-top: 0;
   font-size: 0.76rem;
@@ -917,7 +933,8 @@ th { color: var(--text-dim); font-weight: 600; font-size: 0.76rem; text-transfor
   white-space: nowrap;
 }
 .badge-achat { background: rgba(52, 211, 153, 0.15); color: var(--gain); }
-.badge-vente { background: rgba(241, 85, 76, 0.15); color: var(--loss); }
+/* #f87171 : var(--loss) sur ce fond = 4,11-4,52, sous WCAG AA (calcul du 10/10/2026). */
+.badge-vente { background: rgba(241, 85, 76, 0.15); color: #f87171; }
 .badge-attente { background: rgba(229, 169, 59, 0.15); color: var(--warning); }
 /* Thèse hebdomadaire (portfolio-thesis.json) — mêmes 4 couleurs que le design déjà validé du
    mail hebdo (vert=Renforcer, rouge=Réduire, jaune=Attendre, violet=Conserver), pour rester

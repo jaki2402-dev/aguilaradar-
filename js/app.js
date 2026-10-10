@@ -26,19 +26,6 @@ async function loadJson(url) {
   }
 }
 
-// Rend un div.clickable navigable et activable au clavier (Entrée/Espace), sans changer son
-// comportement au clic — pour les actions "voir plus" qui n'ont pas de vrai <button>.
-function makeKeyboardClickable(el) {
-  if (!el) return;
-  el.setAttribute("tabindex", "0");
-  el.setAttribute("role", "button");
-  el.addEventListener("keydown", (e) => {
-    if (e.key !== "Enter" && e.key !== " ") return;
-    e.preventDefault();
-    el.click();
-  });
-}
-
 // Grille dense (esprit Coin360 : l'essentiel, peu de défilement) — nom/secteur complets
 // disponibles au survol (title) et dans la fiche détaillée au clic, pas sur la tuile elle-même
 // pour rester épuré. Classe .favori-tile volontairement DISTINCTE de .favori-card (toujours
@@ -198,34 +185,10 @@ function renderOpportunities(data) {
   if (constellationControllers.opportunities) constellationControllers.opportunities.refresh();
 }
 
-// Aperçu tronqué (3 lignes) + "Lire plus" pour un texte long — Journal (raisonnement) et
-// Alertes (message) partagent ce motif : sans lui, un texte de 500+ caractères (fréquent côté
-// alertes) rendait ces deux onglets illisibles au scroll. Sous le seuil, retourne un <p> nu —
-// forme strictement identique à l'ancien rendu, donc aucun texte court n'est jamais affecté.
-const CLAMP_TEXT_THRESHOLD = 200;
-let clampTextUid = 0;
-
-function renderClampableText(text) {
-  const safe = highlightKeyInfo(text || "");
-  if (!text || text.length <= CLAMP_TEXT_THRESHOLD) return `<p>${safe}</p>`;
-  const id = `clamp-text-${++clampTextUid}`;
-  return `<p class="clamp-text" id="${id}">${safe}</p><span class="expand-hint expand-hint-inline clickable" data-clamp-target="${id}">Lire plus <span class="chevron">▾</span></span>`;
-}
-
-// stopPropagation : le "Lire plus" vit à l'intérieur d'une .journal-entry.clickable qui a son
-// propre clic (attachDetailToggle, voir detail.js) — sans ça, déplier le texte ouvrirait aussi
-// la grosse fiche d'analyse en dessous, deux actions pour un seul clic.
-function wireClampToggles(root) {
-  root.querySelectorAll("[data-clamp-target]").forEach((btn) => {
-    makeKeyboardClickable(btn);
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const p = document.getElementById(btn.dataset.clampTarget);
-      if (!p) return;
-      const isOpen = p.classList.toggle("clamp-open");
-      btn.classList.toggle("expanded", isOpen);
-    });
-  });
+// « 2026-10-10T16:20:00Z » -> « 10/10/2026 18:20 » (heure locale du lecteur) ; texte brut si illisible.
+function formatIssuedAt(iso) {
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? String(iso || "") : d.toLocaleString("fr-FR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
 }
 
 const JOURNAL_PAGE_SIZE = 15;
@@ -255,10 +218,10 @@ function renderJournalPage() {
         (v, i) => `
       <div class="journal-entry clickable verdict-${(v.verdict || "").toLowerCase()}" data-detail-target="detail-journal-${v.id || i}" data-cgid="${v.asset}">
         <div class="log-header">
-          <span><strong>${v.ticker || v.asset}</strong> · ${v.issued_at}</span>
+          <span><strong>${v.ticker || v.asset}</strong> · ${escapeHtml(formatIssuedAt(v.issued_at))}</span>
           <span class="badge badge-${(v.verdict || "").toLowerCase()}">${v.verdict}</span>
         </div>
-        ${renderClampableText(v.reasoning)}
+        ${renderVerdictText(v)}
         <p class="hint">Confiance ${v.confidence_pct ?? "—"} % · horizon ${v.horizon_days} j · statut ${v.status}</p>
         ${v.status === "pending" ? renderProvisionalBadge(v) : ""}
         <div class="expand-hint">Voir l'analyse détaillée <span class="chevron">▾</span></div>
@@ -535,16 +498,22 @@ function renderNews(newsData) {
     ordered
       .map((n) => {
         const url = safeUrl(n.url);
-        const title = highlightKeyInfo(n.title);
         const important = isNewsImportant(n.title);
+        // Une « actualité » fait souvent 500+ caractères : 2 lignes + « Lire plus », le début
+        // porte déjà l'essentiel (le lien reste sur le texte, le bouton est hors du lien).
+        const long = (n.title || "").length > CLAMP_TEXT_THRESHOLD;
+        const id = long ? `clamp-text-${++clampTextUid}` : "";
+        const title = `<span${long ? ` class="clamp-text clamp-2" id="${id}"` : ""}>${highlightKeyInfo(n.title)}</span>`;
         return `
       <div class="news-item${important ? " important" : ""}">
         ${important ? `<span class="news-important-flag" title="Contient un mot-clé associé à une actualité potentiellement majeure">⚡ À surveiller</span>` : ""}
-        ${url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${title}</a>` : `<span>${title}</span>`}
+        ${url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${title}</a>` : title}
+        ${long ? `<span class="expand-hint expand-hint-inline clickable" data-clamp-target="${id}">Lire plus <span class="chevron">▾</span></span>` : ""}
         <span class="hint">${escapeHtml(n.source || "")}</span>
       </div>`;
       })
       .join("");
+  wireClampToggles(el);
 }
 
 // Anime un chiffre de sa valeur affichée actuelle vers sa nouvelle valeur, plutôt qu'un
