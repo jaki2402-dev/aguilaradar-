@@ -30,7 +30,7 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | Thèse hebdo du portefeuille | 05/10 | OK (hebdomadaire) |
 | Groupe témoin | 04/10 | OK — objectif 8 en attente atteint |
 | Actualités | vérifiées 10/10, contenu inchangé depuis le 05/10 | À surveiller (P2) |
-| Tests (`npm test`) | 10/10 | 705/705 |
+| Tests (`npm test`) | 10/10 | 710/710 |
 
 ## Problèmes ouverts
 
@@ -45,7 +45,7 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | P8 | **Seuls 4 prompts de routines sur environ 11 sont recopiés dans `docs/routines/`** : les autres sont invisibles pour une session qui n'a pas l'outil routines. C'est le principal trou de mémoire entre sessions. | Session avec l'outil routines | Recopier chaque prompt actuel (`get_trigger`) dans `docs/routines/<nom>.md`, sans secret (clé privée exclue). |
 | P9 | **Mail du matin** : le prompt corrigé du 05/10 (jauges fraîches) n'a probablement pas été collé. Non vérifié : le mail ne laisse aucune trace dans le dépôt. | Session avec l'outil routines | Vérifier avec `get_trigger`. |
 | P10 | **CoinMarketCap : routine dédiée prête, pas encore créée.** Site, Assistant et script prêts et testés ; la routine écrira `data/crypto-global.json` (levier, saison des altcoins, encours ETF). | **Toi** | Créer la routine `aguilaradar-coinmarketcap-quotidien` avec le texte et les réglages de `docs/routines/coinmarketcap-quotidien.md`. Ensuite une session vérifie 3 jours de suite. |
-| P11 | **Textes encore longs là où aucun résumé fiable n'existe** (actualités ~500 caractères, notes du contexte marché jusqu'à 1 140, thèses des favoris ~1 600) : affichés en aperçu + « Lire plus » depuis le 10/10, mais l'aperçu montre le début du texte, pas forcément l'essentiel. | Session + **Toi** | Demander aux routines (cycle des verdicts, marché, favoris) d'écrire en plus un champ `resume` d'une phrase (l'essentiel d'abord) ; le site l'afficherait en tête. Texte à préparer, puis à coller par toi. |
+| P11 | **Résumés d'une phrase par les routines : textes prêts, pas encore collés.** Le site affiche déjà un champ `resume` en tête (verdicts, actualités, régime, notes du contexte marché, thèses des favoris) dès qu'il existe. | **Toi** | Coller chaque texte en fin d'instructions de sa routine : `cycle-2h`, `marche-quotidien`, `favoris-quotidien` (section « Ajout du 10/10/2026 » de `docs/routines/cycle-2h-verdict.md`, `marche-quotidien.md`, `favoris-quotidien.md`). Une session vérifie ensuite qu'un `resume` apparaît sur `origin/main`. |
 
 ## Rendez-vous
 
@@ -74,7 +74,8 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 ## Journal des sessions (le plus récent en haut)
 
 - **10/10/2026 (fin de soirée)** — Demande : textes plus courts, l'essentiel en avant. Résumés de verdicts
-  tirés des données (rien d'inventé), aperçus partout ailleurs ; suite proposée : P11.
+  tirés des données (rien d'inventé), aperçus partout ailleurs. Puis, à la demande de l'utilisateur :
+  champ `resume` préparé pour 3 routines (site prêt, textes à coller : P11).
 - **10/10/2026 (soir)** — Cloudflare et CoinMarketCap connectés par l'utilisateur. CoinMarketCap testé
   (outils gratuits vs analyses facturées), règle MCP de `CLAUDE.md` corrigée (Blockscout marche en
   routine, prouvé ; CoinMarketCap seulement en pilote). Site/Assistant prêts pour `crypto_global`,

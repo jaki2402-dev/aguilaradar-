@@ -917,6 +917,7 @@ th { color: var(--text-dim); font-weight: 600; font-size: 0.76rem; text-transfor
 .verdict-signals { margin: 6px 0 0; padding-left: 18px; font-size: 0.82rem; }
 .verdict-signals li { margin: 1px 0; }
 .context-note { margin-top: 6px; }
+.text-resume { margin: 4px 0; color: var(--text); font-weight: 500; }
 .context-note > strong { display: block; }
 .expand-hint-inline {
   display: inline-flex; text-align: left; border-top: none; margin-top: 2px; padding-top: 0;

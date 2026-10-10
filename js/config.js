@@ -317,11 +317,27 @@ function renderVerdictSummary(v) {
   }</div>`;
 }
 
-function renderVerdictText(v) {
-  const summary = renderVerdictSummary(v);
-  if (!summary || !v.reasoning) return summary + renderClampableText(v && v.reasoning);
+// Champ `resume` (une phrase, écrite par la routine à partir du texte complet — docs/routines/*.md,
+// ajout du 10/10/2026) : affiché en tête quand il existe ; sinon rien ne change.
+function resumeHtml(resume) {
+  return typeof resume === "string" && resume.trim() ? `<p class="text-resume">${highlightKeyInfo(resume)}</p>` : "";
+}
+
+function hiddenFullText(text, label) {
   const id = `clamp-text-${++clampTextUid}`;
-  return `${summary}<p class="clamp-text clamp-hidden" id="${id}">${highlightKeyInfo(v.reasoning)}</p><span class="expand-hint expand-hint-inline clickable" data-clamp-target="${id}">Lire l'analyse complète <span class="chevron">▾</span></span>`;
+  return `<p class="clamp-text clamp-hidden" id="${id}">${highlightKeyInfo(text)}</p><span class="expand-hint expand-hint-inline clickable" data-clamp-target="${id}">${label} <span class="chevron">▾</span></span>`;
+}
+
+function renderSummaryFirst(resume, fullText) {
+  const head = resumeHtml(resume);
+  if (!head) return renderClampableText(fullText);
+  return fullText && fullText !== resume ? head + hiddenFullText(fullText, "Lire plus") : head;
+}
+
+function renderVerdictText(v) {
+  const head = resumeHtml(v && v.resume) + renderVerdictSummary(v);
+  if (!v || !v.reasoning) return head;
+  return head ? head + hiddenFullText(v.reasoning, "Lire l'analyse complète") : renderClampableText(v.reasoning);
 }
 
 // Pour un affichage qui n'a que le texte du raisonnement (tuile Portefeuille, fiche détaillée) :

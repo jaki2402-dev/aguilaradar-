@@ -21,7 +21,7 @@ Ce document est la **spécification de référence versionnée** de cette routin
     "<TICKER>": {
       "last_computed_at": "<ISO 8601 UTC — uniquement mis à jour pour les tickers réellement retraités CE cycle>",
       "competitor": { "ticker": "...", "name": "...", "comparison_note": "1-3 phrases factuelles" },
-      "long_term_thesis": { "bull": "...", "base": "...", "bear": "...", "assumptions_note": "..." },
+      "long_term_thesis": { "bull": "...", "base": "...", "bear": "...", "assumptions_note": "...", "resume": "<1 phrase, ajout du 10/10>" },
       "open_interest": { "value_usd": <number|null>, "funding_rate_pct": <number|null>, "source": "...", "note": "..." },
       "defi_tvl": { "value_usd": <number|null>, "change_7d_pct": <number|null>, "source": "...", "note": "..." },
       "onchain_signal": { "available": <bool>, "note": "...", "source_url": "<url|null>" }
@@ -121,3 +121,13 @@ Procédure en 2 étapes, obligatoires toutes les deux à chaque cycle :
 2. **Fusionner explicitement cette branche dans `main` et pousser `main`** — `git checkout main`
    (ou équivalent), `git merge --no-ff &lt;ta-branche&gt; -m "Merge cycle &lt;date&gt; into main"`,
    `git push origin main`. Le cycle n'est pas terminé tant que cette 2e étape n'a pas réussi.
+
+## Ajout du 10/10/2026 : champ `resume` (texte à coller en fin d'instructions)
+
+Une phrase « l'essentiel », affichée en tête par le site (le texte complet reste dépliable). **État : préparé, actif quand le texte ci-dessous a été collé par l'utilisateur** — vérifier l'apparition d'un champ `resume` sur `origin/main` avant de le considérer comme actif.
+
+```
+AJOUT DU 10/10/2026 — CHAMP "resume" dans data/favoris-context.json (autorisé malgré « forme exacte, ne jamais dévier » ; sans aucune recherche ni appel supplémentaire).
+Pour chaque favori que tu retraites ce cycle, ajoute "resume" dans "long_term_thesis" : le scénario de base et le principal risque (scénario bear), en une phrase, tirés de bull/base/bear et assumptions_note. Les favoris non retraités ce cycle ne changent pas.
+Règles du champ "resume" : une seule phrase en français correct (accents), 160 caractères maximum, l'essentiel en premier ; écrite uniquement à partir du texte complet que tu viens d'écrire (aucun chiffre ni fait absent de ce texte) ; jamais de conseil d'achat ou de vente ; écrite par le même script python3 que le reste. Si tu ne peux pas résumer fidèlement, n'écris pas de "resume" : le site affichera le début du texte.
+```

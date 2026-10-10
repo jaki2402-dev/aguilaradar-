@@ -410,6 +410,7 @@ function macroView(engineHistory, gauges) {
     regimeAt,
     stale: ageDays !== null && ageDays > MACRO_REGIME_STALE_DAYS,
     note: r.note || "",
+    resume: r.resume || "",
     fearGreed: fgLive ? fgLive.value : r.fear_greed_value ?? null,
     fearGreedAt: fgLive ? fgLive.as_of || gauges.updated_at : regimeAt,
     dominance: domLive ? domLive.pct : r.btc_dominance_pct ?? null,
@@ -434,7 +435,7 @@ function renderMacroRegime(engineHistory, gauges) {
   const noteHtml = m.stale
     ? `<div class="hint macro-regime-note" style="margin-top:10px;">Régime évalué pour la dernière fois le ${escapeHtml(shortDate(m.regimeAt))} et pas réévalué depuis — à lire comme un contexte passé, pas comme l'état actuel du marché. Les deux jauges, elles, sont relevées automatiquement.</div>`
     : m.note
-      ? `<div class="hint macro-regime-note" style="margin-top:10px;">${renderClampableText(m.note)}</div>`
+      ? `<div class="hint macro-regime-note" style="margin-top:10px;">${renderSummaryFirst(m.resume, m.note)}</div>`
       : "";
   el.innerHTML = `
     <div class="hero-card">
@@ -501,13 +502,17 @@ function renderNews(newsData) {
         const important = isNewsImportant(n.title);
         // Une « actualité » fait souvent 500+ caractères : 2 lignes + « Lire plus », le début
         // porte déjà l'essentiel (le lien reste sur le texte, le bouton est hors du lien).
-        const long = (n.title || "").length > CLAMP_TEXT_THRESHOLD;
+        // Avec un `resume` (une phrase écrite par la routine) : lui seul dans le lien, texte complet
+        // replié dessous. Sans : aperçu de 2 lignes du texte complet.
+        const hasResume = typeof n.resume === "string" && n.resume.trim();
+        const long = !hasResume && (n.title || "").length > CLAMP_TEXT_THRESHOLD;
         const id = long ? `clamp-text-${++clampTextUid}` : "";
-        const title = `<span${long ? ` class="clamp-text clamp-2" id="${id}"` : ""}>${highlightKeyInfo(n.title)}</span>`;
+        const title = hasResume ? `<span>${highlightKeyInfo(n.resume)}</span>` : `<span${long ? ` class="clamp-text clamp-2" id="${id}"` : ""}>${highlightKeyInfo(n.title)}</span>`;
         return `
       <div class="news-item${important ? " important" : ""}">
         ${important ? `<span class="news-important-flag" title="Contient un mot-clé associé à une actualité potentiellement majeure">⚡ À surveiller</span>` : ""}
         ${url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${title}</a>` : title}
+        ${hasResume && n.title && n.title !== n.resume ? hiddenFullText(n.title, "Lire plus") : ""}
         ${long ? `<span class="expand-hint expand-hint-inline clickable" data-clamp-target="${id}">Lire plus <span class="chevron">▾</span></span>` : ""}
         <span class="hint">${escapeHtml(n.source || "")}</span>
       </div>`;

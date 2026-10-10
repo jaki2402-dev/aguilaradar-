@@ -145,7 +145,7 @@ function renderFavorisContextSection(ticker) {
     <strong>Contexte élargi ${freshnessChip}</strong>
     <div class="detail-context-prose">
       ${comp.name ? `<div class="hint"><strong>Concurrent (${escapeHtml(comp.ticker || "?")}) :</strong>${renderClampableText(comp.comparison_note || "—")}</div>` : `<p class="hint">Comparaison concurrent : pas encore calculée.</p>`}
-      ${thesis.assumptions_note ? `<div class="hint"><strong>Thèse long terme</strong>${renderClampableText(`Bull : ${thesis.bull || "—"} · Base : ${thesis.base || "—"} · Bear : ${thesis.bear || "—"} — Hypothèses : ${thesis.assumptions_note}`)}</div>` : `<p class="hint">Thèse long terme : pas encore rédigée.</p>`}
+      ${thesis.assumptions_note ? `<div class="hint"><strong>Thèse long terme</strong>${renderSummaryFirst(thesis.resume, `Bull : ${thesis.bull || "—"} · Base : ${thesis.base || "—"} · Bear : ${thesis.bear || "—"} — Hypothèses : ${thesis.assumptions_note}`)}</div>` : `<p class="hint">Thèse long terme : pas encore rédigée.</p>`}
     </div>
     <div class="detail-context-grid">
       <div class="detail-context-card">

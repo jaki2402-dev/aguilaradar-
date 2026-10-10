@@ -139,3 +139,13 @@ historique permanent, jamais réécrit ; sources fiables uniquement (TradingView
 CoinGecko en accès direct HTTP, etc. — jamais un site non identifiable). Le texte écrit dans
 `data/market-context.json` doit toujours utiliser des accents français corrects — relire avant
 d'écrire.
+
+## Ajout du 10/10/2026 : champ `resume` (texte à coller en fin d'instructions)
+
+Une phrase « l'essentiel », affichée en tête par le site (le texte complet reste dépliable). **État : préparé, actif quand le texte ci-dessous a été collé par l'utilisateur** — vérifier l'apparition d'un champ `resume` sur `origin/main` avant de le considérer comme actif.
+
+```
+AJOUT DU 10/10/2026 — CHAMP "resume" dans data/market-context.json (sans aucune recherche ni appel supplémentaire).
+Dans chaque bloc que tu mets à jour ce cycle (stablecoins, employment_us, etf_flows, gold, fed_policy, site_confidence), ajoute "resume" à côté de son texte ("note", ou "market_reaction_note" pour employment_us) : l'information du jour et ce qu'elle implique pour le marché crypto, en une phrase. Un bloc que tu ne mets pas à jour garde son "resume" tel quel.
+Règles du champ "resume" : une seule phrase en français correct (accents), 160 caractères maximum, l'essentiel en premier ; écrite uniquement à partir du texte complet que tu viens d'écrire (aucun chiffre ni fait absent de ce texte) ; jamais de conseil d'achat ou de vente ; écrite par le même script python3 que le reste. Si tu ne peux pas résumer fidèlement, n'écris pas de "resume" : le site affichera le début du texte.
+```

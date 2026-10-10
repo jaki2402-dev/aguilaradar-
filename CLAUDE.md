@@ -169,6 +169,9 @@ vente.
   attente, jamais deviné.
 - `portfolio-thesis.json` (`constat` + badge) ≠ `favoris-context.json` (`bull/base/bear`, **clé =
   ticker**, pas `cgId`). Les distinguer par la forme.
+- Champ `resume` (verdicts, actualités, régime, notes du contexte marché, thèses des favoris) :
+  1 phrase ≤ 160 caractères écrite par la routine, affichée en tête par le site ; jamais un fait
+  absent du texte complet (règle dans `docs/routines/*.md`, ajout du 10/10/2026).
 - `crypto-global.json` : état courant (levier, saison des altcoins, encours ETF) écrasé chaque jour
   par la seule routine `coinmarketcap-quotidien` (`scripts/write-crypto-global.py`).
 - Avant de proposer une nouvelle source : vérifier `data/market-context.json` (taux 10 ans, flux

@@ -115,3 +115,51 @@ describe("Journal : date lisible", () => {
   });
 });
 
+
+describe("champ resume écrit par les routines (ajout du 10/10/2026) : en tête, texte complet replié", () => {
+  const RESUME = "Hausse confirmée sur 24 h, 7 jours et 30 jours, sans catalyseur fondamental confirmé.";
+
+  it("verdict : la phrase de la routine passe avant les pastilles, l'analyse complète reste dépliable", () => {
+    const dom = loadPage(["config.js"], { html: "<!doctype html><html><body><div id='out'></div></body></html>" });
+    const out = dom.window.document.getElementById("out");
+    out.innerHTML = dom.window.renderVerdictText({ ...CTSI, resume: RESUME });
+    expect(out.firstElementChild.className).toBe("text-resume");
+    expect(out.querySelector(".text-resume").textContent).toBe(RESUME);
+    expect(out.querySelector(".verdict-summary")).not.toBeNull();
+    expect(out.querySelector(".clamp-hidden").textContent).toContain("lecture technique haussiere");
+  });
+
+  it("renderSummaryFirst : sans resume, aperçu habituel ; resume vide ou non textuel ignoré", () => {
+    const dom = loadPage(["config.js"]);
+    expect(dom.window.renderSummaryFirst(undefined, "Texte.")).toBe("<p>Texte.</p>");
+    expect(dom.window.renderSummaryFirst("  ", "Texte.")).toBe("<p>Texte.</p>");
+    expect(dom.window.renderSummaryFirst(42, "Texte.")).toBe("<p>Texte.</p>");
+  });
+
+  it("actualité : le résumé devient le lien, le texte complet est replié et l'alerte « À surveiller » lit toujours le texte complet", () => {
+    const dom = loadPage(["config.js", "app.js"], { html: "<!doctype html><html><body><div id='news-body'></div></body></html>" });
+    const long = "Hack majeur sur une plateforme d'échange : 120 M$ dérobés selon plusieurs sources, retraits suspendus, enquête en cours et remboursement promis aux utilisateurs touchés.";
+    dom.window.renderNews({ items: [{ title: long, resume: "Hack de 120 M$ sur une plateforme d'échange, retraits suspendus.", url: "https://example.com/a", source: "X" }] });
+    const item = dom.window.document.querySelector("#news-body .news-item");
+    expect(item.querySelector("a").textContent).toBe("Hack de 120 M$ sur une plateforme d'échange, retraits suspendus.");
+    expect(item.querySelector(".clamp-hidden").textContent).toBe(long);
+    expect(item.querySelector("[data-clamp-target]").closest("a")).toBeNull();
+  });
+
+  it("note du contexte marché et thèse long terme : résumé en tête", () => {
+    const dom = loadPage(["config.js", "prices.js", "cards.js", "insights.js"], { html: "<!doctype html><html><body><div id='market-context-body'></div></body></html>" });
+    dom.window.renderMarketContext({ last_computed_at: "2026-10-10T08:50:00Z", employment_us: { unemployment_rate_pct: 4.2, market_reaction_note: "Note longue.", resume: "Emploi faible, chômage à 4,2 %." } });
+    const note = dom.window.document.querySelector("#market-context-body .context-note");
+    expect(note.querySelector(".text-resume").textContent).toBe("Emploi faible, chômage à 4,2 %.");
+    expect(note.querySelector(".clamp-hidden").textContent).toBe("Note longue.");
+  });
+});
+
+describe("régime de marché : resume transmis par macroView", () => {
+  it("expose le resume écrit par le cycle à côté de la note", () => {
+    const dom = loadPage(["config.js", "app.js"]);
+    const m = dom.window.macroView({ macro_regime: { regime: "neutre", last_computed_at: new Date().toISOString(), note: "Note longue.", resume: "Régime neutre : Fed restrictive, emploi qui ralentit." } }, null);
+    expect(m.resume).toBe("Régime neutre : Fed restrictive, emploi qui ralentit.");
+    expect(m.note).toBe("Note longue.");
+  });
+});

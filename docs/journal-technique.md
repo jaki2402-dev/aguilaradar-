@@ -453,4 +453,9 @@ lu en lecture seule ici »), donc une simple troncature montrait la mauvaise par
   badge VENTE existant avait le même défaut : corrigé de la même façon.
 - Vrai résumé des textes libres (actualités, notes, thèses) : seulement possible si les routines
   écrivent un champ `resume` (P11, à décider).
+- Suite (accord de l'utilisateur) : champ `resume` (1 phrase ≤ 160 caractères, seulement des faits
+  déjà présents dans le texte complet) demandé à `cycle-2h` (verdicts, actualités, régime),
+  `marche-quotidien` (chaque bloc) et `favoris-quotidien` (`long_term_thesis`). Textes à coller en
+  fin de chaque spec. Site : `renderSummaryFirst`/`resumeHtml` (config.js) — résumé en tête, texte
+  complet replié ; sans `resume`, comportement inchangé. Coût : quelques phrases par cycle.
 

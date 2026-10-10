@@ -146,18 +146,19 @@ function renderMarketContext(ctx, gauges, cryptoGlobal) {
       <div class="stat-card accent-indigo"><div class="stat-label">Trésor US 10 ans${glossaryTipHtml("Trésor US 10 ans")}</div><div class="stat-value">${fed.treasury_yield_10y_pct !== null && fed.treasury_yield_10y_pct !== undefined ? fed.treasury_yield_10y_pct.toFixed(2) + " %" : "—"}</div></div>
     </div>
     ${renderCryptoGlobalRow(cryptoGlobal)}
-    ${contextNote("Stablecoins", sc.note)}
-    ${contextNote("Emploi", emp.market_reaction_note)}
-    ${contextNote("ETF", etf.note)}
-    ${goldView && goldView.approx ? `<p class="hint">Or : cours approché à partir de deux jetons adossés à l'or (PAX Gold, Tether Gold)${goldView.asOf ? `, relevé le ${formatUtcStamp(goldView.asOf)} UTC` : ""} — la routine n'a pas trouvé de cours officiel daté.</p>` : contextNote("Or", gold.note)}
-    ${contextNote("Fed (taux, bilan QE/QT, prochaine réunion)", fed.note)}
-    ${conf.level ? `<div class="hint context-note" style="margin-top:8px;"><strong>Confiance globale du site : ${escapeHtml(conf.level)}</strong>${renderClampableText(conf.note || "")}</div>` : ""}`;
+    ${contextNote("Stablecoins", sc.note, sc.resume)}
+    ${contextNote("Emploi", emp.market_reaction_note, emp.resume)}
+    ${contextNote("ETF", etf.note, etf.resume)}
+    ${goldView && goldView.approx ? `<p class="hint">Or : cours approché à partir de deux jetons adossés à l'or (PAX Gold, Tether Gold)${goldView.asOf ? `, relevé le ${formatUtcStamp(goldView.asOf)} UTC` : ""} — la routine n'a pas trouvé de cours officiel daté.</p>` : contextNote("Or", gold.note, gold.resume)}
+    ${contextNote("Fed (taux, bilan QE/QT, prochaine réunion)", fed.note, fed.resume)}
+    ${conf.level ? `<div class="hint context-note" style="margin-top:8px;"><strong>Confiance globale du site : ${escapeHtml(conf.level)}</strong>${renderSummaryFirst(conf.resume, conf.note || "")}</div>` : ""}`;
   wireClampToggles(el);
 }
 
-// Notes du contexte macro : souvent 400-1 100 caractères, aperçu de 3 lignes + « Lire plus ».
-function contextNote(label, note) {
-  return note ? `<div class="hint context-note"><strong>${escapeHtml(label)}</strong>${renderClampableText(note)}</div>` : "";
+// Notes du contexte macro : souvent 400-1 100 caractères — résumé de la routine en tête s'il
+// existe, sinon aperçu de 3 lignes ; texte complet derrière « Lire plus ».
+function contextNote(label, note, resume) {
+  return note ? `<div class="hint context-note"><strong>${escapeHtml(label)}</strong>${renderSummaryFirst(resume, note)}</div>` : "";
 }
 
 function renderHealthStatus(healthLog, favorisContext, verdicts) {

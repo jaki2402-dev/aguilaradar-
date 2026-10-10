@@ -70,6 +70,7 @@ Tableau au niveau racine, chaque entrée :
   "confidence_pct": <0-100, voir section 2 pour la règle de calcul>,
   "signals_used": ["<phrase courte et factuelle par signal réellement observé>"],
   "reasoning": "<3-6 phrases, cite les chiffres réels utilisés>",
+  "resume": "<1 phrase, ≤ 160 caractères, l'essentiel du raisonnement — voir l'ajout du 10/10 en fin de document>",
   "price_at_issue": <prix réel au moment de l'émission, en USD>,
   "currency": "USD",
   "resolves_at": "issued_at + horizon_days jours",
@@ -293,7 +294,7 @@ que la routine utilisait).
 {
   "last_checked_at": "<ISO 8601 UTC — À CHAQUE cycle, que quelque chose de nouveau soit trouvé ou non>",
   "last_updated_at": "<ISO 8601 UTC — SEULEMENT quand `items` change réellement>",
-  "items": [ { "title": "...", "url": "...", "source": "..." } ]
+  "items": [ { "title": "...", "resume": "<1 phrase, ajout du 10/10>", "url": "...", "source": "..." } ]
 }
 ```
 
@@ -322,3 +323,15 @@ jusqu'à fusion manuelle (14/09). Les 2 étapes sont obligatoires à chaque cycl
 2. **Fusionner explicitement cette branche dans `main` et pousser `main`** — `git checkout main`
    (ou équivalent), `git merge --no-ff &lt;ta-branche&gt; -m "Merge cycle &lt;date&gt; into main"`,
    `git push origin main`. Le cycle n'est pas terminé tant que cette 2e étape n'a pas réussi.
+
+## Ajout du 10/10/2026 : champ `resume` (texte à coller en fin d'instructions)
+
+Une phrase « l'essentiel », affichée en tête par le site (le texte complet reste dépliable). **État : préparé, actif quand le texte ci-dessous a été collé par l'utilisateur** — vérifier l'apparition d'un champ `resume` sur `origin/main` avant de le considérer comme actif.
+
+```
+AJOUT DU 10/10/2026 — CHAMP "resume" (en plus de tout ce qui précède, sans aucune recherche ni appel supplémentaire).
+1. Chaque NOUVEAU verdict de data/verdicts.json reçoit "resume" : la raison principale du verdict et le point de vigilance éventuel, en une phrase.
+2. Chaque NOUVEL item ajouté à data/news.json reçoit "resume" : l'actualité en une phrase.
+3. Quand tu écris engine-history.json.macro_regime, ajoute "resume" : le régime retenu et sa raison principale, en une phrase.
+Les verdicts et actualités déjà écrits ne sont jamais modifiés (historique permanent). Règles du champ "resume" : une seule phrase en français correct (accents), 160 caractères maximum, l'essentiel en premier ; écrite uniquement à partir du texte complet que tu viens d'écrire (aucun chiffre ni fait absent de ce texte) ; jamais de conseil d'achat ou de vente ; écrite par le même script python3 que le reste. Si tu ne peux pas résumer fidèlement, n'écris pas de "resume" : le site affichera le début du texte.
+```
