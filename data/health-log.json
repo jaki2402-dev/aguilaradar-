@@ -950,6 +950,30 @@
       ],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h57, actualités (last_checked_at) il y a 0h57, opportunités il y a 5h06 - rien à signaler."
+    },
+    {
+      "checked_at": "2026-10-10T08:51:35Z",
+      "site_reachable": false,
+      "files_ok": [
+        "verdicts.json",
+        "opportunities.json",
+        "engine-history.json",
+        "alerts.json",
+        "news.json",
+        "control-group.json",
+        "market-context.json",
+        "favoris-context.json",
+        "health-log.json"
+      ],
+      "files_broken": [],
+      "counts": {
+        "verdicts": 96,
+        "alerts": 172,
+        "opportunities": 7,
+        "news": 10,
+        "favoris_context_populated": 15
+      },
+      "note": "Site non vérifiable depuis l'environnement d'exécution (échec DNS sur jaki2402-dev.github.io, WebFetch et curl) : ce n'est pas une preuve de panne du site. Les 9 fichiers data/*.json sont des JSON valides et non vides, et index.html référence les 22 scripts js/*.js. Aucune anomalie de volume par rapport au dernier passage avec compteurs (09/10 08:52) : verdicts 96→96, alerts 171→172, opportunities 7→7, news 10→10, favoris 15→15."
     }
   ]
 }
