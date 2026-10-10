@@ -188,6 +188,8 @@ const GLOSSARY = [
   { term: "Or (once, USD)", definition: "Le prix au comptant d'une once d'or — valeur refuge de référence, utile pour comparer l'appétit pour le risque entre l'or et le bitcoin." },
   { term: "Taux Fed (cible)", definition: "La fourchette de taux directeur fixée par la banque centrale américaine — un taux qui monte renchérit le crédit et pèse en général sur les actifs risqués comme la crypto." },
   { term: "Trésor US 10 ans", definition: "Le rendement de la dette américaine à 10 ans — une hausse traduit souvent des anticipations de taux plus élevés ou plus durables, un signal macro suivi par les marchés risqués." },
+  { term: "Moyenne 200 jours", definition: "Le cours moyen des 200 derniers jours : la tendance de fond. Au-dessus = tendance longue plutôt haussière ; très au-dessus = mouvement déjà étiré." },
+  { term: "MACD", definition: "Indicateur d'élan : il compare une moyenne courte et une moyenne longue du cours. Élan haussier = la hausse s'accélère ; élan baissier = elle ralentit ou s'inverse." },
   { term: "Saison des altcoins", definition: "Indice CoinMarketCap de 0 à 100 : plus il est haut, plus les altcoins font mieux que le bitcoin ces derniers temps. Bas = l'argent reste plutôt sur le bitcoin." },
   { term: "Positions ouvertes", definition: "La valeur totale des contrats à terme crypto encore ouverts. Une forte hausse signale beaucoup d'effet de levier, donc un risque de liquidations en cascade si le prix se retourne." },
   { term: "Taux de financement", definition: "Ce que paient les acheteurs à effet de levier aux vendeurs (ou l'inverse) sur les contrats perpétuels. Positif = acheteurs majoritaires ; très élevé = marché surchauffé." },
@@ -249,6 +251,7 @@ const DATA_URLS = {
   portfolioHistory: "data/portfolio-history.json",
   marketGauges: "data/market-gauges.json",
   cryptoGlobal: "data/crypto-global.json",
+  cmcFavoris: "data/cmc-favoris.json",
   onchainHistory: "data/onchain-history.json",
 };
 
@@ -310,6 +313,16 @@ function renderVerdictSummary(v) {
       const cls = CONSENSUS_DIRECTIONS.includes(dir) ? dir : "neutre";
       return `<span class="consensus-chip consensus-${cls}">${label} : ${escapeHtml(dir)}</span>`;
     });
+  // Analyse technique CoinMarketCap enregistrée à l'émission (cmc_technical_at_issue, ajout du
+  // 10/10/2026) : affichée telle quelle, avec les mêmes seuils RSI que le reste du site (70 / 30).
+  const cmc = (v && v.cmc_technical_at_issue) || {};
+  if (Number.isFinite(cmc.rsi14)) {
+    const zone = cmc.rsi14 >= 70 ? " · surachat" : cmc.rsi14 <= 30 ? " · survente" : "";
+    chips.push(`<span class="consensus-chip consensus-neutre" title="Analyse technique CoinMarketCap au moment du verdict">RSI 14 j : ${Math.round(cmc.rsi14)}${zone}</span>`);
+  }
+  if (Number.isFinite(cmc.sma200_gap_pct)) {
+    chips.push(`<span class="consensus-chip consensus-neutre" title="Écart du cours à sa moyenne 200 jours (CoinMarketCap) au moment du verdict">${cmc.sma200_gap_pct > 0 ? "+" : ""}${cmc.sma200_gap_pct.toFixed(0)} % vs MM200</span>`);
+  }
   const signals = ((v && v.signals_used) || []).filter((s) => typeof s === "string" && s.trim() && s.length <= 70).slice(0, 3);
   if (!chips.length && !signals.length) return "";
   return `<div class="verdict-summary">${chips.length ? `<div class="verdict-chips">${chips.join("")}</div>` : ""}${

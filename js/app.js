@@ -554,7 +554,7 @@ function updateHeroStats(verdicts, alerts) {
 }
 
 async function loadAllData() {
-  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory, marketGauges, cryptoGlobal] = await Promise.all([
+  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory, marketGauges, cryptoGlobal, cmcFavoris] = await Promise.all([
     loadJson(DATA_URLS.verdicts),
     loadJson(DATA_URLS.engineHistory),
     loadJson(DATA_URLS.opportunities),
@@ -571,6 +571,7 @@ async function loadAllData() {
     loadJson(DATA_URLS.onchainHistory),
     loadJson(DATA_URLS.marketGauges),
     loadJson(DATA_URLS.cryptoGlobal),
+    loadJson(DATA_URLS.cmcFavoris),
   ]);
   latestFavorisContext = favorisContext;
   // data/onchain-history.json est neuf (voir docs/routines/favoris-quotidien-onchain-history.md) :
@@ -579,7 +580,7 @@ async function loadAllData() {
   latestOnchainHistory = onchainHistory && onchainHistory.assets ? onchainHistory : { assets: {} };
   // Expose les données déjà chargées pour que d'autres fonctionnalités (l'Assistant) les
   // réutilisent sans refaire les mêmes fetch — toujours les données du dernier rafraîchissement.
-  window.aguilaradarData = { verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory: latestOnchainHistory, marketGauges, cryptoGlobal };
+  window.aguilaradarData = { verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory: latestOnchainHistory, marketGauges, cryptoGlobal, cmcFavoris };
   if (window.renderDigestPanel) renderDigestPanel(digest);
 
   renderEngineTab(verdicts || [], engineHistory, opportunities, controlGroup);

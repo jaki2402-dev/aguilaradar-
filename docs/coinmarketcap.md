@@ -1,8 +1,10 @@
 # Connecteur CoinMarketCap
 
-**En bref** : une routine dédiée (`coinmarketcap-quotidien`) fait 1 appel par jour et écrit
-`data/crypto-global.json`. Le site et l'Assistant l'affichent déjà dès que le fichier existe.
-Activation : l'utilisateur crée la routine (`docs/routines/coinmarketcap-quotidien.md`).
+**En bref** : une routine dédiée (`coinmarketcap-quotidien`) relève chaque jour le marché et
+l'analyse technique des 15 favoris (`data/crypto-global.json`, `data/cmc-favoris.json`). Le site
+(fiche de chaque favori), l'Assistant et — après collage d'un texte — le cycle des verdicts s'en
+servent. Activation : `docs/routines/coinmarketcap-quotidien.md`, puis l'ajout du 10/10 (2) de
+`docs/routines/cycle-2h-verdict.md`.
 
 ## Pourquoi une routine dédiée
 
@@ -15,6 +17,8 @@ fichier, teste CoinMarketCap **sans aucun risque pour les autres routines**.
 | Outil | Contenu | Utilisé ? |
 |---|---|---|
 | `get_global_metrics_latest` | Saison des altcoins, positions ouvertes, financement, liquidations BTC, encours ETF (~5,5 Ko) | **Oui** — routine dédiée |
+| `get_crypto_quotes_latest` | 15 favoris en 1 appel (~9 Ko) : cours, évolutions 1 h → 1 an, volume, offre | **Oui** — routine dédiée |
+| `get_crypto_technical_analysis` | 1 actif par appel (~0,7 Ko) : RSI 7/14/21, MM 7/30/200, MACD, Fibonacci, pivot | **Oui** — routine dédiée, 15 appels |
 | `get_crypto_metrics` | Répartition des détenteurs d'un actif (baleines) | Plus tard : favoris |
 | `get_crypto_latest_news` | ≤ 10 articles pour un actif, lourd en quota | Seulement si les actualités sont rétablies (P2) |
 | `trending_crypto_narratives` | Thèmes en vogue | Plus tard : opportunités |
@@ -25,6 +29,8 @@ fichier, teste CoinMarketCap **sans aucun risque pour les autres routines**.
 
 ## Étapes suivantes
 
-1. Routine dédiée réussie 3 jours de suite (`data/crypto-global.json` daté du jour).
-2. Puis, une routine à la fois et après accord : favoris (`get_crypto_metrics`), opportunités
-   (`trending_crypto_narratives`) — toujours avec l'appel en dernière étape, après le commit habituel.
+1. Routine dédiée réussie 3 jours de suite (`data/cmc-favoris.json` daté du jour).
+2. Cycle des verdicts : enregistre `cmc_technical_at_issue` sans changer sa règle de décision ; après
+   assez de verdicts résolus, mesurer si un RSI en surachat/survente prédit l'issue (auto-correction).
+3. Plus tard, après accord : répartition des détenteurs (`get_crypto_metrics`) pour les favoris,
+   thèmes en vogue (`trending_crypto_narratives`) pour les opportunités — dans la routine dédiée.

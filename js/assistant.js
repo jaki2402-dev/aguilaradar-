@@ -61,8 +61,9 @@ async function ensureChatData() {
     loadJson(DATA_URLS.favorisContext),
     loadJson(DATA_URLS.marketGauges),
     loadJson(DATA_URLS.cryptoGlobal),
-  ]).then(([verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext, marketGauges, cryptoGlobal]) => {
-    chatData = { verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext, marketGauges, cryptoGlobal };
+    loadJson(DATA_URLS.cmcFavoris),
+  ]).then(([verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext, marketGauges, cryptoGlobal, cmcFavoris]) => {
+    chatData = { verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext, marketGauges, cryptoGlobal, cmcFavoris };
     return chatData;
   });
   return chatDataLoading;
@@ -626,6 +627,27 @@ const CHAT_INTENTS = [
   { keywords: ["investir", "acheter", "vendre", "placer", "position", "que penses-tu", "quel est ton avis", "ton avis", "conseil", "conseilles"], handler: answerGenericInvesting },
 ];
 
+function cmcTechnicalLines() {
+  const data = chatData.cmcFavoris;
+  if (!data || !data.assets) return "";
+  const fin = Number.isFinite;
+  const pct = (v) => `${v > 0 ? "+" : ""}${v.toFixed(0)} %`;
+  const lines = Object.entries(data.assets)
+    .map(([ticker, a]) => {
+      const t = a.technical || {};
+      const ch = a.change_pct || {};
+      const bits = [];
+      if (fin(t.rsi14)) bits.push(`RSI14 ${t.rsi14.toFixed(0)}${t.rsi14 >= 70 ? " (surachat)" : t.rsi14 <= 30 ? " (survente)" : ""}`);
+      if (fin(a.price_usd) && fin(t.sma200)) bits.push(`${pct((a.price_usd / t.sma200 - 1) * 100)} vs moyenne 200 j`);
+      if (fin(t.macd_histogram) && t.macd_histogram !== 0) bits.push(`MACD ${t.macd_histogram > 0 ? "haussier" : "baissier"}`);
+      if (fin(ch["90d"])) bits.push(`90 j ${pct(ch["90d"])}`);
+      if (fin(ch["1y"])) bits.push(`1 an ${pct(ch["1y"])}`);
+      return bits.length ? `${ticker} : ${bits.join(", ")}` : null;
+    })
+    .filter(Boolean);
+  return lines.length ? `Analyse technique CoinMarketCap des favoris${data.as_of ? ` (relevé le ${chatShortDate(data.as_of)})` : ""} : ${lines.join(" ; ")}.` : "";
+}
+
 // Contexte compact envoyé au relais IA (cloudflare-worker/, dernier recours seulement, voir
 // fetchLiveAiFallback) — jamais le JSON brut complet (trop gros, ralentirait chaque appel).
 // chatData est déjà chargé par ensureChatData au moment où ceci est appelé, aucun fetch de plus.
@@ -693,6 +715,12 @@ function buildAiContext() {
     const lines = Array.from(latestByAsset.values()).map((v) => `${v.ticker} ${v.verdict} (${v.confidence_pct ?? "—"} %)`);
     parts.push(`Verdicts actifs sur les 15 favoris : ${lines.join(", ")}.`);
   }
+
+  // Analyse technique CoinMarketCap des favoris (data/cmc-favoris.json) : RSI, écart à la moyenne
+  // 200 j, élan MACD, évolution 90 j / 1 an — ce que les verdicts du moteur n'utilisaient pas
+  // (constaté le 10/10 : CTSI émis ACHAT avec un RSI 14 j à 71, en surachat, sans le mentionner).
+  const cmcLines = cmcTechnicalLines();
+  if (cmcLines) parts.push(cmcLines);
 
   // Toujours inclus (voir favorisUtilityBlock ci-dessus) : coût de caractères fixe et minime,
   // contrairement aux thèses bull/base/bear ciblées uniquement sur les actifs nommés plus bas.

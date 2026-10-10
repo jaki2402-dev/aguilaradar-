@@ -30,7 +30,7 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | Thèse hebdo du portefeuille | 05/10 | OK (hebdomadaire) |
 | Groupe témoin | 04/10 | OK — objectif 8 en attente atteint |
 | Actualités | vérifiées 10/10, contenu inchangé depuis le 05/10 | À surveiller (P2) |
-| Tests (`npm test`) | 10/10 | 710/710 |
+| Tests (`npm test`) | 10/10 | 722/722 |
 
 ## Problèmes ouverts
 
@@ -44,7 +44,8 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | P7 | **3 routines gardent toute leur mémoire d'une exécution à l'autre** (verif-fraicheur, opportunités, briefing-email) : 274 k à 491 k tokens de contexte mesurés le 06/10, bien plus coûteux qu'une session neuve. | Session avec l'outil routines + **Toi** | Convertir une par une, en vérifiant après chaque conversion. |
 | P8 | **Seuls 4 prompts de routines sur environ 11 sont recopiés dans `docs/routines/`** : les autres sont invisibles pour une session qui n'a pas l'outil routines. C'est le principal trou de mémoire entre sessions. | Session avec l'outil routines | Recopier chaque prompt actuel (`get_trigger`) dans `docs/routines/<nom>.md`, sans secret (clé privée exclue). |
 | P9 | **Mail du matin** : le prompt corrigé du 05/10 (jauges fraîches) n'a probablement pas été collé. Non vérifié : le mail ne laisse aucune trace dans le dépôt. | Session avec l'outil routines | Vérifier avec `get_trigger`. |
-| P10 | **CoinMarketCap : routine dédiée prête, pas encore créée.** Site, Assistant et script prêts et testés ; la routine écrira `data/crypto-global.json` (levier, saison des altcoins, encours ETF). | **Toi** | Créer la routine `aguilaradar-coinmarketcap-quotidien` avec le texte et les réglages de `docs/routines/coinmarketcap-quotidien.md`. Ensuite une session vérifie 3 jours de suite. |
+| P10 | **CoinMarketCap : routine dédiée prête, pas encore créée.** Elle relèvera chaque jour le marché ET l'analyse technique des 15 favoris (RSI, moyennes 200 j, MACD, évolutions jusqu'à 1 an). Le site (fiche de chaque favori) et l'Assistant s'en servent déjà dès que les fichiers existent. | **Toi** | Créer `aguilaradar-coinmarketcap-quotidien` avec le texte de `docs/routines/coinmarketcap-quotidien.md` (nouvelle version du 10/10 au soir). |
+| P13 | **Les verdicts n'utilisent aucun indicateur technique** (seulement les évolutions 24 h / 7 j / 30 j). Exemple réel : CTSI émis ACHAT le 10/10 avec un RSI à 71 (surachat), non mentionné. | **Toi**, puis session | Après P10 : coller l'ajout du 10/10 (2) en fin d'instructions de `aguilaradar-cycle-2h`. Les verdicts enregistreront l'analyse CoinMarketCap sans changer leur règle ; à mesurer après le 20/10. |
 | P11 | **Résumés d'une phrase par les routines : textes prêts, pas encore collés.** Le site affiche déjà un champ `resume` en tête (verdicts, actualités, régime, notes du contexte marché, thèses des favoris) dès qu'il existe. | **Toi** | Coller chaque texte en fin d'instructions de sa routine : `cycle-2h`, `marche-quotidien`, `favoris-quotidien` (section « Ajout du 10/10/2026 » de `docs/routines/cycle-2h-verdict.md`, `marche-quotidien.md`, `favoris-quotidien.md`). Une session vérifie ensuite qu'un `resume` apparaît sur `origin/main`. |
 
 ## Rendez-vous
@@ -73,6 +74,9 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 
 ## Journal des sessions (le plus récent en haut)
 
+- **10/10/2026 (nuit)** — Priorité de l'utilisateur : de meilleures analyses grâce à CoinMarketCap. Testé :
+  analyse technique par actif et cours multi-durées. Routine dédiée étendue (script `cmc-snapshot.py`,
+  ids vérifiés), bloc dans la fiche des favoris, contexte de l'Assistant, texte pour le cycle des verdicts.
 - **10/10/2026 (fin de soirée)** — Demande : textes plus courts, l'essentiel en avant. Résumés de verdicts
   tirés des données (rien d'inventé), aperçus partout ailleurs. Puis, à la demande de l'utilisateur :
   champ `resume` préparé pour 3 routines (site prêt, textes à coller : P11).

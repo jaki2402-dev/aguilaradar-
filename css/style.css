@@ -918,6 +918,9 @@ th { color: var(--text-dim); font-weight: 600; font-size: 0.76rem; text-transfor
 .verdict-signals li { margin: 1px 0; }
 .context-note { margin-top: 6px; }
 .text-resume { margin: 4px 0; color: var(--text); font-weight: 500; }
+.detail-cmc { margin: 12px 0; }
+.cmc-rows { list-style: none; margin: 6px 0 0; padding: 0; }
+.cmc-rows li { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
 .context-note > strong { display: block; }
 .expand-hint-inline {
   display: inline-flex; text-align: left; border-top: none; margin-top: 2px; padding-top: 0;

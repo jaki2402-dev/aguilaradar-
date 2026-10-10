@@ -163,3 +163,19 @@ describe("régime de marché : resume transmis par macroView", () => {
     expect(m.note).toBe("Note longue.");
   });
 });
+
+describe("résumé d'un verdict : analyse technique CoinMarketCap enregistrée à l'émission", () => {
+  it("ajoute les pastilles RSI (avec la zone) et écart à la MM200 quand le champ existe", () => {
+    const dom = loadPage(["config.js"], { html: "<!doctype html><html><body><div id='out'></div></body></html>" });
+    const out = dom.window.document.getElementById("out");
+    out.innerHTML = dom.window.renderVerdictSummary({ ...CTSI, cmc_technical_at_issue: { as_of: "2026-10-10T07:20:00Z", rsi14: 71.02, sma200_gap_pct: 30.1, macd: "haussier" } });
+    const chips = [...out.querySelectorAll(".consensus-chip")].map((c) => c.textContent);
+    expect(chips).toContain("RSI 14 j : 71 · surachat");
+    expect(chips).toContain("+30 % vs MM200");
+  });
+
+  it("champ absent ou null : aucune pastille CoinMarketCap", () => {
+    const dom = loadPage(["config.js"]);
+    expect(dom.window.renderVerdictSummary({ ...CTSI, cmc_technical_at_issue: null })).not.toContain("RSI 14 j");
+  });
+});

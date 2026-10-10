@@ -443,6 +443,33 @@ async function renderTechnicalSection(asset) {
   return { html, chartId: asset.showChart && asset.tvSymbol ? chartId : null };
 }
 
+// Analyse technique CoinMarketCap (data/cmc-favoris.json, routine coinmarketcap-quotidien) : relevé
+// quotidien qui complète les indicateurs calculés en direct ci-dessus (moyenne 200 j, MACD,
+// évolutions 90 j / 1 an) et reste affiché quand le calcul en direct échoue (limite CoinGecko).
+// Mêmes seuils RSI que technicalSignalSentences (70 / 30). Rien si le fichier ou l'actif manque.
+function renderCmcTechnicalSection(ticker) {
+  const data = typeof window !== "undefined" && window.aguilaradarData ? window.aguilaradarData.cmcFavoris : null;
+  const a = data && data.assets ? data.assets[ticker] : null;
+  if (!a) return "";
+  const t = a.technical || {};
+  const ch = a.change_pct || {};
+  const fin = Number.isFinite;
+  const pct = (v) => `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v).toFixed(0)} %`;
+  const rows = [];
+  if (fin(t.rsi14)) rows.push([`RSI 14 j${glossaryTipHtml("RSI")}`, `${t.rsi14.toFixed(0)} — ${t.rsi14 >= 70 ? "zone de surachat" : t.rsi14 <= 30 ? "zone de survente" : "zone neutre"}`]);
+  if (fin(a.price_usd) && fin(t.sma200)) {
+    const gap = (a.price_usd / t.sma200 - 1) * 100;
+    rows.push([`Cours / moyenne 200 j${glossaryTipHtml("Moyenne 200 jours")}`, `${pct(gap)} (${gap >= 0 ? "au-dessus" : "en dessous"})`]);
+  }
+  if (fin(t.macd_histogram) && t.macd_histogram !== 0) rows.push([`MACD${glossaryTipHtml("MACD")}`, t.macd_histogram > 0 ? "élan haussier" : "élan baissier"]);
+  const perf = [["90 j", ch["90d"]], ["1 an", ch["1y"]], ["depuis janvier", ch.ytd]].filter(([, v]) => fin(v)).map(([l, v]) => `${l} ${pct(v)}`);
+  if (perf.length) rows.push(["Évolution", perf.join(" · ")]);
+  if (!rows.length) return "";
+  const asOf = data.as_of ? new Date(data.as_of).toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit" }) : null;
+  return `<div class="detail-cmc"><strong>Analyse technique CoinMarketCap</strong>${asOf ? ` <span class="hint">relevé du ${escapeHtml(asOf)}</span>` : ""}
+    <ul class="cmc-rows">${rows.map(([label, value]) => `<li><span class="hint">${label}</span><span>${escapeHtml(value)}</span></li>`).join("")}</ul></div>`;
+}
+
 async function renderDetailPanel(panelEl, asset) {
   panelEl.innerHTML = `<p class="empty-state">Calcul des indicateurs en cours…</p>`;
 
@@ -516,6 +543,7 @@ async function renderDetailPanel(panelEl, asset) {
   // dépliage, donc gardent "Mon avis" normalement.
   panelEl.innerHTML = `
     ${technicalHtml}
+    ${renderCmcTechnicalSection(asset.ticker)}
     ${onchainHtml}
     ${renderFavorisContextSection(asset.ticker)}
     ${asset.skipOpinionBlock ? "" : `<div class="detail-opinion">

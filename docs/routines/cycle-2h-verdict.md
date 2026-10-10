@@ -77,7 +77,8 @@ Tableau au niveau racine, chaque entrée :
   "status": "pending",
   "threshold_pct": 5,
   "regime_at_issue": "risk-on | neutre | risk-off",
-  "signal_consensus": { "technique": "haussier|baissier|mixte|neutre", "fondamental": "...", "macro": "...", "accord_count": <0-3> }
+  "signal_consensus": { "technique": "haussier|baissier|mixte|neutre", "fondamental": "...", "macro": "...", "accord_count": <0-3> },
+  "cmc_technical_at_issue": { "as_of": "<ISO>", "rsi14": <number|null>, "sma200_gap_pct": <number|null>, "macd": "haussier|baissier|null" } | null
 }
 ```
 
@@ -334,4 +335,18 @@ AJOUT DU 10/10/2026 — CHAMP "resume" (en plus de tout ce qui précède, sans a
 2. Chaque NOUVEL item ajouté à data/news.json reçoit "resume" : l'actualité en une phrase.
 3. Quand tu écris engine-history.json.macro_regime, ajoute "resume" : le régime retenu et sa raison principale, en une phrase.
 Les verdicts et actualités déjà écrits ne sont jamais modifiés (historique permanent). Règles du champ "resume" : une seule phrase en français correct (accents), 160 caractères maximum, l'essentiel en premier ; écrite uniquement à partir du texte complet que tu viens d'écrire (aucun chiffre ni fait absent de ce texte) ; jamais de conseil d'achat ou de vente ; écrite par le même script python3 que le reste. Si tu ne peux pas résumer fidèlement, n'écris pas de "resume" : le site affichera le début du texte.
+```
+
+## Ajout du 10/10/2026 (2) : analyse technique CoinMarketCap (texte à coller en fin d'instructions)
+
+Lit `data/cmc-favoris.json` (routine `coinmarketcap-quotidien`) pour **documenter** chaque verdict (`cmc_technical_at_issue`, `signals_used`, `reasoning`) sans changer la règle de décision : une seule variable à la fois (corr-20260921 en évaluation jusqu'au 20/10). Une fois assez de verdicts résolus avec ce champ, mesurer si un RSI en surachat/survente à l'émission prédit l'issue — candidat d'auto-correction. **État : préparé, actif quand le texte ci-dessous a été collé ET que `data/cmc-favoris.json` existe** — vérifier un `cmc_technical_at_issue` sur `origin/main`.
+
+```
+AJOUT DU 10/10/2026 (2) — ANALYSE TECHNIQUE COINMARKETCAP (lecture seule ; aucun outil CoinMarketCap dans cette routine).
+Pour chaque favori sur lequel tu émets un verdict, lis seulement son entrée dans data/cmc-favoris.json, par extraction python3 (jamais le fichier entier). Si le fichier manque, si l'actif n'y est pas ou si "as_of" date de plus de 36 h, ignore cette étape et écris "cmc_technical_at_issue": null.
+Sinon :
+1. Ajoute au verdict "cmc_technical_at_issue" : {"as_of": <as_of du fichier>, "rsi14": <technical.rsi14>, "sma200_gap_pct": <(price_usd / technical.sma200 - 1) x 100, arrondi à 1 décimale, calculé en python3>, "macd": "haussier" si technical.macd_histogram > 0, "baissier" s'il est < 0, sinon null}. Valeur absente = null, jamais devinée.
+2. Ajoute dans signals_used les signaux réellement observés, par exemple « RSI14 71 (CMC) » ou « +30 % vs MM200 (CMC) ».
+3. Dans reasoning, signale tout signal CoinMarketCap qui contredit ta lecture technique : RSI14 >= 70 (surachat) sur un ACHAT, RSI14 <= 30 (survente) sur une VENTE, MACD de sens opposé au verdict.
+Ne change PAS la règle de décision ACHAT / ATTENTE / VENTE ni le calcul de confidence_pct : la règle corr-20260921 est en évaluation jusqu'au 20/10 et doit rester la seule variable modifiée. Ces données servent à documenter et à mesurer plus tard si elles prédisent les issues. Elles sont en USD : ne les compare jamais à un prix en euros.
 ```

@@ -172,8 +172,9 @@ vente.
 - Champ `resume` (verdicts, actualités, régime, notes du contexte marché, thèses des favoris) :
   1 phrase ≤ 160 caractères écrite par la routine, affichée en tête par le site ; jamais un fait
   absent du texte complet (règle dans `docs/routines/*.md`, ajout du 10/10/2026).
-- `crypto-global.json` : état courant (levier, saison des altcoins, encours ETF) écrasé chaque jour
-  par la seule routine `coinmarketcap-quotidien` (`scripts/write-crypto-global.py`).
+- `crypto-global.json` (levier, saison des altcoins, encours ETF) et `cmc-favoris.json` (cours,
+  évolutions, RSI, MM, MACD des 15 favoris, clé = ticker, USD) : état courant écrasé chaque jour par
+  la seule routine `coinmarketcap-quotidien` (`scripts/cmc-snapshot.py`, ids CMC vérifiés dedans).
 - Avant de proposer une nouvelle source : vérifier `data/market-context.json` (taux 10 ans, flux
   ETF, stablecoins y sont déjà).
 
@@ -190,10 +191,10 @@ vente.
   (bloquent la session) — WebFetch + WebSearch à la place. Exception : `opportunites-quotidien`.
   Un outil qui marche en session interactive ne prouve rien pour une routine. Validés en
   exécution automatique : Blockscout (`favoris-quotidien`, prouvé sur données le 10/10).
-  **CoinMarketCap** : uniquement `get_global_metrics_latest`, dans la routine dédiée
-  `coinmarketcap-quotidien` (`docs/routines/coinmarketcap-quotidien.md`) ; interdit dans toute
-  autre routine tant qu'elle n'a pas réussi 3 jours de suite. `execute_skill` (facturé) : jamais
-  sans accord de l'utilisateur.
+  **CoinMarketCap** : seulement dans la routine dédiée `coinmarketcap-quotidien`
+  (`get_global_metrics_latest`, `get_crypto_quotes_latest`, `get_crypto_technical_analysis` →
+  `scripts/cmc-snapshot.py`) ; les autres routines lisent ses fichiers, n'appellent jamais l'outil.
+  `execute_skill` (facturé) : jamais sans accord de l'utilisateur.
 - Échec `rate_limit_info.status:"rejected"` = quota d'usage, pas un bug.
 - Indicateur de fraîcheur en alerte → vérifier les timestamps réels sur `origin/main` avant de
   conclure qu'une routine est bloquée.

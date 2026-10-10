@@ -459,3 +459,24 @@ lu en lecture seule ici »), donc une simple troncature montrait la mauvaise par
   fin de chaque spec. Site : `renderSummaryFirst`/`resumeHtml` (config.js) — résumé en tête, texte
   complet replié ; sans `resume`, comportement inchangé. Coût : quelques phrases par cycle.
 
+### 10/10/2026 (nuit) — CoinMarketCap au service des analyses
+
+Priorité exprimée par l'utilisateur : de meilleures analyses grâce au connecteur. Testé en session :
+`get_crypto_quotes_latest` (15 favoris en 1 appel, ~9 Ko, évolutions 1 h → 1 an) et
+`get_crypto_technical_analysis` (~0,7 Ko par actif : RSI 7/14/21, MM 7/30/200, MACD, Fibonacci,
+pivot). Constat : `cycle-2h` décide de `signal_consensus.technique` sur les seules évolutions
+24 h/7 j/30 j (`signals_used` de v-20261010-ctsi) ; CTSI émis ACHAT avec RSI14 71 et cours +30 % au-
+dessus de sa MM200, sans le savoir.
+- Ids CMC des 15 favoris vérifiés via `search_cryptos` (FLUX = 3029 « zel », pas FLX 15535), rangés
+  dans `scripts/cmc-snapshot.py` (`--ids`).
+- La routine enregistre les réponses brutes ; le script extrait et contrôle (RSI hors 0-100 → null ;
+  MM7 hors ±50 % du cours → analyse technique écartée, contre une réponse sous le mauvais id).
+  Testé sur des extraits réels (`test/fixtures/cmc-20261010`).
+- Site : `renderCmcTechnicalSection` (detail.js), visible même si le calcul en direct échoue ;
+  Assistant : `cmcTechnicalLines`.
+- `cycle-2h` : enregistre `cmc_technical_at_issue` et cite les signaux contradictoires, **sans changer
+  la règle de décision** (corr-20260921 en évaluation jusqu'au 20/10 : une variable à la fois). Les
+  données accumulées permettront de mesurer si le surachat à l'émission prédit l'échec.
+- `scripts/write-crypto-global.py` (1re version, 7 valeurs recopiées) gardé pour compatibilité si
+  l'ancien texte a été collé ; à supprimer une fois la nouvelle routine confirmée.
+
