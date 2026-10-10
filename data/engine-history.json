@@ -54,9 +54,9 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-10T00:17:54Z",
+    "last_success_at": "2026-10-10T08:26:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 10/10/2026 ~00h17 UTC : cycle court (verification econome en premier, docs/routines/cycle-2h-verdict.md section demarrage econome). Aucun verdict pending du (15 pending, resolves_at tous dans le futur) et aucun ticker sans verdict pending (15 verdicts pending couvrant les 15 favoris). Aucun outil mcp__ utilise (regle absolue de cette execution, WebSearch/WebFetch/curl uniquement). Veille actualites version courte : 2 recherches WebSearch (hack/exploit crypto, fear&greed) - rien de nouveau date avec fiabilite trouve pour le 10/10 (resultats renvoient des rapports S1/aout 2026 deja plus anciens que le hack Bitget deja logue, et des lectures fear&greed non datees du jour, la plus recente datee etant du 26/01/2026) - rien ajoute a items (regle 'jamais inventer'). last_checked_at de news.json mis a jour, items et last_updated_at inchanges. macro_regime non retouche (cycle sans verdict emis, regle section 7)."
+    "last_failure_reason": "Cycle du 10/10/2026 ~08h16 UTC : 1 verdict resolu (v-20261003-ctsi, +12,56% EUR, seuil 5% depasse a la hausse -> ACHAT aurait ete correct, verdict ATTENTE incorrect), 0 nouveau verdict emis (15 favoris deja couverts par un verdict pending, aucun ticker sans pending). Aucun outil mcp__ utilise (regle absolue de cette execution, WebSearch/curl uniquement). Veille actualites : 3 recherches WebSearch (hack/exploit, fear&greed, actualite generale BTC/ETH) - rien de nouveau date avec fiabilite trouve pour le 09-10/10 (resultats renvoient des incidents et prix anciens, non dates du jour) - rien ajoute a items (regle 'jamais inventer'). last_checked_at de news.json mis a jour, items et last_updated_at inchanges. macro_regime non retouche (cycle sans nouveau verdict emis, regle section 7)."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-06T08:55:00Z",

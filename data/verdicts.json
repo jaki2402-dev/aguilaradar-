@@ -3115,13 +3115,13 @@
     "reasoning": "Le verdict ATTENTE du 22/09 est confirmé : CTSI est passé de 0,025592 à 0,026474 € (+3,45 %), sous le seuil directionnel de 5 % — la forte hausse sur 7 jours qui avait justifié une requalification prudente en « mixte » (corr-20260913) ne s'est pas prolongée au-delà du seuil. Nouveau cycle : lecture technique redevenue neutre (24h +1,77 %, 7j +0,06 % quasiment plat — le +20,68 % sur 30 jours reflète une hausse déjà réalisée mi-septembre, pas une dynamique fraîche, et reste sous le seuil de 15 % qui aurait déclenché une requalification). Croisement : portfolio-thesis.json (28/09) maintient « Attendre » conviction 4/10 (flux d'actualités faible, catalyseur rollups/adoption non confirmé avec une date) ; favoris-context.json (23/09) conserve un scénario de base sans catalyseur (statut Stage 2 confirmé mais adoption encore naissante, risque de concentration des wallets non re-vérifié ce cycle) — fondamental neutre, aligné avec la lecture technique, aucune contradiction à signaler. Régime macro retenu neutre (data/market-context.json, dernier calcul 28/09 08h45 UTC — fichier non rafraîchi depuis, la routine marche-quotidien n'ayant pas tourné depuis cette date, signalé ici par transparence plutôt que recalculé avec un nouvel appel réseau) : Fed toujours hawkish, rendement du Trésor 10 ans à 5,17 % (plus haut depuis 2007) penche risk-off, mais flux ETF BTC/ETH nets positifs pour la 7e/6e séance consécutive penchent risk-on, et la hausse de la dominance stablecoins (10,34 % vs 10,13 %) est mécanique (recul de la capitalisation totale, pas un vrai mouvement vers les stablecoins) donc non retenue comme signal supplémentaire — signaux macro toujours trop mélangés pour trancher, retenus tels quels. Les trois dimensions convergent cette fois sur une lecture neutre (technique, fondamental, macro) : accord_count=3, confiance 78 % (fourchette 75-85, accord complet mais sur une accalmie plutôt qu'une conviction directionnelle forte) ; ATTENTE retenue (technique neutre, aucune direction forcée par la règle de la section 2), horizon maintenu à 7 jours (groupe volatil, corr-20260906).",
     "price_at_issue": 0.026474,
     "resolves_at": "2026-10-10T07:18:00Z",
-    "status": "pending",
+    "status": "resolved",
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.02979947,
+      "actual_move_pct": 12.56,
+      "actual_direction": "ACHAT",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-10T08:20:00Z"
     },
     "threshold_pct": 5,
     "regime_at_issue": "neutre",
