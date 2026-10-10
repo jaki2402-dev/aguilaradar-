@@ -1,14 +1,14 @@
 {
-  "updated_at": "2026-10-09T17:10:04Z",
+  "updated_at": "2026-10-10T01:53:56Z",
   "fear_greed": {
-    "value": 59,
+    "value": 64,
     "classification": "Greed",
-    "as_of": "2026-10-09T00:00:00Z",
+    "as_of": "2026-10-10T00:00:00Z",
     "source": "alternative.me /fng (Crypto Fear & Greed Index)"
   },
   "btc_dominance": {
-    "pct": 59.21,
-    "as_of": "2026-10-09T17:03:48Z",
+    "pct": 59.14,
+    "as_of": "2026-10-10T01:44:50Z",
     "source": "CoinGecko /api/v3/global (market_cap_percentage.btc)"
   },
   "errors": []
