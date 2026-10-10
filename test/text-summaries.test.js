@@ -164,7 +164,7 @@ describe("régime de marché : resume transmis par macroView", () => {
   });
 });
 
-describe("résumé d'un verdict : analyse technique CoinMarketCap enregistrée à l'émission", () => {
+describe("résumé d'un verdict : analyse technique enregistrée à l'émission", () => {
   it("ajoute les pastilles RSI (avec la zone) et écart à la MM200 quand le champ existe", () => {
     const dom = loadPage(["config.js"], { html: "<!doctype html><html><body><div id='out'></div></body></html>" });
     const out = dom.window.document.getElementById("out");
@@ -174,8 +174,18 @@ describe("résumé d'un verdict : analyse technique CoinMarketCap enregistrée �
     expect(chips).toContain("+30 % vs MM200");
   });
 
-  it("champ absent ou null : aucune pastille CoinMarketCap", () => {
+  it("robot quotidien (technical_at_issue, depuis le 11/10) : mêmes pastilles, survente et écart négatif", () => {
+    const dom = loadPage(["config.js"], { html: "<!doctype html><html><body><div id='out'></div></body></html>" });
+    const out = dom.window.document.getElementById("out");
+    out.innerHTML = dom.window.renderVerdictSummary({ ...CTSI, technical_at_issue: { as_of: "2026-10-10T23:30:00Z", source: "technical-favoris", rsi14: 27.6, sma200_gap_pct: -41.8, macd: "baissier" } });
+    const chips = [...out.querySelectorAll(".consensus-chip")].map((c) => c.textContent);
+    expect(chips).toContain("RSI 14 j : 28 · survente");
+    expect(chips).toContain("-42 % vs MM200");
+  });
+
+  it("champ absent ou null : aucune pastille technique", () => {
     const dom = loadPage(["config.js"]);
     expect(dom.window.renderVerdictSummary({ ...CTSI, cmc_technical_at_issue: null })).not.toContain("RSI 14 j");
+    expect(dom.window.renderVerdictSummary({ ...CTSI, technical_at_issue: null })).not.toContain("RSI 14 j");
   });
 });

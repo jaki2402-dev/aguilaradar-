@@ -2,9 +2,14 @@
 
 **En bref** : une routine dédiée (`coinmarketcap-quotidien`) relève chaque jour le marché et
 l'analyse technique des 15 favoris (`data/crypto-global.json`, `data/cmc-favoris.json`). Le site
-(fiche de chaque favori), l'Assistant et — après collage d'un texte — le cycle des verdicts s'en
-servent. Activation : `docs/routines/coinmarketcap-quotidien.md`, puis l'ajout du 10/10 (2) de
-`docs/routines/cycle-2h-verdict.md`.
+(fiche de chaque favori) et l'Assistant s'en servent. Activation : `docs/routines/coinmarketcap-quotidien.md`
+(routine à créer par l'utilisateur, facultative).
+
+**Depuis le 11/10/2026**, l'analyse technique des favoris (MM200, RSI, MACD) est calculée chaque
+soir sans quota par le robot GitHub `technical-daily` (`data/technical-favoris.json`) : c'est elle
+que lit le cycle des verdicts. CoinMarketCap reste utile pour ce que le robot n'a pas : levier,
+financement, liquidations, saison des altcoins (`get_global_metrics_latest`), et a servi à
+recouper les calculs du robot.
 
 ## Pourquoi une routine dédiée
 
@@ -30,7 +35,7 @@ fichier, teste CoinMarketCap **sans aucun risque pour les autres routines**.
 ## Étapes suivantes
 
 1. Routine dédiée réussie 3 jours de suite (`data/cmc-favoris.json` daté du jour).
-2. Cycle des verdicts : enregistre `cmc_technical_at_issue` sans changer sa règle de décision ; après
-   assez de verdicts résolus, mesurer si un RSI en surachat/survente prédit l'issue (auto-correction).
+2. Cycle des verdicts : enregistre `technical_at_issue` (robot) sans changer sa règle de décision ;
+   après assez de verdicts résolus, mesurer si un RSI en surachat/survente prédit l'issue.
 3. Plus tard, après accord : répartition des détenteurs (`get_crypto_metrics`) pour les favoris,
    thèmes en vogue (`trending_crypto_narratives`) pour les opportunités — dans la routine dédiée.

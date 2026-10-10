@@ -171,7 +171,11 @@ vente.
   ticker**, pas `cgId`). Les distinguer par la forme.
 - Champ `resume` (verdicts, actualités, régime, notes du contexte marché, thèses des favoris) :
   1 phrase ≤ 160 caractères écrite par la routine, affichée en tête par le site ; jamais un fait
-  absent du texte complet (règle dans `docs/routines/*.md`, ajout du 10/10/2026).
+  absent du texte complet (section « Champ resume » de `docs/routines/*.md`, active le 11/10/2026).
+- `technical-favoris.json` : GitHub Action `technical-daily` (23h30 UTC, zéro quota,
+  `scripts/technical-favoris.mjs`, mêmes calculs que `js/detail.js`) — MM200, RSI, MACD,
+  volatilité par favori (clé = ticker, USD) + analyse rétrospective des verdicts vérifiés. Le cycle
+  le lit pour `technical_at_issue` (documente, ne change pas la règle de décision).
 - `crypto-global.json` (levier, saison des altcoins, encours ETF) et `cmc-favoris.json` (cours,
   évolutions, RSI, MM, MACD des 15 favoris, clé = ticker, USD) : état courant écrasé chaque jour par
   la seule routine `coinmarketcap-quotidien` (`scripts/cmc-snapshot.py`, ids CMC vérifiés dedans).
@@ -182,7 +186,9 @@ vente.
 
 - La config des routines vit dans les triggers Cowork, invisible à git et non relisible. Les specs
   versionnées sont dans `docs/routines/*.md` (cycle-2h-verdict, favoris-quotidien,
-  marche-quotidien) : modifier le `.md` + committer sur `main`. Changer un trigger
+  marche-quotidien) : leurs prompts disent « lis ce fichier sur main et suis-le à la lettre »
+  (vérifié par `list_triggers` le 10/10) → modifier le `.md` + le fusionner dans `main` SUFFIT,
+  rien à coller. Ne jamais y laisser de texte « à coller / pas encore actif » : la routine le lit. Changer un trigger
   (`update_trigger`) = action à confirmer avec l'utilisateur, jamais automatique.
 - **Commit en 2 étapes** : la session commite sur sa branche `claude/*`, puis fusionne dans `main`
   et pousse `main`. Sans l'étape 2, invisible sur le site. Branches `claude/*` restantes : vérifier

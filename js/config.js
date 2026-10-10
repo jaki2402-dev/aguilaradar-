@@ -313,15 +313,16 @@ function renderVerdictSummary(v) {
       const cls = CONSENSUS_DIRECTIONS.includes(dir) ? dir : "neutre";
       return `<span class="consensus-chip consensus-${cls}">${label} : ${escapeHtml(dir)}</span>`;
     });
-  // Analyse technique CoinMarketCap enregistrée à l'émission (cmc_technical_at_issue, ajout du
-  // 10/10/2026) : affichée telle quelle, avec les mêmes seuils RSI que le reste du site (70 / 30).
-  const cmc = (v && v.cmc_technical_at_issue) || {};
-  if (Number.isFinite(cmc.rsi14)) {
-    const zone = cmc.rsi14 >= 70 ? " · surachat" : cmc.rsi14 <= 30 ? " · survente" : "";
-    chips.push(`<span class="consensus-chip consensus-neutre" title="Analyse technique CoinMarketCap au moment du verdict">RSI 14 j : ${Math.round(cmc.rsi14)}${zone}</span>`);
+  // Analyse technique enregistrée à l'émission : technical_at_issue (robot quotidien, depuis le
+  // 11/10/2026) ou cmc_technical_at_issue (CoinMarketCap, même forme). Affichée telle quelle, avec
+  // les mêmes seuils RSI que le reste du site (70 / 30).
+  const tech = (v && (v.technical_at_issue || v.cmc_technical_at_issue)) || {};
+  if (Number.isFinite(tech.rsi14)) {
+    const zone = tech.rsi14 >= 70 ? " · surachat" : tech.rsi14 <= 30 ? " · survente" : "";
+    chips.push(`<span class="consensus-chip consensus-neutre" title="RSI 14 jours au moment du verdict">RSI 14 j : ${Math.round(tech.rsi14)}${zone}</span>`);
   }
-  if (Number.isFinite(cmc.sma200_gap_pct)) {
-    chips.push(`<span class="consensus-chip consensus-neutre" title="Écart du cours à sa moyenne 200 jours (CoinMarketCap) au moment du verdict">${cmc.sma200_gap_pct > 0 ? "+" : ""}${cmc.sma200_gap_pct.toFixed(0)} % vs MM200</span>`);
+  if (Number.isFinite(tech.sma200_gap_pct)) {
+    chips.push(`<span class="consensus-chip consensus-neutre" title="Écart du cours à sa moyenne 200 jours au moment du verdict">${tech.sma200_gap_pct > 0 ? "+" : ""}${tech.sma200_gap_pct.toFixed(0)} % vs MM200</span>`);
   }
   const signals = ((v && v.signals_used) || []).filter((s) => typeof s === "string" && s.trim() && s.length <= 70).slice(0, 3);
   if (!chips.length && !signals.length) return "";

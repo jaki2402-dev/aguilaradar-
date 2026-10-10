@@ -27,6 +27,34 @@ function computeSMA(closes, period) {
   return slice.reduce((a, b) => a + b, 0) / period;
 }
 
+// Moyenne mobile exponentielle sur toute la série (amorcée par la moyenne simple des `period`
+// premières valeurs) ; null là où elle n'est pas encore définie.
+function computeEMASeries(values, period) {
+  const out = new Array(values.length).fill(null);
+  if (!period || values.length < period) return out;
+  const k = 2 / (period + 1);
+  let ema = values.slice(0, period).reduce((a, b) => a + b, 0) / period;
+  out[period - 1] = ema;
+  for (let i = period; i < values.length; i++) {
+    ema = values[i] * k + ema * (1 - k);
+    out[i] = ema;
+  }
+  return out;
+}
+
+// MACD standard (12, 26, 9) au dernier point : ligne = EMA12 − EMA26, signal = EMA9 de la ligne,
+// histogramme = ligne − signal (> 0 : élan haussier). null si l'historique est trop court.
+function computeMACD(closes, fast = 12, slow = 26, signalPeriod = 9) {
+  if (!closes || closes.length < slow + signalPeriod) return null;
+  const emaFast = computeEMASeries(closes, fast);
+  const emaSlow = computeEMASeries(closes, slow);
+  const line = closes.map((_, i) => (emaFast[i] !== null && emaSlow[i] !== null ? emaFast[i] - emaSlow[i] : null)).filter((v) => v !== null);
+  const signal = computeEMASeries(line, signalPeriod);
+  const last = line.length - 1;
+  if (signal[last] === null) return null;
+  return { line: line[last], signal: signal[last], histogram: line[last] - signal[last] };
+}
+
 function computeRSIAt(closes, period, endIndex) {
   const slice = closes.slice(0, endIndex + 1);
   return computeRSI(slice, period);
