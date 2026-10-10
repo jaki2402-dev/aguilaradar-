@@ -84,6 +84,44 @@ function goldSpotView(ctx, gauges) {
   return null;
 }
 
+// Montants du contexte macro (flux/encours ETF, positions ouvertes) : en DOLLARS. formatMarketCap
+// (cards.js) affiche "Md€" et ignore le signe, faux pour un flux ETF en USD (souvent négatif).
+function formatUsdAmount(value) {
+  if (!Number.isFinite(value)) return "—";
+  const sign = value < 0 ? "−" : "";
+  const abs = Math.abs(value);
+  const fmt = (n) => n.toLocaleString("fr-FR", { maximumFractionDigits: 2 });
+  if (abs >= 1e9) return `${sign}${fmt(abs / 1e9)} Md$`;
+  if (abs >= 1e6) return `${sign}${fmt(abs / 1e6)} M$`;
+  return `${sign}${Math.round(abs).toLocaleString("fr-FR")} $`;
+}
+
+function formatUtcStamp(iso) {
+  return new Date(iso).toLocaleString("fr-FR", { timeZone: "UTC", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+}
+
+function signedPct(value, digits) {
+  return `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(value).toLocaleString("fr-FR", { minimumFractionDigits: digits, maximumFractionDigits: digits })} %`;
+}
+
+// Bloc crypto_global (routine marche-quotidien, connecteur CoinMarketCap — voir
+// docs/coinmarketcap.md) : rien n'est affiché tant que la routine ne l'a pas écrit.
+function renderCryptoGlobalRow(cg) {
+  if (!cg || !cg.as_of) return "";
+  const num = (v) => Number.isFinite(v);
+  const oi = num(cg.open_interest_usd)
+    ? `${formatUsdAmount(cg.open_interest_usd)}${num(cg.open_interest_change_7d_pct) ? `<div class="hint">${signedPct(cg.open_interest_change_7d_pct, 1)} sur 7 j</div>` : ""}`
+    : "—";
+  return `
+    <div class="stat-row">
+      <div class="stat-card accent-gold"><div class="stat-label">Saison des altcoins${glossaryTipHtml("Saison des altcoins")}</div><div class="stat-value">${num(cg.altcoin_season_index) ? `${cg.altcoin_season_index}/100` : "—"}</div></div>
+      <div class="stat-card accent-indigo"><div class="stat-label">Positions ouvertes${glossaryTipHtml("Positions ouvertes")}</div><div class="stat-value">${oi}</div></div>
+      <div class="stat-card accent-violet"><div class="stat-label">Financement moyen${glossaryTipHtml("Taux de financement")}</div><div class="stat-value">${num(cg.funding_rate_avg_pct) ? signedPct(cg.funding_rate_avg_pct, 4) : "—"}</div></div>
+      <div class="stat-card accent-teal"><div class="stat-label">Encours ETF BTC</div><div class="stat-value">${formatUsdAmount(cg.btc_etf_aum_usd)}</div></div>
+    </div>
+    <p class="hint">Levier et rotation : CoinMarketCap, relevé le ${formatUtcStamp(cg.as_of)} UTC${num(cg.btc_liquidations_24h_usd) ? ` — liquidations BTC sur 24 h : ${formatUsdAmount(cg.btc_liquidations_24h_usd)}` : ""}.${cg.note ? ` ${highlightKeyInfo(cg.note)}` : ""}</p>`;
+}
+
 function renderMarketContext(ctx, gauges) {
   const el = document.getElementById("market-context-body");
   if (!el) return;
@@ -102,15 +140,16 @@ function renderMarketContext(ctx, gauges) {
     <div class="stat-row">
       <div class="stat-card accent-indigo"><div class="stat-label">Dominance stablecoins</div><div class="stat-value">${sc.dominance_pct !== null && sc.dominance_pct !== undefined ? sc.dominance_pct.toFixed(1) + " %" : "—"}</div></div>
       <div class="stat-card accent-gold"><div class="stat-label">Chômage US</div><div class="stat-value">${emp.unemployment_rate_pct !== null && emp.unemployment_rate_pct !== undefined ? emp.unemployment_rate_pct.toFixed(1) + " %" : "—"}</div></div>
-      <div class="stat-card accent-teal"><div class="stat-label">Flux ETF BTC</div><div class="stat-value">${etf.btc_etf_net_flow_usd !== null && etf.btc_etf_net_flow_usd !== undefined ? formatMarketCap(etf.btc_etf_net_flow_usd) : "—"}</div></div>
+      <div class="stat-card accent-teal"><div class="stat-label">Flux ETF BTC</div><div class="stat-value">${formatUsdAmount(etf.btc_etf_net_flow_usd)}</div></div>
       <div class="stat-card accent-gray"><div class="stat-label">Or (once, USD)${glossaryTipHtml("Or (once, USD)")}</div><div class="stat-value">${goldView ? (goldView.approx ? "≈ " : "") + "$" + Math.round(goldView.usd).toLocaleString("fr-FR") : "—"}</div></div>
       <div class="stat-card accent-violet"><div class="stat-label">Taux Fed (cible)${glossaryTipHtml("Taux Fed (cible)")}</div><div class="stat-value">${fed.funds_rate_range ? escapeHtml(fed.funds_rate_range) : "—"}</div></div>
       <div class="stat-card accent-indigo"><div class="stat-label">Trésor US 10 ans${glossaryTipHtml("Trésor US 10 ans")}</div><div class="stat-value">${fed.treasury_yield_10y_pct !== null && fed.treasury_yield_10y_pct !== undefined ? fed.treasury_yield_10y_pct.toFixed(2) + " %" : "—"}</div></div>
     </div>
+    ${renderCryptoGlobalRow(ctx.crypto_global)}
     ${sc.note ? `<p class="hint">Stablecoins : ${highlightKeyInfo(sc.note)}</p>` : ""}
     ${emp.market_reaction_note ? `<p class="hint">Emploi : ${highlightKeyInfo(emp.market_reaction_note)}</p>` : ""}
     ${etf.note ? `<p class="hint">ETF : ${highlightKeyInfo(etf.note)}</p>` : ""}
-    ${goldView && goldView.approx ? `<p class="hint">Or : cours approché à partir de deux jetons adossés à l'or (PAX Gold, Tether Gold)${goldView.asOf ? `, relevé le ${new Date(goldView.asOf).toLocaleString("fr-FR", { timeZone: "UTC", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })} UTC` : ""} — la routine n'a pas trouvé de cours officiel daté.</p>` : gold.note ? `<p class="hint">Or : ${highlightKeyInfo(gold.note)}</p>` : ""}
+    ${goldView && goldView.approx ? `<p class="hint">Or : cours approché à partir de deux jetons adossés à l'or (PAX Gold, Tether Gold)${goldView.asOf ? `, relevé le ${formatUtcStamp(goldView.asOf)} UTC` : ""} — la routine n'a pas trouvé de cours officiel daté.</p>` : gold.note ? `<p class="hint">Or : ${highlightKeyInfo(gold.note)}</p>` : ""}
     ${fed.note ? `<p class="hint">Fed (taux, bilan QE/QT, prochaine réunion) : ${highlightKeyInfo(fed.note)}</p>` : ""}
     ${conf.level ? `<p class="hint" style="margin-top:8px;"><strong>Confiance globale du site : ${escapeHtml(conf.level)}</strong> — ${highlightKeyInfo(conf.note || "")}</p>` : ""}`;
 }

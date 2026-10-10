@@ -131,6 +131,47 @@ describe("insights.js — renderMarketContext (contexte macro : stablecoins/empl
     expect(html).toContain("Cours LBMA.");
   });
 
+  // Valeurs réelles relevées via le connecteur CoinMarketCap le 10/10/2026 (get_global_metrics_latest).
+  const cmcBlock = {
+    as_of: "2026-10-10T22:30:00Z",
+    altcoin_season_index: 64,
+    open_interest_usd: 378.07e9,
+    open_interest_change_7d_pct: -12.34,
+    funding_rate_avg_pct: 0.0042474,
+    btc_liquidations_24h_usd: 3.67e6,
+    btc_etf_aum_usd: 108.82e9,
+    eth_etf_aum_usd: 14.6e9,
+    source: "CoinMarketCap get_global_metrics_latest",
+  };
+
+  it("affiche la rangée levier/rotation (CoinMarketCap) quand la routine l'a écrite", () => {
+    const dom = pageWithContext();
+    dom.window.renderMarketContext({ last_computed_at: "2026-10-10T08:50:00Z", crypto_global: cmcBlock });
+    const html = dom.window.document.getElementById("market-context-body").innerHTML;
+    expect(html).toContain("64/100");
+    expect(html).toMatch(/378,07\sMd\$/);
+    expect(html).toMatch(/−12,3\s%\ssur 7 j/);
+    expect(html).toMatch(/\+0,0042\s%/);
+    expect(html).toMatch(/108,82\sMd\$/);
+    expect(html).toMatch(/3,67\sM\$/);
+    expect(html).toContain("CoinMarketCap, relevé le 10/10 22:30 UTC");
+    expect(html).toContain('data-tip="Indice CoinMarketCap de 0 à 100'); // bulle glossaire
+  });
+
+  it("n'affiche rien de CoinMarketCap tant que le bloc n'existe pas", () => {
+    const dom = pageWithContext();
+    dom.window.renderMarketContext({ last_computed_at: "2026-10-10T08:50:00Z" });
+    expect(dom.window.document.getElementById("market-context-body").innerHTML).not.toContain("Saison des altcoins");
+  });
+
+  it("flux ETF en dollars avec son signe (régression : affiché en Md€/M€ et sans signe négatif)", () => {
+    const dom = pageWithContext();
+    dom.window.renderMarketContext({ last_computed_at: "2026-10-10T08:50:00Z", etf_flows: { btc_etf_net_flow_usd: -201900000 } });
+    const html = dom.window.document.getElementById("market-context-body").innerHTML;
+    expect(html).toMatch(/−201,9\sM\$/);
+    expect(html).not.toContain("€");
+  });
+
   it("highlights a key figure inside a market-context note (highlightKeyInfo, not a bare escapeHtml)", () => {
     const dom = pageWithContext();
     dom.window.renderMarketContext({

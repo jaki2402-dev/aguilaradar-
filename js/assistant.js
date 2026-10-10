@@ -664,6 +664,16 @@ function buildAiContext() {
   if (ctx && ctx.fed_policy && ctx.fed_policy.funds_rate_range) {
     parts.push(`Taux Fed cible : ${ctx.fed_policy.funds_rate_range}${ctx.fed_policy.stance ? ` (biais ${ctx.fed_policy.stance})` : ""}${ctx.fed_policy.balance_sheet_trend ? `, bilan en ${ctx.fed_policy.balance_sheet_trend}` : ""}.`);
   }
+  const cg = ctx && ctx.crypto_global;
+  if (cg && cg.as_of) {
+    const bits = [];
+    if (Number.isFinite(cg.altcoin_season_index)) bits.push(`saison des altcoins ${cg.altcoin_season_index}/100`);
+    if (Number.isFinite(cg.open_interest_usd)) bits.push(`positions ouvertes ${(cg.open_interest_usd / 1e9).toFixed(1)} Md$${Number.isFinite(cg.open_interest_change_7d_pct) ? ` (${cg.open_interest_change_7d_pct > 0 ? "+" : ""}${cg.open_interest_change_7d_pct} % sur 7 j)` : ""}`);
+    if (Number.isFinite(cg.funding_rate_avg_pct)) bits.push(`financement moyen ${cg.funding_rate_avg_pct} %`);
+    if (Number.isFinite(cg.btc_liquidations_24h_usd)) bits.push(`liquidations BTC 24 h ${(cg.btc_liquidations_24h_usd / 1e6).toFixed(1)} M$`);
+    if (Number.isFinite(cg.btc_etf_aum_usd)) bits.push(`encours ETF BTC ${(cg.btc_etf_aum_usd / 1e9).toFixed(1)} Md$ (un encours, pas un flux)`);
+    if (bits.length) parts.push(`Levier et rotation (CoinMarketCap, relevé le ${chatShortDate(cg.as_of)}) : ${bits.join(", ")}.`);
+  }
   if (ctx && ctx.fed_policy && ctx.fed_policy.treasury_yield_10y_pct != null) {
     parts.push(`Rendement Trésor US 10 ans : ${ctx.fed_policy.treasury_yield_10y_pct} %.`);
   }

@@ -188,6 +188,9 @@ const GLOSSARY = [
   { term: "Or (once, USD)", definition: "Le prix au comptant d'une once d'or — valeur refuge de référence, utile pour comparer l'appétit pour le risque entre l'or et le bitcoin." },
   { term: "Taux Fed (cible)", definition: "La fourchette de taux directeur fixée par la banque centrale américaine — un taux qui monte renchérit le crédit et pèse en général sur les actifs risqués comme la crypto." },
   { term: "Trésor US 10 ans", definition: "Le rendement de la dette américaine à 10 ans — une hausse traduit souvent des anticipations de taux plus élevés ou plus durables, un signal macro suivi par les marchés risqués." },
+  { term: "Saison des altcoins", definition: "Indice CoinMarketCap de 0 à 100 : plus il est haut, plus les altcoins font mieux que le bitcoin ces derniers temps. Bas = l'argent reste plutôt sur le bitcoin." },
+  { term: "Positions ouvertes", definition: "La valeur totale des contrats à terme crypto encore ouverts. Une forte hausse signale beaucoup d'effet de levier, donc un risque de liquidations en cascade si le prix se retourne." },
+  { term: "Taux de financement", definition: "Ce que paient les acheteurs à effet de levier aux vendeurs (ou l'inverse) sur les contrats perpétuels. Positif = acheteurs majoritaires ; très élevé = marché surchauffé." },
 ];
 
 // Petite bulle d'aide au survol/focus (accessible clavier, sans JS) réutilisant GLOSSARY comme
