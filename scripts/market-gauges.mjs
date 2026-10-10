@@ -1,6 +1,8 @@
 // Jauges de marché brutes dans data/market-gauges.json — lancé par .github/workflows/price-alerts.yml.
-// Pourquoi : engine-history.json.macro_regime (peur/cupidité, dominance BTC) n'était plus mis à
-// jour depuis le 14/09/2026 (allègement du cycle-2h) et le site les affichait comme actuels.
+// Peur/cupidité, dominance BTC, cours de l'or (approché via 2 jetons adossés à l'or, voir
+// parseGoldTokens). Pourquoi : engine-history.json.macro_regime (peur/cupidité, dominance BTC)
+// n'était plus mis à jour depuis le 14/09/2026 (allègement du cycle-2h) et le site les affichait
+// comme actuels.
 // Uniquement des MESURES publiques, aucun jugement : le régime (risk-on/neutre/risk-off) reste
 // décidé par le cycle-2h (docs/routines/cycle-2h-verdict.md §4). Une source en échec = son champ
 // à null avec la raison, jamais une valeur reprise d'avant ou estimée. Fichier d'état courant
@@ -32,6 +34,29 @@ export function parseGlobal(body) {
   };
 }
 
+// Or : deux jetons adossés chacun à une once d'or physique (ids vérifiés via CoinGecko /search le
+// 10/10/2026). Ajouté car la routine marche-quotidien laissait market-context.gold à null, faute
+// de cours daté trouvé par recherche web. Les deux jetons doivent concorder à
+// GOLD_MAX_SPREAD_PCT près : un jeton décroché de l'or ne doit jamais passer pour le cours.
+export const GOLD_TOKEN_IDS = ["pax-gold", "tether-gold"];
+export const GOLD_MAX_SPREAD_PCT = 2;
+
+export function parseGoldTokens(body) {
+  const quotes = GOLD_TOKEN_IDS.map((id) => (body && body[id]) || {});
+  const prices = quotes.map((q) => Number(q.usd));
+  if (prices.some((p) => !Number.isFinite(p) || p <= 0)) return null;
+  const mean = (prices[0] + prices[1]) / 2;
+  const spreadPct = (Math.abs(prices[0] - prices[1]) / mean) * 100;
+  if (spreadPct > GOLD_MAX_SPREAD_PCT) return null;
+  const stamps = quotes.map((q) => Number(q.last_updated_at)).filter(Number.isFinite);
+  return {
+    usd_per_oz: Math.round(mean * 100) / 100,
+    spread_pct: Math.round(spreadPct * 100) / 100,
+    as_of: stamps.length === 2 ? isoSec(new Date(Math.min(...stamps) * 1000)) : null,
+    source: "CoinGecko /simple/price : moyenne PAX Gold + Tether Gold (jetons adossés chacun à une once d'or) — approximation du cours au comptant",
+  };
+}
+
 async function getJson(url) {
   const res = await fetch(url, { headers: { accept: "application/json" } });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -39,7 +64,7 @@ async function getJson(url) {
 }
 
 async function main() {
-  const out = { updated_at: isoSec(new Date()), fear_greed: null, btc_dominance: null, errors: [] };
+  const out = { updated_at: isoSec(new Date()), fear_greed: null, btc_dominance: null, gold: null, errors: [] };
   try {
     out.fear_greed = parseFearGreed(await getJson("https://api.alternative.me/fng/?limit=1"));
     if (!out.fear_greed) out.errors.push("fear_greed : réponse alternative.me inexploitable");
@@ -52,12 +77,20 @@ async function main() {
   } catch (e) {
     out.errors.push(`btc_dominance : ${e.message}`);
   }
-  if (!out.fear_greed && !out.btc_dominance) {
+  try {
+    out.gold = parseGoldTokens(
+      await getJson(`https://api.coingecko.com/api/v3/simple/price?ids=${GOLD_TOKEN_IDS.join(",")}&vs_currencies=usd&include_last_updated_at=true`)
+    );
+    if (!out.gold) out.errors.push(`gold : jetons or absents ou en désaccord de plus de ${GOLD_MAX_SPREAD_PCT} %`);
+  } catch (e) {
+    out.errors.push(`gold : ${e.message}`);
+  }
+  if (!out.fear_greed && !out.btc_dominance && !out.gold) {
     console.error("Aucune jauge récupérée, fichier laissé tel quel :", out.errors.join(" ; "));
     return;
   }
   writeFileSync(GAUGES_PATH, JSON.stringify(out, null, 2) + "\n");
-  console.log(`Peur/cupidité ${out.fear_greed?.value ?? "—"}, dominance BTC ${out.btc_dominance?.pct ?? "—"} %`);
+  console.log(`Peur/cupidité ${out.fear_greed?.value ?? "—"}, dominance BTC ${out.btc_dominance?.pct ?? "—"} %, or ${out.gold?.usd_per_oz ?? "—"} $`);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

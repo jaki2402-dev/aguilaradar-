@@ -655,8 +655,11 @@ function buildAiContext() {
     const flowM = ctx.etf_flows.btc_etf_net_flow_usd / 1e6;
     parts.push(`ETF Bitcoin spot : flux net ${flowM >= 0 ? "+" : ""}${flowM.toFixed(1)} M$ (${ctx.etf_flows.period || "période récente"}).`);
   }
+  const gaugeGold = chatData.marketGauges && chatData.marketGauges.gold;
   if (ctx && ctx.gold && ctx.gold.spot_usd_per_oz != null) {
     parts.push(`Or : ${Math.round(ctx.gold.spot_usd_per_oz)} $/once.`);
+  } else if (gaugeGold && Number.isFinite(gaugeGold.usd_per_oz)) {
+    parts.push(`Or : environ ${Math.round(gaugeGold.usd_per_oz)} $/once (approximation via les jetons PAX Gold et Tether Gold${gaugeGold.as_of ? `, relevé le ${chatShortDate(gaugeGold.as_of)}` : ""}).`);
   }
   if (ctx && ctx.fed_policy && ctx.fed_policy.funds_rate_range) {
     parts.push(`Taux Fed cible : ${ctx.fed_policy.funds_rate_range}${ctx.fed_policy.stance ? ` (biais ${ctx.fed_policy.stance})` : ""}${ctx.fed_policy.balance_sheet_trend ? `, bilan en ${ctx.fed_policy.balance_sheet_trend}` : ""}.`);

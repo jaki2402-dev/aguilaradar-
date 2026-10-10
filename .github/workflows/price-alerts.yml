@@ -1,7 +1,7 @@
 name: Price alerts
 
 # Alertes "seuil_technique" (verdict actif dont le prix a franchi son seuil) dans
-# data/alerts.json, et jauges brutes (peur/cupidité, dominance BTC) dans data/market-gauges.json —
+# data/alerts.json, et jauges brutes (peur/cupidité, dominance BTC, or) dans data/market-gauges.json —
 # calcul pur, aucun quota Claude. Horaires choisis hors des créneaux des
 # routines Cowork (00:15/08:15/16:15, 04:00, 06:xx, 08:xx-09:xx, 18:xx) pour éviter les push
 # concurrents sur main.

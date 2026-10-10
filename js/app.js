@@ -615,7 +615,7 @@ async function loadAllData() {
   if (window.updateNotifBellFromAlerts) updateNotifBellFromAlerts(alerts);
   renderNews(news);
   renderMacroRegime(engineHistory, marketGauges);
-  renderMarketContext(marketContext);
+  renderMarketContext(marketContext, marketGauges);
   renderHealthStatus(healthLog, favorisContext, verdicts || []);
   renderSectorBreakdown(verdicts || []);
   renderConfidenceHistory(verdicts || []);

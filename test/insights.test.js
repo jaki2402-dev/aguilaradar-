@@ -106,6 +106,31 @@ describe("insights.js — renderMarketContext (contexte macro : stablecoins/empl
     expect(html.match(/stat-value">—</g).length).toBe(3);
   });
 
+  it("or absent côté routine : affiche le relevé du robot (jetons or) comme une approximation datée", () => {
+    const dom = pageWithContext();
+    dom.window.renderMarketContext(
+      { last_computed_at: "2026-10-10T08:50:00Z", gold: { spot_usd_per_oz: null, note: "Aucun cours spot daté trouvé, laissé à null." } },
+      { gold: { usd_per_oz: 4182.45, as_of: "2026-10-10T15:56:00Z" } }
+    );
+    const html = dom.window.document.getElementById("market-context-body").innerHTML;
+    expect(html).toMatch(/≈ \$4\s*182/);
+    expect(html).toContain("jetons adossés à l'or");
+    expect(html).toContain("10/10 15:56");
+    expect(html).not.toContain("laissé à null"); // la note "pas de cours" contredirait la valeur affichée
+  });
+
+  it("or trouvé par la routine : il reste prioritaire sur le relevé du robot", () => {
+    const dom = pageWithContext();
+    dom.window.renderMarketContext(
+      { last_computed_at: "2026-10-10T08:50:00Z", gold: { spot_usd_per_oz: 4150, note: "Cours LBMA." } },
+      { gold: { usd_per_oz: 4182.45, as_of: "2026-10-10T15:56:00Z" } }
+    );
+    const html = dom.window.document.getElementById("market-context-body").innerHTML;
+    expect(html).toMatch(/\$4\s*150/);
+    expect(html).not.toContain("≈");
+    expect(html).toContain("Cours LBMA.");
+  });
+
   it("highlights a key figure inside a market-context note (highlightKeyInfo, not a bare escapeHtml)", () => {
     const dom = pageWithContext();
     dom.window.renderMarketContext({

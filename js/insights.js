@@ -73,7 +73,18 @@ function renderProvisionalOverview(verdicts) {
 // jamais inventés ici (rendu pur), alimentés par une routine qui les recherche pour de vrai
 // (WebSearch/HTTP direct) ou les laisse à null plutôt que de deviner. "—" tant qu'absents,
 // jamais un chiffre par défaut qui pourrait passer pour une vraie donnée.
-function renderMarketContext(ctx) {
+// Or : valeur de la routine si elle en a trouvé une, sinon relevé du robot market-gauges (deux
+// jetons adossés à l'or, scripts/market-gauges.mjs) — toujours présenté comme une approximation
+// datée, jamais comme le cours officiel.
+function goldSpotView(ctx, gauges) {
+  const gold = (ctx && ctx.gold) || {};
+  if (gold.spot_usd_per_oz !== null && gold.spot_usd_per_oz !== undefined) return { usd: gold.spot_usd_per_oz, approx: false, asOf: null };
+  const g = gauges && gauges.gold;
+  if (g && Number.isFinite(g.usd_per_oz)) return { usd: g.usd_per_oz, approx: true, asOf: g.as_of || null };
+  return null;
+}
+
+function renderMarketContext(ctx, gauges) {
   const el = document.getElementById("market-context-body");
   if (!el) return;
   if (!ctx || !ctx.last_computed_at) {
@@ -84,6 +95,7 @@ function renderMarketContext(ctx) {
   const emp = ctx.employment_us || {};
   const etf = ctx.etf_flows || {};
   const gold = ctx.gold || {};
+  const goldView = goldSpotView(ctx, gauges);
   const fed = ctx.fed_policy || {};
   const conf = ctx.site_confidence || {};
   el.innerHTML = `
@@ -91,14 +103,14 @@ function renderMarketContext(ctx) {
       <div class="stat-card accent-indigo"><div class="stat-label">Dominance stablecoins</div><div class="stat-value">${sc.dominance_pct !== null && sc.dominance_pct !== undefined ? sc.dominance_pct.toFixed(1) + " %" : "—"}</div></div>
       <div class="stat-card accent-gold"><div class="stat-label">Chômage US</div><div class="stat-value">${emp.unemployment_rate_pct !== null && emp.unemployment_rate_pct !== undefined ? emp.unemployment_rate_pct.toFixed(1) + " %" : "—"}</div></div>
       <div class="stat-card accent-teal"><div class="stat-label">Flux ETF BTC</div><div class="stat-value">${etf.btc_etf_net_flow_usd !== null && etf.btc_etf_net_flow_usd !== undefined ? formatMarketCap(etf.btc_etf_net_flow_usd) : "—"}</div></div>
-      <div class="stat-card accent-gray"><div class="stat-label">Or (once, USD)${glossaryTipHtml("Or (once, USD)")}</div><div class="stat-value">${gold.spot_usd_per_oz !== null && gold.spot_usd_per_oz !== undefined ? "$" + Math.round(gold.spot_usd_per_oz).toLocaleString("fr-FR") : "—"}</div></div>
+      <div class="stat-card accent-gray"><div class="stat-label">Or (once, USD)${glossaryTipHtml("Or (once, USD)")}</div><div class="stat-value">${goldView ? (goldView.approx ? "≈ " : "") + "$" + Math.round(goldView.usd).toLocaleString("fr-FR") : "—"}</div></div>
       <div class="stat-card accent-violet"><div class="stat-label">Taux Fed (cible)${glossaryTipHtml("Taux Fed (cible)")}</div><div class="stat-value">${fed.funds_rate_range ? escapeHtml(fed.funds_rate_range) : "—"}</div></div>
       <div class="stat-card accent-indigo"><div class="stat-label">Trésor US 10 ans${glossaryTipHtml("Trésor US 10 ans")}</div><div class="stat-value">${fed.treasury_yield_10y_pct !== null && fed.treasury_yield_10y_pct !== undefined ? fed.treasury_yield_10y_pct.toFixed(2) + " %" : "—"}</div></div>
     </div>
     ${sc.note ? `<p class="hint">Stablecoins : ${highlightKeyInfo(sc.note)}</p>` : ""}
     ${emp.market_reaction_note ? `<p class="hint">Emploi : ${highlightKeyInfo(emp.market_reaction_note)}</p>` : ""}
     ${etf.note ? `<p class="hint">ETF : ${highlightKeyInfo(etf.note)}</p>` : ""}
-    ${gold.note ? `<p class="hint">Or : ${highlightKeyInfo(gold.note)}</p>` : ""}
+    ${goldView && goldView.approx ? `<p class="hint">Or : cours approché à partir de deux jetons adossés à l'or (PAX Gold, Tether Gold)${goldView.asOf ? `, relevé le ${new Date(goldView.asOf).toLocaleString("fr-FR", { timeZone: "UTC", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" })} UTC` : ""} — la routine n'a pas trouvé de cours officiel daté.</p>` : gold.note ? `<p class="hint">Or : ${highlightKeyInfo(gold.note)}</p>` : ""}
     ${fed.note ? `<p class="hint">Fed (taux, bilan QE/QT, prochaine réunion) : ${highlightKeyInfo(fed.note)}</p>` : ""}
     ${conf.level ? `<p class="hint" style="margin-top:8px;"><strong>Confiance globale du site : ${escapeHtml(conf.level)}</strong> — ${highlightKeyInfo(conf.note || "")}</p>` : ""}`;
 }

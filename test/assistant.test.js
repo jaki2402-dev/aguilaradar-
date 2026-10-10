@@ -964,3 +964,23 @@ describe("assistant.js — statistiques du moteur : même calcul en direct que l
     expect(dom.window.answerEngine()).toContain("a émis 2 verdicts, dont 1 vérifiés, avec une exactitude de 99.9 %");
   });
 });
+
+describe("assistant.js — or : relevé du robot en repli quand la routine n'a pas de cours", () => {
+  async function contextWith(marketContext, marketGauges) {
+    const dom = loadPage(["config.js", "assistant.js"]);
+    dom.window.aguilaradarData = { verdicts: [], engineHistory: {}, marketContext, marketGauges };
+    await dom.window.ensureChatData();
+    return dom.window.buildAiContext();
+  }
+
+  it("utilise les jetons or, présentés comme une approximation", async () => {
+    const ctx = await contextWith({ gold: { spot_usd_per_oz: null } }, { gold: { usd_per_oz: 4182.45, as_of: "2026-10-10T15:56:00Z" } });
+    expect(ctx).toContain("Or : environ 4182 $/once (approximation via les jetons PAX Gold et Tether Gold, relevé le 10/10)");
+  });
+
+  it("garde le cours de la routine quand il existe", async () => {
+    const ctx = await contextWith({ gold: { spot_usd_per_oz: 4150 } }, { gold: { usd_per_oz: 4182.45 } });
+    expect(ctx).toContain("Or : 4150 $/once.");
+    expect(ctx).not.toContain("approximation via les jetons");
+  });
+});
