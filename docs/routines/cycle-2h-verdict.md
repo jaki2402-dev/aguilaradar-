@@ -346,7 +346,7 @@ section fait partie de la spécification : elle s'applique à chaque cycle, sans
 
 Les verdicts et actualités déjà écrits ne sont jamais modifiés (historique permanent). Règles du
 champ "resume" : une seule phrase en français correct (accents), 160 caractères maximum, l'essentiel
-en premier ; écrite uniquement à partir du texte complet que tu viens d'écrire (aucun chiffre ni fait
+en premier ; un écart au plus haut historique s'écrit avec son signe (« à −93 % de son plus haut historique »), jamais « à plus de 93 % de son ATH », qui se lit à l'envers ; écrite uniquement à partir du texte complet que tu viens d'écrire (aucun chiffre ni fait
 absent de ce texte) ; jamais de conseil d'achat ou de vente ; écrite par le même script python3 que
 le reste. Si tu ne peux pas résumer fidèlement, n'écris pas de "resume" : le site affichera le début
 du texte.
