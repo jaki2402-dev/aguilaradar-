@@ -60,8 +60,11 @@ async function ensureChatData() {
     loadJson(DATA_URLS.portfolioThesis),
     loadJson(DATA_URLS.favorisContext),
     loadJson(DATA_URLS.marketGauges),
-  ]).then(([verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext, marketGauges]) => {
-    chatData = { verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext, marketGauges };
+    loadJson(DATA_URLS.cryptoGlobal),
+    loadJson(DATA_URLS.cmcFavoris),
+    loadJson(DATA_URLS.technicalFavoris),
+  ]).then(([verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext, marketGauges, cryptoGlobal, cmcFavoris, technicalFavoris]) => {
+    chatData = { verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext, marketGauges, cryptoGlobal, cmcFavoris, technicalFavoris };
     return chatData;
   });
   return chatDataLoading;
@@ -121,7 +124,20 @@ function countDistinctAssetMentions(text) {
 // Volontairement AVANT le routage "un seul actif nommé" de answerQuestion : une question du
 // type "je devrais renforcer Cartesi avec 100€ ?" nomme un seul favori mais appelle quand même
 // le format allocation, pas la simple fiche verdict.
-const ALLOCATION_INTENT_RE = /\b(recharge\w*|renforce\w*|placer|replacer|investir|ajouter|allou\w*|mettre)\b/i;
+// "achet\w*" ajouté le 06/10/2026 : absent jusqu'ici alors que c'est le verbe français le plus
+// direct pour une question d'achat ("tu penses que je devrais acheter BTC ?") — et que le site
+// nomme lui-même son verdict d'achat "ACHAT". Sans ce mot, une telle question ne matchait aucun
+// des intents prioritaires (comparison : un seul actif nommé ; portfolio/market : hors sujet),
+// tombait par défaut en mode "quick" — le SEUL mode qui utilise encore llama-3.3-70b au lieu du
+// modèle de raisonnement gpt-oss-120b (voir modelForMode, cloudflare-worker/worker.js) et un
+// budget de 320 tokens au lieu de 1600 (maxTokensForMode) — exactement le defaut (réponse plate,
+// non comparative) déjà diagnostiqué et corrigé ailleurs le 10/09/2026 pour les autres modes, mais
+// qui restait possible via cet angle mort précis. Bug réel remonté par l'utilisateur (capture
+// d'écran) : "donc pour toi c'est btc qui mérite d'être acheter... il y'a pas d'autre opportunité
+// plus attractive ?" a réellement pris ce chemin. CHAT_INTENTS (plus bas, filet de repli
+// keyword-only) contenait déjà "acheter" — l'absence ici était une vraie incohérence entre les
+// deux listes, pas un choix délibéré.
+const ALLOCATION_INTENT_RE = /\b(recharge\w*|renforce\w*|placer|replacer|investir|ajouter|allou\w*|mettre|achet\w*)\b/i;
 const THESIS_INTENT_RE = /\bthèses?\b|\bthese\b|\bthesis\b/i;
 
 // Question sur la santé GLOBALE du portefeuille ("comment va mon portefeuille ?", "analyse mes
@@ -540,13 +556,28 @@ function answerAlerts() {
   return `Dernières alertes :\n\n${lines.join("\n\n")}\n\nHistorique complet dans l'onglet Alertes.`;
 }
 
-function answerEngine() {
-  const stats = chatData.engineHistory && chatData.engineHistory.global_stats;
-  if (!stats) return `Pas encore de statistiques du moteur disponibles.\n\n${correctionLogSummary()}`;
-  if (stats.accuracy_strict_pct === null || stats.accuracy_strict_pct === undefined) {
-    return `Le moteur a émis ${stats.total_verdicts_issued} verdict(s) au total, mais aucun n'a encore atteint son échéance — impossible de mesurer un vrai taux de réussite avant ça (rien n'est inventé entre-temps).\n\n${correctionLogSummary()}\n\nDétail dans l'onglet Moteur.`;
+// Même calcul en direct que l'onglet Moteur (computeEngineStats, engine.js) : global_stats
+// n'est recalculé que par certains cycles et a été trouvé figé (10/10/2026 : 81 vérifiés et
+// 25,93 % cités ici, contre 82 et 25,61 % sur l'onglet Moteur). Repli sur global_stats si
+// engine.js n'est pas chargé.
+function chatEngineStats() {
+  const verdicts = chatData.verdicts || [];
+  if (typeof computeEngineStats === "function" && verdicts.length) {
+    const live = computeEngineStats(verdicts.filter((v) => v.status === "resolved"));
+    return { issued: verdicts.length, resolved: live ? live.total : 0, accuracyPct: live ? live.accuracyPct : null };
   }
-  return `Le moteur a émis ${stats.total_verdicts_issued} verdicts, dont ${stats.total_verdicts_resolved} vérifiés, avec une exactitude de ${stats.accuracy_strict_pct.toFixed(1)} %.\n\n${correctionLogSummary()}\n\nDétail complet dans l'onglet Moteur.`;
+  const gs = chatData.engineHistory && chatData.engineHistory.global_stats;
+  if (!gs) return null;
+  return { issued: gs.total_verdicts_issued, resolved: gs.total_verdicts_resolved, accuracyPct: gs.accuracy_strict_pct ?? null };
+}
+
+function answerEngine() {
+  const stats = chatEngineStats();
+  if (!stats) return `Pas encore de statistiques du moteur disponibles.\n\n${correctionLogSummary()}`;
+  if (stats.accuracyPct === null) {
+    return `Le moteur a émis ${stats.issued} verdict(s) au total, mais aucun n'a encore atteint son échéance — impossible de mesurer un vrai taux de réussite avant ça (rien n'est inventé entre-temps).\n\n${correctionLogSummary()}\n\nDétail dans l'onglet Moteur.`;
+  }
+  return `Le moteur a émis ${stats.issued} verdicts, dont ${stats.resolved} vérifiés, avec une exactitude de ${stats.accuracyPct.toFixed(1)} %.\n\n${correctionLogSummary()}\n\nDétail complet dans l'onglet Moteur.`;
 }
 
 // Filet de secours (CHAT_INTENTS) pour une question générale sur LE portefeuille de l'utilisateur
@@ -597,6 +628,39 @@ const CHAT_INTENTS = [
   { keywords: ["investir", "acheter", "vendre", "placer", "position", "que penses-tu", "quel est ton avis", "ton avis", "conseil", "conseilles"], handler: answerGenericInvesting },
 ];
 
+// Une ligne compacte par favori (technicalViewFor : robot quotidien, sinon CoinMarketCap).
+function technicalLines() {
+  const pct = (v) => `${v > 0 ? "+" : ""}${v.toFixed(0)} %`;
+  let asOf = null;
+  let source = null;
+  const lines = FAVORIS.map((f) => {
+    const t = technicalViewFor(f.ticker, chatData.technicalFavoris, chatData.cmcFavoris);
+    if (!t) return null;
+    asOf = asOf || t.asOf;
+    source = source || t.source;
+    const bits = [];
+    if (t.rsi14 !== null) bits.push(`RSI14 ${t.rsi14.toFixed(0)}${t.rsi14 >= 70 ? " (surachat)" : t.rsi14 <= 30 ? " (survente)" : ""}`);
+    if (t.sma200GapPct !== null) bits.push(`${pct(t.sma200GapPct)} vs moyenne 200 j`);
+    if (t.macdHistogram !== null && t.macdHistogram !== 0) bits.push(`MACD ${t.macdHistogram > 0 ? "haussier" : "baissier"}`);
+    if (t.volatilityPct !== null) bits.push(`volatilité ${t.volatilityPct.toFixed(0)} %/an`);
+    for (const [label, v] of t.change) if (v !== null && label !== "depuis janvier") bits.push(`${label} ${pct(v)}`);
+    return bits.length ? `${f.ticker} : ${bits.join(", ")}` : null;
+  }).filter(Boolean);
+  if (!lines.length) return "";
+  const label = source === "robot" ? "Analyse technique des favoris (calcul quotidien" : "Analyse technique CoinMarketCap des favoris (relevé";
+  return `${label}${asOf ? ` du ${chatShortDate(asOf)}` : ""}) : ${lines.join(" ; ")}.`;
+}
+
+// Analyse rétrospective (robot technical-daily) : ce que disaient les indicateurs le jour de chaque
+// verdict vérifié, comparé à l'issue réelle — pour que l'IA dise à quel point se fier au moteur.
+function backtestLine() {
+  const b = chatData.technicalFavoris && chatData.technicalFavoris.backtest;
+  if (!b || !b.sample || !b.engine_calls || !b.actual) return "";
+  const hot = b.by_rsi_zone && b.by_rsi_zone.surachat;
+  const hotPart = hot && hot.n ? ` Verdicts émis avec un RSI ≥ 70 : ${hot.n}, dont ${hot.actual.ACHAT} suivis d'une hausse et ${hot.actual.VENTE} d'une baisse.` : "";
+  return `Fiabilité mesurée du moteur sur ${b.sample} verdicts vérifiés : ${b.engine_accuracy_pct} % d'exacts. Il a dit ATTENTE ${b.engine_calls.ATTENTE.n} fois alors que le marché est resté stable dans ${b.actual.ATTENTE} cas, monté nettement dans ${b.actual.ACHAT} et baissé dans ${b.actual.VENTE}.${hotPart}`;
+}
+
 // Contexte compact envoyé au relais IA (cloudflare-worker/, dernier recours seulement, voir
 // fetchLiveAiFallback) — jamais le JSON brut complet (trop gros, ralentirait chaque appel).
 // chatData est déjà chargé par ensureChatData au moment où ceci est appelé, aucun fetch de plus.
@@ -627,11 +691,24 @@ function buildAiContext() {
     const flowM = ctx.etf_flows.btc_etf_net_flow_usd / 1e6;
     parts.push(`ETF Bitcoin spot : flux net ${flowM >= 0 ? "+" : ""}${flowM.toFixed(1)} M$ (${ctx.etf_flows.period || "période récente"}).`);
   }
+  const gaugeGold = chatData.marketGauges && chatData.marketGauges.gold;
   if (ctx && ctx.gold && ctx.gold.spot_usd_per_oz != null) {
     parts.push(`Or : ${Math.round(ctx.gold.spot_usd_per_oz)} $/once.`);
+  } else if (gaugeGold && Number.isFinite(gaugeGold.usd_per_oz)) {
+    parts.push(`Or : environ ${Math.round(gaugeGold.usd_per_oz)} $/once (approximation via les jetons PAX Gold et Tether Gold${gaugeGold.as_of ? `, relevé le ${chatShortDate(gaugeGold.as_of)}` : ""}).`);
   }
   if (ctx && ctx.fed_policy && ctx.fed_policy.funds_rate_range) {
     parts.push(`Taux Fed cible : ${ctx.fed_policy.funds_rate_range}${ctx.fed_policy.stance ? ` (biais ${ctx.fed_policy.stance})` : ""}${ctx.fed_policy.balance_sheet_trend ? `, bilan en ${ctx.fed_policy.balance_sheet_trend}` : ""}.`);
+  }
+  const cg = chatData.cryptoGlobal;
+  if (cg && cg.as_of) {
+    const bits = [];
+    if (Number.isFinite(cg.altcoin_season_index)) bits.push(`saison des altcoins ${cg.altcoin_season_index}/100`);
+    if (Number.isFinite(cg.open_interest_usd)) bits.push(`positions ouvertes ${(cg.open_interest_usd / 1e9).toFixed(1)} Md$${Number.isFinite(cg.open_interest_change_7d_pct) ? ` (${cg.open_interest_change_7d_pct > 0 ? "+" : ""}${cg.open_interest_change_7d_pct} % sur 7 j)` : ""}`);
+    if (Number.isFinite(cg.funding_rate_avg_pct)) bits.push(`financement moyen ${cg.funding_rate_avg_pct} %`);
+    if (Number.isFinite(cg.btc_liquidations_24h_usd)) bits.push(`liquidations BTC 24 h ${(cg.btc_liquidations_24h_usd / 1e6).toFixed(1)} M$`);
+    if (Number.isFinite(cg.btc_etf_aum_usd)) bits.push(`encours ETF BTC ${(cg.btc_etf_aum_usd / 1e9).toFixed(1)} Md$ (un encours, pas un flux)`);
+    if (bits.length) parts.push(`Levier et rotation (CoinMarketCap, relevé le ${chatShortDate(cg.as_of)}) : ${bits.join(", ")}.`);
   }
   if (ctx && ctx.fed_policy && ctx.fed_policy.treasury_yield_10y_pct != null) {
     parts.push(`Rendement Trésor US 10 ans : ${ctx.fed_policy.treasury_yield_10y_pct} %.`);
@@ -652,13 +729,21 @@ function buildAiContext() {
     parts.push(`Verdicts actifs sur les 15 favoris : ${lines.join(", ")}.`);
   }
 
+  // Analyse technique des favoris (robot quotidien, sinon CoinMarketCap) : RSI, écart à la moyenne
+  // 200 j, élan MACD, volatilité — ce que les verdicts du moteur n'utilisaient pas (constaté le
+  // 10/10 : CTSI émis ACHAT avec un RSI 14 j à 71, en surachat, sans le mentionner).
+  const techLines = technicalLines();
+  if (techLines) parts.push(techLines);
+  const backtest = backtestLine();
+  if (backtest) parts.push(backtest);
+
   // Toujours inclus (voir favorisUtilityBlock ci-dessus) : coût de caractères fixe et minime,
   // contrairement aux thèses bull/base/bear ciblées uniquement sur les actifs nommés plus bas.
   parts.push(`Utilité et capture de valeur du token (fait factuel, jamais un avis) pour les 15 favoris :\n${favorisUtilityBlock()}`);
 
-  const stats = chatData.engineHistory && chatData.engineHistory.global_stats;
-  if (stats && stats.accuracy_strict_pct != null) {
-    parts.push(`Fiabilité mesurée du moteur : ${stats.accuracy_strict_pct.toFixed(1)} % d'exactitude sur ${stats.total_verdicts_resolved} verdicts vérifiés.`);
+  const stats = chatEngineStats();
+  if (stats && stats.accuracyPct !== null) {
+    parts.push(`Fiabilité mesurée du moteur : ${stats.accuracyPct.toFixed(1)} % d'exactitude sur ${stats.resolved} verdicts vérifiés.`);
   }
 
   // Liste complète des opportunités suivies (pas seulement les 3 meilleures, ancien comportement)
@@ -725,10 +810,24 @@ async function requestAiRelayOnce(question, context, responseMode) {
       body: JSON.stringify({ question, context, responseMode }),
       signal: controller.signal,
     });
-    if (!res.ok) return null;
+    // Échec silencieux voulu pour l'UTILISATEUR (repli factuel/mot-clé déjà correct, voir
+    // fetchLiveAiFallback) — mais totalement invisible aussi pour nous jusqu'ici, y compris en
+    // console : un relais qui échoue systématiquement (mauvais déploiement, modèle qui refuse,
+    // réponse hors format) ne laissait AUCUNE trace pour diagnostiquer "l'IA ne répond jamais
+    // vraiment" après coup. console.warn seul (jamais throw/jamais changer la valeur renvoyée) :
+    // ne doit rien changer au comportement utilisateur, juste rendre l'échec observable.
+    if (!res.ok) {
+      console.warn(`Relais IA : HTTP ${res.status} (mode ${responseMode})`);
+      return null;
+    }
     const data = await res.json();
-    return (data && data.answer) || null;
+    if (!data || !data.answer) {
+      console.warn(`Relais IA : réponse sans champ "answer" (mode ${responseMode})`, data);
+      return null;
+    }
+    return data.answer;
   } catch (e) {
+    console.warn(`Relais IA : requête échouée (mode ${responseMode}) —`, e);
     return null;
   } finally {
     clearTimeout(timeoutId);

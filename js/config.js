@@ -188,6 +188,12 @@ const GLOSSARY = [
   { term: "Or (once, USD)", definition: "Le prix au comptant d'une once d'or — valeur refuge de référence, utile pour comparer l'appétit pour le risque entre l'or et le bitcoin." },
   { term: "Taux Fed (cible)", definition: "La fourchette de taux directeur fixée par la banque centrale américaine — un taux qui monte renchérit le crédit et pèse en général sur les actifs risqués comme la crypto." },
   { term: "Trésor US 10 ans", definition: "Le rendement de la dette américaine à 10 ans — une hausse traduit souvent des anticipations de taux plus élevés ou plus durables, un signal macro suivi par les marchés risqués." },
+  { term: "Moyenne 200 jours", definition: "Le cours moyen des 200 derniers jours : la tendance de fond. Au-dessus = tendance longue plutôt haussière ; très au-dessus = mouvement déjà étiré." },
+  { term: "MACD", definition: "Indicateur d'élan : il compare une moyenne courte et une moyenne longue du cours. Élan haussier = la hausse s'accélère ; élan baissier = elle ralentit ou s'inverse." },
+  { term: "Saison des altcoins", definition: "Indice CoinMarketCap de 0 à 100 : plus il est haut, plus les altcoins font mieux que le bitcoin ces derniers temps. Bas = l'argent reste plutôt sur le bitcoin." },
+  { term: "Positions ouvertes", definition: "La valeur totale des contrats à terme crypto encore ouverts. Une forte hausse signale beaucoup d'effet de levier, donc un risque de liquidations en cascade si le prix se retourne." },
+  { term: "Volatilité", definition: "L'amplitude habituelle des variations du cours sur 30 jours, ramenée à l'année. Plus elle est élevée, plus les écarts de prix sont brusques, à la hausse comme à la baisse." },
+  { term: "Taux de financement", definition: "Ce que paient les acheteurs à effet de levier aux vendeurs (ou l'inverse) sur les contrats perpétuels. Positif = acheteurs majoritaires ; très élevé = marché surchauffé." },
 ];
 
 // Petite bulle d'aide au survol/focus (accessible clavier, sans JS) réutilisant GLOSSARY comme
@@ -245,5 +251,154 @@ const DATA_URLS = {
   portfolioThesis: "data/portfolio-thesis.json",
   portfolioHistory: "data/portfolio-history.json",
   marketGauges: "data/market-gauges.json",
+  cryptoGlobal: "data/crypto-global.json",
+  cmcFavoris: "data/cmc-favoris.json",
+  technicalFavoris: "data/technical-favoris.json",
   onchainHistory: "data/onchain-history.json",
 };
+
+// Rend un div.clickable navigable et activable au clavier (Entrée/Espace), sans changer son
+// comportement au clic — pour les actions "voir plus" qui n'ont pas de vrai <button>.
+function makeKeyboardClickable(el) {
+  if (!el) return;
+  el.setAttribute("tabindex", "0");
+  el.setAttribute("role", "button");
+  el.addEventListener("keydown", (e) => {
+    if (e.key !== "Enter" && e.key !== " ") return;
+    e.preventDefault();
+    el.click();
+  });
+}
+
+// Aperçu tronqué (3 lignes) + "Lire plus" pour un texte long — Journal (raisonnement) et
+// Alertes (message) partagent ce motif : sans lui, un texte de 500+ caractères (fréquent côté
+// alertes) rendait ces deux onglets illisibles au scroll. Sous le seuil, retourne un <p> nu —
+// forme strictement identique à l'ancien rendu, donc aucun texte court n'est jamais affecté.
+const CLAMP_TEXT_THRESHOLD = 200;
+let clampTextUid = 0;
+
+function renderClampableText(text) {
+  const safe = highlightKeyInfo(text || "");
+  if (!text || text.length <= CLAMP_TEXT_THRESHOLD) return `<p>${safe}</p>`;
+  const id = `clamp-text-${++clampTextUid}`;
+  return `<p class="clamp-text" id="${id}">${safe}</p><span class="expand-hint expand-hint-inline clickable" data-clamp-target="${id}">Lire plus <span class="chevron">▾</span></span>`;
+}
+
+// stopPropagation : le "Lire plus" vit à l'intérieur d'une .journal-entry.clickable qui a son
+// propre clic (attachDetailToggle, voir detail.js) — sans ça, déplier le texte ouvrirait aussi
+// la grosse fiche d'analyse en dessous, deux actions pour un seul clic.
+function wireClampToggles(root) {
+  root.querySelectorAll("[data-clamp-target]").forEach((btn) => {
+    makeKeyboardClickable(btn);
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const p = document.getElementById(btn.dataset.clampTarget);
+      if (!p) return;
+      const isOpen = p.classList.toggle("clamp-open");
+      btn.classList.toggle("expanded", isOpen);
+    });
+  });
+}
+
+// Résumé d'un verdict tiré de ses champs structurés (signal_consensus, signals_used) : exact par
+// construction, rien n'est interprété ni reformulé. Le raisonnement complet commence souvent par
+// de la tenue de compte (« le verdict précédent a été résolu… ») et non par le pourquoi : il reste
+// accessible derrière « Lire l'analyse complète ». Signaux de plus de 70 caractères ignorés (ce
+// sont des phrases, pas des points clés).
+const CONSENSUS_DIRECTIONS = ["haussier", "baissier", "mixte", "neutre"];
+
+// Analyse technique quotidienne d'un favori sous une forme unique : robot technical-daily
+// (data/technical-favoris.json, prioritaire, aucun quota) ou relevé CoinMarketCap
+// (data/cmc-favoris.json). null si aucune source n'a l'actif — jamais de valeur reconstituée.
+function technicalViewFor(ticker, technicalFavoris, cmcFavoris) {
+  const num = (v) => (Number.isFinite(v) ? v : null);
+  const robot = technicalFavoris && technicalFavoris.assets ? technicalFavoris.assets[ticker] : null;
+  if (robot) {
+    const ch = robot.change_pct || {};
+    return {
+      source: "robot",
+      asOf: robot.as_of || technicalFavoris.updated_at || null,
+      rsi14: num(robot.rsi14),
+      sma200GapPct: num(robot.sma200_gap_pct),
+      sma50AboveSma200: typeof robot.sma50_above_sma200 === "boolean" ? robot.sma50_above_sma200 : null,
+      macdHistogram: num(robot.macd_histogram),
+      change: [["30 j", num(ch["30d"])], ["90 j", num(ch["90d"])], ["1 an", num(ch["365d"])]],
+      volatilityPct: num(robot.volatility_30d_pct),
+      drawdownPct: num(robot.drawdown_from_365d_high_pct),
+      reading: typeof robot.reading === "string" && robot.reading ? robot.reading : null,
+    };
+  }
+  const cmc = cmcFavoris && cmcFavoris.assets ? cmcFavoris.assets[ticker] : null;
+  if (!cmc) return null;
+  const t = cmc.technical || {};
+  const ch = cmc.change_pct || {};
+  return {
+    source: "cmc",
+    asOf: cmcFavoris.as_of || null,
+    rsi14: num(t.rsi14),
+    sma200GapPct: Number.isFinite(cmc.price_usd) && Number.isFinite(t.sma200) && t.sma200 > 0 ? (cmc.price_usd / t.sma200 - 1) * 100 : null,
+    sma50AboveSma200: null,
+    macdHistogram: num(t.macd_histogram),
+    change: [["90 j", num(ch["90d"])], ["1 an", num(ch["1y"])], ["depuis janvier", num(ch.ytd)]],
+    volatilityPct: null,
+    drawdownPct: null,
+    reading: null,
+  };
+}
+
+function renderVerdictSummary(v) {
+  const sc = (v && v.signal_consensus) || {};
+  const chips = [["Technique", sc.technique], ["Fondamental", sc.fondamental], ["Macro", sc.macro]]
+    .filter(([, dir]) => typeof dir === "string" && dir)
+    .map(([label, dir]) => {
+      const cls = CONSENSUS_DIRECTIONS.includes(dir) ? dir : "neutre";
+      return `<span class="consensus-chip consensus-${cls}">${label} : ${escapeHtml(dir)}</span>`;
+    });
+  // Analyse technique enregistrée à l'émission : technical_at_issue (robot quotidien, depuis le
+  // 11/10/2026) ou cmc_technical_at_issue (CoinMarketCap, même forme). Affichée telle quelle, avec
+  // les mêmes seuils RSI que le reste du site (70 / 30).
+  const tech = (v && (v.technical_at_issue || v.cmc_technical_at_issue)) || {};
+  if (Number.isFinite(tech.rsi14)) {
+    const zone = tech.rsi14 >= 70 ? " · surachat" : tech.rsi14 <= 30 ? " · survente" : "";
+    chips.push(`<span class="consensus-chip consensus-neutre" title="RSI 14 jours au moment du verdict">RSI 14 j : ${Math.round(tech.rsi14)}${zone}</span>`);
+  }
+  if (Number.isFinite(tech.sma200_gap_pct)) {
+    chips.push(`<span class="consensus-chip consensus-neutre" title="Écart du cours à sa moyenne 200 jours au moment du verdict">${tech.sma200_gap_pct > 0 ? "+" : ""}${tech.sma200_gap_pct.toFixed(0)} % vs MM200</span>`);
+  }
+  const signals = ((v && v.signals_used) || []).filter((s) => typeof s === "string" && s.trim() && s.length <= 70).slice(0, 3);
+  if (!chips.length && !signals.length) return "";
+  return `<div class="verdict-summary">${chips.length ? `<div class="verdict-chips">${chips.join("")}</div>` : ""}${
+    signals.length ? `<ul class="verdict-signals">${signals.map((s) => `<li>${highlightKeyInfo(s)}</li>`).join("")}</ul>` : ""
+  }</div>`;
+}
+
+// Champ `resume` (une phrase, écrite par la routine à partir du texte complet — docs/routines/*.md,
+// ajout du 10/10/2026) : affiché en tête quand il existe ; sinon rien ne change.
+function resumeHtml(resume) {
+  return typeof resume === "string" && resume.trim() ? `<p class="text-resume">${highlightKeyInfo(resume)}</p>` : "";
+}
+
+function hiddenFullText(text, label) {
+  const id = `clamp-text-${++clampTextUid}`;
+  return `<p class="clamp-text clamp-hidden" id="${id}">${highlightKeyInfo(text)}</p><span class="expand-hint expand-hint-inline clickable" data-clamp-target="${id}">${label} <span class="chevron">▾</span></span>`;
+}
+
+function renderSummaryFirst(resume, fullText) {
+  const head = resumeHtml(resume);
+  if (!head) return renderClampableText(fullText);
+  return fullText && fullText !== resume ? head + hiddenFullText(fullText, "Lire plus") : head;
+}
+
+function renderVerdictText(v) {
+  const head = resumeHtml(v && v.resume) + renderVerdictSummary(v);
+  if (!v || !v.reasoning) return head;
+  return head ? head + hiddenFullText(v.reasoning, "Lire l'analyse complète") : renderClampableText(v.reasoning);
+}
+
+// Pour un affichage qui n'a que le texte du raisonnement (tuile Portefeuille, fiche détaillée) :
+// retrouve le verdict complet seulement s'il correspond exactement à ce texte, sinon aperçu simple.
+function renderReasoningFor(cgId, reasoning) {
+  const verdicts = (typeof window !== "undefined" && window.aguilaradarData && window.aguilaradarData.verdicts) || [];
+  const v = typeof latestVerdictFor === "function" && reasoning ? latestVerdictFor(cgId, verdicts) : null;
+  return v && v.reasoning === reasoning ? renderVerdictText(v) : renderClampableText(reasoning);
+}

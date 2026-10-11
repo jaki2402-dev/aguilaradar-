@@ -70,13 +70,15 @@ Tableau au niveau racine, chaque entrée :
   "confidence_pct": <0-100, voir section 2 pour la règle de calcul>,
   "signals_used": ["<phrase courte et factuelle par signal réellement observé>"],
   "reasoning": "<3-6 phrases, cite les chiffres réels utilisés>",
+  "resume": "<1 phrase, ≤ 160 caractères, l'essentiel du raisonnement — voir la section « Champ resume » en fin de document>",
   "price_at_issue": <prix réel au moment de l'émission, en USD>,
   "currency": "USD",
   "resolves_at": "issued_at + horizon_days jours",
   "status": "pending",
   "threshold_pct": 5,
   "regime_at_issue": "risk-on | neutre | risk-off",
-  "signal_consensus": { "technique": "haussier|baissier|mixte|neutre", "fondamental": "...", "macro": "...", "accord_count": <0-3> }
+  "signal_consensus": { "technique": "haussier|baissier|mixte|neutre", "fondamental": "...", "macro": "...", "accord_count": <0-3> },
+  "technical_at_issue": { "as_of": "<ISO>", "source": "technical-favoris", "rsi14": <number|null>, "sma200_gap_pct": <number|null>, "macd": "haussier|baissier|null" } | null
 }
 ```
 
@@ -293,7 +295,7 @@ que la routine utilisait).
 {
   "last_checked_at": "<ISO 8601 UTC — À CHAQUE cycle, que quelque chose de nouveau soit trouvé ou non>",
   "last_updated_at": "<ISO 8601 UTC — SEULEMENT quand `items` change réellement>",
-  "items": [ { "title": "...", "url": "...", "source": "..." } ]
+  "items": [ { "title": "...", "resume": "<1 phrase, voir la section « Champ resume » en fin de document>", "url": "...", "source": "..." } ]
 }
 ```
 
@@ -322,3 +324,50 @@ jusqu'à fusion manuelle (14/09). Les 2 étapes sont obligatoires à chaque cycl
 2. **Fusionner explicitement cette branche dans `main` et pousser `main`** — `git checkout main`
    (ou équivalent), `git merge --no-ff &lt;ta-branche&gt; -m "Merge cycle &lt;date&gt; into main"`,
    `git push origin main`. Le cycle n'est pas terminé tant que cette 2e étape n'a pas réussi.
+
+## Champ `resume` (actif depuis le 11/10/2026)
+
+Une phrase « l'essentiel », affichée en tête par le site (le texte complet reste dépliable). Cette
+section fait partie de la spécification : elle s'applique à chaque cycle, sans autre action.
+
+1. Chaque NOUVEAU verdict de data/verdicts.json reçoit "resume" : la raison principale du verdict et
+   le point de vigilance éventuel, en une phrase.
+2. Chaque NOUVEL item ajouté à data/news.json reçoit "resume" : l'actualité en une phrase.
+3. Quand tu écris engine-history.json.macro_regime, ajoute "resume" : le régime retenu et sa raison
+   principale, en une phrase.
+
+Les verdicts et actualités déjà écrits ne sont jamais modifiés (historique permanent). Règles du
+champ "resume" : une seule phrase en français correct (accents), 160 caractères maximum, l'essentiel
+en premier ; écrite uniquement à partir du texte complet que tu viens d'écrire (aucun chiffre ni fait
+absent de ce texte) ; jamais de conseil d'achat ou de vente ; écrite par le même script python3 que
+le reste. Si tu ne peux pas résumer fidèlement, n'écris pas de "resume" : le site affichera le début
+du texte.
+
+## Analyse technique du robot quotidien (active depuis le 11/10/2026)
+
+`data/technical-favoris.json` est écrit chaque soir à 23h30 UTC par un robot GitHub
+(`scripts/technical-favoris.mjs`, aucun quota, aucun connecteur) : pour chaque favori (clé = ticker),
+tendance de fond (écart à la moyenne 200 jours), RSI 14 j, MACD, évolutions 7 j → 1 an, volatilité,
+repli depuis le plus haut sur 1 an, et une phrase `reading`. Pourquoi : jusqu'ici le cycle ne voyait
+que les évolutions 24 h / 7 j / 30 j (exemple réel : CTSI émis ACHAT le 10/10 avec un RSI à 71 et un
+cours 30 % au-dessus de sa moyenne 200 j, sans que rien ne le signale).
+
+1. Pour chaque favori sur lequel tu émets un verdict, lis seulement son entrée, par extraction
+   python3 (jamais le fichier entier) :
+   `python3 -c "import json;d=json.load(open('data/technical-favoris.json'));print(d['updated_at']);print(json.dumps(d['assets'].get('TICKER'),ensure_ascii=False))"`
+   Si le fichier manque, si l'actif n'y est pas ou si `updated_at` date de plus de 36 h : écris
+   `"technical_at_issue": null` et passe à la suite, rien d'autre ne change.
+2. Sinon, ajoute au verdict `"technical_at_issue": {"as_of": <as_of de l'actif>, "source":
+   "technical-favoris", "rsi14": <rsi14>, "sma200_gap_pct": <sma200_gap_pct>, "macd": "haussier" si
+   macd_histogram > 0, "baissier" s'il est < 0, sinon null}` — valeurs recopiées par le script
+   python3 qui écrit le verdict, jamais retapées à la main ni devinées.
+3. Ajoute la phrase `reading` de l'actif, telle quelle, dans `signals_used`.
+4. Dans `reasoning`, signale tout signal du robot qui contredit le verdict : RSI14 >= 70 (surachat)
+   sur un ACHAT, RSI14 <= 30 (survente) sur une VENTE, cours sous sa moyenne 200 j sur un ACHAT ou
+   au-dessus sur une VENTE, MACD de sens opposé au verdict.
+5. Ne change PAS la règle de décision ACHAT / ATTENTE / VENTE ni le calcul de `confidence_pct` :
+   corr-20260921 est en évaluation jusqu'au 20/10 et doit rester la seule variable modifiée. Ces
+   données documentent chaque verdict et permettront de mesurer, sur les issues réelles, si elles
+   prédisent mieux que la lecture actuelle (candidat d'auto-correction après le 20/10).
+6. Chiffres en USD et en pourcentages : ne les compare jamais à un prix en euros. Ne modifie jamais
+   `data/technical-favoris.json` (fichier du robot).

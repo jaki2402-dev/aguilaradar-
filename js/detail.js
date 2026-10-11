@@ -27,6 +27,34 @@ function computeSMA(closes, period) {
   return slice.reduce((a, b) => a + b, 0) / period;
 }
 
+// Moyenne mobile exponentielle sur toute la série (amorcée par la moyenne simple des `period`
+// premières valeurs) ; null là où elle n'est pas encore définie.
+function computeEMASeries(values, period) {
+  const out = new Array(values.length).fill(null);
+  if (!period || values.length < period) return out;
+  const k = 2 / (period + 1);
+  let ema = values.slice(0, period).reduce((a, b) => a + b, 0) / period;
+  out[period - 1] = ema;
+  for (let i = period; i < values.length; i++) {
+    ema = values[i] * k + ema * (1 - k);
+    out[i] = ema;
+  }
+  return out;
+}
+
+// MACD standard (12, 26, 9) au dernier point : ligne = EMA12 − EMA26, signal = EMA9 de la ligne,
+// histogramme = ligne − signal (> 0 : élan haussier). null si l'historique est trop court.
+function computeMACD(closes, fast = 12, slow = 26, signalPeriod = 9) {
+  if (!closes || closes.length < slow + signalPeriod) return null;
+  const emaFast = computeEMASeries(closes, fast);
+  const emaSlow = computeEMASeries(closes, slow);
+  const line = closes.map((_, i) => (emaFast[i] !== null && emaSlow[i] !== null ? emaFast[i] - emaSlow[i] : null)).filter((v) => v !== null);
+  const signal = computeEMASeries(line, signalPeriod);
+  const last = line.length - 1;
+  if (signal[last] === null) return null;
+  return { line: line[last], signal: signal[last], histogram: line[last] - signal[last] };
+}
+
 function computeRSIAt(closes, period, endIndex) {
   const slice = closes.slice(0, endIndex + 1);
   return computeRSI(slice, period);
@@ -145,7 +173,7 @@ function renderFavorisContextSection(ticker) {
     <strong>Contexte élargi ${freshnessChip}</strong>
     <div class="detail-context-prose">
       ${comp.name ? `<div class="hint"><strong>Concurrent (${escapeHtml(comp.ticker || "?")}) :</strong>${renderClampableText(comp.comparison_note || "—")}</div>` : `<p class="hint">Comparaison concurrent : pas encore calculée.</p>`}
-      ${thesis.assumptions_note ? `<div class="hint"><strong>Thèse long terme</strong>${renderClampableText(`Bull : ${thesis.bull || "—"} · Base : ${thesis.base || "—"} · Bear : ${thesis.bear || "—"} — Hypothèses : ${thesis.assumptions_note}`)}</div>` : `<p class="hint">Thèse long terme : pas encore rédigée.</p>`}
+      ${thesis.assumptions_note ? `<div class="hint"><strong>Thèse long terme</strong>${renderSummaryFirst(thesis.resume, `Bull : ${thesis.bull || "—"} · Base : ${thesis.base || "—"} · Bear : ${thesis.bear || "—"} — Hypothèses : ${thesis.assumptions_note}`)}</div>` : `<p class="hint">Thèse long terme : pas encore rédigée.</p>`}
     </div>
     <div class="detail-context-grid">
       <div class="detail-context-card">
@@ -443,6 +471,34 @@ async function renderTechnicalSection(asset) {
   return { html, chartId: asset.showChart && asset.tvSymbol ? chartId : null };
 }
 
+// Analyse technique du jour (technicalViewFor : robot technical-daily, sinon relevé CoinMarketCap) :
+// complète les indicateurs calculés en direct ci-dessus (tendance de fond 200 j, MACD, volatilité,
+// évolutions longues) et reste affichée quand le calcul en direct échoue (limite CoinGecko).
+// Mêmes seuils RSI que technicalSignalSentences (70 / 30). Rien si aucune source n'a l'actif.
+function renderDailyTechnicalSection(ticker) {
+  const data = typeof window !== "undefined" && window.aguilaradarData ? window.aguilaradarData : {};
+  const t = technicalViewFor(ticker, data.technicalFavoris, data.cmcFavoris);
+  if (!t) return "";
+  const pct = (v) => `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v).toFixed(0)} %`;
+  const rows = [];
+  if (t.sma200GapPct !== null) {
+    const cross = t.sma50AboveSma200 === null ? "" : t.sma50AboveSma200 ? " · MM50 au-dessus de la MM200" : " · MM50 sous la MM200";
+    rows.push([`Cours / moyenne 200 j${glossaryTipHtml("Moyenne 200 jours")}`, `${pct(t.sma200GapPct)} (${t.sma200GapPct >= 0 ? "au-dessus" : "en dessous"})${cross}`]);
+  }
+  if (t.rsi14 !== null) rows.push([`RSI 14 j${glossaryTipHtml("RSI")}`, `${t.rsi14.toFixed(0)} — ${t.rsi14 >= 70 ? "zone de surachat" : t.rsi14 <= 30 ? "zone de survente" : "zone neutre"}`]);
+  if (t.macdHistogram !== null && t.macdHistogram !== 0) rows.push([`MACD${glossaryTipHtml("MACD")}`, t.macdHistogram > 0 ? "élan haussier" : "élan baissier"]);
+  if (t.volatilityPct !== null) rows.push([`Volatilité 30 j${glossaryTipHtml("Volatilité")}`, `${t.volatilityPct.toFixed(0)} % par an`]);
+  if (t.drawdownPct !== null) rows.push(["Depuis le plus haut sur 1 an", pct(t.drawdownPct)]);
+  const perf = t.change.filter(([, v]) => v !== null).map(([l, v]) => `${l} ${pct(v)}`);
+  if (perf.length) rows.push(["Évolution", perf.join(" · ")]);
+  if (!rows.length) return "";
+  const asOf = t.asOf ? new Date(t.asOf).toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit" }) : null;
+  const origin = t.source === "robot" ? "calcul quotidien sur 1 an d'historique" : "relevé CoinMarketCap";
+  return `<div class="detail-cmc"><strong>Analyse technique du jour</strong> <span class="hint">${origin}${asOf ? ` du ${escapeHtml(asOf)}` : ""}</span>
+    ${t.reading ? `<p class="text-resume">${highlightKeyInfo(t.reading)}</p>` : ""}
+    <ul class="cmc-rows">${rows.map(([label, value]) => `<li><span class="hint">${label}</span><span>${escapeHtml(value)}</span></li>`).join("")}</ul></div>`;
+}
+
 async function renderDetailPanel(panelEl, asset) {
   panelEl.innerHTML = `<p class="empty-state">Calcul des indicateurs en cours…</p>`;
 
@@ -516,11 +572,12 @@ async function renderDetailPanel(panelEl, asset) {
   // dépliage, donc gardent "Mon avis" normalement.
   panelEl.innerHTML = `
     ${technicalHtml}
+    ${renderDailyTechnicalSection(asset.ticker)}
     ${onchainHtml}
     ${renderFavorisContextSection(asset.ticker)}
     ${asset.skipOpinionBlock ? "" : `<div class="detail-opinion">
       <strong>Mon avis</strong>
-      ${renderClampableText(asset.reasoning || asset.reason || "Analyse pas encore disponible pour cet actif — en attente du prochain cycle.")}
+      ${asset.reasoning ? renderReasoningFor(asset.cgId, asset.reasoning) : renderClampableText(asset.reason || "Analyse pas encore disponible pour cet actif — en attente du prochain cycle.")}
       ${asset.verdict ? `<p class="hint">Verdict actuel : <span class="badge badge-${asset.verdict.toLowerCase()}">${asset.verdict}</span> — vérifié automatiquement à son échéance, jamais avant.</p>` : ""}
     </div>`}
     ${breakdownHtml}

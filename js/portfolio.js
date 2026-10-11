@@ -630,7 +630,7 @@ function renderPortfolioTile(p, idx) {
           <span class="hint">Signaux techniques (calculés en direct)</span>
           <div class="portfolio-technical" id="portfolio-technical-${idx}"><p class="empty-state">Se charge à l'ouverture…</p></div>
         </div>
-        ${p.reasoning ? `<div class="hint portfolio-reasoning">${renderClampableText(p.reasoning)}</div>` : ""}
+        ${p.reasoning ? `<div class="hint portfolio-reasoning">${renderReasoningFor(p.cgId, p.reasoning)}</div>` : ""}
         ${renderThesisBlock(p)}
         ${typeof renderFavorisContextSection === "function" ? renderFavorisContextSection(p.ticker) : ""}
       </div>

@@ -1017,6 +1017,35 @@ describe("app.js — renderNews", () => {
     expect(item.classList.contains("important")).toBe(false);
     expect(item.textContent).not.toContain("À surveiller");
   });
+
+  // items est en ajout (le plus récent en dernier, écrit par la routine) — trouvé le 09/10/2026 :
+  // sans ce renversement, un item vieux de 2 semaines restait affiché en premier indéfiniment.
+  it("shows the most recently added item first, not raw array order", () => {
+    dom.window.renderNews({
+      items: [
+        { title: "Ancien article (ajouté en premier)", url: "https://example.com/a", source: "X" },
+        { title: "Article récent (ajouté en dernier)", url: "https://example.com/b", source: "Y" },
+      ],
+    });
+    const titles = Array.from(dom.window.document.querySelectorAll("#news-body .news-item")).map((el) => el.textContent);
+    expect(titles[0]).toContain("Article récent");
+    expect(titles[1]).toContain("Ancien article");
+  });
+
+  it("shows no staleness hint when last_updated_at is recent or missing", () => {
+    dom.window.renderNews({ items: [{ title: "Titre", url: "https://example.com/a", source: "X" }] });
+    expect(dom.window.document.getElementById("news-body").textContent).not.toContain("Dernière actualité réellement nouvelle");
+
+    const recent = new Date(Date.now() - 1 * 86400000).toISOString();
+    dom.window.renderNews({ last_updated_at: recent, items: [{ title: "Titre", url: "https://example.com/a", source: "X" }] });
+    expect(dom.window.document.getElementById("news-body").textContent).not.toContain("Dernière actualité réellement nouvelle");
+  });
+
+  it("shows a staleness hint with the real age when last_updated_at is 3+ days old", () => {
+    const old = new Date(Date.now() - 6 * 86400000).toISOString();
+    dom.window.renderNews({ last_updated_at: old, items: [{ title: "Titre", url: "https://example.com/a", source: "X" }] });
+    expect(dom.window.document.getElementById("news-body").textContent).toContain("il y a 6 jours");
+  });
 });
 
 describe("app.js — isNewsImportant (repérage de mots-clés, jamais une lecture bullish/bearish)", () => {

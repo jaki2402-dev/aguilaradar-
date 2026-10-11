@@ -11,7 +11,7 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml" />
 <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 <link rel="manifest" href="manifest.json" />
-<link rel="stylesheet" href="css/style.css?v=20260915a" />
+<link rel="stylesheet" href="css/style.css?v=20261011b" />
 </head>
 <body>
 
@@ -322,6 +322,8 @@
       </form>
       <div id="search-result" style="margin-bottom: 20px;"></div>
 
+      <div id="favoris-technical"></div>
+
       <div class="constellation-host">
         <canvas id="favoris-constellation-canvas" aria-hidden="true"></canvas>
         <div id="favoris-grid" class="favoris-grid"></div>
@@ -373,6 +375,20 @@
                 <div id="engine-matrix-table"></div>
                 <div id="engine-classes"></div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="engine-acc">
+          <button class="engine-acc-summary" type="button" aria-expanded="false">
+            <span>Ce que disaient les indicateurs (analyse rétrospective)</span><span class="chevron">▾</span>
+          </button>
+          <div class="engine-acc-body">
+            <div class="engine-acc-body-inner">
+              <details class="info-toggle"><summary>ⓘ Comment ça marche</summary>
+                <p class="section-sub">Chaque soir, un robot recalcule le RSI et la moyenne 200 jours de chaque favori au jour exact de chaque verdict vérifié (avec les seuls cours connus ce jour-là), puis compare à ce qui s'est réellement passé. Sert à repérer ce qui prédit vraiment, pour corriger le moteur.</p>
+              </details>
+              <div id="engine-technical-backtest"></div>
             </div>
           </div>
         </div>
@@ -534,16 +550,16 @@
      cache: "no-store", donc toujours frais) - bug réel constaté le 18/08 : la correction de
      l'Assistant était bien en ligne, mais assistant.js restait servi en cache. Bump la date à
      CHAQUE modification d'un fichier js/*.js ou css/*.css, pas seulement pour ce correctif-ci. -->
-<script src="js/config.js?v=20261005a"></script>
-<script src="js/data-integrity.js?v=20260914a"></script>
+<script src="js/config.js?v=20261011b"></script>
+<script src="js/data-integrity.js?v=20261009a"></script>
 <script src="js/prices.js?v=20260914i"></script>
 <script src="js/charts.js?v=20260824i"></script>
 <script src="js/engine.js?v=20261005a"></script>
 <script src="js/cards.js?v=20260831d"></script>
 <script src="js/onchain.js?v=20260915b"></script>
-<script src="js/detail.js?v=20260915b"></script>
-<script src="js/insights.js?v=20261005a"></script>
-<script src="js/portfolio.js?v=20261005a"></script>
+<script src="js/detail.js?v=20261011b"></script>
+<script src="js/insights.js?v=20261011b"></script>
+<script src="js/portfolio.js?v=20261010a"></script>
 <script src="js/allocation.js?v=20260914e"></script>
 <script src="js/verdict-breakdown.js?v=20260914b"></script>
 <script src="js/background-fx.js?v=20260824i"></script>
@@ -556,9 +572,9 @@
 <script src="js/theme.js?v=20260824i"></script>
 <script src="js/layout.js?v=20260824i"></script>
 <script src="js/search.js?v=20260831d"></script>
-<script src="js/app.js?v=20261005b"></script>
+<script src="js/app.js?v=20261011b"></script>
 <script src="js/notify.js?v=20260831d"></script>
-<script src="js/assistant.js?v=20261005a"></script>
+<script src="js/assistant.js?v=20261011b"></script>
 <script src="js/auth.js?v=20260824i"></script>
 </body>
 </html>

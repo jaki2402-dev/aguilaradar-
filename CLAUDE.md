@@ -5,6 +5,12 @@ volontairement. Le *pourquoi* détaillé et l'historique des incidents : `docs/j
 (ne le lire que si une règle ci-dessous ne suffit pas). **Ne pas regonfler ce fichier** : un
 nouveau constat va dans `docs/journal-technique.md`, ici seulement la règle en 1-3 lignes.
 
+## Session interactive : commencer par `docs/feuille-de-route.md`
+
+Tableau de bord unique (état vérifié, problèmes ouverts, qui agit). Le lire en début de session,
+mettre à jour statuts + journal en fin de session ; n'y inscrire qu'un constat vérifié (preuve +
+date). **Routines : ne pas le lire** (hors de leur rôle, coût en tokens).
+
 ## Économie de tokens — OBLIGATOIRE pour toute routine et toute session
 
 Le quota hebdo a été épuisé en fin de semaine (aucun commit de routine du 28/09 au 03/10/2026).
@@ -44,9 +50,15 @@ toutes les 2h qu'on croyait désactivé), et des prompts faisant `cat` de ~480 K
   fait foi. Le watchdog était noté « désactivé » depuis le 06/09 et tournait toujours.
 - **Modifier une routine** : un agent peut changer un horaire, mais le classifieur refuse en
   général désactivation/prompt, et une routine créée hors agent (`created_via: http_api`, ex.
-  `alerte-crypto-quotidienne-cloud`) n'est modifiable que par l'utilisateur. Dans ce cas : fichier
-  prêt à coller (scratchpad) + lien `claude.ai/code/routines/<id>`, puis vérifier avec
-  `get_trigger`. Ne jamais dire « appliqué » sans cette relecture.
+  `alerte-crypto-quotidienne-cloud`) n'est modifiable que par l'utilisateur. Dans ce cas : **relire
+  d'abord le prompt complet** (`get_trigger` — un ajout en fin de prompt ne neutralise pas une
+  étape contradictoire), puis fichier prêt à coller (scratchpad) + lien
+  `claude.ai/code/routines/<id>`, puis re-vérifier avec `get_trigger`. Ne jamais dire « appliqué »
+  sans cette relecture : les 3 prompts « à coller » du 05/10 n'ont jamais été collés.
+- **Session persistante = contexte qui grossit à chaque exécution** (coût par exécution bien
+  supérieur à une session fraîche, mesures du 06/10 dans le journal) : toute nouvelle routine en
+  session fraîche. Les 3 persistantes actives (verif-fraicheur, opportunités, briefing-email) :
+  conversion à planifier une par une (MCP en session fraîche non vérifié).
 - **Secrets** : certains prompts (digest : clé privée VAPID) contiennent des secrets → jamais dans
   le dépôt (public). Clé publique du prompt digest ≠ celle de `js/notify.js` (changée le 23/09) :
   push digest probablement en échec, non vérifié.
@@ -113,6 +125,13 @@ Pas de build/lint. CI : `npm ci && npm test` sur push `main` et PR.
   → « Offre non plafonnée ». Doit rester synchro avec `docs/verdict-methodology.md`.
 - **Panneaux dépliables** : jamais de `max-height` fixe ; mesurer `scrollHeight` juste après le
   lancement du rendu async (même tick) et re-mesurer après la promesse, succès OU échec.
+- **Tableau en ajout** (`correction_log`, `alerts.json`, `news.json`) : le plus récent est en
+  DERNIER dans le fichier — toujours `.slice().reverse()` avant affichage, sinon le plus ancien
+  item reste en tête indéfiniment (trouvé sur `news.json` le 09/10, resté 2 semaines figé).
+- **`?v=` sur `index.html`** : à bumper sur CHAQUE fichier JS/CSS modifié, pas seulement celui
+  qu'on croit avoir changé — un fichier touché sans son `?v=` bumpé peut rester en cache
+  navigateur (trouvé le 09/10 : `data-integrity.js` jamais bumpé depuis le 14/09 malgré un ajout
+  le 21/09).
 - **Grilles** : `min-width: 0` sur les items contenant un `<table>` ; vérifier à 390px
   (`document.body.scrollWidth`). Colonnes plus étroites ≠ page plus courte pour du texte long.
 - **WCAG AA** vérifié par calcul (`--text-faint #7e8ba3`, badge cloche `#c22a22`) : vérifier le
@@ -150,6 +169,16 @@ vente.
   attente, jamais deviné.
 - `portfolio-thesis.json` (`constat` + badge) ≠ `favoris-context.json` (`bull/base/bear`, **clé =
   ticker**, pas `cgId`). Les distinguer par la forme.
+- Champ `resume` (verdicts, actualités, régime, notes du contexte marché, thèses des favoris) :
+  1 phrase ≤ 160 caractères écrite par la routine, affichée en tête par le site ; jamais un fait
+  absent du texte complet (section « Champ resume » de `docs/routines/*.md`, active le 11/10/2026).
+- `technical-favoris.json` : GitHub Action `technical-daily` (23h30 UTC, zéro quota,
+  `scripts/technical-favoris.mjs`, mêmes calculs que `js/detail.js`) — MM200, RSI, MACD,
+  volatilité par favori (clé = ticker, USD) + analyse rétrospective des verdicts vérifiés. Le cycle
+  le lit pour `technical_at_issue` (documente, ne change pas la règle de décision).
+- `crypto-global.json` (levier, saison des altcoins, encours ETF) et `cmc-favoris.json` (cours,
+  évolutions, RSI, MM, MACD des 15 favoris, clé = ticker, USD) : état courant écrasé chaque jour par
+  la seule routine `coinmarketcap-quotidien` (`scripts/cmc-snapshot.py`, ids CMC vérifiés dedans).
 - Avant de proposer une nouvelle source : vérifier `data/market-context.json` (taux 10 ans, flux
   ETF, stablecoins y sont déjà).
 
@@ -157,14 +186,21 @@ vente.
 
 - La config des routines vit dans les triggers Cowork, invisible à git et non relisible. Les specs
   versionnées sont dans `docs/routines/*.md` (cycle-2h-verdict, favoris-quotidien,
-  marche-quotidien) : modifier le `.md` + committer sur `main`. Changer un trigger
+  marche-quotidien) : leurs prompts disent « lis ce fichier sur main et suis-le à la lettre »
+  (vérifié par `list_triggers` le 10/10) → modifier le `.md` + le fusionner dans `main` SUFFIT,
+  rien à coller. Ne jamais y laisser de texte « à coller / pas encore actif » : la routine le lit. Changer un trigger
   (`update_trigger`) = action à confirmer avec l'utilisateur, jamais automatique.
 - **Commit en 2 étapes** : la session commite sur sa branche `claude/*`, puis fusionne dans `main`
   et pousse `main`. Sans l'étape 2, invisible sur le site. Branches `claude/*` restantes : vérifier
   `git merge-base --is-ancestor` avant de conclure à un oubli.
 - Outils MCP CoinGecko/Alpha Vantage/Economic Index **interdits dans les routines one-shot**
   (bloquent la session) — WebFetch + WebSearch à la place. Exception : `opportunites-quotidien`.
-  Un outil qui marche en session interactive ne prouve rien pour une routine.
+  Un outil qui marche en session interactive ne prouve rien pour une routine. Validés en
+  exécution automatique : Blockscout (`favoris-quotidien`, prouvé sur données le 10/10).
+  **CoinMarketCap** : seulement dans la routine dédiée `coinmarketcap-quotidien`
+  (`get_global_metrics_latest`, `get_crypto_quotes_latest`, `get_crypto_technical_analysis` →
+  `scripts/cmc-snapshot.py`) ; les autres routines lisent ses fichiers, n'appellent jamais l'outil.
+  `execute_skill` (facturé) : jamais sans accord de l'utilisateur.
 - Échec `rate_limit_info.status:"rejected"` = quota d'usage, pas un bug.
 - Indicateur de fraîcheur en alerte → vérifier les timestamps réels sur `origin/main` avant de
   conclure qu'une routine est bloquée.

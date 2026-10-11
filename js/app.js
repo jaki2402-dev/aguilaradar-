@@ -26,19 +26,6 @@ async function loadJson(url) {
   }
 }
 
-// Rend un div.clickable navigable et activable au clavier (Entrée/Espace), sans changer son
-// comportement au clic — pour les actions "voir plus" qui n'ont pas de vrai <button>.
-function makeKeyboardClickable(el) {
-  if (!el) return;
-  el.setAttribute("tabindex", "0");
-  el.setAttribute("role", "button");
-  el.addEventListener("keydown", (e) => {
-    if (e.key !== "Enter" && e.key !== " ") return;
-    e.preventDefault();
-    el.click();
-  });
-}
-
 // Grille dense (esprit Coin360 : l'essentiel, peu de défilement) — nom/secteur complets
 // disponibles au survol (title) et dans la fiche détaillée au clic, pas sur la tuile elle-même
 // pour rester épuré. Classe .favori-tile volontairement DISTINCTE de .favori-card (toujours
@@ -198,34 +185,10 @@ function renderOpportunities(data) {
   if (constellationControllers.opportunities) constellationControllers.opportunities.refresh();
 }
 
-// Aperçu tronqué (3 lignes) + "Lire plus" pour un texte long — Journal (raisonnement) et
-// Alertes (message) partagent ce motif : sans lui, un texte de 500+ caractères (fréquent côté
-// alertes) rendait ces deux onglets illisibles au scroll. Sous le seuil, retourne un <p> nu —
-// forme strictement identique à l'ancien rendu, donc aucun texte court n'est jamais affecté.
-const CLAMP_TEXT_THRESHOLD = 200;
-let clampTextUid = 0;
-
-function renderClampableText(text) {
-  const safe = highlightKeyInfo(text || "");
-  if (!text || text.length <= CLAMP_TEXT_THRESHOLD) return `<p>${safe}</p>`;
-  const id = `clamp-text-${++clampTextUid}`;
-  return `<p class="clamp-text" id="${id}">${safe}</p><span class="expand-hint expand-hint-inline clickable" data-clamp-target="${id}">Lire plus <span class="chevron">▾</span></span>`;
-}
-
-// stopPropagation : le "Lire plus" vit à l'intérieur d'une .journal-entry.clickable qui a son
-// propre clic (attachDetailToggle, voir detail.js) — sans ça, déplier le texte ouvrirait aussi
-// la grosse fiche d'analyse en dessous, deux actions pour un seul clic.
-function wireClampToggles(root) {
-  root.querySelectorAll("[data-clamp-target]").forEach((btn) => {
-    makeKeyboardClickable(btn);
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const p = document.getElementById(btn.dataset.clampTarget);
-      if (!p) return;
-      const isOpen = p.classList.toggle("clamp-open");
-      btn.classList.toggle("expanded", isOpen);
-    });
-  });
+// « 2026-10-10T16:20:00Z » -> « 10/10/2026 18:20 » (heure locale du lecteur) ; texte brut si illisible.
+function formatIssuedAt(iso) {
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? String(iso || "") : d.toLocaleString("fr-FR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
 }
 
 const JOURNAL_PAGE_SIZE = 15;
@@ -255,10 +218,10 @@ function renderJournalPage() {
         (v, i) => `
       <div class="journal-entry clickable verdict-${(v.verdict || "").toLowerCase()}" data-detail-target="detail-journal-${v.id || i}" data-cgid="${v.asset}">
         <div class="log-header">
-          <span><strong>${v.ticker || v.asset}</strong> · ${v.issued_at}</span>
+          <span><strong>${v.ticker || v.asset}</strong> · ${escapeHtml(formatIssuedAt(v.issued_at))}</span>
           <span class="badge badge-${(v.verdict || "").toLowerCase()}">${v.verdict}</span>
         </div>
-        ${renderClampableText(v.reasoning)}
+        ${renderVerdictText(v)}
         <p class="hint">Confiance ${v.confidence_pct ?? "—"} % · horizon ${v.horizon_days} j · statut ${v.status}</p>
         ${v.status === "pending" ? renderProvisionalBadge(v) : ""}
         <div class="expand-hint">Voir l'analyse détaillée <span class="chevron">▾</span></div>
@@ -447,6 +410,7 @@ function macroView(engineHistory, gauges) {
     regimeAt,
     stale: ageDays !== null && ageDays > MACRO_REGIME_STALE_DAYS,
     note: r.note || "",
+    resume: r.resume || "",
     fearGreed: fgLive ? fgLive.value : r.fear_greed_value ?? null,
     fearGreedAt: fgLive ? fgLive.as_of || gauges.updated_at : regimeAt,
     dominance: domLive ? domLive.pct : r.btc_dominance_pct ?? null,
@@ -471,7 +435,7 @@ function renderMacroRegime(engineHistory, gauges) {
   const noteHtml = m.stale
     ? `<div class="hint macro-regime-note" style="margin-top:10px;">Régime évalué pour la dernière fois le ${escapeHtml(shortDate(m.regimeAt))} et pas réévalué depuis — à lire comme un contexte passé, pas comme l'état actuel du marché. Les deux jauges, elles, sont relevées automatiquement.</div>`
     : m.note
-      ? `<div class="hint macro-regime-note" style="margin-top:10px;">${renderClampableText(m.note)}</div>`
+      ? `<div class="hint macro-regime-note" style="margin-top:10px;">${renderSummaryFirst(m.resume, m.note)}</div>`
       : "";
   el.innerHTML = `
     <div class="hero-card">
@@ -516,19 +480,45 @@ function renderNews(newsData) {
     el.innerHTML = `<p class="empty-state">Aucune actualité récupérée pour l'instant — alimenté par la routine à chaque cycle profond.</p>`;
     return;
   }
-  el.innerHTML = items
-    .map((n) => {
-      const url = safeUrl(n.url);
-      const title = highlightKeyInfo(n.title);
-      const important = isNewsImportant(n.title);
-      return `
+  // items est en ajout (le plus récent en dernier, comme correction_log/alerts ailleurs sur le
+  // site) — jamais le bon ordre d'affichage tel quel, sinon le plus ancien item reste en tête
+  // indéfiniment. Trouvé le 09/10/2026 : un hack du 24/09 restait affiché en premier alors que
+  // last_updated_at avait bien avancé au 05/10 — même idiome que renderNotifications ci-dessous.
+  const ordered = items.slice().reverse();
+  const updatedAt = newsData && newsData.last_updated_at;
+  const ageDays = updatedAt ? Math.floor((Date.now() - new Date(updatedAt).getTime()) / 86400000) : null;
+  // Même seuil que renderAvisDuJour (3 jours) : la veille ne touche items que sur une actualité
+  // jugée vraiment significative, pas à chaque cycle — rester correct plusieurs jours est normal,
+  // mais le dire plutôt que laisser croire que la liste vient d'être renouvelée aujourd'hui.
+  const staleHint =
+    ageDays !== null && ageDays >= 3
+      ? `<p class="hint" style="margin-bottom:8px;">Dernière actualité réellement nouvelle ajoutée il y a ${ageDays} jours — la liste reste correcte, juste pas forcément celle d'aujourd'hui.</p>`
+      : "";
+  el.innerHTML =
+    staleHint +
+    ordered
+      .map((n) => {
+        const url = safeUrl(n.url);
+        const important = isNewsImportant(n.title);
+        // Une « actualité » fait souvent 500+ caractères : 2 lignes + « Lire plus », le début
+        // porte déjà l'essentiel (le lien reste sur le texte, le bouton est hors du lien).
+        // Avec un `resume` (une phrase écrite par la routine) : lui seul dans le lien, texte complet
+        // replié dessous. Sans : aperçu de 2 lignes du texte complet.
+        const hasResume = typeof n.resume === "string" && n.resume.trim();
+        const long = !hasResume && (n.title || "").length > CLAMP_TEXT_THRESHOLD;
+        const id = long ? `clamp-text-${++clampTextUid}` : "";
+        const title = hasResume ? `<span>${highlightKeyInfo(n.resume)}</span>` : `<span${long ? ` class="clamp-text clamp-2" id="${id}"` : ""}>${highlightKeyInfo(n.title)}</span>`;
+        return `
       <div class="news-item${important ? " important" : ""}">
         ${important ? `<span class="news-important-flag" title="Contient un mot-clé associé à une actualité potentiellement majeure">⚡ À surveiller</span>` : ""}
-        ${url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${title}</a>` : `<span>${title}</span>`}
+        ${url ? `<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${title}</a>` : title}
+        ${hasResume && n.title && n.title !== n.resume ? hiddenFullText(n.title, "Lire plus") : ""}
+        ${long ? `<span class="expand-hint expand-hint-inline clickable" data-clamp-target="${id}">Lire plus <span class="chevron">▾</span></span>` : ""}
         <span class="hint">${escapeHtml(n.source || "")}</span>
       </div>`;
-    })
-    .join("");
+      })
+      .join("");
+  wireClampToggles(el);
 }
 
 // Anime un chiffre de sa valeur affichée actuelle vers sa nouvelle valeur, plutôt qu'un
@@ -564,7 +554,7 @@ function updateHeroStats(verdicts, alerts) {
 }
 
 async function loadAllData() {
-  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory, marketGauges] = await Promise.all([
+  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory, marketGauges, cryptoGlobal, cmcFavoris, technicalFavoris] = await Promise.all([
     loadJson(DATA_URLS.verdicts),
     loadJson(DATA_URLS.engineHistory),
     loadJson(DATA_URLS.opportunities),
@@ -580,6 +570,9 @@ async function loadAllData() {
     loadJson(DATA_URLS.portfolioHistory),
     loadJson(DATA_URLS.onchainHistory),
     loadJson(DATA_URLS.marketGauges),
+    loadJson(DATA_URLS.cryptoGlobal),
+    loadJson(DATA_URLS.cmcFavoris),
+    loadJson(DATA_URLS.technicalFavoris),
   ]);
   latestFavorisContext = favorisContext;
   // data/onchain-history.json est neuf (voir docs/routines/favoris-quotidien-onchain-history.md) :
@@ -588,7 +581,7 @@ async function loadAllData() {
   latestOnchainHistory = onchainHistory && onchainHistory.assets ? onchainHistory : { assets: {} };
   // Expose les données déjà chargées pour que d'autres fonctionnalités (l'Assistant) les
   // réutilisent sans refaire les mêmes fetch — toujours les données du dernier rafraîchissement.
-  window.aguilaradarData = { verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory: latestOnchainHistory, marketGauges };
+  window.aguilaradarData = { verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory: latestOnchainHistory, marketGauges, cryptoGlobal, cmcFavoris, technicalFavoris };
   if (window.renderDigestPanel) renderDigestPanel(digest);
 
   renderEngineTab(verdicts || [], engineHistory, opportunities, controlGroup);
@@ -599,7 +592,9 @@ async function loadAllData() {
   if (window.updateNotifBellFromAlerts) updateNotifBellFromAlerts(alerts);
   renderNews(news);
   renderMacroRegime(engineHistory, marketGauges);
-  renderMarketContext(marketContext);
+  renderMarketContext(marketContext, marketGauges, cryptoGlobal);
+  renderFavorisTechnical(technicalFavoris);
+  renderTechnicalBacktest(technicalFavoris);
   renderHealthStatus(healthLog, favorisContext, verdicts || []);
   renderSectorBreakdown(verdicts || []);
   renderConfidenceHistory(verdicts || []);

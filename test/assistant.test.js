@@ -705,6 +705,12 @@ describe("assistant.js — detectResponseMode + routage d'une comparaison entre 
 
   it("détecte allocation / comparaison / thèse / portfolio / market / quick à partir du seul texte de la question", () => {
     expect(dom.window.detectResponseMode("Je devrais renforcer Cartesi ?")).toBe("allocation");
+    // Régression 06/10/2026 : "acheter" était absent d'ALLOCATION_INTENT_RE alors que c'est le
+    // verbe le plus direct pour ce type de question (et le nom du verdict "ACHAT" lui-même) —
+    // tombait en "quick" (llama-3.3-70b, 320 tokens) au lieu de "allocation" (gpt-oss-120b, 1600
+    // tokens, format comparatif) : exemple réel remonté par l'utilisateur (capture d'écran).
+    expect(dom.window.detectResponseMode("Donc pour toi c'est BTC qui mérite d'être acheté malgré la hausse, il n'y a pas d'autre opportunité plus attractive ?")).toBe("allocation");
+    expect(dom.window.detectResponseMode("Tu penses que je devrais acheter du Bitcoin maintenant ?")).toBe("allocation");
     expect(dom.window.detectResponseMode("INJ ou LINK, lequel recharger ?")).toBe("comparison");
     expect(dom.window.detectResponseMode("Fais-moi une thèse d'investissement sur Celestia")).toBe("thesis");
     expect(dom.window.detectResponseMode("Pourquoi ça monte ?")).toBe("quick"); // pas "marché" explicite
@@ -920,5 +926,79 @@ describe("assistant.js — appendChatMessage (surlignage des chiffres-clés dans
     expect(p.querySelector("img")).toBeNull();
     expect(p.textContent).toContain("<img src=x onerror=alert(1)>");
     expect(p.innerHTML).toContain('<mark class="hl-stat">50%</mark>');
+  });
+});
+
+describe("assistant.js — statistiques du moteur : même calcul en direct que l'onglet Moteur", () => {
+  // Régression réelle (10/10/2026) : l'Assistant citait engine-history.global_stats, figé au
+  // 05/10 (81 vérifiés, 25,93 %), alors que l'onglet Moteur calcule en direct depuis verdicts.json
+  // (82 vérifiés, 25,61 %). Les deux doivent désormais dire la même chose.
+  const resolved = (verdict, actual) => ({ status: "resolved", verdict, outcome: { actual_direction: actual, verdict_correct: verdict === actual } });
+  const staleGlobalStats = { total_verdicts_issued: 2, total_verdicts_resolved: 1, accuracy_strict_pct: 99.9 };
+
+  async function setup(scripts, verdicts) {
+    const dom = loadPage(scripts);
+    dom.window.aguilaradarData = { verdicts, engineHistory: { global_stats: staleGlobalStats } };
+    await dom.window.ensureChatData();
+    return dom;
+  }
+
+  it("cite le calcul en direct (computeEngineStats) et ignore un global_stats figé", async () => {
+    const verdicts = [resolved("ACHAT", "ACHAT"), resolved("ACHAT", "VENTE"), resolved("ATTENTE", "ATTENTE"), resolved("VENTE", "ACHAT"), { status: "pending", verdict: "ACHAT" }];
+    const dom = await setup(["config.js", "engine.js", "assistant.js"], verdicts);
+    const answer = dom.window.answerEngine();
+    expect(answer).toContain("a émis 5 verdicts, dont 4 vérifiés, avec une exactitude de 50.0 %");
+    expect(answer).not.toContain("99.9");
+    expect(dom.window.buildAiContext()).toContain("50.0 % d'exactitude sur 4 verdicts vérifiés");
+  });
+
+  it("aucun verdict encore résolu : ne donne pas de taux, même si global_stats en contient un", async () => {
+    const dom = await setup(["config.js", "engine.js", "assistant.js"], [{ status: "pending", verdict: "ACHAT" }]);
+    const answer = dom.window.answerEngine();
+    expect(answer).toContain("a émis 1 verdict(s) au total, mais aucun n'a encore atteint son échéance");
+    expect(answer).not.toMatch(/exactitude de/);
+  });
+
+  it("repli sur global_stats quand engine.js n'est pas chargé", async () => {
+    const dom = await setup(["config.js", "assistant.js"], [resolved("ACHAT", "ACHAT")]);
+    expect(dom.window.answerEngine()).toContain("a émis 2 verdicts, dont 1 vérifiés, avec une exactitude de 99.9 %");
+  });
+});
+
+describe("assistant.js — or : relevé du robot en repli quand la routine n'a pas de cours", () => {
+  async function contextWith(marketContext, marketGauges) {
+    const dom = loadPage(["config.js", "assistant.js"]);
+    dom.window.aguilaradarData = { verdicts: [], engineHistory: {}, marketContext, marketGauges };
+    await dom.window.ensureChatData();
+    return dom.window.buildAiContext();
+  }
+
+  it("utilise les jetons or, présentés comme une approximation", async () => {
+    const ctx = await contextWith({ gold: { spot_usd_per_oz: null } }, { gold: { usd_per_oz: 4182.45, as_of: "2026-10-10T15:56:00Z" } });
+    expect(ctx).toContain("Or : environ 4182 $/once (approximation via les jetons PAX Gold et Tether Gold, relevé le 10/10)");
+  });
+
+  it("garde le cours de la routine quand il existe", async () => {
+    const ctx = await contextWith({ gold: { spot_usd_per_oz: 4150 } }, { gold: { usd_per_oz: 4182.45 } });
+    expect(ctx).toContain("Or : 4150 $/once.");
+    expect(ctx).not.toContain("approximation via les jetons");
+  });
+});
+
+describe("assistant.js — levier/rotation CoinMarketCap dans le contexte de l'IA", () => {
+  async function contextWith(cryptoGlobal) {
+    const dom = loadPage(["config.js", "assistant.js"]);
+    dom.window.aguilaradarData = { verdicts: [], engineHistory: {}, marketContext: {}, cryptoGlobal };
+    await dom.window.ensureChatData();
+    return dom.window.buildAiContext();
+  }
+
+  it("transmet les chiffres de data/crypto-global.json, l'encours ETF étiqueté comme encours et non flux", async () => {
+    const ctx = await contextWith({ as_of: "2026-10-10T22:30:00Z", altcoin_season_index: 64, open_interest_usd: 378.07e9, open_interest_change_7d_pct: -12.34, funding_rate_avg_pct: 0.0042474, btc_liquidations_24h_usd: 3.67e6, btc_etf_aum_usd: 108.82e9 });
+    expect(ctx).toContain("Levier et rotation (CoinMarketCap, relevé le 10/10) : saison des altcoins 64/100, positions ouvertes 378.1 Md$ (-12.34 % sur 7 j), financement moyen 0.0042474 %, liquidations BTC 24 h 3.7 M$, encours ETF BTC 108.8 Md$ (un encours, pas un flux).");
+  });
+
+  it("rien quand le fichier est absent", async () => {
+    expect(await contextWith(null)).not.toContain("CoinMarketCap");
   });
 });

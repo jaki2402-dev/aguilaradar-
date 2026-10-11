@@ -286,7 +286,226 @@ clé privée dans le prompt, le digest ajoute 1 entrée `avis_du_jour`/jour à `
 Worker (bonnes clés) la notifie. **verif-fraicheur** jugeait les news sur `last_updated_at` (fausse
 alerte quasi quotidienne) et faisait `cat` d'engine-history → nouveau prompt (extraction python,
 `last_checked_at`, + historique portefeuille et jauges). **briefing-email** lisait F&G/dominance
-figés → nouveau prompt (`market-gauges.json`, régime daté). **Worker** : `slice(-500)` des ids
+figés → nouveau prompt (`market-gauges.json`, régime daté). **Constat du 06/10 : aucun de ces 3
+prompts n'a été collé** (`list_triggers` : digest modifié la dernière fois le 03/10, toujours
+web-push/VAPID ; briefing-email le 31/08 ; verif-fraicheur encore en version 17/08 jusqu'au
+correctif partiel collé le 06/10 au soir). Même jour, `get_session` sur les 3 routines en session
+persistante : contexte 443 k tokens (verif-fraicheur), 491 k (opportunités), 274 k (briefing-email),
+coût cumulé ~99 $, ~88 $ et ~95 $ d'équivalent API depuis mi-août — contre 0,17 $ pour une
+exécution d'horizons en session fraîche. **Worker** : `slice(-500)` des ids
 notifiés aurait re-notifié en boucle au-delà de 500 entrées → ids encore présents jamais oubliés
 (code corrigé ici, **pas encore déployé** sur `aguilaradar-assistant-ia` : connecteur Cloudflare non
 autorisé pour vérifier le déploiement).
+
+### 06/10/2026 — corr-20260921 (biais ATTENTE) : encore trop tôt pour juger, conformité intacte
+
+Rappel programmé 14 jours après la fusion de la règle de sélection ACHAT/ATTENTE/VENTE (PR #7) et
+du vérificateur `checkVerdictSelectionCompliance` (PR #8, `js/data-integrity.js`). 19 verdicts émis
+après le cutoff formel (21/09 23h26 UTC), 10 résolus. **Conformité : 0 violation** — chaque fois que
+`signal_consensus.technique` a été lu haussier/baissier avec `accord_count≥1` depuis, le verdict a
+bien été directionnel, sans exception, y compris sur les 7 verdicts haussier→ACHAT émis d'affilée le
+05/10 (encore pending, échéance 12-19/10).
+
+Mais le mécanisme n'a été réellement **exercé** qu'une seule fois dans la fenêtre stricte post-fusion
+(`v-20260928-link`, incorrect : ACHAT émis, +1,86 % réel, resté sous le seuil directionnel). Un
+deuxième cas pré-existe juste avant la fusion (`v-20260920-link`, correct, +11,76 %) mais ne teste
+pas la règle elle-même (émis ~23h avant qu'elle soit en vigueur) — à distinguer, la note du 28/09
+dans `correction_log` l'avait compté un peu vite comme un test. Aucun cas baissier→VENTE ne s'est
+présenté du tout depuis le 20/09 : la moitié de la règle n'a encore jamais été mise à l'épreuve.
+
+Les 9 autres résolutions du lot (mixte/neutre → ATTENTE, non concernées par cette règle précise)
+donnent 3/10 corrects au global du lot (30 %, sous la baseline 50 % du même lot) — un chiffre qui ne
+dit rien sur l'efficacité de la règle testée ici, seulement que « mixte/neutre → ATTENTE » a mal
+performé sur ce lot particulier (3/9). Noté comme angle à surveiller, pas corrigé maintenant : une
+seule variable à la fois, cf. la discipline déjà établie par `corr-20260906`/`corr-20260913`.
+
+`validation_score_after_pct` de `corr-20260921-biais-attente-asymetrique` laissé à `null` (3e fois
+de suite, même discipline que les notes du 28/09 et du 05/10) — le seuil du document (~10 cas où le
+mécanisme se déclenche réellement) est loin d'être atteint avec n=1. Prochain rappel : 20/10/2026,
+après résolution du lot du 05/10 (le premier échantillon vraiment informatif, 7 cas haussier→ACHAT
+d'un coup).
+
+### 09/10/2026 — "Ce qui bouge" affichait un hack du 24/09 en premier : bug d'affichage, pas de donnée figée
+
+Signalé par l'utilisateur (capture d'écran) : le hack Bitget du 24/09 restait affiché en tête de
+"Ce qui bouge" (Accueil) 2 semaines plus tard, l'air d'une actualité qui ne se met plus à jour.
+Vérifié sur `data/news.json` réel (`origin/main`) avant toute conclusion : `last_checked_at` était
+à l'heure du cycle du jour même (la veille tourne normalement, aucun cycle manqué) et
+`last_updated_at` au 05/10 (4 jours, pas 2 semaines) — le contenu n'était donc pas figé, seul
+l'Ethereum Glamsterdam ajouté le 05/10 était le dernier élément du tableau `items`.
+
+Cause réelle : `renderNews()` (`js/app.js`) affichait `items` dans l'ordre brut du fichier — un
+tableau en ajout, le plus récent en DERNIER (même convention que `correction_log`/`alerts.json`,
+déjà gérée correctement ailleurs par `.slice().reverse()` dans `renderNotifications` et
+`renderEngineTab`, mais oubliée ici). L'item du 24/09, ajouté en premier, restait donc toujours en
+tête. Corrigé : même `.slice().reverse()`, plus un indicateur de fraîcheur (`last_updated_at`
+≥3 jours → "ajoutée il y a N jours", même seuil et même ton que `renderAvisDuJour`) pour que la
+liste dise elle-même quand elle n'a pas été renouvelée récemment, plutôt que de laisser deviner.
+
+Au passage, trouvé que `data-integrity.js?v=` dans `index.html` n'avait jamais été bumpé depuis le
+14/09 malgré l'ajout de `checkVerdictSelectionCompliance` le 21/09 (PR #8) — un navigateur ayant mis
+ce fichier en cache avant le 21/09 pouvait donc servir une version sans le vérificateur de
+conformité. Bumpé avec `app.js` dans le même commit.
+
+### 09/10/2026 (suite) — revue générale demandée par l'utilisateur : 1 vrai bug de plus trouvé et corrigé
+
+Demande explicite de repasser sur tout ce qui restait pour une version finalisée. Démarche :
+chercher la même CLASSE de bug ailleurs plutôt qu'un audit non ciblé (coûteux en tokens, voir
+règles d'économie en tête de `CLAUDE.md`).
+
+- **`renderOpportunities`/`renderOpportunityTiles`** (affiche `opportunities.json`, lui aussi en
+  ajout — vérifié `flagged_at` croissant du premier au dernier élément) : pas le même bug que
+  `news.json` — trié par `computeConfidence()` décroissant (`cards.js`), un choix voulu (meilleures
+  pépites d'abord, pas les plus récentes). Vérifié avant de conclure, rien à corriger.
+- **`scripts/price-alerts.mjs` ligne 78** : `source: "...${cur.toUpperCase()})"` entre guillemets
+  droits, pas des backticks — `${...}` ne s'interpole jamais hors template literal, donc ce texte
+  s'affichait tel quel, littéralement, sur l'onglet Alertes (`<p class="hint">Source : ...`,
+  `app.js`). **Confirmé sur les vraies données** : 21 des 97 alertes `seuil_technique` de
+  `data/alerts.json` portaient ce texte cassé. Corrigé : backticks dans le script (prouvé non
+  isolé par `grep -rnE '^\s*[a-zA-Z_]+:\s*"[^"]*\$\{'` sur `js/`+`scripts/`+`cloudflare-worker/`,
+  aucune autre occurrence), test de régression ajouté (`source` ne doit jamais contenir `${`), et
+  les 21 entrées déjà écrites corrigées en place (devise réelle retrouvée via `issueCurrency()` sur
+  le verdict lié, jamais devinée) — seul le texte de citation changeait, jamais `message` (déjà
+  correct, interpolé via backticks) ni aucune valeur de prix/mouvement.
+- **`engine-history.json.opportunities_stats`** : figé au 12/08/2026 (`total_flagged: 8`, contre 7
+  opportunités réelles aujourd'hui), aucun lecteur nulle part (`grep` sur `js/`/`test/`/`docs/`) —
+  bloc mort, supprimé. `data_source_reliability`, en apparence similaire, a un vrai lecteur
+  (`docs/routines/marche-quotidien.md`) — laissé tel quel.
+- Vérifié que le correctif anti-boucle du Worker (`MAX_TRACKED_IDS`, ids encore présents jamais
+  évincés) est bien présent dans `cloudflare-worker/worker.js` ici — toujours pas déployé sur
+  `aguilaradar-assistant-ia` (accès Cloudflare non autorisé dans cette session, et ce 2e dépôt n'est
+  de toute façon pas dans le périmètre accordé à cette session).
+
+npm test : 677/677 après ce passage.
+
+### 10/10/2026 — tableau de bord unique, stats moteur de l'Assistant, or sans quota, relais IA
+
+Demande utilisateur : un « responsable » qui coordonne les agents pour éviter l'éparpillement.
+Constat : aucun agent ne se souvient des autres, la seule mémoire partagée est ce dépôt. Créé
+`docs/feuille-de-route.md` (état vérifié, problèmes ouverts avec preuve et responsable, journal
+des sessions), pointé depuis `CLAUDE.md` pour les sessions interactives (pas les routines).
+Notion écarté comme mémoire : les routines n'y ont pas accès (outils MCP bloquants en routine).
+
+- **Assistant / stats du moteur** : `answerEngine` et `buildAiContext` lisaient
+  `engine-history.global_stats`, recalculé seulement par certains cycles et figé au 05/10
+  (90 émis, 81 vérifiés, 25,93 %) alors que l'onglet Moteur calcule en direct (97, 82, 25,61 %).
+  `chatEngineStats` réutilise `computeEngineStats` (engine.js), repli sur `global_stats`.
+- **Or** : `market-context.gold` à null depuis ≥08/10 (la routine ne trouve pas de cours daté).
+  `scripts/market-gauges.mjs` relève PAX Gold + Tether Gold (`pax-gold`, `tether-gold`, vérifiés
+  via CoinGecko /search ; 4183,38 $ et 4181,51 $ le 10/10, cohérent avec les ~4130-4160 $ cités
+  par la routine les 6-8/10). Moyenne publiée seulement si écart ≤ 2 %. Site (`goldSpotView`,
+  insights.js) et Assistant : valeur de la routine prioritaire, relevé du robot en repli,
+  toujours présenté comme approximation datée. Taux 10 ans : FRED et home.treasury.gov
+  injoignables depuis la session (proxy et WebFetch), donc non branché — format non vérifiable.
+- **Relais IA** : la seule différence entre `cloudflare-worker/worker.js` et
+  `aguilaradar-assistant-ia/worker.js` était le correctif `MAX_TRACKED_IDS` du 05/10. Test ajouté
+  (`test/worker-push.test.js`) : échoue sur la version de l'autre dépôt, passe ici. Poussé
+  (`d0115fa`) ; mise en ligne Cloudflare non vérifiée (connecteur non autorisé).
+- Piège rencontré : la copie locale de la session était superficielle (historique depuis le 24/09),
+  `git merge-base` concluait à tort à un historique réécrit. `git fetch --unshallow` avant toute
+  conclusion sur l'ascendance des branches.
+
+### 10/10/2026 (soir) — connecteur CoinMarketCap : pilote préparé, règle MCP corrigée
+
+Demande utilisateur : brancher CoinMarketCap sur toutes les routines. Non fait d'un coup : un outil
+de connecteur peut bloquer une routine automatique (incidents CoinGecko d'août). **Constat qui
+corrige la règle** : `favoris-quotidien` (session fraîche) a bien utilisé l'outil Blockscout en
+automatique le 10/10 08h27 (`onchain-history.json` : `tx_per_day` sourcé « Blockscout MCP,
+direct_api_call chain_id=1 … 2026-10-09 ») — l'interdiction n'est donc pas universelle, elle dépend
+du connecteur/de l'autorisation. Seul un essai en automatique tranche pour CoinMarketCap.
+
+- Testé en session interactive : `get_global_metrics_latest` (~5,5 Ko, valeurs en texte « 378.07 B »,
+  saison des altcoins 64, positions ouvertes 378,07 Md$, financement +0,0042 %, encours ETF BTC
+  108,82 Md$ — un encours, pas un flux) ; `find_skill` gratuit, mais `execute_skill` facturé (taux
+  10 ans et flux ETF nets seulement par cette voie).
+- Pilote : `marche-quotidien`, appel en dernière étape après le commit habituel, conversion par
+  `scripts/write-crypto-global.py` (testé : valeurs réelles, valeur illisible → null, rien écrit si
+  tout est vide). Site (`renderCryptoGlobalRow`) et Assistant prêts. Activation = 2 gestes de
+  l'utilisateur (`docs/coinmarketcap.md`) ; aucune modification de routine possible depuis cette
+  session (outil routines absent).
+- Au passage : carte « Flux ETF BTC » formatée par `formatMarketCap` (« Md€ », signe perdu) alors
+  que la valeur est en USD → `formatUsdAmount`.
+- Cloudflare autorisé par l'utilisateur, mais outils non chargés dans une session démarrée avant :
+  vérification du déploiement du Worker reportée à la prochaine session.
+- Même soir, sur proposition de l'utilisateur : **routine dédiée** `coinmarketcap-quotidien` au lieu
+  d'une étape ajoutée à `marche-quotidien`, et **fichier dédié** `data/crypto-global.json` au lieu
+  d'un bloc dans `market-context.json` (un fichier = une routine propriétaire : un blocage
+  CoinMarketCap ne touche aucune autre routine, et `marche-quotidien` ne peut pas l'écraser).
+  +1 exécution/jour (~15, le plafond) ; compensation possible : fusion santé + fraîcheur.
+
+### 10/10/2026 (fin de soirée) — textes plus courts, l'essentiel en avant
+
+Demande utilisateur : résumer les textes du site en quelques phrases. Mesuré sur `origin/main` :
+raisonnement des verdicts ~1 200 caractères (max 2 100), « titres » d'actualités ~500, notes du
+contexte marché jusqu'à 1 140, thèses des favoris ~1 600. Le début des textes n'est souvent pas
+l'essentiel (verdict : « le précédent a été résolu… » ; régime : « market-context.json rafraîchi…
+lu en lecture seule ici »), donc une simple troncature montrait la mauvaise partie.
+- Verdicts : `renderVerdictSummary` (config.js) affiche `signal_consensus` (3 pastilles) et les
+  3 premiers `signals_used` de ≤ 70 caractères — exact par construction, aucune reformulation ;
+  raisonnement complet masqué derrière « Lire l'analyse complète ». `accord_count` volontairement
+  non affiché (sémantique ambiguë dans la spec cycle). Repli : aperçu 3 lignes si champs absents.
+- Actualités : 2 lignes + « Lire plus » (bouton hors du lien) ; notes du contexte marché :
+  `contextNote` (insights.js), aperçu + « Lire plus ».
+- Helpers d'aperçu (`renderClampableText`, `wireClampToggles`, `makeKeyboardClickable`) déplacés
+  de app.js vers config.js pour être utilisables par insights.js (chargé avant app.js, et testé
+  sans app.js).
+- Contraste : pastille baissière en `#f87171` (`--loss` sur fond teinté = 4,11-4,52 < 4,5) ; le
+  badge VENTE existant avait le même défaut : corrigé de la même façon.
+- Vrai résumé des textes libres (actualités, notes, thèses) : seulement possible si les routines
+  écrivent un champ `resume` (P11, à décider).
+- Suite (accord de l'utilisateur) : champ `resume` (1 phrase ≤ 160 caractères, seulement des faits
+  déjà présents dans le texte complet) demandé à `cycle-2h` (verdicts, actualités, régime),
+  `marche-quotidien` (chaque bloc) et `favoris-quotidien` (`long_term_thesis`). Textes à coller en
+  fin de chaque spec. Site : `renderSummaryFirst`/`resumeHtml` (config.js) — résumé en tête, texte
+  complet replié ; sans `resume`, comportement inchangé. Coût : quelques phrases par cycle.
+
+### 10/10/2026 (nuit) — CoinMarketCap au service des analyses
+
+Priorité exprimée par l'utilisateur : de meilleures analyses grâce au connecteur. Testé en session :
+`get_crypto_quotes_latest` (15 favoris en 1 appel, ~9 Ko, évolutions 1 h → 1 an) et
+`get_crypto_technical_analysis` (~0,7 Ko par actif : RSI 7/14/21, MM 7/30/200, MACD, Fibonacci,
+pivot). Constat : `cycle-2h` décide de `signal_consensus.technique` sur les seules évolutions
+24 h/7 j/30 j (`signals_used` de v-20261010-ctsi) ; CTSI émis ACHAT avec RSI14 71 et cours +30 % au-
+dessus de sa MM200, sans le savoir.
+- Ids CMC des 15 favoris vérifiés via `search_cryptos` (FLUX = 3029 « zel », pas FLX 15535), rangés
+  dans `scripts/cmc-snapshot.py` (`--ids`).
+- La routine enregistre les réponses brutes ; le script extrait et contrôle (RSI hors 0-100 → null ;
+  MM7 hors ±50 % du cours → analyse technique écartée, contre une réponse sous le mauvais id).
+  Testé sur des extraits réels (`test/fixtures/cmc-20261010`).
+- Site : `renderCmcTechnicalSection` (detail.js), visible même si le calcul en direct échoue ;
+  Assistant : `cmcTechnicalLines`.
+- `cycle-2h` : enregistre `cmc_technical_at_issue` et cite les signaux contradictoires, **sans changer
+  la règle de décision** (corr-20260921 en évaluation jusqu'au 20/10 : une variable à la fois). Les
+  données accumulées permettront de mesurer si le surachat à l'émission prédit l'échec.
+- `scripts/write-crypto-global.py` (1re version, 7 valeurs recopiées) gardé pour compatibilité si
+  l'ancien texte a été collé ; à supprimer une fois la nouvelle routine confirmée.
+
+
+### 11/10/2026 — robot d'analyse technique quotidien, analyse rétrospective, specs actives
+
+- **Demande** : « améliorer nettement l'analyse ». Constat chiffré d'abord (82 verdicts vérifiés) :
+  25,6 % d'exacts ; ATTENTE 66 fois alors que l'issue réelle a été stable 19 fois, hausse ≥ 5 % 44
+  fois, baisse 19 fois. Le cycle ne voyait que les évolutions 24 h / 7 j / 30 j.
+- **Robot `technical-daily`** (GitHub Action 23h30 UTC, zéro quota) : `scripts/technical-favoris.mjs`
+  charge `js/config.js` + `js/detail.js` dans un `vm` (une seule implémentation des indicateurs ;
+  `computeMACD` ajouté, vérifié contre une implémentation indépendante et des propriétés analytiques).
+  Historique CoinGecko 365 j (le runner GitHub y accède, pas le bac à sable). 1er passage réel :
+  15/15, cohérent avec CoinMarketCap (CTSI RSI 71,6 contre 71,0 ; écart MM200 +28 % contre +30 %,
+  un jour d'écart). Note : `computeRSI` = moyenne simple des 14 derniers écarts (pas le lissage de
+  Wilder), d'où de petits écarts avec d'autres sources.
+- **Rétrospectif** (`backtest`, mêmes fichiers) : indicateurs recalculés avec les seuls cours connus
+  au jour de chaque verdict (`closesUntil`, test d'absence d'anticipation). Résultat : RSI ≥ 70 à
+  l'émission (16 cas) → hausse 25 %, baisse 44 % ; RSI neutre (66) → hausse 61 %, baisse 18 %. La
+  tendance MM200 n'a pas départagé sur cette période (règle « au-dessus = ACHAT » : 36,6 %). Petit
+  échantillon, période haussière : piste pour P14 (après le 20/10), pas une preuve.
+- **Découverte** : les prompts de `cycle-2h`, `marche-quotidien`, `favoris-quotidien` disent « lis
+  docs/routines/<x>.md sur main et suis-le à la lettre » (relu via `list_triggers`). Les sections
+  « texte à coller » du 10/10 étaient donc lues par les routines avec une mention contradictoire
+  (« actif quand collé ») → réécrites en sections actives. Règle ajoutée à `CLAUDE.md`.
+- Le cycle de 00h15 le 11/10 a échoué en `USAGE_LIMIT_REACHED` (quota, pas la spec) ; les routines
+  de 04h-06h ont réussi.
+- **Affichage** : fiche (« Analyse technique du jour », robot prioritaire, CoinMarketCap en repli),
+  comparatif des 15 dans l'onglet Favoris (synthèse visible sans déplier), bloc rétrospectif dans
+  l'onglet Moteur, contexte de l'Assistant (15,1 k caractères avec les vraies données, limite 20 k).
+  Pièges : bulles du glossaire dans un `<th>` en `white-space: nowrap` → tableau de 1 424 px ;
+  « % » seul à la ligne → espace insécable.

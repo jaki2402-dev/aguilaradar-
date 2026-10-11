@@ -67,4 +67,13 @@ describe("scripts/price-alerts.mjs — buildPriceAlerts", () => {
     expect(issueCurrency(v({ currency: undefined, issued_at: undefined }))).toBe(null);
     expect(buildPriceAlerts([v({ currency: undefined, issued_at: undefined })], [], { eur: { "injective-protocol": 20 }, usd: { "injective-protocol": 20 } }, now)).toEqual([]);
   });
+
+  // Régression (trouvé le 09/10/2026, confirmé sur 21/97 alertes réelles de data/alerts.json) :
+  // `source` était bâti avec des guillemets normaux au lieu de backticks — ${cur.toUpperCase()}
+  // ne s'interpolait jamais et s'affichait tel quel sur l'onglet Alertes.
+  it("actually interpolates the currency into source (not a literal ${...})", () => {
+    const [a] = buildPriceAlerts([v()], [], { eur: { "injective-protocol": 10.61 } }, now);
+    expect(a.source).not.toContain("${");
+    expect(a.source).toContain("EUR");
+  });
 });

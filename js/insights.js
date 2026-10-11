@@ -73,7 +73,56 @@ function renderProvisionalOverview(verdicts) {
 // jamais inventés ici (rendu pur), alimentés par une routine qui les recherche pour de vrai
 // (WebSearch/HTTP direct) ou les laisse à null plutôt que de deviner. "—" tant qu'absents,
 // jamais un chiffre par défaut qui pourrait passer pour une vraie donnée.
-function renderMarketContext(ctx) {
+// Or : valeur de la routine si elle en a trouvé une, sinon relevé du robot market-gauges (deux
+// jetons adossés à l'or, scripts/market-gauges.mjs) — toujours présenté comme une approximation
+// datée, jamais comme le cours officiel.
+function goldSpotView(ctx, gauges) {
+  const gold = (ctx && ctx.gold) || {};
+  if (gold.spot_usd_per_oz !== null && gold.spot_usd_per_oz !== undefined) return { usd: gold.spot_usd_per_oz, approx: false, asOf: null };
+  const g = gauges && gauges.gold;
+  if (g && Number.isFinite(g.usd_per_oz)) return { usd: g.usd_per_oz, approx: true, asOf: g.as_of || null };
+  return null;
+}
+
+// Montants du contexte macro (flux/encours ETF, positions ouvertes) : en DOLLARS. formatMarketCap
+// (cards.js) affiche "Md€" et ignore le signe, faux pour un flux ETF en USD (souvent négatif).
+function formatUsdAmount(value) {
+  if (!Number.isFinite(value)) return "—";
+  const sign = value < 0 ? "−" : "";
+  const abs = Math.abs(value);
+  const fmt = (n) => n.toLocaleString("fr-FR", { maximumFractionDigits: 2 });
+  if (abs >= 1e9) return `${sign}${fmt(abs / 1e9)} Md$`;
+  if (abs >= 1e6) return `${sign}${fmt(abs / 1e6)} M$`;
+  return `${sign}${Math.round(abs).toLocaleString("fr-FR")} $`;
+}
+
+function formatUtcStamp(iso) {
+  return new Date(iso).toLocaleString("fr-FR", { timeZone: "UTC", day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" });
+}
+
+function signedPct(value, digits) {
+  return `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(value).toLocaleString("fr-FR", { minimumFractionDigits: digits, maximumFractionDigits: digits })} %`;
+}
+
+// data/crypto-global.json (routine dédiée coinmarketcap-quotidien, connecteur CoinMarketCap — voir
+// docs/coinmarketcap.md) : rien n'est affiché tant que la routine ne l'a pas écrit.
+function renderCryptoGlobalRow(cg) {
+  if (!cg || !cg.as_of) return "";
+  const num = (v) => Number.isFinite(v);
+  const oi = num(cg.open_interest_usd)
+    ? `${formatUsdAmount(cg.open_interest_usd)}${num(cg.open_interest_change_7d_pct) ? `<div class="hint">${signedPct(cg.open_interest_change_7d_pct, 1)} sur 7 j</div>` : ""}`
+    : "—";
+  return `
+    <div class="stat-row">
+      <div class="stat-card accent-gold"><div class="stat-label">Saison des altcoins${glossaryTipHtml("Saison des altcoins")}</div><div class="stat-value">${num(cg.altcoin_season_index) ? `${cg.altcoin_season_index}/100` : "—"}</div></div>
+      <div class="stat-card accent-indigo"><div class="stat-label">Positions ouvertes${glossaryTipHtml("Positions ouvertes")}</div><div class="stat-value">${oi}</div></div>
+      <div class="stat-card accent-violet"><div class="stat-label">Financement moyen${glossaryTipHtml("Taux de financement")}</div><div class="stat-value">${num(cg.funding_rate_avg_pct) ? signedPct(cg.funding_rate_avg_pct, 4) : "—"}</div></div>
+      <div class="stat-card accent-teal"><div class="stat-label">Encours ETF BTC</div><div class="stat-value">${formatUsdAmount(cg.btc_etf_aum_usd)}</div></div>
+    </div>
+    <p class="hint">Levier et rotation : CoinMarketCap, relevé le ${formatUtcStamp(cg.as_of)} UTC${num(cg.btc_liquidations_24h_usd) ? ` — liquidations BTC sur 24 h : ${formatUsdAmount(cg.btc_liquidations_24h_usd)}` : ""}.${cg.note ? ` ${highlightKeyInfo(cg.note)}` : ""}</p>`;
+}
+
+function renderMarketContext(ctx, gauges, cryptoGlobal) {
   const el = document.getElementById("market-context-body");
   if (!el) return;
   if (!ctx || !ctx.last_computed_at) {
@@ -84,23 +133,32 @@ function renderMarketContext(ctx) {
   const emp = ctx.employment_us || {};
   const etf = ctx.etf_flows || {};
   const gold = ctx.gold || {};
+  const goldView = goldSpotView(ctx, gauges);
   const fed = ctx.fed_policy || {};
   const conf = ctx.site_confidence || {};
   el.innerHTML = `
     <div class="stat-row">
       <div class="stat-card accent-indigo"><div class="stat-label">Dominance stablecoins</div><div class="stat-value">${sc.dominance_pct !== null && sc.dominance_pct !== undefined ? sc.dominance_pct.toFixed(1) + " %" : "—"}</div></div>
       <div class="stat-card accent-gold"><div class="stat-label">Chômage US</div><div class="stat-value">${emp.unemployment_rate_pct !== null && emp.unemployment_rate_pct !== undefined ? emp.unemployment_rate_pct.toFixed(1) + " %" : "—"}</div></div>
-      <div class="stat-card accent-teal"><div class="stat-label">Flux ETF BTC</div><div class="stat-value">${etf.btc_etf_net_flow_usd !== null && etf.btc_etf_net_flow_usd !== undefined ? formatMarketCap(etf.btc_etf_net_flow_usd) : "—"}</div></div>
-      <div class="stat-card accent-gray"><div class="stat-label">Or (once, USD)${glossaryTipHtml("Or (once, USD)")}</div><div class="stat-value">${gold.spot_usd_per_oz !== null && gold.spot_usd_per_oz !== undefined ? "$" + Math.round(gold.spot_usd_per_oz).toLocaleString("fr-FR") : "—"}</div></div>
+      <div class="stat-card accent-teal"><div class="stat-label">Flux ETF BTC</div><div class="stat-value">${formatUsdAmount(etf.btc_etf_net_flow_usd)}</div></div>
+      <div class="stat-card accent-gray"><div class="stat-label">Or (once, USD)${glossaryTipHtml("Or (once, USD)")}</div><div class="stat-value">${goldView ? (goldView.approx ? "≈ " : "") + "$" + Math.round(goldView.usd).toLocaleString("fr-FR") : "—"}</div></div>
       <div class="stat-card accent-violet"><div class="stat-label">Taux Fed (cible)${glossaryTipHtml("Taux Fed (cible)")}</div><div class="stat-value">${fed.funds_rate_range ? escapeHtml(fed.funds_rate_range) : "—"}</div></div>
       <div class="stat-card accent-indigo"><div class="stat-label">Trésor US 10 ans${glossaryTipHtml("Trésor US 10 ans")}</div><div class="stat-value">${fed.treasury_yield_10y_pct !== null && fed.treasury_yield_10y_pct !== undefined ? fed.treasury_yield_10y_pct.toFixed(2) + " %" : "—"}</div></div>
     </div>
-    ${sc.note ? `<p class="hint">Stablecoins : ${highlightKeyInfo(sc.note)}</p>` : ""}
-    ${emp.market_reaction_note ? `<p class="hint">Emploi : ${highlightKeyInfo(emp.market_reaction_note)}</p>` : ""}
-    ${etf.note ? `<p class="hint">ETF : ${highlightKeyInfo(etf.note)}</p>` : ""}
-    ${gold.note ? `<p class="hint">Or : ${highlightKeyInfo(gold.note)}</p>` : ""}
-    ${fed.note ? `<p class="hint">Fed (taux, bilan QE/QT, prochaine réunion) : ${highlightKeyInfo(fed.note)}</p>` : ""}
-    ${conf.level ? `<p class="hint" style="margin-top:8px;"><strong>Confiance globale du site : ${escapeHtml(conf.level)}</strong> — ${highlightKeyInfo(conf.note || "")}</p>` : ""}`;
+    ${renderCryptoGlobalRow(cryptoGlobal)}
+    ${contextNote("Stablecoins", sc.note, sc.resume)}
+    ${contextNote("Emploi", emp.market_reaction_note, emp.resume)}
+    ${contextNote("ETF", etf.note, etf.resume)}
+    ${goldView && goldView.approx ? `<p class="hint">Or : cours approché à partir de deux jetons adossés à l'or (PAX Gold, Tether Gold)${goldView.asOf ? `, relevé le ${formatUtcStamp(goldView.asOf)} UTC` : ""} — la routine n'a pas trouvé de cours officiel daté.</p>` : contextNote("Or", gold.note, gold.resume)}
+    ${contextNote("Fed (taux, bilan QE/QT, prochaine réunion)", fed.note, fed.resume)}
+    ${conf.level ? `<div class="hint context-note" style="margin-top:8px;"><strong>Confiance globale du site : ${escapeHtml(conf.level)}</strong>${renderSummaryFirst(conf.resume, conf.note || "")}</div>` : ""}`;
+  wireClampToggles(el);
+}
+
+// Notes du contexte macro : souvent 400-1 100 caractères — résumé de la routine en tête s'il
+// existe, sinon aperçu de 3 lignes ; texte complet derrière « Lire plus ».
+function contextNote(label, note, resume) {
+  return note ? `<div class="hint context-note"><strong>${escapeHtml(label)}</strong>${renderSummaryFirst(resume, note)}</div>` : "";
 }
 
 function renderHealthStatus(healthLog, favorisContext, verdicts) {
@@ -301,4 +359,101 @@ function initDayReplay(allData) {
   if (dayReplayHandler) input.removeEventListener("change", dayReplayHandler);
   dayReplayHandler = () => renderDayReplay(input.value, allData);
   input.addEventListener("change", dayReplayHandler);
+}
+
+// ---------------------------------------------------------------------------
+// Analyse technique quotidienne (data/technical-favoris.json, robot technical-daily, aucun quota).
+// Mesures et constats chiffrés uniquement, jamais un verdict : le moteur reste seul à en émettre.
+
+// Espace insécable avant « % » : sur un écran de téléphone, le symbole ne part jamais seul à la ligne.
+const techSignedPct = (v) => `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v).toFixed(0)}\u00a0%`;
+const techDate = (iso) => (iso ? new Date(iso).toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit" }) : null);
+
+// Comparatif des 15 favoris, tendance de fond la plus forte en premier, avec une phrase de synthèse
+// lisible sans rien déplier. Rien du tout si le fichier du robot n'existe pas encore.
+function renderFavorisTechnical(technicalFavoris) {
+  const el = document.getElementById("favoris-technical");
+  if (!el) return;
+  const rows = FAVORIS.map((f) => ({ ticker: f.ticker, t: technicalViewFor(f.ticker, technicalFavoris, null) })).filter((r) => r.t);
+  if (!rows.length) {
+    el.innerHTML = "";
+    return;
+  }
+  const withTrend = rows.filter((r) => r.t.sma200GapPct !== null);
+  const above = withTrend.filter((r) => r.t.sma200GapPct >= 0).length;
+  const hot = rows.filter((r) => r.t.rsi14 !== null && r.t.rsi14 >= 70).map((r) => r.ticker);
+  const cold = rows.filter((r) => r.t.rsi14 !== null && r.t.rsi14 <= 30).map((r) => r.ticker);
+  // Synthèse dans l'ordre des favoris ; tableau ensuite trié par tendance de fond.
+  rows.sort((a, b) => (b.t.sma200GapPct ?? -Infinity) - (a.t.sma200GapPct ?? -Infinity));
+  const summary = [
+    withTrend.length ? `${above}/${withTrend.length} au-dessus de leur moyenne 200 j` : null,
+    hot.length ? `surachat : ${hot.join(", ")}` : null,
+    cold.length ? `survente : ${cold.join(", ")}` : null,
+  ].filter(Boolean).join(" · ");
+  const cls = (v) => (v === null ? "" : v >= 0 ? "tech-pos" : "tech-neg");
+  const cell = (v, text) => `<td class="${cls(v)}">${v === null ? "—" : text}</td>`;
+  const body = rows
+    .map(({ ticker, t }) => {
+      const change30 = (t.change.find(([l]) => l === "30 j") || [])[1] ?? null;
+      const rsiCls = t.rsi14 !== null && (t.rsi14 >= 70 || t.rsi14 <= 30) ? "tech-flag" : "";
+      const rsiText = t.rsi14 === null ? "—" : `${t.rsi14.toFixed(0)}${t.rsi14 >= 70 ? " surachat" : t.rsi14 <= 30 ? " survente" : ""}`;
+      const macd = t.macdHistogram === null || t.macdHistogram === 0 ? null : t.macdHistogram;
+      return `<tr><th scope="row">${escapeHtml(ticker)}</th>${cell(t.sma200GapPct, t.sma200GapPct !== null ? techSignedPct(t.sma200GapPct) : "")}<td class="${rsiCls}">${rsiText}</td>${cell(macd, macd !== null ? (macd > 0 ? "haussier" : "baissier") : "")}${cell(change30, change30 !== null ? techSignedPct(change30) : "")}<td>${t.volatilityPct === null ? "—" : `${t.volatilityPct.toFixed(0)}\u00a0%`}</td></tr>`;
+    })
+    .join("");
+  const asOf = techDate(technicalFavoris.updated_at);
+  el.innerHTML = `<details class="tech-compare">
+    <summary><strong>Comparatif technique des 15 favoris</strong>${summary ? `<span class="hint">${escapeHtml(summary)}</span>` : ""}</summary>
+    <p class="hint">Calcul quotidien${asOf ? ` du ${escapeHtml(asOf)}` : ""} sur 1 an d'historique (CoinGecko), mêmes formules que la fiche de chaque actif : des mesures, pas des verdicts. Tri : tendance de fond la plus forte en premier. Surachat (RSI ≥ 70) = mouvement déjà étiré ; survente (RSI ≤ 30) = rebond possible, sans garantie.</p>
+    <div class="tech-table-wrap"><table class="tech-table">
+      <thead><tr><th scope="col">Actif</th><th scope="col">vs MM200</th><th scope="col">RSI 14 j</th><th scope="col">Élan</th><th scope="col">30 j</th><th scope="col">Volat.</th></tr></thead>
+      <tbody>${body}</tbody>
+    </table></div>
+    <p class="hint">vs MM200 : écart du cours à sa moyenne 200 jours (tendance de fond). Élan : MACD. Volat. : volatilité sur 30 jours, ramenée à l'année. Détail et définitions dans la fiche de chaque actif.</p>
+  </details>`;
+}
+
+// Onglet Moteur : ce que disaient les indicateurs le jour de chaque verdict vérifié, comparé à
+// l'issue réelle (backtest du robot, aucune donnée postérieure à l'émission). Constats calculés à
+// partir des comptes du fichier — aucune conclusion écrite en dur.
+function renderTechnicalBacktest(technicalFavoris) {
+  const el = document.getElementById("engine-technical-backtest");
+  if (!el) return;
+  const b = technicalFavoris && technicalFavoris.backtest;
+  if (!b || !b.sample || !b.engine_calls || !b.actual) {
+    el.innerHTML = `<p class="empty-state">Analyse rétrospective pas encore disponible : elle est calculée chaque soir par le robot technique.</p>`;
+    return;
+  }
+  const share = (n, total) => (total ? Math.round((n / total) * 100) : 0);
+  const a = b.actual;
+  const wait = b.engine_calls.ATTENTE;
+  const since = techDate(b.first_issued_at);
+  const lead = [
+    `Sur ${b.sample} verdicts vérifiés${since ? ` (depuis le ${since})` : ""}, le moteur a vu juste dans ${String(b.engine_accuracy_pct).replace(".", ",")} % des cas.`,
+    `Il a répondu ATTENTE ${wait.n} fois (${share(wait.n, b.sample)} %), alors que le cours est resté stable dans seulement ${a.ATTENTE} cas (${share(a.ATTENTE, b.sample)} %) : il a monté nettement dans ${a.ACHAT} cas et baissé dans ${a.VENTE}.`,
+  ];
+  const hot = b.by_rsi_zone && b.by_rsi_zone.surachat;
+  const neutral = b.by_rsi_zone && b.by_rsi_zone.neutre;
+  if (hot && hot.n >= 5 && neutral && neutral.n) {
+    lead.push(
+      `Quand le RSI 14 j dépassait 70 le jour du verdict (${hot.n} cas), le cours a ensuite monté nettement dans ${share(hot.actual.ACHAT, hot.n)} % des cas et baissé dans ${share(hot.actual.VENTE, hot.n)} %, contre ${share(neutral.actual.ACHAT, neutral.n)} % et ${share(neutral.actual.VENTE, neutral.n)} % avec un RSI neutre.`
+    );
+  }
+  const groups = [
+    ["RSI ≥ 70 (surachat)", b.by_rsi_zone && b.by_rsi_zone.surachat],
+    ["RSI neutre", b.by_rsi_zone && b.by_rsi_zone.neutre],
+    ["RSI ≤ 30 (survente)", b.by_rsi_zone && b.by_rsi_zone.survente],
+    ["Cours au-dessus de la MM200", b.by_trend && b.by_trend.au_dessus_mm200],
+    ["Cours sous la MM200", b.by_trend && b.by_trend.en_dessous_mm200],
+    ["Tous les verdicts", { n: b.sample, actual: a }],
+  ].filter(([, g]) => g && g.n);
+  const cell = (n, total) => `<td>${n}<span class="hint tech-share">${share(n, total)}\u00a0%</span></td>`;
+  const calls = ["ACHAT", "ATTENTE", "VENTE"].map((k) => `${k} ${b.engine_calls[k].n} (${b.engine_calls[k].correct} justes)`).join(" · ");
+  el.innerHTML = `${lead.map((s) => `<p class="text-resume">${highlightKeyInfo(s)}</p>`).join("")}
+    <div class="tech-table-wrap"><table class="tech-table">
+      <thead><tr><th scope="col">Le jour du verdict</th><th scope="col">Verdicts</th><th scope="col">Hausse</th><th scope="col">Stable</th><th scope="col">Baisse</th></tr></thead>
+      <tbody>${groups.map(([label, g]) => `<tr><th scope="row">${label}</th><td>${g.n}</td>${cell(g.actual.ACHAT, g.n)}${cell(g.actual.ATTENTE, g.n)}${cell(g.actual.VENTE, g.n)}</tr>`).join("")}</tbody>
+    </table></div>
+    <p class="hint">Choix du moteur : ${calls}. Hausse = +${THRESHOLDS.directionalMovePct} % ou plus à l'échéance du verdict, baisse = −${THRESHOLDS.directionalMovePct} % ou plus, stable entre les deux. Indicateurs recalculés avec les seuls cours connus le jour de chaque verdict.</p>
+    ${b.note ? `<p class="hint">${escapeHtml(b.note)}</p>` : ""}`;
 }
