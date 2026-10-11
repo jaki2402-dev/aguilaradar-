@@ -395,6 +395,20 @@
 
         <div class="engine-acc">
           <button class="engine-acc-summary" type="button" aria-expanded="false">
+            <span>Laboratoire : ce qui prédit vraiment (cas réels)</span><span class="chevron">▾</span>
+          </button>
+          <div class="engine-acc-body">
+            <div class="engine-acc-body-inner">
+              <details class="info-toggle"><summary>ⓘ Comment ça marche</summary>
+                <p class="section-sub">Chaque soir, un robot rejoue la question du moteur (+5 % ou −5 % à l'horizon de l'actif ?) pour chaque favori et chaque jour des derniers mois, avec les vrais cours. Il apprend sur la période la plus ancienne et se note sur la plus récente, qu'il n'a jamais vue : c'est ce qui empêche de se raconter des histoires.</p>
+              </details>
+              <div id="engine-lab"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="engine-acc">
+          <button class="engine-acc-summary" type="button" aria-expanded="false">
             <span>Santé technique du site</span><span class="chevron">▾</span>
           </button>
           <div class="engine-acc-body">
@@ -550,15 +564,15 @@
      cache: "no-store", donc toujours frais) - bug réel constaté le 18/08 : la correction de
      l'Assistant était bien en ligne, mais assistant.js restait servi en cache. Bump la date à
      CHAQUE modification d'un fichier js/*.js ou css/*.css, pas seulement pour ce correctif-ci. -->
-<script src="js/config.js?v=20261011e"></script>
+<script src="js/config.js?v=20261011f"></script>
 <script src="js/data-integrity.js?v=20261011e"></script>
 <script src="js/prices.js?v=20260914i"></script>
 <script src="js/charts.js?v=20260824i"></script>
 <script src="js/engine.js?v=20261005a"></script>
 <script src="js/cards.js?v=20260831d"></script>
 <script src="js/onchain.js?v=20260915b"></script>
-<script src="js/detail.js?v=20261011e"></script>
-<script src="js/insights.js?v=20261011e"></script>
+<script src="js/detail.js?v=20261011f"></script>
+<script src="js/insights.js?v=20261011f"></script>
 <script src="js/portfolio.js?v=20261010a"></script>
 <script src="js/allocation.js?v=20260914e"></script>
 <script src="js/verdict-breakdown.js?v=20261011e"></script>
@@ -572,7 +586,7 @@
 <script src="js/theme.js?v=20260824i"></script>
 <script src="js/layout.js?v=20260824i"></script>
 <script src="js/search.js?v=20260831d"></script>
-<script src="js/app.js?v=20261011c"></script>
+<script src="js/app.js?v=20261011f"></script>
 <script src="js/notify.js?v=20260831d"></script>
 <script src="js/assistant.js?v=20261011d"></script>
 <script src="js/auth.js?v=20260824i"></script>

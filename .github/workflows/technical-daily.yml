@@ -28,6 +28,10 @@ jobs:
         with:
           node-version: 22
       - run: node scripts/technical-favoris.mjs
+        env:
+          # Facultatif : clé gratuite CoinMarketCap (recoupement des cours et de l'offre). Sans elle,
+          # l'étape est simplement sautée.
+          CMC_API_KEY: ${{ secrets.CMC_API_KEY }}
       - name: Commit si quelque chose a changé
         run: |
           git add -N data/technical-favoris.json data/engine-lab.json 2>/dev/null || true

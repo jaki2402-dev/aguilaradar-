@@ -505,3 +505,35 @@ function renderTechnicalBacktest(technicalFavoris) {
     <p class="hint">Choix du moteur : ${calls}. Hausse = +${THRESHOLDS.directionalMovePct} % ou plus à l'échéance du verdict, baisse = −${THRESHOLDS.directionalMovePct} % ou plus, stable entre les deux. Indicateurs recalculés avec les seuls cours connus le jour de chaque verdict.</p>
     ${b.note ? `<p class="hint">${escapeHtml(b.note)}</p>` : ""}`;
 }
+
+// Laboratoire du moteur (data/engine-lab.json, robot technical-daily) : ~2 000 cas réels, valeur
+// prédictive des indicateurs, classement des règles (période ancienne / récente / verdicts réels),
+// et test de la correction par l'analyse des erreurs. Chiffres tels que calculés, jamais arrondis
+// à l'avantage du moteur.
+function renderEngineLab(lab) {
+  const el = document.getElementById("engine-lab");
+  if (!el) return;
+  if (!lab || !lab.samples || !lab.rules) {
+    el.innerHTML = `<p class="empty-state">Laboratoire pas encore disponible : il est calculé chaque soir par le robot technique.</p>`;
+    return;
+  }
+  const pct = (v) => (Number.isFinite(v) ? `${String(v).replace(".", ",")}\u00a0%` : "—");
+  const day = (iso) => (iso ? `${iso.slice(8, 10)}/${iso.slice(5, 7)}` : "?");
+  const predictive = (lab.features || []).filter((f) => f.predictive);
+  const ranked = Object.entries(lab.rules).sort((a, b) => (b[1].valid ?? -1) - (a[1].valid ?? -1));
+  const c = lab.corrections;
+  const lead = [
+    `${lab.samples.total.toLocaleString("fr-FR")} cas réels (du ${day(lab.period.from)} au ${day(lab.period.to)}) : apprentissage avant le ${day(lab.period.cut)}, notation après.`,
+    predictive.length
+      ? `Indicateurs réellement prédictifs (même sens sur les deux périodes) : ${predictive.map((f) => `${f.name} — ${f.direction} (${f.up_diff_train > 0 ? "+" : ""}${String(f.up_diff_train).replace(".", ",")} et ${f.up_diff_valid > 0 ? "+" : ""}${String(f.up_diff_valid).replace(".", ",")} points de hausses)`).join(" ; ")}.`
+      : "Aucun indicateur n'a gardé le même effet sur les deux périodes : aucune prévision n'est fondée sur un seul indicateur.",
+    c && c.test ? `Correction par l'analyse des erreurs : ${c.used ? "retenue" : "écartée"} — apprise sur l'ancienne période, elle donnerait ${pct(c.test.corrected_valid)} sur la récente contre ${pct(c.test.raw_valid)} sans elle.` : null,
+  ].filter(Boolean);
+  el.innerHTML = `${lead.map((t) => `<p class="text-resume">${highlightKeyInfo(t)}</p>`).join("")}
+    <div class="tech-table-wrap"><table class="tech-table">
+      <thead><tr><th scope="col">Règle</th><th scope="col">Ancien</th><th scope="col">Récent</th><th scope="col">Verdicts réels</th></tr></thead>
+      <tbody>${ranked.map(([k, r]) => `<tr${k === lab.selected ? ' class="tech-flag"' : ""}><th scope="row">${escapeHtml(r.name || k)}${k === lab.selected ? " ✓" : ""}</th><td>${pct(r.train)}</td><td>${pct(r.valid)}</td><td>${pct(r.real_recent)}</td></tr>`).join("")}</tbody>
+    </table></div>
+    <p class="hint">% de bonnes réponses. ✓ = règle en place : la meilleure sur la période récente n'est retenue que si elle a 2 points d'avance et ne fait pas pire de 5 points sur les 30 derniers verdicts réels. Règle apprise du jour : ${escapeHtml(((lab.learned_rule && lab.learned_rule.description) || []).join(" ; ") || "—")}.</p>
+    ${lab.errors && lab.errors.worst && lab.errors.worst.length ? `<p class="hint">Là où la règle en place se trompe le plus (période récente, ${pct(lab.errors.error_pct)} d'erreurs en moyenne) : ${lab.errors.worst.map((w) => `${escapeHtml(w.name)} ${w.zone === "bas" ? "bas" : "haut"} (${pct(w.error_pct)} sur ${w.n} cas)`).join(" ; ")}.</p>` : ""}`;
+}

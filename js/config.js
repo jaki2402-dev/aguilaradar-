@@ -254,6 +254,7 @@ const DATA_URLS = {
   cryptoGlobal: "data/crypto-global.json",
   cmcFavoris: "data/cmc-favoris.json",
   technicalFavoris: "data/technical-favoris.json",
+  engineLab: "data/engine-lab.json",
   onchainHistory: "data/onchain-history.json",
 };
 

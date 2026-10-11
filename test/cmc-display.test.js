@@ -188,3 +188,30 @@ describe("onglet Favoris : comparatif technique des 15", () => {
     expect(doc.getElementById("engine-technical-backtest").textContent).toContain("pas encore disponible");
   });
 });
+
+describe("onglet Moteur : laboratoire (données réelles du 11/10)", () => {
+  const LAB = JSON.parse(readFileSync(new URL("./fixtures/engine-lab-20261011.json", import.meta.url), "utf-8"));
+  function render(lab) {
+    const dom = loadPage(["config.js", "prices.js", "insights.js"], { html: "<!doctype html><html><body><div id='engine-lab'></div></body></html>" });
+    dom.window.renderEngineLab(lab);
+    return dom.window.document.getElementById("engine-lab");
+  }
+
+  it("taille et période réelles, indicateurs prédictifs, test de la correction", () => {
+    const lead = [...render(LAB).querySelectorAll(".text-resume")].map((p) => p.textContent);
+    expect(lead[0]).toBe("2 350 cas réels (du 29/04 au 04/10) : apprentissage avant le 02/08, notation après.");
+    expect(lead[1]).toContain("Élan du bitcoin — plus bas → plus de hausses (-12,5 et -31,3 points de hausses)");
+    expect(lead[1]).toContain("Peur / cupidité — plus haut → plus de hausses (+12,1 et +29,2 points de hausses)");
+    expect(lead[2]).toBe("Correction par l'analyse des erreurs : écartée — apprise sur l'ancienne période, elle donnerait 43,5\u00a0% sur la récente contre 52,6\u00a0% sans elle.");
+  });
+
+  it("classement des règles : la règle en place est marquée, chiffres tels quels", () => {
+    const rows = [...render(LAB).querySelectorAll("tbody tr")].map((tr) => [...tr.children].map((c) => c.textContent.replace(/\s+/g, " ")).join(" | "));
+    expect(rows[0]).toBe("Retour à la moyenne prudent | 21,8 % | 55,6 % | 63,3 %");
+    expect(rows).toContain("Retour à la moyenne (RSI) ✓ | 22,5 % | 52,6 % | 70 %");
+  });
+
+  it("sans fichier : message honnête", () => {
+    expect(render(null).textContent).toContain("pas encore disponible");
+  });
+});

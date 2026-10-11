@@ -555,7 +555,7 @@ function updateHeroStats(verdicts, alerts) {
 }
 
 async function loadAllData() {
-  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory, marketGauges, cryptoGlobal, cmcFavoris, technicalFavoris] = await Promise.all([
+  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory, marketGauges, cryptoGlobal, cmcFavoris, technicalFavoris, engineLab] = await Promise.all([
     loadJson(DATA_URLS.verdicts),
     loadJson(DATA_URLS.engineHistory),
     loadJson(DATA_URLS.opportunities),
@@ -574,6 +574,7 @@ async function loadAllData() {
     loadJson(DATA_URLS.cryptoGlobal),
     loadJson(DATA_URLS.cmcFavoris),
     loadJson(DATA_URLS.technicalFavoris),
+    loadJson(DATA_URLS.engineLab),
   ]);
   latestFavorisContext = favorisContext;
   // data/onchain-history.json est neuf (voir docs/routines/favoris-quotidien-onchain-history.md) :
@@ -582,7 +583,7 @@ async function loadAllData() {
   latestOnchainHistory = onchainHistory && onchainHistory.assets ? onchainHistory : { assets: {} };
   // Expose les données déjà chargées pour que d'autres fonctionnalités (l'Assistant) les
   // réutilisent sans refaire les mêmes fetch — toujours les données du dernier rafraîchissement.
-  window.aguilaradarData = { verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory: latestOnchainHistory, marketGauges, cryptoGlobal, cmcFavoris, technicalFavoris };
+  window.aguilaradarData = { verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory: latestOnchainHistory, marketGauges, cryptoGlobal, cmcFavoris, technicalFavoris, engineLab };
   if (window.renderDigestPanel) renderDigestPanel(digest);
 
   renderEngineTab(verdicts || [], engineHistory, opportunities, controlGroup);
@@ -596,6 +597,7 @@ async function loadAllData() {
   renderMarketContext(marketContext, marketGauges, cryptoGlobal);
   renderFavorisTechnical(technicalFavoris);
   renderTechnicalBacktest(technicalFavoris);
+  renderEngineLab(engineLab);
   renderHealthStatus(healthLog, favorisContext, verdicts || []);
   renderSectorBreakdown(verdicts || []);
   renderConfidenceHistory(verdicts || []);

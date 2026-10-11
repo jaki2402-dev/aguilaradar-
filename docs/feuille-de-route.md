@@ -46,6 +46,7 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | P7 | **3 routines gardent toute leur mémoire d'une exécution à l'autre** (verif-fraicheur, opportunités, briefing-email) : 274 k à 491 k tokens de contexte mesurés le 06/10, bien plus coûteux qu'une session neuve. | Session avec l'outil routines + **Toi** | Convertir une par une, en vérifiant après chaque conversion. |
 | P8 | **Seuls 4 prompts de routines sur environ 11 sont recopiés dans `docs/routines/`** : les autres sont invisibles pour une session qui n'a pas l'outil routines. C'est le principal trou de mémoire entre sessions. | Session avec l'outil routines | Recopier chaque prompt actuel (`get_trigger`) dans `docs/routines/<nom>.md`, sans secret (clé privée exclue). |
 | P9 | **Mail du matin** : le prompt corrigé du 05/10 (jauges fraîches) n'a probablement pas été collé. Non vérifié : le mail ne laisse aucune trace dans le dépôt. | Session avec l'outil routines | Vérifier avec `get_trigger`. |
+| P16 | **CoinMarketCap automatique (facultatif)** : le robot sait recouper chaque jour cours et offre des 15 favoris avec CoinMarketCap (code prêt et testé, 11/10). Il faut une clé gratuite. | **Toi**, si tu veux | 1) Créer un compte gratuit sur pro.coinmarketcap.com (plan Basic) et copier la clé API. 2) Sur GitHub : dépôt `aguilaradar-` → Settings → Secrets and variables → Actions → New repository secret, nom `CMC_API_KEY`, valeur = la clé. Rien d'autre : le robot l'utilise dès le soir suivant. |
 | P15 | **Routine `horizons-6h` devenue inutile** : le robot `resolve-due` fait son travail sans quota (essai réel réussi le 11/10). Une session ne peut pas la désactiver (refus du système). | **Toi** | Désactiver `aguilaradar-horizons-6h` : claude.ai/code/routines/trig_012L3zXByo7gQXCfAYQsrWhn. Sans urgence : elle ne trouve plus rien à faire. |
 | P10 | **CoinMarketCap : routine dédiée facultative.** Depuis le 11/10, l'analyse technique des favoris vient du robot GitHub (sans quota). CoinMarketCap n'apporterait plus que le levier, le financement, les liquidations et la saison des altcoins. | **Toi**, si tu le souhaites | Créer `aguilaradar-coinmarketcap-quotidien` avec le texte de `docs/routines/coinmarketcap-quotidien.md`. Rien ne casse sans elle. |
 | P14 | **Nouvelle règle du moteur à vérifier en conditions réelles** (choisie par l'utilisateur le 11/10) : VENTE si RSI ≥ 70, sinon ACHAT, ATTENTE seulement sans données (57 % de justes sur le passé contre 26 %). Premiers verdicts attendus au cycle du 13/10 00h15 (après les échéances du 12/10). Le prompt de la routine rappelle encore l'ancienne formule : la spec dit qu'elle prime. | Session à partir du 13/10 | Vérifier sur `origin/main` : `decision_rule` présent, verdicts ACHAT/VENTE conformes (panneau « Cohérence des données » : 0 violation). Si la routine retombe sur ATTENTE : te proposer de coller un prompt corrigé. Puis suivre la colonne « Test réel » (onglet Moteur) ; changer de règle seulement si une autre la bat sur ≥ 15 verdicts. |
@@ -80,6 +81,11 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 
 ## Journal des sessions (le plus récent en haut)
 
+- **11/10/2026 (fin d'après-midi)** — Demande : CoinMarketCap en plus, auto-analyse des erreurs, valeur
+  prédictive, chiffres réels. Laboratoire (2 350 cas réels) : seuls l'élan du bitcoin et la peur/cupidité
+  sont prédictifs sur les 2 périodes ; correction par les erreurs testée et écartée (52,6 → 43,5 %) ;
+  confiance par situation (65 % aujourd'hui pour ACHAT). Recoupement CoinMarketCap manuel (cours OK,
+  offre divergente JUP/INJ/FLUX) + code automatique prêt (P16).
 - **11/10/2026 (après-midi)** — Demande : fiabilité et % plus justes, auto-correction, plus de « Donnée
   insuffisante ». Auto-sélection quotidienne de la règle (testée : fenêtre 30 + marge 5 = aucun faux
   changement), confiance ajustée selon l'élan du bitcoin (Brier 0,300 → 0,279 hors échantillon),

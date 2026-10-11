@@ -496,7 +496,11 @@ function renderDailyTechnicalSection(ticker) {
   if (p) {
     const measured = Number.isFinite(p.confidence_pct) ? ` — confiance mesurée ${p.confidence_pct} %${p.context ? ` (${p.context})` : ""}, sur ${p.sample_n} cas passés` : "";
     rows.unshift(["Règle du moteur aujourd'hui", `${p.verdict}${measured}`]);
+    if (Array.isArray(p.vigilance) && p.vigilance.length) rows.splice(1, 0, ["Vigilance", p.vigilance.join(" ; ")]);
   }
+  // Recoupement CoinMarketCap (robot, si la clé gratuite est configurée) : concordance ou écarts.
+  const cc = data.technicalFavoris && data.technicalFavoris.cross_check && data.technicalFavoris.cross_check.assets ? data.technicalFavoris.cross_check.assets[ticker] : null;
+  if (cc) rows.push(["Recoupé avec CoinMarketCap", cc.agreed ? "concordant (cours et offre)" : cc.notes.join(" ; ")]);
   if (!rows.length) return "";
   const asOf = t.asOf ? new Date(t.asOf).toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit" }) : null;
   const origin = t.source === "robot" ? "calcul quotidien sur 1 an d'historique" : "relevé CoinMarketCap";

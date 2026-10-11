@@ -10,6 +10,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
+import { fetchCmcQuotes, crossCheck } from "./cmc-crosscheck.mjs";
 import { dailySeries, buildSamples, splitByTime, evaluateRules, learnTree, treeCall, describeTree, featureReport, errorAnalysis, riskFlags, labCalibration, featuresAt, asRuleInput, TRAIN_SHARE, learnCorrections, correctedCall, evaluateCorrections, situationConfidence, situationKey, describeSituation, CORRECTION_MIN_N, CORRECTION_MARGIN } from "./engine-lab.mjs";
 
 const OUT_PATH = "data/technical-favoris.json";
@@ -719,6 +720,15 @@ async function main() {
     for (const a of Object.values(out.assets)) a.proposed_verdict = proposedVerdict(a, calibration, selection.id, btcInd);
   }
   if (lab) writeFileSync("data/engine-lab.json", JSON.stringify(lab, null, 2) + "\n");
+  // Recoupement CoinMarketCap (seulement si le secret CMC_API_KEY existe) : étape indépendante.
+  if (process.env.CMC_API_KEY) {
+    try {
+      const checks = crossCheck(out.assets, await fetchCmcQuotes(process.env.CMC_API_KEY));
+      out.cross_check = { source: "CoinMarketCap API /v1/cryptocurrency/quotes/latest", at: out.updated_at, agreed: Object.values(checks).filter((c) => c.agreed).length, total: Object.keys(checks).length, assets: checks };
+    } catch (e) {
+      out.errors.push(`CoinMarketCap : ${e.message}`);
+    }
+  }
   writeFileSync(OUT_PATH, JSON.stringify(out, null, 2) + "\n");
   // Alertes : étape à part, son échec ne touche pas le fichier d'analyse déjà écrit.
   try {

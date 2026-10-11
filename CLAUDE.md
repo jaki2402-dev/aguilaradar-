@@ -188,7 +188,14 @@ vente.
   `scripts/technical-favoris.mjs`, mêmes calculs que `js/detail.js`) — MM200, RSI, MACD,
   volatilité, valorisation (capitalisation/volume situé sur 1 an), offre (`/coins/markets`) par
   favori (clé = ticker, USD) + analyse rétrospective des verdicts vérifiés. Remplit les
-  « Donnée insuffisante » de la décomposition du verdict (`js/verdict-breakdown.js`). Le cycle
+  « Donnée insuffisante » de la décomposition du verdict (`js/verdict-breakdown.js`).
+- `engine-lab.json` (même robot, `scripts/engine-lab.mjs`) : ~2 000 cas réels/soir (chaque favori ×
+  chaque jour, issue à l'horizon de l'actif, ±5 %), apprentissage sur la période ancienne, notation
+  sur la récente : valeur prédictive (prédictif = même sens sur les 2 périodes), règles, règle
+  apprise, analyse des erreurs, correction validée ou écartée. Choix de la règle :
+  `chooseEngineRule` (laboratoire récent + garde-fou 30 verdicts réels). Ne jamais présenter un
+  chiffre du laboratoire comme une garantie. CoinMarketCap : recoupement via secret `CMC_API_KEY`
+  (facultatif, `scripts/cmc-crosscheck.mjs`). Le cycle
   le lit pour `technical_at_issue` (documente, ne change pas la règle de décision). `backtest.rules` :
   règles candidates FIGÉES le 11/10 (`CANDIDATE_RULES`) — ne jamais en modifier une, en ajouter.
 - `crypto-global.json` (levier, saison des altcoins, encours ETF) et `cmc-favoris.json` (cours,

@@ -574,3 +574,27 @@ dessus de sa MM200, sans le savoir.
   tendance 47-50 % → règle conservée. Élan BTC négatif → confiance ACHAT 68 % (61 % sans contexte),
   VENTE CTSI 46 %. Valorisation à l'émission sans pouvoir prédictif sur les 82 verdicts (hausses 55 %
   en bas de fourchette, 57 % en haut) : affichée comme information, hors décision.
+
+### 11/10/2026 (fin d'après-midi) — laboratoire du moteur, auto-analyse des erreurs, CoinMarketCap
+
+- **Laboratoire** (`scripts/engine-lab.mjs`, `data/engine-lab.json`) : la question du moteur rejouée
+  pour chaque favori et chaque jour (≥ 200 jours d'historique, horizon de l'actif tiré des verdicts :
+  7 ou 14 j, seuil ±5 %) → 2 350 cas réels du 29/04 au 04/10/2026, coupés au 02/08 (60/40).
+- **Premier passage réel** : prédictifs sur les deux périodes = élan du bitcoin (repli → plus de
+  hausses : −12,5 / −31,3 points) et peur/cupidité d'alternative.me (plus haute → plus de hausses :
+  +12,1 / +29,2). Tous les autres changent de sens. Règles : retour à la moyenne 22,5 % (ancien) /
+  52,6 % (récent) / 70 % (30 verdicts réels) ; règle apprise 38,3 / 29,2 / 16,7 (sur-apprentissage :
+  refusée). VENTE sur RSI ≥ 70 : 29 % de justes (172 cas récents). Bug trouvé par les tests : un
+  indicateur constant était déclaré prédictif (tiers vide compté 0 %) → corrigé.
+- **Correction par l'analyse des erreurs** (situation = élan BTC × peur/cupidité, ≥ 80 cas, ≥ 10
+  points) : apprise sur l'ancien, notée sur le récent → 52,6 % → 43,5 % : écartée (le marché a changé
+  entre les périodes). Retentée chaque soir, utilisée seulement si elle améliore (≥ 1 point).
+- **Confiance** = part réelle de l'issue dans la même situation (période récente), rétrécie vers le
+  taux de l'appel : ACHAT 65 % aujourd'hui (situation « BTC en repli + cupidité », 258 cas), VENTE
+  CTSI 31 %. Nouvelles règles enregistrées à 09h40 (sentiment de marché, prudent). La règle prudente
+  bat la règle en place sur le laboratoire récent (+3 points) mais fait 63 % contre 70 % sur les
+  verdicts réels → bloquée par le garde-fou.
+- **CoinMarketCap** : recoupement manuel via le connecteur (15 favoris) : cours concordants, offre
+  maximale divergente pour JUP (6,86 Md contre 10 Md), INJ (100 M contre non plafonnée), FLUX.
+  `scripts/cmc-crosscheck.mjs` : même recoupement chaque soir via l'API officielle si le secret
+  `CMC_API_KEY` existe (forme de réponse documentée, non vérifiable sans clé).
