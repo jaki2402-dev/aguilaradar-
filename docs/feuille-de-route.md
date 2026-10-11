@@ -70,6 +70,7 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 
 | Date | Problème | Preuve |
 |---|---|---|
+| 11/10 | Historique du portefeuille « en retard » : dernier point daté 10/10 (en fait la valeur du 09 au soir), 05/10 et 10/10 manquants. Cause : tâche GitHub du soir lancée 3-5 h en retard, après minuit, donc datée du lendemain ; le passage suivant trouvait la date prise et n'ajoutait rien (run #8 du 10/10 à 23h47 : succès mais aucun point). | Date = jour représenté (passage avant 6 h UTC → veille), tâche avancée à 18h17 UTC, seuil d'alerte du site 36 h / 60 h. Tests avec les heures réelles des passages. Point du 11/10 ajouté. |
 | 11/10 | Les verdicts n'utilisaient aucun indicateur technique (CTSI émis ACHAT avec un RSI à 71, non signalé). | Robot GitHub quotidien sans quota (`technical-favoris.json`, 15/15 au 1er passage réel). Le cycle lit sa spec sur main (vérifié par `list_triggers`) : il enregistre `technical_at_issue` et signale les contradictions dès le 11/10 08h15. Fiche, comparatif des 15, onglet Moteur, Assistant. 18 tests, vérifié à 390 px. |
 | 11/10 | Résumés d'une phrase « à coller » jamais actifs. | Inutile de coller : les 3 routines lisent leur spec sur main. Sections rendues actives le 10/10 à 23h10 ; à confirmer : un `resume` sur `origin/main` après le prochain passage. |
 | 10/10 | L'Assistant citait des stats du moteur figées au 05/10 (25,93 % sur 81) au lieu du calcul en direct de l'onglet Moteur. | Même calcul partagé ; sur les données réelles l'Assistant dit « 97 émis, 82 vérifiés, 25,6 % ». 3 tests. |

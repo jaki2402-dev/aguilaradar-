@@ -598,3 +598,13 @@ dessus de sa MM200, sans le savoir.
   maximale divergente pour JUP (6,86 Md contre 10 Md), INJ (100 M contre non plafonnée), FLUX.
   `scripts/cmc-crosscheck.mjs` : même recoupement chaque soir via l'API officielle si le secret
   `CMC_API_KEY` existe (forme de réponse documentée, non vérifiable sans clé).
+
+### 11/10/2026 — historique du portefeuille « en retard » : date volée par un passage retardé
+
+- Constat (runs GitHub `portfolio-snapshot`) : cron 20h40 UTC, démarrages réels 00h04-01h25 le
+  lendemain (06 au 10/10), puis 23h47 le 10/10. `buildSnapshot` datait le point du jour UTC
+  d'exécution → la tâche du 09 au soir a pris la date du 10/10 ; celle du 10 au soir a trouvé
+  « 10/10 » déjà pris → succès sans point. Même mécanisme pour le 05/10 manquant.
+- Correctif : `snapshotDate` = date de (maintenant − 6 h), cron avancé à 18h17 UTC, seuils de
+  fraîcheur du site 36 h / 60 h. Points passés laissés tels quels (historique en ajout, pas de
+  backfill) : leurs dates restent décalées d'un jour pour ceux calculés après minuit.

@@ -4,7 +4,9 @@ name: Portfolio snapshot
 # totale"). Tourne sur GitHub, pas dans une routine Claude : ne consomme aucun quota.
 on:
   schedule:
-    - cron: "40 20 * * *"
+    # 18h17 UTC : GitHub démarre souvent cette tâche avec 3 à 5 h de retard ; le script date de
+    # toute façon un passage d'avant 6 h UTC à la veille (snapshotDate).
+    - cron: "17 18 * * *"
   workflow_dispatch:
 
 permissions:

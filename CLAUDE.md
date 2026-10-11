@@ -173,6 +173,8 @@ vente.
   nulle), jamais de backfill.
 - `portfolio-history.json` : 1 point/jour écrit par la GitHub Action `portfolio-snapshot`
   (`scripts/portfolio-snapshot.mjs`, zéro quota Claude) — aucune routine ne l'écrivait depuis le 14/09.
+  GitHub retarde la tâche du soir de 3-5 h : `snapshotDate` date un passage d'avant 6 h UTC à la
+  veille (sinon un jour « vole » la date du suivant, qui est sauté — 05/10 et 10/10 perdus).
 - `alerts.json` (`seuil_technique`) : GitHub Action `price-alerts` (4×/jour, max 3/passage, 1 par
   verdict) — le cycle-2h ne les écrit plus depuis le 14/09. Chaque alerte = 1 push (Worker).
   `signal_technique` : `technical-daily`, seulement une bascule d'un jour à l'autre (MM200,

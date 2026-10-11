@@ -13,8 +13,17 @@ const HISTORY_PATH = "data/portfolio-history.json";
 const round2 = (n) => Math.round(n * 100) / 100;
 
 // Fonction pure (testée dans test/portfolio-snapshot.test.js). Retourne { snapshot } ou { skip }.
+// Date du point = jour qu'il représente. GitHub lance la tâche du soir avec 3 à 5 h de retard,
+// souvent après minuit UTC (constaté du 06 au 10/10/2026) : le point du soir prenait alors la date
+// du lendemain, et le passage suivant, trouvant cette date déjà prise, n'ajoutait rien (05/10 et
+// 10/10 perdus, historique « en retard »). Un passage avant 6 h UTC compte donc pour la veille.
+export const LATE_RUN_GRACE_HOURS = 6;
+export function snapshotDate(now) {
+  return new Date(now.getTime() - LATE_RUN_GRACE_HOURS * 3600000).toISOString().slice(0, 10);
+}
+
 export function buildSnapshot(positions, pricesEur, history, now = new Date()) {
-  const date = now.toISOString().slice(0, 10);
+  const date = snapshotDate(now);
   const snapshots = (history && history.snapshots) || [];
   if (snapshots.some((s) => s.date === date)) return { skip: `snapshot déjà présent pour ${date}` };
   if (!positions || positions.length === 0) return { skip: "aucune position" };

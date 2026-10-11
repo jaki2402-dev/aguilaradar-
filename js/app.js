@@ -622,7 +622,8 @@ const FRESHNESS_SOURCES = [
   { key: "opportunities", label: "Criblage opportunités", warnHours: 24 * 8, staleHours: 24 * 10 },
   // GitHub Action quotidienne (portfolio-snapshot) : resté figé 20 jours sans que rien ne le
   // signale avant le 04/10/2026. Un jour sauté (prix manquant) = "en retard", deux = bloqué.
-  { key: "portfolioHistory", label: "Historique portefeuille", warnHours: 30, staleHours: 54 },
+  // 36 h / 60 h : la tâche du soir démarre souvent avec 3 à 5 h de retard (constaté le 11/10).
+  { key: "portfolioHistory", label: "Historique portefeuille", warnHours: 36, staleHours: 60 },
   // GitHub Action price-alerts, 4×/jour (jauges peur/cupidité + dominance BTC).
   { key: "marketGauges", label: "Jauges de marché", warnHours: 14, staleHours: 26 },
 ];
