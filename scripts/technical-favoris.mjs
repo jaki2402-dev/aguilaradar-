@@ -182,6 +182,25 @@ export function backtest(verdicts, pointsByCgId, site) {
     by_rsi_zone: byRsi,
     by_trend: byTrend,
     rules: scoreRules(rows),
+    // Détail par verdict (indicateurs au jour d'émission + issue) : rend chaque chiffre ci-dessus
+    // vérifiable et permet d'étudier une règle sans refaire tourner le robot.
+    rows: rows.map(({ v, ind }) => ({
+      id: v.id,
+      issued_at: v.issued_at,
+      verdict: v.verdict,
+      actual: v.outcome.actual_direction,
+      move_pct: v.outcome.actual_move_pct ?? null,
+      horizon_days: v.horizon_days ?? null,
+      rsi14: ind.rsi14,
+      sma200_gap_pct: ind.sma200_gap_pct,
+      sma50_above_sma200: ind.sma50_above_sma200,
+      macd_histogram: ind.macd_histogram,
+      change_7d: ind.change_pct["7d"],
+      change_30d: ind.change_pct["30d"],
+      change_90d: ind.change_pct["90d"],
+      volatility_30d_pct: ind.volatility_30d_pct,
+      drawdown_pct: ind.drawdown_from_365d_high_pct,
+    })),
     note: "Rétrospectif, petit échantillon, période majoritairement haussière : un indice pour orienter l'auto-correction du moteur, pas une preuve.",
   };
 }
