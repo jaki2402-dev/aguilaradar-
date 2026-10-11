@@ -154,6 +154,9 @@ vente.
 
 Écrits par les routines, **ajout seulement** :
 - `verdicts.json` : `pending` → `resolved` seulement après `resolves_at`. Jamais d'issue inventée.
+  Résolution (verdicts, horizons des opportunités, groupe témoin) + `global_stats` : GitHub Action
+  `resolve-due` (toutes les heures à :45, zéro quota, `scripts/resolve-due.mjs`, prix à l'heure de
+  l'échéance) ; le cycle ne résout qu'en secours (dû depuis > 6 h). Créneaux des routines évités.
   Devise : champ `currency` (USD depuis le 20/09/2026 ; sans champ → table de la spec cycle §5).
   Le symbole écrit dans `reasoning` n'est PAS fiable. Jamais comparer un prix € à un prix $.
 - `engine-history.json` : `correction_log` = mémoire du moteur ; `global_stats` recalculé ;

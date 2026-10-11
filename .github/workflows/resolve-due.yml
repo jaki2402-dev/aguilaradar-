@@ -1,0 +1,39 @@
+name: Resolve due
+
+# Vérification des échéances (verdicts, horizons des opportunités, groupe témoin) : prix réel
+# CoinGecko à la date de l'échéance, calcul pur, aucun quota Claude. Toutes les heures à :45 ; le
+# script ne touche jamais un fichier pendant le créneau de la routine qui l'écrit (QUIET_WINDOWS).
+on:
+  schedule:
+    - cron: "45 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: data-commit
+  cancel-in-progress: false
+
+jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/resolve-due.mjs
+      - name: Commit si quelque chose a changé
+        run: |
+          FILES="data/verdicts.json data/engine-history.json data/opportunities.json data/control-group.json"
+          git diff --quiet -- $FILES && exit 0
+          for f in $FILES; do python3 -m json.tool "$f" >/dev/null; done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add $FILES
+          git commit -m "Échéances vérifiées le $(date -u "+%d/%m/%Y %Hh%M") UTC"
+          for i in 1 2 3; do git pull --rebase -q origin main && git push origin HEAD:main && exit 0; sleep $((i*5)); done
+          exit 1

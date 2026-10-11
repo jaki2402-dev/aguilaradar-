@@ -17,9 +17,10 @@ Ne jamais lire `data/verdicts.json` (~156 Ko) ni `engine-history.json` en entier
 python3 - <<'EOF'
 import json, datetime
 now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+late = (datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=6)).isoformat()
 v = json.load(open("data/verdicts.json"))
 pending = [x for x in v if x.get("status") == "pending"]
-due = [x["id"] for x in pending if x["resolves_at"] <= now]
+due = [x["id"] for x in pending if x["resolves_at"] <= late]  # dus depuis > 6 h : robot en panne (§5)
 covered = {x["ticker"] for x in pending}
 print("dus:", due); print("tickers sans verdict pending:", sorted({x["ticker"] for x in v} - covered))
 EOF
@@ -240,7 +241,14 @@ du cycle (le contexte macro est le même pour tous, pas la peine de le relire pa
 
 ## 5. Résolution des verdicts en attente
 
-À chaque cycle, pour tout verdict `status:"pending"` dont `resolves_at` est dépassé : calculer
+**Depuis le 11/10/2026, c'est le robot GitHub `resolve-due` qui résout** (toutes les heures à :45,
+aucun quota, `scripts/resolve-due.mjs`) : prix CoinGecko à l'heure exacte de `resolves_at` dans la
+devise du verdict, issue calculée par la même fonction que l'onglet Moteur, puis `global_stats`
+recalculé. Le cycle trouve donc normalement ses tickers déjà libérés et n'a plus qu'à émettre.
+
+**Secours seulement** : un verdict encore `pending` plus de 6 h après `resolves_at` (robot en panne,
+liste `due` du démarrage) est résolu par le cycle avec la méthode ci-dessous, et le cycle le signale
+dans `routine_health.last_failure_reason`. Méthode de secours : pour chaque verdict concerné, calculer
 `actual_move_pct` depuis `price_at_issue` et le prix réel actuel **dans la devise du champ
 `currency` du verdict** (USD → `vs_currencies=usd`, EUR → `eur` ; jamais un prix d'une devise
 comparé à un prix d'une autre). Verdict **sans** champ `currency` (émis avant cette règle) :
