@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { loadSite, indicatorsAt, readingOf, closesUntil, backtest, scoreRules, RULES_REGISTERED_AT, technicalEvents, buildTechnicalAlerts } from "../scripts/technical-favoris.mjs";
+import { loadSite, indicatorsAt, readingOf, closesUntil, backtest, scoreRules, RULES_REGISTERED_AT, technicalEvents, buildTechnicalAlerts, engineCalibration, proposedVerdict, ENGINE_RULE } from "../scripts/technical-favoris.mjs";
 
 const site = loadSite();
 const DAY = 86400000;
@@ -172,10 +172,11 @@ describe("règles candidates figées le 11/10 (test réel sur les issues postér
       row("ATTENTE", "VENTE", { sma200_gap_pct: -5, macd_histogram: -1 }), // tendance : VENTE (juste)
     ]).retrospective;
     expect(r.n).toBe(3);
-    expect(r.results.moteur).toEqual({ correct: 0, pct: 0 });
-    expect(r.results.garde_fou_rsi).toEqual({ correct: 1, pct: 33.3 });
-    expect(r.results.tendance_rsi).toEqual({ correct: 3, pct: 100 }); // RSI 75 au-dessus de la MM200 → ATTENTE (juste)
-    expect(r.results.toujours_achat).toEqual({ correct: 1, pct: 33.3 });
+    expect(r.results.moteur).toEqual({ n: 3, correct: 0, pct: 0 });
+    expect(r.results.garde_fou_rsi).toEqual({ n: 3, correct: 1, pct: 33.3 });
+    expect(r.results.tendance_rsi).toEqual({ n: 3, correct: 3, pct: 100 }); // RSI 75 au-dessus de la MM200 → ATTENTE (juste)
+    expect(r.results.toujours_achat).toEqual({ n: 3, correct: 1, pct: 33.3 });
+    expect(r.results.retour_moyenne_rsi).toEqual({ n: 3, correct: 1, pct: 33.3 }); // RSI 75 → VENTE (faux), puis ACHAT, ACHAT
   });
 
   it("seules les issues connues APRÈS la date des règles comptent comme test réel", () => {
@@ -183,8 +184,13 @@ describe("règles candidates figées le 11/10 (test réel sur les issues postér
     expect(r.registered_at).toBe(RULES_REGISTERED_AT);
     expect(r.retrospective.n).toBe(1);
     expect(r.prospective.n).toBe(1);
-    expect(r.prospective.results.moteur).toEqual({ correct: 0, pct: 0 });
-    expect(scoreRules([]).prospective).toMatchObject({ n: 0, results: { moteur: { correct: 0, pct: null } } });
+    expect(r.prospective.results.moteur).toEqual({ n: 1, correct: 0, pct: 0 });
+    expect(scoreRules([]).prospective).toMatchObject({ n: 0, results: { moteur: { n: 0, correct: 0, pct: null } } });
+    // Règle ajoutée plus tard : sa propre date sépare passé et test réel.
+    const late = scoreRules([row("ACHAT", "ACHAT", {}, "2026-10-11T09:30:00Z")]);
+    expect(late.prospective.results.moteur.n).toBe(1);
+    expect(late.retrospective.results.retour_moyenne_rsi.n).toBe(1);
+    expect(late.definitions.retour_moyenne_rsi.registered_at).toBe("2026-10-11T10:00:00Z");
   });
 
   it("verdict sans RSI ou sans MM200 à l'émission : écarté pour toutes les règles (comparaison à égalité)", () => {
@@ -230,5 +236,30 @@ describe("alertes techniques : seulement les bascules d'un jour à l'autre", () 
     expect(buildTechnicalAlerts(many, recent, NOW).map((a) => a.ticker_ou_theme)).toEqual(["B", "C", "D"]);
     const old = [{ ...recent[0], triggered_at: "2026-10-01T23:30:00Z" }];
     expect(buildTechnicalAlerts(many, old, NOW).map((a) => a.ticker_ou_theme)).toEqual(["A", "B", "C"]);
+  });
+});
+
+describe("règle du moteur depuis le 11/10 : verdict proposé et confiance mesurée", () => {
+  const row = (actual, rsi14) => ({ v: { verdict: "ATTENTE", outcome: { actual_direction: actual } }, ind: { rsi14, sma200_gap_pct: 1, macd_histogram: 1 } });
+  const rows = [
+    ...Array.from({ length: 12 }, (_, i) => row(i < 7 ? "ACHAT" : "VENTE", 50)), // 7/12 ACHAT justes
+    ...Array.from({ length: 4 }, (_, i) => row(i < 2 ? "VENTE" : "ACHAT", 75)), // 2/4 VENTE justes
+  ];
+
+  it("règle adoptée : VENTE si RSI ≥ 70, sinon ACHAT", () => {
+    expect(ENGINE_RULE).toBe("retour_moyenne_rsi");
+    expect(engineCalibration(rows)).toEqual({ ACHAT: { n: 12, correct: 7, pct: 58 }, VENTE: { n: 4, correct: 2, pct: 50 } });
+  });
+
+  it("confiance = taux de réussite mesuré de l'appel, seulement à partir de 10 cas", () => {
+    const cal = engineCalibration(rows);
+    expect(proposedVerdict({ rsi14: 52 }, cal)).toMatchObject({ verdict: "ACHAT", confidence_pct: 58, sample_n: 12 });
+    expect(proposedVerdict({ rsi14: 71.6 }, cal)).toMatchObject({ verdict: "VENTE", confidence_pct: null, sample_n: 4 });
+    expect(proposedVerdict({ rsi14: 71.6 }, cal).basis).toBe("RSI 72 ≥ 70 : hausse étirée, repli plus fréquent ensuite");
+  });
+
+  it("sans RSI : ATTENTE, jamais un appel deviné", () => {
+    expect(proposedVerdict({ rsi14: null }, null)).toMatchObject({ verdict: "ATTENTE", confidence_pct: null });
+    expect(proposedVerdict(null, null).verdict).toBe("ATTENTE");
   });
 });

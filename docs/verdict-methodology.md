@@ -25,12 +25,19 @@ insuffisante" pour cette catégorie précise (pas pour la fiche entière).
 `verdict.verdict`/`confidence_pct`, `signal_consensus.technique` (`verdicts.json`). C'est la
 **seule catégorie couverte pour 15/15 favoris aujourd'hui**.
 
+Depuis le 11/10/2026, `technique` reflète la règle du moteur (`"haussier"` = ACHAT, `"baissier"` =
+VENTE, `"insuffisant"` = données absentes) et `confidence_pct` est le taux de réussite mesuré de
+l'appel (`docs/routines/cycle-2h-verdict.md` §2) : la notation ci-dessous reste valable telle quelle.
+
 Règle de notation (quand `signal_consensus.technique` existe) :
 - `technique` "haussier" + `confidence_pct` ≥ 65 → 8-10 (8 par défaut, +1 si `accord_count` ≥ 2, +1 si le mouvement 7j dépasse le seuil directionnel dans le même sens)
 - `technique` "haussier" + `confidence_pct` < 65 → 6-7
 - `technique` "mixte"/"neutre" → 4-6 (5 par défaut)
 - `technique` "baissier" + `confidence_pct` < 65 → 3-4
 - `technique` "baissier" + `confidence_pct` ≥ 65 → 0-2
+
+`technique` "insuffisant" (données techniques absentes à l'émission, règle du 11/10/2026) : "Donnée
+insuffisante".
 
 Sans `signal_consensus` (verdicts émis avant le 11/08, ou champ absent) : "Donnée insuffisante"
 pour cette catégorie précise plutôt que de deviner depuis `verdict.verdict` seul.

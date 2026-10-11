@@ -167,6 +167,31 @@ describe("data-integrity.js — checkVerdictSelectionCompliance", () => {
     expect(checkVerdictSelectionCompliance(undefined)).toEqual([]);
   });
 
+  describe("règle du 11/10/2026 (retour à la moyenne)", () => {
+    const AFTER = "2026-10-13T00:20:00Z";
+    const mk = (verdict, rsi14, extra = {}) => ({ id: "v", ticker: "CTSI", issued_at: AFTER, verdict, decision_rule: "retour_moyenne_rsi", technical_at_issue: rsi14 === null ? null : { rsi14 }, signal_consensus: { technique: verdict === "VENTE" ? "baissier" : "haussier", accord_count: 0 }, ...extra });
+
+    it("ACHAT sous RSI 70 et VENTE à partir de 70 sont conformes, même avec accord_count = 0", () => {
+      expect(checkVerdictSelectionCompliance([mk("ACHAT", 52), mk("VENTE", 71.6)])).toEqual([]);
+    });
+
+    it("signale un ATTENTE « par prudence » ou une direction contraire au RSI", () => {
+      const v = checkVerdictSelectionCompliance([mk("ATTENTE", 52), mk("ACHAT", 75)]);
+      expect(v.map((x) => x.expected)).toEqual(["ACHAT", "VENTE"]);
+    });
+
+    it("ATTENTE conforme seulement sans RSI ou avec un override vérifié", () => {
+      expect(checkVerdictSelectionCompliance([mk("ATTENTE", null), mk("ATTENTE", 50, { override: { reason: "exploit confirmé", sources: ["a", "b"] } })])).toEqual([]);
+      expect(checkVerdictSelectionCompliance([mk("ACHAT", null)])[0].expected).toBe("ATTENTE");
+    });
+
+    it("signale un verdict émis après la règle sans decision_rule (routine qui ne la suit pas)", () => {
+      const v = checkVerdictSelectionCompliance([{ id: "v", ticker: "BTC", issued_at: AFTER, verdict: "ATTENTE", signal_consensus: { technique: "mixte", accord_count: 1 } }]);
+      expect(v).toHaveLength(1);
+      expect(v[0].expected).toBe("retour_moyenne_rsi");
+    });
+  });
+
   it("skips a verdict with no signal_consensus at all (pre-11/08 verdicts)", () => {
     expect(checkVerdictSelectionCompliance([{ id: "v1", verdict: "ATTENTE" }])).toEqual([]);
   });

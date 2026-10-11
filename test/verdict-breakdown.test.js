@@ -14,6 +14,11 @@ describe("verdict-breakdown.js — scoreMomentum", () => {
     expect(b.momentum).toBeNull();
   });
 
+  it("returns null (Donnée insuffisante) when the technical reading is 'insuffisant' (règle du 11/10/2026)", () => {
+    const verdict = { verdict: "ATTENTE", confidence_pct: 40, signal_consensus: { technique: "insuffisant", accord_count: 0 } };
+    expect(computeVerdictBreakdown({ verdict }).momentum).toBeNull();
+  });
+
   it("scores a strong bullish consensus with agreement highest", () => {
     const verdict = { verdict: "ACHAT", confidence_pct: 70, signal_consensus: { technique: "haussier", accord_count: 2 } };
     expect(computeVerdictBreakdown({ verdict }).momentum).toBe(9);

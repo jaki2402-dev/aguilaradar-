@@ -48,7 +48,7 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | P9 | **Mail du matin** : le prompt corrigé du 05/10 (jauges fraîches) n'a probablement pas été collé. Non vérifié : le mail ne laisse aucune trace dans le dépôt. | Session avec l'outil routines | Vérifier avec `get_trigger`. |
 | P15 | **Routine `horizons-6h` devenue inutile** : le robot `resolve-due` fait son travail sans quota (essai réel réussi le 11/10). Une session ne peut pas la désactiver (refus du système). | **Toi** | Désactiver `aguilaradar-horizons-6h` : claude.ai/code/routines/trig_012L3zXByo7gQXCfAYQsrWhn. Sans urgence : elle ne trouve plus rien à faire. |
 | P10 | **CoinMarketCap : routine dédiée facultative.** Depuis le 11/10, l'analyse technique des favoris vient du robot GitHub (sans quota). CoinMarketCap n'apporterait plus que le levier, le financement, les liquidations et la saison des altcoins. | **Toi**, si tu le souhaites | Créer `aguilaradar-coinmarketcap-quotidien` avec le texte de `docs/routines/coinmarketcap-quotidien.md`. Rien ne casse sans elle. |
-| P14 | **Moteur des verdicts peu fiable (mesuré)** : 25,6 % d'exacts sur 82 ; ATTENTE dans 80 % des cas alors que le cours n'est resté stable que dans 23 %. Indice le plus net : RSI ≥ 70 le jour du verdict → hausse dans 25 % des cas seulement (61 % en RSI neutre), sur 16 cas. | Session après le 20/10 | **Protocole fixé le 11/10** : 4 règles candidates figées dans le robot (`backtest.rules` de `technical-favoris.json`, onglet Moteur), jugées sur la colonne « Test réel » (verdicts vérifiés après le 11/10 09h). Adopter une règle seulement si, sur ≥ 15 verdicts du test réel, elle bat le moteur ET « toujours ACHAT ». Sinon : attendre plus de cas, ne rien changer. Une seule variable à la fois, documentée dans `correction_log`. |
+| P14 | **Nouvelle règle du moteur à vérifier en conditions réelles** (choisie par l'utilisateur le 11/10) : VENTE si RSI ≥ 70, sinon ACHAT, ATTENTE seulement sans données (57 % de justes sur le passé contre 26 %). Premiers verdicts attendus au cycle du 13/10 00h15 (après les échéances du 12/10). Le prompt de la routine rappelle encore l'ancienne formule : la spec dit qu'elle prime. | Session à partir du 13/10 | Vérifier sur `origin/main` : `decision_rule` présent, verdicts ACHAT/VENTE conformes (panneau « Cohérence des données » : 0 violation). Si la routine retombe sur ATTENTE : te proposer de coller un prompt corrigé. Puis suivre la colonne « Test réel » (onglet Moteur) ; changer de règle seulement si une autre la bat sur ≥ 15 verdicts. |
 
 ## Rendez-vous
 
@@ -80,6 +80,9 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 
 ## Journal des sessions (le plus récent en haut)
 
+- **11/10/2026 (midi)** — Demande : « des verdicts beaucoup plus fiables, pas toujours en attente ». Analyse
+  des 82 verdicts (indicateurs à l'émission, deux périodes) ; règle « retour à la moyenne » choisie par
+  l'utilisateur ; spec §2 réécrite, `corr-20261011-regle-retour-moyenne`, contrôle de conformité adapté.
 - **11/10/2026 (fin de matinée)** — Demande : points 2, 1, 3. (2) Robot `resolve-due` : verdicts au prix
   exact de l'échéance, horizons des opportunités, groupe témoin (échéances du 18/10 orphelines), sans
   quota ; le cycle ne résout plus qu'en secours ; désactivation de `horizons-6h` refusée → P15.

@@ -22,6 +22,8 @@ const VERDICT_CATEGORY_LABELS = {
 function scoreMomentum(verdict) {
   if (!verdict || !verdict.signal_consensus || !verdict.signal_consensus.technique) return null;
   const t = verdict.signal_consensus.technique;
+  // « insuffisant » : verdict émis sans lecture technique fiable (règle du 11/10/2026) — pas de note.
+  if (t === "insuffisant") return null;
   const conf = typeof verdict.confidence_pct === "number" ? verdict.confidence_pct : null;
   const strong = conf !== null && conf >= 65;
   if (t === "haussier") {

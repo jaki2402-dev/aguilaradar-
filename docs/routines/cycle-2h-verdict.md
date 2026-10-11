@@ -47,7 +47,8 @@ EOF
 Au 14/09/2026 l'exactitude stricte (26,8 %) était sous la baseline « classe majoritaire » (42,9 %)
 et `confidence_pct` concentré à 88 % sur 50/60 : corrigé par la formule du §2. Au 21/09, la
 sélection ACHAT/ATTENTE/VENTE restait biaisée vers ATTENTE (~79 % des verdicts, jamais VENTE sur
-signal baissier) : corrigé par la sous-section « Sélection » du §2.
+signal baissier) : corrigé par la sous-section « Sélection » du §2. Au 11/10, toujours 25,6 % sur
+82 : la décision suit désormais la règle mesurée du robot (§2).
 
 ## Règle absolue (s'applique à tout ce document)
 
@@ -78,7 +79,9 @@ Tableau au niveau racine, chaque entrée :
   "status": "pending",
   "threshold_pct": 5,
   "regime_at_issue": "risk-on | neutre | risk-off",
-  "signal_consensus": { "technique": "haussier|baissier|mixte|neutre", "fondamental": "...", "macro": "...", "accord_count": <0-3> },
+  "signal_consensus": { "technique": "haussier|baissier|insuffisant", "fondamental": "...", "macro": "...", "accord_count": <0-3> },
+  "decision_rule": "retour_moyenne_rsi",
+  "override": { "reason": "...", "sources": ["..."] } (seulement en cas d'événement exceptionnel vérifié, §2),
   "technical_at_issue": { "as_of": "<ISO>", "source": "technical-favoris", "rsi14": <number|null>, "sma200_gap_pct": <number|null>, "macd": "haussier|baissier|null" } | null
 }
 ```
@@ -98,67 +101,49 @@ alors que l'exactitude est déjà sous la baseline. Le champ `threshold_pct` exi
 qu'un futur seuil variable soit traçable verdict par verdict le jour où cette formule existera et
 aura été validée — pas aujourd'hui.
 
-## 2. `confidence_pct` — une formule reproductible, pas un chiffre à l'instinct
+## 2. Décision ACHAT / ATTENTE / VENTE et `confidence_pct` — règle du moteur depuis le 11/10/2026
 
-Reprend exactement la section "Momentum" de `docs/verdict-methodology.md`, dans l'autre sens
-(cette fois pour PRODUIRE `confidence_pct`, pas pour le noter a posteriori) :
+**Prioritaire sur les rappels du prompt de la routine** (le prompt désigne ce fichier comme la
+référence unique et à jour) : `confidence_pct` n'est plus dérivé d'`accord_count`, et ATTENTE
+n'est plus l'option prudente par défaut. Un verdict qui suit `proposed_verdict` n'est jamais « peu
+étayé » : il repose sur une règle mesurée sur les verdicts vérifiés.
 
-- `signal_consensus.accord_count` = 3 (technique + fondamental + macro tous d'accord) → 75-85 %
-- `accord_count` = 2 → 60-70 %
-- `accord_count` = 1 → 45-55 %
-- `accord_count` = 0 (signaux qui se contredisent) → **le verdict devient ATTENTE**, `confidence_pct` 40-50 % — ne pas forcer un ACHAT/VENTE quand les 3 dimensions ne s'accordent pas, voir section 4.
+**Règle choisie par l'utilisateur le 11/10/2026** (`corr-20261011-regle-retour-moyenne`), calculée
+chaque soir par le robot `technical-daily` : `data/technical-favoris.json` →
+`assets.<TICKER>.proposed_verdict` = `{rule, verdict, confidence_pct, sample_n, basis}`.
 
-Ne jamais sortir de ces fourchettes pour "faire un chiffre rond" — choisir une valeur précise
-dans la fourchette selon la force réelle des signaux (ex. un mouvement de prix net + volume
-confirmé pèse plus qu'un mouvement de prix seul), documentée en une phrase dans `reasoning` si le
-choix dans la fourchette n'est pas évident.
+1. Lire l'entrée de l'actif par extraction `python3` (même commande que la section « Analyse
+   technique du robot quotidien » en fin de document).
+2. `verdict` = `proposed_verdict.verdict`, **tel quel** : VENTE si RSI 14 j ≥ 70, sinon ACHAT.
+   Ne jamais le remplacer par ATTENTE « par prudence » : ATTENTE parie que le cours restera entre
+   −5 % et +5 % à l'échéance, ce qui n'est arrivé que dans 23 % des 82 verdicts vérifiés au 11/10
+   (le moteur la choisissait dans 80 % des cas : 25,6 % de justes).
+3. `confidence_pct` = `proposed_verdict.confidence_pct` (taux de réussite mesuré de ce même appel
+   sur tous les verdicts vérifiés) ; s'il est `null` (moins de 10 cas), `confidence_pct` = 50.
+4. Écrire `"decision_rule": "retour_moyenne_rsi"` sur le verdict (mesure de chaque version de règle).
+5. `signal_consensus` reste écrit pour la page méthode du site : `technique` = `"haussier"` si
+   ACHAT, `"baissier"` si VENTE ; `fondamental`, `macro`, `accord_count` comme avant (§4) — ils **ne
+   changent plus le verdict**. Le `reasoning` cite `proposed_verdict.basis`, le RSI, la tendance de
+   fond, et signale tout élément fondamental ou macro contraire (information pour le lecteur).
+6. **ATTENTE seulement dans deux cas** :
+   - données absentes : fichier ou actif manquant, `updated_at` de plus de 36 h, ou
+     `proposed_verdict.verdict` = `"ATTENTE"` (RSI indisponible) → `technique` = `"insuffisant"`,
+     `confidence_pct` = 40, le `reasoning` le dit ;
+   - événement exceptionnel **vérifié par 2 sources** sur cet actif (piratage ou exploit, retrait
+     d'une grande plateforme, faillite, procédure réglementaire) → ATTENTE avec
+     `"override": {"reason": "...", "sources": ["<url1>", "<url2>"]}`. Jamais d'override pour une
+     opinion, un régime macro ou une thèse : ce sont des informations du `reasoning`.
+7. Ne jamais changer cette règle sans entrée `correction_log`. Le robot la mesure chaque jour
+   (onglet Moteur, « Pistes de correction ») ; une autre règle ne la remplace que si elle la bat sur
+   au moins 15 verdicts du test réel.
 
-### Sélection ACHAT/ATTENTE/VENTE — le trou réel, pas juste `confidence_pct` (trouvé le 21/09/2026)
+### Historique de la section 2
 
-**Ce document n'a jamais dit, explicitement, comment `signal_consensus.technique` devient le
-verdict final (`ACHAT`/`ATTENTE`/`VENTE`).** Seule la formule de confiance ci-dessus était
-spécifiée, en supposant le verdict déjà choisi. Dans les faits, ce choix non écrit s'est révélé
-systématiquement prudent, dans un sens qui ne colle pas à ce qui s'est réellement passé :
-
-- Sur les 56 verdicts résolus au 21/09/2026, `technique = "baissier"` a mené à ATTENTE 10 fois sur
-  10, **jamais** à VENTE — alors que 14 des 56 résolutions réelles (25 %) étaient effectivement une
-  baisse au-delà du seuil.
-- `accord_count = 1` (32 cas sur 56, le groupe le plus fréquent) a mené à ATTENTE 32 fois sur 32 —
-  alors que la section ci-dessus ne force ATTENTE qu'à `accord_count = 0`, jamais à 1.
-- Conséquence mesurée : 44 des 56 verdicts résolus (78,6 %) sont ATTENTE, alors que seulement 10
-  des 56 résolutions réelles (17,9 %) sont effectivement restées sous le seuil — le moteur
-  s'abrite dans ATTENTE près de 5x plus souvent que ce que le marché a réellement fait sur cette
-  période (couverture actuelle : 21 %).
-- Ce biais est **antérieur ET postérieur** à `corr-20260914-confidence-formule-reproductible`
-  (44/56 = 78,6 % avant, 12/15 = 80 % après) : la formule de confiance a résolu la concentration
-  sur 50/60 %, un vrai problème, mais n'a jamais touché ce mécanisme-ci — deux trous distincts.
-
-**Règle, à partir de cette révision** — un seul levier, directement branché sur
-`signal_consensus.technique` qui existe déjà, sans introduire de nouvelle donnée ni de formule
-numérique inventée :
-
-- `technique = "haussier"` et `accord_count ≥ 1` → le verdict **doit** être `ACHAT` (jamais ATTENTE
-  par prudence).
-- `technique = "baissier"` et `accord_count ≥ 1` → le verdict **doit** être `VENTE` (jamais ATTENTE
-  par prudence).
-- `technique` ∈ {"mixte", "neutre", "insuffisant", "a_risque_retournement", "peu_fiable"} →
-  ATTENTE, comme aujourd'hui (aucun changement ici, cette partie n'est pas le problème).
-- `accord_count = 0` → ATTENTE reste forcé (règle existante ci-dessus, inchangée).
-
-**Ne pas confondre avec la section 4** : le plafonnement d'`accord_count` à 1 en cas de
-contradiction avec `favoris-context.json`/`portfolio-thesis.json` reste inchangé et s'applique
-normalement AVANT cette règle — un `technique` haussier plafonné à `accord_count = 1` par la
-section 4 donne toujours ACHAT (accord_count ≥ 1), pas ATTENTE : seul `accord_count = 0`
-(contradiction totale entre les 3 dimensions) annule la direction.
-
-**Pourquoi ce choix et pas un autre** : c'est la lecture technique déjà calculée et déjà écrite
-(`signal_consensus.technique`) qui décide, jamais une nouvelle mesure inventée. Si cette règle se
-révèle mauvaise (ACHAT/VENTE plus souvent faux qu'ATTENTE ne l'était), ce sera visible dans
-`accuracy_strict_pct` du prochain lot résolu et devra être documenté honnêtement dans
-`correction_log` — comme `corr-20260906-test-horizon-adaptatif` puis
-`corr-20260913-biais-chasse-momentum` l'ont déjà fait pour l'horizon adaptatif. **Ne pas juger
-cette règle avant qu'un lot d'au moins ~10 verdicts émis sous elle ait atteint son horizon** (7-14
-jours) — même principe que `MIN_RESOLVED_FOR_SELF_ASSESSMENT` côté site (`js/engine.js`).
+La formule par `accord_count` (14/09/2026) et la règle de sélection « technique haussier/baissier »
+(21/09/2026) sont remplacées : mesurées le 11/10 sur 82 verdicts vérifiés, elles donnaient 25,6 %
+de justes ; les lectures `technique = "baissier"` de la routine avaient été suivies d'une hausse
+10 fois sur 10 (marché de retour à la moyenne sur 1-2 semaines). Détail : `docs/journal-technique.md`,
+11/10/2026, et `engine-history.json.correction_log`.
 
 **Fausse alerte vérifiée et classée le 21/09/2026** : `v-20260807-btc` et `v-20260807-eth` portent
 un `signal_precoce.note` (déjà en place depuis leur émission) signalant un écart de ~16-17 % entre
@@ -373,9 +358,7 @@ cours 30 % au-dessus de sa moyenne 200 j, sans que rien ne le signale).
 4. Dans `reasoning`, signale tout signal du robot qui contredit le verdict : RSI14 >= 70 (surachat)
    sur un ACHAT, RSI14 <= 30 (survente) sur une VENTE, cours sous sa moyenne 200 j sur un ACHAT ou
    au-dessus sur une VENTE, MACD de sens opposé au verdict.
-5. Ne change PAS la règle de décision ACHAT / ATTENTE / VENTE ni le calcul de `confidence_pct` :
-   corr-20260921 est en évaluation jusqu'au 20/10 et doit rester la seule variable modifiée. Ces
-   données documentent chaque verdict et permettront de mesurer, sur les issues réelles, si elles
-   prédisent mieux que la lecture actuelle (candidat d'auto-correction après le 20/10).
+5. La décision elle-même suit le §2 (`proposed_verdict` du même fichier) ; cette section documente
+   le verdict (`technical_at_issue`, `signals_used`, contradictions dans `reasoning`).
 6. Chiffres en USD et en pourcentages : ne les compare jamais à un prix en euros. Ne modifie jamais
    `data/technical-favoris.json` (fichier du robot).

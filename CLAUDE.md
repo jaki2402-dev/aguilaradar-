@@ -154,6 +154,10 @@ vente.
 
 Écrits par les routines, **ajout seulement** :
 - `verdicts.json` : `pending` → `resolved` seulement après `resolves_at`. Jamais d'issue inventée.
+  **Règle de décision depuis le 11/10/2026 (choix de l'utilisateur)** : `proposed_verdict` du robot
+  (VENTE si RSI 14 j ≥ 70, sinon ACHAT ; ATTENTE seulement sans données ou override vérifié),
+  confiance = taux mesuré ; `checkVerdictSelectionCompliance` la contrôle. Ne pas revenir à
+  ATTENTE « par prudence » (23 % d'issues stables) ; changer de règle = `correction_log` + test réel.
   Résolution (verdicts, horizons des opportunités, groupe témoin) + `global_stats` : GitHub Action
   `resolve-due` (toutes les heures à :45, zéro quota, `scripts/resolve-due.mjs`, prix à l'heure de
   l'échéance) ; le cycle ne résout qu'en secours (dû depuis > 6 h). Créneaux des routines évités.

@@ -64,10 +64,31 @@ function checkVerdictPlausibility(verdicts) {
 // jamais — même principe que le reste de ce fichier.
 const SELECTION_RULE_CUTOFF = "2026-09-21T23:26:18Z"; // fusion PR #7 (commit bb89fcb) sur main
 const EXPECTED_DIRECTION_BY_TECHNIQUE = { haussier: "ACHAT", baissier: "VENTE" };
+// Règle du 11/10/2026 (« retour à la moyenne », choisie par l'utilisateur) : VENTE si RSI 14 j ≥ 70
+// à l'émission, sinon ACHAT ; ATTENTE seulement sans lecture technique ou avec un override vérifié.
+// Les règles précédentes ne s'appliquent qu'aux verdicts émis avant elle.
+const MEAN_REVERSION_RULE_CUTOFF = "2026-10-11T09:30:00Z";
+
+function meanReversionViolation(v) {
+  const base = { id: v.id, ticker: v.ticker, issued_at: v.issued_at, verdict: v.verdict };
+  if (v.decision_rule !== "retour_moyenne_rsi") {
+    return { ...base, rule: "règle du 11/10 : decision_rule « retour_moyenne_rsi » absent", expected: "retour_moyenne_rsi" };
+  }
+  if (v.override && v.override.reason) return v.verdict === "ATTENTE" ? null : { ...base, rule: "override vérifié : ATTENTE attendue", expected: "ATTENTE" };
+  const rsi = v.technical_at_issue && v.technical_at_issue.rsi14;
+  if (typeof rsi !== "number") return v.verdict === "ATTENTE" ? null : { ...base, rule: "sans RSI à l'émission : ATTENTE attendue", expected: "ATTENTE" };
+  const expected = rsi >= 70 ? "VENTE" : "ACHAT";
+  return v.verdict === expected ? null : { ...base, rule: `RSI ${Math.round(rsi)} à l'émission → ${expected}`, expected };
+}
 
 function checkVerdictSelectionCompliance(verdicts) {
   const violations = [];
   (verdicts || []).forEach((v) => {
+    if (v.issued_at && v.issued_at >= MEAN_REVERSION_RULE_CUTOFF) {
+      const violation = meanReversionViolation(v);
+      if (violation) violations.push(violation);
+      return;
+    }
     const sc = v.signal_consensus;
     if (!sc || typeof sc.accord_count !== "number") return; // pas de signal_consensus (avant le 11/08) -> rien à vérifier
 

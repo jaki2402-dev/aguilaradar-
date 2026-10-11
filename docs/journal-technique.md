@@ -529,3 +529,25 @@ dessus de sa MM200, sans le savoir.
   émis du 05 au 10/10 → vrai test, sans ajustement a posteriori possible. Protocole dans P14.
 - **Alertes `signal_technique`** : bascule seulement (comparaison avec la lecture de la veille, ignorée
   si elle a plus de 3 jours), MM200 prioritaire, max 3/passage, cooldown 7 jours par actif et type.
+
+### 11/10/2026 (midi) — nouvelle règle de décision du moteur : retour à la moyenne (RSI)
+
+- **Demande** : « avoir toujours des verdicts en attente, ça n'aide pas ». Analyse sur les 82 verdicts
+  vérifiés avec les indicateurs recalculés au jour d'émission (`backtest.rows`, + état du bitcoin),
+  coupés en deux périodes (07/08-05/09 : 41 % de hausses ; 06/09-03/10 : 66 %).
+- **Constats robustes** : ATTENTE (issue entre −5 % et +5 %) = 20-27 % des issues dans les deux
+  périodes, la moins fréquente presque partout ; la lecture technique de la routine était
+  anti-prédictive (« baissier » → hausse 10/10) ; RSI ≥ 70 → baisse 44 % / hausse 25 % ; élan négatif
+  (MACD < 0, de l'actif ou du bitcoin) → plus de hausses que la moyenne dans les deux périodes :
+  retour à la moyenne sur 1-2 semaines.
+- **Écartés après test** : direction calquée sur les 20 derniers résultats (28-45 %, en retard sur les
+  retournements) ; garde-fou « bitcoin sous MM200 → VENTE » (22 % en août : il s'est déclenché au
+  creux, avant le rebond) ; tendance + RSI (39 %).
+- **Retenue (choix de l'utilisateur parmi 3 options)** : VENTE si RSI ≥ 70, sinon ACHAT — 57,3 %
+  (39,0 / 75,6) contre 25,6 % (29,3 / 22,0). Limite dite à l'utilisateur : période surtout haussière,
+  pas de vrai marché baissier dans l'échantillon. Confiance = taux mesuré de l'appel (ACHAT 61 %,
+  VENTE 44 % au 11/10), recalculé chaque soir.
+- **Mise en œuvre** : `ENGINE_RULE` + `proposed_verdict` (robot), spec §2 (prioritaire sur les rappels
+  du prompt, qui citent encore `accord_count`), `checkVerdictSelectionCompliance` (règle par date,
+  signale aussi un verdict sans `decision_rule`), `scoreMomentum` : `technique` « insuffisant » →
+  Donnée insuffisante. Le classifieur a bloqué une étape avant le choix explicite de l'utilisateur.

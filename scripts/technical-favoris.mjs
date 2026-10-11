@@ -101,7 +101,21 @@ export const CANDIDATE_RULES = {
     call: (v, ind) => (ind.sma200_gap_pct >= 0 && ind.rsi14 < 70 ? "ACHAT" : ind.sma200_gap_pct < 0 && ind.macd_histogram !== null && ind.macd_histogram < 0 ? "VENTE" : "ATTENTE"),
   },
   toujours_achat: { name: "Toujours ACHAT (référence)", label: "Référence naïve à battre : ACHAT à chaque fois", call: () => "ACHAT" },
+  // Ajoutée le 11/10/2026 10h (demande de l'utilisateur : des verdicts utiles, pas « ATTENTE » en
+  // permanence) et adoptée comme règle de décision du moteur (ENGINE_RULE). Choisie sur les 82
+  // verdicts vérifiés : 57 % de justes contre 26 % pour le moteur, meilleure sur les deux moitiés
+  // de la période (39 % / 76 % contre 29 % / 22 %). Les lectures technique « baissier » de la routine
+  // avaient été suivies d'une hausse 10 fois sur 10 : marché de retour à la moyenne sur 1-2 semaines.
+  retour_moyenne_rsi: {
+    name: "Retour à la moyenne (RSI)",
+    label: "VENTE si RSI ≥ 70 (hausse étirée), sinon ACHAT — règle du moteur depuis le 11/10/2026",
+    registered_at: "2026-10-11T10:00:00Z",
+    call: (v, ind) => (ind.rsi14 >= 70 ? "VENTE" : "ACHAT"),
+  },
 };
+
+// Règle qui décide les verdicts du moteur (docs/routines/cycle-2h-verdict.md, section 2).
+export const ENGINE_RULE = "retour_moyenne_rsi";
 
 // Score de chaque règle sur les mêmes verdicts (ceux dont RSI et MM200 sont connus à l'émission),
 // séparé entre rétrospectif (issue connue à la date de la règle) et test réel (issue postérieure).
@@ -115,12 +129,23 @@ export function scoreRules(rows) {
     }
     return { n: subset.length, results };
   };
-  const after = (r) => (r.v.outcome.resolved_at || "") >= RULES_REGISTERED_AT;
+  // Chaque règle a sa propre date : seules les issues connues après elle comptent comme test réel.
+  const split = (after) => {
+    const out = { n: 0, results: {} };
+    for (const [key, rule] of Object.entries(CANDIDATE_RULES)) {
+      const since = rule.registered_at || RULES_REGISTERED_AT;
+      const subset = usable.filter((r) => ((r.v.outcome.resolved_at || "") >= since) === after);
+      const one = score(subset);
+      out.results[key] = { n: one.n, ...one.results[key] };
+      if (key === "moteur") out.n = one.n;
+    }
+    return out;
+  };
   return {
     registered_at: RULES_REGISTERED_AT,
-    definitions: Object.fromEntries(Object.entries(CANDIDATE_RULES).map(([k, r]) => [k, { name: r.name, rule: r.label }])),
-    retrospective: score(usable.filter((r) => !after(r))),
-    prospective: score(usable.filter(after)),
+    definitions: Object.fromEntries(Object.entries(CANDIDATE_RULES).map(([k, r]) => [k, { name: r.name, rule: r.label, registered_at: r.registered_at || RULES_REGISTERED_AT }])),
+    retrospective: split(false),
+    prospective: split(true),
   };
 }
 
@@ -184,6 +209,7 @@ export function backtest(verdicts, pointsByCgId, site) {
     by_rsi_zone: byRsi,
     by_trend: byTrend,
     rules: scoreRules(rows),
+    engine_calibration: engineCalibration(rows),
     // Détail par verdict (indicateurs au jour d'émission + issue) : rend chaque chiffre ci-dessus
     // vérifiable et permet d'étudier une règle sans refaire tourner le robot.
     rows: rows.map(({ v, ind, market }) => ({
@@ -207,6 +233,36 @@ export function backtest(verdicts, pointsByCgId, site) {
       btc_change_30d: market ? market.change_pct["30d"] : null,
     })),
     note: "Rétrospectif, petit échantillon, période majoritairement haussière : un indice pour orienter l'auto-correction du moteur, pas une preuve.",
+  };
+}
+
+// Verdict proposé par la règle du moteur pour un favori aujourd'hui, avec une confiance MESURÉE :
+// le taux de réussite de ce même appel sur tous les verdicts vérifiés (rows du backtest), pas un
+// chiffre choisi. Sans RSI : ATTENTE (lecture indisponible), jamais un appel deviné.
+export function engineCalibration(rows) {
+  const rule = CANDIDATE_RULES[ENGINE_RULE];
+  const cal = { ACHAT: { n: 0, correct: 0, pct: null }, VENTE: { n: 0, correct: 0, pct: null } };
+  for (const { v, ind } of rows) {
+    if (ind.rsi14 === null) continue;
+    const call = rule.call(v, ind);
+    if (!cal[call]) continue;
+    cal[call].n += 1;
+    if (call === v.outcome.actual_direction) cal[call].correct += 1;
+  }
+  for (const c of Object.values(cal)) c.pct = c.n ? round((c.correct / c.n) * 100, 0) : null;
+  return cal;
+}
+
+export function proposedVerdict(ind, calibration) {
+  if (!ind || ind.rsi14 === null) return { rule: ENGINE_RULE, verdict: "ATTENTE", confidence_pct: null, sample_n: 0, basis: "RSI indisponible : pas de lecture fiable" };
+  const verdict = CANDIDATE_RULES[ENGINE_RULE].call(null, ind);
+  const cal = calibration && calibration[verdict];
+  return {
+    rule: ENGINE_RULE,
+    verdict,
+    confidence_pct: cal && cal.n >= 10 ? cal.pct : null,
+    sample_n: cal ? cal.n : 0,
+    basis: verdict === "VENTE" ? `RSI ${Math.round(ind.rsi14)} ≥ 70 : hausse étirée, repli plus fréquent ensuite` : `RSI ${Math.round(ind.rsi14)} < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité`,
   };
 }
 
@@ -323,6 +379,10 @@ async function main() {
   } catch (e) {
     out.errors.push(`backtest : ${e.message}`);
   }
+  // Verdict proposé par la règle du moteur, avec sa confiance mesurée (lu par le cycle des verdicts).
+  const calibration = out.backtest ? out.backtest.engine_calibration : null;
+  out.engine_rule = { id: ENGINE_RULE, name: CANDIDATE_RULES[ENGINE_RULE].name, rule: CANDIDATE_RULES[ENGINE_RULE].label, calibration };
+  for (const a of Object.values(out.assets)) a.proposed_verdict = proposedVerdict(a, calibration);
   writeFileSync(OUT_PATH, JSON.stringify(out, null, 2) + "\n");
   // Alertes : étape à part, son échec ne touche pas le fichier d'analyse déjà écrit.
   try {
