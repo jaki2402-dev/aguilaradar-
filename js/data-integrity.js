@@ -71,14 +71,21 @@ const MEAN_REVERSION_RULE_CUTOFF = "2026-10-11T09:30:00Z";
 
 function meanReversionViolation(v) {
   const base = { id: v.id, ticker: v.ticker, issued_at: v.issued_at, verdict: v.verdict };
-  if (v.decision_rule !== "retour_moyenne_rsi") {
-    return { ...base, rule: "règle du 11/10 : decision_rule « retour_moyenne_rsi » absent", expected: "retour_moyenne_rsi" };
+  if (!v.decision_rule) {
+    return { ...base, rule: "règle du 11/10 : decision_rule absent (verdict non issu de la règle du robot)", expected: "decision_rule" };
   }
   if (v.override && v.override.reason) return v.verdict === "ATTENTE" ? null : { ...base, rule: "override vérifié : ATTENTE attendue", expected: "ATTENTE" };
+  // Règle choisie par l'auto-sélection : le verdict doit reprendre la proposition du robot à l'émission.
+  const p = v.proposed_at_issue;
+  if (p && ["ACHAT", "ATTENTE", "VENTE"].includes(p.verdict)) {
+    return v.verdict === p.verdict ? null : { ...base, rule: `proposition du robot à l'émission (${v.decision_rule}) : ${p.verdict}`, expected: p.verdict };
+  }
   const rsi = v.technical_at_issue && v.technical_at_issue.rsi14;
-  if (typeof rsi !== "number") return v.verdict === "ATTENTE" ? null : { ...base, rule: "sans RSI à l'émission : ATTENTE attendue", expected: "ATTENTE" };
-  const expected = rsi >= 70 ? "VENTE" : "ACHAT";
-  return v.verdict === expected ? null : { ...base, rule: `RSI ${Math.round(rsi)} à l'émission → ${expected}`, expected };
+  if (v.decision_rule === "retour_moyenne_rsi" && typeof rsi === "number") {
+    const expected = rsi >= 70 ? "VENTE" : "ACHAT";
+    return v.verdict === expected ? null : { ...base, rule: `RSI ${Math.round(rsi)} à l'émission → ${expected}`, expected };
+  }
+  return v.verdict === "ATTENTE" ? null : { ...base, rule: "sans proposition ni RSI à l'émission : ATTENTE attendue", expected: "ATTENTE" };
 }
 
 function checkVerdictSelectionCompliance(verdicts) {

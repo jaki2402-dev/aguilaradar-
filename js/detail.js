@@ -494,7 +494,7 @@ function renderDailyTechnicalSection(ticker) {
   // Règle du moteur appliquée aujourd'hui (pas un verdict enregistré : le cycle l'émet à son passage).
   const p = t.proposed;
   if (p) {
-    const measured = Number.isFinite(p.confidence_pct) ? ` — juste ${p.confidence_pct} % du temps sur ${p.sample_n} cas passés` : "";
+    const measured = Number.isFinite(p.confidence_pct) ? ` — confiance mesurée ${p.confidence_pct} %${p.context ? ` (${p.context})` : ""}, sur ${p.sample_n} cas passés` : "";
     rows.unshift(["Règle du moteur aujourd'hui", `${p.verdict}${measured}`]);
   }
   if (!rows.length) return "";
@@ -556,7 +556,8 @@ async function renderDetailPanel(panelEl, asset) {
       const lastSnapshotTvl = assetSnapshots.length ? assetSnapshots[assetSnapshots.length - 1].tvl_usd : null;
       const tvlUsd = onchainLive && onchainLive.tvl ? onchainLive.tvl.valueUsd : lastSnapshotTvl;
       const supplyEntry = typeof latestFavorisSupply !== "undefined" ? latestFavorisSupply[asset.cgId] : null;
-      const breakdown = computeVerdictBreakdown({ verdict: fullVerdict, thesisEntry, marketCapUsd, tvlUsd, supplyEntry });
+      const technical = typeof technicalViewFor === "function" ? technicalViewFor(asset.ticker, allData.technicalFavoris, allData.cmcFavoris) : null;
+      const breakdown = computeVerdictBreakdown({ verdict: fullVerdict, thesisEntry, marketCapUsd, tvlUsd, supplyEntry, technical });
       breakdownHtml = renderVerdictBreakdown(breakdown);
     } catch (err) {
       console.error("Erreur décomposition du verdict:", err);

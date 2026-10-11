@@ -80,7 +80,8 @@ Tableau au niveau racine, chaque entrée :
   "threshold_pct": 5,
   "regime_at_issue": "risk-on | neutre | risk-off",
   "signal_consensus": { "technique": "haussier|baissier|insuffisant", "fondamental": "...", "macro": "...", "accord_count": <0-3> },
-  "decision_rule": "retour_moyenne_rsi",
+  "decision_rule": "<proposed_verdict.rule, ex. retour_moyenne_rsi>",
+  "proposed_at_issue": { "rule": "...", "verdict": "...", "confidence_pct": <number|null>, "sample_n": <n>, "context": "...", "basis": "..." },
   "override": { "reason": "...", "sources": ["..."] } (seulement en cas d'événement exceptionnel vérifié, §2),
   "technical_at_issue": { "as_of": "<ISO>", "source": "technical-favoris", "rsi14": <number|null>, "sma200_gap_pct": <number|null>, "macd": "haussier|baissier|null" } | null
 }
@@ -114,13 +115,19 @@ chaque soir par le robot `technical-daily` : `data/technical-favoris.json` →
 
 1. Lire l'entrée de l'actif par extraction `python3` (même commande que la section « Analyse
    technique du robot quotidien » en fin de document).
-2. `verdict` = `proposed_verdict.verdict`, **tel quel** : VENTE si RSI 14 j ≥ 70, sinon ACHAT.
+2. `verdict` = `proposed_verdict.verdict`, **tel quel**. La règle en place (`engine_rule` du même
+   fichier, au 11/10 : VENTE si RSI 14 j ≥ 70, sinon ACHAT) est choisie chaque soir par le robot
+   parmi des règles mesurées sur les 30 derniers verdicts vérifiés (auto-correction) : ne jamais
+   la recalculer ni la remplacer soi-même.
    Ne jamais le remplacer par ATTENTE « par prudence » : ATTENTE parie que le cours restera entre
    −5 % et +5 % à l'échéance, ce qui n'est arrivé que dans 23 % des 82 verdicts vérifiés au 11/10
    (le moteur la choisissait dans 80 % des cas : 25,6 % de justes).
 3. `confidence_pct` = `proposed_verdict.confidence_pct` (taux de réussite mesuré de ce même appel
-   sur tous les verdicts vérifiés) ; s'il est `null` (moins de 10 cas), `confidence_pct` = 50.
-4. Écrire `"decision_rule": "retour_moyenne_rsi"` sur le verdict (mesure de chaque version de règle).
+   sur tous les verdicts vérifiés, ajusté selon l'élan du bitcoin ce jour-là) ; s'il est `null`
+   (moins de 10 cas), `confidence_pct` = 50.
+4. Écrire sur le verdict `"decision_rule": <proposed_verdict.rule>` et `"proposed_at_issue": <copie
+   exacte de proposed_verdict>`, recopiés par le script `python3` qui écrit le verdict (contrôle de
+   conformité du site et mesure de chaque règle).
 5. `signal_consensus` reste écrit pour la page méthode du site : `technique` = `"haussier"` si
    ACHAT, `"baissier"` si VENTE ; `fondamental`, `macro`, `accord_count` comme avant (§4) — ils **ne
    changent plus le verdict**. Le `reasoning` cite `proposed_verdict.basis`, le RSI, la tendance de

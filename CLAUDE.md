@@ -155,9 +155,12 @@ vente.
 Écrits par les routines, **ajout seulement** :
 - `verdicts.json` : `pending` → `resolved` seulement après `resolves_at`. Jamais d'issue inventée.
   **Règle de décision depuis le 11/10/2026 (choix de l'utilisateur)** : `proposed_verdict` du robot
-  (VENTE si RSI 14 j ≥ 70, sinon ACHAT ; ATTENTE seulement sans données ou override vérifié),
-  confiance = taux mesuré ; `checkVerdictSelectionCompliance` la contrôle. Ne pas revenir à
-  ATTENTE « par prudence » (23 % d'issues stables) ; changer de règle = `correction_log` + test réel.
+  (au départ VENTE si RSI 14 j ≥ 70, sinon ACHAT ; ATTENTE seulement sans données ou override
+  vérifié), confiance = taux mesuré ajusté selon l'élan du bitcoin. **Auto-correction** :
+  `selectEngineRule` (fenêtre 30, marge 5 pts, min 20) peut changer de règle chaque soir ;
+  `resolve-due` consigne chaque changement dans `correction_log`. Le verdict copie
+  `proposed_at_issue` ; `checkVerdictSelectionCompliance` le contrôle. Ne jamais revenir à ATTENTE
+  « par prudence » (23 % d'issues stables).
   Résolution (verdicts, horizons des opportunités, groupe témoin) + `global_stats` : GitHub Action
   `resolve-due` (toutes les heures à :45, zéro quota, `scripts/resolve-due.mjs`, prix à l'heure de
   l'échéance) ; le cycle ne résout qu'en secours (dû depuis > 6 h). Créneaux des routines évités.
@@ -183,7 +186,9 @@ vente.
   absent du texte complet (section « Champ resume » de `docs/routines/*.md`, active le 11/10/2026).
 - `technical-favoris.json` : GitHub Action `technical-daily` (23h30 UTC, zéro quota,
   `scripts/technical-favoris.mjs`, mêmes calculs que `js/detail.js`) — MM200, RSI, MACD,
-  volatilité par favori (clé = ticker, USD) + analyse rétrospective des verdicts vérifiés. Le cycle
+  volatilité, valorisation (capitalisation/volume situé sur 1 an), offre (`/coins/markets`) par
+  favori (clé = ticker, USD) + analyse rétrospective des verdicts vérifiés. Remplit les
+  « Donnée insuffisante » de la décomposition du verdict (`js/verdict-breakdown.js`). Le cycle
   le lit pour `technical_at_issue` (documente, ne change pas la règle de décision). `backtest.rules` :
   règles candidates FIGÉES le 11/10 (`CANDIDATE_RULES`) — ne jamais en modifier une, en ajouter.
 - `crypto-global.json` (levier, saison des altcoins, encours ETF) et `cmc-favoris.json` (cours,

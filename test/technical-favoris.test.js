@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { loadSite, indicatorsAt, readingOf, closesUntil, backtest, scoreRules, RULES_REGISTERED_AT, technicalEvents, buildTechnicalAlerts, engineCalibration, proposedVerdict, ENGINE_RULE } from "../scripts/technical-favoris.mjs";
+import { loadSite, indicatorsAt, readingOf, closesUntil, backtest, scoreRules, RULES_REGISTERED_AT, technicalEvents, buildTechnicalAlerts, engineCalibration, proposedVerdict, ENGINE_RULE, contextConfidence, selectEngineRule, valuationSeries, valuationAt } from "../scripts/technical-favoris.mjs";
 
 const site = loadSite();
 const DAY = 86400000;
@@ -248,18 +248,69 @@ describe("règle du moteur depuis le 11/10 : verdict proposé et confiance mesur
 
   it("règle adoptée : VENTE si RSI ≥ 70, sinon ACHAT", () => {
     expect(ENGINE_RULE).toBe("retour_moyenne_rsi");
-    expect(engineCalibration(rows)).toEqual({ ACHAT: { n: 12, correct: 7, pct: 58 }, VENTE: { n: 4, correct: 2, pct: 50 } });
+    const cal = engineCalibration(rows);
+    expect(cal.ACHAT).toMatchObject({ n: 12, correct: 7, pct: 58 });
+    expect(cal.VENTE).toMatchObject({ n: 4, correct: 2, pct: 50 });
   });
 
   it("confiance = taux de réussite mesuré de l'appel, seulement à partir de 10 cas", () => {
     const cal = engineCalibration(rows);
-    expect(proposedVerdict({ rsi14: 52 }, cal)).toMatchObject({ verdict: "ACHAT", confidence_pct: 58, sample_n: 12 });
-    expect(proposedVerdict({ rsi14: 71.6 }, cal)).toMatchObject({ verdict: "VENTE", confidence_pct: null, sample_n: 4 });
-    expect(proposedVerdict({ rsi14: 71.6 }, cal).basis).toBe("RSI 72 ≥ 70 : hausse étirée, repli plus fréquent ensuite");
+    expect(proposedVerdict({ rsi14: 52, sma200_gap_pct: 5 }, cal)).toMatchObject({ verdict: "ACHAT", confidence_pct: 58, sample_n: 12 });
+    expect(proposedVerdict({ rsi14: 71.6, sma200_gap_pct: 5 }, cal)).toMatchObject({ verdict: "VENTE", confidence_pct: null, sample_n: 4 });
+    expect(proposedVerdict({ rsi14: 71.6, sma200_gap_pct: 5 }, cal).basis).toBe("RSI 72 ≥ 70 : hausse étirée, repli plus fréquent ensuite");
+  });
+
+  it("confiance ajustée selon l'élan du bitcoin (rétrécie vers le taux global)", () => {
+    const mk = (actual, btc) => ({ v: { verdict: "ATTENTE", outcome: { actual_direction: actual } }, ind: { rsi14: 50, sma200_gap_pct: 1, macd_histogram: 1 }, market: { macd_histogram: btc, sma200_gap_pct: 5 } });
+    // 10 cas élan BTC négatif : 8 hausses ; 10 cas élan positif : 2 hausses → taux global 50 %.
+    const ctxRows = [...Array.from({ length: 10 }, (_, i) => mk(i < 8 ? "ACHAT" : "VENTE", -1)), ...Array.from({ length: 10 }, (_, i) => mk(i < 2 ? "ACHAT" : "VENTE", 1))];
+    const cal = engineCalibration(ctxRows);
+    expect(contextConfidence(cal, "ACHAT", { macd_histogram: -1 })).toBe(65); // (8 + 10 × 0,5) / 20
+    expect(contextConfidence(cal, "ACHAT", { macd_histogram: 1 })).toBe(35);
+    expect(contextConfidence(cal, "ACHAT", null)).toBe(50);
+    expect(proposedVerdict({ rsi14: 50, sma200_gap_pct: 1 }, cal, ENGINE_RULE, { macd_histogram: 1 })).toMatchObject({ confidence_pct: 35, context: "élan du bitcoin positif", context_n: 10 });
+  });
+
+  it("auto-sélection : change de règle seulement avec ≥ 20 cas et ≥ 5 points d'avance", () => {
+    const mk = (actual, gap, i) => ({ v: { verdict: "ATTENTE", outcome: { actual_direction: actual, resolved_at: `2026-10-${String(10 + (i % 20)).padStart(2, "0")}T00:00:00Z` } }, ind: { rsi14: 50, sma200_gap_pct: gap, macd_histogram: 1 }, market: null });
+    // Marché devenu directionnel à la baisse : cours sous la MM200 et baisses → la tendance gagne
+    // (élan MACD positif : la règle figée « tendance + RSI » dirait ATTENTE, seule « tendance » dit VENTE).
+    const bear = Array.from({ length: 30 }, (_, i) => mk(i < 24 ? "VENTE" : "ACHAT", -10, i));
+    const sel = selectEngineRule("retour_moyenne_rsi", bear);
+    expect(sel).toMatchObject({ id: "tendance_pure", switched: true, from: "retour_moyenne_rsi", window_n: 30 });
+    expect(sel.scores.tendance_pure).toBe(80);
+    expect(selectEngineRule("retour_moyenne_rsi", bear.slice(0, 19)).switched).toBe(false); // trop peu de cas
+    // Avance trop faible : on garde la règle en place.
+    // 15 baisses, 1 stable, 14 hausses : tendance 50 % contre 46,7 % → 3,3 points, sous la marge.
+    const close = Array.from({ length: 30 }, (_, i) => mk(i < 15 ? "VENTE" : i === 15 ? "ATTENTE" : "ACHAT", -10, i));
+    expect(selectEngineRule("retour_moyenne_rsi", close).id).toBe("retour_moyenne_rsi");
+    expect(selectEngineRule("inconnue", []).id).toBe("retour_moyenne_rsi");
   });
 
   it("sans RSI : ATTENTE, jamais un appel deviné", () => {
     expect(proposedVerdict({ rsi14: null }, null)).toMatchObject({ verdict: "ATTENTE", confidence_pct: null });
     expect(proposedVerdict(null, null).verdict).toBe("ATTENTE");
+  });
+});
+
+describe("valorisation : capitalisation / volume moyen 30 j, situé dans SA fourchette sur 1 an", () => {
+  const DAY = 86400000;
+  const t0 = Date.parse("2025-10-11T00:00:00Z");
+  it("ratio d'aujourd'hui au plus bas de l'année → score 10 ; au plus haut → 0", () => {
+    const caps = Array.from({ length: 200 }, (_, i) => [t0 + i * DAY, 1000 + i]); // capitalisation qui monte
+    const vols = Array.from({ length: 200 }, (_, i) => [t0 + i * DAY, 100]);
+    const rising = valuationAt(valuationSeries(caps, vols));
+    expect(rising).toMatchObject({ percentile: 100, score: 0 });
+    const falling = valuationAt(valuationSeries(caps.map(([t], i) => [t, 2000 - i]), vols));
+    expect(falling).toMatchObject({ percentile: 0, score: 10 });
+    expect(falling.ratio).toBe(18); // 1801 / 100 (moyenne sur 30 j)
+  });
+  it("moins de 4 mois d'historique : pas de score ; jamais de donnée postérieure à la date demandée", () => {
+    const caps = Array.from({ length: 100 }, (_, i) => [t0 + i * DAY, 1000]);
+    const vols = Array.from({ length: 100 }, (_, i) => [t0 + i * DAY, 100]);
+    expect(valuationAt(valuationSeries(caps, vols))).toBeNull();
+    const caps2 = Array.from({ length: 300 }, (_, i) => [t0 + i * DAY, 1000 + i]);
+    const vols2 = Array.from({ length: 300 }, (_, i) => [t0 + i * DAY, 100]);
+    expect(valuationAt(valuationSeries(caps2, vols2), t0 + 150 * DAY).days).toBe(132); // jours 19 à 150 (20 jours de volume minimum)
   });
 });

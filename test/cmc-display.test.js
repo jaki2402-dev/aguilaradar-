@@ -26,7 +26,7 @@ const rowText = (li) => [...li.children].map((c) => c.textContent.replace(/\?/g,
 // Même fichier avec le verdict proposé par la règle du moteur (ajouté le 11/10 à 09h, valeurs réelles).
 const WITH_RULE = JSON.parse(JSON.stringify(ROBOT));
 for (const a of Object.values(WITH_RULE.assets)) a.proposed_verdict = { rule: "retour_moyenne_rsi", verdict: "ACHAT", confidence_pct: 61, sample_n: 66, basis: "RSI < 70" };
-WITH_RULE.assets.CTSI.proposed_verdict = { rule: "retour_moyenne_rsi", verdict: "VENTE", confidence_pct: 44, sample_n: 16, basis: "RSI 72 ≥ 70 : hausse étirée, repli plus fréquent ensuite" };
+WITH_RULE.assets.CTSI.proposed_verdict = { rule: "retour_moyenne_rsi", verdict: "VENTE", confidence_pct: 44, sample_n: 16, context: "élan du bitcoin négatif", context_n: 4, basis: "RSI 72 ≥ 70 : hausse étirée, repli plus fréquent ensuite" };
 
 describe("fiche détaillée : règle du moteur appliquée aujourd'hui", () => {
   it("en tête du bloc, avec son taux de réussite mesuré", () => {
@@ -34,7 +34,7 @@ describe("fiche détaillée : règle du moteur appliquée aujourd'hui", () => {
     dom.window.aguilaradarData = { technicalFavoris: WITH_RULE };
     const out = dom.window.document.getElementById("out");
     out.innerHTML = dom.window.renderDailyTechnicalSection("CTSI");
-    expect(rowText(out.querySelector(".cmc-rows li"))).toBe("Règle du moteur aujourd'hui VENTE — juste 44 % du temps sur 16 cas passés");
+    expect(rowText(out.querySelector(".cmc-rows li"))).toBe("Règle du moteur aujourd'hui VENTE — confiance mesurée 44 % (élan du bitcoin négatif), sur 16 cas passés");
   });
 });
 
@@ -166,6 +166,20 @@ describe("onglet Favoris : comparatif technique des 15", () => {
     expect([...tables[1].querySelectorAll("thead th")].map((th) => th.textContent)).toEqual(["Règle", "Passé (82)", "Test réel (0)"]);
     expect([...tables[1].querySelectorAll("tbody tr")].map((tr) => tr.textContent)).toEqual(["Moteur actuel25,6\u00a0%—", "Toujours ACHAT (référence)53,7\u00a0%—"]);
     expect(doc.getElementById("engine-technical-backtest").textContent).toContain("fixées le 11/10 avant de connaître les issues");
+  });
+
+  it("onglet Moteur : règle en place, fiabilité mesurée et auto-correction visibles", () => {
+    const engine_rule = {
+      id: "retour_moyenne_rsi", name: "Retour à la moyenne (RSI)", rule: "VENTE si RSI ≥ 70, sinon ACHAT", since: "2026-10-11T10:00:00Z",
+      selection: { window: 30, margin_pts: 5, window_n: 30, scores: { retour_moyenne_rsi: 63.3, tendance_pure: 40 } },
+      calibration: { ACHAT: { n: 66, correct: 40, pct: 61 }, VENTE: { n: 16, correct: 7, pct: 44 } },
+      history: [],
+    };
+    const doc = render({ ...ROBOT, engine_rule });
+    const box = doc.querySelector("#engine-technical-backtest .engine-rule-box").textContent.replace(/\s+/g, " ");
+    expect(box).toContain("Règle du moteur en place : Retour à la moyenne (RSI) (depuis le 11/10).");
+    expect(box).toContain("ACHAT juste 61 % du temps (66 cas) · VENTE juste 44 % du temps (16 cas)"); // \s+ a normalisé les espaces insécables
+    expect(box).toContain("rejouées sur les 30 derniers verdicts vérifiés — retour_moyenne_rsi 63,3 % · tendance_pure 40 %");
   });
 
   it("sans fichier : rien dans Favoris, message honnête dans Moteur", () => {

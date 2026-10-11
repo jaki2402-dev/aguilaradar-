@@ -39,6 +39,10 @@ Règle de notation (quand `signal_consensus.technique` existe) :
 `technique` "insuffisant" (données techniques absentes à l'émission, règle du 11/10/2026) : "Donnée
 insuffisante".
 
+**Repli depuis le 11/10/2026** : sans `signal_consensus` exploitable, la note vient de la règle du
+moteur appliquée aujourd'hui (`proposed_verdict` de `data/technical-favoris.json` : ACHAT = haussier,
+VENTE = baissier, avec sa confiance mesurée), même grille, affichée « (règle du jour) ».
+
 Sans `signal_consensus` (verdicts émis avant le 11/08, ou champ absent) : "Donnée insuffisante"
 pour cette catégorie précise plutôt que de deviner depuis `verdict.verdict` seul.
 
@@ -74,6 +78,11 @@ Cas particulier, jamais "Donnée insuffisante" : un actif sans `max_supply` (ETH
 AIOZ, LPT parmi les 15 favoris au 14/09) affiche "Offre non plafonnée" — un fait réel et connu
 (pas de plafond défini), pas une donnée manquante, même logique que Risque plus bas.
 
+**Depuis le 11/10/2026** : si l'appel du navigateur échoue (limite CoinGecko), l'offre relevée
+chaque soir par le robot `technical-daily` (`assets.<TICKER>.supply`, `/coins/markets`) prend le
+relais ; s'y ajoute « capitalisation = X % de la valeur diluée » (market cap / FDV) : la part de la
+valeur totale déjà en circulation, mesure directe de la dilution restante.
+
 **Reste manquant** : allocation équipe/investisseurs, calendrier précis des prochains
 déblocages, concentration des holders — `circulating/max` seul ne capture pas ces dimensions
 (CoinGecko ne les fournit pas). `FAVORIS[].utility` (`config.js`) décrit narrativement *comment*
@@ -97,6 +106,15 @@ sont toutes deux disponibles pour cet actif précis) :
 
 Sans les deux termes du ratio pour cet actif précis : "Donnée insuffisante" — ne jamais comparer
 un marketcap à une activité d'un AUTRE actif ou à une moyenne de secteur non calculée ici.
+
+**Depuis le 11/10/2026, pour les 15 favoris** : sans TVL, l'activité retenue est le volume
+d'échange moyen sur 30 jours (robot `technical-daily`, `assets.<TICKER>.valuation`). Ratio
+capitalisation / volume calculé chaque jour sur 1 an d'historique CoinGecko du MÊME actif ;
+`percentile` = part des jours de l'année où le ratio était plus bas qu'aujourd'hui ; score =
+arrondi de (1 − percentile) × 10 — premier tiers → 7-10, tiers médian → 4-6, dernier tiers → 0-3,
+exactement la règle ci-dessus. Moins de 4 mois d'historique : pas de score. La TVL, quand elle
+existe (BTC), garde la priorité. Mesure de type « NVT » sur le volume d'échange : un indice, pas
+une vérité.
 
 ### 5. Risque
 

@@ -439,6 +439,26 @@ function renderCandidateRules(rules) {
     <p class="hint">% de verdicts justes. Une règle ne remplacera le moteur que si, sur au moins 15 verdicts du test réel, elle fait mieux que lui ET que la référence « toujours ACHAT ».</p>`;
 }
 
+// Règle du moteur en place (auto-sélection quotidienne du robot) : laquelle, depuis quand, son
+// classement sur les derniers verdicts vérifiés et l'historique des changements automatiques.
+function renderEngineRule(er, definitions) {
+  if (!er || !er.id) return "";
+  const nameOf = (k) => escapeHtml((definitions && definitions[k] && definitions[k].name) || k);
+  const since = techDate(er.since);
+  const sel = er.selection || {};
+  const ranked = Object.entries(sel.scores || {}).filter(([, v]) => v !== null).sort((a, b) => b[1] - a[1]);
+  const cal = er.calibration || {};
+  const calText = ["ACHAT", "VENTE"].filter((c) => cal[c] && cal[c].n).map((c) => `${c} juste ${cal[c].pct}\u00a0% du temps (${cal[c].n} cas)`).join(" · ");
+  const history = (er.history || []).slice().reverse().slice(0, 3).map((h) => `${techDate(h.at)} : ${nameOf(h.from)} → ${nameOf(h.to)}`);
+  return `<div class="engine-rule-box">
+    <p class="text-resume">Règle du moteur en place : <strong>${escapeHtml(er.name || er.id)}</strong>${since ? ` (depuis le ${escapeHtml(since)})` : ""}.</p>
+    <p class="hint">${escapeHtml(er.rule || "")}</p>
+    ${calText ? `<p class="hint">Fiabilité mesurée : ${calText}. La confiance de chaque verdict est ensuite ajustée selon l'élan du bitcoin ce jour-là.</p>` : ""}
+    ${ranked.length && sel.window_n ? `<p class="hint">Auto-correction : chaque soir, toutes les règles sont rejouées sur les ${sel.window_n} derniers verdicts vérifiés — ${ranked.map(([k, v]) => `${nameOf(k)} ${String(v).replace(".", ",")}\u00a0%`).join(" · ")}. Changement seulement avec ${sel.margin_pts || 5} points d'avance.</p>` : ""}
+    ${history.length ? `<p class="hint">Derniers changements automatiques : ${history.join(" ; ")}.</p>` : ""}
+  </div>`;
+}
+
 // Onglet Moteur : ce que disaient les indicateurs le jour de chaque verdict vérifié, comparé à
 // l'issue réelle (backtest du robot, aucune donnée postérieure à l'émission). Constats calculés à
 // partir des comptes du fichier — aucune conclusion écrite en dur.
@@ -446,6 +466,7 @@ function renderTechnicalBacktest(technicalFavoris) {
   const el = document.getElementById("engine-technical-backtest");
   if (!el) return;
   const b = technicalFavoris && technicalFavoris.backtest;
+  const ruleBox = technicalFavoris ? renderEngineRule(technicalFavoris.engine_rule, b && b.rules && b.rules.definitions) : "";
   if (!b || !b.sample || !b.engine_calls || !b.actual) {
     el.innerHTML = `<p class="empty-state">Analyse rétrospective pas encore disponible : elle est calculée chaque soir par le robot technique.</p>`;
     return;
@@ -475,7 +496,7 @@ function renderTechnicalBacktest(technicalFavoris) {
   ].filter(([, g]) => g && g.n);
   const cell = (n, total) => `<td>${n}<span class="hint tech-share">${share(n, total)}\u00a0%</span></td>`;
   const calls = ["ACHAT", "ATTENTE", "VENTE"].map((k) => `${k} ${b.engine_calls[k].n} (${b.engine_calls[k].correct} justes)`).join(" · ");
-  el.innerHTML = `${lead.map((s) => `<p class="text-resume">${highlightKeyInfo(s)}</p>`).join("")}
+  el.innerHTML = `${ruleBox}${lead.map((s) => `<p class="text-resume">${highlightKeyInfo(s)}</p>`).join("")}
     <div class="tech-table-wrap"><table class="tech-table">
       <thead><tr><th scope="col">Le jour du verdict</th><th scope="col">Verdicts</th><th scope="col">Hausse</th><th scope="col">Stable</th><th scope="col">Baisse</th></tr></thead>
       <tbody>${groups.map(([label, g]) => `<tr><th scope="row">${label}</th><td>${g.n}</td>${cell(g.actual.ACHAT, g.n)}${cell(g.actual.ATTENTE, g.n)}${cell(g.actual.VENTE, g.n)}</tr>`).join("")}</tbody>

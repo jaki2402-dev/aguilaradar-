@@ -5,6 +5,46 @@ function loadBreakdownPage() {
   return loadPage(["config.js", "portfolio.js", "allocation.js", "verdict-breakdown.js"]);
 }
 
+describe("verdict-breakdown.js — données du robot quand la source habituelle manque (11/10/2026)", () => {
+  const dom = loadBreakdownPage();
+  const { computeVerdictBreakdown, renderVerdictBreakdown } = dom.window;
+  const technical = {
+    proposed: { verdict: "ACHAT", confidence_pct: 69, sample_n: 66 },
+    valuation: { ratio: 23.4, percentile: 18, score: 8, days: 336 },
+    supply: { circulating_supply: 600, max_supply: 1000, market_cap_usd: 600, fdv_usd: 1000 },
+  };
+  const rowsOf = (b) => {
+    const el = dom.window.document.createElement("div");
+    el.innerHTML = renderVerdictBreakdown(b);
+    return [...el.querySelectorAll(".verdict-cat-row strong")].map((x) => x.textContent);
+  };
+
+  it("momentum, tokenomics et valorisation remplis au lieu de « Donnée insuffisante »", () => {
+    const b = computeVerdictBreakdown({ verdict: null, technical });
+    expect(b.momentum).toBe(8); // ACHAT, confiance 69 ≥ 65 : grille de scoreMomentum (8, +1 seulement si accord ≥ 2)
+    expect(b.momentumSource).toBe("règle du jour");
+    expect(b.tokenomics).toMatchObject({ circulatingPct: 60, dilutedPct: 60 });
+    expect(b.valorisation).toEqual({ score: 8, ratio: 23.4, percentile: 18 });
+    const rows = rowsOf(b);
+    expect(rows).toContain("60 % de l'offre max en circulation · capitalisation = 60 % de la valeur diluée");
+    expect(rows).toContain("8/10 · capitalisation/volume 23,4× (18e centile de son année : bas, plutôt attractif)");
+  });
+
+  it("un verdict réel garde la priorité sur la règle du jour ; une TVL réelle sur le ratio au volume", () => {
+    const verdict = { confidence_pct: 50, signal_consensus: { technique: "haussier", accord_count: 1 } };
+    const b = computeVerdictBreakdown({ verdict, technical, marketCapUsd: 1000, tvlUsd: 100 });
+    expect(b.momentumSource).toBe("verdict");
+    expect(b.valorisation).toEqual({ ratio: 10 });
+  });
+
+  it("sans aucune donnée : « Donnée insuffisante » reste honnête", () => {
+    const b = computeVerdictBreakdown({});
+    expect(b.momentum).toBeNull();
+    expect(b.valorisation).toBeNull();
+    expect(b.tokenomics).toBeNull();
+  });
+});
+
 describe("verdict-breakdown.js — scoreMomentum", () => {
   const dom = loadBreakdownPage();
   const { computeVerdictBreakdown } = dom.window;
@@ -144,7 +184,8 @@ describe("verdict-breakdown.js — no fabricated global score, ever", () => {
       marketCapUsd: 1e9,
       tvlUsd: 1e6,
     });
-    expect(Object.keys(b).sort()).toEqual(["fondamentaux", "momentum", "risque", "tokenomics", "valorisation"]);
+    // momentumSource = provenance de la note Momentum (« verdict » / « règle du jour »), pas un score.
+    expect(Object.keys(b).sort()).toEqual(["fondamentaux", "momentum", "momentumSource", "risque", "tokenomics", "valorisation"]);
   });
 });
 

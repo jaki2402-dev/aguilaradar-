@@ -551,3 +551,22 @@ dessus de sa MM200, sans le savoir.
   du prompt, qui citent encore `accord_count`), `checkVerdictSelectionCompliance` (règle par date,
   signale aussi un verdict sans `decision_rule`), `scoreMomentum` : `technique` « insuffisant » →
   Donnée insuffisante. Le classifieur a bloqué une étape avant le choix explicite de l'utilisateur.
+
+### 11/10/2026 (après-midi) — auto-correction de la règle, confiance contextuelle, fin des « Donnée insuffisante »
+
+- **Auto-sélection** (`selectEngineRule`) : toutes les règles autonomes rejouées chaque soir sur les
+  30 derniers verdicts vérifiés ; changement seulement avec ≥ 5 points d'avance et ≥ 20 cas. Méta-
+  stratégie testée sur l'historique (données antérieures seulement) : fenêtre 20 sans marge → 51 %
+  (bascule à contretemps vers la tendance), fenêtre 30 + marge 5 → 57,3 % sans faux changement.
+  3 règles ajoutées (registered_at 13h) dont « Suivi de tendance », pour qu'un marché devenu
+  directionnel puisse être suivi. Chaque changement → `engine_rule.history` (robot) → entrée
+  `corr-auto-…` dans `correction_log` (resolve-due).
+- **Confiance** : taux de l'appel rétréci vers le contexte « élan du bitcoin » (k = 10). Brier hors
+  échantillon 0,300 → 0,279 ; élan de l'actif seul 0,294, zone RSI 0,327 et volatilité 0,329
+  (pires) → non retenus. Constat : ACHAT avec élan BTC positif juste 4/14, négatif 36/52.
+- **Données** : valorisation (capitalisation / volume moyen 30 j, percentile sur 1 an du même actif,
+  score méthodologie §4) et offre (`/coins/markets`, 1 appel) dans `technical-favoris.json` ;
+  décomposition du verdict : Momentum « règle du jour » si pas de verdict exploitable, Tokenomics +
+  part de la valeur diluée, Valorisation pour les 15. `momentumSource` autorisé dans le test « pas de
+  score global » (provenance, pas un score). `proposed_at_issue` sur chaque verdict ; contrôle de
+  conformité générique (verdict = proposition du robot à l'émission).

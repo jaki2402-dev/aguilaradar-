@@ -57,6 +57,34 @@ export function indicatorsAt(closes, site) {
   };
 }
 
+// Valorisation (méthodologie §4) : capitalisation / volume d'échange moyen sur 30 j, comparé à SA
+// propre fourchette sur 1 an (jamais à un autre actif). Ratio bas = la capitalisation est faible
+// au regard de l'activité réelle (attractif) ; haut = chère. percentile = part des jours de l'année
+// où le ratio était plus bas qu'aujourd'hui. Score 0-10 : premier tiers → 7-10, tiers médian → 4-6,
+// dernier tiers → 0-3. Mesure de type « NVT » sur le volume d'échange : un indice, pas une vérité.
+export function valuationSeries(marketCaps, volumes) {
+  const volByDay = new Map(volumes.map((p) => [Math.floor(p[0] / DAY_MS), p[1]]));
+  const days = marketCaps.map((p) => [Math.floor(p[0] / DAY_MS), p[1]]);
+  const out = [];
+  for (let i = 0; i < days.length; i++) {
+    const window = [];
+    for (let d = days[i][0] - 29; d <= days[i][0]; d++) if (volByDay.has(d)) window.push(volByDay.get(d));
+    if (window.length < 20) continue;
+    const avgVol = window.reduce((a, b) => a + b, 0) / window.length;
+    if (avgVol > 0) out.push({ day: days[i][0], ratio: days[i][1] / avgVol });
+  }
+  return out;
+}
+
+export function valuationAt(series, untilMs = Infinity) {
+  const known = series.filter((p) => p.day * DAY_MS <= untilMs);
+  if (known.length < 120) return null; // moins de 4 mois d'historique : pas de fourchette fiable
+  const today = known[known.length - 1].ratio;
+  const below = known.filter((p) => p.ratio < today).length;
+  const percentile = below / (known.length - 1);
+  return { ratio: round(today, 1), percentile: round(percentile * 100, 0), score: Math.round((1 - percentile) * 10), days: known.length };
+}
+
 // Lecture en une phrase, par règles fixes (seuils RSI 70 / 30 identiques au reste du site).
 export function readingOf(ind) {
   if (!ind) return null;
@@ -110,12 +138,68 @@ export const CANDIDATE_RULES = {
     name: "Retour à la moyenne (RSI)",
     label: "VENTE si RSI ≥ 70 (hausse étirée), sinon ACHAT — règle du moteur depuis le 11/10/2026",
     registered_at: "2026-10-11T10:00:00Z",
+    standalone: true,
     call: (v, ind) => (ind.rsi14 >= 70 ? "VENTE" : "ACHAT"),
   },
+  // Ajoutées le 11/10/2026 13h avec l'auto-sélection : elles utilisent aussi l'état du bitcoin le
+  // jour du verdict (market). Diversité voulue : retour à la moyenne (marché en dents de scie) ET
+  // suivi de tendance (marché directionnel), pour que la sélection puisse suivre un changement.
+  retour_moyenne_marche: {
+    name: "Retour à la moyenne + marché",
+    label: "VENTE si RSI ≥ 70, ou si l'actif et le bitcoin ont tous deux un élan positif avec RSI ≥ 60 ; sinon ACHAT",
+    registered_at: "2026-10-11T13:00:00Z",
+    standalone: true,
+    call: (v, ind, m) => (ind.rsi14 >= 70 || (ind.rsi14 >= 60 && ind.macd_histogram > 0 && m && m.macd_histogram > 0) ? "VENTE" : "ACHAT"),
+  },
+  tendance_pure: {
+    name: "Suivi de tendance",
+    label: "ACHAT si le cours est au-dessus de sa moyenne 200 j, VENTE en dessous",
+    registered_at: "2026-10-11T13:00:00Z",
+    standalone: true,
+    call: (v, ind) => (ind.sma200_gap_pct >= 0 ? "ACHAT" : "VENTE"),
+  },
+  marche_baissier_protege: {
+    name: "Retour à la moyenne protégé",
+    label: "VENTE si RSI ≥ 70, ou si le bitcoin est sous sa moyenne 200 j avec un élan négatif et RSI ≥ 45 ; sinon ACHAT",
+    registered_at: "2026-10-11T13:00:00Z",
+    standalone: true,
+    call: (v, ind, m) => (ind.rsi14 >= 70 || (m && m.sma200_gap_pct !== null && m.sma200_gap_pct < 0 && m.macd_histogram !== null && m.macd_histogram < 0 && ind.rsi14 >= 45) ? "VENTE" : "ACHAT"),
+  },
 };
+CANDIDATE_RULES.tendance_rsi.standalone = true;
 
-// Règle qui décide les verdicts du moteur (docs/routines/cycle-2h-verdict.md, section 2).
+// Règle par défaut du moteur (docs/routines/cycle-2h-verdict.md §2) ; l'auto-sélection peut en
+// changer (selectEngineRule).
 export const ENGINE_RULE = "retour_moyenne_rsi";
+
+// Auto-correction : chaque soir, chaque règle autonome est rejouée sur les SELECTION_WINDOW derniers
+// verdicts vérifiés (indicateurs connus le jour de l'émission). La règle en place n'est remplacée
+// que si une autre fait mieux d'au moins SELECTION_MARGIN_PTS points, sur au moins
+// SELECTION_MIN_N verdicts. Réglages testés le 11/10 sur l'historique : fenêtre 20 sans marge →
+// changements à contretemps (51 % au lieu de 57 %) ; fenêtre 30 + marge 5 → aucun faux changement.
+export const SELECTION_WINDOW = 30;
+export const SELECTION_MARGIN_PTS = 5;
+export const SELECTION_MIN_N = 20;
+
+export function selectEngineRule(currentId, rows) {
+  const current = CANDIDATE_RULES[currentId] && CANDIDATE_RULES[currentId].standalone ? currentId : ENGINE_RULE;
+  const usable = rows
+    .filter(({ ind }) => ind.rsi14 !== null && ind.sma200_gap_pct !== null)
+    .sort((a, b) => (a.v.outcome.resolved_at || "").localeCompare(b.v.outcome.resolved_at || ""))
+    .slice(-SELECTION_WINDOW);
+  const scores = {};
+  for (const [key, rule] of Object.entries(CANDIDATE_RULES)) {
+    if (!rule.standalone) continue;
+    const correct = usable.filter(({ v, ind, market }) => rule.call(v, ind, market) === v.outcome.actual_direction).length;
+    scores[key] = usable.length ? round((correct / usable.length) * 100, 1) : null;
+  }
+  let id = current;
+  if (usable.length >= SELECTION_MIN_N) {
+    const best = Object.keys(scores).reduce((a, b) => (scores[b] > scores[a] ? b : a), current);
+    if (best !== current && scores[best] - scores[current] >= SELECTION_MARGIN_PTS) id = best;
+  }
+  return { id, switched: id !== current, from: current, window_n: usable.length, scores };
+}
 
 // Score de chaque règle sur les mêmes verdicts (ceux dont RSI et MM200 sont connus à l'émission),
 // séparé entre rétrospectif (issue connue à la date de la règle) et test réel (issue postérieure).
@@ -124,7 +208,7 @@ export function scoreRules(rows) {
   const score = (subset) => {
     const results = {};
     for (const [key, rule] of Object.entries(CANDIDATE_RULES)) {
-      const correct = subset.filter(({ v, ind }) => rule.call(v, ind) === v.outcome.actual_direction).length;
+      const correct = subset.filter(({ v, ind, market }) => rule.call(v, ind, market) === v.outcome.actual_direction).length;
       results[key] = { correct, pct: subset.length ? round((correct / subset.length) * 100, 1) : null };
     }
     return { n: subset.length, results };
@@ -162,7 +246,7 @@ function add(b, v) {
 // Analyse rétrospective des verdicts vérifiés : indicateurs au jour d'émission vs issue réelle.
 // « Règle de tendance » = ACHAT si le cours était au-dessus de sa moyenne 200 j, VENTE sinon —
 // une référence simple pour situer le moteur, pas une règle à appliquer telle quelle.
-export function backtest(verdicts, pointsByCgId, site) {
+export function backtest(verdicts, pointsByCgId, site, valuationByCgId = {}) {
   const rows = [];
   for (const v of verdicts || []) {
     if (v.status !== "resolved" || !v.outcome || !DIRECTIONS.includes(v.outcome.actual_direction)) continue;
@@ -172,7 +256,8 @@ export function backtest(verdicts, pointsByCgId, site) {
     if (!ind) continue;
     // État du marché (bitcoin) le même jour, mêmes cours connus seulement.
     const market = pointsByCgId.bitcoin ? indicatorsAt(closesUntil(pointsByCgId.bitcoin, v.issued_at), site) : null;
-    rows.push({ v, ind, market });
+    const val = valuationByCgId[v.asset] ? valuationAt(valuationByCgId[v.asset], Date.parse(v.issued_at)) : null;
+    rows.push({ v, ind, market, val });
   }
   const byRsi = { surachat: bucket(), neutre: bucket(), survente: bucket() };
   const byTrend = { au_dessus_mm200: bucket(), en_dessous_mm200: bucket() };
@@ -209,10 +294,10 @@ export function backtest(verdicts, pointsByCgId, site) {
     by_rsi_zone: byRsi,
     by_trend: byTrend,
     rules: scoreRules(rows),
-    engine_calibration: engineCalibration(rows),
+    _rows: rows, // usage interne (sélection de règle), retiré avant écriture
     // Détail par verdict (indicateurs au jour d'émission + issue) : rend chaque chiffre ci-dessus
     // vérifiable et permet d'étudier une règle sans refaire tourner le robot.
-    rows: rows.map(({ v, ind, market }) => ({
+    rows: rows.map(({ v, ind, market, val }) => ({
       id: v.id,
       issued_at: v.issued_at,
       verdict: v.verdict,
@@ -231,38 +316,71 @@ export function backtest(verdicts, pointsByCgId, site) {
       btc_sma200_gap_pct: market ? market.sma200_gap_pct : null,
       btc_macd_histogram: market ? market.macd_histogram : null,
       btc_change_30d: market ? market.change_pct["30d"] : null,
+      valuation_percentile: val ? val.percentile : null,
     })),
     note: "Rétrospectif, petit échantillon, période majoritairement haussière : un indice pour orienter l'auto-correction du moteur, pas une preuve.",
   };
 }
 
 // Verdict proposé par la règle du moteur pour un favori aujourd'hui, avec une confiance MESURÉE :
-// le taux de réussite de ce même appel sur tous les verdicts vérifiés (rows du backtest), pas un
-// chiffre choisi. Sans RSI : ATTENTE (lecture indisponible), jamais un appel deviné.
-export function engineCalibration(rows) {
-  const rule = CANDIDATE_RULES[ENGINE_RULE];
-  const cal = { ACHAT: { n: 0, correct: 0, pct: null }, VENTE: { n: 0, correct: 0, pct: null } };
-  for (const { v, ind } of rows) {
-    if (ind.rsi14 === null) continue;
-    const call = rule.call(v, ind);
-    if (!cal[call]) continue;
-    cal[call].n += 1;
-    if (call === v.outcome.actual_direction) cal[call].correct += 1;
+// taux de réussite de ce même appel sur tous les verdicts vérifiés, ajusté selon l'élan du bitcoin
+// le jour du verdict (rétrécissement vers le taux global, poids CONFIDENCE_SHRINK). Testé le 11/10
+// hors échantillon (données antérieures seulement) : erreur de Brier 0,279 contre 0,300 sans ce
+// contexte ; l'élan de l'actif ou la zone de RSI n'amélioraient rien. Sans RSI : ATTENTE.
+const CONFIDENCE_SHRINK = 10;
+const btcContext = (market) => (market && market.macd_histogram !== null ? (market.macd_histogram > 0 ? "hausse" : "baisse") : null);
+
+export function engineCalibration(rows, ruleKey = ENGINE_RULE) {
+  const rule = CANDIDATE_RULES[ruleKey];
+  const blank = () => ({ n: 0, correct: 0, pct: null, btc: { hausse: { n: 0, correct: 0 }, baisse: { n: 0, correct: 0 } } });
+  const cal = { ACHAT: blank(), ATTENTE: blank(), VENTE: blank() };
+  for (const { v, ind, market } of rows) {
+    if (ind.rsi14 === null || ind.sma200_gap_pct === null) continue;
+    const call = rule.call(v, ind, market);
+    const c = cal[call];
+    if (!c) continue;
+    const ok = call === v.outcome.actual_direction;
+    c.n += 1;
+    if (ok) c.correct += 1;
+    const ctx = btcContext(market);
+    if (ctx) {
+      c.btc[ctx].n += 1;
+      if (ok) c.btc[ctx].correct += 1;
+    }
   }
   for (const c of Object.values(cal)) c.pct = c.n ? round((c.correct / c.n) * 100, 0) : null;
   return cal;
 }
 
-export function proposedVerdict(ind, calibration) {
-  if (!ind || ind.rsi14 === null) return { rule: ENGINE_RULE, verdict: "ATTENTE", confidence_pct: null, sample_n: 0, basis: "RSI indisponible : pas de lecture fiable" };
-  const verdict = CANDIDATE_RULES[ENGINE_RULE].call(null, ind);
-  const cal = calibration && calibration[verdict];
+export function contextConfidence(cal, call, market) {
+  const c = cal && cal[call];
+  if (!c || c.n < 10) return null;
+  const base = c.correct / c.n;
+  const ctx = btcContext(market);
+  if (!ctx) return round(base * 100, 0);
+  const k = c.btc[ctx];
+  return round(((k.correct + CONFIDENCE_SHRINK * base) / (k.n + CONFIDENCE_SHRINK)) * 100, 0);
+}
+
+const BASIS = {
+  retour_moyenne_rsi: (verdict, ind) => (verdict === "VENTE" ? `RSI ${Math.round(ind.rsi14)} ≥ 70 : hausse étirée, repli plus fréquent ensuite` : `RSI ${Math.round(ind.rsi14)} < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité`),
+};
+
+export function proposedVerdict(ind, calibration, ruleKey = ENGINE_RULE, market = null) {
+  if (!ind || ind.rsi14 === null || ind.sma200_gap_pct === null) return { rule: ruleKey, verdict: "ATTENTE", confidence_pct: null, sample_n: 0, basis: "Indicateurs indisponibles : pas de lecture fiable" };
+  const rule = CANDIDATE_RULES[ruleKey];
+  const verdict = rule.call(null, ind, market);
+  const c = calibration && calibration[verdict];
+  const ctx = btcContext(market);
+  const describe = BASIS[ruleKey] || ((vd) => `${rule.name} : ${vd}`);
   return {
-    rule: ENGINE_RULE,
+    rule: ruleKey,
     verdict,
-    confidence_pct: cal && cal.n >= 10 ? cal.pct : null,
-    sample_n: cal ? cal.n : 0,
-    basis: verdict === "VENTE" ? `RSI ${Math.round(ind.rsi14)} ≥ 70 : hausse étirée, repli plus fréquent ensuite` : `RSI ${Math.round(ind.rsi14)} < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité`,
+    confidence_pct: contextConfidence(calibration, verdict, market),
+    sample_n: c ? c.n : 0,
+    context: ctx ? `élan du bitcoin ${ctx === "hausse" ? "positif" : "négatif"}` : null,
+    context_n: c && ctx ? c.btc[ctx].n : 0,
+    basis: describe(verdict, ind),
   };
 }
 
@@ -343,9 +461,24 @@ async function fetchSeries(cgId, attempt = 1) {
   }
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const body = await res.json();
-  const points = (body.prices || []).filter((p) => Array.isArray(p) && Number.isFinite(p[0]) && Number.isFinite(p[1]) && p[1] > 0);
+  const valid = (arr) => (arr || []).filter((p) => Array.isArray(p) && Number.isFinite(p[0]) && Number.isFinite(p[1]) && p[1] > 0);
+  const points = valid(body.prices);
   if (points.length < 30) throw new Error(`historique trop court (${points.length} points)`);
-  return points;
+  return { points, marketCaps: valid(body.market_caps), volumes: valid(body.total_volumes) };
+}
+
+// Offre et valorisation diluée des 15 favoris en UN appel (/coins/markets) — remplace l'appel que
+// le navigateur faisait au chargement et qui échouait souvent (limite CoinGecko) : la ligne
+// Tokenomics de la fiche restait alors « Donnée insuffisante ».
+async function fetchSupply(ids) {
+  const res = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${ids.join(",")}&per_page=50`, { headers: { accept: "application/json" } });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const out = {};
+  for (const c of await res.json()) {
+    const num = (v) => (Number.isFinite(v) && v > 0 ? v : null);
+    out[c.id] = { market_cap_usd: num(c.market_cap), fdv_usd: num(c.fully_diluted_valuation), circulating_supply: num(c.circulating_supply), total_supply: num(c.total_supply), max_supply: num(c.max_supply), volume_24h_usd: num(c.total_volume) };
+  }
+  return out;
 }
 
 async function main() {
@@ -358,12 +491,15 @@ async function main() {
   }
   const out = { updated_at: new Date().toISOString().replace(/\.\d{3}Z$/, "Z"), currency: "USD", source: "CoinGecko /coins/{id}/market_chart (365 j, quotidien) — calculs de js/detail.js", assets: {}, backtest: null, errors: [] };
   const pointsByCgId = {};
+  const valuationByCgId = {};
   for (const fav of site.FAVORIS) {
     try {
-      const points = await fetchSeries(fav.cgId);
+      const series = await fetchSeries(fav.cgId);
+      const points = series.points;
       pointsByCgId[fav.cgId] = points;
+      valuationByCgId[fav.cgId] = valuationSeries(series.marketCaps, series.volumes);
       const ind = indicatorsAt(points.map((p) => p[1]), site);
-      out.assets[fav.ticker] = { ...ind, reading: readingOf(ind), as_of: new Date(points[points.length - 1][0]).toISOString().replace(/\.\d{3}Z$/, "Z") };
+      out.assets[fav.ticker] = { ...ind, reading: readingOf(ind), valuation: valuationAt(valuationByCgId[fav.cgId]), as_of: new Date(points[points.length - 1][0]).toISOString().replace(/\.\d{3}Z$/, "Z") };
     } catch (e) {
       out.errors.push(`${fav.ticker} : ${e.message}`);
     }
@@ -375,14 +511,38 @@ async function main() {
     return;
   }
   try {
-    out.backtest = backtest(JSON.parse(readFileSync("data/verdicts.json", "utf-8")), pointsByCgId, site);
+    out.backtest = backtest(JSON.parse(readFileSync("data/verdicts.json", "utf-8")), pointsByCgId, site, valuationByCgId);
   } catch (e) {
     out.errors.push(`backtest : ${e.message}`);
   }
-  // Verdict proposé par la règle du moteur, avec sa confiance mesurée (lu par le cycle des verdicts).
-  const calibration = out.backtest ? out.backtest.engine_calibration : null;
-  out.engine_rule = { id: ENGINE_RULE, name: CANDIDATE_RULES[ENGINE_RULE].name, rule: CANDIDATE_RULES[ENGINE_RULE].label, calibration };
-  for (const a of Object.values(out.assets)) a.proposed_verdict = proposedVerdict(a, calibration);
+  // Offre (Tokenomics de la fiche) : étape à part, son échec n'empêche rien d'autre.
+  try {
+    const supply = await fetchSupply(site.FAVORIS.map((f) => f.cgId));
+    for (const fav of site.FAVORIS) if (out.assets[fav.ticker] && supply[fav.cgId]) out.assets[fav.ticker].supply = supply[fav.cgId];
+  } catch (e) {
+    out.errors.push(`offre : ${e.message}`);
+  }
+  // Auto-correction : règle du moteur choisie sur les derniers verdicts vérifiés, puis verdict
+  // proposé par favori avec sa confiance mesurée (lu par le cycle des verdicts, spec §2).
+  const rows = out.backtest ? out.backtest._rows : [];
+  if (out.backtest) delete out.backtest._rows;
+  const prevRule = previous && previous.engine_rule ? previous.engine_rule : null;
+  const selection = selectEngineRule(prevRule ? prevRule.id : ENGINE_RULE, rows);
+  const history = prevRule && Array.isArray(prevRule.history) ? prevRule.history : [];
+  if (selection.switched) history.push({ at: out.updated_at, from: selection.from, to: selection.id, window_n: selection.window_n, scores: selection.scores });
+  const calibration = engineCalibration(rows, selection.id);
+  const rule = CANDIDATE_RULES[selection.id];
+  out.engine_rule = {
+    id: selection.id,
+    name: rule.name,
+    rule: rule.label,
+    since: selection.switched ? out.updated_at : (prevRule && prevRule.id === selection.id && prevRule.since) || rule.registered_at || RULES_REGISTERED_AT,
+    selection: { window: SELECTION_WINDOW, margin_pts: SELECTION_MARGIN_PTS, window_n: selection.window_n, scores: selection.scores },
+    calibration,
+    history,
+  };
+  const btc = out.assets.BTC || null;
+  for (const a of Object.values(out.assets)) a.proposed_verdict = proposedVerdict(a, calibration, selection.id, btc);
   writeFileSync(OUT_PATH, JSON.stringify(out, null, 2) + "\n");
   // Alertes : étape à part, son échec ne touche pas le fichier d'analyse déjà écrit.
   try {

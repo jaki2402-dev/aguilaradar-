@@ -80,6 +80,10 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 
 ## Journal des sessions (le plus récent en haut)
 
+- **11/10/2026 (après-midi)** — Demande : fiabilité et % plus justes, auto-correction, plus de « Donnée
+  insuffisante ». Auto-sélection quotidienne de la règle (testée : fenêtre 30 + marge 5 = aucun faux
+  changement), confiance ajustée selon l'élan du bitcoin (Brier 0,300 → 0,279 hors échantillon),
+  valorisation et offre par le robot (décomposition du verdict remplie pour les 15 favoris).
 - **11/10/2026 (midi)** — Demande : « des verdicts beaucoup plus fiables, pas toujours en attente ». Analyse
   des 82 verdicts (indicateurs à l'émission, deux périodes) ; règle « retour à la moyenne » choisie par
   l'utilisateur ; spec §2 réécrite, `corr-20261011-regle-retour-moyenne`, contrôle de conformité adapté.

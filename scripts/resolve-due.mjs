@@ -181,11 +181,50 @@ async function resolveVerdicts(now, nowIso, engine, report) {
   const history = readJson("data/engine-history.json");
   const previous = history.global_stats || {};
   const next = globalStats(verdicts, nowIso, engine, previous);
+  let dirty = false;
   if (statsDiffer(previous, next)) {
     history.global_stats = next;
-    writeJson("data/engine-history.json", history);
+    dirty = true;
     report.notes.push("global_stats recalculé");
   }
+  try {
+    const added = ruleSwitchEntries(readJson("data/technical-favoris.json"), history.correction_log);
+    if (added.length) {
+      history.correction_log = [...(history.correction_log || []), ...added];
+      dirty = true;
+      report.notes.push(`changement de règle consigné : ${added.map((e) => e.id).join(", ")}`);
+    }
+  } catch (e) {
+    report.notes.push(`journal des règles : ${e.message}`);
+  }
+  if (dirty) writeJson("data/engine-history.json", history);
+}
+
+// Auto-correction tracée : chaque changement de règle décidé par technical-daily
+// (engine_rule.history de data/technical-favoris.json) devient une entrée de correction_log, une
+// seule fois. Retourne les entrées à ajouter.
+export function ruleSwitchEntries(technical, correctionLog) {
+  const known = new Set((correctionLog || []).map((e) => e.id));
+  const out = [];
+  for (const h of (technical && technical.engine_rule && technical.engine_rule.history) || []) {
+    if (!h || !h.at || !h.to || !h.from) continue;
+    const id = `corr-auto-${h.at.slice(0, 10).replace(/-/g, "")}-${h.to}`;
+    if (known.has(id)) continue;
+    known.add(id);
+    const scores = Object.entries(h.scores || {}).map(([k, v]) => `${k} ${v} %`).join(", ");
+    out.push({
+      id,
+      logged_at: h.at,
+      trigger: "Auto-sélection quotidienne de la règle du moteur (GitHub Action technical-daily)",
+      what: `Sur les ${h.window_n} derniers verdicts vérifiés (indicateurs connus le jour de l'émission) : ${scores}.`,
+      why: `La règle « ${h.to} » fait mieux que « ${h.from} » d'au moins 5 points sur au moins 20 verdicts : seuil de changement automatique atteint.`,
+      action: `Règle du moteur : ${h.from} → ${h.to} (docs/routines/cycle-2h-verdict.md §2 : le cycle applique proposed_verdict, qui suit la règle choisie).`,
+      validation_score_before_pct: h.scores && Number.isFinite(h.scores[h.from]) ? h.scores[h.from] : null,
+      validation_score_after_pct: null,
+      status: "accepted",
+    });
+  }
+  return out;
 }
 
 export function statsDiffer(a, b) {

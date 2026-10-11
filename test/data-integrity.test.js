@@ -185,10 +185,16 @@ describe("data-integrity.js — checkVerdictSelectionCompliance", () => {
       expect(checkVerdictSelectionCompliance([mk("ACHAT", null)])[0].expected).toBe("ATTENTE");
     });
 
+    it("règle choisie automatiquement : le verdict doit reprendre la proposition du robot à l'émission", () => {
+      const auto = (verdict, proposed) => ({ id: "v", ticker: "ARB", issued_at: AFTER, verdict, decision_rule: "tendance_pure", proposed_at_issue: { rule: "tendance_pure", verdict: proposed } });
+      expect(checkVerdictSelectionCompliance([auto("VENTE", "VENTE")])).toEqual([]);
+      expect(checkVerdictSelectionCompliance([auto("ATTENTE", "VENTE")])[0].expected).toBe("VENTE");
+    });
+
     it("signale un verdict émis après la règle sans decision_rule (routine qui ne la suit pas)", () => {
       const v = checkVerdictSelectionCompliance([{ id: "v", ticker: "BTC", issued_at: AFTER, verdict: "ATTENTE", signal_consensus: { technique: "mixte", accord_count: 1 } }]);
       expect(v).toHaveLength(1);
-      expect(v[0].expected).toBe("retour_moyenne_rsi");
+      expect(v[0].expected).toBe("decision_rule");
     });
   });
 

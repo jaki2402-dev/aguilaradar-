@@ -86,12 +86,41 @@ function scoreRisque(verdict, thesisEntry) {
   return "élevé";
 }
 
-function computeVerdictBreakdown({ verdict, thesisEntry, marketCapUsd, tvlUsd, supplyEntry } = {}) {
+// Repli sur le robot technique quotidien (data/technical-favoris.json, via technicalViewFor) quand
+// la source habituelle manque — des données réelles plutôt que « Donnée insuffisante » (demande de
+// l'utilisateur, 11/10/2026) :
+// - Momentum : règle du moteur appliquée aujourd'hui (direction + confiance mesurée), notée avec
+//   la même grille que scoreMomentum ;
+// - Tokenomics : offre relevée par le robot (/coins/markets) si l'appel du navigateur a échoué ;
+// - Valorisation : capitalisation / volume moyen 30 j situé dans SA fourchette sur 1 an (score du
+//   robot, méthodologie §4) quand aucune TVL n'existe pour l'actif.
+function momentumFromProposal(p) {
+  if (!p || (p.verdict !== "ACHAT" && p.verdict !== "VENTE")) return null;
+  const score = scoreMomentum({ signal_consensus: { technique: p.verdict === "ACHAT" ? "haussier" : "baissier", accord_count: 1 }, confidence_pct: p.confidence_pct });
+  return typeof score === "number" ? score : null;
+}
+
+function supplyFromTechnical(t) {
+  const s = t && t.supply;
+  if (!s || typeof s.circulating_supply !== "number") return null;
+  return { circulatingSupply: s.circulating_supply, maxSupply: s.max_supply, marketCapUsd: s.market_cap_usd, fdvUsd: s.fdv_usd };
+}
+
+function computeVerdictBreakdown({ verdict, thesisEntry, marketCapUsd, tvlUsd, supplyEntry, technical } = {}) {
+  const momentum = scoreMomentum(verdict);
+  const proposalMomentum = momentum === null ? momentumFromProposal(technical && technical.proposed) : null;
+  const tokenomics = scoreTokenomics(supplyEntry || supplyFromTechnical(technical));
+  const robotSupply = supplyFromTechnical(technical);
+  if (tokenomics && robotSupply && robotSupply.marketCapUsd && robotSupply.fdvUsd) tokenomics.dilutedPct = (robotSupply.marketCapUsd / robotSupply.fdvUsd) * 100;
+  const tvl = scoreValorisation(marketCapUsd, tvlUsd);
+  const v = technical && technical.valuation;
+  const volumeValuation = !tvl && v && typeof v.score === "number" ? { score: v.score, ratio: v.ratio, percentile: v.percentile } : null;
   return {
-    momentum: scoreMomentum(verdict),
+    momentum: momentum !== null ? momentum : proposalMomentum,
+    momentumSource: momentum !== null ? "verdict" : proposalMomentum !== null ? "règle du jour" : null,
     fondamentaux: scoreFondamentaux(thesisEntry),
-    tokenomics: scoreTokenomics(supplyEntry),
-    valorisation: scoreValorisation(marketCapUsd, tvlUsd),
+    tokenomics,
+    valorisation: tvl || volumeValuation,
     risque: scoreRisque(verdict, thesisEntry),
   };
 }
@@ -108,15 +137,22 @@ function renderVerdictBreakdown(breakdown) {
     }
     if (key === "valorisation") {
       const v = breakdown.valorisation;
-      return `<div class="verdict-cat-row"><span class="hint">${label}</span><strong>${v ? `Marketcap/TVL ${v.ratio.toFixed(1)}×` : "Donnée insuffisante"}</strong></div>`;
+      const text = !v
+        ? "Donnée insuffisante"
+        : typeof v.score === "number"
+          ? `${v.score}/10 · capitalisation/volume ${v.ratio.toLocaleString("fr-FR")}× (${v.percentile}e centile de son année : ${v.percentile <= 33 ? "bas, plutôt attractif" : v.percentile <= 66 ? "milieu de fourchette" : "haut, plutôt cher"})`
+          : `Marketcap/TVL ${v.ratio.toFixed(1)}×`;
+      return `<div class="verdict-cat-row"><span class="hint">${label}</span><strong>${text}</strong></div>`;
     }
     if (key === "tokenomics") {
       const v = breakdown.tokenomics;
-      const text = !v ? "Donnée insuffisante" : v.uncapped ? "Offre non plafonnée" : `${v.circulatingPct.toFixed(0)} % de l'offre max en circulation`;
+      let text = !v ? "Donnée insuffisante" : v.uncapped ? "Offre non plafonnée" : `${v.circulatingPct.toFixed(0)} % de l'offre max en circulation`;
+      if (v && typeof v.dilutedPct === "number") text += ` · capitalisation = ${v.dilutedPct.toFixed(0)} % de la valeur diluée`;
       return `<div class="verdict-cat-row"><span class="hint">${label}</span><strong>${text}</strong></div>`;
     }
     const v = breakdown[key];
-    return `<div class="verdict-cat-row"><span class="hint">${label}</span><strong>${typeof v === "number" ? `${v}/10` : "Donnée insuffisante"}</strong></div>`;
+    const source = key === "momentum" && breakdown.momentumSource === "règle du jour" ? " (règle du jour)" : "";
+    return `<div class="verdict-cat-row"><span class="hint">${label}</span><strong>${typeof v === "number" ? `${v}/10${source}` : "Donnée insuffisante"}</strong></div>`;
   }).join("");
   return `<div class="verdict-breakdown">
     <strong>Décomposition du verdict</strong>

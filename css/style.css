@@ -931,6 +931,7 @@ th { color: var(--text-dim); font-weight: 600; font-size: 0.76rem; text-transfor
 .tech-table td, .tech-table th { padding: 7px 5px; vertical-align: top; }
 .tech-table th[scope="col"] { font-size: 0.68rem; }
 .tech-share { display: block; font-size: 0.72rem; }
+.engine-rule-box { border-left: 3px solid var(--accent); padding: 4px 0 4px 12px; margin: 0 0 14px; }
 .cmc-rows { list-style: none; margin: 6px 0 0; padding: 0; }
 .cmc-rows li { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
 .context-note > strong { display: block; }

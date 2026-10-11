@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
-import { loadEngine, isQuiet, verdictCurrency, priceNear, verdictOutcome, globalStats, statsDiffer, horizonOutcome, matchCurrency, controlStats } from "../scripts/resolve-due.mjs";
+import { loadEngine, isQuiet, verdictCurrency, priceNear, verdictOutcome, globalStats, statsDiffer, horizonOutcome, matchCurrency, controlStats, ruleSwitchEntries } from "../scripts/resolve-due.mjs";
 
 const engine = loadEngine();
 const NOW = "2026-10-12T16:45:00Z";
@@ -78,5 +78,17 @@ describe("scripts/resolve-due.mjs : vérification des échéances sans quota", (
     expect(s.validated_pct).toBe(66.7);
     expect(s.note).toContain("2 actifs sur 3");
     expect(controlStats([], NOW, 5)).toBeNull();
+  });
+});
+
+describe("auto-correction tracée dans correction_log", () => {
+  const technical = { engine_rule: { id: "tendance_pure", history: [{ at: "2026-11-02T23:31:00Z", from: "retour_moyenne_rsi", to: "tendance_pure", window_n: 30, scores: { retour_moyenne_rsi: 40, tendance_pure: 63.3 } }] } };
+  it("une entrée par changement de règle, une seule fois", () => {
+    const added = ruleSwitchEntries(technical, [{ id: "corr-20261011-regle-retour-moyenne" }]);
+    expect(added).toHaveLength(1);
+    expect(added[0]).toMatchObject({ id: "corr-auto-20261102-tendance_pure", status: "accepted", validation_score_before_pct: 40, validation_score_after_pct: null });
+    expect(added[0].action).toContain("retour_moyenne_rsi → tendance_pure");
+    expect(ruleSwitchEntries(technical, added)).toEqual([]);
+    expect(ruleSwitchEntries(null, [])).toEqual([]);
   });
 });
