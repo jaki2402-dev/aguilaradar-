@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { readFileSync } from "node:fs";
-import { loadEngine, isQuiet, verdictCurrency, priceNear, verdictOutcome, globalStats, horizonOutcome, matchCurrency, controlStats } from "../scripts/resolve-due.mjs";
+import { loadEngine, isQuiet, verdictCurrency, priceNear, verdictOutcome, globalStats, statsDiffer, horizonOutcome, matchCurrency, controlStats } from "../scripts/resolve-due.mjs";
 
 const engine = loadEngine();
 const NOW = "2026-10-12T16:45:00Z";
@@ -48,6 +48,9 @@ describe("scripts/resolve-due.mjs : vérification des échéances sans quota", (
     expect(gs.confusion_matrix.ATTENTE.ATTENTE).toBe(live.matrix.ATTENTE.ATTENTE);
     expect(gs.last_computed_at).toBe(NOW);
     expect(gs.baseline_buy_hold_btc_pct).toBe(18.59); // champ non recalculé : conservé tel quel
+    // Réécrit seulement si un chiffre change (pas pour la seule date de calcul).
+    expect(statsDiffer(gs, { ...gs, last_computed_at: "2026-10-13T00:00:00Z" })).toBe(false);
+    expect(statsDiffer({ total_verdicts_resolved: 81, accuracy_strict_pct: 25.93 }, gs)).toBe(true);
   });
 
   it("horizon d'opportunité : règle de la routine horizons-6h (validé si ≥ seuil)", () => {

@@ -174,12 +174,22 @@ async function resolveVerdicts(now, nowIso, engine, report) {
       report.notes.push(`${v.id} : ${e.message}`);
     }
   }
-  if (!changed) return;
-  writeJson("data/verdicts.json", verdicts);
-  const history = readJson("data/engine-history.json");
-  history.global_stats = globalStats(verdicts, nowIso, engine, history.global_stats || {});
-  writeJson("data/engine-history.json", history);
+  if (changed) writeJson("data/verdicts.json", verdicts);
   report.verdicts = changed;
+  // global_stats tenu à jour même sans résolution (nouveaux verdicts émis, ou figé depuis le 05/10
+  // alors que le digest et la routine marché le citent) : réécrit seulement si un chiffre change.
+  const history = readJson("data/engine-history.json");
+  const previous = history.global_stats || {};
+  const next = globalStats(verdicts, nowIso, engine, previous);
+  if (statsDiffer(previous, next)) {
+    history.global_stats = next;
+    writeJson("data/engine-history.json", history);
+    report.notes.push("global_stats recalculé");
+  }
+}
+
+export function statsDiffer(a, b) {
+  return ["total_verdicts_issued", "total_verdicts_resolved", "accuracy_strict_pct", "coverage_pct", "baseline_majority_class_pct", "f1_macro"].some((k) => (a || {})[k] !== (b || {})[k]);
 }
 
 async function resolveHorizons(now, nowIso, report) {
