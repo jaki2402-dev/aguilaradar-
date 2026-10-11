@@ -161,6 +161,18 @@
             "tx_per_day": "Blockscout MCP, direct_api_call chain_id=1, /api/v2/stats/charts/transactions, dernier point du tableau chart_data date 2026-10-09 (jour le plus recent completement clos a l'heure de ce cycle)",
             "active_addresses": "Blockscout MCP, direct_api_call chain_id=1, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-10-05, to=2026-10-09 - dernier point date 2026-10-09 (value=492386)"
           }
+        },
+        {
+          "date": "2026-10-11",
+          "computed_at": "2026-10-11T08:23:00Z",
+          "tvl_usd": null,
+          "tx_per_day": 1644445,
+          "active_addresses": 477814,
+          "source": {
+            "tvl_usd": "non confirmé ce cycle - DefiLlama (api.llama.fi/defillama.com bloqué par le proxy réseau, confirmé par test curl et WebFetch ce cycle) ; résultats WebSearch trouvés non datés avec certitude pour octobre 2026 (chiffre le plus proche : ~39,6 Md$ daté juillet 2026, trop ancien) - laissé à null plutôt que de choisir arbitrairement",
+            "tx_per_day": "Blockscout MCP, direct_api_call chain_id=1, /api/v2/stats/charts/transactions, dernier point du tableau chart_data date 2026-10-10 (jour le plus récent complètement clos à l'heure de ce cycle)",
+            "active_addresses": "Blockscout MCP, direct_api_call chain_id=1, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-10-06, to=2026-10-10 - dernier point date 2026-10-10 (value=477814)"
+          }
         }
       ]
     },
@@ -272,6 +284,18 @@
             "tvl_usd": "non confirme ce cycle - meme blocage reseau que ethereum (DefiLlama) ; aucun resultat WebSearch date avec certitude pour octobre 2026 - laisse a null plutot que de choisir arbitrairement",
             "tx_per_day": "Blockscout MCP, direct_api_call chain_id=42161, /api/v2/stats/charts/transactions, dernier point du tableau chart_data date 2026-10-09",
             "active_addresses": "Blockscout MCP, direct_api_call chain_id=42161, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-10-05, to=2026-10-09 - dernier point date 2026-10-09 (value=144809)"
+          }
+        },
+        {
+          "date": "2026-10-11",
+          "computed_at": "2026-10-11T08:23:00Z",
+          "tvl_usd": null,
+          "tx_per_day": 1465338,
+          "active_addresses": 108032,
+          "source": {
+            "tvl_usd": "non confirmé ce cycle - même blocage réseau que ethereum (DefiLlama) ; résultat WebSearch trouvé (defillama.com/chain/Arbitrum, ~1,407 Md$) sans date visible et surprenamment bas vs les niveaux historiques connus - signe probable de donnée périmée/en cache, non retenu",
+            "tx_per_day": "Blockscout MCP, direct_api_call chain_id=42161, /api/v2/stats/charts/transactions, dernier point du tableau chart_data date 2026-10-10",
+            "active_addresses": "Blockscout MCP, direct_api_call chain_id=42161, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-10-06, to=2026-10-10 - dernier point date 2026-10-10 (value=108032)"
           }
         }
       ]
