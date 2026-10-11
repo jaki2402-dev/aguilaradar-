@@ -145,7 +145,9 @@ export function backtest(verdicts, pointsByCgId, site) {
     if (!points) continue;
     const ind = indicatorsAt(closesUntil(points, v.issued_at), site);
     if (!ind) continue;
-    rows.push({ v, ind });
+    // État du marché (bitcoin) le même jour, mêmes cours connus seulement.
+    const market = pointsByCgId.bitcoin ? indicatorsAt(closesUntil(pointsByCgId.bitcoin, v.issued_at), site) : null;
+    rows.push({ v, ind, market });
   }
   const byRsi = { surachat: bucket(), neutre: bucket(), survente: bucket() };
   const byTrend = { au_dessus_mm200: bucket(), en_dessous_mm200: bucket() };
@@ -184,7 +186,7 @@ export function backtest(verdicts, pointsByCgId, site) {
     rules: scoreRules(rows),
     // Détail par verdict (indicateurs au jour d'émission + issue) : rend chaque chiffre ci-dessus
     // vérifiable et permet d'étudier une règle sans refaire tourner le robot.
-    rows: rows.map(({ v, ind }) => ({
+    rows: rows.map(({ v, ind, market }) => ({
       id: v.id,
       issued_at: v.issued_at,
       verdict: v.verdict,
@@ -200,6 +202,9 @@ export function backtest(verdicts, pointsByCgId, site) {
       change_90d: ind.change_pct["90d"],
       volatility_30d_pct: ind.volatility_30d_pct,
       drawdown_pct: ind.drawdown_from_365d_high_pct,
+      btc_sma200_gap_pct: market ? market.sma200_gap_pct : null,
+      btc_macd_histogram: market ? market.macd_histogram : null,
+      btc_change_30d: market ? market.change_pct["30d"] : null,
     })),
     note: "Rétrospectif, petit échantillon, période majoritairement haussière : un indice pour orienter l'auto-correction du moteur, pas une preuve.",
   };
