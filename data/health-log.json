@@ -1008,6 +1008,16 @@
         "favoris_context_populated": 15
       },
       "note": "Site non vérifiable depuis cet environnement (WebFetch : ENOTFOUND, curl : code 000, résolution DNS bloquée par le bac à sable) — ce n'est pas une panne constatée du site. Les 9 fichiers data/*.json sont des JSON valides et non vides. index.html référence 22 fichiers js/*.js sur 22. Volumes de référence enregistrés (la dernière entrée n'avait pas de champ counts, aucune comparaison possible) : 97 verdicts, 172 alertes, 7 opportunités, 10 actualités, 15 favoris renseignés."
+    },
+    {
+      "checked_at": "2026-10-11T09:16:30Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~0h59)",
+        "data/news.json (last_checked_at, ~0h59)",
+        "data/opportunities.json (last_scan_at, ~5h07)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h59, actualités (last_checked_at) il y a 0h59, opportunités il y a 5h07 - rien à signaler."
     }
   ]
 }
