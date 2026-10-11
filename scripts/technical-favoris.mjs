@@ -10,6 +10,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
+import { dailySeries, buildSamples, splitByTime, evaluateRules, learnTree, treeCall, describeTree, featureReport, errorAnalysis, riskFlags, labCalibration, featuresAt, asRuleInput, TRAIN_SHARE } from "./engine-lab.mjs";
 
 const OUT_PATH = "data/technical-favoris.json";
 const DAY_MS = 86400000;
@@ -181,17 +182,18 @@ export const SELECTION_WINDOW = 30;
 export const SELECTION_MARGIN_PTS = 5;
 export const SELECTION_MIN_N = 20;
 
-export function selectEngineRule(currentId, rows) {
-  const current = CANDIDATE_RULES[currentId] && CANDIDATE_RULES[currentId].standalone ? currentId : ENGINE_RULE;
+export function selectEngineRule(currentId, rows, rules = CANDIDATE_RULES) {
+  const current = rules[currentId] && rules[currentId].standalone ? currentId : ENGINE_RULE;
   const usable = rows
     .filter(({ ind }) => ind.rsi14 !== null && ind.sma200_gap_pct !== null)
     .sort((a, b) => (a.v.outcome.resolved_at || "").localeCompare(b.v.outcome.resolved_at || ""))
     .slice(-SELECTION_WINDOW);
   const scores = {};
-  for (const [key, rule] of Object.entries(CANDIDATE_RULES)) {
+  for (const [key, rule] of Object.entries(rules)) {
     if (!rule.standalone) continue;
-    const correct = usable.filter(({ v, ind, market }) => rule.call(v, ind, market) === v.outcome.actual_direction).length;
-    scores[key] = usable.length ? round((correct / usable.length) * 100, 1) : null;
+    const scored = usable.filter((r) => key !== "regle_apprise" || r.feat);
+    const correct = scored.filter(({ v, ind, market, feat }) => rule.call(v, ind, market, feat) === v.outcome.actual_direction).length;
+    scores[key] = scored.length ? round((correct / scored.length) * 100, 1) : null;
   }
   let id = current;
   if (usable.length >= SELECTION_MIN_N) {
@@ -320,6 +322,23 @@ export function backtest(verdicts, pointsByCgId, site, valuationByCgId = {}) {
     })),
     note: "Rétrospectif, petit échantillon, période majoritairement haussière : un indice pour orienter l'auto-correction du moteur, pas une preuve.",
   };
+}
+
+// Choix de la règle du moteur (auto-correction, depuis le 11/10/2026 après-midi) : critère principal =
+// réussite sur la période RÉCENTE du laboratoire (cas réels jamais vus par la règle apprise) ;
+// garde-fou = les 30 derniers verdicts réellement vérifiés. Changement seulement si la meilleure
+// règle bat la règle en place d'au moins LAB_MARGIN_PTS points sur au moins LAB_MIN_VALID cas, et
+// ne fait pas pire de plus de 5 points sur les verdicts réels récents.
+export const LAB_MARGIN_PTS = 2;
+export const LAB_MIN_VALID = 300;
+
+export function chooseEngineRule(currentId, labScores, validN, realScores) {
+  const current = labScores[currentId] ? currentId : ENGINE_RULE;
+  const valid = (k) => (labScores[k] && Number.isFinite(labScores[k].valid) ? labScores[k].valid : -Infinity);
+  const best = Object.keys(labScores).reduce((a, b) => (valid(b) > valid(a) ? b : a), current);
+  const realOk = !Number.isFinite(realScores[best]) || !Number.isFinite(realScores[current]) || realScores[best] >= realScores[current] - 5;
+  const id = best !== current && validN >= LAB_MIN_VALID && valid(best) - valid(current) >= LAB_MARGIN_PTS && realOk ? best : current;
+  return { id, switched: id !== current, from: current, best };
 }
 
 // Verdict proposé par la règle du moteur pour un favori aujourd'hui, avec une confiance MESURÉE :
@@ -481,6 +500,21 @@ async function fetchSupply(ids) {
   return out;
 }
 
+// Historique de l'indice peur / cupidité (alternative.me, gratuit, déjà utilisé par market-gauges).
+async function fetchFng() {
+  const res = await fetch("https://api.alternative.me/fng/?limit=500&format=json", { headers: { accept: "application/json" } });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const body = await res.json();
+  const map = new Map();
+  for (const d of body.data || []) {
+    const v = Number(d.value);
+    const t = Number(d.timestamp) * 1000;
+    if (Number.isFinite(v) && v >= 0 && v <= 100 && Number.isFinite(t)) map.set(Math.floor(t / DAY_MS), v);
+  }
+  if (map.size < 30) throw new Error(`historique trop court (${map.size} jours)`);
+  return map;
+}
+
 async function main() {
   const site = loadSite();
   let previous = null;
@@ -492,12 +526,14 @@ async function main() {
   const out = { updated_at: new Date().toISOString().replace(/\.\d{3}Z$/, "Z"), currency: "USD", source: "CoinGecko /coins/{id}/market_chart (365 j, quotidien) — calculs de js/detail.js", assets: {}, backtest: null, errors: [] };
   const pointsByCgId = {};
   const valuationByCgId = {};
+  const volumesByCgId = {};
   for (const fav of site.FAVORIS) {
     try {
       const series = await fetchSeries(fav.cgId);
       const points = series.points;
       pointsByCgId[fav.cgId] = points;
       valuationByCgId[fav.cgId] = valuationSeries(series.marketCaps, series.volumes);
+      volumesByCgId[fav.cgId] = series.volumes;
       const ind = indicatorsAt(points.map((p) => p[1]), site);
       out.assets[fav.ticker] = { ...ind, reading: readingOf(ind), valuation: valuationAt(valuationByCgId[fav.cgId]), as_of: new Date(points[points.length - 1][0]).toISOString().replace(/\.\d{3}Z$/, "Z") };
     } catch (e) {
@@ -522,28 +558,122 @@ async function main() {
   } catch (e) {
     out.errors.push(`offre : ${e.message}`);
   }
-  // Auto-correction : règle du moteur choisie sur les derniers verdicts vérifiés, puis verdict
-  // proposé par favori avec sa confiance mesurée (lu par le cycle des verdicts, spec §2).
+  // Laboratoire + auto-correction : règle du moteur choisie sur ~2 000 cas réels (période récente
+  // jamais vue par la règle apprise) avec garde-fou sur les verdicts réels, puis verdict proposé par
+  // favori avec sa confiance mesurée et ses points de vigilance (lu par le cycle des verdicts, §2).
   const rows = out.backtest ? out.backtest._rows : [];
   if (out.backtest) delete out.backtest._rows;
   const prevRule = previous && previous.engine_rule ? previous.engine_rule : null;
-  const selection = selectEngineRule(prevRule ? prevRule.id : ENGINE_RULE, rows);
   const history = prevRule && Array.isArray(prevRule.history) ? prevRule.history : [];
-  if (selection.switched) history.push({ at: out.updated_at, from: selection.from, to: selection.id, window_n: selection.window_n, scores: selection.scores });
-  const calibration = engineCalibration(rows, selection.id);
-  const rule = CANDIDATE_RULES[selection.id];
-  out.engine_rule = {
-    id: selection.id,
-    name: rule.name,
-    rule: rule.label,
-    // Depuis : dernier changement automatique vers cette règle, sinon sa date d'enregistrement.
-    since: (history.filter((h) => h.to === selection.id).pop() || {}).at || rule.registered_at || RULES_REGISTERED_AT,
-    selection: { window: SELECTION_WINDOW, margin_pts: SELECTION_MARGIN_PTS, window_n: selection.window_n, scores: selection.scores },
-    calibration,
-    history,
-  };
-  const btc = out.assets.BTC || null;
-  for (const a of Object.values(out.assets)) a.proposed_verdict = proposedVerdict(a, calibration, selection.id, btc);
+  let lab = null;
+  let rules = CANDIDATE_RULES;
+  let todayFeatures = {};
+  try {
+    let fngByDay = null;
+    try {
+      fngByDay = await fetchFng();
+    } catch (e) {
+      out.errors.push(`peur/cupidité : ${e.message}`);
+    }
+    const verdicts = JSON.parse(readFileSync("data/verdicts.json", "utf-8"));
+    const horizon = {};
+    for (const v of verdicts.slice().sort((x, y) => x.issued_at.localeCompare(y.issued_at))) if (Number.isFinite(v.horizon_days)) horizon[v.asset] = v.horizon_days;
+    const deps = { indicatorsAt, valuationAt, site };
+    const assets = site.FAVORIS.filter((f) => pointsByCgId[f.cgId]).map((f) => ({
+      ticker: f.ticker,
+      cgId: f.cgId,
+      closes: dailySeries(pointsByCgId[f.cgId]),
+      volByDay: new Map(dailySeries(volumesByCgId[f.cgId] || []).map((d) => [d.day, d.value])),
+      valuation: valuationByCgId[f.cgId] || [],
+      horizon: horizon[f.cgId] || 14,
+    }));
+    const btc = assets.find((x) => x.cgId === "bitcoin");
+    if (!btc) throw new Error("bitcoin indisponible");
+    const samples = buildSamples(assets, btc, fngByDay, deps);
+    const { cutDay, train, valid } = splitByTime(samples);
+    const tree = learnTree(train);
+    const learned = { standalone: true, name: "Règle apprise", label: `Apprise chaque soir sur la période ancienne : ${describeTree(tree).join(" ; ")}`, call: (v, ind, market, f) => (f ? treeCall(tree, f) : "ATTENTE") };
+    rules = { ...CANDIDATE_RULES, regle_apprise: learned };
+    const labScores = evaluateRules(rules, train, valid);
+    // Indicateurs complets des verdicts réels (pour noter la règle apprise sur eux aussi).
+    const btcIndexByDay = new Map(btc.closes.map((c, i) => [c.day, i]));
+    for (const r of rows) {
+      const asset = assets.find((x) => x.cgId === r.v.asset);
+      const day = Math.floor(Date.parse(r.v.issued_at) / DAY_MS);
+      const i = asset ? asset.closes.findIndex((c) => c.day === day) : -1;
+      if (i >= 199) r.feat = featuresAt(asset, i, btcIndexByDay, btc, fngByDay, deps);
+    }
+    const real = selectEngineRule(prevRule ? prevRule.id : ENGINE_RULE, rows, rules);
+    const choice = chooseEngineRule(prevRule && rules[prevRule.id] ? prevRule.id : ENGINE_RULE, labScores, valid.length, real.scores);
+    if (choice.switched) history.push({ at: out.updated_at, from: choice.from, to: choice.id, window_n: real.window_n, scores: real.scores, lab_valid: Object.fromEntries(Object.entries(labScores).map(([k, v]) => [k, v.valid])) });
+    const rule = rules[choice.id];
+    const callOf = (sample) => {
+      const { ind, market } = asRuleInput(sample.f);
+      return rule.call(null, ind, market, sample.f);
+    };
+    const calibration = labCalibration(valid, callOf);
+    const analysis = errorAnalysis(valid, callOf);
+    const dayIso = (d) => new Date(d * DAY_MS).toISOString().slice(0, 10);
+    lab = {
+      updated_at: out.updated_at,
+      method: `Cas réels : chaque favori, chaque jour avec 200 jours d'historique ; issue = cours ${Object.values(horizon).includes(7) ? "7 ou 14" : "14"} jours plus tard (horizon de l'actif), seuil ±5 %, comme les verdicts. ${Math.round(TRAIN_SHARE * 100)} % des jours les plus anciens pour apprendre, les plus récents pour noter.`,
+      period: { from: samples.length ? dayIso(Math.min(...samples.map((x) => x.day))) : null, cut: cutDay !== undefined ? dayIso(cutDay) : null, to: samples.length ? dayIso(Math.max(...samples.map((x) => x.day))) : null },
+      samples: { total: samples.length, train: train.length, valid: valid.length },
+      actual_valid: { ACHAT: valid.filter((x) => x.actual === "ACHAT").length, ATTENTE: valid.filter((x) => x.actual === "ATTENTE").length, VENTE: valid.filter((x) => x.actual === "VENTE").length },
+      rules: Object.fromEntries(Object.entries(labScores).map(([k, v]) => [k, { ...v, name: rules[k].name, real_recent: real.scores[k] ?? null }])),
+      learned_rule: { tree, description: describeTree(tree) },
+      selected: choice.id,
+      features: featureReport(samples, train, valid),
+      errors: analysis,
+      calibration,
+      fng_available: Boolean(fngByDay),
+    };
+    for (const x of assets) {
+      const f = featuresAt(x, x.closes.length - 1, btcIndexByDay, btc, fngByDay, deps);
+      if (f) todayFeatures[x.ticker] = f;
+    }
+    out.engine_rule = {
+      id: choice.id,
+      name: rule.name,
+      rule: rule.label,
+      since: (history.filter((h) => h.to === choice.id).pop() || {}).at || rule.registered_at || RULES_REGISTERED_AT,
+      selection: { window: SELECTION_WINDOW, window_n: real.window_n, scores: real.scores, lab_valid_n: valid.length, lab_margin_pts: LAB_MARGIN_PTS, lab_scores: Object.fromEntries(Object.entries(labScores).map(([k, v]) => [k, v.valid])) },
+      calibration,
+      calibration_source: `période récente du laboratoire (${valid.length} cas réels)`,
+      history,
+    };
+    for (const [ticker, a] of Object.entries(out.assets)) {
+      const f = todayFeatures[ticker];
+      if (!f || f.rsi14 === null || f.sma200_gap_pct === null) {
+        a.proposed_verdict = { rule: choice.id, verdict: "ATTENTE", confidence_pct: null, sample_n: 0, basis: "Indicateurs indisponibles : pas de lecture fiable" };
+        continue;
+      }
+      const { ind, market } = asRuleInput(f);
+      const verdict = rule.call(null, ind, market, f);
+      const c = calibration[verdict];
+      const flags = riskFlags(f, analysis, analysis.error_pct || 0);
+      a.proposed_verdict = {
+        rule: choice.id,
+        verdict,
+        confidence_pct: contextConfidence(calibration, verdict, market),
+        sample_n: c ? c.n : 0,
+        context: Number.isFinite(f.btc_macd) ? `élan du bitcoin ${f.btc_macd > 0 ? "positif" : "négatif"}` : null,
+        context_n: c && Number.isFinite(f.btc_macd) ? c.btc[f.btc_macd > 0 ? "hausse" : "baisse"].n : 0,
+        basis: (BASIS[choice.id] || ((vd) => `${rule.name} : ${vd}`))(verdict, ind),
+        vigilance: flags,
+      };
+    }
+  } catch (e) {
+    out.errors.push(`laboratoire : ${e.message}`);
+    // Repli : sélection et confiance sur les seuls verdicts réels (méthode précédente).
+    const selection = selectEngineRule(prevRule ? prevRule.id : ENGINE_RULE, rows);
+    const calibration = engineCalibration(rows, selection.id);
+    const rule = CANDIDATE_RULES[selection.id];
+    out.engine_rule = { id: selection.id, name: rule.name, rule: rule.label, since: rule.registered_at || RULES_REGISTERED_AT, selection: { window: SELECTION_WINDOW, window_n: selection.window_n, scores: selection.scores }, calibration, history };
+    const btcInd = out.assets.BTC || null;
+    for (const a of Object.values(out.assets)) a.proposed_verdict = proposedVerdict(a, calibration, selection.id, btcInd);
+  }
+  if (lab) writeFileSync("data/engine-lab.json", JSON.stringify(lab, null, 2) + "\n");
   writeFileSync(OUT_PATH, JSON.stringify(out, null, 2) + "\n");
   // Alertes : étape à part, son échec ne touche pas le fichier d'analyse déjà écrit.
   try {
