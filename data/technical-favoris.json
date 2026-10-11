@@ -1,111 +1,111 @@
 {
-  "updated_at": "2026-10-11T02:01:26Z",
+  "updated_at": "2026-10-11T08:37:35Z",
   "currency": "USD",
   "source": "CoinGecko /coins/{id}/market_chart (365 j, quotidien) — calculs de js/detail.js",
   "assets": {
     "BTC": {
-      "price_usd": 82959.2,
-      "rsi14": 43.1,
-      "sma50": 80924.9,
-      "sma200": 71968.5,
+      "price_usd": 82990.9,
+      "rsi14": 43.3,
+      "sma50": 80925.6,
+      "sma200": 71968.7,
       "sma200_gap_pct": 15.3,
       "sma50_above_sma200": true,
-      "macd_histogram": -559.736,
+      "macd_histogram": -557.714,
       "change_pct": {
-        "7d": -4.1,
+        "7d": -4,
         "30d": 7.5,
-        "90d": 33.2,
+        "90d": 33.3,
         "365d": -25
       },
       "volatility_30d_pct": 39,
       "drawdown_from_365d_high_pct": -28,
       "reading": "Tendance de fond haussière (+15 % vs moyenne 200 j), élan négatif ; RSI 43 neutre.",
-      "as_of": "2026-10-11T01:59:50Z"
+      "as_of": "2026-10-11T08:36:00Z"
     },
     "ETH": {
-      "price_usd": 2508.26,
-      "rsi14": 28.8,
-      "sma50": 2555.46,
-      "sma200": 2133.17,
-      "sma200_gap_pct": 17.6,
+      "price_usd": 2497.2,
+      "rsi14": 27.7,
+      "sma50": 2555.23,
+      "sma200": 2133.12,
+      "sma200_gap_pct": 17.1,
       "sma50_above_sma200": true,
-      "macd_histogram": -35.248,
+      "macd_histogram": -35.9542,
       "change_pct": {
-        "7d": -8,
-        "30d": -0.3,
-        "90d": 41.4,
-        "365d": -33.1
+        "7d": -8.4,
+        "30d": -0.7,
+        "90d": 40.8,
+        "365d": -33.4
       },
       "volatility_30d_pct": 44,
-      "drawdown_from_365d_high_pct": -40.9,
-      "reading": "Tendance de fond haussière (+18 % vs moyenne 200 j), élan négatif ; RSI 29 : survente.",
-      "as_of": "2026-10-11T01:59:50Z"
+      "drawdown_from_365d_high_pct": -41.2,
+      "reading": "Tendance de fond haussière (+17 % vs moyenne 200 j), élan négatif ; RSI 28 : survente.",
+      "as_of": "2026-10-11T08:35:40Z"
     },
     "FET": {
-      "price_usd": 0.224982,
-      "rsi14": 41.2,
-      "sma50": 0.191115,
-      "sma200": 0.191711,
-      "sma200_gap_pct": 17.4,
+      "price_usd": 0.221577,
+      "rsi14": 40.1,
+      "sma50": 0.191047,
+      "sma200": 0.191694,
+      "sma200_gap_pct": 15.6,
       "sma50_above_sma200": false,
-      "macd_histogram": -0.00376075,
+      "macd_histogram": -0.00397805,
       "change_pct": {
-        "7d": -11,
-        "30d": 35.3,
-        "90d": 42.6,
-        "365d": -38.9
+        "7d": -12.4,
+        "30d": 33.2,
+        "90d": 40.4,
+        "365d": -39.8
       },
       "volatility_30d_pct": 128,
-      "drawdown_from_365d_high_pct": -40.7,
-      "reading": "Tendance de fond haussière (+17 % vs moyenne 200 j), élan négatif ; RSI 41 neutre.",
-      "as_of": "2026-10-11T02:00:20Z"
+      "drawdown_from_365d_high_pct": -41.6,
+      "reading": "Tendance de fond haussière (+16 % vs moyenne 200 j), élan négatif ; RSI 40 neutre.",
+      "as_of": "2026-10-11T08:36:20Z"
     },
     "GRT": {
-      "price_usd": 0.027157,
-      "rsi14": 21.8,
-      "sma50": 0.0222607,
-      "sma200": 0.021258,
-      "sma200_gap_pct": 27.7,
+      "price_usd": 0.026897,
+      "rsi14": 20.7,
+      "sma50": 0.0222555,
+      "sma200": 0.0212567,
+      "sma200_gap_pct": 26.5,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.000647005,
+      "macd_histogram": -0.000663598,
       "change_pct": {
-        "7d": -7.9,
-        "30d": 54.8,
-        "90d": 57.7,
-        "365d": -56.7
+        "7d": -8.8,
+        "30d": 53.3,
+        "90d": 56.1,
+        "365d": -57.1
       },
       "volatility_30d_pct": 141,
-      "drawdown_from_365d_high_pct": -63.1,
-      "reading": "Tendance de fond haussière (+28 % vs moyenne 200 j), élan négatif ; RSI 22 : survente.",
-      "as_of": "2026-10-11T02:00:30Z"
+      "drawdown_from_365d_high_pct": -63.4,
+      "reading": "Tendance de fond haussière (+27 % vs moyenne 200 j), élan négatif ; RSI 21 : survente.",
+      "as_of": "2026-10-11T08:36:40Z"
     },
     "TIA": {
-      "price_usd": 0.628866,
-      "rsi14": 65.7,
-      "sma50": 0.417645,
-      "sma200": 0.374758,
-      "sma200_gap_pct": 67.8,
+      "price_usd": 0.596894,
+      "rsi14": 62.2,
+      "sma50": 0.417006,
+      "sma200": 0.374598,
+      "sma200_gap_pct": 59.3,
       "sma50_above_sma200": true,
-      "macd_histogram": 0.0117294,
+      "macd_histogram": 0.00968896,
       "change_pct": {
-        "7d": 31.3,
-        "30d": 77.7,
-        "90d": 58.8,
-        "365d": -32.1
+        "7d": 24.6,
+        "30d": 68.7,
+        "90d": 50.7,
+        "365d": -35.5
       },
       "volatility_30d_pct": 151,
-      "drawdown_from_365d_high_pct": -46.9,
-      "reading": "Tendance de fond haussière (+68 % vs moyenne 200 j), élan positif ; RSI 66 neutre.",
-      "as_of": "2026-10-11T02:00:20Z"
+      "drawdown_from_365d_high_pct": -49.6,
+      "reading": "Tendance de fond haussière (+59 % vs moyenne 200 j), élan positif ; RSI 62 neutre.",
+      "as_of": "2026-10-11T08:36:40Z"
     },
     "CTSI": {
-      "price_usd": 0.034844,
+      "price_usd": 0.0348445,
       "rsi14": 71.6,
       "sma50": 0.0275948,
       "sma200": 0.0272559,
       "sma200_gap_pct": 27.8,
       "sma50_above_sma200": true,
-      "macd_histogram": 0.00045901,
+      "macd_histogram": 0.000459045,
       "change_pct": {
         "7d": 16.2,
         "30d": 45.6,
@@ -115,178 +115,178 @@
       "volatility_30d_pct": 74,
       "drawdown_from_365d_high_pct": -44.2,
       "reading": "Tendance de fond haussière (+28 % vs moyenne 200 j), élan positif ; RSI 72 : surachat, mouvement étiré.",
-      "as_of": "2026-10-11T02:00:50Z"
+      "as_of": "2026-10-11T08:36:50Z"
     },
     "PEAQ": {
-      "price_usd": 0.0421486,
-      "rsi14": 49.4,
-      "sma50": 0.0319797,
-      "sma200": 0.0228679,
-      "sma200_gap_pct": 84.3,
+      "price_usd": 0.0411369,
+      "rsi14": 47.3,
+      "sma50": 0.0319595,
+      "sma200": 0.0228628,
+      "sma200_gap_pct": 79.9,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.000647436,
+      "macd_histogram": -0.000712001,
       "change_pct": {
-        "7d": -8.1,
-        "30d": 64.6,
-        "90d": 148.2,
-        "365d": -49.5
+        "7d": -10.3,
+        "30d": 60.6,
+        "90d": 142.2,
+        "365d": -50.7
       },
-      "volatility_30d_pct": 142,
-      "drawdown_from_365d_high_pct": -55,
-      "reading": "Tendance de fond haussière (+84 % vs moyenne 200 j), élan négatif ; RSI 49 neutre.",
-      "as_of": "2026-10-11T02:02:00Z"
+      "volatility_30d_pct": 143,
+      "drawdown_from_365d_high_pct": -56.1,
+      "reading": "Tendance de fond haussière (+80 % vs moyenne 200 j), élan négatif ; RSI 47 neutre.",
+      "as_of": "2026-10-11T08:37:10Z"
     },
     "LINK": {
-      "price_usd": 13.0229,
-      "rsi14": 41.2,
-      "sma50": 12.5335,
-      "sma200": 9.70879,
-      "sma200_gap_pct": 34.1,
+      "price_usd": 12.8593,
+      "rsi14": 40,
+      "sma50": 12.5302,
+      "sma200": 9.70797,
+      "sma200_gap_pct": 32.5,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.241465,
+      "macd_histogram": -0.251908,
       "change_pct": {
-        "7d": -8.7,
-        "30d": 12.8,
-        "90d": 65.2,
-        "365d": -24.3
+        "7d": -9.9,
+        "30d": 11.4,
+        "90d": 63.2,
+        "365d": -25.3
       },
       "volatility_30d_pct": 76,
-      "drawdown_from_365d_high_pct": -34.5,
-      "reading": "Tendance de fond haussière (+34 % vs moyenne 200 j), élan négatif ; RSI 41 neutre.",
-      "as_of": "2026-10-11T02:02:00Z"
+      "drawdown_from_365d_high_pct": -35.3,
+      "reading": "Tendance de fond haussière (+33 % vs moyenne 200 j), élan négatif ; RSI 40 neutre.",
+      "as_of": "2026-10-11T08:38:10Z"
     },
     "ONDO": {
-      "price_usd": 0.491579,
-      "rsi14": 21.2,
-      "sma50": 0.420442,
-      "sma200": 0.356,
-      "sma200_gap_pct": 38.1,
+      "price_usd": 0.485893,
+      "rsi14": 20.5,
+      "sma50": 0.420328,
+      "sma200": 0.355971,
+      "sma200_gap_pct": 36.5,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.00673826,
+      "macd_histogram": -0.00710113,
       "change_pct": {
-        "7d": -1.4,
-        "30d": 40.2,
-        "90d": 58.2,
-        "365d": -31.5
+        "7d": -2.5,
+        "30d": 38.6,
+        "90d": 56.4,
+        "365d": -32.3
       },
       "volatility_30d_pct": 127,
-      "drawdown_from_365d_high_pct": -41,
-      "reading": "Tendance de fond haussière (+38 % vs moyenne 200 j), élan négatif ; RSI 21 : survente.",
-      "as_of": "2026-10-11T02:02:10Z"
+      "drawdown_from_365d_high_pct": -41.7,
+      "reading": "Tendance de fond haussière (+37 % vs moyenne 200 j), élan négatif ; RSI 21 : survente.",
+      "as_of": "2026-10-11T08:38:10Z"
     },
     "JUP": {
-      "price_usd": 0.359167,
-      "rsi14": 46.5,
-      "sma50": 0.275929,
-      "sma200": 0.211766,
-      "sma200_gap_pct": 69.6,
+      "price_usd": 0.357456,
+      "rsi14": 46,
+      "sma50": 0.275894,
+      "sma200": 0.211758,
+      "sma200_gap_pct": 68.8,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.000717885,
+      "macd_histogram": -0.000827057,
       "change_pct": {
-        "7d": 7.2,
-        "30d": 46.5,
-        "90d": 73.5,
-        "365d": 6.6
+        "7d": 6.7,
+        "30d": 45.8,
+        "90d": 72.7,
+        "365d": 6.1
       },
       "volatility_30d_pct": 115,
-      "drawdown_from_365d_high_pct": -19.2,
-      "reading": "Tendance de fond haussière (+70 % vs moyenne 200 j), élan négatif ; RSI 47 neutre.",
-      "as_of": "2026-10-11T02:02:00Z"
+      "drawdown_from_365d_high_pct": -19.6,
+      "reading": "Tendance de fond haussière (+69 % vs moyenne 200 j), élan négatif ; RSI 46 neutre.",
+      "as_of": "2026-10-11T08:38:20Z"
     },
     "LPT": {
-      "price_usd": 1.80017,
-      "rsi14": 49.9,
-      "sma50": 1.55265,
-      "sma200": 1.73727,
-      "sma200_gap_pct": 3.6,
+      "price_usd": 1.81679,
+      "rsi14": 50.8,
+      "sma50": 1.55299,
+      "sma200": 1.73735,
+      "sma200_gap_pct": 4.6,
       "sma50_above_sma200": false,
-      "macd_histogram": -0.00620482,
+      "macd_histogram": -0.00514445,
       "change_pct": {
-        "7d": 4.6,
-        "30d": 31.9,
-        "90d": 19.1,
-        "365d": -61.2
+        "7d": 5.5,
+        "30d": 33.1,
+        "90d": 20.2,
+        "365d": -60.8
       },
       "volatility_30d_pct": 95,
-      "drawdown_from_365d_high_pct": -68.3,
-      "reading": "Tendance de fond haussière (+4 % vs moyenne 200 j), élan négatif ; RSI 50 neutre.",
-      "as_of": "2026-10-11T02:02:30Z"
+      "drawdown_from_365d_high_pct": -68,
+      "reading": "Tendance de fond haussière (+5 % vs moyenne 200 j), élan négatif ; RSI 51 neutre.",
+      "as_of": "2026-10-11T08:38:30Z"
     },
     "AIOZ": {
-      "price_usd": 0.115216,
-      "rsi14": 36.9,
-      "sma50": 0.0870057,
-      "sma200": 0.0649493,
-      "sma200_gap_pct": 77.4,
+      "price_usd": 0.115009,
+      "rsi14": 36.8,
+      "sma50": 0.0870016,
+      "sma200": 0.0649482,
+      "sma200_gap_pct": 77.1,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.00187133,
+      "macd_histogram": -0.00188455,
       "change_pct": {
-        "7d": 2.8,
-        "30d": 55.9,
-        "90d": 126.6,
-        "365d": -45.5
+        "7d": 2.6,
+        "30d": 55.6,
+        "90d": 126.2,
+        "365d": -45.6
       },
       "volatility_30d_pct": 217,
-      "drawdown_from_365d_high_pct": -52.9,
+      "drawdown_from_365d_high_pct": -53,
       "reading": "Tendance de fond haussière (+77 % vs moyenne 200 j), élan négatif ; RSI 37 neutre.",
-      "as_of": "2026-10-11T02:03:40Z"
+      "as_of": "2026-10-11T08:38:40Z"
     },
     "FLUX": {
-      "price_usd": 0.0829235,
-      "rsi14": 57.7,
-      "sma50": 0.061164,
-      "sma200": 0.0562863,
-      "sma200_gap_pct": 47.3,
+      "price_usd": 0.0837487,
+      "rsi14": 58.5,
+      "sma50": 0.0611805,
+      "sma200": 0.0562905,
+      "sma200_gap_pct": 48.8,
       "sma50_above_sma200": true,
-      "macd_histogram": 0.0000601836,
+      "macd_histogram": 0.000112844,
       "change_pct": {
-        "7d": 7.4,
-        "30d": 63.8,
-        "90d": 95.5,
-        "365d": -33
+        "7d": 8.5,
+        "30d": 65.4,
+        "90d": 97.5,
+        "365d": -32.4
       },
       "volatility_30d_pct": 96,
-      "drawdown_from_365d_high_pct": -64.1,
-      "reading": "Tendance de fond haussière (+47 % vs moyenne 200 j), élan positif ; RSI 58 neutre.",
-      "as_of": "2026-10-11T02:03:40Z"
+      "drawdown_from_365d_high_pct": -63.8,
+      "reading": "Tendance de fond haussière (+49 % vs moyenne 200 j), élan positif ; RSI 59 neutre.",
+      "as_of": "2026-10-11T08:38:50Z"
     },
     "ARB": {
-      "price_usd": 0.195068,
-      "rsi14": 34.9,
-      "sma50": 0.166818,
-      "sma200": 0.114371,
-      "sma200_gap_pct": 70.6,
+      "price_usd": 0.194861,
+      "rsi14": 34.8,
+      "sma50": 0.166813,
+      "sma200": 0.11437,
+      "sma200_gap_pct": 70.4,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.00503788,
+      "macd_histogram": -0.00505112,
       "change_pct": {
-        "7d": -4.4,
-        "30d": 39.8,
-        "90d": 116.1,
+        "7d": -4.5,
+        "30d": 39.6,
+        "90d": 115.9,
         "365d": -35.5
       },
       "volatility_30d_pct": 134,
-      "drawdown_from_365d_high_pct": -45.6,
-      "reading": "Tendance de fond haussière (+71 % vs moyenne 200 j), élan négatif ; RSI 35 neutre.",
-      "as_of": "2026-10-11T02:03:30Z"
+      "drawdown_from_365d_high_pct": -45.7,
+      "reading": "Tendance de fond haussière (+70 % vs moyenne 200 j), élan négatif ; RSI 35 neutre.",
+      "as_of": "2026-10-11T08:38:40Z"
     },
     "INJ": {
-      "price_usd": 7.71069,
-      "rsi14": 49,
-      "sma50": 6.50277,
-      "sma200": 4.98965,
-      "sma200_gap_pct": 54.5,
+      "price_usd": 7.62874,
+      "rsi14": 47.9,
+      "sma50": 6.50113,
+      "sma200": 4.98924,
+      "sma200_gap_pct": 52.9,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.0989511,
+      "macd_histogram": -0.104181,
       "change_pct": {
-        "7d": 1,
-        "30d": 34.5,
-        "90d": 65.1,
-        "365d": -9.2
+        "7d": -0.1,
+        "30d": 33,
+        "90d": 63.4,
+        "365d": -10.2
       },
       "volatility_30d_pct": 125,
-      "drawdown_from_365d_high_pct": -22.4,
-      "reading": "Tendance de fond haussière (+55 % vs moyenne 200 j), élan négatif ; RSI 49 neutre.",
-      "as_of": "2026-10-11T02:03:40Z"
+      "drawdown_from_365d_high_pct": -23.2,
+      "reading": "Tendance de fond haussière (+53 % vs moyenne 200 j), élan négatif ; RSI 48 neutre.",
+      "as_of": "2026-10-11T08:40:10Z"
     }
   },
   "backtest": {
@@ -362,6 +362,69 @@
           "ACHAT": 19,
           "ATTENTE": 8,
           "VENTE": 5
+        }
+      }
+    },
+    "rules": {
+      "registered_at": "2026-10-11T09:00:00Z",
+      "definitions": {
+        "moteur": {
+          "name": "Moteur actuel",
+          "rule": "Le verdict émis, tel quel"
+        },
+        "garde_fou_rsi": {
+          "name": "Moteur + garde-fou RSI",
+          "rule": "Moteur + garde-fou RSI : ACHAT → ATTENTE si RSI ≥ 70, VENTE → ATTENTE si RSI ≤ 30"
+        },
+        "tendance_rsi": {
+          "name": "Tendance + RSI",
+          "rule": "Tendance + RSI : ACHAT si cours > MM200 et RSI < 70 ; VENTE si cours < MM200 et MACD négatif ; sinon ATTENTE"
+        },
+        "toujours_achat": {
+          "name": "Toujours ACHAT (référence)",
+          "rule": "Référence naïve à battre : ACHAT à chaque fois"
+        }
+      },
+      "retrospective": {
+        "n": 82,
+        "results": {
+          "moteur": {
+            "correct": 21,
+            "pct": 25.6
+          },
+          "garde_fou_rsi": {
+            "correct": 22,
+            "pct": 26.8
+          },
+          "tendance_rsi": {
+            "correct": 32,
+            "pct": 39
+          },
+          "toujours_achat": {
+            "correct": 44,
+            "pct": 53.7
+          }
+        }
+      },
+      "prospective": {
+        "n": 0,
+        "results": {
+          "moteur": {
+            "correct": 0,
+            "pct": null
+          },
+          "garde_fou_rsi": {
+            "correct": 0,
+            "pct": null
+          },
+          "tendance_rsi": {
+            "correct": 0,
+            "pct": null
+          },
+          "toujours_achat": {
+            "correct": 0,
+            "pct": null
+          }
         }
       }
     },
