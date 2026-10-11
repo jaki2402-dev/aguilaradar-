@@ -509,3 +509,23 @@ dessus de sa MM200, sans le savoir.
   l'onglet Moteur, contexte de l'Assistant (15,1 k caractères avec les vraies données, limite 20 k).
   Pièges : bulles du glossaire dans un `<th>` en `white-space: nowrap` → tableau de 1 424 px ;
   « % » seul à la ligne → espace insécable.
+
+### 11/10/2026 (fin de matinée) — robot de vérification, règles candidates figées, alertes techniques
+
+- **`resolve-due`** (GitHub Action, toutes les heures à :45) : verdicts résolus au prix CoinGecko de
+  l'heure exacte de `resolves_at` (`market_chart/range` ±2 h ; le cycle prenait le prix de son propre
+  passage, jusqu'à 8 h plus tard, des jours plus tard pendant la panne de fin septembre) ; issue via
+  `classifyActualMove` de `js/engine.js` (une seule règle), `global_stats` recalculé (figé depuis le
+  05/10 : le digest le lisait). Horizons d'opportunités : méthode identique à la routine horizons-6h
+  (`/history`, EUR du jour). Groupe témoin : la spec du cycle ne mentionnait plus sa résolution
+  (8 échéances du 18/10 orphelines) ; prix de départ sans devise → devise reconnue sur le cours réel
+  (≤ 3 % d'un côté, ≥ 6 % de l'autre), sinon laissé en attente. `QUIET_WINDOWS` : jamais d'écriture
+  pendant le créneau de la routine propriétaire du fichier (conflits git en pleine fusion).
+  Réécriture JSON par Node : 8-9 lignes de différence de forme (66240.0 → 66240), contrôlé.
+- Désactiver `horizons-6h` via `update_trigger` : refusé par le classifieur (comme prévu par
+  CLAUDE.md) → P15, à faire par l'utilisateur.
+- **Règles candidates** (`CANDIDATE_RULES`, `RULES_REGISTERED_AT` = 11/10 09h00) : moteur, moteur +
+  garde-fou RSI, tendance + RSI, toujours ACHAT (référence). Figées AVANT les issues des 15 verdicts
+  émis du 05 au 10/10 → vrai test, sans ajustement a posteriori possible. Protocole dans P14.
+- **Alertes `signal_technique`** : bascule seulement (comparaison avec la lecture de la veille, ignorée
+  si elle a plus de 3 jours), MM200 prioritaire, max 3/passage, cooldown 7 jours par actif et type.

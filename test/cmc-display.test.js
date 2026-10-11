@@ -129,6 +129,21 @@ describe("onglet Favoris : comparatif technique des 15", () => {
     expect(labels).toEqual(["RSI ≥ 70 (surachat)", "RSI neutre", "Cours au-dessus de la MM200", "Cours sous la MM200", "Tous les verdicts"]);
   });
 
+  it("onglet Moteur : règles candidates, passé et test réel côte à côte", () => {
+    const rules = {
+      registered_at: "2026-10-11T09:00:00Z",
+      definitions: { moteur: { name: "Moteur actuel", rule: "Le verdict émis, tel quel" }, toujours_achat: { name: "Toujours ACHAT (référence)", rule: "ACHAT à chaque fois" } },
+      retrospective: { n: 82, results: { moteur: { correct: 21, pct: 25.6 }, toujours_achat: { correct: 44, pct: 53.7 } } },
+      prospective: { n: 0, results: { moteur: { correct: 0, pct: null }, toujours_achat: { correct: 0, pct: null } } },
+    };
+    const doc = render({ ...ROBOT, backtest: { ...ROBOT.backtest, rules } });
+    const tables = doc.querySelectorAll("#engine-technical-backtest table");
+    expect(tables).toHaveLength(2);
+    expect([...tables[1].querySelectorAll("thead th")].map((th) => th.textContent)).toEqual(["Règle", "Passé (82)", "Test réel (0)"]);
+    expect([...tables[1].querySelectorAll("tbody tr")].map((tr) => tr.textContent)).toEqual(["Moteur actuel25,6\u00a0%—", "Toujours ACHAT (référence)53,7\u00a0%—"]);
+    expect(doc.getElementById("engine-technical-backtest").textContent).toContain("fixées le 11/10 avant de connaître les issues");
+  });
+
   it("sans fichier : rien dans Favoris, message honnête dans Moteur", () => {
     const doc = render(null);
     expect(doc.getElementById("favoris-technical").innerHTML).toBe("");

@@ -30,6 +30,7 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | Thèse hebdo du portefeuille | 05/10 | OK (hebdomadaire) |
 | Groupe témoin | 04/10 | OK — objectif 8 en attente atteint |
 | Actualités | vérifiées 10/10, contenu inchangé depuis le 05/10 | À surveiller (P2) |
+| Vérification des échéances (Action GitHub `resolve-due`, toutes les heures) | 11/10 08h33 | OK — 1er passage réel réussi ; 1re vraie échéance le 12/10 16h20 (GRT, PEAQ, TIA) |
 | Analyse technique des favoris (Action GitHub `technical-daily`) | 11/10 02h01 | OK — 15/15, recoupée avec CoinMarketCap (CTSI : RSI 71,6 contre 71,0) |
 | Tests (`npm test`) | 11/10 | 743/743 |
 
@@ -45,8 +46,9 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | P7 | **3 routines gardent toute leur mémoire d'une exécution à l'autre** (verif-fraicheur, opportunités, briefing-email) : 274 k à 491 k tokens de contexte mesurés le 06/10, bien plus coûteux qu'une session neuve. | Session avec l'outil routines + **Toi** | Convertir une par une, en vérifiant après chaque conversion. |
 | P8 | **Seuls 4 prompts de routines sur environ 11 sont recopiés dans `docs/routines/`** : les autres sont invisibles pour une session qui n'a pas l'outil routines. C'est le principal trou de mémoire entre sessions. | Session avec l'outil routines | Recopier chaque prompt actuel (`get_trigger`) dans `docs/routines/<nom>.md`, sans secret (clé privée exclue). |
 | P9 | **Mail du matin** : le prompt corrigé du 05/10 (jauges fraîches) n'a probablement pas été collé. Non vérifié : le mail ne laisse aucune trace dans le dépôt. | Session avec l'outil routines | Vérifier avec `get_trigger`. |
+| P15 | **Routine `horizons-6h` devenue inutile** : le robot `resolve-due` fait son travail sans quota (essai réel réussi le 11/10). Une session ne peut pas la désactiver (refus du système). | **Toi** | Désactiver `aguilaradar-horizons-6h` : claude.ai/code/routines/trig_012L3zXByo7gQXCfAYQsrWhn. Sans urgence : elle ne trouve plus rien à faire. |
 | P10 | **CoinMarketCap : routine dédiée facultative.** Depuis le 11/10, l'analyse technique des favoris vient du robot GitHub (sans quota). CoinMarketCap n'apporterait plus que le levier, le financement, les liquidations et la saison des altcoins. | **Toi**, si tu le souhaites | Créer `aguilaradar-coinmarketcap-quotidien` avec le texte de `docs/routines/coinmarketcap-quotidien.md`. Rien ne casse sans elle. |
-| P14 | **Moteur des verdicts peu fiable (mesuré)** : 25,6 % d'exacts sur 82 ; ATTENTE dans 80 % des cas alors que le cours n'est resté stable que dans 23 %. Indice le plus net : RSI ≥ 70 le jour du verdict → hausse dans 25 % des cas seulement (61 % en RSI neutre), sur 16 cas. | Session après le 20/10 | Fin de l'évaluation de corr-20260921 le 20/10 (rappel programmé). Puis, sur les verdicts portant `technical_at_issue`, décider d'une correction de la règle (une seule variable à la fois), documentée dans `correction_log`. |
+| P14 | **Moteur des verdicts peu fiable (mesuré)** : 25,6 % d'exacts sur 82 ; ATTENTE dans 80 % des cas alors que le cours n'est resté stable que dans 23 %. Indice le plus net : RSI ≥ 70 le jour du verdict → hausse dans 25 % des cas seulement (61 % en RSI neutre), sur 16 cas. | Session après le 20/10 | **Protocole fixé le 11/10** : 4 règles candidates figées dans le robot (`backtest.rules` de `technical-favoris.json`, onglet Moteur), jugées sur la colonne « Test réel » (verdicts vérifiés après le 11/10 09h). Adopter une règle seulement si, sur ≥ 15 verdicts du test réel, elle bat le moteur ET « toujours ACHAT ». Sinon : attendre plus de cas, ne rien changer. Une seule variable à la fois, documentée dans `correction_log`. |
 
 ## Rendez-vous
 
@@ -78,6 +80,11 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 
 ## Journal des sessions (le plus récent en haut)
 
+- **11/10/2026 (fin de matinée)** — Demande : points 2, 1, 3. (2) Robot `resolve-due` : verdicts au prix
+  exact de l'échéance, horizons des opportunités, groupe témoin (échéances du 18/10 orphelines), sans
+  quota ; le cycle ne résout plus qu'en secours ; désactivation de `horizons-6h` refusée → P15.
+  (1) 4 règles candidates figées avant les issues des 15 verdicts en attente (protocole P14).
+  (3) Alertes de bascule technique sur le téléphone (MM200, surachat/survente).
 - **11/10/2026 (matin)** — Demande : « améliorer nettement l'analyse ». Robot d'analyse technique quotidien
   (GitHub, zéro quota) + analyse rétrospective des 82 verdicts vérifiés (P14). Découverte : cycle, marché et
   favoris suivent leur spec sur main → résumés et lecture technique actifs sans rien coller. Cycle de 00h15

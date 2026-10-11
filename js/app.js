@@ -266,6 +266,7 @@ function renderJournalPage() {
 
 const ALERT_TYPE_LABELS = {
   seuil_technique: "Seuil technique",
+  signal_technique: "Signal technique",
   actualite_macro: "Actu macro",
   actualite_favori: "Actu favori",
   actualite_generale: "Actu crypto",

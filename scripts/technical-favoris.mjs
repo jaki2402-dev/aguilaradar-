@@ -83,6 +83,47 @@ export function closesUntil(points, iso) {
 
 const DIRECTIONS = ["ACHAT", "ATTENTE", "VENTE"];
 
+// Règles candidates pour corriger le moteur (P14), FIGÉES le 11/10/2026 avant de connaître l'issue
+// des 15 verdicts alors en attente : leur score sur les verdicts vérifiés après REGISTERED_AT est
+// un vrai test (impossible de les ajuster après coup). Ne jamais modifier une règle existante :
+// en ajouter une nouvelle, avec sa propre date. Mêmes seuils RSI que le site (70 / 30).
+export const RULES_REGISTERED_AT = "2026-10-11T09:00:00Z";
+export const CANDIDATE_RULES = {
+  moteur: { name: "Moteur actuel", label: "Le verdict émis, tel quel", call: (v) => v.verdict },
+  garde_fou_rsi: {
+    name: "Moteur + garde-fou RSI",
+    label: "Moteur + garde-fou RSI : ACHAT → ATTENTE si RSI ≥ 70, VENTE → ATTENTE si RSI ≤ 30",
+    call: (v, ind) => (v.verdict === "ACHAT" && ind.rsi14 >= 70 ? "ATTENTE" : v.verdict === "VENTE" && ind.rsi14 <= 30 ? "ATTENTE" : v.verdict),
+  },
+  tendance_rsi: {
+    name: "Tendance + RSI",
+    label: "Tendance + RSI : ACHAT si cours > MM200 et RSI < 70 ; VENTE si cours < MM200 et MACD négatif ; sinon ATTENTE",
+    call: (v, ind) => (ind.sma200_gap_pct >= 0 && ind.rsi14 < 70 ? "ACHAT" : ind.sma200_gap_pct < 0 && ind.macd_histogram !== null && ind.macd_histogram < 0 ? "VENTE" : "ATTENTE"),
+  },
+  toujours_achat: { name: "Toujours ACHAT (référence)", label: "Référence naïve à battre : ACHAT à chaque fois", call: () => "ACHAT" },
+};
+
+// Score de chaque règle sur les mêmes verdicts (ceux dont RSI et MM200 sont connus à l'émission),
+// séparé entre rétrospectif (issue connue à la date de la règle) et test réel (issue postérieure).
+export function scoreRules(rows) {
+  const usable = rows.filter(({ ind }) => ind.rsi14 !== null && ind.sma200_gap_pct !== null);
+  const score = (subset) => {
+    const results = {};
+    for (const [key, rule] of Object.entries(CANDIDATE_RULES)) {
+      const correct = subset.filter(({ v, ind }) => rule.call(v, ind) === v.outcome.actual_direction).length;
+      results[key] = { correct, pct: subset.length ? round((correct / subset.length) * 100, 1) : null };
+    }
+    return { n: subset.length, results };
+  };
+  const after = (r) => (r.v.outcome.resolved_at || "") >= RULES_REGISTERED_AT;
+  return {
+    registered_at: RULES_REGISTERED_AT,
+    definitions: Object.fromEntries(Object.entries(CANDIDATE_RULES).map(([k, r]) => [k, { name: r.name, rule: r.label }])),
+    retrospective: score(usable.filter((r) => !after(r))),
+    prospective: score(usable.filter(after)),
+  };
+}
+
 function bucket() {
   return { n: 0, engine_correct: 0, actual: { ACHAT: 0, ATTENTE: 0, VENTE: 0 } };
 }
@@ -140,8 +181,78 @@ export function backtest(verdicts, pointsByCgId, site) {
     trend_rule: { n: trendRuleN, accuracy_pct: pct(trendRuleCorrect, trendRuleN) },
     by_rsi_zone: byRsi,
     by_trend: byTrend,
+    rules: scoreRules(rows),
     note: "Rétrospectif, petit échantillon, période majoritairement haussière : un indice pour orienter l'auto-correction du moteur, pas une preuve.",
   };
+}
+
+// ---------------------------------------------------------------------------------------------
+// Alertes techniques (data/alerts.json, type "signal_technique") : uniquement une BASCULE entre la
+// lecture d'hier et celle d'aujourd'hui, jamais un état qui dure. Chaque alerte = 1 notification
+// push (Worker) : au plus MAX_TECH_ALERTS par passage, et pas deux fois la même bascule pour un
+// actif en ALERT_COOLDOWN_DAYS jours (un RSI qui oscille autour de 70 ne sonne pas tous les jours).
+const ALERTS_PATH = "data/alerts.json";
+const MAX_TECH_ALERTS = 3;
+const ALERT_COOLDOWN_DAYS = 7;
+const PREVIOUS_MAX_AGE_MS = 3 * DAY_MS; // lecture précédente trop ancienne (panne) : pas de comparaison
+
+export function technicalEvents(previous, current) {
+  const events = [];
+  for (const [ticker, now] of Object.entries(current || {})) {
+    const before = previous && previous[ticker];
+    if (!before || !now) continue;
+    const fin = Number.isFinite;
+    if (fin(before.sma200_gap_pct) && fin(now.sma200_gap_pct)) {
+      if (before.sma200_gap_pct >= 0 && now.sma200_gap_pct < 0) events.push({ ticker, kind: "mm200_dessous", priority: 0, now });
+      if (before.sma200_gap_pct < 0 && now.sma200_gap_pct >= 0) events.push({ ticker, kind: "mm200_dessus", priority: 0, now });
+    }
+    if (fin(before.rsi14) && fin(now.rsi14)) {
+      if (before.rsi14 < 70 && now.rsi14 >= 70) events.push({ ticker, kind: "rsi_surachat", priority: 1, now });
+      if (before.rsi14 > 30 && now.rsi14 <= 30) events.push({ ticker, kind: "rsi_survente", priority: 1, now });
+    }
+  }
+  return events.sort((a, b) => a.priority - b.priority);
+}
+
+const signedInt = (v) => `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(Math.round(v))} %`;
+
+function alertText(e) {
+  const n = e.now;
+  const trend = Number.isFinite(n.sma200_gap_pct) ? ` Tendance de fond : ${signedInt(n.sma200_gap_pct)} vs moyenne 200 j.` : "";
+  const tail = " Mesure automatique sur les cours, pas un conseil.";
+  switch (e.kind) {
+    case "mm200_dessous":
+      return { sentiment: "négatif", message: `${e.ticker} passe sous sa moyenne 200 jours (${signedInt(n.sma200_gap_pct)}) : la tendance de fond devient baissière.${tail}` };
+    case "mm200_dessus":
+      return { sentiment: "positif", message: `${e.ticker} repasse au-dessus de sa moyenne 200 jours (${signedInt(n.sma200_gap_pct)}) : la tendance de fond redevient haussière.${tail}` };
+    case "rsi_surachat":
+      return { sentiment: "neutre", message: `${e.ticker} entre en zone de surachat (RSI 14 j à ${Math.round(n.rsi14)}) : hausse déjà étirée, le risque de repli augmente.${trend}${tail}` };
+    default:
+      return { sentiment: "neutre", message: `${e.ticker} entre en zone de survente (RSI 14 j à ${Math.round(n.rsi14)}) : forte baisse récente, un rebond est possible sans être garanti.${trend}${tail}` };
+  }
+}
+
+export function buildTechnicalAlerts(events, alerts, nowIso) {
+  const cutoff = new Date(Date.parse(nowIso) - ALERT_COOLDOWN_DAYS * DAY_MS).toISOString();
+  const recent = new Set((alerts || []).filter((a) => a.type === "signal_technique" && (a.triggered_at || "") >= cutoff).map((a) => `${a.ticker_ou_theme}|${a.signal_kind}`));
+  const usedIds = new Set((alerts || []).map((a) => a.id));
+  const out = [];
+  for (const e of events) {
+    if (out.length >= MAX_TECH_ALERTS) break;
+    const id = `alert-${nowIso.slice(0, 10).replace(/-/g, "")}-${e.ticker.toLowerCase()}-${e.kind.replace(/_/g, "-")}`;
+    if (recent.has(`${e.ticker}|${e.kind}`) || usedIds.has(id)) continue;
+    usedIds.add(id);
+    out.push({
+      id,
+      ticker_ou_theme: e.ticker,
+      type: "signal_technique",
+      signal_kind: e.kind,
+      triggered_at: nowIso,
+      ...alertText(e),
+      source: "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko",
+    });
+  }
+  return out;
 }
 
 async function fetchSeries(cgId, attempt = 1) {
@@ -159,6 +270,12 @@ async function fetchSeries(cgId, attempt = 1) {
 
 async function main() {
   const site = loadSite();
+  let previous = null;
+  try {
+    previous = JSON.parse(readFileSync(OUT_PATH, "utf-8"));
+  } catch {
+    previous = null; // premier passage : rien à comparer
+  }
   const out = { updated_at: new Date().toISOString().replace(/\.\d{3}Z$/, "Z"), currency: "USD", source: "CoinGecko /coins/{id}/market_chart (365 j, quotidien) — calculs de js/detail.js", assets: {}, backtest: null, errors: [] };
   const pointsByCgId = {};
   for (const fav of site.FAVORIS) {
@@ -183,6 +300,20 @@ async function main() {
     out.errors.push(`backtest : ${e.message}`);
   }
   writeFileSync(OUT_PATH, JSON.stringify(out, null, 2) + "\n");
+  // Alertes : étape à part, son échec ne touche pas le fichier d'analyse déjà écrit.
+  try {
+    const fresh = previous && previous.updated_at && Date.parse(out.updated_at) - Date.parse(previous.updated_at) <= PREVIOUS_MAX_AGE_MS;
+    if (fresh) {
+      const alerts = JSON.parse(readFileSync(ALERTS_PATH, "utf-8"));
+      const added = buildTechnicalAlerts(technicalEvents(previous.assets, out.assets), alerts, out.updated_at);
+      if (added.length) {
+        writeFileSync(ALERTS_PATH, JSON.stringify([...alerts, ...added], null, 2) + "\n");
+        console.log(`${added.length} alerte(s) technique(s) : ${added.map((a) => a.id).join(", ")}`);
+      }
+    }
+  } catch (e) {
+    console.error(`alertes techniques : ${e.message}`);
+  }
   console.log(`${Object.keys(out.assets).length}/15 favoris calculés ; rétrospectif sur ${out.backtest ? out.backtest.sample : 0} verdicts`);
 }
 

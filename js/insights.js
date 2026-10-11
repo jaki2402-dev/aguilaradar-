@@ -413,6 +413,28 @@ function renderFavorisTechnical(technicalFavoris) {
   </details>`;
 }
 
+// Règles candidates pour corriger le moteur, figées par le robot AVANT de connaître les issues :
+// « Test réel » = verdicts vérifiés après cette date, seule colonne qui décidera (P14).
+function renderCandidateRules(rules) {
+  if (!rules || !rules.definitions || !rules.retrospective || !rules.prospective) return "";
+  const keys = Object.keys(rules.definitions);
+  const fmt = (part, k) => {
+    const r = part.results && part.results[k];
+    return r && part.n && r.pct !== null ? `${String(r.pct).replace(".", ",")}\u00a0%` : "—";
+  };
+  const name = (k) => escapeHtml((rules.definitions[k] && rules.definitions[k].name) || k);
+  const since = techDate(rules.registered_at);
+  return `<p class="text-resume">Pistes de correction, fixées${since ? ` le ${escapeHtml(since)}` : ""} avant de connaître les issues :</p>
+    <div class="tech-table-wrap"><table class="tech-table">
+      <thead><tr><th scope="col">Règle</th><th scope="col">Passé (${rules.retrospective.n})</th><th scope="col">Test réel (${rules.prospective.n})</th></tr></thead>
+      <tbody>${keys.map((k) => `<tr><th scope="row">${name(k)}</th><td>${fmt(rules.retrospective, k)}</td><td>${fmt(rules.prospective, k)}</td></tr>`).join("")}</tbody>
+    </table></div>
+    <details class="info-toggle"><summary>ⓘ Définition des règles</summary>
+      <ul class="hint">${keys.map((k) => `<li><strong>${name(k)}</strong> : ${escapeHtml((rules.definitions[k] && rules.definitions[k].rule) || "")}</li>`).join("")}</ul>
+    </details>
+    <p class="hint">% de verdicts justes. Une règle ne remplacera le moteur que si, sur au moins 15 verdicts du test réel, elle fait mieux que lui ET que la référence « toujours ACHAT ».</p>`;
+}
+
 // Onglet Moteur : ce que disaient les indicateurs le jour de chaque verdict vérifié, comparé à
 // l'issue réelle (backtest du robot, aucune donnée postérieure à l'émission). Constats calculés à
 // partir des comptes du fichier — aucune conclusion écrite en dur.
@@ -454,6 +476,7 @@ function renderTechnicalBacktest(technicalFavoris) {
       <thead><tr><th scope="col">Le jour du verdict</th><th scope="col">Verdicts</th><th scope="col">Hausse</th><th scope="col">Stable</th><th scope="col">Baisse</th></tr></thead>
       <tbody>${groups.map(([label, g]) => `<tr><th scope="row">${label}</th><td>${g.n}</td>${cell(g.actual.ACHAT, g.n)}${cell(g.actual.ATTENTE, g.n)}${cell(g.actual.VENTE, g.n)}</tr>`).join("")}</tbody>
     </table></div>
+    ${renderCandidateRules(b.rules)}
     <p class="hint">Choix du moteur : ${calls}. Hausse = +${THRESHOLDS.directionalMovePct} % ou plus à l'échéance du verdict, baisse = −${THRESHOLDS.directionalMovePct} % ou plus, stable entre les deux. Indicateurs recalculés avec les seuls cours connus le jour de chaque verdict.</p>
     ${b.note ? `<p class="hint">${escapeHtml(b.note)}</p>` : ""}`;
 }

@@ -1,7 +1,8 @@
 name: Technical daily
 
 # Analyse technique des 15 favoris (moyenne 200 j, RSI, MACD, volatilité, repli depuis le plus
-# haut 1 an) et analyse rétrospective des verdicts vérifiés → data/technical-favoris.json —
+# haut 1 an) et analyse rétrospective des verdicts vérifiés → data/technical-favoris.json, plus
+# alertes de bascule (MM200, surachat/survente) dans data/alerts.json —
 # calcul pur à partir de l'historique CoinGecko, aucun quota Claude. 23h30 UTC : juste avant le
 # cycle des verdicts de 00h15, hors des créneaux des autres robots et routines.
 on:
@@ -30,11 +31,12 @@ jobs:
       - name: Commit si quelque chose a changé
         run: |
           git add -N data/technical-favoris.json 2>/dev/null || true
-          git diff --quiet -- data/technical-favoris.json && exit 0
+          git diff --quiet -- data/technical-favoris.json data/alerts.json && exit 0
           python3 -m json.tool data/technical-favoris.json >/dev/null
+          python3 -m json.tool data/alerts.json >/dev/null
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/technical-favoris.json
+          git add data/technical-favoris.json data/alerts.json
           git commit -m "Analyse technique des favoris du $(date -u "+%d/%m/%Y")"
           for i in 1 2 3; do git pull --rebase -q origin main && git push origin HEAD:main && exit 0; sleep $((i*5)); done
           exit 1

@@ -168,6 +168,8 @@ vente.
   (`scripts/portfolio-snapshot.mjs`, zéro quota Claude) — aucune routine ne l'écrivait depuis le 14/09.
 - `alerts.json` (`seuil_technique`) : GitHub Action `price-alerts` (4×/jour, max 3/passage, 1 par
   verdict) — le cycle-2h ne les écrit plus depuis le 14/09. Chaque alerte = 1 push (Worker).
+  `signal_technique` : `technical-daily`, seulement une bascule d'un jour à l'autre (MM200,
+  RSI 70/30), max 3/passage, même bascule pas avant 7 jours.
 - `portfolio.json` : **édité à la main uniquement** ; `null` + `pending: true` = à afficher en
   attente, jamais deviné.
 - `portfolio-thesis.json` (`constat` + badge) ≠ `favoris-context.json` (`bull/base/bear`, **clé =
@@ -178,7 +180,8 @@ vente.
 - `technical-favoris.json` : GitHub Action `technical-daily` (23h30 UTC, zéro quota,
   `scripts/technical-favoris.mjs`, mêmes calculs que `js/detail.js`) — MM200, RSI, MACD,
   volatilité par favori (clé = ticker, USD) + analyse rétrospective des verdicts vérifiés. Le cycle
-  le lit pour `technical_at_issue` (documente, ne change pas la règle de décision).
+  le lit pour `technical_at_issue` (documente, ne change pas la règle de décision). `backtest.rules` :
+  règles candidates FIGÉES le 11/10 (`CANDIDATE_RULES`) — ne jamais en modifier une, en ajouter.
 - `crypto-global.json` (levier, saison des altcoins, encours ETF) et `cmc-favoris.json` (cours,
   évolutions, RSI, MM, MACD des 15 favoris, clé = ticker, USD) : état courant écrasé chaque jour par
   la seule routine `coinmarketcap-quotidien` (`scripts/cmc-snapshot.py`, ids CMC vérifiés dedans).

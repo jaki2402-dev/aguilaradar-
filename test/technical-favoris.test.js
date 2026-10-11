@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { loadSite, indicatorsAt, readingOf, closesUntil, backtest } from "../scripts/technical-favoris.mjs";
+import { loadSite, indicatorsAt, readingOf, closesUntil, backtest, scoreRules, RULES_REGISTERED_AT, technicalEvents, buildTechnicalAlerts } from "../scripts/technical-favoris.mjs";
 
 const site = loadSite();
 const DAY = 86400000;
@@ -159,5 +159,76 @@ describe("analyse rétrospective : répartition des choix du moteur et des issue
   it("cours arrondis à 6 chiffres significatifs", () => {
     const ind = indicatorsAt(Array.from({ length: 220 }, (_, i) => 0.0123456789 + i * 1e-5), site);
     expect(ind.price_usd).toBe(0.0145357);
+  });
+});
+
+describe("règles candidates figées le 11/10 (test réel sur les issues postérieures)", () => {
+  const row = (verdict, actual, ind, resolvedAt = "2026-10-05T08:00:00Z") => ({ v: { verdict, outcome: { actual_direction: actual, resolved_at: resolvedAt } }, ind: { rsi14: 50, sma200_gap_pct: 10, macd_histogram: 1, ...ind } });
+
+  it("chaque règle appliquée telle que définie", () => {
+    const r = scoreRules([
+      row("ACHAT", "ATTENTE", { rsi14: 75 }), // garde-fou et tendance : ATTENTE (juste)
+      row("ATTENTE", "ACHAT", {}), // tendance + RSI : au-dessus, RSI 50 → ACHAT (juste)
+      row("ATTENTE", "VENTE", { sma200_gap_pct: -5, macd_histogram: -1 }), // tendance : VENTE (juste)
+    ]).retrospective;
+    expect(r.n).toBe(3);
+    expect(r.results.moteur).toEqual({ correct: 0, pct: 0 });
+    expect(r.results.garde_fou_rsi).toEqual({ correct: 1, pct: 33.3 });
+    expect(r.results.tendance_rsi).toEqual({ correct: 3, pct: 100 }); // RSI 75 au-dessus de la MM200 → ATTENTE (juste)
+    expect(r.results.toujours_achat).toEqual({ correct: 1, pct: 33.3 });
+  });
+
+  it("seules les issues connues APRÈS la date des règles comptent comme test réel", () => {
+    const r = scoreRules([row("ACHAT", "ACHAT", {}), row("ACHAT", "VENTE", {}, "2026-10-12T16:45:00Z")]);
+    expect(r.registered_at).toBe(RULES_REGISTERED_AT);
+    expect(r.retrospective.n).toBe(1);
+    expect(r.prospective.n).toBe(1);
+    expect(r.prospective.results.moteur).toEqual({ correct: 0, pct: 0 });
+    expect(scoreRules([]).prospective).toMatchObject({ n: 0, results: { moteur: { correct: 0, pct: null } } });
+  });
+
+  it("verdict sans RSI ou sans MM200 à l'émission : écarté pour toutes les règles (comparaison à égalité)", () => {
+    expect(scoreRules([row("ACHAT", "ACHAT", { rsi14: null }), row("ACHAT", "ACHAT", { sma200_gap_pct: null })]).retrospective.n).toBe(0);
+  });
+});
+
+describe("alertes techniques : seulement les bascules d'un jour à l'autre", () => {
+  const prev = {
+    LPT: { sma200_gap_pct: 3.6, rsi14: 50 },
+    CTSI: { sma200_gap_pct: 27.8, rsi14: 68 },
+    ETH: { sma200_gap_pct: 17.6, rsi14: 28.8 }, // déjà en survente hier : pas de nouvelle alerte
+    TIA: { sma200_gap_pct: -2, rsi14: 50 },
+  };
+  const now = {
+    LPT: { sma200_gap_pct: -1.2, rsi14: 45 },
+    CTSI: { sma200_gap_pct: 30.1, rsi14: 71.6 },
+    ETH: { sma200_gap_pct: 15, rsi14: 25 },
+    TIA: { sma200_gap_pct: 4.4, rsi14: 55 },
+    PEAQ: { sma200_gap_pct: -5, rsi14: 20 }, // absent hier : rien à comparer
+  };
+  const NOW = "2026-10-11T23:31:00Z";
+
+  it("détecte les passages de la MM200 (prioritaires) puis l'entrée en surachat/survente", () => {
+    expect(technicalEvents(prev, now).map((e) => `${e.ticker}:${e.kind}`)).toEqual(["LPT:mm200_dessous", "TIA:mm200_dessus", "CTSI:rsi_surachat"]);
+    expect(technicalEvents(null, now)).toEqual([]);
+  });
+
+  it("messages factuels, sans conseil", () => {
+    const alerts = buildTechnicalAlerts(technicalEvents(prev, now), [], NOW);
+    expect(alerts.map((a) => a.message)).toEqual([
+      "LPT passe sous sa moyenne 200 jours (−1 %) : la tendance de fond devient baissière. Mesure automatique sur les cours, pas un conseil.",
+      "TIA repasse au-dessus de sa moyenne 200 jours (+4 %) : la tendance de fond redevient haussière. Mesure automatique sur les cours, pas un conseil.",
+      "CTSI entre en zone de surachat (RSI 14 j à 72) : hausse déjà étirée, le risque de repli augmente. Tendance de fond : +30 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
+    ]);
+    expect(alerts[0]).toMatchObject({ id: "alert-20261011-lpt-mm200-dessous", ticker_ou_theme: "LPT", type: "signal_technique", signal_kind: "mm200_dessous", sentiment: "négatif", triggered_at: NOW });
+  });
+
+  it("au plus 3 par passage, et pas deux fois la même bascule pour un actif en 7 jours", () => {
+    const many = ["A", "B", "C", "D"].map((t) => ({ ticker: t, kind: "rsi_surachat", now: { rsi14: 71, sma200_gap_pct: 1 } }));
+    expect(buildTechnicalAlerts(many, [], NOW)).toHaveLength(3);
+    const recent = [{ id: "x", type: "signal_technique", ticker_ou_theme: "A", signal_kind: "rsi_surachat", triggered_at: "2026-10-06T23:30:00Z" }];
+    expect(buildTechnicalAlerts(many, recent, NOW).map((a) => a.ticker_ou_theme)).toEqual(["B", "C", "D"]);
+    const old = [{ ...recent[0], triggered_at: "2026-10-01T23:30:00Z" }];
+    expect(buildTechnicalAlerts(many, old, NOW).map((a) => a.ticker_ou_theme)).toEqual(["A", "B", "C"]);
   });
 });
