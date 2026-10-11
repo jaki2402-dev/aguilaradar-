@@ -37,6 +37,18 @@
             "tx_per_day": "Blockchain.com explorer, 'last 24h' (resultat indexe via WebSearch - api.blockchain.info bloque par le proxy reseau) ; valeur arrondie '594K+' telle qu'affichee, pas un chiffre exact a l'unite",
             "active_addresses": "Blockchain.com, chart n-unique-addresses (resultat indexe via WebSearch - api.blockchain.info bloque par le proxy reseau) ; valeur arrondie '549K' telle qu'affichee, pas un chiffre exact a l'unite"
           }
+        },
+        {
+          "date": "2026-10-10",
+          "computed_at": "2026-10-11T10:16:38Z",
+          "tvl_usd": 4409163290,
+          "tx_per_day": 754899,
+          "active_addresses": 459043,
+          "source": {
+            "tvl_usd": "DefiLlama API /v2/historicalChainTvl/Bitcoin (GitHub Action)",
+            "tx_per_day": "Blockchain.com API /charts/n-transactions (GitHub Action)",
+            "active_addresses": "Blockchain.com API /charts/n-unique-addresses (GitHub Action)"
+          }
         }
       ]
     },
