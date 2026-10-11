@@ -385,7 +385,11 @@ function renderFavorisTechnical(technicalFavoris) {
   const cold = rows.filter((r) => r.t.rsi14 !== null && r.t.rsi14 <= 30).map((r) => r.ticker);
   // Synthèse dans l'ordre des favoris ; tableau ensuite trié par tendance de fond.
   rows.sort((a, b) => (b.t.sma200GapPct ?? -Infinity) - (a.t.sma200GapPct ?? -Infinity));
+  const proposed = rows.filter((r) => r.t.proposed);
+  const sells = proposed.filter((r) => r.t.proposed.verdict === "VENTE").map((r) => r.ticker);
+  const buys = proposed.filter((r) => r.t.proposed.verdict === "ACHAT").length;
   const summary = [
+    proposed.length ? `règle du moteur : ${buys} ACHAT${sells.length ? `, VENTE ${sells.join(", ")}` : ""}` : null,
     withTrend.length ? `${above}/${withTrend.length} au-dessus de leur moyenne 200 j` : null,
     hot.length ? `surachat : ${hot.join(", ")}` : null,
     cold.length ? `survente : ${cold.join(", ")}` : null,

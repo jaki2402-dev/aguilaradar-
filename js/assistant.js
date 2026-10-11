@@ -643,6 +643,7 @@ function technicalLines() {
     if (t.sma200GapPct !== null) bits.push(`${pct(t.sma200GapPct)} vs moyenne 200 j`);
     if (t.macdHistogram !== null && t.macdHistogram !== 0) bits.push(`MACD ${t.macdHistogram > 0 ? "haussier" : "baissier"}`);
     if (t.volatilityPct !== null) bits.push(`volatilité ${t.volatilityPct.toFixed(0)} %/an`);
+    if (t.proposed) bits.push(`règle du moteur : ${t.proposed.verdict}${Number.isFinite(t.proposed.confidence_pct) ? ` (juste ${t.proposed.confidence_pct} % du temps)` : ""}`);
     for (const [label, v] of t.change) if (v !== null && label !== "depuis janvier") bits.push(`${label} ${pct(v)}`);
     return bits.length ? `${f.ticker} : ${bits.join(", ")}` : null;
   }).filter(Boolean);

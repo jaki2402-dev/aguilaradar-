@@ -491,6 +491,12 @@ function renderDailyTechnicalSection(ticker) {
   if (t.drawdownPct !== null) rows.push(["Depuis le plus haut sur 1 an", pct(t.drawdownPct)]);
   const perf = t.change.filter(([, v]) => v !== null).map(([l, v]) => `${l} ${pct(v)}`);
   if (perf.length) rows.push(["Évolution", perf.join(" · ")]);
+  // Règle du moteur appliquée aujourd'hui (pas un verdict enregistré : le cycle l'émet à son passage).
+  const p = t.proposed;
+  if (p) {
+    const measured = Number.isFinite(p.confidence_pct) ? ` — juste ${p.confidence_pct} % du temps sur ${p.sample_n} cas passés` : "";
+    rows.unshift(["Règle du moteur aujourd'hui", `${p.verdict}${measured}`]);
+  }
   if (!rows.length) return "";
   const asOf = t.asOf ? new Date(t.asOf).toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit" }) : null;
   const origin = t.source === "robot" ? "calcul quotidien sur 1 an d'historique" : "relevé CoinMarketCap";

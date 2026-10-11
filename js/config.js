@@ -326,6 +326,7 @@ function technicalViewFor(ticker, technicalFavoris, cmcFavoris) {
       volatilityPct: num(robot.volatility_30d_pct),
       drawdownPct: num(robot.drawdown_from_365d_high_pct),
       reading: typeof robot.reading === "string" && robot.reading ? robot.reading : null,
+      proposed: robot.proposed_verdict && ["ACHAT", "ATTENTE", "VENTE"].includes(robot.proposed_verdict.verdict) ? robot.proposed_verdict : null,
     };
   }
   const cmc = cmcFavoris && cmcFavoris.assets ? cmcFavoris.assets[ticker] : null;
@@ -343,6 +344,7 @@ function technicalViewFor(ticker, technicalFavoris, cmcFavoris) {
     volatilityPct: null,
     drawdownPct: null,
     reading: null,
+    proposed: null,
   };
 }
 

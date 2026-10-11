@@ -23,6 +23,21 @@ const ROBOT = JSON.parse(readFileSync(new URL("./fixtures/technical-favoris-2026
 // Titre (avec sa bulle « ? » de glossaire) et valeur sont deux éléments distincts, espacés en CSS.
 const rowText = (li) => [...li.children].map((c) => c.textContent.replace(/\?/g, "").trim()).join(" ");
 
+// Même fichier avec le verdict proposé par la règle du moteur (ajouté le 11/10 à 09h, valeurs réelles).
+const WITH_RULE = JSON.parse(JSON.stringify(ROBOT));
+for (const a of Object.values(WITH_RULE.assets)) a.proposed_verdict = { rule: "retour_moyenne_rsi", verdict: "ACHAT", confidence_pct: 61, sample_n: 66, basis: "RSI < 70" };
+WITH_RULE.assets.CTSI.proposed_verdict = { rule: "retour_moyenne_rsi", verdict: "VENTE", confidence_pct: 44, sample_n: 16, basis: "RSI 72 ≥ 70 : hausse étirée, repli plus fréquent ensuite" };
+
+describe("fiche détaillée : règle du moteur appliquée aujourd'hui", () => {
+  it("en tête du bloc, avec son taux de réussite mesuré", () => {
+    const dom = loadPage(["config.js", "prices.js", "detail.js"], { html: "<!doctype html><html><body><div id='out'></div></body></html>" });
+    dom.window.aguilaradarData = { technicalFavoris: WITH_RULE };
+    const out = dom.window.document.getElementById("out");
+    out.innerHTML = dom.window.renderDailyTechnicalSection("CTSI");
+    expect(rowText(out.querySelector(".cmc-rows li"))).toBe("Règle du moteur aujourd'hui VENTE — juste 44 % du temps sur 16 cas passés");
+  });
+});
+
 describe("fiche détaillée : analyse technique du jour", () => {
   function render(ticker, data) {
     const dom = loadPage(["config.js", "prices.js", "detail.js"], { html: "<!doctype html><html><body><div id='out'></div></body></html>" });
@@ -82,6 +97,10 @@ describe("Assistant : analyse technique et fiabilité mesurée dans le contexte 
     expect(ctx).not.toContain("CoinMarketCap des favoris");
   });
 
+  it("robot : règle du moteur par favori quand elle existe", async () => {
+    expect(await context({ technicalFavoris: WITH_RULE })).toContain("CTSI : RSI14 72 (surachat), +28 % vs moyenne 200 j, MACD haussier, volatilité 74 %/an, règle du moteur : VENTE (juste 44 % du temps)");
+  });
+
   it("robot : fiabilité mesurée du moteur, avec le cas du RSI en surachat", async () => {
     expect(await context({ technicalFavoris: ROBOT })).toContain(
       "Fiabilité mesurée du moteur sur 82 verdicts vérifiés : 25.6 % d'exacts. Il a dit ATTENTE 66 fois alors que le marché est resté stable dans 19 cas, monté nettement dans 44 et baissé dans 19. Verdicts émis avec un RSI ≥ 70 : 16, dont 4 suivis d'une hausse et 7 d'une baisse."
@@ -117,6 +136,11 @@ describe("onglet Favoris : comparatif technique des 15", () => {
     expect(rows.map((r) => r.querySelector("th").textContent).slice(0, 3)).toEqual(["PEAQ", "AIOZ", "ARB"]);
     const ctsi = rows.find((r) => r.querySelector("th").textContent === "CTSI");
     expect([...ctsi.querySelectorAll("td")].map((c) => c.textContent)).toEqual(["+28\u00a0%", "72 surachat", "haussier", "+46\u00a0%", "74\u00a0%"]);
+  });
+
+  it("synthèse : verdicts de la règle du moteur en tête", () => {
+    const doc = render(WITH_RULE);
+    expect(doc.querySelector(".tech-compare summary .hint").textContent).toBe("règle du moteur : 14 ACHAT, VENTE CTSI · 15/15 au-dessus de leur moyenne 200 j · surachat : CTSI · survente : ETH, GRT, ONDO");
   });
 
   it("onglet Moteur : constats chiffrés et tableau des issues réelles", () => {
