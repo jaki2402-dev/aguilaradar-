@@ -121,3 +121,44 @@ describe("choix de la règle du moteur : laboratoire d'abord, verdicts réels en
     expect(chooseEngineRule("retour_moyenne_rsi", lab, 500, { retour_moyenne_rsi: 70, regle_apprise: 66 }).switched).toBe(true);
   });
 });
+
+describe("correction par l'analyse des erreurs", async () => {
+  const { learnCorrections, correctedCall, evaluateCorrections, situationKey, situationConfidence, describeSituation } = await import("../scripts/engine-lab.mjs");
+  // Règle « toujours ACHAT ». Situation « bitcoin en élan positif + peur » : baisses 80 % (jours pairs, i % 10 ∈ {0,2,4,6}).
+  const mk = (day, btc, fng, actual) => ({ ticker: "T", day, f: { btc_macd: btc, fng, rsi14: 50 }, actual });
+  const data = [];
+  for (let i = 0; i < 400; i++) {
+    const bad = i % 2 === 0; // une moitié des jours dans la situation défavorable
+    const actual = bad ? (i % 10 < 7 ? "VENTE" : "ACHAT") : i % 10 < 7 ? "ACHAT" : "ATTENTE";
+    data.push(mk(i, bad ? 1 : -1, bad ? 30 : 60, actual));
+  }
+  const always = () => "ACHAT";
+
+  it("situation = élan du bitcoin × peur/cupidité, en clair", () => {
+    expect(situationKey({ btc_macd: 1, fng: 30 })).toBe("btc_hausse|peur");
+    expect(situationKey({ btc_macd: -1, fng: 60 })).toBe("btc_baisse|cupidite");
+    expect(describeSituation("btc_hausse|peur")).toBe("bitcoin en élan positif, peur (< 45)");
+  });
+
+  it("corrige l'appel seulement là où une autre issue a été nettement plus fréquente", () => {
+    const c = learnCorrections(data, always);
+    expect(Object.keys(c)).toEqual(["ACHAT#btc_hausse|peur"]);
+    expect(c["ACHAT#btc_hausse|peur"]).toMatchObject({ from: "ACHAT", to: "VENTE", n: 200 });
+    expect(correctedCall(c, "ACHAT", { btc_macd: 1, fng: 30 })).toBe("VENTE");
+    expect(correctedCall(c, "ACHAT", { btc_macd: -1, fng: 60 })).toBe("ACHAT");
+  });
+
+  it("validation honnête : apprise sur l'ancien, notée sur le récent", () => {
+    const train = data.filter((s) => s.day < 240);
+    const valid = data.filter((s) => s.day >= 240);
+    const r = evaluateCorrections(train, valid, always);
+    expect(r.corrected_valid).toBeGreaterThan(r.raw_valid + 10);
+  });
+
+  it("confiance : part réelle de l'issue dans la même situation, rétrécie vers le taux global", () => {
+    const c = learnCorrections(data, always);
+    const conf = situationConfidence(data, "VENTE", { btc_macd: 1, fng: 30 }, always, c);
+    expect(conf.situation_n).toBe(200);
+    expect(conf.pct).toBe(80);
+  });
+});

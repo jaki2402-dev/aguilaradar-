@@ -10,7 +10,7 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import vm from "node:vm";
-import { dailySeries, buildSamples, splitByTime, evaluateRules, learnTree, treeCall, describeTree, featureReport, errorAnalysis, riskFlags, labCalibration, featuresAt, asRuleInput, TRAIN_SHARE } from "./engine-lab.mjs";
+import { dailySeries, buildSamples, splitByTime, evaluateRules, learnTree, treeCall, describeTree, featureReport, errorAnalysis, riskFlags, labCalibration, featuresAt, asRuleInput, TRAIN_SHARE, learnCorrections, correctedCall, evaluateCorrections, situationConfidence, situationKey, describeSituation, CORRECTION_MIN_N, CORRECTION_MARGIN } from "./engine-lab.mjs";
 
 const OUT_PATH = "data/technical-favoris.json";
 const DAY_MS = 86400000;
@@ -166,6 +166,32 @@ export const CANDIDATE_RULES = {
     standalone: true,
     call: (v, ind, m) => (ind.rsi14 >= 70 || (m && m.sma200_gap_pct !== null && m.sma200_gap_pct < 0 && m.macd_histogram !== null && m.macd_histogram < 0 && ind.rsi14 >= 45) ? "VENTE" : "ACHAT"),
   },
+  // Ajoutées le 11/10/2026 à 09h40, après le premier passage réel du laboratoire : les deux
+  // seuls indicateurs dont la valeur prédictive a tenu sur ses deux périodes sont l'élan du bitcoin
+  // (après un repli du bitcoin, plus de hausses) et la peur/cupidité (plus elle est haute, plus de
+  // hausses) ; et les VENTE sur RSI ≥ 70 n'étaient justes que 29 % du temps (172 cas récents).
+  // f = indicateurs complets (laboratoire) ; sans eux, repli sur la règle du RSI.
+  sentiment_marche: {
+    name: "Sentiment de marché",
+    label: "VENTE si le bitcoin est en élan positif ET que le marché est dans la peur (< 45) ; sinon ACHAT",
+    registered_at: "2026-10-11T09:40:00Z",
+    standalone: true,
+    call: (v, ind, m, f) => (f && Number.isFinite(f.btc_macd) && Number.isFinite(f.fng) ? (f.btc_macd > 0 && f.fng < 45 ? "VENTE" : "ACHAT") : ind.rsi14 >= 70 ? "VENTE" : "ACHAT"),
+  },
+  sentiment_marche_rsi: {
+    name: "Sentiment de marché + RSI",
+    label: "VENTE si (bitcoin en élan positif ET peur < 45) ou RSI ≥ 70 ; sinon ACHAT",
+    registered_at: "2026-10-11T09:40:00Z",
+    standalone: true,
+    call: (v, ind, m, f) => (ind.rsi14 >= 70 || (f && f.btc_macd > 0 && Number.isFinite(f.fng) && f.fng < 45) ? "VENTE" : "ACHAT"),
+  },
+  retour_moyenne_prudent: {
+    name: "Retour à la moyenne prudent",
+    label: "ATTENTE si RSI ≥ 70 (hausse étirée), sinon ACHAT",
+    registered_at: "2026-10-11T09:40:00Z",
+    standalone: true,
+    call: (v, ind) => (ind.rsi14 >= 70 ? "ATTENTE" : "ACHAT"),
+  },
 };
 CANDIDATE_RULES.tendance_rsi.standalone = true;
 
@@ -210,7 +236,7 @@ export function scoreRules(rows) {
   const score = (subset) => {
     const results = {};
     for (const [key, rule] of Object.entries(CANDIDATE_RULES)) {
-      const correct = subset.filter(({ v, ind, market }) => rule.call(v, ind, market) === v.outcome.actual_direction).length;
+      const correct = subset.filter(({ v, ind, market, feat }) => rule.call(v, ind, market, feat) === v.outcome.actual_direction).length;
       results[key] = { correct, pct: subset.length ? round((correct / subset.length) * 100, 1) : null };
     }
     return { n: subset.length, results };
@@ -353,9 +379,9 @@ export function engineCalibration(rows, ruleKey = ENGINE_RULE) {
   const rule = CANDIDATE_RULES[ruleKey];
   const blank = () => ({ n: 0, correct: 0, pct: null, btc: { hausse: { n: 0, correct: 0 }, baisse: { n: 0, correct: 0 } } });
   const cal = { ACHAT: blank(), ATTENTE: blank(), VENTE: blank() };
-  for (const { v, ind, market } of rows) {
+  for (const { v, ind, market, feat } of rows) {
     if (ind.rsi14 === null || ind.sma200_gap_pct === null) continue;
-    const call = rule.call(v, ind, market);
+    const call = rule.call(v, ind, market, feat);
     const c = cal[call];
     if (!c) continue;
     const ok = call === v.outcome.actual_direction;
@@ -382,6 +408,8 @@ export function contextConfidence(cal, call, market) {
 }
 
 const BASIS = {
+  sentiment_marche: (verdict) => (verdict === "VENTE" ? "Bitcoin en élan positif et marché dans la peur : situation suivie plus souvent d'une baisse" : "Pas de combinaison « bitcoin en élan positif + peur » : hausse plus fréquente que la baisse"),
+  sentiment_marche_rsi: (verdict, ind) => (verdict === "VENTE" ? `RSI ${Math.round(ind.rsi14)} ou combinaison « bitcoin en élan positif + peur » : repli plus fréquent ensuite` : "Ni excès de RSI ni combinaison « élan BTC positif + peur »"),
   retour_moyenne_rsi: (verdict, ind) => (verdict === "VENTE" ? `RSI ${Math.round(ind.rsi14)} ≥ 70 : hausse étirée, repli plus fréquent ensuite` : `RSI ${Math.round(ind.rsi14)} < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité`),
 };
 
@@ -603,6 +631,7 @@ async function main() {
       const i = asset ? asset.closes.findIndex((c) => c.day === day) : -1;
       if (i >= 199) r.feat = featuresAt(asset, i, btcIndexByDay, btc, fngByDay, deps);
     }
+    if (out.backtest) out.backtest.rules = scoreRules(rows);
     const real = selectEngineRule(prevRule ? prevRule.id : ENGINE_RULE, rows, rules);
     const choice = chooseEngineRule(prevRule && rules[prevRule.id] ? prevRule.id : ENGINE_RULE, labScores, valid.length, real.scores);
     if (choice.switched) history.push({ at: out.updated_at, from: choice.from, to: choice.id, window_n: real.window_n, scores: real.scores, lab_valid: Object.fromEntries(Object.entries(labScores).map(([k, v]) => [k, v.valid])) });
@@ -613,6 +642,11 @@ async function main() {
     };
     const calibration = labCalibration(valid, callOf);
     const analysis = errorAnalysis(valid, callOf);
+    // Correction par l'analyse des erreurs : utilisée seulement si, apprise sur la période ancienne,
+    // elle a amélioré la réussite sur la période récente ; alors réapprise sur la période récente.
+    const correctionTest = evaluateCorrections(train, valid, callOf);
+    const useCorrections = Number.isFinite(correctionTest.corrected_valid) && correctionTest.corrected_valid - correctionTest.raw_valid >= 1;
+    const corrections = useCorrections ? learnCorrections(valid, callOf) : {};
     const dayIso = (d) => new Date(d * DAY_MS).toISOString().slice(0, 10);
     lab = {
       updated_at: out.updated_at,
@@ -627,6 +661,12 @@ async function main() {
       errors: analysis,
       calibration,
       fng_available: Boolean(fngByDay),
+      corrections: {
+        method: `Par situation (élan du bitcoin × peur/cupidité) : si une autre issue a été plus fréquente d'au moins ${CORRECTION_MARGIN} points sur au moins ${CORRECTION_MIN_N} cas, l'appel de la règle est corrigé vers elle. Validation : apprise sur la période ancienne, notée sur la récente.`,
+        test: correctionTest,
+        used: useCorrections,
+        table: Object.entries(corrections).map(([k, c]) => ({ situation: describeSituation(k.split("#")[1]), ...c })),
+      },
     };
     for (const x of assets) {
       const f = featuresAt(x, x.closes.length - 1, btcIndexByDay, btc, fngByDay, deps);
@@ -649,17 +689,22 @@ async function main() {
         continue;
       }
       const { ind, market } = asRuleInput(f);
-      const verdict = rule.call(null, ind, market, f);
-      const c = calibration[verdict];
+      const raw = rule.call(null, ind, market, f);
+      const verdict = correctedCall(corrections, raw, f);
+      const fix = corrections[`${raw}#${situationKey(f)}`];
+      const conf = situationConfidence(valid, verdict, f, callOf, corrections);
       const flags = riskFlags(f, analysis, analysis.error_pct || 0);
+      const ruleBasis = (BASIS[choice.id] || ((vd) => `${rule.name} : ${vd}`))(raw, ind);
       a.proposed_verdict = {
         rule: choice.id,
         verdict,
-        confidence_pct: contextConfidence(calibration, verdict, market),
-        sample_n: c ? c.n : 0,
-        context: Number.isFinite(f.btc_macd) ? `élan du bitcoin ${f.btc_macd > 0 ? "positif" : "négatif"}` : null,
-        context_n: c && Number.isFinite(f.btc_macd) ? c.btc[f.btc_macd > 0 ? "hausse" : "baisse"].n : 0,
-        basis: (BASIS[choice.id] || ((vd) => `${rule.name} : ${vd}`))(verdict, ind),
+        raw_verdict: raw,
+        corrected: Boolean(fix),
+        confidence_pct: conf.pct,
+        sample_n: conf.n,
+        context: describeSituation(situationKey(f)),
+        context_n: conf.situation_n,
+        basis: fix ? `${ruleBasis} ; corrigé par l'analyse des erreurs : dans cette situation (${describeSituation(situationKey(f))}), l'issue a été ${fix.to} dans ${String(fix.share_to).replace(".", ",")} % des ${fix.n} cas récents contre ${String(fix.share_from).replace(".", ",")} % pour ${raw}` : ruleBasis,
         vigilance: flags,
       };
     }

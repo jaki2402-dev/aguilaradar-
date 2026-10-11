@@ -282,3 +282,65 @@ export function labCalibration(valid, call) {
   for (const c of Object.values(cal)) c.pct = c.n ? round((c.correct / c.n) * 100, 0) : null;
   return cal;
 }
+
+// --- Correction par l'analyse des erreurs (11/10/2026) : la situation de marché du jour est
+// résumée par deux indicateurs dont la valeur prédictive a tenu sur les deux périodes du
+// laboratoire (élan du bitcoin, peur/cupidité). Pour chaque appel de la règle × situation, si une
+// autre issue a été nettement plus fréquente (≥ CORRECTION_MARGIN points, ≥ CORRECTION_MIN_N cas),
+// l'appel est corrigé vers elle. Le mécanisme lui-même est validé honnêtement : corrections apprises
+// sur la période ancienne, notées sur la période récente qu'elles n'ont jamais vue.
+export const CORRECTION_MIN_N = 80;
+export const CORRECTION_MARGIN = 10;
+
+export function situationKey(f) {
+  const btc = Number.isFinite(f.btc_macd) ? (f.btc_macd > 0 ? "btc_hausse" : "btc_baisse") : "btc_inconnu";
+  const fng = Number.isFinite(f.fng) ? (f.fng >= 55 ? "cupidite" : f.fng >= 45 ? "neutre" : "peur") : "fng_inconnu";
+  return `${btc}|${fng}`;
+}
+
+export const SITUATION_LABELS = { btc_hausse: "bitcoin en élan positif", btc_baisse: "bitcoin en élan négatif", btc_inconnu: "élan du bitcoin inconnu", cupidite: "cupidité (≥ 55)", neutre: "sentiment neutre (45-54)", peur: "peur (< 45)", fng_inconnu: "sentiment inconnu" };
+export const describeSituation = (key) => key.split("|").map((k) => SITUATION_LABELS[k] || k).join(", ");
+
+export function learnCorrections(samples, call) {
+  const cells = {};
+  for (const s of samples) {
+    const k = `${call(s)}#${situationKey(s.f)}`;
+    const c = (cells[k] = cells[k] || { n: 0, ACHAT: 0, ATTENTE: 0, VENTE: 0 });
+    c.n += 1;
+    c[s.actual] += 1;
+  }
+  const corrections = {};
+  for (const [k, c] of Object.entries(cells)) {
+    if (c.n < CORRECTION_MIN_N) continue;
+    const from = k.split("#")[0];
+    const best = CLASSES.reduce((a, b) => (c[b] > c[a] ? b : a), from);
+    if (best !== from && ((c[best] - c[from]) / c.n) * 100 >= CORRECTION_MARGIN) {
+      corrections[k] = { from, to: best, n: c.n, share_from: round((c[from] / c.n) * 100), share_to: round((c[best] / c.n) * 100) };
+    }
+  }
+  return corrections;
+}
+
+export function correctedCall(corrections, call, f) {
+  const fix = corrections && corrections[`${call}#${situationKey(f)}`];
+  return fix ? fix.to : call;
+}
+
+export function evaluateCorrections(train, valid, call) {
+  const learned = learnCorrections(train, call);
+  const fixed = (s) => correctedCall(learned, call(s), s.f);
+  return { raw_valid: accuracy(valid, call), corrected_valid: accuracy(valid, fixed), learned_on_train: Object.keys(learned).length };
+}
+
+// Confiance d'un appel dans une situation : part des cas récents de cette situation où l'issue a été
+// cet appel, rétrécie vers le taux global de l'appel (k = 10) — même principe que pour l'élan BTC.
+export function situationConfidence(valid, finalCall, f, rawCallFn, corrections) {
+  const final = (s) => correctedCall(corrections, rawCallFn(s), s.f);
+  const same = valid.filter((s) => final(s) === finalCall);
+  if (same.length < 10) return { pct: null, n: same.length, situation_n: 0 };
+  const base = same.filter((s) => s.actual === finalCall).length / same.length;
+  const key = situationKey(f);
+  const ctx = same.filter((s) => situationKey(s.f) === key);
+  const p = (ctx.filter((s) => s.actual === finalCall).length + 10 * base) / (ctx.length + 10);
+  return { pct: round(p * 100, 0), n: same.length, situation_n: ctx.length };
+}
