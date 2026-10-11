@@ -54,9 +54,9 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-11T08:17:00Z",
+    "last_success_at": "2026-10-11T16:17:42Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle court du 11/10/2026 ~08h20 UTC : aucun verdict pending echu, les 15 favoris ont deja un verdict pending en cours - rien emis ni resolu. Veille actualites : 2 recherches WebSearch (hack/exploit, fear&greed) - aucun developpement date et fiable trouve pour ce cycle (resultats hors-date ou anciens) - rien ajoute a news.json (regle 'jamais inventer'). last_checked_at de news.json mis a jour, items et last_updated_at inchanges. macro_regime non touche (regle section 7 : seulement si un verdict est emis ce cycle). Aucun outil mcp__ utilise."
+    "last_failure_reason": "Cycle court du 11/10/2026 ~16h20 UTC : aucun verdict pending echu, les 15 favoris ont deja un verdict pending en cours - rien emis ni resolu. Veille actualites : 2 recherches WebSearch (hack/exploit, fear&greed) - aucun resultat date du jour trouve (tout hors-date ou ancien) - rien ajoute a news.json (regle 'jamais inventer'). last_checked_at de news.json mis a jour, items et last_updated_at inchanges. macro_regime non touche (regle section 7 : seulement si un verdict est emis ce cycle). Aucun outil mcp__ utilise."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-10T16:28:00Z",
