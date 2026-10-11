@@ -187,10 +187,10 @@ describe("règles candidates figées le 11/10 (test réel sur les issues postér
     expect(r.prospective.results.moteur).toEqual({ n: 1, correct: 0, pct: 0 });
     expect(scoreRules([]).prospective).toMatchObject({ n: 0, results: { moteur: { n: 0, correct: 0, pct: null } } });
     // Règle ajoutée plus tard : sa propre date sépare passé et test réel.
-    const late = scoreRules([row("ACHAT", "ACHAT", {}, "2026-10-11T09:30:00Z")]);
+    const late = scoreRules([row("ACHAT", "ACHAT", {}, "2026-10-11T09:02:00Z")]);
     expect(late.prospective.results.moteur.n).toBe(1);
     expect(late.retrospective.results.retour_moyenne_rsi.n).toBe(1);
-    expect(late.definitions.retour_moyenne_rsi.registered_at).toBe("2026-10-11T10:00:00Z");
+    expect(late.definitions.retour_moyenne_rsi.registered_at).toBe("2026-10-11T09:05:00Z");
   });
 
   it("verdict sans RSI ou sans MM200 à l'émission : écarté pour toutes les règles (comparaison à égalité)", () => {

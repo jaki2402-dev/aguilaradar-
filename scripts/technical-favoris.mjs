@@ -129,7 +129,7 @@ export const CANDIDATE_RULES = {
     call: (v, ind) => (ind.sma200_gap_pct >= 0 && ind.rsi14 < 70 ? "ACHAT" : ind.sma200_gap_pct < 0 && ind.macd_histogram !== null && ind.macd_histogram < 0 ? "VENTE" : "ATTENTE"),
   },
   toujours_achat: { name: "Toujours ACHAT (référence)", label: "Référence naïve à battre : ACHAT à chaque fois", call: () => "ACHAT" },
-  // Ajoutée le 11/10/2026 10h (demande de l'utilisateur : des verdicts utiles, pas « ATTENTE » en
+  // Ajoutée le 11/10/2026 09h05 (demande de l'utilisateur : des verdicts utiles, pas « ATTENTE » en
   // permanence) et adoptée comme règle de décision du moteur (ENGINE_RULE). Choisie sur les 82
   // verdicts vérifiés : 57 % de justes contre 26 % pour le moteur, meilleure sur les deux moitiés
   // de la période (39 % / 76 % contre 29 % / 22 %). Les lectures technique « baissier » de la routine
@@ -137,31 +137,31 @@ export const CANDIDATE_RULES = {
   retour_moyenne_rsi: {
     name: "Retour à la moyenne (RSI)",
     label: "VENTE si RSI ≥ 70 (hausse étirée), sinon ACHAT — règle du moteur depuis le 11/10/2026",
-    registered_at: "2026-10-11T10:00:00Z",
+    registered_at: "2026-10-11T09:05:00Z",
     standalone: true,
     call: (v, ind) => (ind.rsi14 >= 70 ? "VENTE" : "ACHAT"),
   },
-  // Ajoutées le 11/10/2026 13h avec l'auto-sélection : elles utilisent aussi l'état du bitcoin le
+  // Ajoutées le 11/10/2026 09h15 avec l'auto-sélection : elles utilisent aussi l'état du bitcoin le
   // jour du verdict (market). Diversité voulue : retour à la moyenne (marché en dents de scie) ET
   // suivi de tendance (marché directionnel), pour que la sélection puisse suivre un changement.
   retour_moyenne_marche: {
     name: "Retour à la moyenne + marché",
     label: "VENTE si RSI ≥ 70, ou si l'actif et le bitcoin ont tous deux un élan positif avec RSI ≥ 60 ; sinon ACHAT",
-    registered_at: "2026-10-11T13:00:00Z",
+    registered_at: "2026-10-11T09:15:00Z",
     standalone: true,
     call: (v, ind, m) => (ind.rsi14 >= 70 || (ind.rsi14 >= 60 && ind.macd_histogram > 0 && m && m.macd_histogram > 0) ? "VENTE" : "ACHAT"),
   },
   tendance_pure: {
     name: "Suivi de tendance",
     label: "ACHAT si le cours est au-dessus de sa moyenne 200 j, VENTE en dessous",
-    registered_at: "2026-10-11T13:00:00Z",
+    registered_at: "2026-10-11T09:15:00Z",
     standalone: true,
     call: (v, ind) => (ind.sma200_gap_pct >= 0 ? "ACHAT" : "VENTE"),
   },
   marche_baissier_protege: {
     name: "Retour à la moyenne protégé",
     label: "VENTE si RSI ≥ 70, ou si le bitcoin est sous sa moyenne 200 j avec un élan négatif et RSI ≥ 45 ; sinon ACHAT",
-    registered_at: "2026-10-11T13:00:00Z",
+    registered_at: "2026-10-11T09:15:00Z",
     standalone: true,
     call: (v, ind, m) => (ind.rsi14 >= 70 || (m && m.sma200_gap_pct !== null && m.sma200_gap_pct < 0 && m.macd_histogram !== null && m.macd_histogram < 0 && ind.rsi14 >= 45) ? "VENTE" : "ACHAT"),
   },
@@ -536,7 +536,8 @@ async function main() {
     id: selection.id,
     name: rule.name,
     rule: rule.label,
-    since: selection.switched ? out.updated_at : (prevRule && prevRule.id === selection.id && prevRule.since) || rule.registered_at || RULES_REGISTERED_AT,
+    // Depuis : dernier changement automatique vers cette règle, sinon sa date d'enregistrement.
+    since: (history.filter((h) => h.to === selection.id).pop() || {}).at || rule.registered_at || RULES_REGISTERED_AT,
     selection: { window: SELECTION_WINDOW, margin_pts: SELECTION_MARGIN_PTS, window_n: selection.window_n, scores: selection.scores },
     calibration,
     history,

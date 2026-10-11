@@ -558,7 +558,7 @@ dessus de sa MM200, sans le savoir.
   30 derniers verdicts vérifiés ; changement seulement avec ≥ 5 points d'avance et ≥ 20 cas. Méta-
   stratégie testée sur l'historique (données antérieures seulement) : fenêtre 20 sans marge → 51 %
   (bascule à contretemps vers la tendance), fenêtre 30 + marge 5 → 57,3 % sans faux changement.
-  3 règles ajoutées (registered_at 13h) dont « Suivi de tendance », pour qu'un marché devenu
+  3 règles ajoutées (registered_at 09h15, heure réelle de publication ; la règle du moteur : 09h05) dont « Suivi de tendance », pour qu'un marché devenu
   directionnel puisse être suivi. Chaque changement → `engine_rule.history` (robot) → entrée
   `corr-auto-…` dans `correction_log` (resolve-due).
 - **Confiance** : taux de l'appel rétréci vers le contexte « élan du bitcoin » (k = 10). Brier hors
@@ -570,3 +570,7 @@ dessus de sa MM200, sans le savoir.
   part de la valeur diluée, Valorisation pour les 15. `momentumSource` autorisé dans le test « pas de
   score global » (provenance, pas un score). `proposed_at_issue` sur chaque verdict ; contrôle de
   conformité générique (verdict = proposition du robot à l'émission).
+- **Premier passage réel (11/10 09h16)** : sur les 30 derniers verdicts, retour à la moyenne 70 %,
+  tendance 47-50 % → règle conservée. Élan BTC négatif → confiance ACHAT 68 % (61 % sans contexte),
+  VENTE CTSI 46 %. Valorisation à l'émission sans pouvoir prédictif sur les 82 verdicts (hausses 55 %
+  en bas de fourchette, 57 % en haut) : affichée comme information, hors décision.
