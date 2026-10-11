@@ -711,6 +711,13 @@ function buildAiContext() {
     if (Number.isFinite(cg.btc_etf_aum_usd)) bits.push(`encours ETF BTC ${(cg.btc_etf_aum_usd / 1e9).toFixed(1)} Md$ (un encours, pas un flux)`);
     if (bits.length) parts.push(`Levier et rotation (CoinMarketCap, relevé le ${chatShortDate(cg.as_of)}) : ${bits.join(", ")}.`);
   }
+  const g = chatData.marketGauges || {};
+  if (!(ctx && ctx.fed_policy && ctx.fed_policy.treasury_yield_10y_pct != null) && g.treasury_10y && Number.isFinite(g.treasury_10y.pct)) {
+    parts.push(`Rendement Trésor US 10 ans : ${g.treasury_10y.pct} % (FRED, séance du ${chatShortDate(g.treasury_10y.date)}).`);
+  }
+  if (g.stablecoins && Number.isFinite(g.stablecoins.change_7d_pct)) {
+    parts.push(`Stablecoins en dollars en circulation : ${Math.round(g.stablecoins.total_usd / 1e9)} Md$, ${g.stablecoins.change_7d_pct > 0 ? "+" : ""}${g.stablecoins.change_7d_pct} % sur 7 jours (DefiLlama).`);
+  }
   if (ctx && ctx.fed_policy && ctx.fed_policy.treasury_yield_10y_pct != null) {
     parts.push(`Rendement Trésor US 10 ans : ${ctx.fed_policy.treasury_yield_10y_pct} %.`);
   }

@@ -57,6 +57,41 @@ export function parseGoldTokens(body) {
   };
 }
 
+// Rendement du Trésor US à 10 ans (FRED, série DGS10, CSV public sans clé) : case « Trésor US
+// 10 ans » vide sur le site depuis des semaines (la routine marché ne trouvait pas de valeur
+// datée). Dernière ligne chiffrée ; « . » = jour sans cotation (férié), ignoré.
+export function parseFredCsv(text) {
+  const lines = String(text || "").trim().split(/\r?\n/);
+  if (lines.length < 2 || !/DGS10/i.test(lines[0])) return null;
+  for (let i = lines.length - 1; i > 0; i--) {
+    const [date, value] = lines[i].split(",");
+    const pct = Number(value);
+    if (/^\d{4}-\d{2}-\d{2}$/.test(date) && value !== "." && Number.isFinite(pct) && pct > 0 && pct < 20) {
+      return { pct, date, source: "FRED (Réserve fédérale de Saint-Louis), série DGS10" };
+    }
+  }
+  return null;
+}
+
+// Stablecoins adossés au dollar en circulation (DefiLlama /stablecoincharts/all) : total du dernier
+// jour et évolution sur 7 jours (case « tendance 7 j » vide côté routine).
+export function parseStablecoinChart(body) {
+  if (!Array.isArray(body) || body.length < 8) return null;
+  const usd = (p) => (p && p.totalCirculatingUSD && Number.isFinite(p.totalCirculatingUSD.peggedUSD) ? p.totalCirculatingUSD.peggedUSD : null);
+  const last = body[body.length - 1];
+  const weekAgo = body[body.length - 8];
+  const now = usd(last);
+  const before = usd(weekAgo);
+  if (!now || !before) return null;
+  return { total_usd: Math.round(now), change_7d_pct: Math.round((now / before - 1) * 10000) / 100, as_of: isoSec(new Date(Number(last.date) * 1000)), source: "DefiLlama /stablecoincharts/all (stablecoins adossés au dollar)" };
+}
+
+async function getText(url) {
+  const res = await fetch(url, { headers: { accept: "text/csv" } });
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  return res.text();
+}
+
 async function getJson(url) {
   const res = await fetch(url, { headers: { accept: "application/json" } });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -64,7 +99,7 @@ async function getJson(url) {
 }
 
 async function main() {
-  const out = { updated_at: isoSec(new Date()), fear_greed: null, btc_dominance: null, gold: null, errors: [] };
+  const out = { updated_at: isoSec(new Date()), fear_greed: null, btc_dominance: null, gold: null, treasury_10y: null, stablecoins: null, errors: [] };
   try {
     out.fear_greed = parseFearGreed(await getJson("https://api.alternative.me/fng/?limit=1"));
     if (!out.fear_greed) out.errors.push("fear_greed : réponse alternative.me inexploitable");
@@ -85,7 +120,20 @@ async function main() {
   } catch (e) {
     out.errors.push(`gold : ${e.message}`);
   }
-  if (!out.fear_greed && !out.btc_dominance && !out.gold) {
+  try {
+    const since = new Date(Date.now() - 30 * 86400000).toISOString().slice(0, 10);
+    out.treasury_10y = parseFredCsv(await getText(`https://fred.stlouisfed.org/graph/fredgraph.csv?id=DGS10&cosd=${since}`));
+    if (!out.treasury_10y) out.errors.push("treasury_10y : CSV FRED inexploitable");
+  } catch (e) {
+    out.errors.push(`treasury_10y : ${e.message}`);
+  }
+  try {
+    out.stablecoins = parseStablecoinChart(await getJson("https://stablecoins.llama.fi/stablecoincharts/all"));
+    if (!out.stablecoins) out.errors.push("stablecoins : réponse DefiLlama inexploitable");
+  } catch (e) {
+    out.errors.push(`stablecoins : ${e.message}`);
+  }
+  if (!out.fear_greed && !out.btc_dominance && !out.gold && !out.treasury_10y && !out.stablecoins) {
     console.error("Aucune jauge récupérée, fichier laissé tel quel :", out.errors.join(" ; "));
     return;
   }

@@ -608,3 +608,18 @@ dessus de sa MM200, sans le savoir.
 - Correctif : `snapshotDate` = date de (maintenant − 6 h), cron avancé à 18h17 UTC, seuils de
   fraîcheur du site 36 h / 60 h. Points passés laissés tels quels (historique en ajout, pas de
   backfill) : leurs dates restent décalées d'un jour pour ceux calculés après minuit.
+
+### 11/10/2026 — tour de vérification : on-chain BTC, taux 10 ans, stablecoins, relais IA
+
+- Données sur `origin/main` relues une à une (fraîcheur) + tous les runs GitHub (tous en succès).
+- **On-chain BTC** figé au 04/10 : la routine favoris-quotidien passait par WebSearch (api.blockchain.info
+  et api.llama.fi bloqués par son proxy). `scripts/onchain-btc.mjs` (étape de price-alerts) : date =
+  dernier jour UTC complet des données (pas le jour d'exécution — même leçon que l'historique du
+  portefeuille), jamais deux fois le même jour, créneau 08h UTC de la routine évité. Spec : la routine
+  n'écrit plus bitcoin.
+- **Trésor 10 ans** (FRED DGS10, CSV sans clé) et **stablecoins** (DefiLlama /stablecoincharts/all,
+  total + 7 j) dans `market-gauges.json`, affichés en secours (même principe que l'or).
+- Décimales françaises dans les cases du contexte marché (`frPct`).
+- `resolve-due` : aucun passage planifié encore au 11/10 10h (créé à 08h32) — délai d'enregistrement
+  des nouveaux crons GitHub ; à revérifier, le cycle résout en secours après 6 h.
+- Relais IA : `workers_list` → modifié le 10/10 22h17 UTC, juste après l'envoi du correctif (P5 clos).

@@ -67,6 +67,21 @@ describe("insights.js — renderMarketContext (contexte macro : stablecoins/empl
     return loadPage(["config.js", "prices.js", "cards.js", "insights.js"], { html: `<!doctype html><html><body><div id="market-context-body"></div></body></html>` });
   }
 
+  it("valeurs de secours du robot : Trésor 10 ans (FRED) et stablecoins sur 7 jours (DefiLlama), relevés réels du 11/10", () => {
+    const dom = pageWithContext();
+    const ctx = { last_computed_at: "2026-10-11T08:45:00Z", stablecoins: { dominance_pct: 10.4, supply_trend_7d_pct: null }, fed_policy: { funds_rate_range: "3.75%-4.00%", treasury_yield_10y_pct: null } };
+    const gauges = { treasury_10y: { pct: 4.14, date: "2026-10-09" }, stablecoins: { total_usd: 292070924236, change_7d_pct: 0.42 } };
+    dom.window.renderMarketContext(ctx, gauges, null);
+    const text = dom.window.document.getElementById("market-context-body").textContent;
+    expect(text).toContain("Trésor US 10 ans");
+    expect(text).toContain("4,14 %");
+    expect(text).toContain("FRED, séance du 09/10");
+    expect(text).toContain("292,07 Md$ (+0,42 % sur 7 jours, DefiLlama)");
+    // La valeur de la routine, quand elle existe, garde la priorité.
+    dom.window.renderMarketContext({ ...ctx, fed_policy: { treasury_yield_10y_pct: 4.2 } }, gauges, null);
+    expect(dom.window.document.getElementById("market-context-body").textContent).not.toContain("FRED");
+  });
+
   it("affiche les valeurs réelles (stablecoins/emploi/ETF/or/Fed) quand tous les champs sont renseignés", () => {
     const dom = pageWithContext();
     dom.window.renderMarketContext({
@@ -78,11 +93,11 @@ describe("insights.js — renderMarketContext (contexte macro : stablecoins/empl
       fed_policy: { funds_rate_range: "4.25%-4.50%", treasury_yield_10y_pct: 4.28, note: "Note Fed." },
     });
     const html = dom.window.document.getElementById("market-context-body").innerHTML;
-    expect(html).toContain("11.1 %"); // dominance stablecoins
-    expect(html).toContain("4.1 %"); // chômage
+    expect(html).toContain("11,1 %"); // dominance stablecoins
+    expect(html).toContain("4,1 %"); // chômage
     expect(html).toMatch(/\$2\s*415/); // or, arrondi (espace insécable via toLocaleString)
     expect(html).toContain("4.25%-4.50%"); // taux Fed cible
-    expect(html).toContain("4.28 %"); // rendement Trésor 10 ans
+    expect(html).toContain("4,28 %"); // rendement Trésor 10 ans
     expect(html).toContain("Note or.");
     expect(html).toContain("Note Fed.");
   });
@@ -97,7 +112,7 @@ describe("insights.js — renderMarketContext (contexte macro : stablecoins/empl
       // gold / fed_policy absents : jamais un chiffre inventé pour combler.
     });
     const html = dom.window.document.getElementById("market-context-body").innerHTML;
-    expect(html).toContain("11.1 %");
+    expect(html).toContain("11,1 %");
     // Le label porte désormais une bulle d'aide glossaire (info-tip) avant la fermeture du
     // </div> — on vérifie label et valeur séparément plutôt qu'une sous-chaîne contiguë.
     expect(html).toContain("Or (once, USD)");

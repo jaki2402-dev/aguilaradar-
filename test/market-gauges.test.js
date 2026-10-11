@@ -34,3 +34,23 @@ describe("scripts/market-gauges.mjs", () => {
     expect(parseGoldTokens(null)).toBeNull();
   });
 });
+
+describe("scripts/market-gauges.mjs — taux 10 ans (FRED) et stablecoins (DefiLlama)", async () => {
+  const { parseFredCsv, parseStablecoinChart } = await import("../scripts/market-gauges.mjs");
+
+  it("FRED : dernière séance chiffrée, jours fériés (« . ») ignorés", () => {
+    const csv = "observation_date,DGS10\n2026-10-07,4.11\n2026-10-08,4.14\n2026-10-09,.\n";
+    expect(parseFredCsv(csv)).toMatchObject({ pct: 4.14, date: "2026-10-08" });
+    expect(parseFredCsv("DATE,DGS10\r\n2026-10-08,4.14\r\n")).toMatchObject({ pct: 4.14 });
+    expect(parseFredCsv("<html>erreur</html>")).toBeNull();
+    expect(parseFredCsv("observation_date,DGS10\n2026-10-08,.\n")).toBeNull();
+  });
+
+  it("DefiLlama : total du dernier jour et évolution sur 7 jours", () => {
+    const day = (i, v) => ({ date: String(1791158400 + i * 86400), totalCirculatingUSD: { peggedUSD: v } });
+    const body = Array.from({ length: 10 }, (_, i) => day(i, 280e9 + i * 1e9));
+    expect(parseStablecoinChart(body)).toMatchObject({ total_usd: 289e9, change_7d_pct: 2.48 });
+    expect(parseStablecoinChart(body.slice(0, 5))).toBeNull();
+    expect(parseStablecoinChart([{ date: "1" }])).toBeNull();
+  });
+});

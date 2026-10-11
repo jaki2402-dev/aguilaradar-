@@ -122,6 +122,11 @@ function renderCryptoGlobalRow(cg) {
     <p class="hint">Levier et rotation : CoinMarketCap, relevé le ${formatUtcStamp(cg.as_of)} UTC${num(cg.btc_liquidations_24h_usd) ? ` — liquidations BTC sur 24 h : ${formatUsdAmount(cg.btc_liquidations_24h_usd)}` : ""}.${cg.note ? ` ${highlightKeyInfo(cg.note)}` : ""}</p>`;
 }
 
+// Pourcentage à la française (« 4,14 % ») ; « — » si la valeur manque.
+function frPct(v, digits) {
+  return Number.isFinite(v) ? `${v.toLocaleString("fr-FR", { minimumFractionDigits: digits, maximumFractionDigits: digits })} %` : "—";
+}
+
 function renderMarketContext(ctx, gauges, cryptoGlobal) {
   const el = document.getElementById("market-context-body");
   if (!el) return;
@@ -136,17 +141,24 @@ function renderMarketContext(ctx, gauges, cryptoGlobal) {
   const goldView = goldSpotView(ctx, gauges);
   const fed = ctx.fed_policy || {};
   const conf = ctx.site_confidence || {};
+  // Valeurs de secours du robot (data/market-gauges.json) quand la routine marché n'en a pas trouvé
+  // de datée : rendement 10 ans (FRED) et stablecoins en circulation (DefiLlama).
+  const g10 = gauges && gauges.treasury_10y && Number.isFinite(gauges.treasury_10y.pct) ? gauges.treasury_10y : null;
+  const tenYear = Number.isFinite(fed.treasury_yield_10y_pct) ? { pct: fed.treasury_yield_10y_pct, robot: false } : g10 ? { pct: g10.pct, robot: true, date: g10.date } : null;
+  const gs = gauges && gauges.stablecoins && Number.isFinite(gauges.stablecoins.change_7d_pct) ? gauges.stablecoins : null;
   el.innerHTML = `
     <div class="stat-row">
-      <div class="stat-card accent-indigo"><div class="stat-label">Dominance stablecoins</div><div class="stat-value">${sc.dominance_pct !== null && sc.dominance_pct !== undefined ? sc.dominance_pct.toFixed(1) + " %" : "—"}</div></div>
-      <div class="stat-card accent-gold"><div class="stat-label">Chômage US</div><div class="stat-value">${emp.unemployment_rate_pct !== null && emp.unemployment_rate_pct !== undefined ? emp.unemployment_rate_pct.toFixed(1) + " %" : "—"}</div></div>
+      <div class="stat-card accent-indigo"><div class="stat-label">Dominance stablecoins</div><div class="stat-value">${frPct(sc.dominance_pct, 1)}</div></div>
+      <div class="stat-card accent-gold"><div class="stat-label">Chômage US</div><div class="stat-value">${frPct(emp.unemployment_rate_pct, 1)}</div></div>
       <div class="stat-card accent-teal"><div class="stat-label">Flux ETF BTC</div><div class="stat-value">${formatUsdAmount(etf.btc_etf_net_flow_usd)}</div></div>
       <div class="stat-card accent-gray"><div class="stat-label">Or (once, USD)${glossaryTipHtml("Or (once, USD)")}</div><div class="stat-value">${goldView ? (goldView.approx ? "≈ " : "") + "$" + Math.round(goldView.usd).toLocaleString("fr-FR") : "—"}</div></div>
       <div class="stat-card accent-violet"><div class="stat-label">Taux Fed (cible)${glossaryTipHtml("Taux Fed (cible)")}</div><div class="stat-value">${fed.funds_rate_range ? escapeHtml(fed.funds_rate_range) : "—"}</div></div>
-      <div class="stat-card accent-indigo"><div class="stat-label">Trésor US 10 ans${glossaryTipHtml("Trésor US 10 ans")}</div><div class="stat-value">${fed.treasury_yield_10y_pct !== null && fed.treasury_yield_10y_pct !== undefined ? fed.treasury_yield_10y_pct.toFixed(2) + " %" : "—"}</div></div>
+      <div class="stat-card accent-indigo"><div class="stat-label">Trésor US 10 ans${glossaryTipHtml("Trésor US 10 ans")}</div><div class="stat-value">${frPct(tenYear && tenYear.pct, 2)}</div></div>
     </div>
     ${renderCryptoGlobalRow(cryptoGlobal)}
     ${contextNote("Stablecoins", sc.note, sc.resume)}
+    ${!Number.isFinite(sc.supply_trend_7d_pct) && gs ? `<p class="hint">Stablecoins adossés au dollar en circulation : ${formatUsdAmount(gs.total_usd)} (${gs.change_7d_pct > 0 ? "+" : ""}${String(gs.change_7d_pct).replace(".", ",")} % sur 7 jours, DefiLlama) — une hausse signale de l'argent frais disponible pour la crypto.</p>` : ""}
+    ${tenYear && tenYear.robot ? `<p class="hint">Trésor US 10 ans : dernier rendement publié par la Réserve fédérale (FRED, séance du ${escapeHtml(tenYear.date.slice(8, 10) + "/" + tenYear.date.slice(5, 7))}).</p>` : ""}
     ${contextNote("Emploi", emp.market_reaction_note, emp.resume)}
     ${contextNote("ETF", etf.note, etf.resume)}
     ${goldView && goldView.approx ? `<p class="hint">Or : cours approché à partir de deux jetons adossés à l'or (PAX Gold, Tether Gold)${goldView.asOf ? `, relevé le ${formatUtcStamp(goldView.asOf)} UTC` : ""} — la routine n'a pas trouvé de cours officiel daté.</p>` : contextNote("Or", gold.note, gold.resume)}

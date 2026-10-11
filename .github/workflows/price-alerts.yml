@@ -31,16 +31,21 @@ jobs:
       # Échec des jauges = sans effet sur les alertes (étape indépendante).
       - run: node scripts/market-gauges.mjs
         continue-on-error: true
+      # On-chain du bitcoin (blockchain.info + DefiLlama) : étape indépendante elle aussi.
+      - run: node scripts/onchain-btc.mjs
+        continue-on-error: true
       - name: Commit si quelque chose a changé
         run: |
           git add -N data/market-gauges.json 2>/dev/null || true
-          git diff --quiet -- data/alerts.json data/market-gauges.json && exit 0
+          git diff --quiet -- data/alerts.json data/market-gauges.json data/onchain-history.json && exit 0
+          python3 -m json.tool data/onchain-history.json >/dev/null
           python3 -m json.tool data/alerts.json >/dev/null
           [ ! -f data/market-gauges.json ] || python3 -m json.tool data/market-gauges.json >/dev/null
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/alerts.json
           [ ! -f data/market-gauges.json ] || git add data/market-gauges.json
+          git add data/onchain-history.json
           git commit -m "Alertes et jauges du $(date -u "+%d/%m/%Y %Hh%M") UTC"
           for i in 1 2 3; do git pull --rebase -q origin main && git push origin HEAD:main && exit 0; sleep $((i*5)); done
           exit 1
