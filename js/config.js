@@ -192,6 +192,7 @@ const GLOSSARY = [
   { term: "MACD", definition: "Indicateur d'élan : il compare une moyenne courte et une moyenne longue du cours. Élan haussier = la hausse s'accélère ; élan baissier = elle ralentit ou s'inverse." },
   { term: "Saison des altcoins", definition: "Indice CoinMarketCap de 0 à 100 : plus il est haut, plus les altcoins font mieux que le bitcoin ces derniers temps. Bas = l'argent reste plutôt sur le bitcoin." },
   { term: "Positions ouvertes", definition: "La valeur totale des contrats à terme crypto encore ouverts. Une forte hausse signale beaucoup d'effet de levier, donc un risque de liquidations en cascade si le prix se retourne." },
+  { term: "Volatilité", definition: "L'amplitude habituelle des variations du cours sur 30 jours, ramenée à l'année. Plus elle est élevée, plus les écarts de prix sont brusques, à la hausse comme à la baisse." },
   { term: "Taux de financement", definition: "Ce que paient les acheteurs à effet de levier aux vendeurs (ou l'inverse) sur les contrats perpétuels. Positif = acheteurs majoritaires ; très élevé = marché surchauffé." },
 ];
 
@@ -252,6 +253,7 @@ const DATA_URLS = {
   marketGauges: "data/market-gauges.json",
   cryptoGlobal: "data/crypto-global.json",
   cmcFavoris: "data/cmc-favoris.json",
+  technicalFavoris: "data/technical-favoris.json",
   onchainHistory: "data/onchain-history.json",
 };
 
@@ -304,6 +306,45 @@ function wireClampToggles(root) {
 // accessible derrière « Lire l'analyse complète ». Signaux de plus de 70 caractères ignorés (ce
 // sont des phrases, pas des points clés).
 const CONSENSUS_DIRECTIONS = ["haussier", "baissier", "mixte", "neutre"];
+
+// Analyse technique quotidienne d'un favori sous une forme unique : robot technical-daily
+// (data/technical-favoris.json, prioritaire, aucun quota) ou relevé CoinMarketCap
+// (data/cmc-favoris.json). null si aucune source n'a l'actif — jamais de valeur reconstituée.
+function technicalViewFor(ticker, technicalFavoris, cmcFavoris) {
+  const num = (v) => (Number.isFinite(v) ? v : null);
+  const robot = technicalFavoris && technicalFavoris.assets ? technicalFavoris.assets[ticker] : null;
+  if (robot) {
+    const ch = robot.change_pct || {};
+    return {
+      source: "robot",
+      asOf: robot.as_of || technicalFavoris.updated_at || null,
+      rsi14: num(robot.rsi14),
+      sma200GapPct: num(robot.sma200_gap_pct),
+      sma50AboveSma200: typeof robot.sma50_above_sma200 === "boolean" ? robot.sma50_above_sma200 : null,
+      macdHistogram: num(robot.macd_histogram),
+      change: [["30 j", num(ch["30d"])], ["90 j", num(ch["90d"])], ["1 an", num(ch["365d"])]],
+      volatilityPct: num(robot.volatility_30d_pct),
+      drawdownPct: num(robot.drawdown_from_365d_high_pct),
+      reading: typeof robot.reading === "string" && robot.reading ? robot.reading : null,
+    };
+  }
+  const cmc = cmcFavoris && cmcFavoris.assets ? cmcFavoris.assets[ticker] : null;
+  if (!cmc) return null;
+  const t = cmc.technical || {};
+  const ch = cmc.change_pct || {};
+  return {
+    source: "cmc",
+    asOf: cmcFavoris.as_of || null,
+    rsi14: num(t.rsi14),
+    sma200GapPct: Number.isFinite(cmc.price_usd) && Number.isFinite(t.sma200) && t.sma200 > 0 ? (cmc.price_usd / t.sma200 - 1) * 100 : null,
+    sma50AboveSma200: null,
+    macdHistogram: num(t.macd_histogram),
+    change: [["90 j", num(ch["90d"])], ["1 an", num(ch["1y"])], ["depuis janvier", num(ch.ytd)]],
+    volatilityPct: null,
+    drawdownPct: null,
+    reading: null,
+  };
+}
 
 function renderVerdictSummary(v) {
   const sc = (v && v.signal_consensus) || {};

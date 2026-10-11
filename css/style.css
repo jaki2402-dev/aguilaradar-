@@ -919,6 +919,18 @@ th { color: var(--text-dim); font-weight: 600; font-size: 0.76rem; text-transfor
 .context-note { margin-top: 6px; }
 .text-resume { margin: 4px 0; color: var(--text); font-weight: 500; }
 .detail-cmc { margin: 12px 0; }
+.tech-pos { color: var(--gain); }
+.tech-neg { color: #f87171; }
+.tech-flag { font-weight: 700; color: var(--text); }
+.tech-compare { margin: 0 0 20px; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 12px 14px; min-width: 0; }
+.tech-compare summary { cursor: pointer; }
+.tech-compare summary .hint { display: block; font-size: 0.82rem; margin-top: 2px; }
+.tech-table-wrap { overflow-x: auto; margin-top: 10px; min-width: 0; }
+.tech-table { font-size: 0.82rem; }
+.tech-table th[scope="row"] { color: var(--text); text-transform: none; font-size: 0.82rem; letter-spacing: 0; }
+.tech-table td, .tech-table th { padding: 7px 5px; vertical-align: top; }
+.tech-table th[scope="col"] { font-size: 0.68rem; }
+.tech-share { display: block; font-size: 0.72rem; }
 .cmc-rows { list-style: none; margin: 6px 0 0; padding: 0; }
 .cmc-rows li { display: flex; justify-content: space-between; gap: 12px; padding: 3px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; }
 .context-note > strong { display: block; }

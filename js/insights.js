@@ -360,3 +360,100 @@ function initDayReplay(allData) {
   dayReplayHandler = () => renderDayReplay(input.value, allData);
   input.addEventListener("change", dayReplayHandler);
 }
+
+// ---------------------------------------------------------------------------
+// Analyse technique quotidienne (data/technical-favoris.json, robot technical-daily, aucun quota).
+// Mesures et constats chiffrés uniquement, jamais un verdict : le moteur reste seul à en émettre.
+
+// Espace insécable avant « % » : sur un écran de téléphone, le symbole ne part jamais seul à la ligne.
+const techSignedPct = (v) => `${v > 0 ? "+" : v < 0 ? "−" : ""}${Math.abs(v).toFixed(0)}\u00a0%`;
+const techDate = (iso) => (iso ? new Date(iso).toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit" }) : null);
+
+// Comparatif des 15 favoris, tendance de fond la plus forte en premier, avec une phrase de synthèse
+// lisible sans rien déplier. Rien du tout si le fichier du robot n'existe pas encore.
+function renderFavorisTechnical(technicalFavoris) {
+  const el = document.getElementById("favoris-technical");
+  if (!el) return;
+  const rows = FAVORIS.map((f) => ({ ticker: f.ticker, t: technicalViewFor(f.ticker, technicalFavoris, null) })).filter((r) => r.t);
+  if (!rows.length) {
+    el.innerHTML = "";
+    return;
+  }
+  const withTrend = rows.filter((r) => r.t.sma200GapPct !== null);
+  const above = withTrend.filter((r) => r.t.sma200GapPct >= 0).length;
+  const hot = rows.filter((r) => r.t.rsi14 !== null && r.t.rsi14 >= 70).map((r) => r.ticker);
+  const cold = rows.filter((r) => r.t.rsi14 !== null && r.t.rsi14 <= 30).map((r) => r.ticker);
+  // Synthèse dans l'ordre des favoris ; tableau ensuite trié par tendance de fond.
+  rows.sort((a, b) => (b.t.sma200GapPct ?? -Infinity) - (a.t.sma200GapPct ?? -Infinity));
+  const summary = [
+    withTrend.length ? `${above}/${withTrend.length} au-dessus de leur moyenne 200 j` : null,
+    hot.length ? `surachat : ${hot.join(", ")}` : null,
+    cold.length ? `survente : ${cold.join(", ")}` : null,
+  ].filter(Boolean).join(" · ");
+  const cls = (v) => (v === null ? "" : v >= 0 ? "tech-pos" : "tech-neg");
+  const cell = (v, text) => `<td class="${cls(v)}">${v === null ? "—" : text}</td>`;
+  const body = rows
+    .map(({ ticker, t }) => {
+      const change30 = (t.change.find(([l]) => l === "30 j") || [])[1] ?? null;
+      const rsiCls = t.rsi14 !== null && (t.rsi14 >= 70 || t.rsi14 <= 30) ? "tech-flag" : "";
+      const rsiText = t.rsi14 === null ? "—" : `${t.rsi14.toFixed(0)}${t.rsi14 >= 70 ? " surachat" : t.rsi14 <= 30 ? " survente" : ""}`;
+      const macd = t.macdHistogram === null || t.macdHistogram === 0 ? null : t.macdHistogram;
+      return `<tr><th scope="row">${escapeHtml(ticker)}</th>${cell(t.sma200GapPct, t.sma200GapPct !== null ? techSignedPct(t.sma200GapPct) : "")}<td class="${rsiCls}">${rsiText}</td>${cell(macd, macd !== null ? (macd > 0 ? "haussier" : "baissier") : "")}${cell(change30, change30 !== null ? techSignedPct(change30) : "")}<td>${t.volatilityPct === null ? "—" : `${t.volatilityPct.toFixed(0)}\u00a0%`}</td></tr>`;
+    })
+    .join("");
+  const asOf = techDate(technicalFavoris.updated_at);
+  el.innerHTML = `<details class="tech-compare">
+    <summary><strong>Comparatif technique des 15 favoris</strong>${summary ? `<span class="hint">${escapeHtml(summary)}</span>` : ""}</summary>
+    <p class="hint">Calcul quotidien${asOf ? ` du ${escapeHtml(asOf)}` : ""} sur 1 an d'historique (CoinGecko), mêmes formules que la fiche de chaque actif : des mesures, pas des verdicts. Tri : tendance de fond la plus forte en premier. Surachat (RSI ≥ 70) = mouvement déjà étiré ; survente (RSI ≤ 30) = rebond possible, sans garantie.</p>
+    <div class="tech-table-wrap"><table class="tech-table">
+      <thead><tr><th scope="col">Actif</th><th scope="col">vs MM200</th><th scope="col">RSI 14 j</th><th scope="col">Élan</th><th scope="col">30 j</th><th scope="col">Volat.</th></tr></thead>
+      <tbody>${body}</tbody>
+    </table></div>
+    <p class="hint">vs MM200 : écart du cours à sa moyenne 200 jours (tendance de fond). Élan : MACD. Volat. : volatilité sur 30 jours, ramenée à l'année. Détail et définitions dans la fiche de chaque actif.</p>
+  </details>`;
+}
+
+// Onglet Moteur : ce que disaient les indicateurs le jour de chaque verdict vérifié, comparé à
+// l'issue réelle (backtest du robot, aucune donnée postérieure à l'émission). Constats calculés à
+// partir des comptes du fichier — aucune conclusion écrite en dur.
+function renderTechnicalBacktest(technicalFavoris) {
+  const el = document.getElementById("engine-technical-backtest");
+  if (!el) return;
+  const b = technicalFavoris && technicalFavoris.backtest;
+  if (!b || !b.sample || !b.engine_calls || !b.actual) {
+    el.innerHTML = `<p class="empty-state">Analyse rétrospective pas encore disponible : elle est calculée chaque soir par le robot technique.</p>`;
+    return;
+  }
+  const share = (n, total) => (total ? Math.round((n / total) * 100) : 0);
+  const a = b.actual;
+  const wait = b.engine_calls.ATTENTE;
+  const since = techDate(b.first_issued_at);
+  const lead = [
+    `Sur ${b.sample} verdicts vérifiés${since ? ` (depuis le ${since})` : ""}, le moteur a vu juste dans ${String(b.engine_accuracy_pct).replace(".", ",")} % des cas.`,
+    `Il a répondu ATTENTE ${wait.n} fois (${share(wait.n, b.sample)} %), alors que le cours est resté stable dans seulement ${a.ATTENTE} cas (${share(a.ATTENTE, b.sample)} %) : il a monté nettement dans ${a.ACHAT} cas et baissé dans ${a.VENTE}.`,
+  ];
+  const hot = b.by_rsi_zone && b.by_rsi_zone.surachat;
+  const neutral = b.by_rsi_zone && b.by_rsi_zone.neutre;
+  if (hot && hot.n >= 5 && neutral && neutral.n) {
+    lead.push(
+      `Quand le RSI 14 j dépassait 70 le jour du verdict (${hot.n} cas), le cours a ensuite monté nettement dans ${share(hot.actual.ACHAT, hot.n)} % des cas et baissé dans ${share(hot.actual.VENTE, hot.n)} %, contre ${share(neutral.actual.ACHAT, neutral.n)} % et ${share(neutral.actual.VENTE, neutral.n)} % avec un RSI neutre.`
+    );
+  }
+  const groups = [
+    ["RSI ≥ 70 (surachat)", b.by_rsi_zone && b.by_rsi_zone.surachat],
+    ["RSI neutre", b.by_rsi_zone && b.by_rsi_zone.neutre],
+    ["RSI ≤ 30 (survente)", b.by_rsi_zone && b.by_rsi_zone.survente],
+    ["Cours au-dessus de la MM200", b.by_trend && b.by_trend.au_dessus_mm200],
+    ["Cours sous la MM200", b.by_trend && b.by_trend.en_dessous_mm200],
+    ["Tous les verdicts", { n: b.sample, actual: a }],
+  ].filter(([, g]) => g && g.n);
+  const cell = (n, total) => `<td>${n}<span class="hint tech-share">${share(n, total)}\u00a0%</span></td>`;
+  const calls = ["ACHAT", "ATTENTE", "VENTE"].map((k) => `${k} ${b.engine_calls[k].n} (${b.engine_calls[k].correct} justes)`).join(" · ");
+  el.innerHTML = `${lead.map((s) => `<p class="text-resume">${highlightKeyInfo(s)}</p>`).join("")}
+    <div class="tech-table-wrap"><table class="tech-table">
+      <thead><tr><th scope="col">Le jour du verdict</th><th scope="col">Verdicts</th><th scope="col">Hausse</th><th scope="col">Stable</th><th scope="col">Baisse</th></tr></thead>
+      <tbody>${groups.map(([label, g]) => `<tr><th scope="row">${label}</th><td>${g.n}</td>${cell(g.actual.ACHAT, g.n)}${cell(g.actual.ATTENTE, g.n)}${cell(g.actual.VENTE, g.n)}</tr>`).join("")}</tbody>
+    </table></div>
+    <p class="hint">Choix du moteur : ${calls}. Hausse = +${THRESHOLDS.directionalMovePct} % ou plus à l'échéance du verdict, baisse = −${THRESHOLDS.directionalMovePct} % ou plus, stable entre les deux. Indicateurs recalculés avec les seuls cours connus le jour de chaque verdict.</p>
+    ${b.note ? `<p class="hint">${escapeHtml(b.note)}</p>` : ""}`;
+}

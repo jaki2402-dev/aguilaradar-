@@ -13,7 +13,7 @@ listes éparpillées dans les résumés de session.
   source réelle** (`origin/main`, test, commande) et sa date. Ce qui n'a pas pu être vérifié est
   écrit « non vérifié », jamais supposé. Le détail technique va dans `docs/journal-technique.md`.
 
-## État vérifié — 10/10/2026 22h UTC
+## État vérifié — 11/10/2026 08h UTC
 
 Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 
@@ -30,7 +30,8 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | Thèse hebdo du portefeuille | 05/10 | OK (hebdomadaire) |
 | Groupe témoin | 04/10 | OK — objectif 8 en attente atteint |
 | Actualités | vérifiées 10/10, contenu inchangé depuis le 05/10 | À surveiller (P2) |
-| Tests (`npm test`) | 10/10 | 722/722 |
+| Analyse technique des favoris (Action GitHub `technical-daily`) | 11/10 02h01 | OK — 15/15, recoupée avec CoinMarketCap (CTSI : RSI 71,6 contre 71,0) |
+| Tests (`npm test`) | 11/10 | 743/743 |
 
 ## Problèmes ouverts
 
@@ -44,19 +45,20 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | P7 | **3 routines gardent toute leur mémoire d'une exécution à l'autre** (verif-fraicheur, opportunités, briefing-email) : 274 k à 491 k tokens de contexte mesurés le 06/10, bien plus coûteux qu'une session neuve. | Session avec l'outil routines + **Toi** | Convertir une par une, en vérifiant après chaque conversion. |
 | P8 | **Seuls 4 prompts de routines sur environ 11 sont recopiés dans `docs/routines/`** : les autres sont invisibles pour une session qui n'a pas l'outil routines. C'est le principal trou de mémoire entre sessions. | Session avec l'outil routines | Recopier chaque prompt actuel (`get_trigger`) dans `docs/routines/<nom>.md`, sans secret (clé privée exclue). |
 | P9 | **Mail du matin** : le prompt corrigé du 05/10 (jauges fraîches) n'a probablement pas été collé. Non vérifié : le mail ne laisse aucune trace dans le dépôt. | Session avec l'outil routines | Vérifier avec `get_trigger`. |
-| P10 | **CoinMarketCap : routine dédiée prête, pas encore créée.** Elle relèvera chaque jour le marché ET l'analyse technique des 15 favoris (RSI, moyennes 200 j, MACD, évolutions jusqu'à 1 an). Le site (fiche de chaque favori) et l'Assistant s'en servent déjà dès que les fichiers existent. | **Toi** | Créer `aguilaradar-coinmarketcap-quotidien` avec le texte de `docs/routines/coinmarketcap-quotidien.md` (nouvelle version du 10/10 au soir). |
-| P13 | **Les verdicts n'utilisent aucun indicateur technique** (seulement les évolutions 24 h / 7 j / 30 j). Exemple réel : CTSI émis ACHAT le 10/10 avec un RSI à 71 (surachat), non mentionné. | **Toi**, puis session | Après P10 : coller l'ajout du 10/10 (2) en fin d'instructions de `aguilaradar-cycle-2h`. Les verdicts enregistreront l'analyse CoinMarketCap sans changer leur règle ; à mesurer après le 20/10. |
-| P11 | **Résumés d'une phrase par les routines : textes prêts, pas encore collés.** Le site affiche déjà un champ `resume` en tête (verdicts, actualités, régime, notes du contexte marché, thèses des favoris) dès qu'il existe. | **Toi** | Coller chaque texte en fin d'instructions de sa routine : `cycle-2h`, `marche-quotidien`, `favoris-quotidien` (section « Ajout du 10/10/2026 » de `docs/routines/cycle-2h-verdict.md`, `marche-quotidien.md`, `favoris-quotidien.md`). Une session vérifie ensuite qu'un `resume` apparaît sur `origin/main`. |
+| P10 | **CoinMarketCap : routine dédiée facultative.** Depuis le 11/10, l'analyse technique des favoris vient du robot GitHub (sans quota). CoinMarketCap n'apporterait plus que le levier, le financement, les liquidations et la saison des altcoins. | **Toi**, si tu le souhaites | Créer `aguilaradar-coinmarketcap-quotidien` avec le texte de `docs/routines/coinmarketcap-quotidien.md`. Rien ne casse sans elle. |
+| P14 | **Moteur des verdicts peu fiable (mesuré)** : 25,6 % d'exacts sur 82 ; ATTENTE dans 80 % des cas alors que le cours n'est resté stable que dans 23 %. Indice le plus net : RSI ≥ 70 le jour du verdict → hausse dans 25 % des cas seulement (61 % en RSI neutre), sur 16 cas. | Session après le 20/10 | Fin de l'évaluation de corr-20260921 le 20/10 (rappel programmé). Puis, sur les verdicts portant `technical_at_issue`, décider d'une correction de la règle (une seule variable à la fois), documentée dans `correction_log`. |
 
 ## Rendez-vous
 
 - **20/10/2026** — rappel `corr-20260921` : juger la règle de sélection ACHAT/ATTENTE/VENTE une fois
   résolus les 7 verdicts haussier→ACHAT du 05/10 (détail dans `docs/journal-technique.md`, 06/10).
+  Puis P14 : correction de la règle à partir des verdicts portant `technical_at_issue`.
 
 ## Ce qu'une session ne peut pas faire seule
 
 - Modifier le prompt d'une routine : il faut ton accord, et souvent que tu colles toi-même le texte
-  dans claude.ai (l'outil le refuse depuis une autre session).
+  dans claude.ai (l'outil le refuse depuis une autre session). **Sauf** cycle des verdicts, marché et
+  favoris : leur prompt renvoie à `docs/routines/*.md` sur main, qu'une session peut modifier directement.
 - Vérifier ce qui tourne réellement sur Cloudflare : connecteur à autoriser par toi.
 - Compter les routines en direct : seulement depuis une session qui a l'outil routines
   (`list_triggers`).
@@ -65,6 +67,8 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 
 | Date | Problème | Preuve |
 |---|---|---|
+| 11/10 | Les verdicts n'utilisaient aucun indicateur technique (CTSI émis ACHAT avec un RSI à 71, non signalé). | Robot GitHub quotidien sans quota (`technical-favoris.json`, 15/15 au 1er passage réel). Le cycle lit sa spec sur main (vérifié par `list_triggers`) : il enregistre `technical_at_issue` et signale les contradictions dès le 11/10 08h15. Fiche, comparatif des 15, onglet Moteur, Assistant. 18 tests, vérifié à 390 px. |
+| 11/10 | Résumés d'une phrase « à coller » jamais actifs. | Inutile de coller : les 3 routines lisent leur spec sur main. Sections rendues actives le 10/10 à 23h10 ; à confirmer : un `resume` sur `origin/main` après le prochain passage. |
 | 10/10 | L'Assistant citait des stats du moteur figées au 05/10 (25,93 % sur 81) au lieu du calcul en direct de l'onglet Moteur. | Même calcul partagé ; sur les données réelles l'Assistant dit « 97 émis, 82 vérifiés, 25,6 % ». 3 tests. |
 | 10/10 | Cours de l'or vide sur le site et pour l'IA. | Le robot GitHub (sans quota) relève PAX Gold + Tether Gold, publié seulement s'ils concordent à 2 % près, affiché comme approximation datée. 6 tests + exécution simulée du script. Premier relevé réel au prochain passage du robot (02h40, 10h40, 14h40 ou 22h40 UTC). |
 | 10/10 | Correctif du relais IA jamais poussé vers le dépôt surveillé par Cloudflare. | Poussé ; nouveau test qui échoue sur l'ancienne version et passe sur la nouvelle. Mise en ligne : voir P5. |
@@ -73,6 +77,11 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | 10/10 | Badge VENTE sous le seuil d'accessibilité (4,11-4,52 pour 4,5). | Rouge `#f87171` : 5,08 au pire. |
 
 ## Journal des sessions (le plus récent en haut)
+
+- **11/10/2026 (matin)** — Demande : « améliorer nettement l'analyse ». Robot d'analyse technique quotidien
+  (GitHub, zéro quota) + analyse rétrospective des 82 verdicts vérifiés (P14). Découverte : cycle, marché et
+  favoris suivent leur spec sur main → résumés et lecture technique actifs sans rien coller. Cycle de 00h15
+  manqué pour quota d'usage atteint (pas un bug).
 
 - **10/10/2026 (nuit)** — Priorité de l'utilisateur : de meilleures analyses grâce à CoinMarketCap. Testé :
   analyse technique par actif et cours multi-durées. Routine dédiée étendue (script `cmc-snapshot.py`,

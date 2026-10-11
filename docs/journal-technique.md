@@ -480,3 +480,32 @@ dessus de sa MM200, sans le savoir.
 - `scripts/write-crypto-global.py` (1re version, 7 valeurs recopiées) gardé pour compatibilité si
   l'ancien texte a été collé ; à supprimer une fois la nouvelle routine confirmée.
 
+
+### 11/10/2026 — robot d'analyse technique quotidien, analyse rétrospective, specs actives
+
+- **Demande** : « améliorer nettement l'analyse ». Constat chiffré d'abord (82 verdicts vérifiés) :
+  25,6 % d'exacts ; ATTENTE 66 fois alors que l'issue réelle a été stable 19 fois, hausse ≥ 5 % 44
+  fois, baisse 19 fois. Le cycle ne voyait que les évolutions 24 h / 7 j / 30 j.
+- **Robot `technical-daily`** (GitHub Action 23h30 UTC, zéro quota) : `scripts/technical-favoris.mjs`
+  charge `js/config.js` + `js/detail.js` dans un `vm` (une seule implémentation des indicateurs ;
+  `computeMACD` ajouté, vérifié contre une implémentation indépendante et des propriétés analytiques).
+  Historique CoinGecko 365 j (le runner GitHub y accède, pas le bac à sable). 1er passage réel :
+  15/15, cohérent avec CoinMarketCap (CTSI RSI 71,6 contre 71,0 ; écart MM200 +28 % contre +30 %,
+  un jour d'écart). Note : `computeRSI` = moyenne simple des 14 derniers écarts (pas le lissage de
+  Wilder), d'où de petits écarts avec d'autres sources.
+- **Rétrospectif** (`backtest`, mêmes fichiers) : indicateurs recalculés avec les seuls cours connus
+  au jour de chaque verdict (`closesUntil`, test d'absence d'anticipation). Résultat : RSI ≥ 70 à
+  l'émission (16 cas) → hausse 25 %, baisse 44 % ; RSI neutre (66) → hausse 61 %, baisse 18 %. La
+  tendance MM200 n'a pas départagé sur cette période (règle « au-dessus = ACHAT » : 36,6 %). Petit
+  échantillon, période haussière : piste pour P14 (après le 20/10), pas une preuve.
+- **Découverte** : les prompts de `cycle-2h`, `marche-quotidien`, `favoris-quotidien` disent « lis
+  docs/routines/<x>.md sur main et suis-le à la lettre » (relu via `list_triggers`). Les sections
+  « texte à coller » du 10/10 étaient donc lues par les routines avec une mention contradictoire
+  (« actif quand collé ») → réécrites en sections actives. Règle ajoutée à `CLAUDE.md`.
+- Le cycle de 00h15 le 11/10 a échoué en `USAGE_LIMIT_REACHED` (quota, pas la spec) ; les routines
+  de 04h-06h ont réussi.
+- **Affichage** : fiche (« Analyse technique du jour », robot prioritaire, CoinMarketCap en repli),
+  comparatif des 15 dans l'onglet Favoris (synthèse visible sans déplier), bloc rétrospectif dans
+  l'onglet Moteur, contexte de l'Assistant (15,1 k caractères avec les vraies données, limite 20 k).
+  Pièges : bulles du glossaire dans un `<th>` en `white-space: nowrap` → tableau de 1 424 px ;
+  « % » seul à la ligne → espace insécable.
