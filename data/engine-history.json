@@ -54,9 +54,9 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-10T16:28:00Z",
+    "last_success_at": "2026-10-11T08:17:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 10/10/2026 ~16h20 UTC : 0 verdict resolu (aucun pending du avant ce cycle), 1 nouveau verdict emis (v-20261010-ctsi, ACHAT, confiance 65%, seul ticker sans pending - les 14 autres favoris deja couverts). Croisement favoris-context.json/portfolio-thesis.json effectue en lecture seule avant finalisation. Aucun outil mcp__ utilise (regle absolue de cette execution, WebSearch/curl direct uniquement). Veille actualites : 2 recherches WebSearch (hack/exploit, actualite generale BTC/ETH) - rien de nouveau date avec fiabilite trouve pour le 10/10 (resultats renvoient des incidents et prix anciens, non dates du jour) - rien ajoute a items (regle 'jamais inventer'). last_checked_at de news.json mis a jour, items et last_updated_at inchanges. macro_regime recalcule (verdict emis ce cycle, regle section 7) : neutre, inchange depuis le 06/10."
+    "last_failure_reason": "Cycle court du 11/10/2026 ~08h20 UTC : aucun verdict pending echu, les 15 favoris ont deja un verdict pending en cours - rien emis ni resolu. Veille actualites : 2 recherches WebSearch (hack/exploit, fear&greed) - aucun developpement date et fiable trouve pour ce cycle (resultats hors-date ou anciens) - rien ajoute a news.json (regle 'jamais inventer'). last_checked_at de news.json mis a jour, items et last_updated_at inchanges. macro_regime non touche (regle section 7 : seulement si un verdict est emis ce cycle). Aucun outil mcp__ utilise."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-10T16:28:00Z",
