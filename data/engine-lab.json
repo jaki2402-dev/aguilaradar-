@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-11T09:31:58Z",
+  "updated_at": "2026-10-11T09:38:58Z",
   "method": "Cas réels : chaque favori, chaque jour avec 200 jours d'historique ; issue = cours 7 ou 14 jours plus tard (horizon de l'actif), seuil ±5 %, comme les verdicts. 60 % des jours les plus anciens pour apprendre, les plus récents pour noter.",
   "period": {
     "from": "2026-04-29",
@@ -46,6 +46,24 @@
       "valid": 50.4,
       "name": "Retour à la moyenne protégé",
       "real_recent": 70
+    },
+    "sentiment_marche": {
+      "train": 22.5,
+      "valid": 52.6,
+      "name": "Sentiment de marché",
+      "real_recent": 60
+    },
+    "sentiment_marche_rsi": {
+      "train": 22.5,
+      "valid": 52.6,
+      "name": "Sentiment de marché + RSI",
+      "real_recent": 70
+    },
+    "retour_moyenne_prudent": {
+      "train": 21.8,
+      "valid": 55.6,
+      "name": "Retour à la moyenne prudent",
+      "real_recent": 63.3
     },
     "regle_apprise": {
       "train": 38.3,
@@ -560,5 +578,15 @@
       "pct": 29
     }
   },
-  "fng_available": true
+  "fng_available": true,
+  "corrections": {
+    "method": "Par situation (élan du bitcoin × peur/cupidité) : si une autre issue a été plus fréquente d'au moins 10 points sur au moins 80 cas, l'appel de la règle est corrigé vers elle. Validation : apprise sur la période ancienne, notée sur la récente.",
+    "test": {
+      "raw_valid": 52.6,
+      "corrected_valid": 43.5,
+      "learned_on_train": 2
+    },
+    "used": false,
+    "table": []
+  }
 }
