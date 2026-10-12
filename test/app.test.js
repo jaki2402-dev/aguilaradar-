@@ -964,6 +964,56 @@ describe("app.js — renderMacroRegime : jauges fraîches et régime daté (fig�
   });
 });
 
+describe("app.js — fil des médias (data/news-feed.json, robot 4×/jour)", () => {
+  const FEED = {
+    updated_at: "2026-10-12T22:40:00Z",
+    items: [
+      { title: "Bitcoin : les ETF <b>attirent</b> 1,2 Md$", url: "https://www.lesechos.fr/a", source: "Les Echos", published_at: "2026-10-12T21:00:00Z", tickers: ["BTC"] },
+      { title: "Lien piégé", url: "javascript:alert(1)", source: "X", published_at: "2026-10-12T20:00:00Z", tickers: ["ETH"] },
+      { title: "Chainlink (LINK) étend CCIP", url: "https://www.cointribune.com/b", source: "Cointribune", published_at: "2026-10-10T20:00:00Z", tickers: ["LINK"] },
+    ],
+  };
+  let dom;
+  beforeEach(() => {
+    dom = loadPage(["config.js", "app.js"], { html: APP_FIXTURE_HTML });
+    freezeNow(dom, "2026-10-12T23:00:00Z");
+  });
+
+  it("affiche les titres datés et sourcés avant la sélection du cycle, échappés, lien sûr seulement", () => {
+    dom.window.renderNews({ items: [{ title: "Sélection", url: "https://example.com/s", source: "Y" }] }, FEED);
+    const el = dom.window.document.getElementById("news-body");
+    const items = Array.from(el.querySelectorAll(".news-item"));
+    expect(items.map((i) => i.querySelector("a").getAttribute("href"))).toEqual(["https://www.lesechos.fr/a", "https://www.cointribune.com/b", "https://example.com/s"]);
+    expect(el.querySelector("b")).toBeNull();
+    expect(items[0].textContent).toContain("Les Echos · il y a 2 h · BTC");
+    expect(items[1].textContent).toContain("Cointribune · il y a 2 j · LINK");
+    expect(el.textContent).toContain("Fil des médias — titres publiés citant un favori (relevé il y a moins d'1 h)");
+    expect(el.textContent).toContain("Sélection du cycle profond");
+  });
+
+  it("sans fil (fichier absent) : rendu identique à avant, sans intertitre", () => {
+    dom.window.renderNews({ items: [{ title: "Sélection", url: "https://example.com/s", source: "Y" }] }, null);
+    expect(dom.window.document.querySelector("#news-body .news-feed-heading")).toBeNull();
+  });
+
+  it("sélection du cycle vide : le fil reste affiché au-dessus du message d'attente", () => {
+    dom.window.renderNews({ items: [] }, FEED);
+    const el = dom.window.document.getElementById("news-body");
+    expect(el.querySelectorAll(".news-feed-item")).toHaveLength(2);
+    expect(el.textContent).toContain("Aucune actualité");
+  });
+
+  it("indicateur de fraîcheur : fil relevé il y a plus de 26 h → bloqué", () => {
+    const html = `<!doctype html><html><body><div id="last-deep-cycle"></div></body></html>`;
+    const d = loadPage(["config.js", "app.js"], { html });
+    freezeNow(d, "2026-10-12T23:00:00Z");
+    d.window.updateFreshnessIndicator({}, {}, {}, {}, {}, { updated_at: "2026-10-11T20:00:00Z" });
+    const el = d.window.document.getElementById("last-deep-cycle");
+    expect(el.classList.contains("freshness-stale")).toBe(true);
+    expect(el.textContent).toContain("Fil des médias");
+  });
+});
+
 describe("app.js — renderNews", () => {
   let dom;
 

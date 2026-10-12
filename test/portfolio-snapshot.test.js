@@ -23,22 +23,30 @@ describe("scripts/portfolio-snapshot.mjs — buildSnapshot", () => {
   });
 
   it("never writes two snapshots for the same day", () => {
-    expect(buildSnapshot(positions, { bitcoin: 1, ethereum: 1 }, { snapshots: [{ date: "2026-10-04" }] }, now).skip).toMatch(/déjà/);
+    // Même jour : le point est rafraîchi (même date, remplacé dans main), jamais dupliqué.
+    const fresh = { snapshots: [{ date: "2026-10-04", computed_at: "2026-10-04T20:00:00Z" }] };
+    expect(buildSnapshot(positions, { bitcoin: 1, ethereum: 1 }, fresh, now).skip).toMatch(/moins de 2 h/);
+    const old = { snapshots: [{ date: "2026-10-04", computed_at: "2026-10-04T09:00:00Z" }] };
+    expect(buildSnapshot(positions, { bitcoin: 1, ethereum: 1 }, old, now).snapshot.date).toBe("2026-10-04");
   });
 });
 
-describe("date du point : un passage retardé après minuit compte pour la veille", () => {
-  it("cas réels du 10 et 11/10/2026", () => {
-    expect(snapshotDate(new Date("2026-10-10T00:17:36Z"))).toBe("2026-10-09"); // tâche du 09 au soir, lancée à 00h17
-    expect(snapshotDate(new Date("2026-10-10T23:47:55Z"))).toBe("2026-10-10"); // tâche du 10 au soir
-    expect(snapshotDate(new Date("2026-10-11T10:10:00Z"))).toBe("2026-10-11");
-    expect(snapshotDate(new Date("2026-10-11T05:59:00Z"))).toBe("2026-10-10");
-    expect(snapshotDate(new Date("2026-10-11T06:00:00Z"))).toBe("2026-10-11");
+describe("point du jour mis à jour à chaque passage, jours passés intacts", () => {
+  const prices = { bitcoin: 20000, ethereum: 1000 };
+  it("date = jour UTC du relevé", () => {
+    expect(snapshotDate(new Date("2026-10-12T22:38:00Z"))).toBe("2026-10-12");
+    expect(snapshotDate(new Date("2026-10-13T01:43:00Z"))).toBe("2026-10-13");
   });
 
-  it("le passage du soir ne trouve plus sa date « volée » par le passage retardé de la veille", () => {
-    const history = { snapshots: [{ date: snapshotDate(new Date("2026-10-10T00:17:36Z")) }] }; // 09/10
-    const { snapshot } = buildSnapshot(positions, { bitcoin: 20000, ethereum: 1000 }, history, new Date("2026-10-10T23:47:55Z"));
-    expect(snapshot.date).toBe("2026-10-10");
+  it("cas réel du 11/10 : le passage de 22h01 rafraîchit le point de 10h11 au lieu de ne rien faire", () => {
+    const history = { snapshots: [{ date: "2026-10-10" }, { date: "2026-10-11", computed_at: "2026-10-11T10:11:56Z" }] };
+    const { snapshot } = buildSnapshot(positions, prices, history, new Date("2026-10-11T22:01:49Z"));
+    expect(snapshot).toMatchObject({ date: "2026-10-11", computed_at: "2026-10-11T22:01:49Z" });
+  });
+
+  it("pas de réécriture si le point du jour a moins de 2 h ; jamais un jour antérieur au dernier", () => {
+    const history = { snapshots: [{ date: "2026-10-12", computed_at: "2026-10-12T19:58:00Z" }] };
+    expect(buildSnapshot(positions, prices, history, new Date("2026-10-12T21:00:00Z")).skip).toMatch(/moins de 2 h/);
+    expect(buildSnapshot(positions, prices, { snapshots: [{ date: "2026-10-13" }] }, new Date("2026-10-12T21:00:00Z")).skip).toMatch(/postérieur/);
   });
 });

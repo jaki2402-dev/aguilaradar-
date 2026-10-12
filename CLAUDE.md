@@ -169,12 +169,14 @@ vente.
 - `engine-history.json` : `correction_log` = mémoire du moteur ; `global_stats` recalculé ;
   `routine_health.last_success_at` touché à **chaque** cycle réussi, même sans verdict.
 - `news.json` : `last_checked_at` à chaque cycle ; `last_updated_at` seulement si `items` change.
+- `news-feed.json` (≠ `news.json`) : fil des médias, robot `price-alerts` (`scripts/news-feed.mjs`,
+  flux RSS publics), titres tels que publiés citant un favori, 7 j glissants, le plus récent EN TÊTE.
 - `onchain-history.json` : un jour sans aucune métrique confirmée est sauté (jamais de ligne
   nulle), jamais de backfill.
 - `portfolio-history.json` : 1 point/jour écrit par la GitHub Action `portfolio-snapshot`
   (`scripts/portfolio-snapshot.mjs`, zéro quota Claude) — aucune routine ne l'écrivait depuis le 14/09.
-  GitHub retarde la tâche du soir de 3-5 h : `snapshotDate` date un passage d'avant 6 h UTC à la
-  veille (sinon un jour « vole » la date du suivant, qui est sauté — 05/10 et 10/10 perdus).
+  GitHub retarde les tâches de 3-5 h : le point du jour UTC est RAFRAÎCHI à chaque passage (robot
+  des alertes 4×/jour + sa tâche), jours passés jamais modifiés (12/10 : 36 h sans valeur sinon).
 - `alerts.json` (`seuil_technique`) : GitHub Action `price-alerts` (4×/jour, max 3/passage, 1 par
   verdict) — le cycle-2h ne les écrit plus depuis le 14/09. Chaque alerte = 1 push (Worker).
   `signal_technique` : `technical-daily`, seulement une bascule d'un jour à l'autre (MM200,

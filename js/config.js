@@ -242,6 +242,7 @@ const DATA_URLS = {
   opportunities: "data/opportunities.json",
   alerts: "data/alerts.json",
   news: "data/news.json",
+  newsFeed: "data/news-feed.json",
   controlGroup: "data/control-group.json",
   marketContext: "data/market-context.json",
   favorisContext: "data/favoris-context.json",

@@ -3,7 +3,8 @@
 // Pourquoi : plus aucune routine n'écrivait ce fichier depuis le 14/09/2026 (graphique figé).
 // Même discipline que le reste du site : prix réellement récupérés (CoinGecko /simple/price),
 // jamais deviné. Une seule position sans prix ou sans quantité = jour sauté (jamais un total
-// partiel présenté comme complet), jamais de backfill, jamais deux points le même jour.
+// partiel présenté comme complet), jamais de backfill, jamais deux points le même jour (le point
+// du jour est mis à jour jusqu'à minuit UTC, voir snapshotDate).
 import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
@@ -13,19 +14,25 @@ const HISTORY_PATH = "data/portfolio-history.json";
 const round2 = (n) => Math.round(n * 100) / 100;
 
 // Fonction pure (testée dans test/portfolio-snapshot.test.js). Retourne { snapshot } ou { skip }.
-// Date du point = jour qu'il représente. GitHub lance la tâche du soir avec 3 à 5 h de retard,
-// souvent après minuit UTC (constaté du 06 au 10/10/2026) : le point du soir prenait alors la date
-// du lendemain, et le passage suivant, trouvant cette date déjà prise, n'ajoutait rien (05/10 et
-// 10/10 perdus, historique « en retard »). Un passage avant 6 h UTC compte donc pour la veille.
-export const LATE_RUN_GRACE_HOURS = 6;
+// Un point par jour UTC, MIS À JOUR à chaque passage de la journée (jamais figé au premier) :
+// GitHub lance les tâches planifiées avec 3 à 5 h de retard (constaté du 06 au 12/10/2026), et un
+// seul passage par jour laissait l'historique 36 h sans nouvelle valeur. Le relevé tourne donc à
+// chaque passage du robot des alertes (4×/jour) en plus du sien ; le point du jour garde la
+// dernière valeur relevée, les jours passés ne sont JAMAIS modifiés.
+export const MIN_REFRESH_HOURS = 2; // pas de réécriture si le point du jour a moins de 2 h
 export function snapshotDate(now) {
-  return new Date(now.getTime() - LATE_RUN_GRACE_HOURS * 3600000).toISOString().slice(0, 10);
+  return now.toISOString().slice(0, 10);
 }
 
 export function buildSnapshot(positions, pricesEur, history, now = new Date()) {
   const date = snapshotDate(now);
   const snapshots = (history && history.snapshots) || [];
-  if (snapshots.some((s) => s.date === date)) return { skip: `snapshot déjà présent pour ${date}` };
+  const last = snapshots[snapshots.length - 1];
+  if (last && last.date > date) return { skip: `dernier point (${last.date}) postérieur à ${date}` };
+  const today = snapshots.find((s) => s.date === date);
+  if (today && today.computed_at && now.getTime() - Date.parse(today.computed_at) < MIN_REFRESH_HOURS * 3600000) {
+    return { skip: `point du ${date} relevé il y a moins de ${MIN_REFRESH_HOURS} h` };
+  }
   if (!positions || positions.length === 0) return { skip: "aucune position" };
 
   let value = 0;
@@ -73,9 +80,12 @@ async function main() {
     console.log(`Jour sauté : ${result.skip}`);
     return;
   }
-  history.snapshots.push(result.snapshot);
+  // Point du jour : remplacé par la valeur la plus récente ; sinon ajouté. Jours passés intacts.
+  const i = history.snapshots.findIndex((x) => x.date === result.snapshot.date);
+  if (i >= 0) history.snapshots[i] = result.snapshot;
+  else history.snapshots.push(result.snapshot);
   writeFileSync(HISTORY_PATH, JSON.stringify(history, null, 2) + "\n");
-  console.log(`Point ajouté : ${result.snapshot.date} · ${result.snapshot.total_value_eur} €`);
+  console.log(`${i >= 0 ? "Point du jour mis à jour" : "Point ajouté"} : ${result.snapshot.date} · ${result.snapshot.total_value_eur} €`);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

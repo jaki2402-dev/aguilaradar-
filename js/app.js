@@ -473,12 +473,48 @@ function isNewsImportant(title) {
   return NEWS_IMPORTANCE_KEYWORDS.some((kw) => t.includes(kw));
 }
 
-function renderNews(newsData) {
+// Âge lisible d'un horodatage ISO : « il y a 3 h », « il y a 2 j » — null si absent/illisible.
+function ageLabel(iso, now = Date.now()) {
+  const t = Date.parse(iso || "");
+  if (!Number.isFinite(t)) return null;
+  const hours = Math.max(0, (now - t) / 3600000);
+  if (hours < 1) return "il y a moins d'1 h";
+  if (hours < 48) return `il y a ${Math.floor(hours)} h`;
+  return `il y a ${Math.floor(hours / 24)} j`;
+}
+
+const NEWS_FEED_SHOWN = 8;
+// Fil des médias (data/news-feed.json, robot price-alerts 4×/jour, aucun quota) : titres RÉELS
+// publiés par les médias crypto francophones et citant un favori, datés et sourcés, le plus
+// récent en premier (déjà trié par le robot). Rien n'est résumé : titre tel que publié.
+// Ajouté le 12/10/2026 : la sélection du cycle (news.json) n'avait rien ajouté depuis le 05/10.
+function renderNewsFeedBlock(feedData) {
+  const items = ((feedData && feedData.items) || []).filter((n) => n && n.title && safeUrl(n.url));
+  if (items.length === 0) return "";
+  const updated = ageLabel(feedData.updated_at);
+  const heading = `<p class="news-feed-heading">Fil des médias — titres publiés citant un favori${updated ? ` (relevé ${updated})` : ""}</p>`;
+  const rows = items
+    .slice(0, NEWS_FEED_SHOWN)
+    .map((n) => {
+      const meta = [n.source, ageLabel(n.published_at), (n.tickers || []).join(", ")].filter(Boolean).join(" · ");
+      return `
+      <div class="news-item news-feed-item">
+        <a href="${escapeHtml(safeUrl(n.url))}" target="_blank" rel="noopener noreferrer"><span>${highlightKeyInfo(n.title)}</span></a>
+        <span class="hint">${escapeHtml(meta)}</span>
+      </div>`;
+    })
+    .join("");
+  return heading + rows;
+}
+
+function renderNews(newsData, feedData) {
   const el = document.getElementById("news-body");
   if (!el) return;
   const items = (newsData && newsData.items) || [];
+  const feedHtml = renderNewsFeedBlock(feedData);
+  const curatedHeading = feedHtml ? `<p class="news-feed-heading">Sélection du cycle profond</p>` : "";
   if (items.length === 0) {
-    el.innerHTML = `<p class="empty-state">Aucune actualité récupérée pour l'instant — alimenté par la routine à chaque cycle profond.</p>`;
+    el.innerHTML = feedHtml + curatedHeading + `<p class="empty-state">Aucune actualité récupérée pour l'instant — alimenté par la routine à chaque cycle profond.</p>`;
     return;
   }
   // items est en ajout (le plus récent en dernier, comme correction_log/alerts ailleurs sur le
@@ -496,6 +532,8 @@ function renderNews(newsData) {
       ? `<p class="hint" style="margin-bottom:8px;">Dernière actualité réellement nouvelle ajoutée il y a ${ageDays} jours — la liste reste correcte, juste pas forcément celle d'aujourd'hui.</p>`
       : "";
   el.innerHTML =
+    feedHtml +
+    curatedHeading +
     staleHint +
     ordered
       .map((n) => {
@@ -555,12 +593,13 @@ function updateHeroStats(verdicts, alerts) {
 }
 
 async function loadAllData() {
-  const [verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory, marketGauges, cryptoGlobal, cmcFavoris, technicalFavoris, engineLab] = await Promise.all([
+  const [verdicts, engineHistory, opportunities, alerts, news, newsFeed, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory, marketGauges, cryptoGlobal, cmcFavoris, technicalFavoris, engineLab] = await Promise.all([
     loadJson(DATA_URLS.verdicts),
     loadJson(DATA_URLS.engineHistory),
     loadJson(DATA_URLS.opportunities),
     loadJson(DATA_URLS.alerts),
     loadJson(DATA_URLS.news),
+    loadJson(DATA_URLS.newsFeed),
     loadJson(DATA_URLS.controlGroup),
     loadJson(DATA_URLS.marketContext),
     loadJson(DATA_URLS.favorisContext),
@@ -583,7 +622,7 @@ async function loadAllData() {
   latestOnchainHistory = onchainHistory && onchainHistory.assets ? onchainHistory : { assets: {} };
   // Expose les données déjà chargées pour que d'autres fonctionnalités (l'Assistant) les
   // réutilisent sans refaire les mêmes fetch — toujours les données du dernier rafraîchissement.
-  window.aguilaradarData = { verdicts, engineHistory, opportunities, alerts, news, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory: latestOnchainHistory, marketGauges, cryptoGlobal, cmcFavoris, technicalFavoris, engineLab };
+  window.aguilaradarData = { verdicts, engineHistory, opportunities, alerts, news, newsFeed, controlGroup, marketContext, favorisContext, healthLog, digest, portfolio, portfolioThesis, portfolioHistory, onchainHistory: latestOnchainHistory, marketGauges, cryptoGlobal, cmcFavoris, technicalFavoris, engineLab };
   if (window.renderDigestPanel) renderDigestPanel(digest);
 
   renderEngineTab(verdicts || [], engineHistory, opportunities, controlGroup);
@@ -592,7 +631,7 @@ async function loadAllData() {
   renderNotifications(alerts);
   renderAvisDuJour(alerts);
   if (window.updateNotifBellFromAlerts) updateNotifBellFromAlerts(alerts);
-  renderNews(news);
+  renderNews(news, newsFeed);
   renderMacroRegime(engineHistory, marketGauges);
   renderMarketContext(marketContext, marketGauges, cryptoGlobal);
   renderFavorisTechnical(technicalFavoris);
@@ -609,7 +648,7 @@ async function loadAllData() {
   renderFavorisSummary(verdicts || []);
   if (window.renderPortfolio) renderPortfolio(portfolio, verdicts || [], portfolioThesis, portfolioHistory);
 
-  updateFreshnessIndicator(engineHistory, opportunities, news, portfolioHistory, marketGauges);
+  updateFreshnessIndicator(engineHistory, opportunities, news, portfolioHistory, marketGauges, newsFeed);
 }
 
 // Sources suivies par l'indicateur de fraîcheur, chacune à SON PROPRE rythme attendu.
@@ -622,10 +661,13 @@ const FRESHNESS_SOURCES = [
   { key: "opportunities", label: "Criblage opportunités", warnHours: 24 * 8, staleHours: 24 * 10 },
   // GitHub Action quotidienne (portfolio-snapshot) : resté figé 20 jours sans que rien ne le
   // signale avant le 04/10/2026. Un jour sauté (prix manquant) = "en retard", deux = bloqué.
-  // 36 h / 60 h : la tâche du soir démarre souvent avec 3 à 5 h de retard (constaté le 11/10).
-  { key: "portfolioHistory", label: "Historique portefeuille", warnHours: 36, staleHours: 60 },
+  // Rafraîchi à chaque passage du robot des alertes (4×/jour) + sa propre tâche, chacun pouvant
+  // démarrer 3 à 5 h en retard : au-delà de 14 h sans relevé, quelque chose cloche.
+  { key: "portfolioHistory", label: "Historique portefeuille", warnHours: 14, staleHours: 30 },
   // GitHub Action price-alerts, 4×/jour (jauges peur/cupidité + dominance BTC).
   { key: "marketGauges", label: "Jauges de marché", warnHours: 14, staleHours: 26 },
+  // Même robot (fil des médias) : updated_at n'avance que si au moins un flux a répondu.
+  { key: "newsFeed", label: "Fil des médias", warnHours: 14, staleHours: 26 },
 ];
 
 // Indicateur de fraîcheur bien visible : plusieurs routines à cadences différentes
@@ -636,10 +678,11 @@ const FRESHNESS_SOURCES = [
 // bloquée tant qu'une autre tournait normalement (ex: routine_health frais toutes les 2h
 // pendant qu'opportunities.last_scan_at restait figé 10 jours) — chaque source est donc
 // désormais jugée indépendamment contre son propre rythme, et on affiche la pire.
-function updateFreshnessIndicator(engineHistory, opportunities, news, portfolioHistory, marketGauges) {
+function updateFreshnessIndicator(engineHistory, opportunities, news, portfolioHistory, marketGauges, newsFeed) {
   const snapshots = (portfolioHistory && portfolioHistory.snapshots) || [];
   const timestampsByKey = {
     marketGauges: marketGauges && marketGauges.updated_at,
+    newsFeed: newsFeed && newsFeed.updated_at,
     portfolioHistory: snapshots.map((s) => s.computed_at).filter(Boolean).sort().pop(),
     routine: engineHistory && engineHistory.routine_health && engineHistory.routine_health.last_success_at,
     news: news && (news.last_checked_at || news.last_updated_at),

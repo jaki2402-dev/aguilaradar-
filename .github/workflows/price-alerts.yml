@@ -1,7 +1,8 @@
 name: Price alerts
 
 # Alertes "seuil_technique" (verdict actif dont le prix a franchi son seuil) dans
-# data/alerts.json, et jauges brutes (peur/cupidité, dominance BTC, or) dans data/market-gauges.json —
+# data/alerts.json, jauges brutes (peur/cupidité, dominance BTC, or) dans data/market-gauges.json,
+# on-chain du bitcoin, point du jour du portefeuille et fil des médias (data/news-feed.json) —
 # calcul pur, aucun quota Claude. Horaires choisis hors des créneaux des
 # routines Cowork (00:15/08:15/16:15, 04:00, 06:xx, 08:xx-09:xx, 18:xx) pour éviter les push
 # concurrents sur main.
@@ -34,18 +35,30 @@ jobs:
       # On-chain du bitcoin (blockchain.info + DefiLlama) : étape indépendante elle aussi.
       - run: node scripts/onchain-btc.mjs
         continue-on-error: true
+      # Valeur du portefeuille : le point du jour est rafraîchi à chaque passage (4×/jour) — un seul
+      # passage quotidien, retardé de 3 à 5 h par GitHub, laissait l'historique 36 h sans valeur.
+      - run: node scripts/portfolio-snapshot.mjs
+        continue-on-error: true
+      # Fil des médias (titres réels datés des médias crypto francophones citant un favori) :
+      # un flux injoignable est noté dans le fichier, sans effet sur le reste.
+      - run: node scripts/news-feed.mjs
+        continue-on-error: true
       - name: Commit si quelque chose a changé
         run: |
           git add -N data/market-gauges.json 2>/dev/null || true
-          git diff --quiet -- data/alerts.json data/market-gauges.json data/onchain-history.json && exit 0
+          git add -N data/news-feed.json 2>/dev/null || true
+          git diff --quiet -- data/alerts.json data/market-gauges.json data/onchain-history.json data/portfolio-history.json data/news-feed.json && exit 0
+          python3 -m json.tool data/portfolio-history.json >/dev/null
           python3 -m json.tool data/onchain-history.json >/dev/null
           python3 -m json.tool data/alerts.json >/dev/null
           [ ! -f data/market-gauges.json ] || python3 -m json.tool data/market-gauges.json >/dev/null
+          [ ! -f data/news-feed.json ] || python3 -m json.tool data/news-feed.json >/dev/null
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/alerts.json
           [ ! -f data/market-gauges.json ] || git add data/market-gauges.json
-          git add data/onchain-history.json
+          git add data/onchain-history.json data/portfolio-history.json
+          [ ! -f data/news-feed.json ] || git add data/news-feed.json
           git commit -m "Alertes et jauges du $(date -u "+%d/%m/%Y %Hh%M") UTC"
           for i in 1 2 3; do git pull --rebase -q origin main && git push origin HEAD:main && exit 0; sleep $((i*5)); done
           exit 1

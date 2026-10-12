@@ -63,8 +63,9 @@ async function ensureChatData() {
     loadJson(DATA_URLS.cryptoGlobal),
     loadJson(DATA_URLS.cmcFavoris),
     loadJson(DATA_URLS.technicalFavoris),
-  ]).then(([verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext, marketGauges, cryptoGlobal, cmcFavoris, technicalFavoris]) => {
-    chatData = { verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext, marketGauges, cryptoGlobal, cmcFavoris, technicalFavoris };
+    loadJson(DATA_URLS.newsFeed),
+  ]).then(([verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext, marketGauges, cryptoGlobal, cmcFavoris, technicalFavoris, newsFeed]) => {
+    chatData = { verdicts, opportunities, alerts, news, engineHistory, marketContext, digest, portfolio, portfolioThesis, favorisContext, marketGauges, cryptoGlobal, cmcFavoris, technicalFavoris, newsFeed };
     return chatData;
   });
   return chatDataLoading;
@@ -549,11 +550,24 @@ function answerOpportunities() {
   return `Les opportunités les plus solides en ce moment :\n\n${lines.join("\n")}\n\nListe complète dans l'onglet Opportunités.`;
 }
 
+// Fil des médias (data/news-feed.json, robot price-alerts) : déjà trié du plus récent au plus
+// ancien. « [12/10] Média — titre (BTC, ETH) ».
+function mediaHeadlines(max) {
+  const items = (chatData.newsFeed && chatData.newsFeed.items) || [];
+  return items.slice(0, max).map((n) => {
+    const day = n.published_at ? new Date(n.published_at).toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit" }) : "?";
+    const tickers = (n.tickers || []).length ? ` (${n.tickers.join(", ")})` : "";
+    return `[${day}] ${n.source || "?"} — ${n.title}${tickers}`;
+  });
+}
+
 function answerAlerts() {
   const recent = (chatData.alerts || []).slice(-5).reverse();
-  if (recent.length === 0) return "Aucune alerte enregistrée pour l'instant.";
+  const headlines = mediaHeadlines(3);
+  const media = headlines.length ? `\n\nDerniers titres des médias :\n\n${headlines.map((h) => `• ${h}`).join("\n\n")}` : "";
+  if (recent.length === 0) return `Aucune alerte enregistrée pour l'instant.${media}`;
   const lines = recent.map((a) => `• [${new Date(a.triggered_at).toLocaleDateString("fr-FR")}] ${a.ticker_ou_theme || ""} — ${a.message}`);
-  return `Dernières alertes :\n\n${lines.join("\n\n")}\n\nHistorique complet dans l'onglet Alertes.`;
+  return `Dernières alertes :\n\n${lines.join("\n\n")}${media}\n\nHistorique complet dans l'onglet Alertes.`;
 }
 
 // Même calcul en direct que l'onglet Moteur (computeEngineStats, engine.js) : global_stats
@@ -762,6 +776,8 @@ function buildAiContext() {
   if (alerts.length) parts.push("Dernières alertes : " + alerts.map((a) => a.message).join(" ; "));
   const news = (chatData.news && chatData.news.items) || [];
   if (news.length) parts.push("Actualités récentes : " + news.slice(-8).map((n) => n.title).join(" ; "));
+  const headlines = mediaHeadlines(10);
+  if (headlines.length) parts.push("Titres publiés par les médias crypto (fil automatique, daté, titre tel que publié — jamais un avis) : " + headlines.join(" ; "));
 
   // Portefeuille personnel de l'utilisateur (data/portfolio.json, saisi manuellement) —
   // computePortfolioSummary (portfolio.js) est la SEULE source de cette méthode de calcul,

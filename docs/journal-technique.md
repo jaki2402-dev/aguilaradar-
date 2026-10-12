@@ -623,3 +623,21 @@ dessus de sa MM200, sans le savoir.
 - `resolve-due` : aucun passage planifié encore au 11/10 10h (créé à 08h32) — délai d'enregistrement
   des nouveaux crons GitHub ; à revérifier, le cycle résout en secours après 6 h.
 - Relais IA : `workers_list` → modifié le 10/10 22h17 UTC, juste après l'envoi du correctif (P5 clos).
+
+### 12/10/2026 — historique du portefeuille rafraîchi 4×/jour, fil des médias automatique
+
+- **Portefeuille 36 h sans valeur** : le correctif du 11/10 (date − 6 h, cron 18h17) gardait
+  « un point par jour, jamais réécrit » ; avec un démarrage réel 3-5 h après l'heure prévue, le
+  seul relevé du jour pouvait dater de la veille au soir. Correctif : `snapshotDate` = jour UTC
+  d'exécution ; le point du jour est RECALCULÉ à chaque passage (étape du robot `price-alerts`,
+  4×/jour, + sa propre tâche), pas plus d'une fois toutes les 2 h (`MIN_REFRESH_HOURS`) ; jours
+  passés jamais modifiés ; un dernier point postérieur à la date du jour = passage ignoré. Seuils
+  de fraîcheur du site ramenés à 14 h / 30 h.
+- **Actualités figées depuis le 05/10** : la veille du cycle n'ajoute qu'une actualité jugée
+  « significative » (P2), sans date. `scripts/news-feed.mjs` (étape de `price-alerts`, aucun quota) :
+  flux RSS publics (Google Actualités fr, Cointribune, Journal du Coin), titres tels que publiés,
+  seulement ceux qui citent un favori (tickers courts ou mots courants — FLUX, LINK, TIA, JUP — en
+  MAJUSCULES seulement : « flux ETF » n'est pas Flux), 7 jours glissants, 30 titres, doublons de lien
+  ou de titre retirés. Fichier séparé `data/news-feed.json` (le plus récent EN TÊTE, contrairement à
+  `news.json`) ; site : « Fil des médias » au-dessus de la sélection du cycle ; Assistant : titres
+  datés dans le contexte. Flux injoignables depuis la session (proxy) : validé par le run GitHub.

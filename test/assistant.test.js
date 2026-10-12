@@ -1002,3 +1002,18 @@ describe("assistant.js — levier/rotation CoinMarketCap dans le contexte de l'I
     expect(await contextWith(null)).not.toContain("CoinMarketCap");
   });
 });
+
+describe("assistant.js — fil des médias dans le contexte de l'IA", () => {
+  it("transmet les titres datés et sourcés, présentés comme des titres publiés et non un avis", async () => {
+    const dom = loadPage(["config.js", "assistant.js"]);
+    dom.window.aguilaradarData = {
+      verdicts: [],
+      engineHistory: {},
+      marketContext: {},
+      newsFeed: { items: [{ title: "Chainlink étend CCIP", source: "Cointribune", published_at: "2026-10-11T18:12:00Z", tickers: ["LINK"] }] },
+    };
+    await dom.window.ensureChatData();
+    const ctx = dom.window.buildAiContext();
+    expect(ctx).toContain("Titres publiés par les médias crypto (fil automatique, daté, titre tel que publié — jamais un avis) : [11/10] Cointribune — Chainlink étend CCIP (LINK)");
+  });
+});
