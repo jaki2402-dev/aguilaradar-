@@ -645,3 +645,8 @@ dessus de sa MM200, sans le savoir.
   autre favori, 12 h couvertes. D'où : recherche Google séparée pour les 13 autres favoris (7 jours),
   plafonds 12 titres bitcoin/ether seuls et 5 par autre favori, et au plus 4 bitcoin/ether parmi les
   10 affichés.
+- 2e passage réel (12/10 22h48) : 38 titres, 8 favoris couverts… mais 7 faux : Škoda Peaq (voiture),
+  trains Celestia d'Eurostar via un site de recopie (source = adresse), convertisseur Bybit. D'où : noms
+  partagés retenus seulement avec un mot du monde crypto et sans mot du sens concurrent, pages de
+  recopie/convertisseurs écartées, « crypto » exigé dans la recherche Google des autres favoris.
+  Rejoué sur le fichier réel : exactement ces 7 titres retirés, aucun vrai titre perdu.

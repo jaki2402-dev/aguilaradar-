@@ -13,33 +13,35 @@ listes éparpillées dans les résumés de session.
   source réelle** (`origin/main`, test, commande) et sa date. Ce qui n'a pas pu être vérifié est
   écrit « non vérifié », jamais supposé. Le détail technique va dans `docs/journal-technique.md`.
 
-## État vérifié — 11/10/2026 08h UTC
+## État vérifié — 12/10/2026 22h50 UTC
 
 Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 
 | Brique | Dernière mise à jour | État |
 |---|---|---|
-| Cycle des verdicts | 10/10 16h28 | OK — 15 verdicts en attente, aucun en retard |
-| Résumé périodique | 10/10 18h06 | OK pour le texte — notifications : voir P1 |
-| Opportunités | 10/10 04h09 | OK — 7 actives, 13 archivées |
-| Contexte marché | 10/10 08h50 | Partiel — taux 10 ans et flux ETF vides (P3) ; or fourni par le robot GitHub à partir de son prochain passage |
-| Jauges peur/cupidité, dominance (Action GitHub) | 10/10 15h56 | OK |
-| Contexte des favoris | 10/10 08h23 | OK — rotation, plus ancien au 06/10 |
-| Santé + fraîcheur | 10/10 09h16 | OK — mais liste de fichiers incomplète (P6) |
-| Photo du portefeuille (Action GitHub) | 10/10 00h17 | OK — 19 points |
-| Thèse hebdo du portefeuille | 05/10 | OK (hebdomadaire) |
+| Cycle des verdicts | 12/10 16h17 | OK — 12 en attente ; dernier verdict émis le 10/10 16h20 (les 15 places étaient prises). 3 places libérées le 12/10 19h59 (TIA, GRT, PEAQ résolus) → premiers verdicts de la nouvelle règle attendus au cycle du 13/10 00h15 (P14) |
+| Résumé périodique | 12/10 18h06 | OK pour le texte — notifications : voir P1 |
+| Opportunités | 12/10 04h10 | OK |
+| Contexte marché | 12/10 08h50 | OK — taux 10 ans et stablecoins fournis par le robot GitHub en secours |
+| Jauges peur/cupidité, dominance (Action GitHub) | 12/10 22h48 | OK |
+| Contexte des favoris | 12/10 08h25 | OK — rotation, plus ancien au 08/10 |
+| Santé + fraîcheur | 12/10 09h16 | OK — mais liste de fichiers incomplète (P6) |
+| Photo du portefeuille (Action GitHub) | 12/10 22h46 | OK — 21 points ; le point du jour est désormais rafraîchi 4×/jour (36 h sans valeur avant le correctif) |
+| Thèse hebdo du portefeuille | 12/10 05h04 | OK |
 | Groupe témoin | 04/10 | OK — objectif 8 en attente atteint |
-| Actualités | vérifiées 10/10, contenu inchangé depuis le 05/10 | À surveiller (P2) |
-| Vérification des échéances (Action GitHub `resolve-due`, toutes les heures) | 11/10 08h33 | OK — 1er passage réel réussi ; 1re vraie échéance le 12/10 16h20 (GRT, PEAQ, TIA) |
-| Analyse technique des favoris (Action GitHub `technical-daily`) | 11/10 02h01 | OK — 15/15, recoupée avec CoinMarketCap (CTSI : RSI 71,6 contre 71,0) |
-| Tests (`npm test`) | 11/10 | 743/743 |
+| Actualités (sélection du cycle) | vérifiées 12/10 16h17, contenu inchangé depuis le 05/10 | P2 — compensé par le fil des médias |
+| Fil des médias (Action GitHub, `news-feed.json`) | 12/10 22h48 | OK — 4 flux lus sans erreur, 38 titres réels datés, 8 favoris couverts |
+| Vérification des échéances (Action GitHub `resolve-due`, toutes les heures) | 12/10 20h00 | OK — TIA juste (+23,08 %), GRT faux (−9,4 %), PEAQ faux (−2,55 %) |
+| Analyse technique + laboratoire (Action GitHub `technical-daily`) | 12/10 02h32 | OK |
+| On-chain du bitcoin (Action GitHub) | jour complet du 11/10 | OK |
+| Tests (`npm test`) | 12/10 | 821/821 |
 
 ## Problèmes ouverts
 
 | # | Constat (preuve) | Qui | Prochaine action |
 |---|---|---|---|
 | P1 | **Notifications du résumé et « Avis du jour » arrêtés.** Aucune entrée `avis_du_jour` dans `alerts.json` depuis le 14/09 00h40. Cause documentée le 05/10 : le prompt de la routine digest utilise une ancienne clé de notification ; le nouveau prompt préparé n'a jamais été collé. | Session avec l'outil routines + **Toi** | Relire le prompt actuel (`get_trigger`), préparer la version corrigée, tu la colles, puis re-vérifier. |
-| P2 | **Alertes d'actualité arrêtées depuis le 13/09** (`actualite_*`), et aucune nouvelle actualité ajoutée depuis le 05/10 alors que la veille tourne à chaque cycle. Arrêt volontaire lors de l'allègement du 14-15/09 pour économiser le quota. | **Toi** | Décider : rétablir (coûte du quota) ou accepter. |
+| P2 | **Alertes d'actualité arrêtées depuis le 13/09** (`actualite_*`), et aucune nouvelle actualité ajoutée par le cycle depuis le 05/10. Arrêt volontaire lors de l'allègement du 14-15/09 pour économiser le quota. **Compensé le 12/10** : le robot GitHub relève 4×/jour les titres réels des médias crypto citant un favori (« Fil des médias », sans quota). | **Toi** | Rien d'urgent. Décider plus tard si les alertes d'actualité doivent revenir (coûte du quota). |
 | P3 | **Taux 10 ans US et flux ETF vides** dans `market-context.json` depuis au moins le 08/10 : la routine ne trouve pas de chiffre daté par recherche web. **Or : corrigé le 10/10** (voir journal). | Session + **Toi** | 10 ans : tester une source officielle gratuite (Trésor US, FRED) depuis le robot GitHub — injoignables depuis la session du 10/10. CoinMarketCap fournit les deux (taux 10 ans, flux nets ETF) mais via des analyses **facturées à chaque exécution** : à toi de décider (voir `docs/coinmarketcap.md`). |
 | P6 | **Le contrôle de santé ne vérifie que 9 des 15 fichiers de données** (note du 10/10 08h51 : « Les 9 fichiers data/*.json »). Non couverts : `digest`, `market-gauges`, `onchain-history`, `portfolio`, `portfolio-history`, `portfolio-thesis`. | Session avec l'outil routines + **Toi** | Mettre à jour la liste dans le prompt `sante-quotidien`. |
 | P7 | **3 routines gardent toute leur mémoire d'une exécution à l'autre** (verif-fraicheur, opportunités, briefing-email) : 274 k à 491 k tokens de contexte mesurés le 06/10, bien plus coûteux qu'une session neuve. | Session avec l'outil routines + **Toi** | Convertir une par une, en vérifiant après chaque conversion. |
@@ -85,6 +87,10 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 
 ## Journal des sessions (le plus récent en haut)
 
+- **12/10/2026 (soir)** — Demande : historique du portefeuille 36 h en retard, « tout à jour et autonome ».
+  Point du jour rafraîchi à chaque passage du robot des alertes (4×/jour, vérifié : point du 12/10 à
+  22h46). Fil des médias automatique (titres réels datés, sans quota) : 1er relevé trop centré sur le
+  bitcoin puis faux positifs (Škoda Peaq, trains Celestia) corrigés et vérifiés sur le fichier réel.
 - **11/10/2026 (fin d'après-midi)** — Demande : CoinMarketCap en plus, auto-analyse des erreurs, valeur
   prédictive, chiffres réels. Laboratoire (2 350 cas réels) : seuls l'élan du bitcoin et la peur/cupidité
   sont prédictifs sur les 2 périodes ; correction par les erreurs testée et écartée (52,6 → 43,5 %) ;

@@ -19,7 +19,7 @@ const MAX_AGE_DAYS = 7;
 // Deux recherches Google Actualités : le bitcoin et l'ether occupent sinon tout le fil (constaté au
 // 1er passage, 12/10/2026 : 24 titres BTC + 7 ETH sur 30, aucun autre favori, 12 h couvertes).
 const GOOGLE_MAJORS = "(bitcoin OR ethereum) crypto when:1d";
-const GOOGLE_ALTS = '(chainlink OR arbitrum OR celestia OR injective OR "ondo finance" OR livepeer OR "the graph" OR cartesi OR peaq OR aioz OR "fetch.ai" OR "jupiter exchange" OR "flux network") when:7d';
+const GOOGLE_ALTS = '(chainlink OR arbitrum OR celestia OR injective OR "ondo finance" OR livepeer OR "the graph" OR cartesi OR peaq OR aioz OR "fetch.ai" OR "jupiter exchange" OR "flux network") crypto when:7d';
 const google = (q) => `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=fr&gl=FR&ceid=FR:fr`;
 export const FEEDS = [
   { name: "Google Actualités (fr) — bitcoin, ether", url: google(GOOGLE_MAJORS), aggregator: true },
@@ -30,31 +30,45 @@ export const FEEDS = [
 
 // Repérage des favoris dans un titre. Noms propres : sans casse. Tickers et mots courants en
 // français (« flux », « link », « the graph ») : casse exacte, pour ne pas confondre « flux ETF » et FLUX.
+// Noms partagés avec autre chose (`context`) : retenus seulement avec un mot du monde crypto dans le
+// titre/extrait, et jamais avec un mot du sens concurrent (`exclude`). Constaté au 2e relevé réel
+// (12/10/2026) : Škoda Peaq (voiture), trains Celestia d'Eurostar.
 export const TICKER_PATTERNS = {
-  BTC: [/\b(bitcoin|btc)\b/i],
-  ETH: [/\b(ethereum|ether)\b/i, /\bETH\b/],
-  FET: [/fetch\.ai|asi alliance|artificial superintelligence/i, /\bFET\b/],
-  GRT: [/\bThe Graph\b|\bGRT\b/],
-  TIA: [/\bcelestia\b/i, /\bTIA\b/],
-  CTSI: [/\bcartesi\b/i, /\bCTSI\b/],
-  PEAQ: [/\bpeaq\b/i],
-  LINK: [/\bchainlink\b/i, /\bLINK\b/],
-  ONDO: [/\bondo\b/i],
-  JUP: [/\bjupiter (exchange|dex|ag)\b/i, /\bJUP\b/],
-  LPT: [/\blivepeer\b/i, /\bLPT\b/],
-  AIOZ: [/\baioz\b/i],
+  BTC: { name: /\b(bitcoin|btc)\b/i },
+  ETH: { name: /\b(ethereum|ether)\b/i, ticker: /\bETH\b/ },
+  FET: { name: /fetch\.ai|asi alliance|artificial superintelligence/i, ticker: /\bFET\b/ },
+  GRT: { name: /\bThe Graph\b/, ticker: /\bGRT\b/, context: true },
+  TIA: { name: /\bcelestia\b/i, ticker: /\bTIA\b/, context: true, exclude: /eurostar|\btrains?\b|sncf|ferroviaire/i },
+  CTSI: { name: /\bcartesi\b/i, ticker: /\bCTSI\b/ },
+  PEAQ: { name: /\bpeaq\b/i, context: true, exclude: /[sš]koda|enyaq|epiq|\bsuv\b|voiture|automobile/i },
+  LINK: { name: /\bchainlink\b/i, ticker: /\bLINK\b/ },
+  ONDO: { name: /\bondo\b/i, context: true },
+  JUP: { name: /\bjupiter (exchange|dex|ag)\b/i, ticker: /\bJUP\b/ },
+  LPT: { name: /\blivepeer\b/i, ticker: /\bLPT\b/ },
+  AIOZ: { name: /\baioz\b/i },
   // « flux crypto » = les flux de capitaux en français : jamais retenu seul.
-  FLUX: [/\bFLUX\b/, /\bflux (network|token)\b/i],
-  ARB: [/\barbitrum\b/i, /\bARB\b/],
-  INJ: [/\binjective\b/i, /\bINJ\b/],
+  FLUX: { name: /\bflux (network|token)\b/i, ticker: /\bFLUX\b/ },
+  ARB: { name: /\barbitrum\b/i, ticker: /\bARB\b/ },
+  INJ: { name: /\binjective\b/i, ticker: /\bINJ\b/ },
 };
+const CRYPTO_CONTEXT = /crypto|token|jeton|blockchain|\bdefi\b|depin|staking|altcoin|bitcoin|ethereum|\bcours\b|\bprix\b|stablecoin|tokenis|airdrop|mainnet|testnet|rollup|\blayer\b|binance|coinbase|\bdata availability\b/i;
 const MAJORS = new Set(["BTC", "ETH"]);
 
 export function tickersIn(text) {
   const t = String(text || "");
   return Object.entries(TICKER_PATTERNS)
-    .filter(([, res]) => res.some((re) => re && re.test(t)))
+    .filter(([, p]) => {
+      if (p.exclude && p.exclude.test(t)) return false;
+      if (p.ticker && p.ticker.test(t)) return true;
+      return p.name.test(t) && (!p.context || CRYPTO_CONTEXT.test(t));
+    })
     .map(([k]) => k);
+}
+
+// Pages sans valeur d'information : source réduite à une adresse (sites de recopie) ou
+// convertisseurs de devises (« Convertir 1 INJ en MDL »).
+export function isJunk(item) {
+  return /^https?:\/\//i.test(item.source || "") || /^convertir\b|convertisseur|\bconvert \d/i.test(item.title || "");
 }
 
 const ENTITIES = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " " };
@@ -113,7 +127,7 @@ export function mergeFeed(previous, fresh, now = new Date()) {
   const all = [...fresh, ...((previous && previous.items) || [])].sort((a, b) => b.published_at.localeCompare(a.published_at));
   for (const it of all) {
     const t = Date.parse(it.published_at);
-    if (!Number.isFinite(t) || t < minTime || t > now.getTime() + 3600000) continue;
+    if (!Number.isFinite(t) || t < minTime || t > now.getTime() + 3600000 || isJunk(it)) continue;
     const tickers = tickersIn(`${it.title} ${it.excerpt || ""}`);
     if (!tickers.length) continue;
     const key = normTitle(it.title);

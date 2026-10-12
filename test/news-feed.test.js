@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseRss, tickersIn, cleanText, mergeFeed } from "../scripts/news-feed.mjs";
+import { parseRss, tickersIn, cleanText, mergeFeed, isJunk } from "../scripts/news-feed.mjs";
 
 const GOOGLE = `<?xml version="1.0"?><rss><channel>
 <item><title>Bitcoin : les ETF enregistrent une nouvelle semaine d&#39;entrées - Les Echos</title><link>https://news.google.com/rss/articles/abc</link><pubDate>Mon, 12 Oct 2026 09:30:00 GMT</pubDate><description>&lt;a href="x"&gt;lien&lt;/a&gt;</description><source url="https://www.lesechos.fr">Les Echos</source></item>
@@ -33,6 +33,18 @@ describe("scripts/news-feed.mjs — fil des médias crypto", () => {
     expect(tickersIn("Les flux crypto vers les ETF")).toEqual([]);
     expect(tickersIn("the graph shows a rise")).toEqual([]);
     expect(tickersIn("The Graph (GRT) migre vers Arbitrum")).toEqual(["GRT", "ARB"]);
+  });
+
+  it("noms partagés : la voiture Škoda Peaq et les trains Celestia ne sont pas des favoris (titres réels du 12/10)", () => {
+    expect(tickersIn("Comparatif : BYD Seal U vs Škoda Peaq")).toEqual([]);
+    expect(tickersIn("Skoda montre l’Epiq Sportline à Paris et annonce 70 000 commandes pour l’Epiq et le Peaq")).toEqual([]);
+    expect(tickersIn("Eurostar prépare ses nouveaux trains Celestia à affronter des températures extrêmes")).toEqual([]);
+    expect(tickersIn("Pourquoi le cours de Celestia baisse-t-il de 10,6 % aujourd’hui ?")).toEqual(["TIA"]);
+    expect(tickersIn("Celestia vs Avail : Comparatif des Tokens de Data Availability")).toEqual(["TIA"]);
+    expect(tickersIn("peaq lance un nouveau réseau DePIN")).toEqual(["PEAQ"]);
+    expect(isJunk({ title: "Convertir 1 INJ (Injective) en MDL (Leu moldave)", source: "Bybit" })).toBe(true);
+    expect(isJunk({ title: "Trains Celestia", source: "https://horticulture-abadie-pyrenees.com/" })).toBe(true);
+    expect(isJunk({ title: "Injective Became an SEC-Registered Transfer Agent", source: "TradingView" })).toBe(false);
     expect(cleanText("<p>A&nbsp;&amp;&#160;B</p>")).toBe("A & B");
   });
 
