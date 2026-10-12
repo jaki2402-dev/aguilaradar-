@@ -641,3 +641,7 @@ dessus de sa MM200, sans le savoir.
   ou de titre retirés. Fichier séparé `data/news-feed.json` (le plus récent EN TÊTE, contrairement à
   `news.json`) ; site : « Fil des médias » au-dessus de la sélection du cycle ; Assistant : titres
   datés dans le contexte. Flux injoignables depuis la session (proxy) : validé par le run GitHub.
+- 1er passage réel (12/10 22h46) : 3 flux lus, 30 titres réels… dont 24 bitcoin et 7 ether, aucun
+  autre favori, 12 h couvertes. D'où : recherche Google séparée pour les 13 autres favoris (7 jours),
+  plafonds 12 titres bitcoin/ether seuls et 5 par autre favori, et au plus 4 bitcoin/ether parmi les
+  10 affichés.

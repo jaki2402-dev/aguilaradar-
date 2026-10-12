@@ -30,6 +30,9 @@ describe("scripts/news-feed.mjs — fil des médias crypto", () => {
     expect(tickersIn("un link vers le site")).toEqual([]);
     expect(tickersIn("Chainlink et LINK")).toEqual(["LINK"]);
     expect(tickersIn("ETH : le prix grimpe")).toEqual(["ETH"]);
+    expect(tickersIn("Les flux crypto vers les ETF")).toEqual([]);
+    expect(tickersIn("the graph shows a rise")).toEqual([]);
+    expect(tickersIn("The Graph (GRT) migre vers Arbitrum")).toEqual(["GRT", "ARB"]);
     expect(cleanText("<p>A&nbsp;&amp;&#160;B</p>")).toBe("A & B");
   });
 
@@ -43,5 +46,14 @@ describe("scripts/news-feed.mjs — fil des médias crypto", () => {
     const items = mergeFeed(previous, fresh, now);
     expect(items.map((i) => i.source)).toEqual(["Les Echos", "I"]);
     expect(items[0].tickers).toEqual(["BTC"]);
+  });
+
+  it("plafonds par sujet : 12 titres bitcoin/ether seuls au plus, 5 par autre favori", () => {
+    const now = new Date("2026-10-12T22:00:00Z");
+    const mk = (i, title) => ({ title: `${title} n°${i}`, url: `https://m.fr/${title.length}/${i}`, source: "M", published_at: new Date(now.getTime() - i * 60000).toISOString(), excerpt: null });
+    const fresh = [...Array.from({ length: 20 }, (_, i) => mk(i, "Bitcoin recule")), ...Array.from({ length: 8 }, (_, i) => mk(i, "Chainlink et Bitcoin"))];
+    const items = mergeFeed(null, fresh, now);
+    expect(items.filter((x) => x.tickers.includes("LINK"))).toHaveLength(5);
+    expect(items.filter((x) => !x.tickers.includes("LINK"))).toHaveLength(12);
   });
 });

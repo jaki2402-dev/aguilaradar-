@@ -991,6 +991,16 @@ describe("app.js — fil des médias (data/news-feed.json, robot 4×/jour)", () 
     expect(el.textContent).toContain("Sélection du cycle profond");
   });
 
+  it("au plus 4 titres bitcoin/ether seuls affichés : les autres favoris restent visibles", () => {
+    const items = [
+      ...Array.from({ length: 6 }, (_, i) => ({ title: `BTC ${i}`, url: `https://a.fr/${i}`, source: "A", published_at: "2026-10-12T22:00:00Z", tickers: ["BTC"] })),
+      { title: "Arbitrum", url: "https://a.fr/arb", source: "A", published_at: "2026-10-12T10:00:00Z", tickers: ["ARB"] },
+    ];
+    dom.window.renderNews({ items: [] }, { updated_at: "2026-10-12T22:40:00Z", items });
+    const shown = Array.from(dom.window.document.querySelectorAll("#news-body .news-feed-item a")).map((a) => a.textContent);
+    expect(shown).toEqual(["BTC 0", "BTC 1", "BTC 2", "BTC 3", "Arbitrum"]);
+  });
+
   it("sans fil (fichier absent) : rendu identique à avant, sans intertitre", () => {
     dom.window.renderNews({ items: [{ title: "Sélection", url: "https://example.com/s", source: "Y" }] }, null);
     expect(dom.window.document.querySelector("#news-body .news-feed-heading")).toBeNull();

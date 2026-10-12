@@ -9,42 +9,52 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const PATH = "data/news-feed.json";
-const MAX_ITEMS = 30;
+const MAX_ITEMS = 40;
+// Plafonds par sujet : titres sur le seul bitcoin/ether, et par autre favori — sinon un seul
+// sujet très couvert chasse tous les autres du fil.
+const MAX_MAJORS_ONLY = 12;
+const MAX_PER_ALT = 5;
 const MAX_AGE_DAYS = 7;
 
-const GOOGLE_QUERY = '(bitcoin OR ethereum OR chainlink OR arbitrum OR celestia OR injective OR "ondo finance" OR livepeer OR "the graph" OR cartesi OR peaq OR aioz OR "fetch.ai" OR "jupiter exchange") crypto when:2d';
+// Deux recherches Google Actualités : le bitcoin et l'ether occupent sinon tout le fil (constaté au
+// 1er passage, 12/10/2026 : 24 titres BTC + 7 ETH sur 30, aucun autre favori, 12 h couvertes).
+const GOOGLE_MAJORS = "(bitcoin OR ethereum) crypto when:1d";
+const GOOGLE_ALTS = '(chainlink OR arbitrum OR celestia OR injective OR "ondo finance" OR livepeer OR "the graph" OR cartesi OR peaq OR aioz OR "fetch.ai" OR "jupiter exchange" OR "flux network") when:7d';
+const google = (q) => `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=fr&gl=FR&ceid=FR:fr`;
 export const FEEDS = [
-  { name: "Google Actualités (fr)", url: `https://news.google.com/rss/search?q=${encodeURIComponent(GOOGLE_QUERY)}&hl=fr&gl=FR&ceid=FR:fr`, aggregator: true },
+  { name: "Google Actualités (fr) — bitcoin, ether", url: google(GOOGLE_MAJORS), aggregator: true },
+  { name: "Google Actualités (fr) — autres favoris", url: google(GOOGLE_ALTS), aggregator: true },
   { name: "Cointribune", url: "https://www.cointribune.com/feed/" },
   { name: "Journal du Coin", url: "https://journalducoin.com/feed/" },
 ];
 
-// Repérage des favoris dans un titre. Noms : sans casse. Tickers courts ou mots courants en
-// français (« flux », « link ») : seulement en MAJUSCULES, pour ne pas confondre « flux ETF » et FLUX.
+// Repérage des favoris dans un titre. Noms propres : sans casse. Tickers et mots courants en
+// français (« flux », « link », « the graph ») : casse exacte, pour ne pas confondre « flux ETF » et FLUX.
 export const TICKER_PATTERNS = {
-  BTC: /\b(bitcoin|btc)\b/i,
-  ETH: /\b(ethereum|ether)\b/i,
-  FET: /(fetch\.ai|asi alliance|artificial superintelligence)|\bFET\b/i,
-  GRT: /\bthe graph\b|\bGRT\b/i,
-  TIA: /\bcelestia\b|\bTIA\b/,
-  CTSI: /\bcartesi\b|\bCTSI\b/i,
-  PEAQ: /\bpeaq\b/i,
-  LINK: /\bchainlink\b|\bLINK\b/,
-  ONDO: /\bondo\b/i,
-  JUP: /\bjupiter (exchange|dex|ag)\b|\bJUP\b/,
-  LPT: /\blivepeer\b|\bLPT\b/i,
-  AIOZ: /\baioz\b/i,
-  FLUX: /\bFLUX\b|\bflux (network|crypto|token)\b/,
-  ARB: /\barbitrum\b|\bARB\b/i,
-  INJ: /\binjective\b|\bINJ\b/i,
+  BTC: [/\b(bitcoin|btc)\b/i],
+  ETH: [/\b(ethereum|ether)\b/i, /\bETH\b/],
+  FET: [/fetch\.ai|asi alliance|artificial superintelligence/i, /\bFET\b/],
+  GRT: [/\bThe Graph\b|\bGRT\b/],
+  TIA: [/\bcelestia\b/i, /\bTIA\b/],
+  CTSI: [/\bcartesi\b/i, /\bCTSI\b/],
+  PEAQ: [/\bpeaq\b/i],
+  LINK: [/\bchainlink\b/i, /\bLINK\b/],
+  ONDO: [/\bondo\b/i],
+  JUP: [/\bjupiter (exchange|dex|ag)\b/i, /\bJUP\b/],
+  LPT: [/\blivepeer\b/i, /\bLPT\b/],
+  AIOZ: [/\baioz\b/i],
+  // « flux crypto » = les flux de capitaux en français : jamais retenu seul.
+  FLUX: [/\bFLUX\b/, /\bflux (network|token)\b/i],
+  ARB: [/\barbitrum\b/i, /\bARB\b/],
+  INJ: [/\binjective\b/i, /\bINJ\b/],
 };
-const ETH_TICKER = /\bETH\b/;
+const MAJORS = new Set(["BTC", "ETH"]);
 
 export function tickersIn(text) {
   const t = String(text || "");
-  const found = Object.entries(TICKER_PATTERNS).filter(([, re]) => re.test(t)).map(([k]) => k);
-  if (!found.includes("ETH") && ETH_TICKER.test(t)) found.push("ETH");
-  return found;
+  return Object.entries(TICKER_PATTERNS)
+    .filter(([, res]) => res.some((re) => re && re.test(t)))
+    .map(([k]) => k);
 }
 
 const ENTITIES = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " " };
@@ -91,20 +101,27 @@ export function parseRss(xml, feed) {
 const normTitle = (t) => t.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9 ]/g, "").replace(/\s+/g, " ").trim();
 
 // Fusion avec le fil existant : favoris cités seulement, 7 derniers jours, sans doublon (même lien
-// ou même titre chez plusieurs médias), le plus récent en premier, MAX_ITEMS au plus.
+// ou même titre chez plusieurs médias), le plus récent en premier, plafonds par sujet, MAX_ITEMS au
+// plus. Favoris recalculés à chaque passage (titres conservés) : une règle de repérage corrigée
+// s'applique aussi aux anciens titres.
 export function mergeFeed(previous, fresh, now = new Date()) {
   const minTime = now.getTime() - MAX_AGE_DAYS * 86400000;
   const seenUrl = new Set();
   const seenTitle = new Set();
+  const perTopic = new Map();
   const out = [];
   const all = [...fresh, ...((previous && previous.items) || [])].sort((a, b) => b.published_at.localeCompare(a.published_at));
   for (const it of all) {
     const t = Date.parse(it.published_at);
     if (!Number.isFinite(t) || t < minTime || t > now.getTime() + 3600000) continue;
-    const tickers = it.tickers && it.tickers.length ? it.tickers : tickersIn(`${it.title} ${it.excerpt || ""}`);
+    const tickers = tickersIn(`${it.title} ${it.excerpt || ""}`);
     if (!tickers.length) continue;
     const key = normTitle(it.title);
     if (seenUrl.has(it.url) || seenTitle.has(key)) continue;
+    const topic = tickers.find((k) => !MAJORS.has(k)) || "MAJORS";
+    const cap = topic === "MAJORS" ? MAX_MAJORS_ONLY : MAX_PER_ALT;
+    if ((perTopic.get(topic) || 0) >= cap) continue;
+    perTopic.set(topic, (perTopic.get(topic) || 0) + 1);
     seenUrl.add(it.url);
     seenTitle.add(key);
     out.push({ ...it, tickers });

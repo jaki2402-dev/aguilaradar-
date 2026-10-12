@@ -483,7 +483,19 @@ function ageLabel(iso, now = Date.now()) {
   return `il y a ${Math.floor(hours / 24)} j`;
 }
 
-const NEWS_FEED_SHOWN = 8;
+const NEWS_FEED_SHOWN = 10;
+// Au plus 4 titres sur le seul bitcoin/ether parmi ceux affichés : ils sont de loin les plus
+// couverts et masqueraient sinon tous les autres favoris (constaté au 1er relevé, 12/10/2026).
+const NEWS_FEED_MAJORS_SHOWN = 4;
+function pickFeedItems(items) {
+  let majors = 0;
+  return items.filter((n) => {
+    const majorsOnly = (n.tickers || []).every((t) => t === "BTC" || t === "ETH");
+    if (majorsOnly && majors >= NEWS_FEED_MAJORS_SHOWN) return false;
+    if (majorsOnly) majors++;
+    return true;
+  }).slice(0, NEWS_FEED_SHOWN);
+}
 // Fil des médias (data/news-feed.json, robot price-alerts 4×/jour, aucun quota) : titres RÉELS
 // publiés par les médias crypto francophones et citant un favori, datés et sourcés, le plus
 // récent en premier (déjà trié par le robot). Rien n'est résumé : titre tel que publié.
@@ -493,8 +505,7 @@ function renderNewsFeedBlock(feedData) {
   if (items.length === 0) return "";
   const updated = ageLabel(feedData.updated_at);
   const heading = `<p class="news-feed-heading">Fil des médias — titres publiés citant un favori${updated ? ` (relevé ${updated})` : ""}</p>`;
-  const rows = items
-    .slice(0, NEWS_FEED_SHOWN)
+  const rows = pickFeedItems(items)
     .map((n) => {
       const meta = [n.source, ageLabel(n.published_at), (n.tickers || []).join(", ")].filter(Boolean).join(" · ");
       return `
