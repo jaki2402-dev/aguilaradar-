@@ -1466,5 +1466,35 @@
     "sentiment": "positif",
     "message": "LPT : +5,17 % depuis l'émission du verdict ACHAT du 05/10 (1,74 $ → 1,83 $), seuil de mouvement directionnel de 5 % franchi à la hausse, dans le sens du verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
     "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
+  },
+  {
+    "id": "alert-20261012-tia-rsi-surachat",
+    "ticker_ou_theme": "TIA",
+    "type": "signal_technique",
+    "signal_kind": "rsi_surachat",
+    "triggered_at": "2026-10-12T02:32:05Z",
+    "sentiment": "neutre",
+    "message": "TIA entre en zone de surachat (RSI 14 j à 72) : hausse déjà étirée, le risque de repli augmente. Tendance de fond : +58 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261012-link-rsi-survente",
+    "ticker_ou_theme": "LINK",
+    "type": "signal_technique",
+    "signal_kind": "rsi_survente",
+    "triggered_at": "2026-10-12T02:32:05Z",
+    "sentiment": "neutre",
+    "message": "LINK entre en zone de survente (RSI 14 j à 28) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : +38 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261012-flux-rsi-surachat",
+    "ticker_ou_theme": "FLUX",
+    "type": "signal_technique",
+    "signal_kind": "rsi_surachat",
+    "triggered_at": "2026-10-12T02:32:05Z",
+    "sentiment": "neutre",
+    "message": "FLUX entre en zone de surachat (RSI 14 j à 70) : hausse déjà étirée, le risque de repli augmente. Tendance de fond : +57 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
   }
 ]
