@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { loadPage } from "./helpers/loadPage.js";
+import { loadPage, setGlobal } from "./helpers/loadPage.js";
 
 describe("detail.js — computeSMA", () => {
   const dom = loadPage(["prices.js", "detail.js"]);
@@ -296,5 +296,28 @@ describe("detail.js — renderOpportunityHorizonsSection", () => {
     const html = renderOpportunityHorizonsSection({ j1: { status: "pending" } });
     // m6/j14/etc. absents : pas de crash, simplement pas de chip pour ces clés-là.
     expect(html).not.toContain("undefined");
+  });
+});
+
+describe("detail.js — signal on-chain du Contexte élargi : phrase courte d'abord, journal replié", () => {
+  const longNote = "ERC-20 sur Ethereum (contrat 0xaea46A60368A7bD060eec7Df8CBa43b7EF41Ad85). " + "Fenêtre des 48h précédant le 11/10. ".repeat(12);
+  function render(onchain) {
+    const dom = loadPage(["config.js", "data-integrity.js", "prices.js", "detail.js", "app.js"]);
+    setGlobal(dom, "latestFavorisContext", { assets: { FET: { last_computed_at: "2026-10-11T08:23:00Z", onchain_signal: onchain } } });
+    const host = dom.window.document.createElement("div");
+    host.innerHTML = dom.window.renderFavorisContextSection("FET");
+    return host.querySelectorAll(".detail-context-card")[2];
+  }
+
+  it("avec resume : la phrase seule visible, le journal complet replié derrière « Lire plus »", () => {
+    const card = render({ available: true, note: longNote, resume: "Sortie nette de 2 M FET de Binance sur 48 h.", source_url: "https://eth.blockscout.com/x" });
+    expect(card.textContent).toContain("Sortie nette de 2 M FET de Binance sur 48 h.");
+    expect(card.textContent).toContain("Lire plus");
+    expect(card.querySelector("a[href='https://eth.blockscout.com/x']")).not.toBeNull();
+  });
+
+  it("sans resume : note longue tronquée (Lire plus), jamais un mur de texte", () => {
+    const card = render({ available: false, note: longNote });
+    expect(card.querySelector(".clamp-text")).not.toBeNull();
   });
 });

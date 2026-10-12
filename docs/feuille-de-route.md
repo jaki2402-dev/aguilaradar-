@@ -34,7 +34,7 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | Vérification des échéances (Action GitHub `resolve-due`, toutes les heures) | 12/10 20h00 | OK — TIA juste (+23,08 %), GRT faux (−9,4 %), PEAQ faux (−2,55 %) |
 | Analyse technique + laboratoire (Action GitHub `technical-daily`) | 12/10 02h32 | OK |
 | On-chain du bitcoin (Action GitHub) | jour complet du 11/10 | OK |
-| Tests (`npm test`) | 12/10 | 821/821 |
+| Tests (`npm test`) | 12/10 | 824/824 |
 
 ## Problèmes ouverts
 
@@ -87,6 +87,9 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 
 ## Journal des sessions (le plus récent en haut)
 
+- **12/10/2026 (nuit)** — « Tu n'as rien vu à améliorer ? » Tour complet dans un navigateur (mobile et
+  ordinateur, chaque fiche dépliée) + contrôles de cohérence sur les vraies données (0 anomalie).
+  Corrigé : cartes d'allocation coupées sur mobile et notes on-chain illisibles (adresses, noms d'outils).
 - **12/10/2026 (soir)** — Demande : historique du portefeuille 36 h en retard, « tout à jour et autonome ».
   Point du jour rafraîchi à chaque passage du robot des alertes (4×/jour, vérifié : point du 12/10 à
   22h46). Fil des médias automatique (titres réels datés, sans quota) : 1er relevé trop centré sur le

@@ -650,3 +650,18 @@ dessus de sa MM200, sans le savoir.
   partagés retenus seulement avec un mot du monde crypto et sans mot du sens concurrent, pages de
   recopie/convertisseurs écartées, « crypto » exigé dans la recherche Google des autres favoris.
   Rejoué sur le fichier réel : exactement ces 7 titres retirés, aucun vrai titre perdu.
+
+### 12/10/2026 (nuit) — tour de contrôle dans un vrai navigateur (390 px et 1 280 px)
+
+- Méthode : Chromium (Playwright), 8 onglets, chaque tuile Portefeuille et Favoris dépliée une à une,
+  recherche de tout élément visible dépassant de l'écran ; contrôles de cohérence du site
+  (`summarizeDataIntegrity`) rejoués sur les vrais fichiers : 0 anomalie.
+- Trouvé : cartes du classement d'allocation coupées de 9 px sur mobile. Cause : la note on-chain de
+  FET (798 caractères, adresses de contrat insécables, noms d'outils) affichée telle quelle, et une
+  grille en `1fr` (= largeur minimale du contenu). Correctifs : `minmax(0, 1fr)` + coupure des mots
+  longs ; ligne du classement = phrase `resume` de la note, sinon la note si courte, sinon renvoi vers
+  la fiche ; carte « Signal on-chain » de la fiche = phrase d'abord, journal replié (« Lire plus »).
+  Spec favoris-quotidien : `onchain_signal.resume` (une phrase claire, sans adresse ni outil).
+- Vu et laissé : tableaux du Moteur défilables horizontalement sur mobile (voulu) ; 404 sur
+  `crypto-global.json`/`cmc-favoris.json` (routine CoinMarketCap facultative non créée, P10).
+

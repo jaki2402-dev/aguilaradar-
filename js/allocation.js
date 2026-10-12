@@ -81,6 +81,18 @@ function hasSignalConflict(verdict, recommendation) {
   return !!(verdict && recommendation && VERDICT_THESIS_CONFLICTS[verdict] === recommendation);
 }
 
+// Texte court pour une ligne du classement : la note on-chain de la routine est un journal de
+// recherche (250 à 1 200 caractères, adresses de contrat, noms d'outils — constaté le 12/10/2026 sur
+// FET : carte élargie au-delà de l'écran mobile). On prend sa phrase `resume` si elle existe, la
+// note seulement si elle est déjà courte et lisible, sinon un renvoi vers la fiche du favori.
+function onchainCaveatText(signal) {
+  const resume = signal && typeof signal.resume === "string" ? signal.resume.trim() : "";
+  if (resume) return resume.replace(/\.$/, "");
+  const note = signal && typeof signal.note === "string" ? signal.note.trim() : "";
+  if (note && note.length <= 160 && !/\S{30,}/.test(note)) return note.replace(/\.$/, "");
+  return "détail dans la fiche du favori (Contexte élargi)";
+}
+
 // Un seul point d'assemblage par position — factorise ce que rankPortfolioAttractiveness (ci-
 // dessous) ET l'Assistant (assistant.js, question ciblée sur un actif précis) doivent pouvoir
 // appeler pour UNE position sans reconstruire tout le classement des 15.
@@ -127,7 +139,7 @@ function computePositionAttractiveness(pos, verdict, thesisEntry, favContextEntr
   // ce commentaire) — jamais estimé pour les autres, listé en donnée manquante plutôt que
   // silencieusement ignoré.
   if (favContextEntry && favContextEntry.onchain_signal && favContextEntry.onchain_signal.available) {
-    caveats.push(`Signal on-chain récent disponible : ${favContextEntry.onchain_signal.note || "voir Contexte élargi"}.`);
+    caveats.push(`Signal on-chain récent disponible : ${onchainCaveatText(favContextEntry.onchain_signal)}.`);
   } else {
     missingData.push("Flux whales / on-chain récents");
   }

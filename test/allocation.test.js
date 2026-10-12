@@ -79,6 +79,16 @@ describe("allocation.js — computePositionAttractiveness", () => {
     expect(noData.missingData).toContain("Open interest / positionnement dérivés");
   });
 
+  // Note réelle de FET (favoris-context.json, 12/10/2026) : 798 caractères, adresses de contrat —
+  // affichée telle quelle, elle élargissait la carte au-delà de l'écran mobile.
+  it("never dumps a long on-chain research log into a ranking line: resume first, else a pointer to the sheet", () => {
+    const longNote = "ERC-20 sur Ethereum (contrat 0xaea46A60368A7bD060eec7Df8CBa43b7EF41Ad85). " + "Fenêtre des 48h ".repeat(20);
+    const pointer = compute(verdict(), thesis(), { onchain_signal: { available: true, note: longNote } }, 5);
+    expect(pointer.caveats).toContain("Signal on-chain récent disponible : détail dans la fiche du favori (Contexte élargi).");
+    const withResume = compute(verdict(), thesis(), { onchain_signal: { available: true, note: longNote, resume: "Sortie nette de 2 M FET de Binance sur 48 h." } }, 5);
+    expect(withResume.caveats).toContain("Signal on-chain récent disponible : Sortie nette de 2 M FET de Binance sur 48 h.");
+  });
+
   it("never claims false precision: unavailable ETF-flow/unlock-calendar data is always listed as missing", () => {
     const r = compute(verdict(), thesis(), null, 5);
     expect(r.missingData.some((m) => m.includes("ETF"))).toBe(true);

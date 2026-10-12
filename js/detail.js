@@ -188,7 +188,7 @@ function renderFavorisContextSection(ticker) {
       </div>
       <div class="detail-context-card">
         <span class="hint">Signal on-chain (opportuniste, pas systématique)</span>
-        <p class="hint">${onchain.available ? `${highlightKeyInfo(onchain.note)} ${onchainSourceUrl ? `<a href="${escapeHtml(onchainSourceUrl)}" target="_blank" rel="noopener">source</a>` : ""}` : highlightKeyInfo(onchain.note || "aucun signal cette fois")}</p>
+        <div class="hint">${renderSummaryFirst(onchain.resume, onchain.note || (onchain.available ? "" : "aucun signal cette fois"))}${onchain.available && onchainSourceUrl ? ` <a href="${escapeHtml(onchainSourceUrl)}" target="_blank" rel="noopener">source</a>` : ""}</div>
       </div>
     </div>
   </div>`;
