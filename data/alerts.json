@@ -1496,5 +1496,15 @@
     "sentiment": "neutre",
     "message": "FLUX entre en zone de surachat (RSI 14 j à 70) : hausse déjà étirée, le risque de repli augmente. Tendance de fond : +57 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
     "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261012-ctsi-seuil",
+    "ticker_ou_theme": "CTSI",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-12T22:45:57Z",
+    "verdict_id": "v-20261010-ctsi",
+    "sentiment": "négatif",
+    "message": "CTSI : -6,57 % depuis l'émission du verdict ACHAT du 10/10 (0,035283 $ → 0,032964 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   }
 ]
