@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-12T22:48:10Z",
+  "updated_at": "2026-10-12T22:50:13Z",
   "fear_greed": {
     "value": 69,
     "classification": "Greed",
@@ -12,9 +12,9 @@
     "source": "CoinGecko /api/v3/global (market_cap_percentage.btc)"
   },
   "gold": {
-    "usd_per_oz": 4168.14,
+    "usd_per_oz": 4168.04,
     "spread_pct": 0.04,
-    "as_of": "2026-10-12T22:47:53Z",
+    "as_of": "2026-10-12T22:49:21Z",
     "source": "CoinGecko /simple/price : moyenne PAX Gold + Tether Gold (jetons adossés chacun à une once d'or) — approximation du cours au comptant"
   },
   "treasury_10y": {
