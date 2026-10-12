@@ -17,7 +17,7 @@
     "resolves_at": "2026-08-21T00:20:00Z",
     "status": "resolved",
     "outcome": {
-      "price_at_resolution": 66240.0,
+      "price_at_resolution": 66240,
       "actual_move_pct": 18.71,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
@@ -61,7 +61,7 @@
     "signal_precoce": {
       "detected_at": "2026-08-10T10:30:00Z",
       "price_at_signal_eur": 1914.37,
-      "move_pct_since_issue": 16.0,
+      "move_pct_since_issue": 16,
       "threshold_pct": 5,
       "threshold_crossed": true,
       "note": "Ethereum (ETH) : même anomalie que sur Bitcoin ce cycle. Écart de +16,0 % à +16,7 % entre le prix d'émission enregistré (1 649,89 dollars, 7 août 2026) et le prix confirmé ce cycle (1 914,37 à 1 925,02 dollars, double vérification indépendante, cohérent avec tous les cycles précédents). Une recherche dédiée sur le prix réel de l'Ethereum le 7 août 2026 converge sur environ 1 910 dollars (Yahoo Finance), cohérent avec le niveau actuel — Ethereum est donc resté globalement stable (mouvement réel estimé sous 1 %) depuis l'émission du verdict, comme Bitcoin. Le champ price_at_issue de ce verdict (1 649,89 dollars) semble donc également erroné à la source. Signal enregistré à titre de signalement d'anomalie de données, pas comme signal de marché exploitable : même recommandation de vérification manuelle avant la résolution du 21 août. RÉÉVALUATION DU 21/09/2026 : vérifié via l'historique CoinGecko réel (/coins/ethereum/history, 07/08/2026) — 1 650,60 € contre price_at_issue stocké 1 649,89 (écart 0,04 %). price_at_issue est correct ; même erreur de devise que sur BTC dans cette note (comparaison euros/dollars sans conversion, cohérent avec les 1 902,16 $ que CoinGecko confirme pour cette date). Aucune correction de données nécessaire."
@@ -129,7 +129,7 @@
     "signal_precoce": {
       "detected_at": "2026-08-10T10:30:00Z",
       "price_at_signal_eur": 0.01459,
-      "move_pct_since_issue": 16.0,
+      "move_pct_since_issue": 16,
       "threshold_pct": 5,
       "threshold_crossed": true,
       "note": "The Graph (GRT) : seuil de mouvement directionnel (5 %) franchi à la hausse, en sens opposé au verdict VENTE. Prix confirmé ce cycle (CoinGecko, 0,01459 dollar) cohérent avec au moins trois cycles précédents consécutifs (~0,0146 dollar, stable sur plusieurs jours malgré une source unique par cycle — la persistance sur un intervalle aussi long limite le risque de contenu indexé dupliqué). Par rapport au prix d'émission (0,01257596 dollar), le mouvement est de +16,0 %. Aucune actualité spécifique trouvée pour l'expliquer : lecture purement technique. Signal précoce enregistré avec la réserve habituelle (source unique par cycle, non recoupée par une seconde plateforme ce cycle) ; ne préjuge pas de l'issue à l'échéance du 21 août."
@@ -527,13 +527,13 @@
       "accord_count": 1
     },
     "reasoning": "Reprise du cycle après plusieurs jours d'interruption : BTC a bondi d'environ +18,7 % depuis le dernier verdict, porté par un basculement net de l'indice de peur et de cupidité (46 « neutre » -> 73 « avidité »), sur fond d'optimisme réglementaire (CLARITY Act, rachats Trésor) largement relayé. Signal technique jugé insuffisant faute d'historique 24h/7j/30j frais pour ce nouveau cycle ; signal fondamental neutre (statut de réserve de valeur inchangé) ; seul le signal macro est nettement haussier. Un seul signal sur trois converge : pas de conviction directionnelle suffisante pour courir après un mouvement déjà réalisé.",
-    "price_at_issue": 66240.0,
+    "price_at_issue": 66240,
     "resolves_at": "2026-09-06T23:20:00Z",
     "status": "resolved",
     "threshold_pct": 5,
     "regime_at_issue": "risk-on",
     "outcome": {
-      "price_at_resolution": 69078.0,
+      "price_at_resolution": 69078,
       "actual_move_pct": 4.28,
       "actual_direction": "ATTENTE",
       "verdict_correct": true,
@@ -1204,7 +1204,7 @@
       "accord_count": 1
     },
     "reasoning": "Le verdict ATTENTE du 23 août est validé : Bitcoin n'a progressé que de +4,28 % sur les deux semaines, sous le seuil directionnel de 5 %, malgré un signal précoce ayant brièvement franchi ce seuil le 4 septembre (+5,49 %) avant de refluer. Nouveau cycle : signal technique jugé insuffisant, mouvement modeste sur 24h (+0,5 %) et 7 jours (+1,8 %), sans direction franche après le repli qui a suivi le pic de début septembre. Signal fondamental neutre : statut de réserve de valeur inchangé, pas de nouveau catalyseur identifié (flux ETF toujours positifs mais déjà connus). Signal macro haussier : indice de peur et de cupidité remonté autour de 59 (zone neutre à cupide selon les sources), régime risk-on maintenu, dominance BTC stable autour de 59,2 %. Un seul signal sur trois converge (macro) : confiance insuffisante pour un appel directionnel, horizon maintenu à 14 jours vu la stabilisation relative du prix.",
-    "price_at_issue": 69078.0,
+    "price_at_issue": 69078,
     "resolves_at": "2026-09-20T23:25:00Z",
     "status": "resolved",
     "outcome": {
@@ -1596,7 +1596,7 @@
     "status": "resolved",
     "outcome": {
       "price_at_resolution": 1.37643,
-      "actual_move_pct": 11.0,
+      "actual_move_pct": 11,
       "actual_direction": "ACHAT",
       "verdict_correct": false,
       "resolved_at": "2026-09-20T23:28:00Z",
@@ -3326,7 +3326,7 @@
     "price_at_issue": 0.466773,
     "currency": "USD",
     "resolves_at": "2026-10-12T16:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "threshold_pct": 5,
     "regime_at_issue": "neutre",
     "signal_consensus": {
@@ -3336,11 +3336,11 @@
       "accord_count": 2
     },
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.574501,
+      "actual_move_pct": 23.08,
+      "actual_direction": "ACHAT",
+      "verdict_correct": true,
+      "resolved_at": "2026-10-12T19:59:57Z"
     }
   },
   {
@@ -3361,7 +3361,7 @@
     "price_at_issue": 0.02920356,
     "currency": "USD",
     "resolves_at": "2026-10-12T16:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "threshold_pct": 5,
     "regime_at_issue": "neutre",
     "signal_consensus": {
@@ -3371,11 +3371,11 @@
       "accord_count": 2
     },
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.0264573,
+      "actual_move_pct": -9.4,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-12T19:59:57Z"
     }
   },
   {
@@ -3396,7 +3396,7 @@
     "price_at_issue": 0.04236474,
     "currency": "USD",
     "resolves_at": "2026-10-12T16:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "threshold_pct": 5,
     "regime_at_issue": "neutre",
     "signal_consensus": {
@@ -3406,11 +3406,11 @@
       "accord_count": 2
     },
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.0412862,
+      "actual_move_pct": -2.55,
+      "actual_direction": "ATTENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-12T19:59:57Z"
     }
   },
   {
