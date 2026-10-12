@@ -314,3 +314,20 @@ describe("valorisation : capitalisation / volume moyen 30 j, situé dans SA four
     expect(valuationAt(valuationSeries(caps2, vols2), t0 + 150 * DAY).days).toBe(132); // jours 19 à 150 (20 jours de volume minimum)
   });
 });
+
+describe("indicateurs affichés : clôtures quotidiennes, comme la règle du moteur (12/10/2026)", async () => {
+  const { assetIndicators, loadSite: load } = await import("../scripts/technical-favoris.mjs");
+  const s = load();
+  // Clôtures quotidiennes réelles de TIA (Crypto.com TIA_USD, 24/08 → 11/10/2026), puis le cours
+  // « maintenant » que CoinGecko ajoute en dernier (12/10 02h31, 0,593032 $).
+  const closes = [0.37119, 0.34946, 0.35977, 0.35847, 0.34019, 0.34001, 0.32247, 0.33579, 0.35234, 0.35669, 0.36674, 0.34842, 0.37904, 0.44303, 0.42106, 0.41124, 0.38179, 0.36927, 0.35201, 0.35152, 0.35883, 0.36119, 0.32885, 0.34055, 0.34886, 0.4064, 0.42457, 0.41567, 0.43743, 0.52188, 0.46788, 0.4974, 0.4974, 0.49331, 0.51262, 0.4664, 0.44753, 0.44308, 0.4337, 0.43852, 0.47699, 0.47786, 0.48202, 0.48602, 0.46395, 0.50073, 0.47114, 0.60348, 0.58308];
+  const T0 = Date.parse("2026-08-25T00:00:00Z"); // clôture du 24/08 = point de 00h00 le 25/08
+  const points = [...closes.map((v, i) => [T0 + i * 86400000, v]), [Date.parse("2026-10-12T02:31:10Z"), 0.593032]];
+
+  it("le cours de la journée incomplète est écarté : RSI 59,5 et non 68,8", () => {
+    const { ind, as_of } = assetIndicators(points, s);
+    expect(ind.rsi14).toBe(59.5);
+    expect(as_of).toBe("2026-10-12T00:00:00Z");
+    expect(s.computeRSI(points.map((p) => p[1]), 14).toFixed(1)).toBe("68.8"); // l'ancien calcul
+  });
+});

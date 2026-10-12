@@ -15,6 +15,7 @@ import { dailySeries, buildSamples, splitByTime, evaluateRules, learnTree, treeC
 
 const OUT_PATH = "data/technical-favoris.json";
 const DAY_MS = 86400000;
+export const INDICATOR_BASIS = "clotures_quotidiennes";
 
 // Charge js/config.js (FAVORIS) et js/detail.js (calculs) dans un contexte isolé : une seule
 // implémentation des indicateurs pour le site et le robot.
@@ -88,6 +89,19 @@ export function valuationAt(series, untilMs = Infinity) {
 }
 
 // Lecture en une phrase, par règles fixes (seuils RSI 70 / 30 identiques au reste du site).
+// Indicateurs affichés = clôtures QUOTIDIENNES (un point par jour UTC), exactement comme la règle
+// du moteur et le laboratoire (dailySeries). CoinGecko ajoute en dernier le cours « maintenant »
+// (journée incomplète) : avec un RSI 14 j à moyenne simple, ce seul point fait sortir de la
+// fenêtre le plus ancien des 14 jours — constaté le 12/10/2026 : TIA affiché RSI 72,2 (alerte
+// « surachat ») alors que la clôture du 11/10 donne 59,5 (Crypto.com) et la proposition 60 ;
+// GRT 37,7 affiché contre 27,3. as_of = date de la dernière clôture utilisée.
+export function assetIndicators(points, site) {
+  const daily = dailySeries(points);
+  const ind = indicatorsAt(daily.map((d) => d.value), site);
+  const last = daily[daily.length - 1];
+  return { ind, as_of: last ? new Date(last.day * DAY_MS).toISOString().replace(/\.\d{3}Z$/, "Z") : null };
+}
+
 export function readingOf(ind) {
   if (!ind) return null;
   const parts = [];
@@ -552,7 +566,7 @@ async function main() {
   } catch {
     previous = null; // premier passage : rien à comparer
   }
-  const out = { updated_at: new Date().toISOString().replace(/\.\d{3}Z$/, "Z"), currency: "USD", source: "CoinGecko /coins/{id}/market_chart (365 j, quotidien) — calculs de js/detail.js", assets: {}, backtest: null, errors: [] };
+  const out = { updated_at: new Date().toISOString().replace(/\.\d{3}Z$/, "Z"), currency: "USD", source: "CoinGecko /coins/{id}/market_chart (365 j, quotidien) — calculs de js/detail.js", indicator_basis: INDICATOR_BASIS, assets: {}, backtest: null, errors: [] };
   const pointsByCgId = {};
   const valuationByCgId = {};
   const volumesByCgId = {};
@@ -563,8 +577,8 @@ async function main() {
       pointsByCgId[fav.cgId] = points;
       valuationByCgId[fav.cgId] = valuationSeries(series.marketCaps, series.volumes);
       volumesByCgId[fav.cgId] = series.volumes;
-      const ind = indicatorsAt(points.map((p) => p[1]), site);
-      out.assets[fav.ticker] = { ...ind, reading: readingOf(ind), valuation: valuationAt(valuationByCgId[fav.cgId]), as_of: new Date(points[points.length - 1][0]).toISOString().replace(/\.\d{3}Z$/, "Z") };
+      const { ind, as_of } = assetIndicators(points, site);
+      out.assets[fav.ticker] = { ...ind, reading: readingOf(ind), valuation: valuationAt(valuationByCgId[fav.cgId]), as_of };
     } catch (e) {
       out.errors.push(`${fav.ticker} : ${e.message}`);
     }
@@ -732,7 +746,9 @@ async function main() {
   writeFileSync(OUT_PATH, JSON.stringify(out, null, 2) + "\n");
   // Alertes : étape à part, son échec ne touche pas le fichier d'analyse déjà écrit.
   try {
-    const fresh = previous && previous.updated_at && Date.parse(out.updated_at) - Date.parse(previous.updated_at) <= PREVIOUS_MAX_AGE_MS;
+    // Même base de calcul la veille et aujourd'hui, sinon une « bascule » ne serait qu'un changement
+    // de méthode (passage aux clôtures quotidiennes le 12/10/2026) : aucune alerte ce jour-là.
+    const fresh = previous && previous.updated_at && previous.indicator_basis === INDICATOR_BASIS && Date.parse(out.updated_at) - Date.parse(previous.updated_at) <= PREVIOUS_MAX_AGE_MS;
     if (fresh) {
       const alerts = JSON.parse(readFileSync(ALERTS_PATH, "utf-8"));
       const added = buildTechnicalAlerts(technicalEvents(previous.assets, out.assets), alerts, out.updated_at);
