@@ -34,7 +34,7 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | Vérification des échéances (Action GitHub `resolve-due`, toutes les heures) | 12/10 20h00 | OK — TIA juste (+23,08 %), GRT faux (−9,4 %), PEAQ faux (−2,55 %) |
 | Analyse technique + laboratoire (Action GitHub `technical-daily`) | 12/10 02h32 | OK |
 | On-chain du bitcoin (Action GitHub) | jour complet du 11/10 | OK |
-| Tests (`npm test`) | 12/10 | 824/824 |
+| Tests (`npm test`) | 12/10 | 826/826 |
 
 ## Problèmes ouverts
 
@@ -87,6 +87,10 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 
 ## Journal des sessions (le plus récent en haut)
 
+- **12/10/2026 (nuit, avant le cycle de 00h15)** — Vérification préalable des propositions du robot :
+  RSI affiché ≠ RSI de la règle sur les 15 favoris (TIA 72,2 contre 60). Tranché avec les vraies
+  clôtures Crypto.com (TIA 59,5, GRT 27,3) : la règle était juste, l'affichage et les alertes RSI non
+  (cours de la journée incomplète). Robot, fiche et Assistant alignés sur les clôtures quotidiennes.
 - **12/10/2026 (nuit)** — « Tu n'as rien vu à améliorer ? » Tour complet dans un navigateur (mobile et
   ordinateur, chaque fiche dépliée) + contrôles de cohérence sur les vraies données (0 anomalie).
   Corrigé : cartes d'allocation coupées sur mobile et notes on-chain illisibles (adresses, noms d'outils).

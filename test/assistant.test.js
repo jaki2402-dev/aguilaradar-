@@ -177,8 +177,9 @@ describe("assistant.js — findAssetMention / answerQuestion (bout en bout)", ()
     dom.window.fetch = async () => ({
       ok: true,
       json: async () => ({
-        prices: closes.map((c, i) => [i, c]),
-        total_volumes: volumes.map((v, i) => [i, v]),
+        // Un point par jour (horodatages réels CoinGecko) : la fiche ne garde qu'un point par jour UTC.
+        prices: closes.map((c, i) => [i * 86400000, c]),
+        total_volumes: volumes.map((v, i) => [i * 86400000, v]),
       }),
     });
     const answer = await dom.window.answerQuestion("Que penses-tu de Chainlink ?");

@@ -665,3 +665,21 @@ dessus de sa MM200, sans le savoir.
 - Vu et laissé : tableaux du Moteur défilables horizontalement sur mobile (voulu) ; 404 sur
   `crypto-global.json`/`cmc-favoris.json` (routine CoinMarketCap facultative non créée, P10).
 
+### 12/10/2026 (nuit) — deux RSI différents : affiché ≠ celui qui décide le verdict
+
+- Constat (avant le cycle du 13/10 00h15) : `technical-favoris.json` affichait TIA RSI 72,2 (et une
+  alerte « surachat » partie le 12/10) alors que sa proposition disait « RSI 60 < 70 → ACHAT » ; écart
+  sur les 15 favoris (GRT 37,7 / 26, LINK 27,7 / 44, ONDO 50,4 / 33).
+- Arbitrage par une source indépendante : clôtures quotidiennes Crypto.com (`get_candlestick` 1D),
+  même `computeRSI` : TIA 59,5 à la clôture du 11/10, GRT 27,3 (et 48,6 la veille, proposition 49) →
+  la PROPOSITION (dailySeries) est juste, l'affichage non.
+- Cause : CoinGecko ajoute en dernier le cours « maintenant » (journée incomplète). Le RSI de
+  `computeRSI` est une moyenne simple des 14 dernières variations : ce point fait sortir de la fenêtre
+  le plus ancien jour (TIA : 59,5 → 68,8 avec le seul point de 02h31 ; écart encore plus grand quand
+  le jour sorti est une forte variation, GRT après son +30 % du 27/09).
+- Correctifs : robot → `assetIndicators` (clôtures quotidiennes, `as_of` = dernière clôture,
+  `indicator_basis`, aucune alerte le jour du changement de méthode) ; fiche du site et Assistant →
+  `dailyPointValues` pour RSI/moyennes/volumes, cours du moment gardé à part (`lastPrice`) ; le
+  comparatif du portefeuille garde le cours du moment. Le cycle recopiait le RSI affiché dans
+  `technical_at_issue` : désormais le même que celui de la règle.
+

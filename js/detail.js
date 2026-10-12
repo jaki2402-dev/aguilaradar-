@@ -107,11 +107,30 @@ function fetchWithTimeout(url, ms) {
   return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(timer));
 }
 
-async function fetchHistoricalCloses(cgId, days) {
+// Un point par jour UTC (le premier) : CoinGecko ajoute en dernier le cours « maintenant », une
+// journée incomplète. Pour le RSI/les moyennes, on garde les seules clôtures quotidiennes — même
+// base que le robot technique et la règle du moteur (scripts/engine-lab.mjs dailySeries). Sans ça,
+// le RSI 14 j de la fiche pouvait s'écarter de 10 points et plus de celui du verdict (TIA, 12/10/2026 :
+// 72 affiché contre 60 pour la règle).
+function dailyPointValues(points) {
+  const out = [];
+  let lastDay = null;
+  for (const p of points || []) {
+    const day = Math.floor(p[0] / 86400000);
+    if (day === lastDay) continue;
+    lastDay = day;
+    out.push(p[1]);
+  }
+  return out;
+}
+
+// opts.daily : clôtures quotidiennes seulement (corrélation avec un actif lui-même en quotidien).
+// Sans : tous les points, cours du moment compris (comparatif du portefeuille jusqu'à aujourd'hui).
+async function fetchHistoricalCloses(cgId, days, opts = {}) {
   const res = await fetchWithTimeout(`https://api.coingecko.com/api/v3/coins/${cgId}/market_chart?vs_currency=eur&days=${days}&interval=daily`, 12000);
   if (!res.ok) throw new Error(`history ${res.status}`);
   const data = await res.json();
-  return (data.prices || []).map((p) => p[1]);
+  return opts.daily ? dailyPointValues(data.prices) : (data.prices || []).map((p) => p[1]);
 }
 
 async function fetchOrderBookImbalance(tvSymbol) {
@@ -242,9 +261,12 @@ async function fetchMarketChartData(cgId, days) {
   const res = await fetchWithTimeout(`https://api.coingecko.com/api/v3/coins/${cgId}/market_chart?vs_currency=eur&days=${days}&interval=daily`, 12000);
   if (!res.ok) throw new Error(`market_chart ${res.status}`);
   const data = await res.json();
+  const prices = data.prices || [];
   return {
-    closes: (data.prices || []).map((p) => p[1]),
-    volumes: (data.total_volumes || []).map((v) => v[1]),
+    closes: dailyPointValues(prices),
+    volumes: dailyPointValues(data.total_volumes),
+    // Cours du moment (dernier point) : comparé aux moyennes, jamais utilisé dans le RSI.
+    lastPrice: prices.length ? prices[prices.length - 1][1] : null,
   };
 }
 
@@ -384,7 +406,7 @@ async function renderTechnicalSection(asset) {
   const isBtc = asset.cgId === "bitcoin";
   const [assetChart, btcCloses] = await Promise.all([
     fetchMarketChartData(asset.cgId, VOLUME_PROFILE_DAYS),
-    isBtc ? Promise.resolve(null) : fetchHistoricalCloses("bitcoin", 60).catch(() => null),
+    isBtc ? Promise.resolve(null) : fetchHistoricalCloses("bitcoin", 60, { daily: true }).catch(() => null),
   ]);
   const closes = assetChart.closes;
   const rsi = computeRSI(closes, 14);
@@ -393,7 +415,7 @@ async function renderTechnicalSection(asset) {
   // affaiblissait silencieusement la periode a ce qui etait disponible et affichait le
   // resultat sous l'etiquette trompeuse "MM50" au lieu d'un "-" honnete faute de donnees.
   const sma50 = computeSMA(closes, 50);
-  const price = closes[closes.length - 1];
+  const price = Number.isFinite(assetChart.lastPrice) ? assetChart.lastPrice : closes[closes.length - 1];
   const signals = technicalSignalSentences(price, sma20, sma50, rsi, asset.athChangePct);
 
   const utility = utilitySignal(asset.cgId);

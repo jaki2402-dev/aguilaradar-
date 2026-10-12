@@ -300,9 +300,9 @@ async function fetchLiveSearchAnswer(query) {
 // et pour la même raison : un échec réseau ici ne doit jamais faire échouer toute la réponse.
 async function fetchLiveTechnicalSummary(cgId) {
   try {
-    const { closes, volumes } = await fetchMarketChartData(cgId, VOLUME_PROFILE_DAYS);
+    const { closes, volumes, lastPrice } = await fetchMarketChartData(cgId, VOLUME_PROFILE_DAYS);
     if (!closes || closes.length < 15) return null;
-    const price = closes[closes.length - 1];
+    const price = Number.isFinite(lastPrice) ? lastPrice : closes[closes.length - 1];
     const rsi = computeRSI(closes, 14);
     const sma20 = computeSMA(closes, 20);
     // Vrai MM50 (50 points exacts, voir detail.js/computeSMA) : Math.min(50, closes.length)

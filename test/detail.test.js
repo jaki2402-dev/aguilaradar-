@@ -321,3 +321,18 @@ describe("detail.js — signal on-chain du Contexte élargi : phrase courte d'ab
     expect(card.querySelector(".clamp-text")).not.toBeNull();
   });
 });
+
+describe("detail.js — fiche : RSI sur clôtures quotidiennes, cours du moment à part (12/10/2026)", () => {
+  it("fetchMarketChartData écarte le point « maintenant » des clôtures et le rend en lastPrice", async () => {
+    const dom = loadPage(["prices.js", "detail.js"]);
+    const D = 86400000, T = Date.parse("2026-10-10T00:00:00Z");
+    const body = { prices: [[T, 1], [T + D, 2], [T + 2 * D, 3], [T + 2 * D + 9000000, 3.5]], total_volumes: [[T, 10], [T + D, 20], [T + 2 * D, 30], [T + 2 * D + 9000000, 35]] };
+    dom.window.fetch = async () => ({ ok: true, json: async () => body });
+    const r = await dom.window.fetchMarketChartData("x", 3);
+    expect(Array.from(r.closes)).toEqual([1, 2, 3]);
+    expect(Array.from(r.volumes)).toEqual([10, 20, 30]);
+    expect(r.lastPrice).toBe(3.5);
+    expect(Array.from(await dom.window.fetchHistoricalCloses("x", 3))).toEqual([1, 2, 3, 3.5]);
+    expect(Array.from(await dom.window.fetchHistoricalCloses("x", 3, { daily: true }))).toEqual([1, 2, 3]);
+  });
+});
