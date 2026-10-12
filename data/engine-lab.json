@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-12T02:32:05Z",
+  "updated_at": "2026-10-12T23:20:42Z",
   "method": "Cas réels : chaque favori, chaque jour avec 200 jours d'historique ; issue = cours 7 ou 14 jours plus tard (horizon de l'actif), seuil ±5 %, comme les verdicts. 60 % des jours les plus anciens pour apprendre, les plus récents pour noter.",
   "period": {
     "from": "2026-04-30",
@@ -21,55 +21,55 @@
       "train": 34.8,
       "valid": 37,
       "name": "Tendance + RSI",
-      "real_recent": 50
+      "real_recent": 43.3
     },
     "retour_moyenne_rsi": {
       "train": 22.1,
       "valid": 53,
       "name": "Retour à la moyenne (RSI)",
-      "real_recent": 70
+      "real_recent": 63.3
     },
     "retour_moyenne_marche": {
       "train": 23.6,
       "valid": 49.5,
       "name": "Retour à la moyenne + marché",
-      "real_recent": 70
+      "real_recent": 63.3
     },
     "tendance_pure": {
       "train": 36,
       "valid": 28.6,
       "name": "Suivi de tendance",
-      "real_recent": 46.7
+      "real_recent": 40
     },
     "marche_baissier_protege": {
       "train": 25.5,
       "valid": 50.6,
       "name": "Retour à la moyenne protégé",
-      "real_recent": 70
+      "real_recent": 63.3
     },
     "sentiment_marche": {
       "train": 22.1,
       "valid": 53,
       "name": "Sentiment de marché",
-      "real_recent": 60
+      "real_recent": 53.3
     },
     "sentiment_marche_rsi": {
       "train": 22.1,
       "valid": 53,
       "name": "Sentiment de marché + RSI",
-      "real_recent": 70
+      "real_recent": 63.3
     },
     "retour_moyenne_prudent": {
       "train": 21.3,
       "valid": 56.2,
       "name": "Retour à la moyenne prudent",
-      "real_recent": 63.3
+      "real_recent": 56.7
     },
     "regle_apprise": {
       "train": 38.5,
       "valid": 28.9,
       "name": "Règle apprise",
-      "real_recent": 16.7
+      "real_recent": 20
     }
   },
   "learned_rule": {
