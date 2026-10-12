@@ -30,7 +30,7 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | Thèse hebdo du portefeuille | 12/10 05h04 | OK |
 | Groupe témoin | 04/10 | OK — objectif 8 en attente atteint |
 | Actualités (sélection du cycle) | vérifiées 12/10 16h17, contenu inchangé depuis le 05/10 | P2 — compensé par le fil des médias |
-| Fil des médias (Action GitHub, `news-feed.json`) | 12/10 22h48 | OK — 4 flux lus sans erreur, 38 titres réels datés, 8 favoris couverts |
+| Fil des médias (Action GitHub, `news-feed.json`) | 12/10 22h50 | OK — 4 flux lus sans erreur, 33 titres réels datés, 7 favoris couverts (BTC, ETH, LINK, INJ, TIA, ARB, FET), aucun faux positif |
 | Vérification des échéances (Action GitHub `resolve-due`, toutes les heures) | 12/10 20h00 | OK — TIA juste (+23,08 %), GRT faux (−9,4 %), PEAQ faux (−2,55 %) |
 | Analyse technique + laboratoire (Action GitHub `technical-daily`) | 12/10 02h32 | OK |
 | On-chain du bitcoin (Action GitHub) | jour complet du 11/10 | OK |
