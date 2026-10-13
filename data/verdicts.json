@@ -3664,5 +3664,175 @@
       "verdict_correct": null,
       "resolved_at": null
     }
+  },
+  {
+    "id": "v-20261013-grt",
+    "issued_at": "2026-10-13T00:20:00Z",
+    "asset": "the-graph",
+    "ticker": "GRT",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 64,
+    "signals_used": [
+      "Tendance de fond haussière (+32 % vs moyenne 200 j), élan négatif ; RSI 26 : survente.",
+      "MACD baissier (histogramme -0,000587)",
+      "Recul de -9,72 % sur 24h (au-delà du seuil de 5 %), -14,16 % sur 7j, +40,47 % sur 30j",
+      "portfolio-thesis Conserver conviction 4/10"
+    ],
+    "reasoning": "GRT cote 0,02533 $ (CoinGecko, 13/10 00h18 UTC), en recul de -9,72 % sur 24h (au-delà du seuil directionnel de 5 %) et de -14,16 % sur 7 jours, après un rebond de +40,47 % sur 30 jours — repli marqué mais concomitant avec celui observé sur TIA (-8,85 %) et PEAQ (-7,04 %), signe d'un mouvement de marché large plutôt que propre à GRT. Lecture technique du robot quotidien (as_of 12/10) : RSI 14j à 26,3 (survente), tendance de fond haussière (+32,1 % au-dessus de la moyenne 200 jours), mais MACD baissier (histogramme négatif) — signal contraire au verdict. Règle du moteur (retour_moyenne_rsi, mesurée sur 749 cas, confiance 64 %) : RSI sous 70, donc pas d'excès, rebond ou poursuite plus fréquents que la stabilité ; contexte bitcoin en élan négatif, indice peur/avidité en zone de cupidité (≥ 55). Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 4/10 (aucun catalyseur d'octobre confirmé), favoris-context.json ne signale aucun nouveau développement depuis le 06/10 — pas de contradiction franche avec la lecture technique. Régime macro neutre : Fed toujours restrictive (3,75-4,00 %, prochain FOMC le 28/10) mais rapport sur l'emploi du 02/10 (+29 000, très sous consensus) tempère cette lecture, flux ETF spot BTC/ETH toujours non confirmés. ACHAT retenu par la règle du moteur (§2 de la spec), horizon maintenu à 7 jours (groupe volatil, corr-20260906).",
+    "resume": "RSI 26 en survente et tendance haussière (+32% vs MM200), mais -9,7% sur 24h et MACD contraire : ACHAT retenu par la règle du moteur (confiance 64%).",
+    "price_at_issue": 0.02533189,
+    "currency": "USD",
+    "resolves_at": "2026-10-20T00:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 64,
+      "sample_n": 749,
+      "context": "bitcoin en élan négatif, cupidité (≥ 55)",
+      "context_n": 268,
+      "basis": "RSI 26 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": []
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-12T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 26.3,
+      "sma200_gap_pct": 32.1,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261013-tia",
+    "issued_at": "2026-10-13T00:20:00Z",
+    "asset": "celestia",
+    "ticker": "TIA",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 64,
+    "signals_used": [
+      "Tendance de fond haussière (+55 % vs moyenne 200 j), élan positif ; RSI 60 neutre.",
+      "MACD haussier (histogramme +0,00864)",
+      "Recul de -8,85 % sur 24h (au-delà du seuil de 5 %), +10,45 % sur 7j, +51,41 % sur 30j",
+      "portfolio-thesis Conserver conviction 4/10"
+    ],
+    "reasoning": "TIA cote 0,524951 $ (CoinGecko, 13/10 00h18 UTC), en recul de -8,85 % sur 24h (au-delà du seuil directionnel de 5 %), mais reste positif sur 7 jours (+10,45 %) et sur 30 jours (+51,41 %) — repli concomitant avec celui observé sur GRT (-9,72 %) et PEAQ (-7,04 %), signe d'un mouvement de marché large plutôt que propre à TIA. Lecture technique du robot quotidien (as_of 12/10) : RSI 14j à 59,5 (neutre), tendance de fond haussière (+55 % au-dessus de la moyenne 200 jours), MACD haussier (histogramme positif) — aligné avec le verdict, mais le robot signale que sur élan MACD haut la règle s'est déjà trompée 59,2 % du temps (309 cas), point de vigilance documenté. Règle du moteur (retour_moyenne_rsi, mesurée sur 749 cas, confiance 64 %) : RSI sous 70, donc pas d'excès, rebond ou poursuite plus fréquents que la stabilité ; contexte bitcoin en élan négatif, indice peur/avidité en zone de cupidité (≥ 55). Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 4/10 (aucune actualité d'octobre confirmée), favoris-context.json cite l'upgrade Hibiscus livrée en mainnet mi-mars mais une TVL DeFi native quasi nulle — pas de contradiction franche. Régime macro neutre : Fed toujours restrictive (3,75-4,00 %, prochain FOMC le 28/10) mais rapport sur l'emploi du 02/10 tempère cette lecture, flux ETF spot BTC/ETH toujours non confirmés. ACHAT retenu par la règle du moteur (§2 de la spec), horizon maintenu à 7 jours (groupe volatil, corr-20260906).",
+    "resume": "RSI 60 neutre, tendance haussière (+55% vs MM200) et MACD haussier, malgré -8,9% sur 24h : ACHAT retenu par la règle du moteur (confiance 64%).",
+    "price_at_issue": 0.524951,
+    "currency": "USD",
+    "resolves_at": "2026-10-20T00:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 64,
+      "sample_n": 749,
+      "context": "bitcoin en élan négatif, cupidité (≥ 55)",
+      "context_n": 268,
+      "basis": "RSI 60 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": [
+        "Élan MACD haut : la règle s'y est trompée 59.2 % du temps (309 cas)"
+      ]
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-12T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 59.5,
+      "sma200_gap_pct": 55,
+      "macd": "haussier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261013-peaq",
+    "issued_at": "2026-10-13T00:20:00Z",
+    "asset": "peaq-2",
+    "ticker": "PEAQ",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 64,
+    "signals_used": [
+      "Tendance de fond haussière (+86 % vs moyenne 200 j), élan négatif ; RSI 51 neutre.",
+      "MACD baissier (histogramme -0,000618)",
+      "Recul de -7,04 % sur 24h (au-delà du seuil de 5 %), -7,59 % sur 7j, +59,85 % sur 30j",
+      "portfolio-thesis Attendre conviction 3/10"
+    ],
+    "reasoning": "PEAQ cote 0,039695 $ (CoinGecko, 13/10 00h18 UTC), en recul de -7,04 % sur 24h (au-delà du seuil directionnel de 5 %) et de -7,59 % sur 7 jours, après un rebond de +59,85 % sur 30 jours — repli concomitant avec celui observé sur GRT (-9,72 %) et TIA (-8,85 %), signe d'un mouvement de marché large plutôt que propre à PEAQ. Lecture technique du robot quotidien (as_of 12/10) : RSI 14j à 50,5 (neutre), tendance de fond haussière (+86,3 % au-dessus de la moyenne 200 jours), mais MACD baissier (histogramme négatif) — signal contraire au verdict. Règle du moteur (retour_moyenne_rsi, mesurée sur 749 cas, confiance 64 %) : RSI sous 70, donc pas d'excès, rebond ou poursuite plus fréquents que la stabilité ; contexte bitcoin en élan négatif, indice peur/avidité en zone de cupidité (≥ 55). Signal fondamental neutre : portfolio-thesis.json indique 'Attendre' conviction 3/10 (aucun catalyseur confirmé cette semaine au-delà d'Economics 2.0, déjà connu), favoris-context.json signale un calendrier de déblocage mensuel documenté comme pression persistante sur l'offre — pas de contradiction franche avec la lecture technique (pas de 'Réduire' à conviction élevée). Régime macro neutre : Fed toujours restrictive (3,75-4,00 %, prochain FOMC le 28/10) mais rapport sur l'emploi du 02/10 tempère cette lecture, flux ETF spot BTC/ETH toujours non confirmés. ACHAT retenu par la règle du moteur (§2 de la spec), horizon maintenu à 7 jours (groupe volatil, corr-20260906).",
+    "resume": "RSI 51 neutre, tendance haussière (+86% vs MM200) mais MACD contraire et -7% sur 24h : ACHAT retenu par la règle du moteur (confiance 64%).",
+    "price_at_issue": 0.03969452,
+    "currency": "USD",
+    "resolves_at": "2026-10-20T00:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 64,
+      "sample_n": 749,
+      "context": "bitcoin en élan négatif, cupidité (≥ 55)",
+      "context_n": 268,
+      "basis": "RSI 51 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": []
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-12T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 50.5,
+      "sma200_gap_pct": 86.3,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
   }
 ]

@@ -54,17 +54,18 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-12T16:17:18Z",
+    "last_success_at": "2026-10-13T00:25:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle court du 12/10/2026 ~16h16 UTC : aucun verdict pending echu (verifie via extraction python3, demarrage econome), les 15 favoris ont deja un verdict pending en cours - rien emis ni resolu ce cycle. Veille actualites : 2 recherches WebSearch (hack/exploit, fear&greed/dominance) - aucun resultat date du 12/10/2026 trouve (tout hors-date ou ancien) - rien ajoute a news.json (regle 'jamais inventer'). last_checked_at de news.json mis a jour, items et last_updated_at inchanges. macro_regime non touche (regle section 7 : seulement si un verdict est emis ce cycle). Aucun outil mcp__ utilise."
+    "last_failure_reason": "Cycle du 13/10/2026 00h20 UTC : 3 tickers sans verdict pending detectes au demarrage econome (GRT, TIA, PEAQ) - les 12 autres favoris avaient deja un verdict pending en cours, aucun du au-dela de 6h (robot resolve-due a jour). 3 verdicts emis (GRT, TIA, PEAQ), tous ACHAT par la regle du moteur (retour_moyenne_rsi, confiance 64%), horizon 7 jours (groupe volatil, corr-20260906). Repli de marche large observe au moment de l'emission (-9,72% GRT, -8,85% TIA, -7,04% PEAQ sur 24h) : documente dans chaque reasoning, n'a pas change la decision (regle appliquee telle quelle, aucun override - pas d'evenement exceptionnel verifie par 2 sources). Veille actualites : 2 recherches WebSearch (fear&greed/dominance, hack/exploit) - aucun resultat date du 12-13/10/2026 trouve, rien ajoute a news.json. last_checked_at mis a jour, items et last_updated_at inchanges. Aucun outil mcp__ utilise."
   },
   "macro_regime": {
-    "last_computed_at": "2026-10-10T16:28:00Z",
+    "last_computed_at": "2026-10-13T00:20:00Z",
     "regime": "neutre",
     "fear_greed_value": 70,
     "btc_dominance_pct": 59.18,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Cycle du 10/10 16h20 UTC. Regime retenu neutre, inchange depuis le 06/10 : data/market-context.json rafraichi ce matin (08h50 UTC) par la routine marche-quotidien, lu en lecture seule ici. Fed toujours hawkish (taux 3,75-4,00%, prochain FOMC le 28/10, dans plus de 48h) mais le rapport sur l'emploi du 02/10 (+29 000 creations, chomage 4,2%) tempere cette lecture, inchange depuis le dernier cycle. Dominance des stablecoins a 10,4% (291,59 Md$ / 2 807,6 Md$), legerement au-dessus du 10,04-10,16% du 04-05/10 - signal trop faible pour trancher seul. Flux ETF spot BTC/ETH et rendement du Tresor a 10 ans toujours non confirmes (champs a null). fear_greed_value et btc_dominance_pct non retouches ici (lus dans data/market-gauges.json par une autre routine). Signaux toujours insuffisamment alignes pour trancher franchement : regime maintenu neutre."
+    "note": "Cycle du 13/10 00h20 UTC. Regime retenu neutre, inchange depuis le 10/10 : data/market-context.json (dernier calcul 12/10 08h50 UTC, lu en lecture seule) toujours Fed hawkish (taux 3,75-4,00%, prochain FOMC le 28/10, dans plus de 48h) temperee par le rapport sur l'emploi du 02/10 (+29 000 creations, chomage 4,2%, tres sous consensus), stablecoins a 10,4% de dominance (292,37 Md$, +0,10% sur 24h), flux ETF spot BTC/ETH toujours non confirmes (champs a null). fear_greed_value et btc_dominance_pct non retouches ici (lus dans data/market-gauges.json par une autre routine). A noter, hors perimetre de ce champ macro mais observe au moment de l'emission des 3 verdicts de ce cycle : repli large sur plusieurs favoris (-9,72% GRT, -8,85% TIA, -7,04% PEAQ sur 24h, CoinGecko), signe d'un mouvement de marche plutot que d'un choc isole - signaux macro toujours insuffisamment alignes pour trancher franchement, regime maintenu neutre.",
+    "resume": "Régime macro neutre : Fed restrictive mais emploi faible tempère, ETF non confirmés ; repli large de -7 à -10% observé sur plusieurs favoris."
   },
   "paper_portfolio_stats": {
     "last_computed_at": "2026-09-13T23:26:00Z",
