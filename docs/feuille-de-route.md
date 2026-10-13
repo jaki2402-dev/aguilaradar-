@@ -50,7 +50,7 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | P16 | **CoinMarketCap automatique (facultatif)** : le robot sait recouper chaque jour cours et offre des 15 favoris avec CoinMarketCap (code prêt et testé, 11/10). Il faut une clé gratuite. | **Toi**, si tu veux | 1) Créer un compte gratuit sur pro.coinmarketcap.com (plan Basic) et copier la clé API. 2) Sur GitHub : dépôt `aguilaradar-` → Settings → Secrets and variables → Actions → New repository secret, nom `CMC_API_KEY`, valeur = la clé. Rien d'autre : le robot l'utilise dès le soir suivant. |
 | P15 | **Routine `horizons-6h` devenue inutile** : le robot `resolve-due` fait son travail sans quota (essai réel réussi le 11/10). Une session ne peut pas la désactiver (refus du système). | **Toi** | Désactiver `aguilaradar-horizons-6h` : claude.ai/code/routines/trig_012L3zXByo7gQXCfAYQsrWhn. Sans urgence : elle ne trouve plus rien à faire. |
 | P10 | **CoinMarketCap : routine dédiée facultative.** Depuis le 11/10, l'analyse technique des favoris vient du robot GitHub (sans quota). CoinMarketCap n'apporterait plus que le levier, le financement, les liquidations et la saison des altcoins. | **Toi**, si tu le souhaites | Créer `aguilaradar-coinmarketcap-quotidien` avec le texte de `docs/routines/coinmarketcap-quotidien.md`. Rien ne casse sans elle. |
-| P14 | **Nouvelle règle du moteur à vérifier en conditions réelles** (choisie par l'utilisateur le 11/10) : VENTE si RSI ≥ 70, sinon ACHAT, ATTENTE seulement sans données (57 % de justes sur le passé contre 26 %). Premiers verdicts attendus au cycle du 13/10 00h15 (après les échéances du 12/10). Le prompt de la routine rappelle encore l'ancienne formule : la spec dit qu'elle prime. | Session à partir du 13/10 | Vérifier sur `origin/main` : `decision_rule` présent, verdicts ACHAT/VENTE conformes (panneau « Cohérence des données » : 0 violation). Si la routine retombe sur ATTENTE : te proposer de coller un prompt corrigé. Puis suivre la colonne « Test réel » (onglet Moteur) ; changer de règle seulement si une autre la bat sur ≥ 15 verdicts. |
+| P14 | **Nouvelle règle du moteur en conditions réelles** (choisie par l'utilisateur le 11/10) : VENTE si RSI ≥ 70, sinon ACHAT. **Premiers verdicts vérifiés le 13/10 00h40** : GRT, TIA, PEAQ en ACHAT, conformes (règle, proposition du robot, RSI des clôtures quotidiennes, 0 anomalie). Échéance le 20/10 00h20. | Session à partir du 20/10 | Suivre la colonne « Test réel » (onglet Moteur) ; changer de règle seulement si une autre la bat sur ≥ 15 verdicts. |
 
 ## Rendez-vous
 
@@ -87,6 +87,9 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 
 ## Journal des sessions (le plus récent en haut)
 
+- **13/10/2026 00h40** — Vérification du cycle de 00h15 : 3 verdicts ACHAT (GRT, TIA, PEAQ) conformes
+  à la règle et au robot, 0 anomalie. Trouvé : la vérification « toutes les heures » des échéances
+  n'était lancée par GitHub que 3-4×/jour → ajoutée aux robots des alertes et de l'analyse technique.
 - **12/10/2026 (nuit, avant le cycle de 00h15)** — Vérification préalable des propositions du robot :
   RSI affiché ≠ RSI de la règle sur les 15 favoris (TIA 72,2 contre 60). Tranché avec les vraies
   clôtures Crypto.com (TIA 59,5, GRT 27,3) : la règle était juste, l'affichage et les alertes RSI non

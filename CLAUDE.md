@@ -162,8 +162,9 @@ vente.
   `proposed_at_issue` ; `checkVerdictSelectionCompliance` le contrôle. Ne jamais revenir à ATTENTE
   « par prudence » (23 % d'issues stables).
   Résolution (verdicts, horizons des opportunités, groupe témoin) + `global_stats` : GitHub Action
-  `resolve-due` (toutes les heures à :45, zéro quota, `scripts/resolve-due.mjs`, prix à l'heure de
-  l'échéance) ; le cycle ne résout qu'en secours (dû depuis > 6 h). Créneaux des routines évités.
+  `resolve-due` (`scripts/resolve-due.mjs`, zéro quota, prix à l'heure de l'échéance) ; son horaire
+  « toutes les heures » n'est lancé par GitHub que 3-4×/jour → aussi étape de `price-alerts` et
+  `technical-daily`. Le cycle ne résout qu'en secours (dû depuis > 6 h). Créneaux des routines évités.
   Devise : champ `currency` (USD depuis le 20/09/2026 ; sans champ → table de la spec cycle §5).
   Le symbole écrit dans `reasoning` n'est PAS fiable. Jamais comparer un prix € à un prix $.
 - `engine-history.json` : `correction_log` = mémoire du moteur ; `global_stats` recalculé ;

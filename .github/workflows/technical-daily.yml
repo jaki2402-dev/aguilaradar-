@@ -27,6 +27,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      # Échéances d'abord (tâche horaire resolve-due peu fiable côté GitHub) : l'analyse rétrospective
+      # et le choix de la règle voient ainsi les verdicts tout juste vérifiés.
+      - run: node scripts/resolve-due.mjs
+        continue-on-error: true
       - run: node scripts/technical-favoris.mjs
         env:
           # Facultatif : clé gratuite CoinMarketCap (recoupement des cours et de l'offre). Sans elle,
@@ -34,14 +38,16 @@ jobs:
           CMC_API_KEY: ${{ secrets.CMC_API_KEY }}
       - name: Commit si quelque chose a changé
         run: |
+          RESOLVED="data/verdicts.json data/engine-history.json data/opportunities.json data/control-group.json"
           git add -N data/technical-favoris.json data/engine-lab.json 2>/dev/null || true
-          git diff --quiet -- data/technical-favoris.json data/alerts.json data/engine-lab.json && exit 0
+          git diff --quiet -- data/technical-favoris.json data/alerts.json data/engine-lab.json $RESOLVED && exit 0
+          for f in $RESOLVED; do python3 -m json.tool "$f" >/dev/null; done
           python3 -m json.tool data/technical-favoris.json >/dev/null
           python3 -m json.tool data/alerts.json >/dev/null
           [ ! -f data/engine-lab.json ] || python3 -m json.tool data/engine-lab.json >/dev/null
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/technical-favoris.json data/alerts.json
+          git add data/technical-favoris.json data/alerts.json $RESOLVED
           [ ! -f data/engine-lab.json ] || git add data/engine-lab.json
           git commit -m "Analyse technique des favoris du $(date -u "+%d/%m/%Y")"
           for i in 1 2 3; do git pull --rebase -q origin main && git push origin HEAD:main && exit 0; sleep $((i*5)); done

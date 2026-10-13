@@ -683,3 +683,15 @@ dessus de sa MM200, sans le savoir.
   comparatif du portefeuille garde le cours du moment. Le cycle recopiait le RSI affiché dans
   `technical_at_issue` : désormais le même que celui de la règle.
 
+### 13/10/2026 00h40 — cycle de 00h15 vérifié ; vérification des échéances fiabilisée
+
+- Cycle du 13/10 00h20 : 3 verdicts (GRT, TIA, PEAQ), tous ACHAT, `decision_rule`
+  retour_moyenne_rsi, `proposed_at_issue` identique, confiance 64 %, `technical_at_issue` = RSI des
+  clôtures quotidiennes (26,3 / 59,5 / 50,5, as_of 12/10 00h00) ; `resume` ≤ 160 caractères, chiffres
+  tous présents dans le texte (arrondis) ; contrôles du site : 0 anomalie.
+- `resolve-due` (cron `45 * * * *`) : seulement 8 passages du 11/10 08h32 au 13/10 00h40 (11/10 23h12,
+  12/10 02h39, 09h46, 19h59…) — GitHub ne garantit pas les tâches planifiées fréquentes. JUP, LINK,
+  ONDO échus à 00h30 restaient en attente. Ajout de `resolve-due.mjs` en étape de `price-alerts`
+  (4×/jour, avant les alertes) et de `technical-daily` (avant l'analyse) ; même groupe de
+  concurrence `data-commit`, créneaux des routines respectés par `isQuiet`.
+

@@ -28,6 +28,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      # Échéances (verdicts, horizons, groupe témoin) AVANT les alertes : la tâche horaire resolve-due
+      # n'est lancée par GitHub que 3 à 4 fois par jour (8 passages du 11/10 08h au 13/10 00h40) ;
+      # ce passage-ci en ajoute 4. Créneaux des routines respectés par le script (QUIET_WINDOWS).
+      - run: node scripts/resolve-due.mjs
+        continue-on-error: true
       - run: node scripts/price-alerts.mjs
       # Échec des jauges = sans effet sur les alertes (étape indépendante).
       - run: node scripts/market-gauges.mjs
@@ -47,7 +52,9 @@ jobs:
         run: |
           git add -N data/market-gauges.json 2>/dev/null || true
           git add -N data/news-feed.json 2>/dev/null || true
-          git diff --quiet -- data/alerts.json data/market-gauges.json data/onchain-history.json data/portfolio-history.json data/news-feed.json && exit 0
+          RESOLVED="data/verdicts.json data/engine-history.json data/opportunities.json data/control-group.json"
+          git diff --quiet -- data/alerts.json data/market-gauges.json data/onchain-history.json data/portfolio-history.json data/news-feed.json $RESOLVED && exit 0
+          for f in $RESOLVED; do python3 -m json.tool "$f" >/dev/null; done
           python3 -m json.tool data/portfolio-history.json >/dev/null
           python3 -m json.tool data/onchain-history.json >/dev/null
           python3 -m json.tool data/alerts.json >/dev/null
@@ -57,7 +64,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/alerts.json
           [ ! -f data/market-gauges.json ] || git add data/market-gauges.json
-          git add data/onchain-history.json data/portfolio-history.json
+          git add data/onchain-history.json data/portfolio-history.json $RESOLVED
           [ ! -f data/news-feed.json ] || git add data/news-feed.json
           git commit -m "Alertes et jauges du $(date -u "+%d/%m/%Y %Hh%M") UTC"
           for i in 1 2 3; do git pull --rebase -q origin main && git push origin HEAD:main && exit 0; sleep $((i*5)); done
