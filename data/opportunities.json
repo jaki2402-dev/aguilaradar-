@@ -978,79 +978,6 @@
       }
     },
     {
-      "id": "opp-20260921-hype",
-      "ticker": "HYPE",
-      "name": "Hyperliquid",
-      "cgId": "hyperliquid",
-      "image": "https://coin-images.coingecko.com/coins/images/50882/large/hyperliquid.jpg?1729431300",
-      "price_eur": 81.321856,
-      "market_cap": 20762148046,
-      "market_cap_rank": 11,
-      "change_24h_pct": 2.84,
-      "change_7d_pct": 16.71,
-      "change_30d_pct": 23.63,
-      "ath_change_pct": null,
-      "opportunity_score": 11.2,
-      "recognized": true,
-      "sparkline": [],
-      "tags": [
-        "Reprise confirmee",
-        "Perpetuals DEX"
-      ],
-      "reason": "Reintegration : archive le 14/09 sur tendance negative soutenue, desormais en reprise nette confirmee sur 7j (+16.7%, 24h +2.8%, 30j +23.6%). Rang 18->11 sur la capitalisation. Donnee ATH indisponible via le connecteur MCP actuel (omise, non estimee).",
-      "flagged_at": "2026-09-21T04:09:23Z",
-      "price_at_flag": 81.321856,
-      "threshold_pct": 5,
-      "price_refreshed_at": "2026-09-21T04:09:23Z",
-      "horizons": {
-        "j1": {
-          "check_at": "2026-09-22T04:09:23Z",
-          "status": "resolved",
-          "outcome": {
-            "price_at_check": 82.0418023424997,
-            "move_pct": 0.89,
-            "validated": false,
-            "checked_at": "2026-09-22T06:40:00Z"
-          }
-        },
-        "j3": {
-          "check_at": "2026-09-24T04:09:23Z",
-          "status": "resolved",
-          "outcome": {
-            "price_at_check": 82.57507496393664,
-            "move_pct": 1.54,
-            "validated": false,
-            "checked_at": "2026-09-24T06:36:28Z"
-          }
-        },
-        "j7": {
-          "check_at": "2026-09-28T04:09:23Z",
-          "status": "resolved",
-          "outcome": {
-            "price_at_check": 80.57218364462985,
-            "move_pct": -0.92,
-            "validated": false,
-            "checked_at": "2026-10-03T06:36:04Z"
-          }
-        },
-        "j14": {
-          "check_at": "2026-10-05T04:09:23Z",
-          "status": "resolved",
-          "outcome": {
-            "price_at_check": 80.41917820087353,
-            "move_pct": -1.11,
-            "validated": false,
-            "checked_at": "2026-10-05T06:36:21Z"
-          }
-        },
-        "m6": {
-          "check_at": "2027-03-22T04:09:23Z",
-          "status": "pending",
-          "outcome": null
-        }
-      }
-    },
-    {
       "id": "opp-20260921-ada",
       "ticker": "ADA",
       "name": "Cardano",
@@ -4154,6 +4081,81 @@
       },
       "archived_at": "2026-10-08T04:12:08Z",
       "archived_reason": "Declin soutenu confirme sur 3 verifications consecutives en aggravation : -5.4% sur 7j (07/10 cycle precedent -1), -7.0% (07/10 cycle precedent), -12.3% (08/10, 24h -3.4%). Sorti du Top 20 (rang 21). Reintegration possible si retournement reel et confirme sur plusieurs jours."
+    },
+    {
+      "id": "opp-20260921-hype",
+      "ticker": "HYPE",
+      "name": "Hyperliquid",
+      "cgId": "hyperliquid",
+      "image": "https://coin-images.coingecko.com/coins/images/50882/large/hyperliquid.jpg?1729431300",
+      "price_eur": 81.321856,
+      "market_cap": 20762148046,
+      "market_cap_rank": 11,
+      "change_24h_pct": 2.84,
+      "change_7d_pct": 16.71,
+      "change_30d_pct": 23.63,
+      "ath_change_pct": null,
+      "opportunity_score": 11.2,
+      "recognized": true,
+      "sparkline": [],
+      "tags": [
+        "Reprise confirmee",
+        "Perpetuals DEX"
+      ],
+      "reason": "Reintegration : archive le 14/09 sur tendance negative soutenue, desormais en reprise nette confirmee sur 7j (+16.7%, 24h +2.8%, 30j +23.6%). Rang 18->11 sur la capitalisation. Donnee ATH indisponible via le connecteur MCP actuel (omise, non estimee).",
+      "flagged_at": "2026-09-21T04:09:23Z",
+      "price_at_flag": 81.321856,
+      "threshold_pct": 5,
+      "price_refreshed_at": "2026-09-21T04:09:23Z",
+      "horizons": {
+        "j1": {
+          "check_at": "2026-09-22T04:09:23Z",
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 82.0418023424997,
+            "move_pct": 0.89,
+            "validated": false,
+            "checked_at": "2026-09-22T06:40:00Z"
+          }
+        },
+        "j3": {
+          "check_at": "2026-09-24T04:09:23Z",
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 82.57507496393664,
+            "move_pct": 1.54,
+            "validated": false,
+            "checked_at": "2026-09-24T06:36:28Z"
+          }
+        },
+        "j7": {
+          "check_at": "2026-09-28T04:09:23Z",
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 80.57218364462985,
+            "move_pct": -0.92,
+            "validated": false,
+            "checked_at": "2026-10-03T06:36:04Z"
+          }
+        },
+        "j14": {
+          "check_at": "2026-10-05T04:09:23Z",
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 80.41917820087353,
+            "move_pct": -1.11,
+            "validated": false,
+            "checked_at": "2026-10-05T06:36:21Z"
+          }
+        },
+        "m6": {
+          "check_at": "2027-03-22T04:09:23Z",
+          "status": "pending",
+          "outcome": null
+        }
+      },
+      "archived_at": "2026-10-13T04:11:44Z",
+      "archived_reason": "Declin sur 5 verifications 7j consecutives (-4.6%, -4.8%, -4.4%, -3.8%, puis acceleration nette a -11.8% ce cycle, 24h -5.0%), apres une premiere reintegration reussie le 21/09. Contrairement aux cycles precedents ou la magnitude restait stable (~-4%), ce cycle montre une aggravation claire, pas un simple repli de marche large ponctuel. Reintegration possible si retournement reel et confirme sur plusieurs jours."
     }
   ],
   "last_checked_at": "2026-09-14T16:20:00Z"
