@@ -1506,5 +1506,15 @@
     "sentiment": "négatif",
     "message": "CTSI : -6,57 % depuis l'émission du verdict ACHAT du 10/10 (0,035283 $ → 0,032964 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
     "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
+  },
+  {
+    "id": "alert-20261013-tia-seuil",
+    "ticker_ou_theme": "TIA",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-13T03:09:34Z",
+    "verdict_id": "v-20261013-tia",
+    "sentiment": "positif",
+    "message": "TIA : +9,75 % depuis l'émission du verdict ACHAT du 13/10 (0,52495 $ → 0,57612 $), seuil de mouvement directionnel de 5 % franchi à la hausse, dans le sens du verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   }
 ]
