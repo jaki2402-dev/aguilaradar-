@@ -54,17 +54,17 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-13T08:25:00Z",
+    "last_success_at": "2026-10-13T16:20:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 13/10/2026 08h17 UTC : demarrage econome a detecte 3 tickers sans verdict pending (LINK, ONDO, JUP), rien de du (robot resolve-due a jour). 3 verdicts emis, tous ACHAT par la regle du moteur (retour_moyenne_rsi, confiance 62%), horizon 7 jours (groupe volatil, corr-20260906). MACD baissier sur les 3 actifs (signal contraire au verdict), documente dans chaque reasoning - regle appliquee telle quelle, aucun override (pas d'evenement exceptionnel verifie par 2 sources). Croisement portfolio-thesis.json : 'Conserver' sur les 3 (conviction 7/10 LINK, 6/10 ONDO, 4/10 JUP), aucune contradiction franche. Veille actualites : 2 recherches WebSearch (hack/exploit, actualite generale) - aucun resultat date du 13/10/2026 trouve, rien ajoute a news.json. last_checked_at mis a jour, items et last_updated_at inchanges. Aucun outil mcp__ utilise."
+    "last_failure_reason": "Cycle du 13/10/2026 16h17 UTC : démarrage économe a détecté 3 tickers sans verdict pending (AIOZ, ARB, INJ), rien de dû (robot resolve-due à jour, aucun pending > 6h après resolves_at). 3 verdicts émis, tous ACHAT par la règle du moteur (retour_moyenne_rsi, confiance 62%), horizon 7 jours (groupe volatil, corr-20260906). MACD baissier sur les 3 actifs (signal contraire au verdict), documenté dans chaque reasoning — règle appliquée telle quelle, aucun override (pas d'événement exceptionnel vérifié par 2 sources). Croisement portfolio-thesis.json : 'Attendre' AIOZ (conviction 3/10), 'Conserver' ARB (4/10) et INJ (5/10), aucune contradiction franche. Veille actualités : 4 recherches WebSearch (hack/exploit, actualité générale, régulation/ETF, dates 11-12/10) — aucun résultat daté et significatif du 10-13/10/2026 trouvé, rien ajouté à news.json. last_checked_at mis à jour, items et last_updated_at inchangés. Branche claude/eloquent-maxwell-b4ecbs : 4 commits antérieurs (santé/fraîcheur/contexte marché du 13/10, déjà réels) jamais fusionnés dans main depuis une session précédente — fusionnés dans main avec ce cycle (étape 2 du commit). Aucun outil mcp__ utilisé."
   },
   "macro_regime": {
-    "last_computed_at": "2026-10-13T08:25:00Z",
+    "last_computed_at": "2026-10-13T16:20:00Z",
     "regime": "neutre",
-    "fear_greed_value": 70,
-    "btc_dominance_pct": 59.18,
+    "fear_greed_value": 57,
+    "btc_dominance_pct": 59.35,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Cycle du 13/10 08h17 UTC. Regime retenu neutre, inchange depuis le 10/10 : data/market-context.json (dernier calcul 12/10 08h50 UTC, lu en lecture seule) toujours Fed hawkish (taux 3,75-4,00%, prochain FOMC le 28/10, dans plus de 48h), flux ETF spot BTC/ETH toujours non confirmes (champs a null), stablecoins a 10,4% de dominance sans tendance 7j exploitable. Signal contraire observe ce cycle dans data/market-gauges.json (lecture seule, autre routine) : indice peur/avidite a 57 (Greed), plutot risk-on, tempere la lecture Fed restrictive. fear_greed_value et btc_dominance_pct non retouches ici (lus dans data/market-gauges.json par une autre routine). Signaux macro toujours insuffisamment alignes pour trancher franchement, regime maintenu neutre - noté explicitement dans le reasoning des 3 verdicts emis ce cycle (LINK, ONDO, JUP).",
+    "note": "Cycle du 13/10 16h17 UTC. Régime retenu neutre, inchangé depuis le 10/10 : data/market-context.json (dernier calcul 13/10 08h41 UTC, lu en lecture seule) toujours Fed hawkish (taux 3,75-4,00%, prochain FOMC le 28/10, dans plus de 48h), flux ETF spot BTC/ETH toujours non confirmés (champs à null), stablecoins à 10,7% de dominance sans tendance 7j exploitable. Signal contraire observé ce cycle dans data/market-gauges.json (lecture seule, autre routine) : indice peur/avidité à 57 (Greed), plutôt risk-on, tempère la lecture Fed restrictive. Signaux macro toujours insuffisamment alignés pour trancher franchement, régime maintenu neutre — noté explicitement dans le reasoning des 3 verdicts émis ce cycle (AIOZ, ARB, INJ).",
     "resume": "Régime macro neutre : Fed restrictive mais indice peur/avidité en zone de cupidité (57) tempère, flux ETF toujours non confirmés."
   },
   "paper_portfolio_stats": {
