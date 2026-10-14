@@ -1110,6 +1110,16 @@
         "favoris_context_populated": 15
       },
       "note": "Les 9 fichiers JSON sont valides et non vides ; aucune chute de volume (verdicts 103→106, alertes 179→180, opportunités 6→7, actualités 10→10, favoris renseignés 15→15). Les 21 scripts js/*.js sont tous référencés dans index.html. Site non vérifié : l'accès réseau à github.io est bloqué depuis cet environnement (proxy, résolution DNS impossible), donc site_reachable reste à null."
+    },
+    {
+      "checked_at": "2026-10-14T09:16:00Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~0h58)",
+        "data/news.json (last_checked_at, ~0h58)",
+        "data/opportunities.json (last_scan_at, ~5h00)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h58, actualités (last_checked_at) il y a 0h58, opportunités il y a 5h00 - rien à signaler."
     }
   ]
 }
