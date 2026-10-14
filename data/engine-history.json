@@ -54,9 +54,9 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-13T16:20:00Z",
+    "last_success_at": "2026-10-14T00:16:40Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 13/10/2026 16h17 UTC : démarrage économe a détecté 3 tickers sans verdict pending (AIOZ, ARB, INJ), rien de dû (robot resolve-due à jour, aucun pending > 6h après resolves_at). 3 verdicts émis, tous ACHAT par la règle du moteur (retour_moyenne_rsi, confiance 62%), horizon 7 jours (groupe volatil, corr-20260906). MACD baissier sur les 3 actifs (signal contraire au verdict), documenté dans chaque reasoning — règle appliquée telle quelle, aucun override (pas d'événement exceptionnel vérifié par 2 sources). Croisement portfolio-thesis.json : 'Attendre' AIOZ (conviction 3/10), 'Conserver' ARB (4/10) et INJ (5/10), aucune contradiction franche. Veille actualités : 4 recherches WebSearch (hack/exploit, actualité générale, régulation/ETF, dates 11-12/10) — aucun résultat daté et significatif du 10-13/10/2026 trouvé, rien ajouté à news.json. last_checked_at mis à jour, items et last_updated_at inchangés. Branche claude/eloquent-maxwell-b4ecbs : 4 commits antérieurs (santé/fraîcheur/contexte marché du 13/10, déjà réels) jamais fusionnés dans main depuis une session précédente — fusionnés dans main avec ce cycle (étape 2 du commit). Aucun outil mcp__ utilisé."
+    "last_failure_reason": "Cycle du 14/10/2026 00h16 UTC : démarrage économe — rien de dû (robot resolve-due à jour, aucun pending > 6h après resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Cycle court : aucun verdict émis, macro_regime non réécrit (§7, réservé aux cycles qui émettent). Veille actualités version courte : 2 recherches WebSearch (hack/exploit dates 13-14/10, fear&greed) — aucun hack/exploit daté et significatif du 13-14/10/2026 trouvé, indice peur/avidité du jour non confirmé par la recherche (résultats obsolètes) ; non réécrit ici, le site le lit dans data/market-gauges.json (autre routine). last_checked_at mis à jour, items et last_updated_at inchangés. Aucun outil mcp__ utilisé."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-13T16:20:00Z",
