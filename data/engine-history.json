@@ -54,9 +54,9 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-14T00:16:40Z",
+    "last_success_at": "2026-10-14T08:17:04Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 14/10/2026 00h16 UTC : démarrage économe — rien de dû (robot resolve-due à jour, aucun pending > 6h après resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Cycle court : aucun verdict émis, macro_regime non réécrit (§7, réservé aux cycles qui émettent). Veille actualités version courte : 2 recherches WebSearch (hack/exploit dates 13-14/10, fear&greed) — aucun hack/exploit daté et significatif du 13-14/10/2026 trouvé, indice peur/avidité du jour non confirmé par la recherche (résultats obsolètes) ; non réécrit ici, le site le lit dans data/market-gauges.json (autre routine). last_checked_at mis à jour, items et last_updated_at inchangés. Aucun outil mcp__ utilisé."
+    "last_failure_reason": "Cycle du 14/10/2026 08h17 UTC : demarrage econome - rien de du (robot resolve-due a jour, aucun pending > 6h apres resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Cycle court : aucun verdict emis, macro_regime non reecrit (section 7, reserve aux cycles qui emettent). Veille actualites version courte : 2 recherches WebSearch (hack/exploit date 13-14/10, fear&greed du jour) - aucun hack/exploit date et significatif du 13-14/10/2026 trouve, indice peur/avidite du jour non confirme par la recherche (resultats obsoletes) ; non reecrit ici, le site le lit dans data/market-gauges.json (autre routine). last_checked_at mis a jour, items et last_updated_at inchanges. Aucun outil mcp__ utilise."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-13T16:20:00Z",
