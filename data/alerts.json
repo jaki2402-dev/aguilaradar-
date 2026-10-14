@@ -1546,5 +1546,25 @@
     "sentiment": "positif",
     "message": "LPT repasse au-dessus de sa moyenne 200 jours (+1 %) : la tendance de fond redevient haussière. Mesure automatique sur les cours, pas un conseil.",
     "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261014-ondo-seuil",
+    "ticker_ou_theme": "ONDO",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-14T15:26:21Z",
+    "verdict_id": "v-20261013-ondo",
+    "sentiment": "négatif",
+    "message": "ONDO : -6,93 % depuis l'émission du verdict ACHAT du 13/10 (0,48051 $ → 0,44722 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
+  },
+  {
+    "id": "alert-20261014-jup-seuil",
+    "ticker_ou_theme": "JUP",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-14T15:26:21Z",
+    "verdict_id": "v-20261013-jup",
+    "sentiment": "négatif",
+    "message": "JUP : -5,53 % depuis l'émission du verdict ACHAT du 13/10 (0,33482 $ → 0,31631 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   }
 ]
