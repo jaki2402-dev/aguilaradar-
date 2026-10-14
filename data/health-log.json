@@ -1086,6 +1086,30 @@
       ],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h51, actualités (last_checked_at) il y a 0h51, opportunités il y a 5h06 - rien à signaler."
+    },
+    {
+      "checked_at": "2026-10-14T08:52:18Z",
+      "site_reachable": null,
+      "files_ok": [
+        "verdicts.json",
+        "opportunities.json",
+        "engine-history.json",
+        "alerts.json",
+        "news.json",
+        "control-group.json",
+        "market-context.json",
+        "favoris-context.json",
+        "health-log.json"
+      ],
+      "files_broken": [],
+      "counts": {
+        "verdicts": 106,
+        "alerts": 180,
+        "opportunities": 7,
+        "news": 10,
+        "favoris_context_populated": 15
+      },
+      "note": "Les 9 fichiers JSON sont valides et non vides ; aucune chute de volume (verdicts 103→106, alertes 179→180, opportunités 6→7, actualités 10→10, favoris renseignés 15→15). Les 21 scripts js/*.js sont tous référencés dans index.html. Site non vérifié : l'accès réseau à github.io est bloqué depuis cet environnement (proxy, résolution DNS impossible), donc site_reachable reste à null."
     }
   ]
 }
