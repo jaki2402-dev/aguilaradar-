@@ -1145,6 +1145,16 @@
         "favoris_context_populated": 15
       },
       "note": "Site non vérifiable depuis cette session : le proxy sortant refuse jaki2402-dev.github.io (DNS/connexion rejetée), ce n'est pas une panne constatée du site. Tous les fichiers data/*.json sont des JSON valides et non vides. Volumes vs passage précédent (14/10 08h52) : verdicts 106 → 106, alertes 180 → 187, opportunités 7 → 6 (variation normale du criblage), actualités 10 → 10, favoris renseignés 15 → 15 : aucune anomalie de volume. Cycle profond à jour (dernier succès 15/10 08h17 UTC)."
+    },
+    {
+      "checked_at": "2026-10-15T09:16:45Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~0h59)",
+        "data/news.json (last_checked_at, ~0h59)",
+        "data/opportunities.json (last_scan_at, ~5h04)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h59, actualités (last_checked_at) il y a 0h59, opportunités il y a 5h04 - rien à signaler."
     }
   ]
 }
