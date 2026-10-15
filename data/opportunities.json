@@ -1,8 +1,8 @@
 {
-  "last_scan_at": "2026-10-13T04:10:16Z",
+  "last_scan_at": "2026-10-14T04:15:00Z",
   "scanned_count": 20,
   "excluded_meme_count": 22,
-  "methodology": "Cycle du 13/10/2026 : Top 20 CoinGecko, taux EUR reel Alpha Vantage 0.89474696, variation 7j via sparkline, ATH omis. Repli large du marche (SOL -3.6%, ZEC -5.6%, HYPE -5.0%, ADA -5.3%, NEAR -8.8%, Unibase -12.1% hors Top 20). 0 nouvelle entree : tous deja suivis/exclus, ou archives sans reprise (Zcash -10.3% sur 7j, Rain -12.8%). Revue optionnelle (commit separe) : Hyperliquid archive pour declin accelere sur 5 verifications consecutives (-4.6% -> -4.8% -> -4.4% -> -3.8% -> -11.8%, nette aggravation ce cycle, pas une simple stabilite). Cardano -11.5% sur 7j (2e verification en aggravation) et Monero -5.5% (retour en negatif) : conserves pour une verification supplementaire avant decision. Unibase -9.7% (1ere lecture negative, repli marque de -12.1% du jour) : conserve, a resurveiller.",
+  "methodology": "Cycle du 14/10/2026 : criblage CoinGecko (top 20 par capitalisation, variations 7j derivees du sparkline horaire). Marche globalement stable a legerement positif (BTC +0,52%/24h). Exclusions editoriales appliquees : megacaps (BTC, ETH, BNB, XRP, SOL, TRX), stablecoins/assimiles (USDT, USDC, USDS, Figure Heloc), memecoin (Dogecoin), position deja suivie au Portefeuille (Chainlink). 1 nouvelle entree retenue : Bitway (BTW), jeton DeFi/gouvernance rang #19, +93,83% sur 7j et +46,98% sur 24h, ratio volume/capitalisation ~2,2% (sous le seuil de 25%) - signale comme hausse tres recente et a risque eleve dans le motif. Actifs deja actifs stables ou en leger mieux : Monero (-1,5%/7j, +4,36%/24h), WhiteBIT (-2,1%/7j), LEO Token (+1,7%/7j), NEAR (+4,4%/7j), Cardano (-6,5%/7j, repli modere a surveiller). Unibase (-13,0%/7j, declin lisible sur le sparkline des ~2 derniers jours apres une lecture positive la veille) : conserve actif ce cycle, a confirmer au prochain passage avant archivage eventuel. Revue des archives : Zcash (-4,2%/7j malgre +4,18%/24h) et Rain (-10,9%/7j) ne montrent pas de reprise multi-jours suffisante pour reintegration ; Hyperliquid confirme son declin (-9,0%/7j) et reste archive.",
   "opportunities": [
     {
       "id": "opp-20260807-ub",
@@ -1108,6 +1108,61 @@
         },
         "m6": {
           "check_at": "2027-04-08T04:09:57Z",
+          "status": "pending",
+          "outcome": null
+        }
+      }
+    },
+    {
+      "id": "opp-20261014-btw",
+      "ticker": "BTW",
+      "name": "Bitway",
+      "cgId": "bitway",
+      "image": "https://coin-images.coingecko.com/coins/images/71205/large/BTW_Token_200x200.png?1786291907",
+      "price_eur": 2.336453,
+      "market_cap": 7055001034,
+      "market_cap_rank": 19,
+      "change_24h_pct": 46.98,
+      "change_7d_pct": 93.83,
+      "change_30d_pct": null,
+      "ath_change_pct": null,
+      "opportunity_score": 63.0,
+      "recognized": true,
+      "sparkline": [],
+      "tags": [
+        "defi",
+        "yield-farming",
+        "bnb-chain",
+        "governance"
+      ],
+      "reason": "Jeton DeFi/gouvernance de l'ecosysteme Bitway (BNB Chain/Ethereum) : +46,98% sur 24h et +93,83% sur 7 jours, rang #19 par capitalisation (~7,06 Md$). Volume/capitalisation ~2,2%, sous le seuil d'exclusion. Hausse tres marquee et recente (quasi-doublement en une semaine, pic de +47% en une seule journee) : a traiter comme une position a risque eleve, momentum non confirme sur plusieurs semaines.",
+      "flagged_at": "2026-10-14T04:15:00Z",
+      "price_at_flag": 2.336453,
+      "threshold_pct": 5,
+      "price_refreshed_at": "2026-10-14T04:15:00Z",
+      "horizons": {
+        "j1": {
+          "check_at": "2026-10-15T04:15:00Z",
+          "status": "pending",
+          "outcome": null
+        },
+        "j3": {
+          "check_at": "2026-10-17T04:15:00Z",
+          "status": "pending",
+          "outcome": null
+        },
+        "j7": {
+          "check_at": "2026-10-21T04:15:00Z",
+          "status": "pending",
+          "outcome": null
+        },
+        "j14": {
+          "check_at": "2026-10-28T04:15:00Z",
+          "status": "pending",
+          "outcome": null
+        },
+        "m6": {
+          "check_at": "2027-04-14T04:15:00Z",
           "status": "pending",
           "outcome": null
         }
