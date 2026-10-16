@@ -1155,6 +1155,30 @@
       ],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h59, actualités (last_checked_at) il y a 0h59, opportunités il y a 5h04 - rien à signaler."
+    },
+    {
+      "checked_at": "2026-10-16T08:52:25Z",
+      "site_reachable": false,
+      "files_ok": [
+        "data/verdicts.json",
+        "data/opportunities.json",
+        "data/engine-history.json",
+        "data/alerts.json",
+        "data/news.json",
+        "data/control-group.json",
+        "data/market-context.json",
+        "data/favoris-context.json",
+        "data/health-log.json"
+      ],
+      "files_broken": [],
+      "counts": {
+        "verdicts": 106,
+        "alerts": 187,
+        "opportunities": 5,
+        "news": 10,
+        "favoris_context_populated": 15
+      },
+      "note": "Site non vérifiable depuis cet environnement : la résolution DNS de jaki2402-dev.github.io échoue (ENOTFOUND, curl code 000), probablement une limite réseau du bac à sable et non une panne avérée du site. Les 9 fichiers JSON sont valides et non vides, index.html référence les 22 scripts js/ présents. Premier relevé de volumes (pas de référence précédente) : verdicts 106, alertes 187, opportunités 5, actualités 10, favoris renseignés 15. Fraîcheur : actualités et cycle profond à jour (dernier succès 16/10 08:17 UTC), opportunités du 16/10 04:12 UTC."
     }
   ]
 }
