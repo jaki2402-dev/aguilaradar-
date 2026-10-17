@@ -1189,6 +1189,30 @@
       ],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h59, actualités (last_checked_at) il y a 0h59, opportunités il y a 5h04 - rien à signaler."
+    },
+    {
+      "checked_at": "2026-10-17T08:51:39Z",
+      "site_reachable": null,
+      "files_ok": [
+        "data/verdicts.json",
+        "data/opportunities.json",
+        "data/engine-history.json",
+        "data/alerts.json",
+        "data/news.json",
+        "data/control-group.json",
+        "data/market-context.json",
+        "data/favoris-context.json",
+        "data/health-log.json"
+      ],
+      "files_broken": [],
+      "counts": {
+        "verdicts": 106,
+        "alerts": 187,
+        "opportunities": 5,
+        "news": 10,
+        "favoris_context_populated": 15
+      },
+      "note": "Les 9 fichiers de données sont des JSON valides et non vides ; index.html référence tous les scripts js/ attendus. Volumes identiques au passage précédent (aucune anomalie). Joignabilité du site non vérifiable : le proxy de la session bloque jaki2402-dev.github.io (ENOTFOUND/connexion refusée), ce qui n'indique pas une panne du site."
     }
   ]
 }
