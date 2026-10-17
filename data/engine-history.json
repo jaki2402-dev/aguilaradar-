@@ -54,9 +54,9 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-16T16:17:31Z",
+    "last_success_at": "2026-10-17T00:17:22Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 16/10/2026 16h16 UTC : demarrage econome - rien de du (robot resolve-due a jour, aucun pending > 6h apres resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Cycle court : aucun verdict emis, macro_regime non reecrit (section 7, reserve aux cycles qui emettent). Veille actualites version courte : 2 recherches WebSearch (hack/exploit exchange 15-16/10, fear&greed du jour) - aucun hack/exploit confirme et date sur cette fenetre, aucune lecture fear&greed datee du jour trouvee ; rien ajoute a news.json (regle : jamais de signal invente), last_checked_at mis a jour, items et last_updated_at inchanges. Aucun outil mcp__ utilise."
+    "last_failure_reason": "Cycle du 17/10/2026 00h16 UTC : demarrage econome - rien de du (robot resolve-due a jour, aucun pending > 6h apres resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Cycle court : aucun verdict emis, macro_regime non reecrit (section 7, reserve aux cycles qui emettent). Veille actualites version courte : 2 recherches WebSearch (hack/exploit exchange 16-17/10, fear&greed du jour) - aucun hack/exploit confirme et date sur cette fenetre, aucune lecture fear&greed datee du jour trouvee ; rien ajoute a news.json (regle : jamais de signal invente), last_checked_at mis a jour, items et last_updated_at inchanges. Aucun outil mcp__ utilise."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-13T16:20:00Z",
