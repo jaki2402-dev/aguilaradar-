@@ -1,5 +1,5 @@
 {
-  "last_computed_at": "2026-10-16T08:30:00Z",
+  "last_computed_at": "2026-10-17T08:27:00Z",
   "assets": {
     "BTC": {
       "last_computed_at": "2026-10-14T08:30:00Z",
@@ -134,99 +134,102 @@
       }
     },
     "TIA": {
-      "last_computed_at": "2026-10-12T08:25:00Z",
+      "last_computed_at": "2026-10-17T08:27:00Z",
       "competitor": {
         "ticker": "AVAIL",
         "name": "Avail",
-        "comparison_note": "Au 12/10/2026 (CoinGecko API directe, /coins/markets) : TIA cote 0,5963 $ (cap. 584,4 M$, rang #108, -1,62% 24h, environ +23,7% sur 7j d'après le sparkline) contre AVAIL 0,002767 $ (cap. 11,21 M$, rang #1186, +3,85% 24h) — TIA reste ~52x plus gros par capitalisation, un écart en hausse depuis les ~42x du 07/10/2026, porté par un net rebond de TIA sur la semaine."
+        "comparison_note": "Au 17/10/2026 (CoinGecko API directe, /coins/markets) : TIA cote 0,724568 $ (cap. 711,4 M$, rang #92, +8,74% 24h, environ +47,6% sur 7j d'après le sparkline) contre AVAIL 0,0026243 $ (cap. 10,65 M$, rang #1180, +0,52% 24h) — TIA reste désormais ~66,8x plus gros par capitalisation, un écart en forte hausse depuis les ~52x du 12/10/2026, porté par le rebond marqué de TIA cette semaine."
       },
       "long_term_thesis": {
-        "bull": "La feuille de route continue de livrer : l'upgrade Hibiscus (V7), déployée en mainnet à la mi-mars 2026, a ajouté un module de sécurité interchain à preuve zero-knowledge pour vérifier les messages cross-chain (blog.celestia.org, WebSearch 12/10/2026) ; le token a aussi fortement rebondi cette semaine (environ +24% sur 7 jours selon le sparkline CoinGecko du 12/10/2026, de 0,48$ à 0,596$).",
-        "base": "Le marché reste partagé entre exécution technique confirmée (Hibiscus livré, roadmap tenue) et valorisation : malgré ce rebond hebdomadaire, TIA reste très loin de son ATH de 20,17$ (unchainedcrypto.com, déjà cité aux cycles précédents) et la TVL DeFi native de la chaîne Celestia reste quasi nulle (0$, DefiLlama, reconfirmé ce cycle).",
-        "bear": "Aucun catalyseur spécifiquement daté d'octobre 2026 n'a pu être confirmé lors de cette recherche (12/10/2026) — le dernier point de roadmap trouvé avec une date certaine reste le billet de blog sur la Relay Chain (05/05/2026). La concurrence (EigenDA, Avail) persiste, et le staking liquide TIA (MilkyWay) affiche une TVL soit ancienne (~5,7M$ mi-2025) soit nulle selon la source consultée (iocharts, 31/07/2026) — signe d'un suivi de données fragile sur ce segment plutôt que d'une traction confirmée.",
-        "assumptions_note": "Construit à partir de CoinGecko (API directe /coins/markets, 12/10/2026) et WebSearch réel (blog.celestia.org, citoreport.substack.com, modularmedia.substack.com, unchainedcrypto.com, everstake.one, iocharts.io) — aucune extrapolation depuis la connaissance générale du modèle. La variation sur 7 jours est calculée à partir du sparkline CoinGecko (premier point du tableau vs prix courant), pas d'un champ pourcentage dédié ; aucune variation sur 30 jours disponible via l'outil utilisé ce cycle, non inventée.",
-        "resume": "Rebond hebdo d’environ 24 %, porté par l’upgrade Hibiscus, mais TVL native quasi nulle et TIA reste à −97 % de son plus haut historique."
+        "bull": "Le rebond hebdomadaire se poursuit (+47,6% sur 7 jours, sparkline CoinGecko du 17/10/2026, prix passé de 0,49$ à 0,72$) et surperforme largement le marché (+8,74% sur 24h). Aucun nouveau catalyseur de roadmap daté postérieur à l'upgrade Hibiscus (V7, mi-mars 2026, blog.celestia.org, déjà cité aux cycles précédents) n'a pu être confirmé par une recherche dédiée ce cycle (17/10/2026) : les résultats restent centrés sur la feuille de route 2024 (Abundant/Verifiable/Frictionless Blockspace) et des jalons 2025 (testnet Mamo-1 à 128 Mo de blocs, upgrade Lotus réduisant l'inflation de 33% et activant les transferts cross-chain via Hyperlane).",
+        "base": "Le marché reste partagé entre ce rebond technique fort et la valorisation : malgré la hausse de la semaine, TIA reste à environ -96% de son plus haut historique de 20,17$ (unchainedcrypto.com, déjà cité). La TVL native de la chaîne Celestia reste proche de zéro sur la page DefiLlama de la chaîne, mais une recherche plus poussée ce cycle (17/10/2026) a retrouvé Stride (liquid staking stTIA) comme premier protocole listé sur cette même page, avec plusieurs instantanés DefiLlama non datés et incohérents entre eux (environ 244 000$ à 306 000$) — à vérifier, pas assez fiable pour un chiffre unique.",
+        "bear": "Aucun catalyseur spécifiquement daté d'octobre 2026 n'a pu être confirmé lors de cette recherche (17/10/2026) — même constat qu'au cycle du 12/10/2026. L'open interest CoinGlass affiche pour la 4e fois consécutive (03/10, 07/10, 12/10, 17/10/2026) la même valeur associée à un prix de 0,41$, alors que le prix live est désormais 0,72$ (+76% au-dessus) — confirme très fortement une page indexée en cache plutôt qu'une lecture fraîche. La concurrence (EigenDA, Avail) persiste ; Avail reste ~67x plus petit par capitalisation.",
+        "assumptions_note": "Construit à partir de CoinGecko (API directe /coins/markets, 17/10/2026) et WebSearch réel (requêtes dédiées roadmap/actualité, CoinGlass, DefiLlama/Stride, mouvement whale — toutes datées du 17/10/2026) — aucune extrapolation depuis la connaissance générale du modèle. Variation 7j calculée depuis le sparkline CoinGecko (premier point du tableau vs prix courant) ; aucune variation 30j disponible via l'outil utilisé ce cycle.",
+        "resume": "Rebond de +48 % sur 7 jours, aucun catalyseur confirmé depuis mars 2026 ; TIA reste à −96 % de son plus haut historique."
       },
       "open_interest": {
         "value_usd": null,
         "funding_rate_pct": null,
         "source": "CoinGlass (résultat indexé via WebSearch)",
-        "note": "Résultat indexé affiche un OI de 52,09 M$ associé à un prix de 0,41$ (WebSearch 12/10/2026) — identique au chiffre déjà flagué comme en cache lors des cycles du 03/10 et du 07/10/2026, alors que le prix live CoinGecko du 12/10/2026 est 0,596$ (+45% au-dessus). Troisième cycle consécutif avec cette même valeur figée — confirme fortement la suspicion de page indexée en cache plutôt qu'une lecture fraîche, laissé à null. Funding rate : page dynamique non rendue par l'indexation, aucune valeur chiffrée actuelle trouvée, laissé à null."
+        "note": "Résultat indexé affiche toujours un OI de 52,09 M$ associé à un prix de 0,41$ (WebSearch 17/10/2026) — identique au chiffre déjà flagué comme en cache lors des cycles du 03/10, 07/10 et 12/10/2026, alors que le prix live CoinGecko du 17/10/2026 est 0,7246$ (+77% au-dessus). Quatrième cycle consécutif avec cette même valeur figée — confirme très fortement la suspicion de page indexée en cache plutôt qu'une lecture fraîche, laissé à null. Funding rate : page dynamique non rendue par l'indexation, aucune valeur chiffrée actuelle trouvée, laissé à null."
       },
       "defi_tvl": {
         "value_usd": null,
         "change_7d_pct": null,
-        "source": "DefiLlama / MilkyWay (résultat indexé via WebSearch)",
-        "note": "TVL native de la chaîne Celestia reconfirmée à 0$ (DefiLlama, WebSearch 12/10/2026, même constat que les cycles précédents). Recherche dédiée sur l'exposition liquide/wrapped de TIA dans la DeFi (MilkyWay, staking liquide TIA sur Osmosis — pas un wrapped au sens strict mais l'équivalent le plus proche identifié ce cycle) : les seuls chiffres trouvés sont soit anciens (~5,7 M$ au T2 2025, DefiLlama via Everstake) soit à 0$ sur un snapshot iocharts du 31/07/2026, probablement un trou de données plutôt qu'un effondrement réel — aucun chiffre daté et fiable pour le 12/10/2026, laissé à null plutôt que de choisir arbitrairement entre ces signaux contradictoires."
+        "source": "DefiLlama / Stride (résultats indexés via WebSearch)",
+        "note": "TVL native de la chaîne Celestia reconfirmée proche de zéro sur la page chaîne DefiLlama (0$ dans la plupart des instantanés, un instantané alternatif cite ~3,1K$ porté par le protocole Eden) — incohérence déjà connue mais sans nouveau chiffre fiable. Nouveauté de ce cycle (17/10/2026) : Stride (liquid staking stTIA) apparaît comme protocole le mieux classé sur la page chaîne Celestia, avec plusieurs instantanés DefiLlama non datés et mutuellement incohérents (~259K$, ~305,7K$, ~244,1K$) — remplace MilkyWay (cité aux cycles précédents, données plus anciennes/à zéro) comme principal acteur de staking liquide TIA identifié, mais aucun chiffre daté avec certitude pour le 17/10/2026 : laissé à null plutôt que de choisir arbitrairement entre ces instantanés."
       },
       "onchain_signal": {
         "available": false,
-        "note": "Chaîne non-EVM (Cosmos SDK), hors périmètre Blockscout comme prévu. Recherche WebSearch ciblée (12/10/2026) sur un mouvement whale/exchange daté <48h : rien trouvé (résultats non pertinents ou antérieurs à juillet 2025, déjà signalés aux cycles précédents).",
-        "source_url": null
+        "note": "Chaîne non-EVM (Cosmos SDK), hors périmètre Blockscout comme prévu. Recherche WebSearch ciblée (17/10/2026) sur un mouvement whale/exchange daté <48h : rien trouvé (résultats génériques ou antérieurs à juillet 2025, même constat qu'aux cycles précédents).",
+        "source_url": null,
+        "resume": "Aucun mouvement de baleine notable confirmé sur les 48 dernières heures."
       }
     },
     "CTSI": {
-      "last_computed_at": "2026-10-12T08:25:00Z",
+      "last_computed_at": "2026-10-17T08:27:00Z",
       "competitor": {
         "ticker": "FUEL",
         "name": "Fuel Network",
-        "comparison_note": "Au 12/10/2026 (CoinGecko API directe) : CTSI cote 0,03435 $ (cap. 32,74 M$, rang #651, -2,09% 24h, environ +14% sur 7j d'après le sparkline) contre FUEL 0,0008105 $ (cap. 7,73 M$, rang #1425, +0,92% 24h) — CTSI reste ~4,2x plus gros par capitalisation, un écart en légère hausse depuis les ~3,9x du 07/10/2026."
+        "comparison_note": "Au 17/10/2026 (CoinGecko API directe) : CTSI cote 0,03198639 $ (cap. 30,50 M$, rang #648, -0,15% 24h, environ -2,6% sur 7j d'après le sparkline) contre FUEL 0,00074674 $ (cap. 7,15 M$, rang #1434, -6,94% 24h) — CTSI reste ~4,27x plus gros par capitalisation, stable depuis le ~4,2x du 12/10/2026."
       },
       "long_term_thesis": {
-        "bull": "Les mises à jour mensuelles officielles de l'écosystème Cartesi (cartesi.io/blog) se poursuivent sans interruption en 2026 : système de fraud proofs permissionless (janvier), Rollup Contracts 2.2.0 avec mécanisme de fast-sync pour les nœuds (février), Rollups Node v2.0.0-alpha.10 et processus de remboursement de bond plus fiable (mars), Machine Emulator v0.20.0 avec support de preuves zero-knowledge (avril), retraits d'urgence (« emergency withdrawals ») en test (mai) — une cadence d'exécution continue, contrairement au constat du cycle du 07/10/2026 qui n'avait trouvé aucune mise à jour postérieure à juillet (une recherche plus large ce cycle a retrouvé les billets de janvier à mai 2026).",
-        "base": "Le prix reste très affaibli (environ -98% depuis l'ATH, reconfirmé) mais a progressé d'environ +14% sur 7 jours (sparkline CoinGecko 12/10/2026) ; aucune traction DeFi/TVL propre n'existe pour ce rollup d'exécution générale (reconfirmé ce cycle, voir defi_tvl) — la thèse reste donc dépendante de l'adoption de la plateforme par des développeurs tiers plutôt que d'un effet de marché direct.",
-        "bear": "La recherche de ce cycle n'a pas pu confirmer de billet de blog officiel Cartesi plus récent que mai 2026 (un recap de juin n'a été trouvé que via un repost Binance Square, non vérifié directement) — un rythme de communication qui semble ralentir en milieu d'année malgré les jalons techniques. La concurrence des rollups applicatifs spécialisés (dont Fuel) persiste.",
-        "assumptions_note": "Construit à partir de CoinGecko (API directe /coins/markets, 12/10/2026) et WebSearch réel (cartesi.io/blog — billets de janvier à mai 2026 confirmés directement, juin seulement via repost Binance Square non vérifié) ; variation 7j calculée depuis le sparkline CoinGecko, aucune variation 30j disponible via l'outil utilisé ce cycle.",
-        "resume": "Mises à jour techniques mensuelles confirmées (janv.-mai 2026) et +14 % sur 7 jours, mais toujours à environ −98 % de son plus haut historique."
+        "bull": "Une recherche directe sur cartesi.io/blog (17/10/2026) confirme la poursuite de la cadence mensuelle de mises à jour jusqu'en août 2026 (recap daté du 04/09/2026) — deux mois de plus que le dernier cycle (qui s'arrêtait à mai, un recap de juin seulement via un repost Binance Square non vérifié). Juin : retraits d'urgence étendus aux applications Authority/Quorum/PRT (Rollups Node v2.0.0-alpha.12). Juillet : réorganisation des paquets TypeScript (@cartesi/client, @cartesi/react). Août : outillage TypeScript aligné sur Rollups Contracts v3.0.0-alpha.9 (RefundOutputBuilder).",
+        "base": "Le prix reste très affaibli (environ -98% depuis l'ATH de 1,74$ du 08/05/2021, cryptorank.io/kucoin.com, confirmé ce cycle) et recule légèrement sur 7 jours (environ -2,6%, sparkline CoinGecko du 17/10/2026) malgré un 24h quasi stable (-0,15%) ; aucune traction DeFi/TVL propre n'existe pour ce rollup d'exécution générale (reconfirmé ce cycle, voir defi_tvl).",
+        "bear": "Aucun billet de blog officiel postérieur au 04/09/2026 (recap d'août) n'a pu être confirmé ce cycle (17/10/2026) — pas de post de septembre ou octobre trouvé dans la catégorie newsletter du blog. L'open interest CoinGlass affiche pour la 4e fois consécutive (03/10, 07/10, 12/10, 17/10/2026) la même valeur figée (~2,18 M$, prix associé 0,0218$) alors que le prix live est 0,032$ (+47% au-dessus) — confirme fortement le cache. La concurrence des rollups applicatifs spécialisés (dont Fuel) persiste.",
+        "assumptions_note": "Construit à partir de CoinGecko (API directe /coins/markets, 17/10/2026) et WebSearch réel (cartesi.io/blog — recaps de janvier à août 2026 confirmés directement ce cycle, catégorie newsletter consultée ; CoinGlass ; cryptorank.io/kucoin.com pour l'ATH) ; variation 7j calculée depuis le sparkline CoinGecko, aucune variation 30j disponible via l'outil utilisé ce cycle.",
+        "resume": "Mises à jour mensuelles confirmées jusqu'en août 2026, mais CTSI reste à −98 % de son plus haut historique."
       },
       "open_interest": {
         "value_usd": null,
         "funding_rate_pct": null,
         "source": "CoinGlass (résultat indexé via WebSearch)",
-        "note": "Résultat indexé affiche un OI de 2,18-2,19 M$ associé à un prix de 0,0218$ — identique au chiffre déjà flagué en cache lors des cycles du 03/10 et du 07/10/2026, alors que le prix live CoinGecko du 12/10/2026 est 0,03435$ (+57% au-dessus). Troisième cycle consécutif avec cette même valeur figée — confirme fortement une page indexée en cache, laissé à null. Funding rate : page dynamique non rendue par l'indexation, aucune valeur chiffrée actuelle trouvée, laissé à null."
+        "note": "Résultat indexé affiche toujours un OI de 2,18-2,19 M$ associé à un prix de 0,0218-0,0219$ (WebSearch 17/10/2026) — identique au chiffre déjà flagué en cache lors des cycles du 03/10, 07/10 et 12/10/2026, alors que le prix live CoinGecko du 17/10/2026 est 0,03199$ (+47% au-dessus). Quatrième cycle consécutif avec cette même valeur figée — confirme très fortement un cache, laissé à null. Funding rate : page dynamique non rendue par l'indexation, aucune valeur chiffrée actuelle trouvée, laissé à null."
       },
       "defi_tvl": {
         "value_usd": null,
         "change_7d_pct": null,
-        "source": "Non applicable (reconfirmé par recherche, aucune entrée DefiLlama trouvée pour un protocole Cartesi)",
-        "note": "Reconfirmé le 12/10/2026 : aucune page DefiLlama propre à un protocole « Cartesi » n'a été retrouvée (recherche WebSearch dédiée). CTSI est le jeton de frais/mise en jeu d'une couche de rollups d'exécution générale, pas un protocole DeFi avec une TVL verrouillée propre. Le projet « Nucleus » (hackathon ETHSanFrancisco 2022), déjà identifié aux cycles précédents comme seule application DeFi construite sur Cartesi Rollups, reste sans TVL suivie sur DefiLlama à ce jour — ne change pas la conclusion « non applicable »."
+        "source": "Non applicable (reconfirmé par recherche, aucune entrée DefiLlama trouvée pour un protocole Cartesi/Nucleus)",
+        "note": "Reconfirmé le 17/10/2026 par une recherche WebSearch dédiée (« Cartesi Nucleus DeFi TVL DefiLlama ») : aucune page DefiLlama propre à un protocole Cartesi/Nucleus retrouvée, seule une entrée DefiLlama de type levée de fonds mentionnant Cartesi comme infrastructure Linux pour dApps scalables. CTSI reste le jeton de frais/mise en jeu d'une couche de rollups d'exécution générale, pas un protocole DeFi avec TVL verrouillée propre — conclusion inchangée depuis les cycles précédents."
       },
       "onchain_signal": {
         "available": false,
-        "note": "CTSI est un jeton ERC-20 sur Ethereum (contrat 0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D, confirmé via Blockscout MCP le 12/10/2026 par lookup_token_by_symbol puis get_address_info : exchange_rate 0,03414976$ cohérent avec le prix live CoinGecko 0,03435$, 19296 détenteurs, volume 24h ~11,76M$ cohérent avec CoinGecko ~11,99M$) — donc bien en périmètre Blockscout, contrairement à la méthode WebSearch utilisée par erreur aux cycles précédents (07/10/2026 et antérieurs, qui invoquaient à tort la règle anti-MCP des routines one-shot alors que Blockscout est explicitement autorisé pour favoris-quotidien, cf. CLAUDE.md). Tentative de lister les transferts du contrat via direct_api_call (/api/v2/tokens/<contrat>/transfers) : réponse rejetée ce cycle (taille 129 482 caractères, au-delà de la limite de l'outil), et le budget de session Blockscout gratuit (8 appels, clé PRO requise depuis le 08/10/2026) était presque épuisé par les vérifications ethereum/arbitrum de ce même cycle. Aucun mouvement whale confirmé ni infirmé — laissé à false par prudence plutôt que deviné ; à reprendre avec un appel plus ciblé (adresse d'exchange connue ou pagination) au prochain cycle retraitant CTSI.",
-        "source_url": "https://eth.blockscout.com/token/0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D"
+        "note": "CTSI est un jeton ERC-20 sur Ethereum (contrat 0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D, reconfirmé en périmètre Blockscout). Tentative ce cycle (17/10/2026) de lister les transferts via direct_api_call (/api/v2/tokens/<contrat>/transfers) : réponse rejetée à nouveau (taille 110 377 caractères, au-delà de la limite de l'outil de 100 000) — même limitation que les cycles du 12/10 et antérieurs, non résolue. Aucun mouvement whale confirmé ni infirmé — laissé à false par prudence plutôt que deviné ; une requête plus ciblée (adresse d'exchange connue, ou get_token_transfers_by_address avec une adresse spécifique et une fenêtre de temps courte) reste à tester à un prochain cycle retraitant CTSI.",
+        "source_url": "https://eth.blockscout.com/token/0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D",
+        "resume": "Aucune confirmation possible ce cycle : la liste des transferts dépasse la limite de taille de l'outil."
       }
     },
     "PEAQ": {
-      "last_computed_at": "2026-10-12T08:25:00Z",
+      "last_computed_at": "2026-10-17T08:27:00Z",
       "competitor": {
         "ticker": "IOTX",
         "name": "IoTeX",
-        "comparison_note": "Au 12/10/2026 (CoinGecko API directe) : PEAQ cote 0,04224 $ (cap. 108,8 M$, rang #276, +2,50% 24h, environ -5,7% sur 7j d'après le sparkline) contre IOTX 0,003823 $ (cap. 36,09 M$, rang #607, +3,04% 24h) — PEAQ reste ~3x plus gros par capitalisation (stable depuis le 07/10/2026), mais recule légèrement sur la semaine contrairement à IOTX qui progresse."
+        "comparison_note": "Au 17/10/2026 (CoinGecko API directe) : PEAQ cote 0,03834071 $ (cap. 98,91 M$, rang #284, -4,00% 24h, environ -10,8% sur 7j d'après le sparkline) contre IOTX 0,00377285 $ (cap. 35,62 M$, rang #584, -4,91% 24h, environ +1,9% sur 7j) — PEAQ reste ~2,78x plus gros par capitalisation, un écart en léger repli depuis les ~3x du 12/10/2026, PEAQ reculant plus fortement qu'IOTX cette semaine."
       },
       "long_term_thesis": {
-        "bull": "Catalyseur confirmé par recherche (12/10/2026, via le résumé IA de CoinMarketCap citant le compte officiel @peaq) : la phase 1 d'« Economics 2.0 » est live depuis le 7 septembre 2026, imposant aux machines de bloquer (bonder) des PEAQ — un passage d'une utilité par frais de transaction à un modèle de capital bloqué, avec une projection d'environ 1 million de machines activées la première semaine. Kiln aurait rejoint le réseau pour renforcer le staking (Blockmedia, article non consulté directement, titre daté du 23/09/2026).",
-        "base": "Ces catalyseurs (Economics 2.0, World ID sur peaqOS en août, Kiln) sont les mêmes que ceux déjà identifiés au cycle du 07/10/2026 — aucun nouveau catalyseur daté d'octobre 2026 n'a pu être confirmé cette semaine. L'offre en circulation continue d'augmenter vers le plafond de 5,668 Md PEAQ (2,576 Md en circulation au 12/10/2026, CoinGecko, soit ~45,5%).",
-        "bear": "Le prix recule légèrement sur 7 jours (environ -5,7%, sparkline CoinGecko 12/10/2026) malgré la hausse sur 24h, pendant que son concurrent IOTX progresse sur les deux fenêtres — signe que les catalyseurs déjà connus depuis plusieurs semaines ne génèrent plus d'élan haussier neuf. Le calendrier de déblocage mensuel documenté aux cycles précédents (tokenomist.ai) reste un facteur de pression sur l'offre, non réévalué ce cycle.",
-        "assumptions_note": "Construit à partir de CoinGecko (API directe /coins/markets, 12/10/2026) et WebSearch réel (coinmarketcap.com/cmc-ai citant @peaq, blockmedia.co.kr — article non ouvert directement, titre/date seulement) ; aucun nouveau catalyseur plus récent que le 23/09/2026 trouvé. Variation 7j calculée depuis le sparkline CoinGecko, aucune variation 30j disponible via l'outil utilisé ce cycle.",
-        "resume": "Catalyseurs (Economics 2.0, Kiln) inchangés depuis début octobre ; prix en léger repli hebdo malgré la hausse sur 24 h."
+        "bull": "Catalyseurs confirmés aux cycles précédents (recherche 17/10/2026, rien de plus récent trouvé) : phase 1 d'« Economics 2.0 » live depuis le 7 septembre 2026 (bonding de PEAQ par les machines), World ID intégré à peaqOS depuis le 21/08/2026, Kiln ayant rejoint le réseau pour le staking (23/09/2026, non consulté directement).",
+        "base": "Ces catalyseurs restent les mêmes qu'au cycle du 12/10/2026 — aucun nouveau catalyseur daté d'octobre 2026 trouvé cette semaine non plus. PEAQ recule plus fortement cette semaine (environ -10,8% sur 7 jours, sparkline CoinGecko du 17/10/2026) qu'IOTX (+1,9%), et reste à environ -95% de son plus haut historique de 0,7505$ du 10/12/2024 (coingecko.com, confirmé ce cycle).",
+        "bear": "Le repli hebdomadaire s'accentue (-10,8% contre -5,7% au cycle précédent) alors qu'aucun catalyseur neuf n'est confirmé depuis début septembre — signe que les annonces déjà connues ne suffisent plus à soutenir le cours. L'open interest CoinGlass affiche pour la 4e fois consécutive (03/10, 07/10, 12/10, 17/10/2026) la même valeur figée (~1,0-1,03 M$, prix associé ~0,0204-0,0205$) alors que le prix live est 0,0383$ (+88% au-dessus) — confirme fortement le cache.",
+        "assumptions_note": "Construit à partir de CoinGecko (API directe /coins/markets, 17/10/2026) et WebSearch réel (requête dédiée actualités PEAQ octobre 2026 — rien de postérieur au 09/09/2026 trouvé ; CoinGlass ; cryptorank.io/coingecko.com pour l'ATH) ; variation 7j calculée depuis le sparkline CoinGecko, aucune variation 30j disponible via l'outil utilisé ce cycle.",
+        "resume": "Catalyseurs inchangés depuis début septembre ; repli de -10,8 % sur 7 jours, PEAQ reste à −95 % de son plus haut historique."
       },
       "open_interest": {
         "value_usd": null,
         "funding_rate_pct": null,
         "source": "CoinGlass (résultat indexé via WebSearch)",
-        "note": "Résultat indexé affiche un OI de 1,01-1,02 M$ associé à un prix de 0,0204$ — identique au chiffre déjà écarté comme obsolète le 03/10/2026 puis reconduit à null le 07/10/2026, alors que le prix live CoinGecko du 12/10/2026 (0,04224$) est désormais plus du double (+107%) de ce prix associé. Troisième cycle consécutif avec cette même page figée — confirme fortement le cache, laissé à null. Funding rate : page dynamique non rendue par l'indexation, aucune valeur chiffrée actuelle trouvée, laissé à null."
+        "note": "Résultat indexé affiche toujours un OI de 1,0-1,03 M$ associé à un prix de 0,0204-0,0205$ (WebSearch 17/10/2026) — identique au chiffre déjà écarté comme obsolète le 03/10/2026 puis reconduit à null le 07/10 et le 12/10/2026, alors que le prix live CoinGecko du 17/10/2026 (0,03834$) est désormais quasiment le double (+88%) de ce prix associé. Quatrième cycle consécutif avec cette même page figée — confirme très fortement le cache, laissé à null. Funding rate : page dynamique non rendue par l'indexation, aucune valeur chiffrée actuelle trouvée, laissé à null."
       },
       "defi_tvl": {
         "value_usd": 0,
         "change_7d_pct": null,
         "source": "DefiLlama (defillama.com/protocols/depin/peaq, via WebSearch)",
-        "note": "Reconfirmé le 12/10/2026 : la page DePIN Protocols de la chaîne peaq affiche toujours un TVL de 0$ (seul protocole listé, Silencio, également à 0$ — même constat que les cycles précédents). change_7d_pct non disponible (TVL nul). Recherche complémentaire sur une exposition PEAQ en dehors de sa propre chaîne (analogie wrapped/bridged) : des pools PEAQ-USDC (Raydium, ~223K$) et PEAQ-SOL (Orca, ~90K$) existent sur Solana, mais sans date de snapshot visible dans les résultats — non retenu dans value_usd par prudence (règle anti-invention), signalé ici à titre indicatif seulement."
+        "note": "Reconfirmé le 17/10/2026 : la page DePIN Protocols de la chaîne peaq affiche toujours un TVL de 0$ (seul protocole listé, Silencio, également à 0$ — même constat que les cycles précédents). Une page DEX DefiLlama distincte cite un chiffre contradictoire de ~561K$ via un résumé auto-généré, non retenu (source peu fiable, en conflit direct avec la page catégorie DePIN). change_7d_pct non disponible (TVL nul). Les pools PEAQ-USDC (Raydium, ~223,3K$) et PEAQ-SOL (Orca, ~89,8K$) sur Solana restent quasi inchangés depuis le cycle précédent (~223K$/~90K$) — toujours non retenus dans value_usd par prudence (règle anti-invention), signalés ici à titre indicatif seulement."
       },
       "onchain_signal": {
         "available": false,
-        "note": "Chaîne Substrate non-EVM, hors périmètre Blockscout comme prévu (confirmé aux cycles précédents). Recherche WebSearch ciblée (12/10/2026) sur un mouvement whale/exchange daté <48h pour PEAQ : rien trouvé (résultats génériques, pages de conversion de devises, aucune donnée on-chain datée).",
-        "source_url": null
+        "note": "Chaîne Substrate non-EVM, hors périmètre Blockscout comme prévu (confirmé aux cycles précédents). Recherche WebSearch ciblée (17/10/2026) sur un mouvement whale/exchange daté <48h pour PEAQ : rien trouvé (résultats génériques, pages de prix multi-devises, aucune donnée on-chain datée).",
+        "source_url": null,
+        "resume": "Aucun mouvement de baleine notable confirmé sur les 48 dernières heures."
       }
     },
     "LINK": {
