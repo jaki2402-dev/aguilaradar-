@@ -4170,5 +4170,61 @@
       "verdict_correct": null,
       "resolved_at": null
     }
+  },
+  {
+    "id": "v-20261018-ctsi",
+    "issued_at": "2026-10-18T00:18:00Z",
+    "asset": "cartesi",
+    "ticker": "CTSI",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 56,
+    "signals_used": [
+      "Tendance de fond haussière (+18 % vs moyenne 200 j), élan négatif ; RSI 60 neutre.",
+      "MACD baissier (histogramme -0,00015039)",
+      "Évolution -5 % sur 7j, +33,2 % sur 30j, +44 % sur 90j",
+      "portfolio-thesis Attendre conviction 3/10"
+    ],
+    "reasoning": "CTSI cote 0,03154 $ (CoinGecko, 18/10 00h18 UTC). Lecture technique du robot quotidien (as_of 17/10) : RSI 14j à 60,2 (neutre), tendance de fond haussière (+17,7 % au-dessus de la moyenne 200 jours), mais MACD baissier (histogramme négatif) — signal contraire au verdict. Évolution récente : -5 % sur 7 jours, +33,2 % sur 30 jours, +44 % sur 90 jours, repli de -41,3 % depuis le plus haut sur 1 an. Règle du moteur (retour_moyenne_rsi, mesurée sur 737 cas, confiance 56 %) : RSI sous 70, donc pas d'excès, rebond ou poursuite plus fréquents que la stabilité ; contexte bitcoin en élan négatif, indice peur/avidité en zone de cupidité (≥ 55). Signal fondamental neutre : portfolio-thesis.json maintient 'Attendre' conviction 3/10 (presque aucune actualité 2026 trouvée sur Cartesi, capitalisation faible, aucun catalyseur vérifié) — pas de contradiction franche avec la lecture technique (pas de 'Réduire' à conviction élevée) ; aucune entrée favoris-context.json pour CTSI. Régime macro neutre : Fed toujours restrictive (3,75-4,00 %, prochain FOMC le 28/10) mais flux ETF spot BTC/ETH nets positifs sur la dernière séance confirmée (13/10, non reconfirmés depuis) — signaux macro contradictoires, retenus comme tels plutôt que tranchés arbitrairement. ACHAT retenu par la règle du moteur (§2 de la spec), horizon maintenu à 7 jours (groupe volatil, corr-20260906).",
+    "resume": "RSI 60 neutre et tendance haussière (+18% vs MM200), mais MACD contraire : ACHAT retenu par la règle du moteur (confiance 56%).",
+    "price_at_issue": 0.03153989,
+    "currency": "USD",
+    "resolves_at": "2026-10-25T00:18:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 56,
+      "sample_n": 737,
+      "context": "bitcoin en élan négatif, cupidité (≥ 55)",
+      "context_n": 325,
+      "basis": "RSI 60 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": []
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-17T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 60.2,
+      "sma200_gap_pct": 17.7,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
   }
 ]
