@@ -54,9 +54,9 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-18T00:18:00Z",
+    "last_success_at": "2026-10-18T08:16:38Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 18/10/2026 00h18 UTC : demarrage econome - rien de du (robot resolve-due a jour, aucun pending > 6h apres resolves_at), mais CTSI sans verdict pending (14/15 couverts, le precedent v-20261010-ctsi resolu le 17/10). 1 verdict emis (CTSI, ACHAT, confiance 56%, regle retour_moyenne_rsi), croise avec portfolio-thesis.json (Attendre conviction 3/10, pas de contradiction franche) - aucune entree favoris-context.json pour ce ticker. Regime macro neutre (Fed hawkish vs flux ETF positifs non reconfirmes depuis le 13/10). Veille actualites : 3 recherches WebSearch (hack/exploit 16-18/10, fear&greed du jour, actualite generale/regulation) - rien de nouveau et date trouve sur cette fenetre, rien ajoute a news.json (regle : jamais de signal invente), last_checked_at mis a jour. Aucun outil mcp__ utilise."
+    "last_failure_reason": "Cycle du 18/10/2026 08h16 UTC : demarrage econome - rien de du (robot resolve-due a jour, aucun pending > 6h apres resolves_at) et les 15/15 favoris ont deja un verdict pending -> cycle court, aucun verdict emis/resolu. Veille actualites : 2 recherches WebSearch (hack/exploit 17-18/10, fear&greed du jour) - aucune des deux n'a renvoye de resultat date de facon fiable sur cette fenetre, rien ajoute a news.json (regle : jamais de signal invente), last_checked_at mis a jour. macro_regime non touche (regle sec. 7 : seulement si un verdict est emis ce cycle). Aucun outil mcp__ utilise."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-18T00:18:00Z",
