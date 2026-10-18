@@ -204,12 +204,12 @@
       "sampled_at": "2026-10-04T09:10:14Z",
       "price_at_issue": 0.38641104252291314,
       "resolves_at": "2026-10-18T09:10:14Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 0.448916,
+        "move_pct": 16.18,
+        "validated": true,
+        "resolved_at": "2026-10-18T14:09:47Z"
       }
     },
     {
@@ -219,12 +219,12 @@
       "sampled_at": "2026-10-04T09:10:14Z",
       "price_at_issue": 0.09184748174647019,
       "resolves_at": "2026-10-18T09:10:14Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 0.161361,
+        "move_pct": 75.68,
+        "validated": true,
+        "resolved_at": "2026-10-18T14:09:47Z"
       }
     },
     {
@@ -234,18 +234,18 @@
       "sampled_at": "2026-10-04T09:10:14Z",
       "price_at_issue": 0.01607293389294848,
       "resolves_at": "2026-10-18T09:10:14Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 0.0159956,
+        "move_pct": -0.48,
+        "validated": false,
+        "resolved_at": "2026-10-18T14:09:47Z"
       }
     }
   ],
   "stats": {
-    "total_resolved": 13,
-    "validated_pct": 23.1,
-    "note": "3 actifs sur 13 tirés au hasard dans le Top 300 ont pris +5 % ou plus en 14 jours. Recalculé par le robot de vérification le 18/10/2026."
+    "total_resolved": 16,
+    "validated_pct": 31.3,
+    "note": "5 actifs sur 16 tirés au hasard dans le Top 300 ont pris +5 % ou plus en 14 jours. Recalculé par le robot de vérification le 18/10/2026."
   }
 }
