@@ -1247,6 +1247,16 @@
         "favoris_context_populated": 15
       },
       "note": "Site non vérifiable depuis cette session : la résolution DNS de WebFetch a échoué (ENOTFOUND) et le proxy a refusé le tunnel (403) pour curl — c'est une limite de l'environnement, pas une panne constatée du site. Les 9 fichiers JSON sont valides et non vides, et index.html référence tous les scripts js/*.js. Volumes stables par rapport au passage précédent (verdicts 106→107, alertes 187→188, opportunités 5→5, actualités 10→10, favoris renseignés 15→15) : aucune anomalie de volume."
+    },
+    {
+      "checked_at": "2026-10-18T09:16:15Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~0h59)",
+        "data/news.json (last_checked_at, ~0h59)",
+        "data/opportunities.json (last_scan_at, ~5h04)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h59, actualités (last_checked_at) il y a 0h59, opportunités il y a 5h04 - rien à signaler."
     }
   ]
 }
