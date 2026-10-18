@@ -220,6 +220,15 @@
       "total_pnl_eur": -1974.16,
       "total_pnl_pct": -21.21,
       "source": "CoinGecko /simple/price (GitHub Action portfolio-snapshot)"
+    },
+    {
+      "date": "2026-10-18",
+      "computed_at": "2026-10-18T00:15:08Z",
+      "total_value_eur": 7249.16,
+      "total_invested_eur": 9309.35,
+      "total_pnl_eur": -2060.19,
+      "total_pnl_pct": -22.13,
+      "source": "CoinGecko /simple/price (GitHub Action portfolio-snapshot)"
     }
   ]
 }
