@@ -129,12 +129,12 @@
       "sampled_at": "2026-10-04T09:10:14Z",
       "price_at_issue": 701.7710064676548,
       "resolves_at": "2026-10-18T09:10:14Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 640.481,
+        "move_pct": -8.73,
+        "validated": false,
+        "resolved_at": "2026-10-18T09:53:36Z"
       }
     },
     {
@@ -144,12 +144,12 @@
       "sampled_at": "2026-10-04T09:10:14Z",
       "price_at_issue": 161.06117058563925,
       "resolves_at": "2026-10-18T09:10:14Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 135.254,
+        "move_pct": -16.02,
+        "validated": false,
+        "resolved_at": "2026-10-18T09:53:36Z"
       }
     },
     {
@@ -159,12 +159,12 @@
       "sampled_at": "2026-10-04T09:10:14Z",
       "price_at_issue": 6.557586867359179,
       "resolves_at": "2026-10-18T09:10:14Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 6.61357,
+        "move_pct": 0.85,
+        "validated": false,
+        "resolved_at": "2026-10-18T09:53:36Z"
       }
     },
     {
@@ -174,12 +174,12 @@
       "sampled_at": "2026-10-04T09:10:14Z",
       "price_at_issue": 0.06390456806981618,
       "resolves_at": "2026-10-18T09:10:14Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 0.0553799,
+        "move_pct": -13.34,
+        "validated": false,
+        "resolved_at": "2026-10-18T09:53:36Z"
       }
     },
     {
@@ -189,12 +189,12 @@
       "sampled_at": "2026-10-04T09:10:14Z",
       "price_at_issue": 0.11839365915606262,
       "resolves_at": "2026-10-18T09:10:14Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 0.112384,
+        "move_pct": -5.08,
+        "validated": false,
+        "resolved_at": "2026-10-18T09:53:36Z"
       }
     },
     {
@@ -244,8 +244,8 @@
     }
   ],
   "stats": {
-    "total_resolved": 8,
-    "validated_pct": 37.5,
-    "note": "Première résolution de l'échantillon du 12 août (8 actifs, échéance à 14 jours) : 3 des 8 actifs ont progressé de plus de 5 % (RAIN +16,2 %, PYTH +8,0 %, ENS +18,0 %), soit un taux de validation de 37,5 % pour une sélection au hasard dans le Top 300. Point de comparaison à suivre au fil des résolutions futures face au taux de validation du criblage d'opportunités."
+    "total_resolved": 13,
+    "validated_pct": 23.1,
+    "note": "3 actifs sur 13 tirés au hasard dans le Top 300 ont pris +5 % ou plus en 14 jours. Recalculé par le robot de vérification le 18/10/2026."
   }
 }
