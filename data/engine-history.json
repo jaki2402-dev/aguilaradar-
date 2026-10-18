@@ -54,18 +54,18 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-17T16:17:16Z",
+    "last_success_at": "2026-10-18T00:18:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 17/10/2026 16h16 UTC : demarrage econome - rien de du (robot resolve-due a jour, aucun pending > 6h apres resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Cycle court : aucun verdict emis, macro_regime non reecrit (section 7, reserve aux cycles qui emettent). Veille actualites version courte : 2 recherches WebSearch (hack/exploit exchange 16-17/10, fear&greed du jour) - aucun hack/exploit confirme et date sur cette fenetre, aucune lecture fear&greed datee du jour trouvee ; rien ajoute a news.json (regle : jamais de signal invente), last_checked_at mis a jour, items et last_updated_at inchanges. Aucun outil mcp__ utilise."
+    "last_failure_reason": "Cycle du 18/10/2026 00h18 UTC : demarrage econome - rien de du (robot resolve-due a jour, aucun pending > 6h apres resolves_at), mais CTSI sans verdict pending (14/15 couverts, le precedent v-20261010-ctsi resolu le 17/10). 1 verdict emis (CTSI, ACHAT, confiance 56%, regle retour_moyenne_rsi), croise avec portfolio-thesis.json (Attendre conviction 3/10, pas de contradiction franche) - aucune entree favoris-context.json pour ce ticker. Regime macro neutre (Fed hawkish vs flux ETF positifs non reconfirmes depuis le 13/10). Veille actualites : 3 recherches WebSearch (hack/exploit 16-18/10, fear&greed du jour, actualite generale/regulation) - rien de nouveau et date trouve sur cette fenetre, rien ajoute a news.json (regle : jamais de signal invente), last_checked_at mis a jour. Aucun outil mcp__ utilise."
   },
   "macro_regime": {
-    "last_computed_at": "2026-10-13T16:20:00Z",
+    "last_computed_at": "2026-10-18T00:18:00Z",
     "regime": "neutre",
     "fear_greed_value": 57,
     "btc_dominance_pct": 59.35,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Cycle du 13/10 16h17 UTC. Régime retenu neutre, inchangé depuis le 10/10 : data/market-context.json (dernier calcul 13/10 08h41 UTC, lu en lecture seule) toujours Fed hawkish (taux 3,75-4,00%, prochain FOMC le 28/10, dans plus de 48h), flux ETF spot BTC/ETH toujours non confirmés (champs à null), stablecoins à 10,7% de dominance sans tendance 7j exploitable. Signal contraire observé ce cycle dans data/market-gauges.json (lecture seule, autre routine) : indice peur/avidité à 57 (Greed), plutôt risk-on, tempère la lecture Fed restrictive. Signaux macro toujours insuffisamment alignés pour trancher franchement, régime maintenu neutre — noté explicitement dans le reasoning des 3 verdicts émis ce cycle (AIOZ, ARB, INJ).",
-    "resume": "Régime macro neutre : Fed restrictive mais indice peur/avidité en zone de cupidité (57) tempère, flux ETF toujours non confirmés."
+    "note": "Cycle du 18/10 00h18 UTC. Regime retenu neutre, inchange : data/market-context.json (lecture seule) toujours Fed hawkish (taux 3,75-4,00%, prochain FOMC le 28/10), mais flux ETF spot BTC/ETH nets positifs sur la derniere seance confirmee (13/10 : +175,6 M$ BTC, +24,8 M$ ETH), non reconfirmes depuis ; stablecoins a 10,85% de dominance, quasi stables. Signaux macro contradictoires (Fed restrictive vs flux ETF positifs), retenus comme tels plutot que tranches arbitrairement - note explicitement dans le reasoning du verdict CTSI emis ce cycle.",
+    "resume": "Régime macro neutre : Fed restrictive mais flux ETF BTC/ETH positifs (13/10, non reconfirmés depuis) tempèrent."
   },
   "paper_portfolio_stats": {
     "last_computed_at": "2026-09-13T23:26:00Z",
