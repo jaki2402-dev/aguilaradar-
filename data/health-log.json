@@ -1223,6 +1223,30 @@
       ],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h54, actualités (last_checked_at) il y a 0h54, opportunités il y a 5h03 - rien à signaler."
+    },
+    {
+      "checked_at": "2026-10-18T08:51:32Z",
+      "site_reachable": false,
+      "files_ok": [
+        "data/verdicts.json",
+        "data/opportunities.json",
+        "data/engine-history.json",
+        "data/alerts.json",
+        "data/news.json",
+        "data/control-group.json",
+        "data/market-context.json",
+        "data/favoris-context.json",
+        "data/health-log.json"
+      ],
+      "files_broken": [],
+      "counts": {
+        "verdicts": 107,
+        "alerts": 188,
+        "opportunities": 5,
+        "news": 10,
+        "favoris_context_populated": 15
+      },
+      "note": "Site non vérifiable depuis cette session : la résolution DNS de WebFetch a échoué (ENOTFOUND) et le proxy a refusé le tunnel (403) pour curl — c'est une limite de l'environnement, pas une panne constatée du site. Les 9 fichiers JSON sont valides et non vides, et index.html référence tous les scripts js/*.js. Volumes stables par rapport au passage précédent (verdicts 106→107, alertes 187→188, opportunités 5→5, actualités 10→10, favoris renseignés 15→15) : aucune anomalie de volume."
     }
   ]
 }
