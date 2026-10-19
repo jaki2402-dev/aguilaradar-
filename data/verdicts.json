@@ -4226,5 +4226,170 @@
       "verdict_correct": null,
       "resolved_at": null
     }
+  },
+  {
+    "id": "v-20261019-btc",
+    "issued_at": "2026-10-19T08:35:00Z",
+    "asset": "bitcoin",
+    "ticker": "BTC",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 53,
+    "signals_used": [
+      "Tendance de fond haussière (+13 % vs moyenne 200 j), élan négatif ; RSI 33 neutre.",
+      "BTC -2 % sur 7 jours, +1,4 % sur 30 jours, +25,8 % sur 90 jours.",
+      "Repli de -28,3 % depuis le plus haut sur 1 an."
+    ],
+    "reasoning": "BTC cote 82 650 $ (CoinGecko, 19/10 08h20 UTC). Lecture technique du robot quotidien (as_of 19/10) : RSI 14j à 33 (neutre), tendance de fond haussière (+13 % au-dessus de la moyenne 200 jours), mais MACD baissier (histogramme négatif) — signal contraire au verdict. Évolution récente : -2 % sur 7 jours, +1,4 % sur 30 jours, +25,8 % sur 90 jours, repli de -28,3 % depuis le plus haut sur 1 an. Règle du moteur (retour_moyenne_rsi, mesurée sur 731 cas, confiance 53 %) : RSI sous 70, donc pas d'excès, rebond ou poursuite plus fréquents que la stabilité ; contexte bitcoin en élan négatif, indice peur/avidité en zone de cupidité (≥ 55). Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 6/10 (ETF bitcoin américains : 2,39 Md$ d'entrées nettes fin septembre, meilleure semaine de l'année, BTC alors autour de 83 100 $ ; donnée de la semaine courante non confirmée) — pas de contradiction franche avec la lecture technique (pas de 'Réduire' à conviction élevée). Régime macro neutre : Fed toujours restrictive (hawkish, fourchette 3,75-4,00 %, prochain FOMC le 28/10) mais flux ETF spot BTC/ETH nets positifs sur la dernière séance confirmée (13/10 : BTC +175,6 M$, ETH +24,8 M$), non reconfirmés depuis (séances du 14 au 18/10 introuvables) — signaux macro contradictoires, retenus comme tels plutôt que tranchés arbitrairement. ACHAT retenu par la règle du moteur (§2 de la spec), horizon maintenu à 14 jours (groupe resté stable, corr-20260906).",
+    "resume": "RSI 33 neutre et tendance haussière (+13% vs MM200), mais MACD contraire : ACHAT retenu par la règle du moteur (confiance 53%).",
+    "price_at_issue": 82650,
+    "currency": "USD",
+    "resolves_at": "2026-11-02T08:35:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 53,
+      "sample_n": 731,
+      "context": "bitcoin en élan négatif, cupidité (≥ 55)",
+      "context_n": 349,
+      "basis": "RSI 33 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": []
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-19T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 33.4,
+      "sma200_gap_pct": 13.1,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261019-eth",
+    "issued_at": "2026-10-19T08:35:00Z",
+    "asset": "ethereum",
+    "ticker": "ETH",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 53,
+    "signals_used": [
+      "Tendance de fond haussière (+12 % vs moyenne 200 j), élan négatif ; RSI 23 : survente.",
+      "ETH -5 % sur 7 jours, -7,8 % sur 30 jours, +26,6 % sur 90 jours.",
+      "Repli de -42,1 % depuis le plus haut sur 1 an."
+    ],
+    "reasoning": "ETH cote 2 428,41 $ (CoinGecko, 19/10 08h20 UTC). Lecture technique du robot quotidien (as_of 19/10) : RSI 14j à 23 (survente), tendance de fond haussière (+12 % au-dessus de la moyenne 200 jours), mais MACD baissier (histogramme négatif) — signal contraire au verdict. Évolution récente : -5 % sur 7 jours, -7,8 % sur 30 jours, +26,6 % sur 90 jours, repli de -42,1 % depuis le plus haut sur 1 an. Règle du moteur (retour_moyenne_rsi, mesurée sur 731 cas, confiance 53 %) : RSI sous 70, donc pas d'excès, rebond ou poursuite plus fréquents que la stabilité ; contexte bitcoin en élan négatif, indice peur/avidité en zone de cupidité (≥ 55). Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 6/10 (ETF ether américains : ~690 M$ d'entrées nettes la dernière semaine de septembre après 140 M$ de sorties, ETH alors vers 2 640 $ ; donnée de la semaine courante non confirmée) — pas de contradiction franche avec la lecture technique (pas de 'Réduire' à conviction élevée). Régime macro neutre : Fed toujours restrictive (hawkish, fourchette 3,75-4,00 %, prochain FOMC le 28/10) mais flux ETF spot BTC/ETH nets positifs sur la dernière séance confirmée (13/10 : BTC +175,6 M$, ETH +24,8 M$), non reconfirmés depuis (séances du 14 au 18/10 introuvables) — signaux macro contradictoires, retenus comme tels plutôt que tranchés arbitrairement. ACHAT retenu par la règle du moteur (§2 de la spec), horizon maintenu à 14 jours (groupe resté stable, corr-20260906).",
+    "resume": "RSI 23 survente et tendance haussière (+12% vs MM200), mais MACD contraire : ACHAT retenu par la règle du moteur (confiance 53%).",
+    "price_at_issue": 2428.41,
+    "currency": "USD",
+    "resolves_at": "2026-11-02T08:35:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 53,
+      "sample_n": 731,
+      "context": "bitcoin en élan négatif, cupidité (≥ 55)",
+      "context_n": 349,
+      "basis": "RSI 23 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": []
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-19T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 23.4,
+      "sma200_gap_pct": 12.1,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261019-fet",
+    "issued_at": "2026-10-19T08:35:00Z",
+    "asset": "fetch-ai",
+    "ticker": "FET",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 53,
+    "signals_used": [
+      "Tendance de fond baissière (-1 % vs moyenne 200 j), élan négatif ; RSI 26 : survente.",
+      "FET -20,7 % sur 7 jours, +2,1 % sur 30 jours, +22,9 % sur 90 jours.",
+      "Repli de -49 % depuis le plus haut sur 1 an."
+    ],
+    "reasoning": "FET cote 0,191328 $ (CoinGecko, 19/10 08h20 UTC). Lecture technique du robot quotidien (as_of 19/10) : RSI 14j à 26 (survente), tendance de fond légèrement baissière (-0,7 % sous la moyenne 200 jours) et MACD baissier (histogramme négatif) — deux signaux contraires au verdict (cours sous sa moyenne 200 j sur un ACHAT, MACD de sens opposé). Évolution récente : -20,7 % sur 7 jours, +2,1 % sur 30 jours, +22,9 % sur 90 jours, repli de -49 % depuis le plus haut sur 1 an. Règle du moteur (retour_moyenne_rsi, mesurée sur 731 cas, confiance 53 %) : RSI sous 70, donc pas d'excès, rebond ou poursuite plus fréquents que la stabilité ; contexte bitcoin en élan négatif, indice peur/avidité en zone de cupidité (≥ 55). Signal fondamental neutre, mais faible : portfolio-thesis.json maintient 'Attendre' conviction 4/10 (aucune actualité d'octobre trouvée, fusion ASI présentée comme achevée par une source promotionnelle à vérifier, prix contradictoires entre agrégateurs) — pas de contradiction franche au sens de la règle (pas de 'Réduire' à conviction ≥7), mais aucun catalyseur positif confirmé non plus. favoris-context.json signale un exploit du pont SingularityNET rapporté le 20/09/2026 par une seule source (Blockonomi), ayant entraîné une pause des conversions — événement non vérifié par 2 sources et déjà ancien d'un mois, donc pas d'override au sens de la règle (§2), mais point de vigilance à surveiller. Régime macro neutre : Fed toujours restrictive (hawkish, fourchette 3,75-4,00 %, prochain FOMC le 28/10) mais flux ETF spot BTC/ETH nets positifs sur la dernière séance confirmée (13/10 : BTC +175,6 M$, ETH +24,8 M$), non reconfirmés depuis (séances du 14 au 18/10 introuvables) — signaux macro contradictoires, retenus comme tels plutôt que tranchés arbitrairement. ACHAT retenu par la règle du moteur (§2 de la spec), horizon maintenu à 14 jours (groupe resté stable, corr-20260906).",
+    "resume": "RSI 26 survente, mais tendance légèrement baissière (-0,7% vs MM200) et MACD contraire : ACHAT retenu par la règle du moteur (confiance 53%).",
+    "price_at_issue": 0.191328,
+    "currency": "USD",
+    "resolves_at": "2026-11-02T08:35:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 53,
+      "sample_n": 731,
+      "context": "bitcoin en élan négatif, cupidité (≥ 55)",
+      "context_n": 349,
+      "basis": "RSI 26 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": []
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-19T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 26.1,
+      "sma200_gap_pct": -0.7,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
   }
 ]
