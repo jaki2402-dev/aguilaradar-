@@ -4391,5 +4391,121 @@
       "verdict_correct": null,
       "resolved_at": null
     }
+  },
+  {
+    "id": "v-20261019-lpt",
+    "issued_at": "2026-10-19T16:20:00Z",
+    "asset": "livepeer",
+    "ticker": "LPT",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 53,
+    "signals_used": [
+      "Tendance de fond baissière (-5 % vs moyenne 200 j), élan négatif ; RSI 45 neutre.",
+      "24h +0,68%",
+      "7j -9,50%",
+      "30j +2,20%",
+      "portfolio-thesis Conserver conviction 5/10"
+    ],
+    "reasoning": "LPT n'a plus de verdict pending : le précédent (ACHAT du 05/10) a résolu VENTE (-5,81 %) le 19/10, repassé sous le seuil directionnel de 5 %. Nouveau verdict basé sur la règle du moteur retour_moyenne_rsi (data/technical-favoris.json) : RSI14 à 44,8 (<70, pas de surachat), prix actuel 1,63 $ (24h +0,68 %, 7j -9,50 %, 30j +2,20 %), mais tendance de fond baissière (-5,4 % sous la moyenne 200 jours) et MACD baissier — deux signaux techniques contraires à l'ACHAT, signalés ici mais la décision suit la règle du moteur sans improvisation (§2). Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 5/10 (Livepeer Agent et Livepeer 2.0 restent des projets de roadmap, aucune actualité d'octobre confirmée) ; favoris-context.json ne relève aucun catalyseur daté nouveau non plus — pas de contradiction franche avec la lecture technique. Régime macro retenu neutre (Fed restrictive mais flux ETF BTC/ETH positifs au 13/10, non reconfirmés depuis — signaux macro contradictoires, non tranchés arbitrairement). Verdict ACHAT retenu tel quel par la règle du moteur (retour_moyenne_rsi, basis : RSI 45 < 70), confiance 53 % (taux mesuré sur 731 cas), horizon maintenu à 14 jours (LPT fait partie du groupe stable non concerné par l'horizon adaptatif).",
+    "resume": "ACHAT retenu (confiance 53%) malgré une tendance de fond baissière (-5,4% sous la MM200) et un MACD baissier à surveiller.",
+    "price_at_issue": 1.63,
+    "currency": "USD",
+    "resolves_at": "2026-11-02T16:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 53,
+      "sample_n": 731,
+      "context": "bitcoin en élan négatif, cupidité (≥ 55)",
+      "context_n": 349,
+      "basis": "RSI 45 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": []
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-19T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 44.8,
+      "sma200_gap_pct": -5.4,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261019-flux",
+    "issued_at": "2026-10-19T16:20:00Z",
+    "asset": "zelcash",
+    "ticker": "FLUX",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 53,
+    "signals_used": [
+      "Tendance de fond haussière (+25 % vs moyenne 200 j), élan négatif ; RSI 45 neutre.",
+      "24h -0,92%",
+      "7j -20,70%",
+      "30j +26,00%",
+      "portfolio-thesis Attendre conviction 3/10"
+    ],
+    "reasoning": "FLUX n'a plus de verdict pending : le précédent (ACHAT du 05/10) a résolu VENTE (-9,54 %) le 19/10. Nouveau verdict basé sur la règle du moteur retour_moyenne_rsi : RSI14 à 44,6 (<70), prix actuel 0,069791 $ (24h -0,92 %, 7j -20,70 %, 30j +26,00 %), tendance de fond haussière (+24,8 % au-dessus de la moyenne 200 jours, alignée avec l'ACHAT) mais MACD baissier et élan négatif à court terme ; le moteur signale lui-même que cet écart haut à la moyenne 200 jours s'est trompé 62,3 % du temps sur 310 cas historiques — vigilance explicite à relayer. Signal fondamental neutre : portfolio-thesis.json maintient 'Attendre' conviction 3/10 (aucune actualité FLUX confirmée cette semaine) ; favoris-context.json relève un catalyseur réel mais modéré (registre d'applications RunOnFlux passé de 1195 à 1913 en un mois), sans contredire franchement la lecture technique. Régime macro retenu neutre (Fed restrictive mais flux ETF BTC/ETH positifs au 13/10, non reconfirmés depuis). Verdict ACHAT retenu tel quel par la règle du moteur, confiance 53 % (taux mesuré sur 731 cas), horizon maintenu à 14 jours (groupe stable non concerné par l'horizon adaptatif).",
+    "resume": "ACHAT retenu (confiance 53%) ; tendance de fond haussière mais MACD baissier et écart haut historiquement peu fiable (62,3%).",
+    "price_at_issue": 0.069791,
+    "currency": "USD",
+    "resolves_at": "2026-11-02T16:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 53,
+      "sample_n": 731,
+      "context": "bitcoin en élan négatif, cupidité (≥ 55)",
+      "context_n": 349,
+      "basis": "RSI 45 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": [
+        "Écart à la moyenne 200 j haut : la règle s'y est trompée 62.3 % du temps (310 cas)"
+      ]
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-19T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 44.6,
+      "sma200_gap_pct": 24.8,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
   }
 ]
