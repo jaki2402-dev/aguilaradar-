@@ -1282,6 +1282,16 @@
         "favoris_context_populated": 15
       },
       "note": "Site GitHub Pages non vérifiable depuis cet environnement : la résolution DNS de jaki2402-dev.github.io échoue (WebFetch ENOTFOUND, curl code 000), ce qui ne prouve pas une panne du site. Tous les fichiers de données sont des JSON valides et non vides ; index.html référence tous les scripts js/*.js. Volumes par rapport au dernier passage avec compteurs (18/10 08h51) : verdicts 107→110, alertes 188→191, opportunités 5→5, actualités 10→10, favoris renseignés 15→15 : aucune chute, pas d'anomalie."
+    },
+    {
+      "checked_at": "2026-10-19T09:16:30Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~0h36)",
+        "data/news.json (last_checked_at, ~0h46)",
+        "data/opportunities.json (last_scan_at, ~5h04)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h36, actualités (last_checked_at) il y a 0h46, opportunités il y a 5h04 - rien à signaler."
     }
   ]
 }
