@@ -1,20 +1,20 @@
 {
   "current_version": "v1",
   "global_stats": {
-    "last_computed_at": "2026-10-19T17:08:43Z",
+    "last_computed_at": "2026-10-20T01:13:52Z",
     "total_verdicts_issued": 112,
-    "total_verdicts_resolved": 97,
-    "accuracy_strict_pct": 24.74,
-    "coverage_pct": 25.77,
-    "baseline_majority_class_pct": 46.39,
+    "total_verdicts_resolved": 100,
+    "accuracy_strict_pct": 25,
+    "coverage_pct": 28,
+    "baseline_majority_class_pct": 46,
     "baseline_buy_hold_btc_pct": 18.59,
-    "f1_macro": 20.71,
-    "f1_weighted": 18.23,
+    "f1_macro": 21.2,
+    "f1_weighted": 18.83,
     "confusion_matrix": {
       "ACHAT": {
-        "ACHAT": 4,
+        "ACHAT": 5,
         "ATTENTE": 5,
-        "VENTE": 12
+        "VENTE": 14
       },
       "ATTENTE": {
         "ACHAT": 39,
@@ -54,17 +54,17 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-19T16:30:00Z",
+    "last_success_at": "2026-10-20T08:25:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 19/10/2026 16h15 UTC : demarrage econome - rien de du (robot resolve-due a jour, aucun pending > 6h apres resolves_at), mais 2 tickers sans verdict pending (LPT, FLUX, resolus par resolve-due a 11h16 UTC apres le cycle precedent de 08h15) -> 2 nouveaux verdicts emis (sous le plafond de 3/cycle), tous ACHAT par la regle retour_moyenne_rsi (confiance 53%, sample_n 731), horizon 14 jours (groupe reste stable, corr-20260906). Croisement favoris-context.json/portfolio-thesis.json fait pour les 2 (aucune contradiction franche au sens de la regle sec. 4). Contradictions techniques signalees en reasoning : LPT sous sa MM200 et MACD baissier malgre l'ACHAT ; FLUX MACD baissier malgre l'ACHAT, avec la vigilance du moteur sur l'ecart haut MM200. Veille actualites : 4 recherches WebSearch (fear&greed, hack/exploit, actualite generale bitcoin, dominance BTC/altseason) - aucune n'a renvoye de resultat date de facon fiable sur cette fenetre, rien ajoute a news.json (regle : jamais de signal invente), last_checked_at mis a jour. Aucun outil mcp__ utilise."
+    "last_failure_reason": "Cycle du 20/10/2026 08h15 UTC : 3 tickers sans verdict pending detectes au demarrage (GRT, PEAQ, TIA), aucun verdict du en resolution (robot resolve-due a jour). 3 nouveaux verdicts ACHAT emis (regle retour_moyenne_rsi, confiance 52%, horizon 7 jours - groupe volatil corr-20260906), croises avec favoris-context.json et portfolio-thesis.json (aucune contradiction franche au sens de la regle). Veille actualites : 3 recherches WebSearch (fear&greed, hack/exploit, actualite generale) - rien de nouveau et date trouve, last_checked_at mis a jour, items inchanges. Aucun outil mcp__ utilise."
   },
   "macro_regime": {
-    "last_computed_at": "2026-10-19T16:30:00Z",
+    "last_computed_at": "2026-10-20T08:25:00Z",
     "regime": "neutre",
     "fear_greed_value": 57,
     "btc_dominance_pct": 59.35,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Cycle du 19/10 16h15 UTC. Regime reconduit neutre, inchange depuis le cycle du 08h15 : data/market-context.json (lecture seule, non remis a jour depuis 08h50) toujours Fed hawkish (fourchette 3,75-4,00%, prochain FOMC le 28/10, rendement 10 ans non confirme), flux ETF spot BTC/ETH nets positifs sur la derniere seance confirmee (13/10 : +175,6 M$ BTC, +24,8 M$ ETH), toujours non reconfirmes depuis (14 au 18/10 introuvables) ; stablecoins a 10,81% de dominance, quasi stables. Signaux macro contradictoires (Fed restrictive vs flux ETF positifs), retenus comme tels plutot que tranches arbitrairement. Veille de ce cycle (fear&greed, dominance BTC/altseason) n'a renvoye aucune valeur datee fiable du jour, bloc fear_greed_value/btc_dominance_pct reconduit du cycle precedent (lu dans data/market-gauges.json, non ecrit ici).",
+    "note": "Cycle du 20/10 08h15 UTC. Regime reconduit neutre : data/market-context.json (lecture seule, non remis a jour depuis le 19/10 08h50) toujours Fed hawkish (fourchette 3,75-4,00%, prochain FOMC le 28/10, rendement 10 ans non confirme), flux ETF spot BTC/ETH nets positifs sur la derniere seance confirmee (13/10 : +175,6 M$ BTC, +24,8 M$ ETH), toujours non reconfirmes depuis (14 au 19/10 introuvables) ; stablecoins a 10,81% de dominance, quasi stables. Signaux macro contradictoires (Fed restrictive vs flux ETF positifs), retenus comme tels plutot que tranches arbitrairement. fear_greed_value/btc_dominance_pct non touches (lus dans data/market-gauges.json, non ecrits ici).",
     "resume": "Régime macro neutre, reconduit : Fed restrictive mais flux ETF BTC/ETH positifs (13/10, non reconfirmés) tempèrent."
   },
   "paper_portfolio_stats": {

@@ -1656,5 +1656,15 @@
     "sentiment": "neutre",
     "message": "GRT entre en zone de survente (RSI 14 j à 26) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : +11 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
     "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261020-fet-mm200-dessus",
+    "ticker_ou_theme": "FET",
+    "type": "signal_technique",
+    "signal_kind": "mm200_dessus",
+    "triggered_at": "2026-10-20T01:57:19Z",
+    "sentiment": "positif",
+    "message": "FET repasse au-dessus de sa moyenne 200 jours (+1 %) : la tendance de fond redevient haussière. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
   }
 ]
