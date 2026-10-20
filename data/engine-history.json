@@ -54,9 +54,9 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-19T16:30:00Z",
+    "last_success_at": "2026-10-20T00:16:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 19/10/2026 16h15 UTC : demarrage econome - rien de du (robot resolve-due a jour, aucun pending > 6h apres resolves_at), mais 2 tickers sans verdict pending (LPT, FLUX, resolus par resolve-due a 11h16 UTC apres le cycle precedent de 08h15) -> 2 nouveaux verdicts emis (sous le plafond de 3/cycle), tous ACHAT par la regle retour_moyenne_rsi (confiance 53%, sample_n 731), horizon 14 jours (groupe reste stable, corr-20260906). Croisement favoris-context.json/portfolio-thesis.json fait pour les 2 (aucune contradiction franche au sens de la regle sec. 4). Contradictions techniques signalees en reasoning : LPT sous sa MM200 et MACD baissier malgre l'ACHAT ; FLUX MACD baissier malgre l'ACHAT, avec la vigilance du moteur sur l'ecart haut MM200. Veille actualites : 4 recherches WebSearch (fear&greed, hack/exploit, actualite generale bitcoin, dominance BTC/altseason) - aucune n'a renvoye de resultat date de facon fiable sur cette fenetre, rien ajoute a news.json (regle : jamais de signal invente), last_checked_at mis a jour. Aucun outil mcp__ utilise."
+    "last_failure_reason": "Cycle du 20/10/2026 00h15 UTC : demarrage econome - rien de du (aucun pending > 6h apres resolves_at, robot resolve-due a jour) et les 15 favoris ont deja un verdict pending -> cycle court, aucun nouveau verdict emis. Veille actualites : 2 recherches WebSearch (fear&greed, hack/exploit) - fear&greed sans lecture datee fiable pour aujourd'hui, hack/exploit ne renvoie que des incidents deja logues (Bitget 24/09) ou non dates -> rien ajoute a news.json (regle : jamais de signal invente), last_checked_at mis a jour. Aucun outil mcp__ utilise."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-19T16:30:00Z",
