@@ -1292,6 +1292,30 @@
       ],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h36, actualités (last_checked_at) il y a 0h46, opportunités il y a 5h04 - rien à signaler."
+    },
+    {
+      "checked_at": "2026-10-20T08:51:40Z",
+      "site_reachable": false,
+      "files_ok": [
+        "data/verdicts.json",
+        "data/opportunities.json",
+        "data/engine-history.json",
+        "data/alerts.json",
+        "data/news.json",
+        "data/control-group.json",
+        "data/market-context.json",
+        "data/favoris-context.json",
+        "data/health-log.json"
+      ],
+      "files_broken": [],
+      "counts": {
+        "verdicts": 115,
+        "alerts": 192,
+        "opportunities": 5,
+        "news": 10,
+        "favoris_context_populated": 15
+      },
+      "note": "Site non joignable depuis l'environnement d'exécution (échec DNS « ENOTFOUND » via WebFetch et curl, pas un constat de panne du site). Tous les fichiers data/*.json sont des JSON valides et non vides ; index.html référence les 22 scripts js/*.js. Volumes stables par rapport au dernier passage de référence (verdicts 110 → 115, alerts 191 → 192, opportunities 5 → 5, news 10 → 10, favoris 15 → 15) : aucune anomalie de volume."
     }
   ]
 }
