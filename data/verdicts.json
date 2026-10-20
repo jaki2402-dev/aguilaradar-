@@ -4679,5 +4679,175 @@
       "verdict_correct": null,
       "resolved_at": null
     }
+  },
+  {
+    "id": "v-20261020-link",
+    "issued_at": "2026-10-20T16:20:00Z",
+    "asset": "chainlink",
+    "ticker": "LINK",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 52,
+    "signals_used": [
+      "Tendance de fond haussière (+22 % vs moyenne 200 j), élan négatif ; RSI 28 : survente.",
+      "LINK -4,5 % sur 7 jours, -3,0 % sur 30 jours, +39,3 % sur 90 jours.",
+      "Repli de -35,4 % depuis le plus haut sur 1 an.",
+      "portfolio-thesis Conserver conviction 7/10"
+    ],
+    "reasoning": "LINK cote 12,20 $ (CoinGecko, 20/10 16h20 UTC). Lecture technique du robot quotidien (as_of 20/10) : RSI 14j à 27,5 (survente), tendance de fond haussière (+22,3 % au-dessus de la moyenne 200 jours) mais MACD baissier (histogramme négatif) — signal contraire au verdict. Règle du moteur (retour_moyenne_rsi, mesurée sur 730 cas, confiance 52 %) : RSI sous 70, rebond ou poursuite plus fréquents que la stabilité ; contexte bitcoin en élan négatif, cupidité (≥ 55). Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 7/10 (Fulcrum lancé le 30 septembre, CCIP 2.0, DTCC Collateral AppChain prévu au T4 2026, adoption institutionnelle encore précoce) ; favoris-context.json signale un recul de -8,3 % en 5 jours sans nouveau catalyseur confirmé d'octobre, et l'absence de TVL native comme principal risque de long terme — pas de contradiction franche au sens de la règle (pas de 'Réduire' à conviction ≥7). Régime macro retenu neutre (Fed toujours restrictive, fourchette 3,75-4,00 %, prochain FOMC le 28/10, mais flux ETF spot BTC/ETH nets positifs sur la dernière séance confirmée du 13/10, non reconfirmés depuis — signaux macro contradictoires, retenus comme tels). ACHAT retenu tel quel par la règle du moteur, horizon réduit à 7 jours (LINK fait partie du groupe à volatilité élevée identifié par corr-20260906).",
+    "resume": "RSI 28 survente, tendance de fond haussière mais MACD baissier : ACHAT retenu (confiance 52%), pas de TVL native (risque long terme).",
+    "price_at_issue": 12.2,
+    "currency": "USD",
+    "resolves_at": "2026-10-27T16:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 52,
+      "sample_n": 730,
+      "context": "bitcoin en élan négatif, cupidité (≥ 55)",
+      "context_n": 363,
+      "basis": "RSI 28 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": []
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-20T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 27.5,
+      "sma200_gap_pct": 22.3,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261020-ondo",
+    "issued_at": "2026-10-20T16:20:00Z",
+    "asset": "ondo-finance",
+    "ticker": "ONDO",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 52,
+    "signals_used": [
+      "Tendance de fond haussière (+20 % vs moyenne 200 j), élan négatif ; RSI 35 neutre.",
+      "ONDO -7,3 % sur 7 jours, +3,5 % sur 30 jours, +8,5 % sur 90 jours.",
+      "Repli de -43,2 % depuis le plus haut sur 1 an.",
+      "portfolio-thesis Conserver conviction 5/10"
+    ],
+    "reasoning": "ONDO cote 0,445315 $ (CoinGecko, 20/10 16h20 UTC). Lecture technique du robot quotidien (as_of 20/10) : RSI 14j à 35,1 (neutre, pas d'excès), tendance de fond haussière (+19,7 % au-dessus de la moyenne 200 jours) mais MACD baissier (histogramme négatif) — signal contraire au verdict. Règle du moteur (retour_moyenne_rsi, mesurée sur 730 cas, confiance 52 %) : RSI sous 70, rebond ou poursuite plus fréquents que la stabilité ; contexte bitcoin en élan négatif, cupidité (≥ 55). Signal fondamental neutre : portfolio-thesis.json maintient 'Conserver' conviction 5/10 (expansion RWA en cours, mais le token ne donne que la gouvernance, sans part des revenus) ; favoris-context.json relève le litige de gouvernance Allman v. Ondo Finance (Delaware Court of Chancery) toujours non tranché, sans actualité d'octobre trouvée ce cycle au-delà de ce qui était déjà connu — pas de contradiction franche au sens de la règle (pas de 'Réduire' à conviction ≥7), mais aucun élément positif confirmé récent non plus. Régime macro retenu neutre (Fed toujours restrictive, prochain FOMC le 28/10, mais flux ETF spot BTC/ETH nets positifs sur la dernière séance confirmée du 13/10, non reconfirmés depuis — signaux macro contradictoires, retenus comme tels). ACHAT retenu tel quel par la règle du moteur, horizon réduit à 7 jours (ONDO fait partie du groupe à volatilité élevée identifié par corr-20260906).",
+    "resume": "RSI 35 neutre, tendance de fond haussière mais MACD baissier : ACHAT retenu (confiance 52%), litige de gouvernance Allman toujours non tranché.",
+    "price_at_issue": 0.445315,
+    "currency": "USD",
+    "resolves_at": "2026-10-27T16:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 52,
+      "sample_n": 730,
+      "context": "bitcoin en élan négatif, cupidité (≥ 55)",
+      "context_n": 363,
+      "basis": "RSI 35 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": []
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-20T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 35.1,
+      "sma200_gap_pct": 19.7,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261020-jup",
+    "issued_at": "2026-10-20T16:20:00Z",
+    "asset": "jupiter-exchange-solana",
+    "ticker": "JUP",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 52,
+    "signals_used": [
+      "Tendance de fond haussière (+35 % vs moyenne 200 j), élan négatif ; RSI 34 neutre.",
+      "JUP -11,3 % sur 7 jours, +4,4 % sur 30 jours, +47,3 % sur 90 jours.",
+      "Repli de -33,8 % depuis le plus haut sur 1 an.",
+      "portfolio-thesis Attendre conviction 4/10"
+    ],
+    "reasoning": "JUP cote 0,314054 $ (CoinGecko, 20/10 16h20 UTC). Lecture technique du robot quotidien (as_of 20/10) : RSI 14j à 34,1 (neutre, pas d'excès), tendance de fond haussière (+34,8 % au-dessus de la moyenne 200 jours) mais MACD baissier (histogramme négatif) — signal contraire au verdict ; le moteur signale lui-même que cet écart haut à la moyenne 200 jours s'est trompé 62,1 % du temps sur 309 cas historiques — vigilance explicite à relayer. Règle du moteur (retour_moyenne_rsi, mesurée sur 730 cas, confiance 52 %) : RSI sous 70, rebond ou poursuite plus fréquents que la stabilité ; contexte bitcoin en élan négatif, cupidité (≥ 55). Signal fondamental neutre, prudent : portfolio-thesis.json recommande 'Attendre' conviction 4/10 (aucune actualité JUP confirmée cette semaine) ; favoris-context.json confirme un prix stabilisé après le repli du 15/10 mais signale que le statut du rachat (buyback Litterbox) et la reprise de gouvernance de la DAO restent non confirmés — pas de contradiction franche au sens de la règle (pas de 'Réduire' à conviction ≥7), mais aucun catalyseur positif confirmé non plus. Régime macro retenu neutre (Fed toujours restrictive, prochain FOMC le 28/10, mais flux ETF spot BTC/ETH nets positifs sur la dernière séance confirmée du 13/10, non reconfirmés depuis — signaux macro contradictoires, retenus comme tels). ACHAT retenu tel quel par la règle du moteur, horizon réduit à 7 jours (JUP fait partie du groupe à volatilité élevée identifié par corr-20260906).",
+    "resume": "RSI 34 neutre, tendance de fond haussière mais MACD baissier et écart haut peu fiable (62%) : ACHAT retenu (confiance 52%).",
+    "price_at_issue": 0.314054,
+    "currency": "USD",
+    "resolves_at": "2026-10-27T16:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 52,
+      "sample_n": 730,
+      "context": "bitcoin en élan négatif, cupidité (≥ 55)",
+      "context_n": 363,
+      "basis": "RSI 34 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": [
+        "Écart à la moyenne 200 j haut : la règle s'y est trompée 62.1 % du temps (309 cas)"
+      ]
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-20T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 34.1,
+      "sma200_gap_pct": 34.8,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
   }
 ]
