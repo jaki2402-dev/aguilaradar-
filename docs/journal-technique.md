@@ -695,3 +695,40 @@ dessus de sa MM200, sans le savoir.
   (4×/jour, avant les alertes) et de `technical-daily` (avant l'analyse) ; même groupe de
   concurrence `data-commit`, créneaux des routines respectés par `isQuiet`.
 
+
+### 20/10/2026 — corr-20260921 clôturée (10,0 %), déjà remplacée par la décision du 11/10
+
+Rappel programmé le 06/10 pour revalider la règle de sélection ACHAT/ATTENTE/VENTE du 21/09.
+Découverte en premier lieu : **l'utilisateur a lui-même remplacé cette règle le 11/10**
+(`corr-20261011-regle-retour-moyenne`) par un mécanisme sans rapport avec `signal_consensus` —
+un robot GitHub (`scripts/technical-favoris.mjs`, nocturne, zéro quota) calcule un RSI 14 jours
+réel par favori et choisit chaque soir, par mesure sur les 30 derniers verdicts vérifiés, la
+règle `proposed_verdict` à suivre (au 11/10 : VENTE si RSI≥70, sinon ACHAT). Le cycle-2h ne fait
+plus que recopier cette proposition. Non vu avant ce rappel : la session de développement n'avait
+aucune visibilité sur les décisions prises par l'utilisateur en dehors d'elle entre deux rappels.
+
+Conséquence sur le travail de ce rappel : plutôt que proposer un nouveau correctif concurrent
+(l'ancien plan, avant cette découverte), la mesure de corr-20260921 a simplement été terminée pour
+le dossier historique, et la nouvelle règle vérifiée sans y toucher :
+
+- **Chiffre final de corr-20260921** (ne grossira plus, la règle est morte depuis le 11/10) : sur
+  les 10 verdicts ayant réellement exercé le mécanisme (technique haussier/baissier +
+  accord_count≥1), 1 seul correct (TIA, +23,08 %) = **10,0 %**, contre 60 % pour la baseline classe
+  majoritaire du même lot (VENTE, 6 résolutions réelles sur 10). `validation_score_after_pct`
+  renseigné dans `engine-history.json`.
+- **Cause supplémentaire isolée, pas vue avant** : les 10 cas avaient tous `fondamental="neutre"`
+  et `macro="neutre"` — `accord_count=2` ne venait donc jamais d'une vraie 2e dimension d'accord,
+  seulement de la lecture technique seule, les deux neutres étant comptés comme "alignés" plutôt
+  que comme une absence d'opinion. Confirmé mot pour mot dans le `reasoning` de `v-20261005-fet` :
+  *"accord_count=2 (fondamental et macro alignés neutres)"*. Aucun cas baissier→VENTE ne s'est
+  jamais présenté sur toute la durée de vie de la règle.
+- **Nouvelle règle (depuis le 11/10) vérifiée, pas remise en cause** : `checkVerdictSelectionCompliance`
+  mis à jour par la session du 11/10 (`js/data-integrity.js`, `meanReversionViolation`) — confirmé
+  0 violation sur les 15 verdicts émis sous elle à ce jour. Tous encore `pending` (horizon 7-14j),
+  trop tôt pour juger sa propre exactitude — et ce suivi est désormais natif (colonne "Test réel",
+  onglet Moteur), pas besoin d'un rappel programmé séparé pour y revenir.
+- **Décision** : dossier fermé, aucun nouveau rappel programmé sur ce sujet précis — la nouvelle
+  règle a son propre mécanisme d'auto-mesure quotidien, plus réactif qu'un rappel à 14 jours et à
+  coût de quota nul. Si un vrai problème apparaît sur la nouvelle règle, ce sera visible sur le
+  site lui-même (`accuracy_strict_pct`, "Test réel") sans qu'une session doive le découvrir à
+  l'aveugle comme celle du 06/10 l'a fait pour la décision du 11/10.
