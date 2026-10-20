@@ -1316,6 +1316,16 @@
         "favoris_context_populated": 15
       },
       "note": "Site non joignable depuis l'environnement d'exécution (échec DNS « ENOTFOUND » via WebFetch et curl, pas un constat de panne du site). Tous les fichiers data/*.json sont des JSON valides et non vides ; index.html référence les 22 scripts js/*.js. Volumes stables par rapport au dernier passage de référence (verdicts 110 → 115, alerts 191 → 192, opportunities 5 → 5, news 10 → 10, favoris 15 → 15) : aucune anomalie de volume."
+    },
+    {
+      "checked_at": "2026-10-20T09:16:15Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~0h51)",
+        "data/news.json (last_checked_at, ~0h51)",
+        "data/opportunities.json (last_scan_at, ~5h04)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h51, actualités (last_checked_at) il y a 0h51, opportunités il y a 5h04 - rien à signaler."
     }
   ]
 }
