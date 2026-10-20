@@ -1,20 +1,20 @@
 {
   "current_version": "v1",
   "global_stats": {
-    "last_computed_at": "2026-10-19T17:08:43Z",
+    "last_computed_at": "2026-10-20T01:13:52Z",
     "total_verdicts_issued": 112,
-    "total_verdicts_resolved": 97,
-    "accuracy_strict_pct": 24.74,
-    "coverage_pct": 25.77,
-    "baseline_majority_class_pct": 46.39,
+    "total_verdicts_resolved": 100,
+    "accuracy_strict_pct": 25,
+    "coverage_pct": 28,
+    "baseline_majority_class_pct": 46,
     "baseline_buy_hold_btc_pct": 18.59,
-    "f1_macro": 20.71,
-    "f1_weighted": 18.23,
+    "f1_macro": 21.2,
+    "f1_weighted": 18.83,
     "confusion_matrix": {
       "ACHAT": {
-        "ACHAT": 4,
+        "ACHAT": 5,
         "ATTENTE": 5,
-        "VENTE": 12
+        "VENTE": 14
       },
       "ATTENTE": {
         "ACHAT": 39,
