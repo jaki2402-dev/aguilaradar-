@@ -3854,7 +3854,7 @@
     "price_at_issue": 13.08,
     "currency": "USD",
     "resolves_at": "2026-10-20T08:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "threshold_pct": 5,
     "regime_at_issue": "neutre",
     "signal_consensus": {
@@ -3884,11 +3884,11 @@
       "macd": "baissier"
     },
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 11.9201,
+      "actual_move_pct": -8.87,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-20T12:13:42Z"
     }
   },
   {
@@ -3910,7 +3910,7 @@
     "price_at_issue": 0.480509,
     "currency": "USD",
     "resolves_at": "2026-10-20T08:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "threshold_pct": 5,
     "regime_at_issue": "neutre",
     "signal_consensus": {
@@ -3940,11 +3940,11 @@
       "macd": "baissier"
     },
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.433809,
+      "actual_move_pct": -9.72,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-20T12:13:42Z"
     }
   },
   {
@@ -3966,7 +3966,7 @@
     "price_at_issue": 0.334818,
     "currency": "USD",
     "resolves_at": "2026-10-20T08:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "threshold_pct": 5,
     "regime_at_issue": "neutre",
     "signal_consensus": {
@@ -3996,11 +3996,11 @@
       "macd": "baissier"
     },
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.298095,
+      "actual_move_pct": -10.97,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-20T12:13:42Z"
     }
   },
   {
