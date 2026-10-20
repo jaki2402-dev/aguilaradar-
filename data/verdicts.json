@@ -4022,7 +4022,7 @@
     "price_at_issue": 0.11457,
     "currency": "USD",
     "resolves_at": "2026-10-20T16:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "threshold_pct": 5,
     "regime_at_issue": "neutre",
     "signal_consensus": {
@@ -4052,11 +4052,11 @@
       "macd": "baissier"
     },
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.104994,
+      "actual_move_pct": -8.36,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-20T17:33:04Z"
     }
   },
   {
@@ -4078,7 +4078,7 @@
     "price_at_issue": 0.186518,
     "currency": "USD",
     "resolves_at": "2026-10-20T16:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "threshold_pct": 5,
     "regime_at_issue": "neutre",
     "signal_consensus": {
@@ -4108,11 +4108,11 @@
       "macd": "baissier"
     },
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.18716,
+      "actual_move_pct": 0.34,
+      "actual_direction": "ATTENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-20T17:33:04Z"
     }
   },
   {
@@ -4134,7 +4134,7 @@
     "price_at_issue": 7.91,
     "currency": "USD",
     "resolves_at": "2026-10-20T16:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "threshold_pct": 5,
     "regime_at_issue": "neutre",
     "signal_consensus": {
@@ -4164,11 +4164,11 @@
       "macd": "baissier"
     },
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 8.56331,
+      "actual_move_pct": 8.26,
+      "actual_direction": "ACHAT",
+      "verdict_correct": true,
+      "resolved_at": "2026-10-20T17:33:04Z"
     }
   },
   {
