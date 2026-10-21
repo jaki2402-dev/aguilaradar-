@@ -1350,6 +1350,16 @@
         "favoris_context_populated": 15
       },
       "note": "Site non vérifiable depuis cette session : le proxy sortant a refusé la connexion (403 / DNS introuvable) vers jaki2402-dev.github.io — ce n'est pas une preuve que le site est en panne. Les 9 fichiers de données sont des JSON valides et non vides ; index.html référence tous les scripts js/*.js présents. Volumes stables par rapport au passage du 20/10 (verdicts 115→121, alertes 192→193, opportunités 5, actualités 10, favoris 15) : aucune anomalie."
+    },
+    {
+      "checked_at": "2026-10-21T09:16:30Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~0h59)",
+        "data/news.json (last_checked_at, ~0h59)",
+        "data/opportunities.json (last_scan_at, ~5h04)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h59, actualités (last_checked_at) il y a 0h59, opportunités il y a 5h04 - rien à signaler."
     }
   ]
 }
