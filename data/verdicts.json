@@ -4849,5 +4849,182 @@
       "verdict_correct": null,
       "resolved_at": null
     }
+  },
+  {
+    "id": "v-20261021-aioz",
+    "issued_at": "2026-10-21T00:20:00Z",
+    "asset": "aioz-network",
+    "ticker": "AIOZ",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 52,
+    "signals_used": [
+      "RSI 14 j à 40,6 (zone neutre)",
+      "Cours 51,2 % au-dessus de la moyenne 200 jours",
+      "MACD négatif (-0,0028), signal baissier",
+      "Mouvement 7 j : -8,6 % ; 30 j : +14,6 %",
+      "Tendance de fond haussière (+51 % vs moyenne 200 j), élan négatif ; RSI 41 neutre."
+    ],
+    "reasoning": "Règle retour_moyenne_rsi : RSI 14 jours à 40,6 (ni survente ni surachat), ce qui a historiquement précédé un rebond ou une poursuite de hausse plus souvent qu'une stabilité (confiance mesurée 52 % sur 730 cas, contexte bitcoin en élan négatif et indice de cupidité >= 55 sur 363 cas). Tendance de fond haussière : cours 51,2 % au-dessus de sa moyenne 200 jours, mais le MACD reste négatif (-0,0028), signal de sens opposé au verdict ACHAT à surveiller. Repli de 8,6 % sur 7 jours malgré une hausse de 14,6 % sur 30 jours. Thèse hebdo \"Attendre\" (conviction 3/10) : aucune actualité officielle plus récente que février 2026 trouvée, capitalisation modeste (~130 M$) loin derrière RNDR — pas de contradiction franche avec le signal technique, mais pas de catalyseur confirmé non plus. Régime macro neutre : Fed restrictive (prochain FOMC le 28/10) mais flux ETF BTC/ETH nets positifs (13/10, non reconfirmés depuis) — signaux macro contradictoires, retenus comme tels.",
+    "resume": "RSI neutre (41) et tendance de fond haussière (+51 % vs MM200), mais MACD négatif et thèse hebdo prudente (conviction 3/10).",
+    "price_at_issue": 0.107779,
+    "currency": "USD",
+    "resolves_at": "2026-10-28T00:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 52,
+      "sample_n": 730,
+      "context": "bitcoin en élan négatif, cupidité (≥ 55)",
+      "context_n": 363,
+      "basis": "RSI 41 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": [
+        "Écart à la moyenne 200 j haut : la règle s'y est trompée 62.1 % du temps (309 cas)"
+      ]
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-20T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 40.6,
+      "sma200_gap_pct": 51.2,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261021-arb",
+    "issued_at": "2026-10-21T00:20:00Z",
+    "asset": "arbitrum",
+    "ticker": "ARB",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 52,
+    "signals_used": [
+      "RSI 14 j à 46,3 (zone neutre)",
+      "Cours 66,6 % au-dessus de la moyenne 200 jours",
+      "MACD négatif (-0,0015), signal baissier",
+      "Mouvement 7 j : +9,8 % ; 30 j : -4,4 %",
+      "Tendance de fond haussière (+67 % vs moyenne 200 j), élan négatif ; RSI 46 neutre."
+    ],
+    "reasoning": "Règle retour_moyenne_rsi : RSI 14 jours à 46,3 (zone neutre), confiance mesurée 52 % sur 730 cas (contexte bitcoin en élan négatif, cupidité >= 55). Tendance de fond haussière : cours 66,6 % au-dessus de sa moyenne 200 jours, mais MACD négatif (-0,0015), signal de sens opposé au verdict ACHAT. Déblocage mensuel d'environ 92,65 M ARB passé le 16/10 sans chute du cours (+1,59 % sur 7 jours selon la thèse hebdo), prochain déblocage similaire le 16/11. Thèse hebdo \"Attendre\" (conviction 4/10) : aucun catalyseur positif spécifique identifié au-delà du rebond général du marché altcoin — pas de contradiction franche avec le signal technique. Régime macro neutre : Fed restrictive (FOMC le 28/10) mais flux ETF BTC/ETH positifs (13/10, non reconfirmés) — signaux contradictoires retenus comme tels.",
+    "resume": "RSI neutre (46) et tendance de fond haussière (+67 % vs MM200), mais MACD négatif ; déblocage mensuel ARB du 16/10 sans impact visible.",
+    "price_at_issue": 0.188293,
+    "currency": "USD",
+    "resolves_at": "2026-10-28T00:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 52,
+      "sample_n": 730,
+      "context": "bitcoin en élan négatif, cupidité (≥ 55)",
+      "context_n": 363,
+      "basis": "RSI 46 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": [
+        "Écart à la moyenne 200 j haut : la règle s'y est trompée 62.1 % du temps (309 cas)"
+      ]
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-20T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 46.3,
+      "sma200_gap_pct": 66.6,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261021-inj",
+    "issued_at": "2026-10-21T00:20:00Z",
+    "asset": "injective-protocol",
+    "ticker": "INJ",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 52,
+    "signals_used": [
+      "RSI 14 j à 57,7 (zone neutre)",
+      "Cours 65 % au-dessus de la moyenne 200 jours",
+      "MACD positif (+0,069), signal haussier",
+      "Mouvement 7 j : +17,7 % ; 30 j : +8,5 %",
+      "Tendance de fond haussière (+65 % vs moyenne 200 j), élan positif ; RSI 58 neutre."
+    ],
+    "reasoning": "Règle retour_moyenne_rsi : RSI 14 jours à 57,7 (zone neutre, loin du seuil de surachat à 70), confiance mesurée 52 % sur 730 cas (contexte bitcoin en élan négatif, cupidité >= 55). Tendance de fond haussière confirmée : cours 65 % au-dessus de sa moyenne 200 jours, MACD positif (+0,069), signal technique cohérent avec le verdict ACHAT. Rallye marqué sur plusieurs fenêtres (+17,7 % sur 7 jours, +8,5 % sur 30 jours), porté par des catalyseurs réels cette semaine : validateur institutionnel Gulf Labs (27 Md$ d'encours) intégré le 14/10, dépôt de proposition INJC (staking ETF) et proposition IIP-709 de frais fixes. Thèse hebdo \"Conserver\" (conviction 5/10), alignée avec le signal technique, mais le narratif ETF/RWA reste non confirmé par un régulateur et le jeton demeure à -82,6 % de son ATH malgré le rallye. Régime macro neutre : Fed restrictive (FOMC le 28/10) mais flux ETF BTC/ETH positifs (13/10, non reconfirmés) — signaux contradictoires retenus comme tels.",
+    "resume": "Rallye porté par Gulf Labs et le dépôt INJC ; RSI neutre (58) et MACD haussier, mais encore à −82,6 % de son ATH.",
+    "price_at_issue": 8.99,
+    "currency": "USD",
+    "resolves_at": "2026-10-28T00:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 52,
+      "sample_n": 730,
+      "context": "bitcoin en élan négatif, cupidité (≥ 55)",
+      "context_n": 363,
+      "basis": "RSI 58 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": [
+        "Écart à la moyenne 200 j haut : la règle s'y est trompée 62.1 % du temps (309 cas)"
+      ]
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-20T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 57.7,
+      "sma200_gap_pct": 65,
+      "macd": "haussier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
   }
 ]
