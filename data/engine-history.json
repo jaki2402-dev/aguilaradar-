@@ -54,9 +54,9 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-21T00:25:00Z",
+    "last_success_at": "2026-10-21T08:17:18Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 21/10/2026 00h15 UTC : 3 tickers sans verdict pending detectes au demarrage (AIOZ, ARB, INJ), aucun verdict du en resolution (robot resolve-due a jour). 3 nouveaux verdicts ACHAT emis (regle retour_moyenne_rsi, confiance 52%, horizon 7 jours - groupe volatil corr-20260906), croises avec favoris-context.json et portfolio-thesis.json (aucune contradiction franche au sens de la regle ; MACD baissier signale dans le reasoning pour AIOZ et ARB). Veille actualites : 3 recherches WebSearch (fear&greed, hack/exploit, actualite generale) - rien de nouveau et date trouve, last_checked_at mis a jour, items inchanges. Aucun outil mcp__ utilise."
+    "last_failure_reason": "Cycle du 21/10/2026 08h16 UTC : cycle court (aucun verdict du, 15/15 tickers avec verdict pending). Veille actualites : 2 recherches WebSearch (fear&greed, hack/exploit) - rien de nouveau ni significatif par rapport aux items existants (hack Bitget/total PeckShield de septembre deja logues), last_checked_at mis a jour, items inchanges. Aucun outil mcp__ utilise."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-21T00:25:00Z",
