@@ -1666,5 +1666,15 @@
     "sentiment": "positif",
     "message": "FET repasse au-dessus de sa moyenne 200 jours (+1 %) : la tendance de fond redevient haussière. Mesure automatique sur les cours, pas un conseil.",
     "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261021-peaq-seuil",
+    "ticker_ou_theme": "PEAQ",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-21T00:52:32Z",
+    "verdict_id": "v-20261020-peaq",
+    "sentiment": "positif",
+    "message": "PEAQ : +5,09 % depuis l'émission du verdict ACHAT du 20/10 (0,036334 $ → 0,038183 $), seuil de mouvement directionnel de 5 % franchi à la hausse, dans le sens du verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   }
 ]
