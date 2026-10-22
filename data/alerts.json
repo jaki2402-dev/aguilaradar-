@@ -1706,5 +1706,15 @@
     "sentiment": "positif",
     "message": "ARB : +5,15 % depuis l'émission du verdict ACHAT du 21/10 (0,18829 $ → 0,19798 $), seuil de mouvement directionnel de 5 % franchi à la hausse, dans le sens du verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
     "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
+  },
+  {
+    "id": "alert-20261022-aioz-seuil",
+    "ticker_ou_theme": "AIOZ",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-22T00:52:04Z",
+    "verdict_id": "v-20261021-aioz",
+    "sentiment": "négatif",
+    "message": "AIOZ : -5,65 % depuis l'émission du verdict ACHAT du 21/10 (0,10778 $ → 0,10169 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   }
 ]
