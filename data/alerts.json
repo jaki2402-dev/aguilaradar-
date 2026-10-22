@@ -1716,5 +1716,25 @@
     "sentiment": "négatif",
     "message": "AIOZ : -5,65 % depuis l'émission du verdict ACHAT du 21/10 (0,10778 $ → 0,10169 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
     "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
+  },
+  {
+    "id": "alert-20261022-tia-seuil",
+    "ticker_ou_theme": "TIA",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-22T07:55:20Z",
+    "verdict_id": "v-20261020-tia",
+    "sentiment": "négatif",
+    "message": "TIA : -9,33 % depuis l'émission du verdict ACHAT du 20/10 (0,634 $ → 0,57484 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
+  },
+  {
+    "id": "alert-20261022-inj-seuil",
+    "ticker_ou_theme": "INJ",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-22T07:55:20Z",
+    "verdict_id": "v-20261021-inj",
+    "sentiment": "négatif",
+    "message": "INJ : -8,01 % depuis l'émission du verdict ACHAT du 21/10 (8,99 $ → 8,27 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   }
 ]
