@@ -1,8 +1,8 @@
 {
-  "last_scan_at": "2026-10-21T04:12:00Z",
+  "last_scan_at": "2026-10-22T04:12:00Z",
   "scanned_count": 20,
   "excluded_meme_count": 22,
-  "methodology": "Cycle du 21/10/2026 : criblage CoinGecko (top 20 par capitalisation, variations 7j derivees du sparkline horaire). Marche legerement haussier (BTC +0,86%/24h). Cardano poursuit son amelioration (-5,4%/7j, +2,07%/24h, watch allege). NEAR se redresse (+4,04%/24h) apres le repli d'hier. Monero marque une pause (-4,52%/24h) apres plusieurs jours de hausse, reste positif sur 7j (+3,9%). Zcash (archive) bondit de +10,47%/24h mais reste proche de zero sur 7j (+0,2%) - un seul jour fort, pas encore une reprise multi-jours confirmee, pas de reintegration. Rain (archive, reapparu en rang #19) +9,87%/24h mais encore -4,7%/7j - meme profil 'pic d'un jour' deja observe, pas de reintegration. 0 nouvelle entree retenue : reste du Top 20 inchange (megacaps/stablecoins exclus, actifs deja actifs).",
+  "methodology": "Cycle du 22/10/2026 : criblage CoinGecko (top 20 par capitalisation, variations 7j derivees du sparkline horaire). Marche globalement stable (BTC +0,15%/24h). Reintegration de Zcash (ZEC, archive le 04/10) : reprise multi-jours confirmee (+18,34%/7j, 2e jour consecutif de forte hausse apres le +10,47% du 21/10). Cardano repasse en territoire positif sur 7j (+0,34%, contre -5,4% la veille) - watch leve. NEAR (+10,7%/7j) et Monero (+11,9%/7j, +6,10%/24h) poursuivent leur reprise. Stellar (archive, reapparu rang #20) +0,8%/7j - signal plus faible que Zcash, pas de reintegration. Hyperliquid (archive) proche de l'equilibre (+1,1%/7j) mais 24h negatif (-2,44%), pas de reintegration.",
   "opportunities": [
     {
       "id": "opp-20260818-xmr",
@@ -866,6 +866,59 @@
         },
         "m6": {
           "check_at": "2027-04-08T04:09:57Z",
+          "status": "pending",
+          "outcome": null
+        }
+      }
+    },
+    {
+      "id": "opp-20261022-zec",
+      "ticker": "ZEC",
+      "name": "Zcash",
+      "cgId": "zcash",
+      "image": "https://coin-images.coingecko.com/coins/images/486/large/Brandmark-Yellow_%281%29.png?1785810558",
+      "price_eur": 1151.591432,
+      "market_cap": 22012368469,
+      "market_cap_rank": 10,
+      "change_24h_pct": 2.45,
+      "change_7d_pct": 18.34,
+      "change_30d_pct": null,
+      "ath_change_pct": null,
+      "opportunity_score": 11.9,
+      "recognized": true,
+      "sparkline": [],
+      "tags": [
+        "privacy",
+        "store-of-value"
+      ],
+      "reason": "Reintegration : Zcash (ZEC), archive le 04/10/2026 pour declin lisse sur plusieurs jours, confirme desormais une reprise multi-jours - +18,34% sur 7j, 2e jour consecutif de hausse marquee (+10,47% le 21/10 puis +2,45% le 22/10), rang #10 (~22,0 Md$). Ratio volume/capitalisation ~5,2%, sous le seuil d'exclusion.",
+      "flagged_at": "2026-10-22T04:12:00Z",
+      "price_at_flag": 1151.591432,
+      "threshold_pct": 5,
+      "price_refreshed_at": "2026-10-22T04:12:00Z",
+      "horizons": {
+        "j1": {
+          "check_at": "2026-10-23T04:12:00Z",
+          "status": "pending",
+          "outcome": null
+        },
+        "j3": {
+          "check_at": "2026-10-25T04:12:00Z",
+          "status": "pending",
+          "outcome": null
+        },
+        "j7": {
+          "check_at": "2026-10-29T04:12:00Z",
+          "status": "pending",
+          "outcome": null
+        },
+        "j14": {
+          "check_at": "2026-11-05T04:12:00Z",
+          "status": "pending",
+          "outcome": null
+        },
+        "m6": {
+          "check_at": "2027-04-22T04:12:00Z",
           "status": "pending",
           "outcome": null
         }
