@@ -1736,5 +1736,25 @@
     "sentiment": "négatif",
     "message": "INJ : -8,01 % depuis l'émission du verdict ACHAT du 21/10 (8,99 $ → 8,27 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
     "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
+  },
+  {
+    "id": "alert-20261022-ctsi-seuil",
+    "ticker_ou_theme": "CTSI",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-22T15:36:29Z",
+    "verdict_id": "v-20261018-ctsi",
+    "sentiment": "négatif",
+    "message": "CTSI : -6,81 % depuis l'émission du verdict ACHAT du 18/10 (0,03154 $ → 0,029391 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
+  },
+  {
+    "id": "alert-20261022-flux-seuil",
+    "ticker_ou_theme": "FLUX",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-22T15:36:29Z",
+    "verdict_id": "v-20261019-flux",
+    "sentiment": "négatif",
+    "message": "FLUX : -5,44 % depuis l'émission du verdict ACHAT du 19/10 (0,069791 $ → 0,065991 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   }
 ]
