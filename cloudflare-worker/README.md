@@ -63,10 +63,10 @@ jamais vivre dans ce dépôt public, donc jamais dans le flux "Deploy to Cloudfl
    `aguilaradar-push-state` → **Déployer**.
 3. **Ajouter le Cron Trigger** : **Paramètres** → **Déclencheurs** → **Cron Triggers** →
    **Ajouter** → `*/15 * * * *` → **Ajouter**.
-4. **Ajouter les 4 secrets** : **Paramètres** → **Variables et secrets** → **Ajouter**, type
+4. **Ajouter les 5 secrets** : **Paramètres** → **Variables et secrets** → **Ajouter**, type
    **Secret**, une fois pour chacun de `VAPID_PRIVATE_KEY`, `VAPID_PUBLIC_KEY`,
-   `PUSH_SUBSCRIPTION_JSON`, `TEST_PUSH_SECRET` — valeurs transmises séparément (jamais dans ce
-   dépôt).
+   `PUSH_SUBSCRIPTION_JSON`, `TEST_PUSH_SECRET`, `DIGEST_PUSH_SECRET` — valeurs transmises
+   séparément (jamais dans ce dépôt).
 5. **Tester tout de suite**, sans attendre le prochain passage du cron : ouvre
    `https://aguilaradar-assistant-ia.<ton-compte>.workers.dev/send-test-push?secret=<TEST_PUSH_SECRET>`
    dans un navigateur. Une notification doit arriver sur l'appareil abonné dans la minute — si
@@ -77,6 +77,14 @@ jamais vivre dans ce dépôt public, donc jamais dans le flux "Deploy to Cloudfl
 rouvre le site → onglet Alertes → si un abonnement existe déjà, clique **Régénérer le code** →
 colle le nouveau JSON obtenu dans le secret `PUSH_SUBSCRIPTION_JSON` (remplace l'ancienne
 valeur, mêmes étapes qu'à la création).
+
+**Route POST `/send-digest`** (protégée par `DIGEST_PUSH_SECRET`, en-tête `X-Digest-Secret`) :
+utilisée par la routine Cowork "aguilaradar-digest-6h" pour envoyer SON push (le résumé 2×/jour,
+`data/digest.json`) via ce Worker, avec les `VAPID_PRIVATE_KEY`/`VAPID_PUBLIC_KEY`/
+`PUSH_SUBSCRIPTION_JSON` déjà configurés ci-dessus — body JSON `{"title": "...", "body": "..."}`.
+Avant le 23/10/2026, cette routine gardait sa propre copie figée (12/08) de ces 3 valeurs
+directement dans son prompt, jamais resynchronisée avec une rotation de clé : son push échouait
+en silence depuis, sans toucher au cycle alertes/opportunités ci-dessus (secrets séparés).
 
 **Validation de l'implémentation cryptographique** (avant tout déploiement) : le chiffrement a
 été comparé octet pour octet à l'implémentation de référence de l'auteur de la RFC

@@ -27,7 +27,12 @@
 //    aucune dépendance npm — voir cloudflare-worker/README.md pour la validation croisée de
 //    cette implémentation contre les bibliothèques de référence). Route GET /send-test-push
 //    (protégée par TEST_PUSH_SECRET) pour vérifier la livraison à la demande sans attendre le
-//    prochain passage du cron.
+//    prochain passage du cron. Route POST /send-digest (protégée par DIGEST_PUSH_SECRET,
+//    distinct de TEST_PUSH_SECRET) : utilisée par la routine Cowork "aguilaradar-digest-6h" pour
+//    envoyer SON push via ce Worker — réutilise VAPID_PRIVATE_KEY/VAPID_PUBLIC_KEY/
+//    PUSH_SUBSCRIPTION_JSON déjà configurés ici, au lieu que la routine garde sa propre copie de
+//    ces secrets dans son prompt (trouvé périmé le 23/10/2026 : copie figée du 12/08, jamais
+//    resynchronisée avec une rotation de clé — voir docs/journal-technique.md).
 //
 // 3) Écriture directe d'une transaction du portefeuille (fetch, POST /transaction) : reçoit
 //    {cgId, qty, invested} déjà calculé côté client (computeTransactionResult, js/portfolio.js —
@@ -598,6 +603,37 @@ async function runPushCycle(env) {
   return { total: items.length, sent, isBaseline };
 }
 
+// Point d'entrée de la route POST /send-digest — voir l'en-tête du fichier. Secret dédié
+// (DIGEST_PUSH_SECRET) plutôt que de réutiliser TEST_PUSH_SECRET : son état de configuration ne
+// dépend pas d'une autre route, et la routine qui l'appelle le voit nommément dans son prompt.
+// env.DIGEST_PUSH_SECRET absent (secret jamais posé) : 501 explicite, jamais un 401 trompeur.
+async function handleSendDigestRequest(request, env) {
+  if (!env.DIGEST_PUSH_SECRET) return json({ error: "not_configured" }, 501);
+
+  if (request.headers.get("X-Digest-Secret") !== env.DIGEST_PUSH_SECRET) {
+    return json({ error: "unauthorized" }, 401);
+  }
+
+  let body;
+  try {
+    body = await request.json();
+  } catch (e) {
+    return json({ error: "invalid_json" }, 400);
+  }
+
+  const title = String(body.title || "").slice(0, 100).trim();
+  const text = String(body.body || "").slice(0, 500).trim();
+  if (!title || !text) return json({ error: "empty_payload" }, 400);
+
+  try {
+    const subscription = JSON.parse(env.PUSH_SUBSCRIPTION_JSON);
+    await sendPushNotification(env, subscription, title, text, "aguilaradar-digest");
+    return json({ ok: true }, 200);
+  } catch (e) {
+    return json({ error: String((e && e.message) || e) }, 500);
+  }
+}
+
 // ---- Écriture directe du portefeuille (3e rôle, voir l'en-tête du fichier) --------------------
 
 function bytesToB64(bytes) {
@@ -726,6 +762,10 @@ export default {
 
     if (url.pathname === "/transaction") {
       return handleTransactionRequest(request, env);
+    }
+
+    if (url.pathname === "/send-digest") {
+      return handleSendDigestRequest(request, env);
     }
 
     let body;

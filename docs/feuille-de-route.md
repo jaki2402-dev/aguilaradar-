@@ -40,7 +40,7 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 
 | # | Constat (preuve) | Qui | Prochaine action |
 |---|---|---|---|
-| P1 | **Notifications du résumé et « Avis du jour » arrêtés.** Aucune entrée `avis_du_jour` dans `alerts.json` depuis le 14/09 00h40. Cause documentée le 05/10 : le prompt de la routine digest utilise une ancienne clé de notification ; le nouveau prompt préparé n'a jamais été collé. | Session avec l'outil routines + **Toi** | Relire le prompt actuel (`get_trigger`), préparer la version corrigée, tu la colles, puis re-vérifier. |
+| P1 | **Push du digest 2×/jour mort depuis le 12/08**, pas juste « une clé » : la routine `digest-6h` garde sa propre copie figée de clés VAPID + d'un abonnement, jamais resynchronisée (un abonnement push est verrouillé à la clé publique utilisée à sa création — diagnostic complet le 23/10, lecture du prompt entier via `get_trigger`). Alertes/opportunités non touchées : pipeline séparé (Worker Cloudflare), confirmé toujours actif par toi le 23/10. Fix prêt et testé (4 tests) : route `POST /send-digest` sur le Worker, réutilise les secrets déjà configurés — la routine n'aura plus sa propre copie. | **Toi** | 1) Poser le secret Cloudflare `DIGEST_PUSH_SECRET` (valeur dans le fichier prêt, scratchpad de la session). 2) Coller le nouveau prompt de la routine (même fichier) dans `claude.ai/code/routines/trig_01PieLv3mQo3T9K3CskGpSd4`. 3) Déployer le Worker mis à jour (copier `cloudflare-worker/` vers `aguilaradar-assistant-ia` + push — demande confirmation à la session, ça touche un dépôt en production). Puis re-vérifier avec `get_trigger`. |
 | P2 | **Alertes d'actualité arrêtées depuis le 13/09** (`actualite_*`), et aucune nouvelle actualité ajoutée par le cycle depuis le 05/10. Arrêt volontaire lors de l'allègement du 14-15/09 pour économiser le quota. **Compensé le 12/10** : le robot GitHub relève 4×/jour les titres réels des médias crypto citant un favori (« Fil des médias », sans quota). | **Toi** | Rien d'urgent. Décider plus tard si les alertes d'actualité doivent revenir (coûte du quota). |
 | P3 | **Taux 10 ans US et flux ETF vides** dans `market-context.json` depuis au moins le 08/10 : la routine ne trouve pas de chiffre daté par recherche web. **Or : corrigé le 10/10** (voir journal). | Session + **Toi** | 10 ans : tester une source officielle gratuite (Trésor US, FRED) depuis le robot GitHub — injoignables depuis la session du 10/10. CoinMarketCap fournit les deux (taux 10 ans, flux nets ETF) mais via des analyses **facturées à chaque exécution** : à toi de décider (voir `docs/coinmarketcap.md`). |
 | P6 | **Le contrôle de santé ne vérifie que 9 des 15 fichiers de données** (note du 10/10 08h51 : « Les 9 fichiers data/*.json »). Non couverts : `digest`, `market-gauges`, `onchain-history`, `portfolio`, `portfolio-history`, `portfolio-thesis`. | Session avec l'outil routines + **Toi** | Mettre à jour la liste dans le prompt `sante-quotidien`. |
@@ -85,6 +85,16 @@ natif (colonne « Test réel », onglet Moteur) — voir P14 dans « Résolu » 
 
 ## Journal des sessions (le plus récent en haut)
 
+- **23/10/2026 (suite)** — P1 : diagnostic complet (prompt entier lu via `get_trigger`, pas
+  seulement la clé suspectée dans `CLAUDE.md`) — la routine `digest-6h` signe ses push avec sa
+  propre paire VAPID + un abonnement du 12/08, jamais synchronisés avec aucune rotation ; un
+  abonnement push est verrouillé à la clé publique utilisée à sa création, donc « juste changer la
+  clé » ne suffisait pas. Confirmé auprès de l'utilisateur : alertes/opportunités (pipeline séparé,
+  Worker Cloudflare) arrivent toujours → pas besoin de régénérer quoi que ce soit côté Worker.
+  Fix : nouvelle route `POST /send-digest` (secret `DIGEST_PUSH_SECRET`, 4 tests ajoutés,
+  830/830 au total) ; la routine délègue au lieu de garder sa propre copie de secrets. CLAUDE.md et
+  `cloudflare-worker/README.md` mis à jour (route + `digest.json`, absent de la doc jusqu'ici).
+  Reste à toi (voir P1) : poser le secret, coller le nouveau prompt, confirmer le déploiement.
 - **23/10/2026** — Fusion de la clôture P14/`corr-20260921` (PR #11, confirmée par l'utilisateur).
   Découverte de ce tableau de bord à cette occasion (n'existait pas lors des sessions du 06-09/10) ;
   mis à jour rétroactivement.
