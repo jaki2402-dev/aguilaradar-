@@ -125,6 +125,14 @@ Pas de build/lint. CI : `npm ci && npm test` sur push `main` et PR.
   → « Offre non plafonnée ». Doit rester synchro avec `docs/verdict-methodology.md`.
 - **Panneaux dépliables** : jamais de `max-height` fixe ; mesurer `scrollHeight` juste après le
   lancement du rendu async (même tick) et re-mesurer après la promesse, succès OU échec.
+- **Transition de découpe entre onglets** (`switchTab`, `js/app.js` ; View Transitions API) :
+  `view-transition-name` posé sur `.tab-panel`, jamais sur `root`/`main` (sinon la nav fixe et les
+  fonds d'écran seraient inclus dans la capture). `switchTab` appelle déjà
+  `document.startViewTransition` en interne — ne jamais l'appeler une 2e fois autour (ex. dans un
+  test) : la transition interne se fait alors annuler (« Transition was skipped »), trouvé le
+  23/10/2026. Vérification visuelle : `page.screenshot()` de Playwright termine les animations CSS
+  avant de capturer par défaut, sauf `animations: "allow"` — sans cette option, toutes les captures
+  ressemblent à l'état final, masquant un vrai réglage de timing (même session).
 - **Tableau en ajout** (`correction_log`, `alerts.json`, `news.json`) : le plus récent est en
   DERNIER dans le fichier — toujours `.slice().reverse()` avant affichage, sinon le plus ancien
   item reste en tête indéfiniment (trouvé sur `news.json` le 09/10, resté 2 semaines figé).
