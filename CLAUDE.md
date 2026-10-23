@@ -151,6 +151,10 @@ Achat/vente/correction restent symétriques ; `invested` = coût de revient, jam
 vente. `POST /send-digest` (secret `DIGEST_PUSH_SECRET`) : envoie le push du digest 2×/jour avec
 les secrets push déjà configurés (`VAPID_*`/`PUSH_SUBSCRIPTION_JSON`) — la routine `digest-6h` ne
 garde plus sa propre copie de ces secrets (périmée depuis le 12/08, corrigé le 23/10/2026).
+`POST /subscribe` (23/10/2026, sans secret — vérif d'`Origin` + limite de fréquence seulement,
+jamais une vraie protection) : `js/notify.js` y transmet l'abonnement push dès qu'il est (re)créé,
+stocké dans le KV `PUSH_STATE` (clé `live_subscription`) ; `PUSH_SUBSCRIPTION_JSON` n'est plus que
+le filet de secours si ce KV est vide.
 
 ## Fichiers de données
 

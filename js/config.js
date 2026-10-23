@@ -226,6 +226,14 @@ let AI_RELAY_URL = "https://aguilaradar-assistant-ia.jaki2402.workers.dev/";
 // AI_RELAY_URL (valeur à changer après coup par un humain).
 let PORTFOLIO_WRITE_URL = "https://aguilaradar-assistant-ia.jaki2402.workers.dev/transaction";
 
+// URL de la route de capture d'abonnement push (même Worker, route /subscribe — voir
+// cloudflare-worker/worker.js) utilisée par notify.js pour transmettre automatiquement
+// l'abonnement dès qu'il est (re)créé, au lieu du copier-coller manuel dans le secret
+// PUSH_SUBSCRIPTION_JSON (qui reste le filet de secours tant que /subscribe n'a jamais été
+// appelé avec succès). Échec silencieux et non bloquant si le Worker n'est pas joignable (voir
+// postSubscriptionToWorker, notify.js) : l'ancien copier-coller reste disponible juste en dessous.
+let PUSH_SUBSCRIBE_URL = "https://aguilaradar-assistant-ia.jaki2402.workers.dev/subscribe";
+
 // Base de l'API GitHub publique (dépôt public, lecture seule, sans authentification ni secret —
 // même limite de 60 requêtes/heure/IP que n'importe quel visiteur anonyme) utilisée par
 // l'historique des transactions (loadTransactionHistory, portfolio.js) : chaque achat/vente/

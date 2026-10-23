@@ -73,10 +73,18 @@ jamais vivre dans ce dépôt public, donc jamais dans le flux "Deploy to Cloudfl
    rien n'arrive, regarde les **Logs** temps réel du Worker (onglet **Logs** du tableau de bord)
    pendant que tu réessaies, le message d'erreur y apparaît en clair.
 
-**Si `PUSH_SUBSCRIPTION_JSON` devient invalide** (abonnement expiré ou révoqué côté navigateur) :
-rouvre le site → onglet Alertes → si un abonnement existe déjà, clique **Régénérer le code** →
-colle le nouveau JSON obtenu dans le secret `PUSH_SUBSCRIPTION_JSON` (remplace l'ancienne
-valeur, mêmes étapes qu'à la création).
+**Si l'abonnement devient invalide** (expiré ou révoqué côté navigateur, ou après une rotation de
+la clé VAPID publique côté site) : depuis le 23/10/2026, plus besoin de copier-coller manuellement
+— rouvre le site → onglet Alertes → clique **Activer** (ou **Régénérer le code** si un abonnement
+existe déjà) → `js/notify.js` transmet automatiquement le nouvel abonnement à ce Worker (route
+`POST /subscribe` ci-dessous), qui le stocke dans le KV `PUSH_STATE` et l'utilise pour tout envoi
+futur. Le secret `PUSH_SUBSCRIPTION_JSON` reste un filet de secours (utilisé seulement si ce KV
+est vide, ex. avant le premier appel réel à `/subscribe`) — inutile de le mettre à jour à la main
+désormais, sauf si `/subscribe` n'a jamais réussi à être appelé (Worker non déployé, hors ligne).
+
+**Route POST `/subscribe`** (vérif d'`Origin` + limite de 20/heure, **pas une vraie protection** —
+voir l'en-tête du fichier sur les limites réelles de ce genre de filtre ici) : capture l'abonnement
+transmis par `js/notify.js`, décrit juste au-dessus. Aucun secret à poser pour cette route.
 
 **Route POST `/send-digest`** (protégée par `DIGEST_PUSH_SECRET`, en-tête `X-Digest-Secret`) :
 utilisée par la routine Cowork "aguilaradar-digest-6h" pour envoyer SON push (le résumé 2×/jour,

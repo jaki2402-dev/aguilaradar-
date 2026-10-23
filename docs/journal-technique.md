@@ -790,3 +790,50 @@ secret Cloudflare ni coller dans une routine non éditable directement) : poser 
 dans le scratchpad de la session, secret inclus), confirmer le déploiement du Worker mis à jour
 (copie vers `jaki2402-dev/aguilaradar-assistant-ia` + push — dépôt de production, jamais sans
 confirmation explicite). Voir P1 dans `docs/feuille-de-route.md`.
+
+### 23/10/2026 (suite) — capture automatique de l'abonnement push (route POST /subscribe)
+
+Demande explicite de l'utilisateur (gratuit uniquement + attention à la sécurité) pour
+l'amélioration proposée en option juste au-dessus : au lieu que `js/notify.js` régénère
+l'abonnement côté navigateur sans jamais le transmettre nulle part (copier-coller manuel dans le
+secret Cloudflare `PUSH_SUBSCRIPTION_JSON` comme seul mécanisme jusqu'ici), le Worker capture
+désormais l'abonnement lui-même.
+
+**Coût réel** : nul. Le palier gratuit Cloudflare Workers KV autorise 100 000 lectures et 1 000
+écritures par jour ; `/subscribe` n'écrit que sur un clic « Activer »/« Régénérer » (quelques fois
+par mois dans la pratique), et `runPushCycle` (déjà en place, cron 15 min) lit déjà le KV pour
+`notified_ids` — une 2e clé lue au même endroit (`live_subscription`) ne change pas d'ordre de
+grandeur. Aucun nouveau service, aucune clé payante.
+
+**Sécurité, explicitement pas une vraie protection** (même limite que partout ailleurs dans ce
+Worker — code et site publics, un secret côté client ne protège jamais rien) : vérification de
+l'en-tête `Origin` + limite de 20 tentatives/heure (réutilise le mécanisme KV de `/transaction`,
+généralisé — `checkAndBumpRateLimit` prend maintenant un prefix/max en paramètre au lieu d'être
+câblé sur `/transaction` seul) + validation de forme (endpoint `https://`, clés présentes, tailles
+bornées). Pire cas si contourné : les push partent vers un autre abonnement que celui de
+l'utilisateur réel — gênant, jamais une fuite de donnée sensible (le contenu de ces push est déjà
+public, voir `CLAUDE.md` sur `data/*.json`). Dit explicitement à l'utilisateur plutôt que présenté
+comme une vraie sécurité.
+
+**Implémentation** : `getCurrentSubscription(env)` centralise la décision (KV `live_subscription`
+en premier, `PUSH_SUBSCRIPTION_JSON` en filet de secours) pour les 3 appelants existants
+(`runPushCycle`, `/send-test-push`, `/send-digest`) — plus aucun ne lit le secret statique
+directement. `js/notify.js` transmet l'abonnement (`postSubscriptionToWorker`, best-effort, jamais
+bloquant pour l'activation locale) aux 2 endroits où un abonnement frais apparaît : première
+activation et régénération. URL centralisée dans `js/config.js` (`PUSH_SUBSCRIBE_URL`), même
+convention que `PORTFOLIO_WRITE_URL`. `?v=` de `config.js`/`notify.js` bumpés dans `index.html`.
+
+**Tests** : `fakeKv` (`test/worker-push.test.js`) corrigé pour distinguer réellement les clés KV
+(une seule valeur "stored" partagée aurait mélangé `notified_ids` et `live_subscription` — bug de
+test silencieux, jamais détecté avant parce qu'aucun test précédent ne lisait 2 clés à la fois).
+4 tests `/subscribe` (origine refusée, forme invalide, limite de fréquence, et un test
+d'intégration prouvant que `runPushCycle` utilise bien l'abonnement capturé plutôt que le secret
+statique — volontairement rendu différent et invalide dans ce test pour le prouver). 3 tests
+`notify.js` (transmission à la régénération, à la première activation, résilience si le Worker est
+inaccessible). 837/837 au total.
+
+**Volontairement laissé tel quel** : `PUSH_SUBSCRIPTION_JSON` reste un secret Cloudflare (filet de
+secours), jamais supprimé — seule façon de démarrer le système avant le premier `/subscribe`
+réussi, ou si le KV est vidé. Rien de nouveau à faire par l'utilisateur au-delà de ce qui était
+déjà prévu pour P1 (déployer le Worker) — une fois déployé, le prochain clic « Régénérer » suffit,
+plus de copier-coller de `PUSH_SUBSCRIPTION_JSON` à faire à la main pour une rotation future.

@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { loadPage } from "./helpers/loadPage.js";
+import { loadPage, getGlobal } from "./helpers/loadPage.js";
 
 // Fausse API Notification : enregistre chaque appel plutôt que d'ouvrir une vraie
 // notification système (indisponible dans jsdom de toute façon).
@@ -228,8 +228,11 @@ describe("notify.js — renderPushSection (bouton \"Régénérer le code\")", ()
   }
 
   beforeEach(() => {
-    dom = loadPage(["notify.js"], { html: FIXTURE_HTML });
+    dom = loadPage(["config.js", "notify.js"], { html: FIXTURE_HTML });
     stubPushSupport(dom);
+    // Évite tout vrai réseau pendant les tests (postSubscriptionToWorker) — jsdom n'a pas de
+    // fetch global de toute façon ("fetch is not defined" sans ce stub, voir git blame).
+    dom.window.fetch = async () => ({ ok: true });
   });
 
   it("shows only the activation button (no reset button, no code) when there is no existing subscription", () => {
@@ -273,5 +276,61 @@ describe("notify.js — renderPushSection (bouton \"Régénérer le code\")", ()
 
     expect(resetBtn.disabled).toBe(false);
     expect(resetBtn.textContent).toBe("Régénérer le code");
+  });
+
+  // Ajouté le 23/10/2026 (P1 suite) : le Worker capture désormais l'abonnement automatiquement
+  // (POST /subscribe, cloudflare-worker/worker.js) au lieu du copier-coller manuel seul.
+  it("transmet le nouvel abonnement au Worker après régénération (POST /subscribe)", async () => {
+    const calls = [];
+    dom.window.fetch = async (url, opts) => {
+      calls.push({ url, opts });
+      return { ok: true };
+    };
+    const freshSub = fakeSubscription({
+      toJSON: () => ({ endpoint: "https://push.example/FRESH", keys: { p256dh: "new-x", auth: "new-y" } }),
+    });
+    dom.window.subscribeToPush = async () => freshSub;
+
+    dom.window.renderPushSection(fakeSubscription());
+    dom.window.document.getElementById("push-reset-btn").click();
+    await new Promise((r) => setTimeout(r, 0));
+
+    expect(calls).toHaveLength(1);
+    expect(calls[0].url).toBe(getGlobal(dom, "PUSH_SUBSCRIBE_URL"));
+    expect(calls[0].opts.method).toBe("POST");
+    expect(JSON.parse(calls[0].opts.body)).toEqual({ endpoint: "https://push.example/FRESH", keys: { p256dh: "new-x", auth: "new-y" } });
+  });
+
+  it("transmet aussi l'abonnement au Worker lors de la toute première activation", async () => {
+    const calls = [];
+    dom.window.fetch = async (url, opts) => {
+      calls.push({ url, opts });
+      return { ok: true };
+    };
+    dom.window.subscribeToPush = async () => fakeSubscription();
+
+    dom.window.renderPushSection(null);
+    dom.window.document.getElementById("push-enable-btn").click();
+    await new Promise((r) => setTimeout(r, 0));
+
+    expect(calls).toHaveLength(1);
+    expect(JSON.parse(calls[0].opts.body)).toEqual({ endpoint: "https://push.example/abc", keys: { p256dh: "x", auth: "y" } });
+  });
+
+  it("n'empêche jamais l'activation locale si la transmission au Worker échoue (best-effort, le copier-coller manuel reste disponible)", async () => {
+    dom.window.fetch = async () => {
+      throw new Error("hors ligne");
+    };
+    const freshSub = fakeSubscription({
+      toJSON: () => ({ endpoint: "https://push.example/FRESH", keys: { p256dh: "new-x", auth: "new-y" } }),
+    });
+    dom.window.subscribeToPush = async () => freshSub;
+
+    dom.window.renderPushSection(fakeSubscription());
+    dom.window.document.getElementById("push-reset-btn").click();
+    await new Promise((r) => setTimeout(r, 0));
+
+    const el = dom.window.document.getElementById("push-section");
+    expect(el.querySelector("#push-sub-text").value).toContain("https://push.example/FRESH");
   });
 });
