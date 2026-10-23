@@ -7,12 +7,32 @@ let latestOnchainHistory = null;
 let latestFavorisSupply = {};
 
 function switchTab(tabId) {
-  TABS.forEach((id) => {
-    document.getElementById(`tab-${id}`).classList.toggle("active", id === tabId);
-    document.querySelector(`[data-tab="${id}"]`).classList.toggle("active", id === tabId);
-  });
-  if (window.notifyTabActive) notifyTabActive(tabId);
-  if (tabId === "notifications" && window.clearNotifBellBadge) clearNotifBellBadge();
+  function applyTab() {
+    TABS.forEach((id) => {
+      document.getElementById(`tab-${id}`).classList.toggle("active", id === tabId);
+      document.querySelector(`[data-tab="${id}"]`).classList.toggle("active", id === tabId);
+    });
+    if (window.notifyTabActive) notifyTabActive(tabId);
+    if (tabId === "notifications" && window.clearNotifBellBadge) clearNotifBellBadge();
+  }
+
+  // Effet de découpe (View Transitions API) qui part du bouton de l'onglet de destination —
+  // dégradation gratuite vers la bascule instantanée si l'API est absente ou mouvement réduit
+  // demandé, même garde inline que prefersReducedMotion ailleurs dans ce fichier (pas de nouvel
+  // helper partagé, aucun n'existait déjà).
+  const reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (!document.startViewTransition || reduceMotion) {
+    applyTab();
+    return;
+  }
+
+  const btn = document.querySelector(`[data-tab="${tabId}"]`);
+  const rect = btn ? btn.getBoundingClientRect() : null;
+  const x = rect ? rect.left + rect.width / 2 : window.innerWidth / 2;
+  const y = rect ? rect.top + rect.height / 2 : window.innerHeight / 2;
+  document.documentElement.style.setProperty("--vt-x", `${x}px`);
+  document.documentElement.style.setProperty("--vt-y", `${y}px`);
+  document.startViewTransition(applyTab);
 }
 
 async function loadJson(url) {

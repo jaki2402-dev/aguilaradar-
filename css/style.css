@@ -399,9 +399,35 @@ main { padding: 20px 20px 40px; max-width: 1100px; margin: 0 auto; }
 @media (min-width: 1440px) {
   main { max-width: 1320px; }
 }
-section.tab-panel { display: none; animation: fadein 0.2s ease; }
+section.tab-panel { display: none; animation: fadein 0.2s ease; view-transition-name: tab-content; }
 section.tab-panel.active { display: block; }
 @keyframes fadein { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Transition de découpe entre onglets (voir switchTab, js/app.js) : un seul panneau est jamais
+   rendu à la fois (les autres display:none sortent de l'arbre de rendu), donc leur donner le même
+   view-transition-name ne crée pas de conflit — la nav fixe et les fonds d'écran n'ont pas ce nom
+   et restent immobiles pendant que seul le contenu de l'onglet se découpe. Durée courte (450ms,
+   pas plus) : cette appli se consulte souvent, un effet trop long deviendrait vite agaçant. Repli
+   géré en JS (switchTab) si l'API ou la préférence de mouvement ne permettent pas cet effet —
+   cette règle ne s'applique alors jamais, --vt-x/--vt-y ne sont même pas posées. */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-group(tab-content) { animation-duration: 450ms; }
+  ::view-transition-new(tab-content) {
+    animation: tab-wipe-in 450ms ease-out;
+  }
+}
+/* 100% (pas plus) : circle() en pourcentage couvre déjà le coin le plus éloigné du point
+   d'origine par définition CSS — un rayon plus grand (150% essayé d'abord) dépasse le cadre
+   si tôt dans la courbe que la découpe semblait déjà terminée après quelques dizaines de
+   millisecondes. Vérifié en vrai navigateur (Playwright + captures rapprochées, 23/10/2026,
+   `animations: "allow"` sur page.screenshot() — sans ce réglage Playwright complète les
+   animations CSS avant chaque capture par défaut, ce qui avait d'abord masqué le problème ET
+   sa correction) : avec 450ms + ease-out + 100%, la découpe progresse visiblement du bouton
+   d'onglet cliqué vers le reste de l'écran sur une bonne partie de la durée, pas instantanée. */
+@keyframes tab-wipe-in {
+  from { clip-path: circle(0% at var(--vt-x, 50%) var(--vt-y, 50%)); }
+  to { clip-path: circle(100% at var(--vt-x, 50%) var(--vt-y, 50%)); }
+}
 
 h2 { margin: 4px 0 4px; font-size: 1.32rem; font-weight: 700; letter-spacing: -0.02em; }
 h3 { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.015em; }

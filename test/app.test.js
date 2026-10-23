@@ -232,6 +232,30 @@ describe("app.js — switchTab", () => {
     dom.window.switchTab("notifications");
     expect(cleared).toBe(true);
   });
+
+  // Effet de découpe (23/10/2026) : jsdom n'implémente ni matchMedia ni startViewTransition,
+  // donc les 5 tests ci-dessus exercent déjà naturellement le repli (comportement inchangé).
+  // Ces 2 tests-ci vérifient explicitement le branchement vers/depuis la View Transitions API.
+  it("uses document.startViewTransition when available, and still applies the real tab switch inside its callback", () => {
+    let calledWith = null;
+    dom.window.document.startViewTransition = (cb) => {
+      calledWith = "called";
+      cb();
+      return { ready: Promise.resolve(), finished: Promise.resolve(), updateCallbackDone: Promise.resolve() };
+    };
+    dom.window.switchTab("engine");
+    expect(calledWith).toBe("called");
+    expect(dom.window.document.getElementById("tab-engine").classList.contains("active")).toBe(true);
+  });
+
+  it("never calls startViewTransition when prefers-reduced-motion is set, falling back to the instant switch", () => {
+    let called = false;
+    dom.window.document.startViewTransition = () => { called = true; };
+    dom.window.matchMedia = () => ({ matches: true });
+    dom.window.switchTab("engine");
+    expect(called).toBe(false);
+    expect(dom.window.document.getElementById("tab-engine").classList.contains("active")).toBe(true);
+  });
 });
 
 describe("app.js — renderFavorisGrid", () => {
