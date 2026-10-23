@@ -50,13 +50,10 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 | P16 | **CoinMarketCap automatique (facultatif)** : le robot sait recouper chaque jour cours et offre des 15 favoris avec CoinMarketCap (code prêt et testé, 11/10). Il faut une clé gratuite. | **Toi**, si tu veux | 1) Créer un compte gratuit sur pro.coinmarketcap.com (plan Basic) et copier la clé API. 2) Sur GitHub : dépôt `aguilaradar-` → Settings → Secrets and variables → Actions → New repository secret, nom `CMC_API_KEY`, valeur = la clé. Rien d'autre : le robot l'utilise dès le soir suivant. |
 | P15 | **Routine `horizons-6h` devenue inutile** : le robot `resolve-due` fait son travail sans quota (essai réel réussi le 11/10). Une session ne peut pas la désactiver (refus du système). | **Toi** | Désactiver `aguilaradar-horizons-6h` : claude.ai/code/routines/trig_012L3zXByo7gQXCfAYQsrWhn. Sans urgence : elle ne trouve plus rien à faire. |
 | P10 | **CoinMarketCap : routine dédiée facultative.** Depuis le 11/10, l'analyse technique des favoris vient du robot GitHub (sans quota). CoinMarketCap n'apporterait plus que le levier, le financement, les liquidations et la saison des altcoins. | **Toi**, si tu le souhaites | Créer `aguilaradar-coinmarketcap-quotidien` avec le texte de `docs/routines/coinmarketcap-quotidien.md`. Rien ne casse sans elle. |
-| P14 | **Nouvelle règle du moteur en conditions réelles** (choisie par l'utilisateur le 11/10) : VENTE si RSI ≥ 70, sinon ACHAT. **Premiers verdicts vérifiés le 13/10 00h40** : GRT, TIA, PEAQ en ACHAT, conformes (règle, proposition du robot, RSI des clôtures quotidiennes, 0 anomalie). Échéance le 20/10 00h20. | Session à partir du 20/10 | Suivre la colonne « Test réel » (onglet Moteur) ; changer de règle seulement si une autre la bat sur ≥ 15 verdicts. |
-
 ## Rendez-vous
 
-- **20/10/2026** — rappel `corr-20260921` : juger la règle de sélection ACHAT/ATTENTE/VENTE une fois
-  résolus les 7 verdicts haussier→ACHAT du 05/10 (détail dans `docs/journal-technique.md`, 06/10).
-  Puis P14 : correction de la règle à partir des verdicts portant `technical_at_issue`.
+Aucun rendez-vous programmé actuellement. Le suivi de la performance du moteur est désormais
+natif (colonne « Test réel », onglet Moteur) — voir P14 dans « Résolu » pour le pourquoi.
 
 ## Ce qu'une session ne peut pas faire seule
 
@@ -71,6 +68,7 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 
 | Date | Problème | Preuve |
 |---|---|---|
+| 20/10 | P14 : rendez-vous du 20/10 tenu — ancienne règle (21/09) définitivement close, nouvelle règle (11/10) vérifiée conforme. Ancienne règle : dernier lot réel (10 cas où le mécanisme s'est exercé), 1 correct (TIA) = 10,0 %, contre 60 % de baseline — nettement pire, clôturée. Cause isolée au passage : les 10 cas avaient `fondamental`/`macro` à "neutre", comptés à tort comme un accord à part entière. Nouvelle règle (retour à la moyenne RSI) : `checkVerdictSelectionCompliance` confirme 0 violation sur ses 15 premiers verdicts, tous encore en attente (trop tôt pour juger sa propre exactitude). | `engine-history.json.correction_log` (`corr-20260921-biais-attente-asymetrique`, `validation_score_after_pct=10.0`), PR #11 fusionnée (`f5e22f9`). Détail : `docs/journal-technique.md`, 20/10/2026. |
 | 11/10 | On-chain du bitcoin figé depuis le 04/10 (la routine ne pouvait pas joindre blockchain.info ni DefiLlama). | Robot `onchain-btc` (GitHub Action price-alerts) : dernier jour complet, sans doublon ; spec favoris-quotidien : bitcoin retiré. Tests. |
 | 11/10 | Trésor US 10 ans vide sur le site, tendance 7 j des stablecoins vide. | Robot market-gauges : FRED DGS10 (CSV public) et DefiLlama, affichés en secours quand la routine n'a rien de daté. Tests. |
 | 11/10 | Décimales à l'anglaise dans le contexte marché (« 4.14 % »). | Format français partout dans ces cases. |
@@ -87,6 +85,22 @@ Horodatages lus dans les fichiers `data/*.json` sur `origin/main`.
 
 ## Journal des sessions (le plus récent en haut)
 
+- **23/10/2026** — Fusion de la clôture P14/`corr-20260921` (PR #11, confirmée par l'utilisateur).
+  Découverte de ce tableau de bord à cette occasion (n'existait pas lors des sessions du 06-09/10) ;
+  mis à jour rétroactivement.
+- **20/10/2026** — Rendez-vous `corr-20260921` tenu. Découvert en premier lieu que l'utilisateur avait
+  remplacé la règle du 21/09 par la sienne (règle retour-moyenne, 11/10) sans que la session en ait
+  connaissance au préalable : pas de correctif concurrent proposé, dossier historique simplement
+  clôturé (10,0 % final, voir « Résolu »). Nouvelle règle vérifiée conforme sans y toucher.
+- **09/10/2026** — Suite à une demande de revue générale : "Ce qui bouge" (Accueil) affichait les
+  actualités dans le mauvais ordre (le plus ancien en tête au lieu du plus récent — append-only mal
+  reversé), corrigé + indicateur de fraîcheur ajouté. `scripts/price-alerts.mjs` construisait le
+  champ `source` avec des guillemets droits au lieu de backticks (`${cur.toUpperCase()}` jamais
+  interpolé) : confirmé sur 21/97 alertes réelles cassées, script corrigé et les 21 entrées réparées.
+  Bloc mort `engine-history.json.opportunities_stats` (figé depuis le 12/08, aucun lecteur) supprimé.
+- **06/10/2026** — Rappel `corr-20260921` (1er tour, 14j après la mise en place de la règle du 21/09) :
+  encore trop tôt pour juger (n=1 sur le mécanisme réellement testé), `validation_score_after_pct`
+  laissé à `null`. Conformité déjà vérifiée bonne (0 violation).
 - **13/10/2026 00h40** — Vérification du cycle de 00h15 : 3 verdicts ACHAT (GRT, TIA, PEAQ) conformes
   à la règle et au robot, 0 anomalie. Trouvé : la vérification « toutes les heures » des échéances
   n'était lancée par GitHub que 3-4×/jour → ajoutée aux robots des alertes et de l'analyse technique.
