@@ -85,6 +85,10 @@ natif (colonne « Test réel », onglet Moteur) — voir P14 dans « Résolu » 
 
 ## Journal des sessions (le plus récent en haut)
 
+- **23/10/2026 (suite 3)** — PR #13 (route `/send-digest` + `/subscribe`) fusionnée sur `main`
+  (confirmée par l'utilisateur), vérifiée présente sur `origin/main` (`b52daac`). P1 reste ouvert
+  tant que les 4 actions côté utilisateur (secret, prompt, déploiement Worker, clic « Régénérer »)
+  ne sont pas faites — fusionner ici n'a rien déployé sur Cloudflare.
 - **23/10/2026 (suite 2)** — Demande explicite (gratuit uniquement + sécurité) : construire
   l'amélioration proposée en option à la fin du travail P1 ci-dessous. Nouvelle route Worker
   `POST /subscribe` (coût réel nul, palier gratuit KV très large pour ce volume) : capture
