@@ -54,9 +54,9 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-23T08:17:53Z",
+    "last_success_at": "2026-10-23T16:17:32Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 23/10/2026 08h17 UTC : cycle court (15/15 tickers avec verdict pending, aucun due depuis >6h). Veille actualites : 2 recherches WebSearch (fear&greed du jour non confirme par la recherche ; hack/exploit crypto majeur recent - rien de nouveau au-dela du bilan de septembre 2026 deja connu, Bitget deja logue). Items de news.json inchanges, last_checked_at mis a jour. Aucun outil mcp__ utilise."
+    "last_failure_reason": "Cycle du 23/10/2026 16h16 UTC : cycle court (15/15 tickers avec verdict pending, aucun due depuis >6h). Veille actualites : 2 recherches WebSearch (fear&greed du jour non confirme par la recherche ; hack/exploit crypto majeur recent - rien de nouveau au-dela du bilan de septembre 2026 deja connu, Bitget deja logue). Items de news.json inchanges, last_checked_at mis a jour. Aucun outil mcp__ utilise."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-21T00:25:00Z",
