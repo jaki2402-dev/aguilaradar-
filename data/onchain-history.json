@@ -97,6 +97,54 @@
             "tx_per_day": "Blockchain.com API /charts/n-transactions (GitHub Action)",
             "active_addresses": "Blockchain.com API /charts/n-unique-addresses (GitHub Action)"
           }
+        },
+        {
+          "date": "2026-10-16",
+          "computed_at": "2026-10-21T15:34:48Z",
+          "tvl_usd": 4401099840,
+          "tx_per_day": 704182,
+          "active_addresses": 504550,
+          "source": {
+            "tvl_usd": "DefiLlama API /v2/historicalChainTvl/Bitcoin (GitHub Action)",
+            "tx_per_day": "Blockchain.com API /charts/n-transactions (GitHub Action)",
+            "active_addresses": "Blockchain.com API /charts/n-unique-addresses (GitHub Action)"
+          }
+        },
+        {
+          "date": "2026-10-20",
+          "computed_at": "2026-10-22T00:52:05Z",
+          "tvl_usd": 4365945176,
+          "tx_per_day": 808860,
+          "active_addresses": 472935,
+          "source": {
+            "tvl_usd": "DefiLlama API /v2/historicalChainTvl/Bitcoin (GitHub Action)",
+            "tx_per_day": "Blockchain.com API /charts/n-transactions (GitHub Action)",
+            "active_addresses": "Blockchain.com API /charts/n-unique-addresses (GitHub Action)"
+          }
+        },
+        {
+          "date": "2026-10-21",
+          "computed_at": "2026-10-22T07:55:21Z",
+          "tvl_usd": 4434057177,
+          "tx_per_day": 709817,
+          "active_addresses": 463608,
+          "source": {
+            "tvl_usd": "DefiLlama API /v2/historicalChainTvl/Bitcoin (GitHub Action)",
+            "tx_per_day": "Blockchain.com API /charts/n-transactions (GitHub Action)",
+            "active_addresses": "Blockchain.com API /charts/n-unique-addresses (GitHub Action)"
+          }
+        },
+        {
+          "date": "2026-10-22",
+          "computed_at": "2026-10-23T07:54:28Z",
+          "tvl_usd": 4502728828,
+          "tx_per_day": 560565,
+          "active_addresses": 488219,
+          "source": {
+            "tvl_usd": "DefiLlama API /v2/historicalChainTvl/Bitcoin (GitHub Action)",
+            "tx_per_day": "Blockchain.com API /charts/n-transactions (GitHub Action)",
+            "active_addresses": "Blockchain.com API /charts/n-unique-addresses (GitHub Action)"
+          }
         }
       ]
     },
@@ -329,6 +377,42 @@
             "tx_per_day": "Blockscout MCP, direct_api_call chain_id=1, /api/v2/stats/charts/transactions, dernier point du tableau chart_data daté 2026-10-19 (jour le plus récent complètement clos à l'heure de ce cycle)",
             "active_addresses": "Blockscout MCP, direct_api_call chain_id=1, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-10-16, to=2026-10-19 - dernier point daté 2026-10-19 (value=463793)"
           }
+        },
+        {
+          "date": "2026-10-21",
+          "computed_at": "2026-10-21T08:30:00Z",
+          "tvl_usd": null,
+          "tx_per_day": 1831271,
+          "active_addresses": 529491,
+          "source": {
+            "tvl_usd": "non confirme ce cycle - DefiLlama (api.llama.fi injoignable via WebFetch, echec DNS ENOTFOUND confirme ce cycle, meme blocage reseau que les cycles precedents ; recherche WebSearch ciblee du 21/10/2026 n'a trouve aucune valeur Ethereum datee avec certitude d'octobre 2026) - laisse a null plutot que de choisir arbitrairement",
+            "tx_per_day": "Blockscout MCP, direct_api_call chain_id=1, /api/v2/stats/charts/transactions, dernier point du tableau chart_data date 2026-10-20 (jour le plus recent completement clos a l'heure de ce cycle)",
+            "active_addresses": "Blockscout MCP, direct_api_call chain_id=1, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-10-17, to=2026-10-20 - dernier point date 2026-10-20 (value=529491)"
+          }
+        },
+        {
+          "date": "2026-10-22",
+          "computed_at": "2026-10-22T08:35:00Z",
+          "tvl_usd": null,
+          "tx_per_day": 1882780,
+          "active_addresses": 524723,
+          "source": {
+            "tvl_usd": "non confirmé ce cycle - DefiLlama (api.llama.fi et defillama.com injoignables via WebFetch, échec DNS ; recherche WebSearch ciblée du 22/10/2026 n'a trouvé aucune valeur Ethereum datée avec certitude d'aujourd'hui) - laissé à null plutôt que de choisir arbitrairement",
+            "tx_per_day": "Blockscout MCP, direct_api_call chain_id=1, /api/v2/stats/charts/transactions, dernier point du tableau chart_data daté 2026-10-21 (jour le plus récent complètement clos à l'heure de ce cycle)",
+            "active_addresses": "Blockscout MCP, direct_api_call chain_id=1, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-10-18, to=2026-10-21 - dernier point daté 2026-10-21 (value=524723)"
+          }
+        },
+        {
+          "date": "2026-10-23",
+          "computed_at": "2026-10-23T08:40:00Z",
+          "tvl_usd": null,
+          "tx_per_day": 1801861,
+          "active_addresses": 534981,
+          "source": {
+            "tvl_usd": "non confirmé ce cycle - DefiLlama (api.llama.fi et defillama.com injoignables via WebFetch, échec DNS ; recherche WebSearch ciblée n'a trouvé aucune valeur Ethereum datée avec certitude d'aujourd'hui) - laissé à null plutôt que de choisir arbitrairement",
+            "tx_per_day": "Blockscout MCP, direct_api_call chain_id=1, /api/v2/stats/charts/transactions, dernier point du tableau chart_data daté 2026-10-22 (jour le plus récent complètement clos à l'heure de ce cycle)",
+            "active_addresses": "Blockscout MCP, direct_api_call chain_id=1, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-10-19, to=2026-10-22 - dernier point daté 2026-10-22 (value=534981)"
+          }
         }
       ]
     },
@@ -548,6 +632,42 @@
             "tvl_usd": "non confirmé ce cycle - même blocage réseau que ethereum (DefiLlama, connect_rejected via le proxy de l'environnement) - laissé à null plutôt que de choisir arbitrairement",
             "tx_per_day": "Blockscout MCP, direct_api_call chain_id=42161, /api/v2/stats/charts/transactions, dernier point du tableau chart_data daté 2026-10-19 (jour le plus récent complètement clos à l'heure de ce cycle)",
             "active_addresses": "Blockscout MCP, direct_api_call chain_id=42161, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-10-16, to=2026-10-19 - dernier point daté 2026-10-19 (value=152095)"
+          }
+        },
+        {
+          "date": "2026-10-21",
+          "computed_at": "2026-10-21T08:30:00Z",
+          "tvl_usd": null,
+          "tx_per_day": 1822194,
+          "active_addresses": 201349,
+          "source": {
+            "tvl_usd": "non confirme ce cycle - meme blocage reseau que ethereum (DefiLlama, echec DNS ENOTFOUND confirme ce cycle) - laisse a null plutot que de choisir arbitrairement",
+            "tx_per_day": "Blockscout MCP, direct_api_call chain_id=42161, /api/v2/stats/charts/transactions, dernier point du tableau chart_data date 2026-10-20 (jour le plus recent completement clos a l'heure de ce cycle)",
+            "active_addresses": "Blockscout MCP, direct_api_call chain_id=42161, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-10-17, to=2026-10-20 - dernier point date 2026-10-20 (value=201349)"
+          }
+        },
+        {
+          "date": "2026-10-22",
+          "computed_at": "2026-10-22T08:35:00Z",
+          "tvl_usd": null,
+          "tx_per_day": 1974590,
+          "active_addresses": 570079,
+          "source": {
+            "tvl_usd": "non confirmé ce cycle - même blocage réseau que ethereum (DefiLlama, échec DNS via WebFetch) - laissé à null plutôt que de choisir arbitrairement",
+            "tx_per_day": "Blockscout MCP, direct_api_call chain_id=42161, /api/v2/stats/charts/transactions, dernier point du tableau chart_data daté 2026-10-21 (jour le plus récent complètement clos à l'heure de ce cycle)",
+            "active_addresses": "Blockscout MCP, direct_api_call chain_id=42161, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-10-18, to=2026-10-21 - dernier point daté 2026-10-21 (value=570079, net triplement vs 201349 le 2026-10-20 - valeur brute de l'API, non vérifiée davantage faute de budget Blockscout restant ce cycle)"
+          }
+        },
+        {
+          "date": "2026-10-23",
+          "computed_at": "2026-10-23T08:40:00Z",
+          "tvl_usd": null,
+          "tx_per_day": 1592703,
+          "active_addresses": 300326,
+          "source": {
+            "tvl_usd": "non confirmé ce cycle - même blocage réseau que ethereum (DefiLlama, échec DNS via WebFetch) - laissé à null plutôt que de choisir arbitrairement",
+            "tx_per_day": "Blockscout MCP, direct_api_call chain_id=42161, /api/v2/stats/charts/transactions, dernier point du tableau chart_data daté 2026-10-22 (jour le plus récent complètement clos à l'heure de ce cycle)",
+            "active_addresses": "Blockscout MCP, direct_api_call chain_id=42161, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-10-19, to=2026-10-22 - dernier point daté 2026-10-22 (value=300326, retombé après le pic de 570079 du 2026-10-21 signalé au cycle précédent comme possiblement anormal)"
           }
         }
       ]

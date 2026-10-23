@@ -1326,6 +1326,74 @@
       ],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h51, actualités (last_checked_at) il y a 0h51, opportunités il y a 5h04 - rien à signaler."
+    },
+    {
+      "checked_at": "2026-10-21T08:51:20Z",
+      "site_reachable": false,
+      "files_ok": [
+        "verdicts.json",
+        "opportunities.json",
+        "engine-history.json",
+        "alerts.json",
+        "news.json",
+        "control-group.json",
+        "market-context.json",
+        "favoris-context.json",
+        "health-log.json"
+      ],
+      "files_broken": [],
+      "counts": {
+        "verdicts": 121,
+        "alerts": 193,
+        "opportunities": 5,
+        "news": 10,
+        "favoris_context_populated": 15
+      },
+      "note": "Site non vérifiable depuis cette session : le proxy sortant a refusé la connexion (403 / DNS introuvable) vers jaki2402-dev.github.io — ce n'est pas une preuve que le site est en panne. Les 9 fichiers de données sont des JSON valides et non vides ; index.html référence tous les scripts js/*.js présents. Volumes stables par rapport au passage du 20/10 (verdicts 115→121, alertes 192→193, opportunités 5, actualités 10, favoris 15) : aucune anomalie."
+    },
+    {
+      "checked_at": "2026-10-21T09:16:30Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~0h59)",
+        "data/news.json (last_checked_at, ~0h59)",
+        "data/opportunities.json (last_scan_at, ~5h04)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h59, actualités (last_checked_at) il y a 0h59, opportunités il y a 5h04 - rien à signaler."
+    },
+    {
+      "checked_at": "2026-10-22T08:51:21Z",
+      "site_reachable": false,
+      "files_ok": [
+        "data/verdicts.json",
+        "data/opportunities.json",
+        "data/engine-history.json",
+        "data/alerts.json",
+        "data/news.json",
+        "data/control-group.json",
+        "data/market-context.json",
+        "data/favoris-context.json",
+        "data/health-log.json"
+      ],
+      "files_broken": [],
+      "counts": {
+        "verdicts": 121,
+        "alerts": 199,
+        "opportunities": 6,
+        "news": 10,
+        "favoris_context_populated": 15
+      },
+      "note": "Site non joignable depuis l'environnement d'exécution (résolution DNS impossible pour jaki2402-dev.github.io, WebFetch et curl) : limite réseau du bac à sable, pas une panne constatée du site. Les 9 fichiers data/*.json sont des JSON valides et non vides ; index.html référence les 22 scripts js/*.js présents. Volumes stables par rapport au passage précédent (verdicts 121 → 121, alertes 193 → 199, opportunités 5 → 6, actualités 10 → 10, favoris 15 → 15) : aucune anomalie."
+    },
+    {
+      "checked_at": "2026-10-22T09:16:15Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~0h58)",
+        "data/news.json (last_checked_at, ~0h58)",
+        "data/opportunities.json (last_scan_at, ~5h04)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h58, actualités (last_checked_at) il y a 0h58, opportunités il y a 5h04 - rien à signaler."
     }
   ]
 }
