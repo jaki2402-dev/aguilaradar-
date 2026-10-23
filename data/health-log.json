@@ -1418,6 +1418,16 @@
         "favoris_context_populated": 15
       },
       "note": "Site non vérifiable depuis cet environnement (résolution DNS de jaki2402-dev.github.io bloquée : WebFetch et curl en échec) ; site_reachable laissé à null, ce n'est pas un constat de panne. Les 9 fichiers data/*.json sont des JSON valides et non vides ; index.html référence bien les 22 scripts js/*.js. Volumes stables par rapport au dernier passage (verdicts 121 → 121, alerts 199 → 201, opportunities 6 → 6, news 10 → 10, favoris 15 → 15) : aucune anomalie."
+    },
+    {
+      "checked_at": "2026-10-23T09:16:01Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~0h58)",
+        "data/news.json (last_checked_at, ~0h58)",
+        "data/opportunities.json (last_scan_at, ~5h04)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h58, actualités (last_checked_at) il y a 0h58, opportunités il y a 5h04 - rien à signaler."
     }
   ]
 }
