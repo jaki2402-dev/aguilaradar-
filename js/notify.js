@@ -234,6 +234,22 @@ async function subscribeToPush() {
   return Promise.race([subscribePromise, timeout]);
 }
 
+// Transmet l'abonnement au Worker (cloudflare-worker/worker.js, POST /subscribe) dès qu'il est
+// (re)créé, pour qu'il reste à jour sans copier-coller manuel dans PUSH_SUBSCRIPTION_JSON.
+// Best-effort : un échec (Worker non déployé, hors ligne) ne bloque jamais l'activation locale —
+// le copier-coller manuel reste disponible juste en dessous dans renderPushSection.
+async function postSubscriptionToWorker(subscription) {
+  try {
+    await fetch(PUSH_SUBSCRIBE_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(subscription.toJSON()),
+    });
+  } catch (e) {
+    console.error("Transmission de l'abonnement au Worker impossible (non bloquant) :", e);
+  }
+}
+
 function renderPushSection(subscription) {
   const el = document.getElementById("push-section");
   if (!el) return;
@@ -253,6 +269,7 @@ function renderPushSection(subscription) {
         btn.textContent = "Activation…";
         try {
           const sub = await subscribeToPush();
+          await postSubscriptionToWorker(sub);
           renderPushSection(sub);
         } catch (e) {
           console.error("Abonnement push impossible :", e);
@@ -307,6 +324,7 @@ function renderPushSection(subscription) {
       try {
         await subscription.unsubscribe();
         const fresh = await subscribeToPush();
+        await postSubscriptionToWorker(fresh);
         renderPushSection(fresh);
       } catch (e) {
         console.error("Régénération de l'abonnement push impossible :", e);

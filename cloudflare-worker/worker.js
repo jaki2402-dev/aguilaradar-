@@ -27,7 +27,17 @@
 //    aucune dépendance npm — voir cloudflare-worker/README.md pour la validation croisée de
 //    cette implémentation contre les bibliothèques de référence). Route GET /send-test-push
 //    (protégée par TEST_PUSH_SECRET) pour vérifier la livraison à la demande sans attendre le
-//    prochain passage du cron.
+//    prochain passage du cron. Route POST /send-digest (protégée par DIGEST_PUSH_SECRET,
+//    distinct de TEST_PUSH_SECRET) : utilisée par la routine Cowork "aguilaradar-digest-6h" pour
+//    envoyer SON push via ce Worker — réutilise VAPID_PRIVATE_KEY/VAPID_PUBLIC_KEY/
+//    PUSH_SUBSCRIPTION_JSON déjà configurés ici, au lieu que la routine garde sa propre copie de
+//    ces secrets dans son prompt (trouvé périmé le 23/10/2026 : copie figée du 12/08, jamais
+//    resynchronisée avec une rotation de clé — voir docs/journal-technique.md). Route POST
+//    /subscribe (23/10/2026) : capture automatiquement l'abonnement dès que js/notify.js le
+//    (re)crée, stocké dans PUSH_STATE (clé PUSH_SUBSCRIPTION_KV_KEY) — PUSH_SUBSCRIPTION_JSON
+//    reste le filet de secours tant que cette clé KV est vide. Vérif d'Origin + limite de
+//    20/heure (voir handleSubscribeRequest) : un filtre, pas une vraie protection — même limite
+//    que partout ailleurs dans ce fichier (code et site publics).
 //
 // 3) Écriture directe d'une transaction du portefeuille (fetch, POST /transaction) : reçoit
 //    {cgId, qty, invested} déjà calculé côté client (computeTransactionResult, js/portfolio.js —
@@ -56,6 +66,12 @@ const PUSH_NOTIFIED_IDS_KV_KEY = "notified_ids";
 const MAX_TRACKED_IDS = 500;
 const TX_RATE_LIMIT_PREFIX = "tx_attempts_";
 const TX_RATE_LIMIT_MAX_PER_HOUR = 20;
+// Abonnement transmis automatiquement par js/notify.js (POST /subscribe) quand il est (re)créé
+// côté navigateur, à la place du copier-coller manuel dans le secret PUSH_SUBSCRIPTION_JSON (qui
+// reste le filet de secours si cette clé KV est vide — voir getCurrentSubscription).
+const PUSH_SUBSCRIPTION_KV_KEY = "live_subscription";
+const SUBSCRIBE_RATE_LIMIT_PREFIX = "subscribe_attempts_";
+const SUBSCRIBE_RATE_LIMIT_MAX_PER_HOUR = 20;
 
 // X-Portfolio-Secret ajouté le 02/09 (route /transaction, voir handleTransactionRequest plus
 // bas) : sans lui dans cette liste, le préflight CORS du navigateur rejette la requête réelle
@@ -543,6 +559,15 @@ async function sendPushNotification(env, subscription, title, body, tag) {
   return res;
 }
 
+// Abonnement à utiliser pour tout envoi (cycle, test, digest) : celui transmis automatiquement
+// par /subscribe s'il existe, sinon le secret statique PUSH_SUBSCRIPTION_JSON (compatibilité
+// avant le premier /subscribe réel, ou si KV est vidé). Un seul endroit pour cette décision,
+// jamais dupliquée entre les 3 appelants.
+async function getCurrentSubscription(env) {
+  const live = await env.PUSH_STATE.get(PUSH_SUBSCRIPTION_KV_KEY);
+  return JSON.parse(live || env.PUSH_SUBSCRIPTION_JSON);
+}
+
 // Même construction d'id/titre/texte que checkForNewOpportunities (js/notify.js) pour les
 // opportunités. Pour les alertes en revanche, PAS le même filtre de type : notify.js ne
 // notifie que les types "opportunite"/"signal_precoce", mais alerts.json aujourd'hui n'émet
@@ -564,7 +589,7 @@ function buildNotifiableItems(opportunitiesData, alertsData) {
 // isBaseline (aucun état KV encore) : enregistre tout ce qui existe déjà sans notifier, sinon
 // le premier passage après déploiement envoie d'un coup toutes les alertes déjà accumulées.
 async function runPushCycle(env) {
-  const subscription = JSON.parse(env.PUSH_SUBSCRIPTION_JSON);
+  const subscription = await getCurrentSubscription(env);
   const [oppRes, alertsRes] = await Promise.all([
     fetch(`${GITHUB_DATA_BASE}/opportunities.json`),
     fetch(`${GITHUB_DATA_BASE}/alerts.json`),
@@ -598,6 +623,77 @@ async function runPushCycle(env) {
   return { total: items.length, sent, isBaseline };
 }
 
+// Point d'entrée de la route POST /send-digest — voir l'en-tête du fichier. Secret dédié
+// (DIGEST_PUSH_SECRET) plutôt que de réutiliser TEST_PUSH_SECRET : son état de configuration ne
+// dépend pas d'une autre route, et la routine qui l'appelle le voit nommément dans son prompt.
+// env.DIGEST_PUSH_SECRET absent (secret jamais posé) : 501 explicite, jamais un 401 trompeur.
+async function handleSendDigestRequest(request, env) {
+  if (!env.DIGEST_PUSH_SECRET) return json({ error: "not_configured" }, 501);
+
+  if (request.headers.get("X-Digest-Secret") !== env.DIGEST_PUSH_SECRET) {
+    return json({ error: "unauthorized" }, 401);
+  }
+
+  let body;
+  try {
+    body = await request.json();
+  } catch (e) {
+    return json({ error: "invalid_json" }, 400);
+  }
+
+  const title = String(body.title || "").slice(0, 100).trim();
+  const text = String(body.body || "").slice(0, 500).trim();
+  if (!title || !text) return json({ error: "empty_payload" }, 400);
+
+  try {
+    const subscription = await getCurrentSubscription(env);
+    await sendPushNotification(env, subscription, title, text, "aguilaradar-digest");
+    return json({ ok: true }, 200);
+  } catch (e) {
+    return json({ error: String((e && e.message) || e) }, 500);
+  }
+}
+
+// Forme minimale attendue d'un PushSubscription.toJSON() (voir js/notify.js) : juste assez pour
+// ne jamais stocker n'importe quoi dans KV, pas une validation cryptographique (pas le rôle d'un
+// filtre anti-curieux — voir handleSubscribeRequest).
+function isValidSubscription(sub) {
+  return !!sub
+    && typeof sub.endpoint === "string" && /^https:\/\//.test(sub.endpoint) && sub.endpoint.length < 2000
+    && !!sub.keys
+    && typeof sub.keys.p256dh === "string" && sub.keys.p256dh.length > 0 && sub.keys.p256dh.length < 200
+    && typeof sub.keys.auth === "string" && sub.keys.auth.length > 0 && sub.keys.auth.length < 100;
+}
+
+// Point d'entrée POST /subscribe — voir l'en-tête du fichier. PAS une vraie sécurité (même limite
+// que partout ailleurs ici : code et site publics, un secret côté client ne protège rien) : vérif
+// d'Origin + limite de 20/heure, un filtre anti-curieux. Pire cas si contourné : les push partent
+// vers un autre abonnement que celui de l'utilisateur réel — gênant, jamais une fuite de donnée
+// sensible (le contenu de ces push est déjà public, voir CLAUDE.md sur data/*.json).
+async function handleSubscribeRequest(request, env) {
+  if (request.headers.get("Origin") !== ALLOWED_ORIGIN) {
+    return json({ error: "unauthorized" }, 401);
+  }
+
+  const withinLimit = await checkAndBumpRateLimit(env, SUBSCRIBE_RATE_LIMIT_PREFIX, SUBSCRIBE_RATE_LIMIT_MAX_PER_HOUR);
+  if (!withinLimit) return json({ error: "rate_limited" }, 429);
+
+  let body;
+  try {
+    body = await request.json();
+  } catch (e) {
+    return json({ error: "invalid_json" }, 400);
+  }
+
+  if (!isValidSubscription(body)) return json({ error: "invalid_subscription" }, 400);
+
+  await env.PUSH_STATE.put(PUSH_SUBSCRIPTION_KV_KEY, JSON.stringify({
+    endpoint: body.endpoint,
+    keys: { p256dh: body.keys.p256dh, auth: body.keys.auth },
+  }));
+  return json({ ok: true }, 200);
+}
+
 // ---- Écriture directe du portefeuille (3e rôle, voir l'en-tête du fichier) --------------------
 
 function bytesToB64(bytes) {
@@ -617,16 +713,17 @@ function b64ToUtf8Text(b64) {
 }
 
 // Limite de tentatives par heure (compteur KV, réutilise le binding PUSH_STATE déjà lié pour le
-// rôle 2 — jamais besoin d'un 2e espace de noms à provisionner). expirationTtl (2h, pas de purge
-// manuelle) : le compteur de l'heure précédente disparaît de lui-même. Seule protection
-// supplémentaire raisonnable sans vrai serveur dédié contre un essai automatisé de deviner
-// env.PORTFOLIO_WRITE_SECRET — ralentit, ne bloque pas un attaquant patient (voir l'en-tête du
-// fichier sur les limites réelles de cette protection).
-async function checkAndBumpRateLimit(env) {
+// rôle 2 — jamais besoin d'un 2e espace de noms à provisionner), prefix/maxPerHour paramétrés pour
+// servir à /transaction ET /subscribe sans dupliquer cette logique. expirationTtl (2h, pas de
+// purge manuelle) : le compteur de l'heure précédente disparaît de lui-même. Seule protection
+// supplémentaire raisonnable sans vrai serveur dédié contre un essai automatisé de deviner un
+// secret, ou de prendre la main sur l'abonnement push — ralentit, ne bloque pas un attaquant
+// patient (voir l'en-tête du fichier sur les limites réelles de cette protection).
+async function checkAndBumpRateLimit(env, prefix, maxPerHour) {
   const hourBucket = Math.floor(Date.now() / 3600000);
-  const key = `${TX_RATE_LIMIT_PREFIX}${hourBucket}`;
+  const key = `${prefix}${hourBucket}`;
   const current = parseInt((await env.PUSH_STATE.get(key)) || "0", 10);
-  if (current >= TX_RATE_LIMIT_MAX_PER_HOUR) return false;
+  if (current >= maxPerHour) return false;
   await env.PUSH_STATE.put(key, String(current + 1), { expirationTtl: 7200 });
   return true;
 }
@@ -670,7 +767,7 @@ async function updatePortfolioPosition(env, { cgId, qty, invested }) {
 async function handleTransactionRequest(request, env) {
   if (!env.PORTFOLIO_WRITE_SECRET) return json({ error: "not_configured" }, 501);
 
-  const withinLimit = await checkAndBumpRateLimit(env);
+  const withinLimit = await checkAndBumpRateLimit(env, TX_RATE_LIMIT_PREFIX, TX_RATE_LIMIT_MAX_PER_HOUR);
   if (!withinLimit) return json({ error: "rate_limited" }, 429);
 
   if (request.headers.get("X-Portfolio-Secret") !== env.PORTFOLIO_WRITE_SECRET) {
@@ -709,7 +806,7 @@ export default {
         return json({ error: "unauthorized" }, 401);
       }
       try {
-        const subscription = JSON.parse(env.PUSH_SUBSCRIPTION_JSON);
+        const subscription = await getCurrentSubscription(env);
         await sendPushNotification(env, subscription, "AguilaRadar — test", "Si tu vois ceci, les notifications push fonctionnent.", "test-push");
         return json({ ok: true }, 200);
       } catch (e) {
@@ -726,6 +823,14 @@ export default {
 
     if (url.pathname === "/transaction") {
       return handleTransactionRequest(request, env);
+    }
+
+    if (url.pathname === "/send-digest") {
+      return handleSendDigestRequest(request, env);
+    }
+
+    if (url.pathname === "/subscribe") {
+      return handleSubscribeRequest(request, env);
     }
 
     let body;

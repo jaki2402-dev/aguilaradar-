@@ -732,3 +732,108 @@ le dossier historique, et la nouvelle règle vérifiée sans y toucher :
   coût de quota nul. Si un vrai problème apparaît sur la nouvelle règle, ce sera visible sur le
   site lui-même (`accuracy_strict_pct`, "Test réel") sans qu'une session doive le découvrir à
   l'aveugle comme celle du 06/10 l'a fait pour la décision du 11/10.
+
+### 23/10/2026 — P1 : pourquoi le push du digest était mort, et pourquoi « changer la clé » n'aurait pas suffi
+
+`CLAUDE.md` suspectait depuis le 05/10 une clé VAPID publique périmée dans le prompt de la routine
+`digest-6h` (différente de celle de `js/notify.js`, elle-même notée « changée le 23/09 »). Lecture
+du prompt complet de la routine (`get_trigger trig_01PieLv3mQo3T9K3CskGpSd4`, jamais faite avant —
+les sessions précédentes n'avaient vu que des extraits) : le diagnostic était dans la bonne
+direction mais incomplet.
+
+**Ce qui se passe réellement** : `digest-6h` n'utilise ni la clé de `js/notify.js` ni le Worker
+Cloudflare. Elle a sa **propre** paire de clés VAPID et son **propre** abonnement push (Apple Web
+Push), les trois capturés une seule fois le 12/08/2026 et jamais mis à jour — un script Node.js
+(`web-push`) écrit et exécuté à chaque passage, directement dans le prompt. Un abonnement push est
+verrouillé côté service (Apple) à la clé publique utilisée **au moment de sa création** : on ne
+peut pas remplacer juste la clé publique affichée quelque part, il faut la paire complète (privée +
+publique) ET un abonnement créé avec cette même paire. Ni la session ni l'utilisateur ne peuvent
+relire une clé privée VAPID une fois posée (secret Cloudflare write-only, ou — ici — jamais
+sauvegardée ailleurs que dans le prompt lui-même).
+
+**Deux pipelines de push indépendants dans ce projet**, découverts en lisant `cloudflare-worker/
+worker.js` en détail : (1) le Worker Cloudflare (`runPushCycle`, cron 15 min) pour les alertes et
+opportunités, avec ses propres secrets (`VAPID_PRIVATE_KEY`/`VAPID_PUBLIC_KEY`/
+`PUSH_SUBSCRIPTION_JSON`) — documenté, maintenu, re-synchronisable via la procédure déjà écrite
+dans `cloudflare-worker/README.md` (« Régénérer le code » sur le site → coller dans le secret) ;
+(2) la routine `digest-6h`, avec sa copie séparée, jamais touchée depuis sa création. Les deux ne
+se recoupent pas : la panne de l'un ne dit rien sur l'autre. D'où la question posée à l'utilisateur
+avant tout correctif (éviter de régénérer une clé pour rien, ou de rater un problème plus large) :
+reçoit-il encore les push alertes/opportunités ? Réponse : **oui** → pipeline (1) sain, aucune
+rotation de clé nécessaire, seule la routine (2) est à corriger.
+
+**Fix retenu** : plutôt que redonner à la routine une 2e copie fraîche des mêmes secrets (even
+plus fragile — elle se périmerait pareil à la prochaine rotation), la routine délègue désormais au
+pipeline (1), déjà entretenu. Nouvelle route `POST /send-digest` sur le Worker
+(`cloudflare-worker/worker.js`), protégée par un secret dédié `DIGEST_PUSH_SECRET` (distinct de
+`TEST_PUSH_SECRET` : son état ne doit pas dépendre d'une autre route, et la routine le voit
+nommément). Elle réutilise `sendPushNotification()`/`VAPID_PRIVATE_KEY`/`VAPID_PUBLIC_KEY`/
+`PUSH_SUBSCRIPTION_JSON` déjà en place — zéro nouveau secret VAPID, zéro abonnement dupliqué.
+4 tests ajoutés (`test/worker-push.test.js`, paire P-256 générée pour le test uniquement, sans
+rapport avec la vraie clé du projet) : secret absent → 501 explicite (jamais un 401 trompeur,
+même convention que `handleTransactionRequest`), mauvais secret → 401, charge utile vide → 400,
+succès → 200 avec le fetch effectivement appelé sur l'abonnement du Worker (pas un simulacre).
+830/830 tests au total après l'ajout.
+
+**Volontairement non fait** : construire un point d'entrée qui capture automatiquement un nouvel
+abonnement à chaque régénération côté navigateur (`js/notify.js` régénère déjà localement mais ne
+transmet jamais le résultat nulle part — vérifié en lisant le code, commentaire explicite sur ce
+choix). Techniquement faisable (le Worker a déjà un point d'entrée POST pour `/transaction`, le
+même principe marcherait ici), mais ça change un choix de design explicite et documenté
+(`cloudflare-worker/README.md` : « Pourquoi des étapes manuelles ici ») sans que ça soit nécessaire
+pour corriger P1 — proposé à l'utilisateur comme amélioration optionnelle séparée, pas construit
+sans qu'il tranche.
+
+**Reste à faire, uniquement par l'utilisateur** (aucun outil de cette session ne peut poser un
+secret Cloudflare ni coller dans une routine non éditable directement) : poser le secret
+`DIGEST_PUSH_SECRET` sur le Worker, coller le nouveau prompt de la routine (texte complet prêt
+dans le scratchpad de la session, secret inclus), confirmer le déploiement du Worker mis à jour
+(copie vers `jaki2402-dev/aguilaradar-assistant-ia` + push — dépôt de production, jamais sans
+confirmation explicite). Voir P1 dans `docs/feuille-de-route.md`.
+
+### 23/10/2026 (suite) — capture automatique de l'abonnement push (route POST /subscribe)
+
+Demande explicite de l'utilisateur (gratuit uniquement + attention à la sécurité) pour
+l'amélioration proposée en option juste au-dessus : au lieu que `js/notify.js` régénère
+l'abonnement côté navigateur sans jamais le transmettre nulle part (copier-coller manuel dans le
+secret Cloudflare `PUSH_SUBSCRIPTION_JSON` comme seul mécanisme jusqu'ici), le Worker capture
+désormais l'abonnement lui-même.
+
+**Coût réel** : nul. Le palier gratuit Cloudflare Workers KV autorise 100 000 lectures et 1 000
+écritures par jour ; `/subscribe` n'écrit que sur un clic « Activer »/« Régénérer » (quelques fois
+par mois dans la pratique), et `runPushCycle` (déjà en place, cron 15 min) lit déjà le KV pour
+`notified_ids` — une 2e clé lue au même endroit (`live_subscription`) ne change pas d'ordre de
+grandeur. Aucun nouveau service, aucune clé payante.
+
+**Sécurité, explicitement pas une vraie protection** (même limite que partout ailleurs dans ce
+Worker — code et site publics, un secret côté client ne protège jamais rien) : vérification de
+l'en-tête `Origin` + limite de 20 tentatives/heure (réutilise le mécanisme KV de `/transaction`,
+généralisé — `checkAndBumpRateLimit` prend maintenant un prefix/max en paramètre au lieu d'être
+câblé sur `/transaction` seul) + validation de forme (endpoint `https://`, clés présentes, tailles
+bornées). Pire cas si contourné : les push partent vers un autre abonnement que celui de
+l'utilisateur réel — gênant, jamais une fuite de donnée sensible (le contenu de ces push est déjà
+public, voir `CLAUDE.md` sur `data/*.json`). Dit explicitement à l'utilisateur plutôt que présenté
+comme une vraie sécurité.
+
+**Implémentation** : `getCurrentSubscription(env)` centralise la décision (KV `live_subscription`
+en premier, `PUSH_SUBSCRIPTION_JSON` en filet de secours) pour les 3 appelants existants
+(`runPushCycle`, `/send-test-push`, `/send-digest`) — plus aucun ne lit le secret statique
+directement. `js/notify.js` transmet l'abonnement (`postSubscriptionToWorker`, best-effort, jamais
+bloquant pour l'activation locale) aux 2 endroits où un abonnement frais apparaît : première
+activation et régénération. URL centralisée dans `js/config.js` (`PUSH_SUBSCRIBE_URL`), même
+convention que `PORTFOLIO_WRITE_URL`. `?v=` de `config.js`/`notify.js` bumpés dans `index.html`.
+
+**Tests** : `fakeKv` (`test/worker-push.test.js`) corrigé pour distinguer réellement les clés KV
+(une seule valeur "stored" partagée aurait mélangé `notified_ids` et `live_subscription` — bug de
+test silencieux, jamais détecté avant parce qu'aucun test précédent ne lisait 2 clés à la fois).
+4 tests `/subscribe` (origine refusée, forme invalide, limite de fréquence, et un test
+d'intégration prouvant que `runPushCycle` utilise bien l'abonnement capturé plutôt que le secret
+statique — volontairement rendu différent et invalide dans ce test pour le prouver). 3 tests
+`notify.js` (transmission à la régénération, à la première activation, résilience si le Worker est
+inaccessible). 837/837 au total.
+
+**Volontairement laissé tel quel** : `PUSH_SUBSCRIPTION_JSON` reste un secret Cloudflare (filet de
+secours), jamais supprimé — seule façon de démarrer le système avant le premier `/subscribe`
+réussi, ou si le KV est vidé. Rien de nouveau à faire par l'utilisateur au-delà de ce qui était
+déjà prévu pour P1 (déployer le Worker) — une fois déployé, le prochain clic « Régénérer » suffit,
+plus de copier-coller de `PUSH_SUBSCRIPTION_JSON` à faire à la main pour une rotation future.

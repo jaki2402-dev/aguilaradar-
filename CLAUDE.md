@@ -148,7 +148,13 @@ requête → l'ajouter à `corsHeaders()` (sinon `Failed to fetch` sans log) ; s
 retour navigateur valide un correctif CORS. `POST /transaction` : écrit `qty`/`invested` dans
 `portfolio.json` (secrets `GITHUB_WRITE_TOKEN`, `PORTFOLIO_WRITE_SECRET`, `PORTFOLIO_WRITE_URL`).
 Achat/vente/correction restent symétriques ; `invested` = coût de revient, jamais le produit de
-vente.
+vente. `POST /send-digest` (secret `DIGEST_PUSH_SECRET`) : envoie le push du digest 2×/jour avec
+les secrets push déjà configurés (`VAPID_*`/`PUSH_SUBSCRIPTION_JSON`) — la routine `digest-6h` ne
+garde plus sa propre copie de ces secrets (périmée depuis le 12/08, corrigé le 23/10/2026).
+`POST /subscribe` (23/10/2026, sans secret — vérif d'`Origin` + limite de fréquence seulement,
+jamais une vraie protection) : `js/notify.js` y transmet l'abonnement push dès qu'il est (re)créé,
+stocké dans le KV `PUSH_STATE` (clé `live_subscription`) ; `PUSH_SUBSCRIPTION_JSON` n'est plus que
+le filet de secours si ce KV est vide.
 
 ## Fichiers de données
 
@@ -172,6 +178,9 @@ vente.
 - `news.json` : `last_checked_at` à chaque cycle ; `last_updated_at` seulement si `items` change.
 - `news-feed.json` (≠ `news.json`) : fil des médias, robot `price-alerts` (`scripts/news-feed.mjs`,
   flux RSS publics), titres tels que publiés citant un favori, 7 j glissants, le plus récent EN TÊTE.
+- `digest.json` : seul fichier `data/` que la routine `digest-6h` (06h05/18h05 UTC) a le droit
+  d'écrire ; son push companion passe par `POST /send-digest` du Worker (voir Relais IA), plus par
+  une copie de clés VAPID dans son propre prompt.
 - `onchain-history.json` : un jour sans aucune métrique confirmée est sauté (jamais de ligne
   nulle), jamais de backfill.
 - `portfolio-history.json` : 1 point/jour écrit par la GitHub Action `portfolio-snapshot`
