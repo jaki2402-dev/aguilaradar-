@@ -904,8 +904,13 @@
       "horizons": {
         "j1": {
           "check_at": "2026-10-23T04:12:00Z",
-          "status": "pending",
-          "outcome": null
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 1085.235008,
+            "move_pct": -5.76,
+            "validated": false,
+            "checked_at": "2026-10-23T06:36:41Z"
+          }
         },
         "j3": {
           "check_at": "2026-10-25T04:12:00Z",
