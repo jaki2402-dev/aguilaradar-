@@ -1786,5 +1786,35 @@
     "sentiment": "négatif",
     "message": "FET : -6,70 % depuis l'émission du verdict ACHAT du 19/10 (0,19133 $ → 0,17851 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
     "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
+  },
+  {
+    "id": "alert-20261024-ctsi-rsi-survente",
+    "ticker_ou_theme": "CTSI",
+    "type": "signal_technique",
+    "signal_kind": "rsi_survente",
+    "triggered_at": "2026-10-24T01:45:08Z",
+    "sentiment": "neutre",
+    "message": "CTSI entre en zone de survente (RSI 14 j à 28) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : +6 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261024-jup-rsi-survente",
+    "ticker_ou_theme": "JUP",
+    "type": "signal_technique",
+    "signal_kind": "rsi_survente",
+    "triggered_at": "2026-10-24T01:45:08Z",
+    "sentiment": "neutre",
+    "message": "JUP entre en zone de survente (RSI 14 j à 27) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : +36 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261024-lpt-rsi-survente",
+    "ticker_ou_theme": "LPT",
+    "type": "signal_technique",
+    "signal_kind": "rsi_survente",
+    "triggered_at": "2026-10-24T01:45:08Z",
+    "sentiment": "neutre",
+    "message": "LPT entre en zone de survente (RSI 14 j à 27) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : −10 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
   }
 ]
