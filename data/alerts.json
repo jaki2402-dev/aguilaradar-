@@ -1816,5 +1816,15 @@
     "sentiment": "neutre",
     "message": "LPT entre en zone de survente (RSI 14 j à 27) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : −10 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
     "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261024-link-seuil",
+    "ticker_ou_theme": "LINK",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-24T17:33:39Z",
+    "verdict_id": "v-20261020-link",
+    "sentiment": "négatif",
+    "message": "LINK : -6,48 % depuis l'émission du verdict ACHAT du 20/10 (12,20 $ → 11,41 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   }
 ]
