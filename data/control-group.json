@@ -1,6 +1,6 @@
 {
-  "last_sampled_at": "2026-10-04T09:10:14Z",
-  "sample_size": 16,
+  "last_sampled_at": "2026-10-25T09:18:39Z",
+  "sample_size": 24,
   "items": [
     {
       "id": "cg-20260812-rain",
@@ -240,6 +240,126 @@
         "move_pct": -0.48,
         "validated": false,
         "resolved_at": "2026-10-18T14:09:47Z"
+      }
+    },
+    {
+      "id": "cg-20261025-ltc",
+      "ticker": "LTC",
+      "cgId": "litecoin",
+      "sampled_at": "2026-10-25T09:18:39Z",
+      "price_at_issue": 56.04,
+      "resolves_at": "2026-11-08T09:18:39Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20261025-sky",
+      "ticker": "SKY",
+      "cgId": "sky",
+      "sampled_at": "2026-10-25T09:18:39Z",
+      "price_at_issue": 0.068244,
+      "resolves_at": "2026-11-08T09:18:39Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20261025-aero",
+      "ticker": "AERO",
+      "cgId": "aerodrome-finance",
+      "sampled_at": "2026-10-25T09:18:39Z",
+      "price_at_issue": 0.672612,
+      "resolves_at": "2026-11-08T09:18:39Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20261025-xtz",
+      "ticker": "XTZ",
+      "cgId": "tezos",
+      "sampled_at": "2026-10-25T09:18:39Z",
+      "price_at_issue": 0.287665,
+      "resolves_at": "2026-11-08T09:18:39Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20261025-syrup",
+      "ticker": "SYRUP",
+      "cgId": "syrup",
+      "sampled_at": "2026-10-25T09:18:39Z",
+      "price_at_issue": 0.172367,
+      "resolves_at": "2026-11-08T09:18:39Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20261025-vsn",
+      "ticker": "VSN",
+      "cgId": "vision-3",
+      "sampled_at": "2026-10-25T09:18:39Z",
+      "price_at_issue": 0.03917169,
+      "resolves_at": "2026-11-08T09:18:39Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20261025-ath",
+      "ticker": "ATH",
+      "cgId": "aethir",
+      "sampled_at": "2026-10-25T09:18:39Z",
+      "price_at_issue": 0.00563332,
+      "resolves_at": "2026-11-08T09:18:39Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
+      }
+    },
+    {
+      "id": "cg-20261025-dydx",
+      "ticker": "DYDX",
+      "cgId": "dydx-chain",
+      "sampled_at": "2026-10-25T09:18:39Z",
+      "price_at_issue": 0.106931,
+      "resolves_at": "2026-11-08T09:18:39Z",
+      "status": "pending",
+      "outcome": {
+        "price_at_resolution": null,
+        "move_pct": null,
+        "validated": null,
+        "resolved_at": null
       }
     }
   ],
