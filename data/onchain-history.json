@@ -449,6 +449,18 @@
             "tx_per_day": "Blockscout MCP, direct_api_call chain_id=1, /api/v2/stats/charts/transactions, dernier point du tableau chart_data daté 2026-10-23 (jour le plus récent complètement clos à l'heure de ce cycle)",
             "active_addresses": "Blockscout MCP, direct_api_call chain_id=1, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-10-20, to=2026-10-23 - dernier point daté 2026-10-23 (value=541759)"
           }
+        },
+        {
+          "date": "2026-10-25",
+          "computed_at": "2026-10-25T08:30:00Z",
+          "tvl_usd": null,
+          "tx_per_day": 1721192,
+          "active_addresses": 473211,
+          "source": {
+            "tvl_usd": "non confirmé ce cycle - DefiLlama (api.llama.fi, CONNECT tunnel failed 403 via curl direct, reconfirmé ce cycle ; recherche WebSearch ciblée n'a trouvé aucune valeur datée avec certitude d'octobre 2026) - laissé à null plutôt que de choisir arbitrairement",
+            "tx_per_day": "Blockscout MCP, direct_api_call chain_id=1, /api/v2/stats/charts/transactions, dernier point du tableau chart_data daté 2026-10-24 (jour le plus récent complètement clos à l'heure de ce cycle)",
+            "active_addresses": "Blockscout MCP, direct_api_call chain_id=1, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-10-21, to=2026-10-24 - dernier point daté 2026-10-24 (value=473211)"
+          }
         }
       ]
     },
@@ -716,6 +728,18 @@
             "tvl_usd": "non confirmé ce cycle - même blocage réseau que ethereum (DefiLlama, échec DNS via WebFetch) - laissé à null plutôt que de choisir arbitrairement",
             "tx_per_day": "Blockscout MCP, direct_api_call chain_id=42161, /api/v2/stats/charts/transactions, dernier point du tableau chart_data daté 2026-10-23 (jour le plus récent complètement clos à l'heure de ce cycle)",
             "active_addresses": "Blockscout MCP, direct_api_call chain_id=42161, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-10-20, to=2026-10-23 - dernier point daté 2026-10-23 (value=565259) - suite directe de l'oscillation déjà signalée aux cycles précédents (201349 le 20/10, 570079 le 21/10, 300326 le 22/10) : série instable sur 4 jours consécutifs, valeur brute de l'API non corrigée faute de confirmation indépendante"
+          }
+        },
+        {
+          "date": "2026-10-25",
+          "computed_at": "2026-10-25T08:30:00Z",
+          "tvl_usd": null,
+          "tx_per_day": 1577564,
+          "active_addresses": 178481,
+          "source": {
+            "tvl_usd": "non confirmé ce cycle - DefiLlama (api.llama.fi, CONNECT tunnel failed 403 via curl direct, reconfirmé ce cycle ; recherche WebSearch ciblée n'a trouvé aucune valeur datée avec certitude d'octobre 2026) - laissé à null plutôt que de choisir arbitrairement",
+            "tx_per_day": "Blockscout MCP, direct_api_call chain_id=42161, /api/v2/stats/charts/transactions, dernier point du tableau chart_data daté 2026-10-24 (jour le plus récent complètement clos à l'heure de ce cycle)",
+            "active_addresses": "Blockscout MCP, direct_api_call chain_id=42161, /stats-service/api/v1/lines/activeAccounts, resolution=DAY, from=2026-10-21, to=2026-10-24 - dernier point daté 2026-10-24 (value=178481) - série toujours instable sur plusieurs jours consécutifs (570079 le 21/10, 300326 le 22/10, 565259 le 23/10, 178481 le 24/10), valeur brute de l'API non corrigée faute de confirmation indépendante, cohérent avec l'oscillation déjà signalée aux cycles précédents"
           }
         }
       ]
