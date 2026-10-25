@@ -1462,6 +1462,30 @@
       ],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h59, actualités (last_checked_at) il y a 0h59, opportunités il y a 5h04 - rien à signaler."
+    },
+    {
+      "checked_at": "2026-10-25T08:51:23Z",
+      "site_reachable": false,
+      "files_ok": [
+        "data/verdicts.json",
+        "data/opportunities.json",
+        "data/engine-history.json",
+        "data/alerts.json",
+        "data/news.json",
+        "data/control-group.json",
+        "data/market-context.json",
+        "data/favoris-context.json",
+        "data/health-log.json"
+      ],
+      "files_broken": [],
+      "counts": {
+        "verdicts": 122,
+        "alerts": 209,
+        "opportunities": 5,
+        "news": 10,
+        "favoris_context_populated": 15
+      },
+      "note": "Site non joignable depuis l'environnement de la routine (résolution DNS impossible pour jaki2402-dev.github.io, comme au passage précédent) : sans doute une limite réseau du bac à sable, non vérifiable ici. Les 9 fichiers JSON sont valides et non vides ; index.html référence tous les scripts js/*.js. Volumes stables (verdicts 121→122, alertes 207→209, opportunités 6→5, variation normale ; actualités 10, favoris 15/15) : aucune anomalie d'effacement."
     }
   ]
 }
