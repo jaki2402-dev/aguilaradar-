@@ -54,9 +54,9 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-25T08:25:00Z",
+    "last_success_at": "2026-10-25T16:19:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 25/10/2026 08h16 UTC : 1 nouveau verdict émis (CTSI, seul ticker sans verdict pending ; aucun verdict dû depuis >6h, resolve-due couvre la résolution). Veille actualités : 2 recherches WebSearch (fear&greed du jour, hack/exploit/réglementaire majeur) — rien de nouveau au-delà des items déjà connus. Aucun outil mcp__ utilisé."
+    "last_failure_reason": "Cycle du 25/10/2026 16h16 UTC : cycle court (aucun verdict dû depuis >6h, aucun ticker sans verdict pending — 15/15 couverts). Veille actualités : 2 recherches WebSearch (fear&greed du jour, hack/exploit/réglementaire majeur) — aucune lecture datée fiable du jour trouvée, rien de nouveau au-delà des items déjà connus. Aucun outil mcp__ utilisé."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-25T08:25:00Z",
