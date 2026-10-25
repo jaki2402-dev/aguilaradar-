@@ -804,79 +804,6 @@
       }
     },
     {
-      "id": "opp-20261008-near",
-      "ticker": "NEAR",
-      "name": "NEAR Protocol",
-      "cgId": "near",
-      "image": "https://coin-images.coingecko.com/coins/images/10365/large/near.jpg?1696510367",
-      "price_eur": 4.774309,
-      "market_cap": 6966681646,
-      "market_cap_rank": 20,
-      "change_24h_pct": 8,
-      "change_7d_pct": -0.15,
-      "change_30d_pct": 132.06,
-      "ath_change_pct": null,
-      "opportunity_score": 4.3,
-      "recognized": true,
-      "sparkline": [],
-      "tags": [
-        "Rallye soutenu 30j",
-        "Layer 1"
-      ],
-      "reason": "Entree au Top 20 (rang 20), rallye soutenu sur 30j (+132%, confirme via get-coin-history au 08/09/2026) avec acceleration du jour (+8.0% sur 24h). 7j quasi stable (-0.15%), le gros du mouvement date de la semaine precedente puis consolidation avant la relance du jour. Donnee ATH indisponible via le connecteur MCP actuel (omise, non estimee).",
-      "flagged_at": "2026-10-08T04:09:57Z",
-      "price_at_flag": 4.774309,
-      "threshold_pct": 5,
-      "price_refreshed_at": "2026-10-08T04:09:57Z",
-      "horizons": {
-        "j1": {
-          "check_at": "2026-10-09T04:09:57Z",
-          "status": "resolved",
-          "outcome": {
-            "price_at_check": 3.978882984584017,
-            "move_pct": -16.66,
-            "validated": false,
-            "checked_at": "2026-10-09T06:36:33Z"
-          }
-        },
-        "j3": {
-          "check_at": "2026-10-11T04:09:57Z",
-          "status": "resolved",
-          "outcome": {
-            "price_at_check": 4.722843,
-            "move_pct": -1.08,
-            "validated": false,
-            "checked_at": "2026-10-11T06:36:06Z"
-          }
-        },
-        "j7": {
-          "check_at": "2026-10-15T04:09:57Z",
-          "status": "resolved",
-          "outcome": {
-            "price_at_check": 4.360156223714307,
-            "move_pct": -8.67,
-            "validated": false,
-            "checked_at": "2026-10-15T05:14:10Z"
-          }
-        },
-        "j14": {
-          "check_at": "2026-10-22T04:09:57Z",
-          "status": "resolved",
-          "outcome": {
-            "price_at_check": 4.683214,
-            "move_pct": -1.91,
-            "validated": false,
-            "checked_at": "2026-10-22T06:36:28Z"
-          }
-        },
-        "m6": {
-          "check_at": "2027-04-08T04:09:57Z",
-          "status": "pending",
-          "outcome": null
-        }
-      }
-    },
-    {
       "id": "opp-20261022-zec",
       "ticker": "ZEC",
       "name": "Zcash",
@@ -4298,6 +4225,81 @@
       },
       "archived_at": "2026-10-16T04:13:00Z",
       "archived_reason": "Retournement specifique a l'actif confirme sur 2 jours consecutifs (-12,18% puis -16,89% sur 24h) alors que le marche global est en hausse ce jour-la (BTC +1,39%, ETH +3,15%, NEAR +11,98%) - divergence claire, pas un mouvement de marche. Rang par capitalisation tombe de #19 (14/10) a #33 (15/10) puis #38 (16/10). Profil coherent avec un essoufflement post-pic (deja signale 'a risque eleve, momentum non confirme' lors de l'ajout)."
+    },
+    {
+      "id": "opp-20261008-near",
+      "ticker": "NEAR",
+      "name": "NEAR Protocol",
+      "cgId": "near",
+      "image": "https://coin-images.coingecko.com/coins/images/10365/large/near.jpg?1696510367",
+      "price_eur": 4.774309,
+      "market_cap": 6966681646,
+      "market_cap_rank": 20,
+      "change_24h_pct": 8,
+      "change_7d_pct": -0.15,
+      "change_30d_pct": 132.06,
+      "ath_change_pct": null,
+      "opportunity_score": 4.3,
+      "recognized": true,
+      "sparkline": [],
+      "tags": [
+        "Rallye soutenu 30j",
+        "Layer 1"
+      ],
+      "reason": "Entree au Top 20 (rang 20), rallye soutenu sur 30j (+132%, confirme via get-coin-history au 08/09/2026) avec acceleration du jour (+8.0% sur 24h). 7j quasi stable (-0.15%), le gros du mouvement date de la semaine precedente puis consolidation avant la relance du jour. Donnee ATH indisponible via le connecteur MCP actuel (omise, non estimee).",
+      "flagged_at": "2026-10-08T04:09:57Z",
+      "price_at_flag": 4.774309,
+      "threshold_pct": 5,
+      "price_refreshed_at": "2026-10-08T04:09:57Z",
+      "horizons": {
+        "j1": {
+          "check_at": "2026-10-09T04:09:57Z",
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 3.978882984584017,
+            "move_pct": -16.66,
+            "validated": false,
+            "checked_at": "2026-10-09T06:36:33Z"
+          }
+        },
+        "j3": {
+          "check_at": "2026-10-11T04:09:57Z",
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 4.722843,
+            "move_pct": -1.08,
+            "validated": false,
+            "checked_at": "2026-10-11T06:36:06Z"
+          }
+        },
+        "j7": {
+          "check_at": "2026-10-15T04:09:57Z",
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 4.360156223714307,
+            "move_pct": -8.67,
+            "validated": false,
+            "checked_at": "2026-10-15T05:14:10Z"
+          }
+        },
+        "j14": {
+          "check_at": "2026-10-22T04:09:57Z",
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 4.683214,
+            "move_pct": -1.91,
+            "validated": false,
+            "checked_at": "2026-10-22T06:36:28Z"
+          }
+        },
+        "m6": {
+          "check_at": "2027-04-08T04:09:57Z",
+          "status": "pending",
+          "outcome": null
+        }
+      },
+      "archived_at": "2026-10-25T04:13:00Z",
+      "archived_reason": "Declin specifique a l'actif confirme sur 3 cycles consecutifs, plus severe que le marche a chaque fois (-3,37% le 23/10, -6,19% le 24/10, -2,92% le 25/10 sur 24h) : -11,6% sur 7j, declin lisible sur la 2e moitie de la semaine dans le sparkline (pic ~5,3 USD en milieu de semaine, repli regulier jusqu'a ~4,46-4,49 USD)."
     }
   ],
   "last_checked_at": "2026-09-14T16:20:00Z"
