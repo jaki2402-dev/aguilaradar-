@@ -5026,5 +5026,62 @@
       "verdict_correct": null,
       "resolved_at": null
     }
+  },
+  {
+    "id": "v-20261025-ctsi",
+    "issued_at": "2026-10-25T08:20:00Z",
+    "asset": "cartesi",
+    "ticker": "CTSI",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 62,
+    "signals_used": [
+      "RSI 14 j à 18,4 : survente",
+      "Cours 3,3 % au-dessus de la moyenne 200 jours",
+      "MACD négatif (-0,000612) : signal baissier à court terme",
+      "Mouvement 7 j : -10,5 % ; 30 j : -3,5 % ; 90 j : +24,6 %",
+      "Tendance de fond haussière (+3 % vs moyenne 200 j), élan négatif ; RSI 18 : survente."
+    ],
+    "reasoning": "Règle retour_moyenne_rsi : RSI 14 jours à 18,4 (survente), confiance mesurée 62 % sur 729 cas (contexte bitcoin en élan négatif, sentiment neutre 45-54). Tendance de fond restée haussière (cours 3,3 % au-dessus de sa moyenne 200 jours, à 0,028 $ au moment de l'émission), mais élan court terme négatif : MACD négatif (-0,000612), signal technique opposé au verdict ACHAT, et recul de -10,5 % sur 7 jours malgré un rebond de +24,6 % sur 90 jours. Thèse hebdo \"Attendre\" (conviction 4/10) : aucun catalyseur confirmé, calendrier de déblocages non fiable, jeton toujours à -98,3 % de son plus haut historique et sans mise à jour officielle depuis début septembre — contexte à surveiller, sans contredire franchement le signal technique (conviction faible, pas de recommandation \"Réduire\"). Régime macro neutre : Fed restrictive (FOMC le 28/10) mais flux ETF BTC/ETH positifs non reconfirmés depuis plusieurs séances — signaux macro contradictoires retenus comme tels.",
+    "resume": "RSI 18 en survente déclenche le signal ACHAT (retour à la moyenne), mais MACD baissier et thèse hebdo Attendre (conviction 4) incitent à la vigilance.",
+    "price_at_issue": 0.02798527,
+    "currency": "USD",
+    "resolves_at": "2026-11-08T08:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 62,
+      "sample_n": 729,
+      "context": "bitcoin en élan négatif, sentiment neutre (45-54)",
+      "context_n": 50,
+      "basis": "RSI 18 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": []
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-25T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 18.4,
+      "sma200_gap_pct": 3.3,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
   }
 ]
