@@ -4190,7 +4190,7 @@
     "price_at_issue": 0.03153989,
     "currency": "USD",
     "resolves_at": "2026-10-25T00:18:00Z",
-    "status": "pending",
+    "status": "resolved",
     "threshold_pct": 5,
     "regime_at_issue": "neutre",
     "signal_consensus": {
@@ -4220,11 +4220,11 @@
       "macd": "baissier"
     },
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.0282823,
+      "actual_move_pct": -10.33,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-10-25T01:22:06Z"
     }
   },
   {
