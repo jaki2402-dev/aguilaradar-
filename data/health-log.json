@@ -1520,6 +1520,16 @@
         "favoris_context_populated": 15
       },
       "note": "Site non vérifiable depuis cet environnement : le domaine github.io est bloqué par le proxy de sortie (ENOTFOUND / connexion refusée), ce qui ne prouve pas une panne du site. Les 9 fichiers de données sont des JSON valides et non vides, index.html référence bien les 22 scripts js/ présents. Volumes stables par rapport au dernier passage avec compteurs (25/10 : verdicts 122, alertes 209→212, opportunités 5, actualités 10, favoris 15) : aucune anomalie."
+    },
+    {
+      "checked_at": "2026-10-26T09:17:00Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~0h52)",
+        "data/news.json (last_checked_at, ~0h52)",
+        "data/opportunities.json (last_scan_at, ~5h05)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h52, actualités (last_checked_at) il y a 0h52, opportunités il y a 5h05 - rien à signaler."
     }
   ]
 }
