@@ -54,9 +54,9 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-27T00:17:27Z",
+    "last_success_at": "2026-10-27T08:24:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 27/10/2026 00h16 UTC : cycle court (aucun verdict dû depuis >6h, aucun ticker sans verdict pending - 15/15 couverts). Veille actualités : 2 recherches WebSearch (hack/exploit majeur, fear&greed du jour) - aucun hack/exploit daté du 26-27/10/2026 trouvé, aucune lecture fear&greed datée du jour trouvée (résultats obsolètes). Aucun outil mcp__ utilisé."
+    "last_failure_reason": "Cycle du 27/10/2026 08h22 UTC : cycle court (aucun verdict du depuis >6h, aucun ticker sans verdict pending - 15/15 couverts). Veille actualites : 2 recherches WebSearch (hack/exploit majeur, fear&greed du jour) - aucun hack/exploit date du 26-27/10/2026 trouve, aucune lecture fear&greed datee du jour trouvee (resultats obsoletes, API alternative.me non joignable via le proxy reseau). Aucun outil mcp__ utilise."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-25T08:25:00Z",
