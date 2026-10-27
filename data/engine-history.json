@@ -54,9 +54,9 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-26T16:20:59Z",
+    "last_success_at": "2026-10-27T00:17:27Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 26/10/2026 16h15 UTC : cycle court (aucun verdict dû depuis >6h, aucun ticker sans verdict pending - 15/15 couverts). Veille actualités : 2 recherches WebSearch (fear&greed du jour, hack/exploit majeur) - aucune lecture fiable datée du jour trouvée pour le fear&greed (seule donnée datée retrouvée : 5/100 du 23/02/2026, trop ancienne), aucun hack/exploit majeur nouveau daté du 23-26/10/2026 au-delà du Bitget (24/09) déjà connu. Aucun outil mcp__ utilisé."
+    "last_failure_reason": "Cycle du 27/10/2026 00h16 UTC : cycle court (aucun verdict dû depuis >6h, aucun ticker sans verdict pending - 15/15 couverts). Veille actualités : 2 recherches WebSearch (hack/exploit majeur, fear&greed du jour) - aucun hack/exploit daté du 26-27/10/2026 trouvé, aucune lecture fear&greed datée du jour trouvée (résultats obsolètes). Aucun outil mcp__ utilisé."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-25T08:25:00Z",
