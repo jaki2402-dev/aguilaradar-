@@ -54,18 +54,18 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-27T08:24:00Z",
+    "last_success_at": "2026-10-27T16:25:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 27/10/2026 08h22 UTC : cycle court (aucun verdict du depuis >6h, aucun ticker sans verdict pending - 15/15 couverts). Veille actualites : 2 recherches WebSearch (hack/exploit majeur, fear&greed du jour) - aucun hack/exploit date du 26-27/10/2026 trouve, aucune lecture fear&greed datee du jour trouvee (resultats obsoletes, API alternative.me non joignable via le proxy reseau). Aucun outil mcp__ utilise."
+    "last_failure_reason": "Cycle du 27/10/2026 16h17 UTC : 3 nouveaux verdicts émis (GRT, PEAQ, TIA — seuls tickers sans verdict pending, aucun dû >6h). Règle retour_moyenne_rsi (technical-favoris.json, as_of 27/10 00h00 UTC) : ACHAT, confiance 64 % sur les trois, RSI en zone non-surachat (28,7/31,7/52,1) malgré un MACD baissier sur les trois actifs. Veille actualités : 2 recherches WebSearch (hack/exploit majeur, fear&greed du jour) — aucun hack/exploit daté du 26-27/10/2026 trouvé, aucune lecture fear&greed datée du jour trouvée (résultats obsolètes). Aucun outil mcp__ utilisé."
   },
   "macro_regime": {
-    "last_computed_at": "2026-10-25T08:25:00Z",
+    "last_computed_at": "2026-10-27T16:25:00Z",
     "regime": "neutre",
     "fear_greed_value": 57,
     "btc_dominance_pct": 59.35,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Cycle du 25/10 08h16 UTC. Régime reconduit neutre : data/market-context.json (lecture seule) toujours Fed hawkish (fourchette 3,75-4,00 %, prochain FOMC le 28/10, rendement 10 ans non confirmé, reconduit sans nouvelle recherche au cycle du 24/10) ; flux ETF spot BTC nets positifs mais en net ralentissement (+23,16 M$ le 20/10, une seule source non recoupée, après +526,7 M$ le 19/10), ETH non remis à jour depuis le 13/10 ; stablecoins à 11,22 % de dominance du marché crypto, en légère hausse mais attribuée au recul du marché total plutôt qu'à une fuite vers les stablecoins (cycle du 24/10). Signaux macro contradictoires (Fed restrictive vs flux ETF BTC positifs mais faiblissants), retenus comme tels plutôt que tranchés arbitrairement.",
-    "resume": "Régime macro neutre, reconduit : Fed restrictive mais flux ETF BTC positifs, en net ralentissement, tempèrent."
+    "note": "Cycle du 27/10 16h17 UTC. Régime neutre : data/market-context.json (lecture seule) toujours Fed hawkish (fourchette 3,75-4,00 %, décision FOMC le 28/10 à 14h ET, maintien jugé probable ~80 %, rendement 10 ans non confirmé) ; flux ETF spot BTC nets positifs mais modestes (+23,16 M$ le 20/10, une seule source non recoupée, après +526,7 M$ le 19/10), ETH non remis à jour depuis le 13/10 ; stablecoins à 11,42 % de dominance du marché crypto, variation 7 jours non disponible. Signaux macro contradictoires (Fed restrictive vs flux ETF BTC positifs), retenus comme tels plutôt que tranchés arbitrairement — décision FOMC imminente (28/10).",
+    "resume": "Régime macro neutre : Fed restrictive avant sa décision du 28/10, mais flux ETF BTC toujours nets positifs — signaux contradictoires."
   },
   "paper_portfolio_stats": {
     "last_computed_at": "2026-09-13T23:26:00Z",
