@@ -54,9 +54,9 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-28T08:20:00Z",
+    "last_success_at": "2026-10-28T16:19:28Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 28/10/2026 08h15 UTC : 3 nouveaux verdicts émis (AIOZ, ARB, INJ — seuls tickers sans verdict pending, aucun dû >6h, résolution déléguée à resolve-due). Règle retour_moyenne_prudent (technical-favoris.json, as_of 28/10 00h00 UTC) : ACHAT, confiance 63 % sur les trois, RSI hors surachat (29,6/35,8/48) malgré un MACD baissier sur les trois actifs. Veille actualités : 3 recherches WebSearch (fear&greed, hack/exploit, actualité générale/régulation) — aucun résultat daté du 28/10/2026 trouvé pour aucune des trois. Aucun outil mcp__ utilisé."
+    "last_failure_reason": "Cycle du 28/10/2026 16h15 UTC : cycle court, rien de dû (aucun verdict pending >6h après resolves_at) et aucun ticker sans verdict pending (résolution déléguée à resolve-due). Veille actualités : 2 recherches WebSearch (hack/exploit, fear&greed) — aucun développement daté du 28/10/2026 trouvé pour les deux ; last_checked_at mis à jour, items inchangés. Aucun outil mcp__ utilisé."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-28T08:20:00Z",
