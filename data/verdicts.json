@@ -5258,5 +5258,180 @@
       "verdict_correct": null,
       "resolved_at": null
     }
+  },
+  {
+    "id": "v-20261028-jup",
+    "issued_at": "2026-10-28T00:20:00Z",
+    "asset": "jupiter-exchange-solana",
+    "ticker": "JUP",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 64,
+    "signals_used": [
+      "RSI 14 j à 29,1 : survente",
+      "Cours 24,7 % au-dessus de la moyenne 200 jours",
+      "MACD négatif (-0,00633), signal baissier",
+      "Mouvement 7 j : -5,6 % ; 30 j : -18 %",
+      "Tendance de fond haussière (+25 % vs moyenne 200 j), élan négatif ; RSI 29 : survente."
+    ],
+    "reasoning": "Règle retour_moyenne_rsi : RSI 14 jours à 29,1 (survente), confiance mesurée 64 % sur 724 cas (contexte bitcoin en élan négatif, sentiment neutre 45-54). Tendance de fond restée haussière (cours 24,7 % au-dessus de sa moyenne 200 jours), mais élan court terme négatif : MACD négatif (-0,00633), signal technique opposé au verdict ACHAT, et recul de -5,6 % sur 7 jours et -18 % sur 30 jours malgré un rebond de +44,9 % sur 90 jours. Vigilance signalée par le robot : la règle s'est trompée 68 % du temps après un repli depuis le plus haut (306 cas). Thèse hebdo \"Attendre\" (conviction 4/10) : rachat via la Litterbox Trust toujours actif, mais gouvernance DAO toujours en pause depuis juin 2025 sans reprise de vote confirmée — contexte à surveiller, sans contredire franchement le signal technique (conviction faible, pas de recommandation \"Réduire\"). Régime macro neutre : Fed restrictive (décision FOMC aujourd'hui, 28/10) mais flux ETF BTC positifs (20/10) — signaux macro contradictoires retenus comme tels, décision Fed imminente à suivre.",
+    "resume": "RSI 29 en survente déclenche ACHAT (retour à la moyenne), mais MACD baissier et gouvernance DAO en pause incitent à la prudence.",
+    "price_at_issue": 0.279456,
+    "currency": "USD",
+    "resolves_at": "2026-11-04T00:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 64,
+      "sample_n": 724,
+      "context": "bitcoin en élan négatif, sentiment neutre (45-54)",
+      "context_n": 48,
+      "verdict": "ACHAT",
+      "basis": "RSI 29 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": [
+        "Repli depuis le plus haut haut : la règle s'y est trompée 68 % du temps (306 cas)"
+      ]
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-27T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 29.1,
+      "sma200_gap_pct": 24.7,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261028-link",
+    "issued_at": "2026-10-28T00:20:00Z",
+    "asset": "chainlink",
+    "ticker": "LINK",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 64,
+    "signals_used": [
+      "RSI 14 j à 28,4 : survente",
+      "Cours 14,3 % au-dessus de la moyenne 200 jours",
+      "MACD négatif (-0,131), signal baissier",
+      "Mouvement 7 j : -5,5 % ; 30 j : -19,5 %",
+      "Tendance de fond haussière (+14 % vs moyenne 200 j), élan négatif ; RSI 28 : survente."
+    ],
+    "reasoning": "Règle retour_moyenne_rsi : RSI 14 jours à 28,4 (survente), confiance mesurée 64 % sur 724 cas (contexte bitcoin en élan négatif, sentiment neutre 45-54). Tendance de fond restée haussière (cours 14,3 % au-dessus de sa moyenne 200 jours), mais élan court terme négatif : MACD négatif (-0,131), signal technique opposé au verdict ACHAT, et recul de -5,5 % sur 7 jours et -19,5 % sur 30 jours malgré un rebond de +34,9 % sur 90 jours. Vigilance signalée par le robot : la règle s'est trompée 68 % du temps après un repli depuis le plus haut (306 cas). Thèse hebdo \"Conserver\" (conviction 7/10) : CCIP revendique plus de 21 Md$ de volume cumulé transféré, mais sans actualité nouvelle confirmée d'octobre 2026, et la TVL/staking natif reste introuvable sur DefiLlama — contexte à surveiller, sans contredire franchement le signal technique (recommandation \"Conserver\", pas \"Réduire\"). Régime macro neutre : Fed restrictive (décision FOMC aujourd'hui, 28/10) mais flux ETF BTC positifs (20/10) — signaux macro contradictoires retenus comme tels, décision Fed imminente à suivre.",
+    "resume": "RSI 28 en survente déclenche ACHAT (retour à la moyenne), mais MACD baissier et absence de TVL native incitent à la vigilance.",
+    "price_at_issue": 11.55,
+    "currency": "USD",
+    "resolves_at": "2026-11-04T00:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 64,
+      "sample_n": 724,
+      "context": "bitcoin en élan négatif, sentiment neutre (45-54)",
+      "context_n": 48,
+      "verdict": "ACHAT",
+      "basis": "RSI 28 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": [
+        "Repli depuis le plus haut haut : la règle s'y est trompée 68 % du temps (306 cas)"
+      ]
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-27T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 28.4,
+      "sma200_gap_pct": 14.3,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261028-ondo",
+    "issued_at": "2026-10-28T00:20:00Z",
+    "asset": "ondo-finance",
+    "ticker": "ONDO",
+    "verdict": "ACHAT",
+    "horizon_days": 7,
+    "confidence_pct": 64,
+    "signals_used": [
+      "RSI 14 j à 34 (zone neutre)",
+      "Cours 12,4 % au-dessus de la moyenne 200 jours",
+      "MACD négatif (-0,00717), signal baissier",
+      "Mouvement 7 j : -4,6 % ; 30 j : -22,8 %",
+      "Tendance de fond haussière (+12 % vs moyenne 200 j), élan négatif ; RSI 34 neutre."
+    ],
+    "reasoning": "Règle retour_moyenne_rsi : RSI 14 jours à 34 (zone neutre, loin de la survente), confiance mesurée 64 % sur 724 cas (contexte bitcoin en élan négatif, sentiment neutre 45-54). Tendance de fond haussière (cours 12,4 % au-dessus de sa moyenne 200 jours), mais élan court terme négatif : MACD négatif (-0,00717), signal technique opposé au verdict ACHAT, et recul de -4,6 % sur 7 jours et -22,8 % sur 30 jours (quasi stable sur 90 jours, +2,3 %). Thèse hebdo \"Conserver\" (conviction 5/10) : expansion RWA toujours en cours, mais litige de gouvernance Allman v. Ondo Finance toujours non tranché au Delaware Court of Chancery (dernière couverture fin juillet 2026, rien de nouveau trouvé ce cycle) — contexte à surveiller, sans contredire franchement le signal technique (conviction modérée, pas de recommandation \"Réduire\"). Régime macro neutre : Fed restrictive (décision FOMC aujourd'hui, 28/10) mais flux ETF BTC positifs (20/10) — signaux macro contradictoires retenus comme tels, décision Fed imminente à suivre.",
+    "resume": "RSI 34 neutre déclenche ACHAT (retour à la moyenne), mais MACD baissier et litige de gouvernance Allman incitent à la prudence.",
+    "price_at_issue": 0.419155,
+    "currency": "USD",
+    "resolves_at": "2026-11-04T00:20:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "neutre",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "neutre",
+      "accord_count": 2
+    },
+    "decision_rule": "retour_moyenne_rsi",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_rsi",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 64,
+      "sample_n": 724,
+      "context": "bitcoin en élan négatif, sentiment neutre (45-54)",
+      "context_n": 48,
+      "verdict": "ACHAT",
+      "basis": "RSI 34 < 70 : pas d'excès, rebond ou poursuite plus fréquents que la stabilité",
+      "vigilance": []
+    },
+    "technical_at_issue": {
+      "as_of": "2026-10-27T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 34,
+      "sma200_gap_pct": 12.4,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
   }
 ]
