@@ -160,6 +160,17 @@
       "validation_score_before_pct": 25.61,
       "validation_score_after_pct": null,
       "status": "accepted"
+    },
+    {
+      "id": "corr-auto-20261028-retour_moyenne_prudent",
+      "logged_at": "2026-10-28T02:28:56Z",
+      "trigger": "Auto-sélection quotidienne de la règle du moteur (GitHub Action technical-daily)",
+      "what": "Sur les 30 derniers verdicts vérifiés (indicateurs connus le jour de l'émission) : tendance_rsi 13.3 %, retour_moyenne_rsi 13.3 %, retour_moyenne_marche 13.3 %, tendance_pure 10 %, marche_baissier_protege 13.3 %, sentiment_marche 6.7 %, sentiment_marche_rsi 13.3 %, retour_moyenne_prudent 10 %, regle_apprise 56.7 %.",
+      "why": "La règle « retour_moyenne_prudent » fait mieux que « retour_moyenne_rsi » d'au moins 5 points sur au moins 20 verdicts : seuil de changement automatique atteint.",
+      "action": "Règle du moteur : retour_moyenne_rsi → retour_moyenne_prudent (docs/routines/cycle-2h-verdict.md §2 : le cycle applique proposed_verdict, qui suit la règle choisie).",
+      "validation_score_before_pct": 13.3,
+      "validation_score_after_pct": null,
+      "status": "accepted"
     }
   ]
 }
