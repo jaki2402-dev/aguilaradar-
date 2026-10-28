@@ -1588,6 +1588,16 @@
         "favoris_context_populated": 15
       },
       "note": "Les 9 fichiers JSON sont valides et non vides ; index.html référence bien les 22 scripts js/*.js. Aucune chute de volume (verdicts 122 → 131, alertes 212 → 213, opportunités 5 → 5, actualités 10 → 10). Site non vérifiable depuis cette session : le domaine jaki2402-dev.github.io n'est pas autorisé dans les paramètres réseau (échec de résolution DNS), ce qui ne prouve pas une panne du site."
+    },
+    {
+      "checked_at": "2026-10-28T09:17:00Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~0h56)",
+        "data/news.json (last_checked_at, ~0h56)",
+        "data/opportunities.json (last_scan_at, ~5h04)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h56, actualités (last_checked_at) il y a 0h56, opportunités il y a 5h04 - rien à signaler."
     }
   ]
 }
