@@ -1,20 +1,20 @@
 {
   "current_version": "v1",
   "global_stats": {
-    "last_computed_at": "2026-10-27T11:00:02Z",
-    "total_verdicts_issued": 122,
-    "total_verdicts_resolved": 110,
-    "accuracy_strict_pct": 23.64,
-    "coverage_pct": 34.55,
-    "baseline_majority_class_pct": 42.73,
+    "last_computed_at": "2026-10-28T01:39:22Z",
+    "total_verdicts_issued": 128,
+    "total_verdicts_resolved": 116,
+    "accuracy_strict_pct": 22.41,
+    "coverage_pct": 37.93,
+    "baseline_majority_class_pct": 40.52,
     "baseline_buy_hold_btc_pct": 18.59,
-    "f1_macro": 20.54,
-    "f1_weighted": 17.81,
+    "f1_macro": 19.82,
+    "f1_weighted": 16.51,
     "confusion_matrix": {
       "ACHAT": {
         "ACHAT": 6,
         "ATTENTE": 6,
-        "VENTE": 22
+        "VENTE": 28
       },
       "ATTENTE": {
         "ACHAT": 39,
@@ -54,18 +54,18 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-27T08:24:00Z",
+    "last_success_at": "2026-10-28T08:20:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 27/10/2026 08h22 UTC : cycle court (aucun verdict du depuis >6h, aucun ticker sans verdict pending - 15/15 couverts). Veille actualites : 2 recherches WebSearch (hack/exploit majeur, fear&greed du jour) - aucun hack/exploit date du 26-27/10/2026 trouve, aucune lecture fear&greed datee du jour trouvee (resultats obsoletes, API alternative.me non joignable via le proxy reseau). Aucun outil mcp__ utilise."
+    "last_failure_reason": "Cycle du 28/10/2026 08h15 UTC : 3 nouveaux verdicts émis (AIOZ, ARB, INJ — seuls tickers sans verdict pending, aucun dû >6h, résolution déléguée à resolve-due). Règle retour_moyenne_prudent (technical-favoris.json, as_of 28/10 00h00 UTC) : ACHAT, confiance 63 % sur les trois, RSI hors surachat (29,6/35,8/48) malgré un MACD baissier sur les trois actifs. Veille actualités : 3 recherches WebSearch (fear&greed, hack/exploit, actualité générale/régulation) — aucun résultat daté du 28/10/2026 trouvé pour aucune des trois. Aucun outil mcp__ utilisé."
   },
   "macro_regime": {
-    "last_computed_at": "2026-10-25T08:25:00Z",
+    "last_computed_at": "2026-10-28T08:20:00Z",
     "regime": "neutre",
     "fear_greed_value": 57,
     "btc_dominance_pct": 59.35,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Cycle du 25/10 08h16 UTC. Régime reconduit neutre : data/market-context.json (lecture seule) toujours Fed hawkish (fourchette 3,75-4,00 %, prochain FOMC le 28/10, rendement 10 ans non confirmé, reconduit sans nouvelle recherche au cycle du 24/10) ; flux ETF spot BTC nets positifs mais en net ralentissement (+23,16 M$ le 20/10, une seule source non recoupée, après +526,7 M$ le 19/10), ETH non remis à jour depuis le 13/10 ; stablecoins à 11,22 % de dominance du marché crypto, en légère hausse mais attribuée au recul du marché total plutôt qu'à une fuite vers les stablecoins (cycle du 24/10). Signaux macro contradictoires (Fed restrictive vs flux ETF BTC positifs mais faiblissants), retenus comme tels plutôt que tranchés arbitrairement.",
-    "resume": "Régime macro neutre, reconduit : Fed restrictive mais flux ETF BTC positifs, en net ralentissement, tempèrent."
+    "note": "Cycle du 28/10 08h15 UTC. Régime neutre, inchangé depuis le cycle précédent : data/market-context.json (lecture seule, non remis à jour depuis le 27/10 08h55 UTC) toujours Fed hawkish (fourchette 3,75-4,00 %, décision FOMC le 28/10 à 14h ET, maintien jugé probable, rendement 10 ans non confirmé) ; flux ETF spot BTC nets positifs mais modestes (+23,16 M$ le 20/10, une seule source non recoupée), ETH non remis à jour depuis le 13/10 ; stablecoins à 11,42 % de dominance du marché crypto, quasi stable. Signaux macro contradictoires (Fed restrictive vs flux ETF BTC positifs), retenus comme tels plutôt que tranchés arbitrairement — décision FOMC attendue aujourd'hui même (28/10, 14h ET).",
+    "resume": "Régime macro neutre, inchangé : Fed restrictive avec décision FOMC ce jour, mais flux ETF BTC toujours nets positifs."
   },
   "paper_portfolio_stats": {
     "last_computed_at": "2026-09-13T23:26:00Z",
@@ -158,6 +158,17 @@
       "why": "ATTENTE n'est pas une absence d'avis : elle parie que le cours reste entre −5 % et +5 % à l'échéance, l'issue la plus rare pour des actifs aussi volatils. Sur 1-2 semaines, le marché a fait du retour à la moyenne (rebond après une baisse, repli après une hausse étirée). Règles comparées sur les deux moitiés de la période : retour à la moyenne 57,3 % (39,0 / 75,6) contre moteur 25,6 % (29,3 / 22,0) ; un garde-fou « bitcoin sous sa moyenne 200 j → VENTE » et une direction calquée sur les 20 derniers résultats ont été testés et écartés (pires).",
       "action": "docs/routines/cycle-2h-verdict.md §2 réécrit : verdict = proposed_verdict du robot (VENTE si RSI 14 j ≥ 70, sinon ACHAT) ; ATTENTE seulement sans lecture technique ou avec un override vérifié par 2 sources ; confidence_pct = taux de réussite mesuré de l'appel ; champ decision_rule. Contrôle de conformité mis à jour (js/data-integrity.js). Limite connue : période surtout haussière, règle moins bonne si le marché baisse durablement — mesurée chaque jour, colonne « Test réel » de l'onglet Moteur ; remplaçable seulement par une règle qui la bat sur au moins 15 verdicts du test réel.",
       "validation_score_before_pct": 25.61,
+      "validation_score_after_pct": null,
+      "status": "accepted"
+    },
+    {
+      "id": "corr-auto-20261028-retour_moyenne_prudent",
+      "logged_at": "2026-10-28T02:28:56Z",
+      "trigger": "Auto-sélection quotidienne de la règle du moteur (GitHub Action technical-daily)",
+      "what": "Sur les 30 derniers verdicts vérifiés (indicateurs connus le jour de l'émission) : tendance_rsi 13.3 %, retour_moyenne_rsi 13.3 %, retour_moyenne_marche 13.3 %, tendance_pure 10 %, marche_baissier_protege 13.3 %, sentiment_marche 6.7 %, sentiment_marche_rsi 13.3 %, retour_moyenne_prudent 10 %, regle_apprise 56.7 %.",
+      "why": "La règle « retour_moyenne_prudent » fait mieux que « retour_moyenne_rsi » d'au moins 5 points sur au moins 20 verdicts : seuil de changement automatique atteint.",
+      "action": "Règle du moteur : retour_moyenne_rsi → retour_moyenne_prudent (docs/routines/cycle-2h-verdict.md §2 : le cycle applique proposed_verdict, qui suit la règle choisie).",
+      "validation_score_before_pct": 13.3,
       "validation_score_after_pct": null,
       "status": "accepted"
     }
