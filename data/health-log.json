@@ -1622,6 +1622,16 @@
         "favoris_context_populated": 15
       },
       "note": "Site non vérifié : la session ne peut pas résoudre jaki2402-dev.github.io (domaine hors de la liste réseau autorisée), donc site_reachable=false ne signifie pas que le site est en panne. Les 9 fichiers data/*.json sont des JSON valides et non vides, tous les scripts js/*.js sont référencés dans index.html, et les volumes sont identiques au passage précédent (131 verdicts, 213 alertes, 5 opportunités, 10 actualités, 15 favoris renseignés) : aucune anomalie."
+    },
+    {
+      "checked_at": "2026-10-29T09:17:00Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~0h58)",
+        "data/news.json (last_checked_at, ~0h58)",
+        "data/opportunities.json (last_scan_at, ~5h04)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h58, actualités (last_checked_at) il y a 0h58, opportunités il y a 5h04 - rien à signaler."
     }
   ]
 }
