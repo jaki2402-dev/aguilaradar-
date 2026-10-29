@@ -205,6 +205,18 @@
             "tx_per_day": "Blockchain.com API /charts/n-transactions (GitHub Action)",
             "active_addresses": "Blockchain.com API /charts/n-unique-addresses (GitHub Action)"
           }
+        },
+        {
+          "date": "2026-10-28",
+          "computed_at": "2026-10-29T01:55:55Z",
+          "tvl_usd": 6270017901,
+          "tx_per_day": 642252,
+          "active_addresses": 466000,
+          "source": {
+            "tvl_usd": "DefiLlama API /v2/historicalChainTvl/Bitcoin (GitHub Action)",
+            "tx_per_day": "Blockchain.com API /charts/n-transactions (GitHub Action)",
+            "active_addresses": "Blockchain.com API /charts/n-unique-addresses (GitHub Action)"
+          }
         }
       ]
     },
