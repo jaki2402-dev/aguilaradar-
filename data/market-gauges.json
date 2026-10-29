@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-10-29T08:52:48Z",
+  "updated_at": "2026-10-29T17:03:36Z",
   "fear_greed": {
     "value": 51,
     "classification": "Neutral",
@@ -7,14 +7,14 @@
     "source": "alternative.me /fng (Crypto Fear & Greed Index)"
   },
   "btc_dominance": {
-    "pct": 59.45,
-    "as_of": "2026-10-29T08:47:06Z",
+    "pct": 59.46,
+    "as_of": "2026-10-29T16:58:36Z",
     "source": "CoinGecko /api/v3/global (market_cap_percentage.btc)"
   },
   "gold": {
-    "usd_per_oz": 4019.09,
-    "spread_pct": 0.18,
-    "as_of": "2026-10-29T08:52:25Z",
+    "usd_per_oz": 4016.99,
+    "spread_pct": 0.16,
+    "as_of": "2026-10-29T17:03:34Z",
     "source": "CoinGecko /simple/price : moyenne PAX Gold + Tether Gold (jetons adossés chacun à une once d'or) — approximation du cours au comptant"
   },
   "treasury_10y": {
@@ -23,7 +23,7 @@
     "source": "FRED (Réserve fédérale de Saint-Louis), série DGS10"
   },
   "stablecoins": {
-    "total_usd": 300306705450,
+    "total_usd": 300325904538,
     "change_7d_pct": -1.11,
     "as_of": "2026-10-29T00:00:00Z",
     "source": "DefiLlama /stablecoincharts/all (stablecoins adossés au dollar)"
