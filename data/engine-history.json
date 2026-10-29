@@ -54,9 +54,9 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-29T08:18:22Z",
+    "last_success_at": "2026-10-29T16:31:45Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 29/10/2026 08h15 UTC : cycle court, rien de dû (aucun verdict pending >6h après resolves_at) et aucun ticker sans verdict pending (résolution déléguée à resolve-due). Veille actualités : 2 recherches WebSearch (hack/exploit, fear&greed/dominance) — aucun développement daté du 29/10/2026 trouvé pour les deux ; last_checked_at mis à jour, items inchangés. Aucun outil mcp__ utilisé."
+    "last_failure_reason": "Cycle du 29/10/2026 16h15 UTC : cycle court, rien de du (aucun verdict pending >6h apres resolves_at, resolution deleguee a resolve-due) et aucun ticker sans verdict pending (15/15 couverts). Veille actualites : 2 recherches WebSearch (hack/exploit exchange crypto ; fear&greed et dominance BTC) -- aucun developpement date du 29/10/2026 trouve pour les deux (resultats non dates ou anterieurs) ; last_checked_at mis a jour, items inchanges. Aucun outil mcp__ utilise."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-28T08:20:00Z",
