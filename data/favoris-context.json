@@ -1,5 +1,5 @@
 {
-  "last_computed_at": "2026-10-29T08:28:57Z",
+  "last_computed_at": "2026-10-30T08:28:07Z",
   "assets": {
     "BTC": {
       "last_computed_at": "2026-10-29T08:28:57Z",
@@ -299,69 +299,69 @@
       }
     },
     "JUP": {
-      "last_computed_at": "2026-10-25T08:30:00Z",
+      "last_computed_at": "2026-10-30T08:28:07Z",
       "competitor": {
-        "ticker": "RAY",
-        "name": "Raydium",
-        "comparison_note": "Au 25/10/2026 (CoinGecko API, compare-coins, appel direct) : JUP capitalise environ 1,92x RAY (936,53 M$ contre 487,24 M$), rangs #77 et #112. JUP recule plus que RAY sur 24h (JUP -4,14%, RAY -0,39%) ; sur 7 jours JUP recule légèrement (-2,18%) alors que RAY progresse (+0,38%) ; sur 30 jours RAY reste légèrement devant en recul (-10,10% contre -8,09% pour JUP)."
+        "ticker": "OKX",
+        "name": "OKX (plateforme centralisée, routage DEX sur Solana)",
+        "comparison_note": "Selon un article CryptoBriefing (2026, date précise non confirmée) citant des données DefiLlama, OKX a dépassé 30% du volume quotidien des DEX sur Solana, faisant retomber la part de Jupiter sous 50% ; un autre agrégateur, DFlow, afficherait ~9,2 Md$ de volume sur 30 jours contre ~15,5 Md$ pour Jupiter selon la même source (non datée précisément). Les chiffres de part de marché varient fortement selon la source (de ~48% à ~95% selon les pages trouvées), à traiter avec prudence."
       },
       "long_term_thesis": {
-        "bull": "Le rachat JUP via la Litterbox Trust (50% des frais protocolaires, environ 4% de l'offre en circulation détenue selon The Block) reste actif selon la page token-rights DefiLlama (dernière mise à jour avril 2026) ; aucune nouvelle reprise de vote de gouvernance datée d'octobre 2026 n'a été trouvée ce cycle.",
-        "base": "Prix au 25/10/2026 (CoinGecko en direct) : 0,282131$, -2,18% sur 7 jours, -4,14% sur 24h et -8,09% sur 30 jours — repli qui prolonge la tendance du 20/10/2026 (0,298205$), sans catalyseur négatif spécifique identifié.",
-        "bear": "La DAO Jupiter reste en pause de gouvernance depuis juin 2025 (reprise annoncée « pas avant janvier 2026 », The Block) ; aucune confirmation d'un nouveau cadre de vote ou d'une reprise effective trouvée ce cycle, ni de vote spécifique sur le rachat daté d'octobre 2026.",
-        "assumptions_note": "Prix/capitalisation : CoinGecko API (compare-coins), appel direct, 25/10/2026. Statut du fee switch / buyback Litterbox : page token-rights DefiLlama (WebSearch, résultat indexé, dernière mise à jour avril 2026 visible sur la page) — pas une confirmation fraîche d'octobre 2026. Reprise de gouvernance DAO : The Block (juin 2025), aucune mise à jour plus récente trouvée ce cycle.",
-        "resume": "Prix en repli (-8 % sur 30 jours) ; gouvernance DAO toujours en pause, aucune reprise de vote confirmée."
+        "bull": "TVL Jupiter à 1,814 Md$ selon une page DefiLlama datée du 21/10/2026 (en baisse de 3,1% sur 30 jours) ; Jupiter reste la 2e plus grosse protocole de Solana par TVL selon une source de 2026. Un plan de rachat/destruction de jetons d'environ 3 Md$ a été annoncé (article daté par son identifiant d'URL de juin 2026, non reconfirmé ce cycle).",
+        "base": "Open interest JUP non confirmé pour octobre 2026 : les chiffres trouvés (~58,7 M$ début juillet 2026, ~45 M$ début mai 2026) sont tous antérieurs à ce cycle et ne permettent pas de lecture actuelle. Laissé à null plutôt que reconduit.",
+        "bear": "La part de marché de Jupiter sur l'agrégation Solana s'érode face à OKX (routage côté exchange centralisé) et à l'agrégateur concurrent DFlow, selon un rapport DefiLlama cité par CryptoBriefing (2026, jour non confirmé) ; les chiffres exacts de part de marché divergent fortement selon la source.",
+        "assumptions_note": "Sources : DefiLlama (page protocole Jupiter, via WebSearch, datée du 21/10/2026 pour la TVL), CryptoBriefing citant DefiLlama (part de marché agrégation Solana, via WebSearch, date exacte non confirmée), CoinGlass (open interest, via WebSearch, chiffres de mai et juillet 2026 non repris). api.llama.fi et coinglass.com confirmés injoignables en appel direct ce cycle (proxy : connect_rejected). Blockscout non applicable à JUP (Solana, non-EVM).",
+        "resume": "TVL Jupiter à 1,814 Md$ au 21/10 (−3,1% sur 30 j) ; part de marché Solana sous pression face à OKX et DFlow."
       },
       "open_interest": {
         "value_usd": null,
         "funding_rate_pct": null,
-        "source": null,
-        "note": "Recherche WebSearch ce cycle : page Coinglass (anglais) affiche 56,01 M$ d'open interest à un prix de 0,2023$ — incohérent avec le prix actuel (0,282131$ au 25/10/2026), signe d'un instantané non daté/obsolète ; TMGM (mi-juillet 2026) citait un OI de 59,36 M$ et un funding positif (+0,0036%) mais daté de juillet, pas d'octobre. Aucune confirmation fraîche datée d'octobre 2026. Laissé à null plutôt que de retenir une valeur non datée ou incohérente."
+        "source": "CoinGlass (résultat indexé via WebSearch, aucun appel API direct possible)",
+        "note": "Chiffres trouvés tous antérieurs à ce cycle et non datés d'octobre 2026 (~58,71 M$ daté du 01/07/2026, ~45 M$ daté du 05/05/2026) : aucune lecture actuelle confirmée, laissé à null plutôt que de reconduire une valeur ancienne."
       },
       "defi_tvl": {
-        "value_usd": null,
+        "value_usd": 1814000000,
         "change_7d_pct": null,
-        "source": null,
-        "note": "Recherche WebSearch ce cycle : un post Binance Square (citant Messari/DefiLlama, non vérifié directement) évoque Jupiter Lend (produit de prêt, pas l'ensemble du protocole) à 2,6 Md$ de dépôts (record) et une TVL d'écosystème Jupiter en hausse de +28% sur 30 jours daté du 6-8/10/2026 — source secondaire non recoupée sur la page DefiLlama elle-même, restée inaccessible ce cycle (connect_rejected confirmé via curl direct). Laissé à null plutôt que de retenir ce chiffre non recoupé directement."
+        "source": "DefiLlama - page protocole \"Jupiter\" (résultat indexé via WebSearch, daté du 21/10/2026 selon l'extrait ; api.llama.fi injoignable en appel direct, connect_rejected confirmé ce cycle)",
+        "note": "Variation disponible uniquement sur 30 jours (−3,1%) dans l'extrait trouvé, jamais sur 7 jours : change_7d_pct laissé à null plutôt que de substituer une période différente. Valeur datée du 21/10/2026, donc âgée d'environ 9 jours à ce cycle."
       },
       "onchain_signal": {
         "available": false,
-        "note": "JUP est un jeton SPL sur Solana, non couvert par Blockscout (mainnet Solana absent de get_chains_list, confirmé aux cycles précédents). Recherche WebSearch ciblée sur un mouvement baleine JUP dans la fenêtre du 23/10 08h20 UTC au 25/10 08h20 UTC (48h) : aucun événement daté dans cette fenêtre trouvé (résultat le plus proche : achat de 6,2M JUP daté de mai 2026, hors fenêtre).",
+        "note": "JUP est un jeton Solana, hors couverture Blockscout (EVM uniquement) : recherche WebSearch ciblée \"whale transfer alert\" sur une fenêtre stricte de 48h. Aucun évènement daté d'octobre 2026 trouvé ; les signalements les plus proches (accumulation d'un whale sur 3 jours, ~19,48 M$ en SOL+JUP) datent de mai 2026, et un article évoquant des achats de whales date de septembre 2026 (jour exact incertain) - tous hors fenêtre.",
         "source_url": null,
-        "resume": "Aucun mouvement de baleine notable identifié sur les dernières 48 heures."
+        "resume": "Aucun mouvement de baleine daté dans les 48 dernières heures ; les signalements trouvés datent de mai et septembre 2026, hors fenêtre."
       }
     },
     "LPT": {
-      "last_computed_at": "2026-10-25T08:30:00Z",
+      "last_computed_at": "2026-10-30T08:28:07Z",
       "competitor": {
-        "ticker": "RENDER",
-        "name": "Render Network",
-        "comparison_note": "Au 25/10/2026 (CoinGecko API, compare-coins, appel direct) : RENDER cote 1,68$, capitalisation ~874,19 M$ (rang #79), contre 1,48$ et ~73,39 M$ (rang #340) pour LPT — écart d'environ 11,9x en capitalisation (rang LPT en recul depuis le 20/10/2026, alors #313). Les deux reculent sur 24h (RENDER -1,05%, LPT -2,56%) et sur 7 jours (RENDER -7,96%, LPT -10,75%) ; sur 30 jours l'écart se resserre (RENDER -8,45%, LPT -8,48%, quasi identique)."
+        "ticker": "AWS",
+        "name": "Amazon Web Services (encodage vidéo centralisé)",
+        "comparison_note": "Livepeer se positionne comme alternative moins chère à l'encodage vidéo centralisé : une source cite un coût jusqu'à 10x inférieur à AWS, une autre jusqu'à 50x inférieur aux fournisseurs classiques (affirmations du projet lui-même, non vérifiées de façon indépendante, aucune ne datée d'octobre 2026). Aucun concurrent décentralisé direct nommé dans les sources trouvées ce cycle."
       },
       "long_term_thesis": {
-        "bull": "Livepeer 2.0 (déployé le 7/08/2026) fait du calcul générique, et non plus seulement du GPU, l'unité fournie par les nœuds — ouvrant le réseau à des nœuds CPU ou spécialisés via API, en complément de Punch Compute (marketplace de capacité GPU inactive, lancé fin juin 2026) ; aucune mise à jour plus récente datée d'octobre 2026 trouvée ce cycle.",
-        "base": "Prix au 25/10/2026 (CoinGecko en direct) : 1,48$, -10,75% sur 7 jours, -2,56% sur 24h et -8,48% sur 30 jours — repli qui prolonge celui du 20/10/2026 (1,63$), sans catalyseur négatif spécifique identifié ; rang de capitalisation désormais #340 (contre #313 le 20/10), l'écart avec RENDER (#79) continuant de se creuser en rang malgré un recul à 30 jours comparable.",
-        "bear": "La refonte tokenomics Livepeer 2.0 (Burn-Mint Equilibrium) reste un projet de roadmap sans vote on-chain confirmé ce cycle non plus. La concurrence (Render, Akash, io.net) reste nettement mieux capitalisée, l'écart de rang avec RENDER s'étant encore élargi depuis le 20/10/2026.",
-        "assumptions_note": "Prix/capitalisation : CoinGecko API (compare-coins), appel direct, 25/10/2026. Livepeer 2.0 et Punch Compute : CoinMarketCal et résumés CoinMarketCap (pages génératives par IA, traitées comme secondaires), aucune date plus récente qu'août 2026 trouvée ce cycle. Refonte tokenomics : aucune information nouvelle trouvée au-delà de ce qui était déjà su le 20/10/2026.",
-        "resume": "Prix en repli (-11 % sur 7 jours) ; Livepeer 2.0 ouvre le réseau au calcul générique, la refonte tokenomics reste un projet non voté."
+        "bull": "DefiLlama n'affiche pas de TVL significative pour Livepeer (l'activité du protocole ne passe pas par des pools de liquidité selon une source de 2026). Signal qualitatif : une mise à jour CoinMarketCap datée d'août 2026 rapporte une hausse d'environ 72% de l'usage du réseau au T1 2026, attribuée à la vidéo IA en temps réel (non reconfirmé depuis).",
+        "base": "Open interest LPT trouvé ce cycle entre ~8,5 M$ et ~13,8 M$ selon la page CoinGlass consultée (versions linguistiques différentes, aucune horodatée), avec des prix affichés incohérents (1,43$ vs 2,17$) : écart non résolu, laissé à null plutôt que choisi arbitrairement.",
+        "bear": "Vérification Blockscout du token LPT impossible ce cycle (quota de session de 8 appels épuisé par les vérifications précédentes sur ARB) ; repli WebSearch ciblé \"whale transfer alert\" : aucun évènement daté d'octobre 2026 trouvé, le plus récent (retrait de 526 000 LPT du staking vers Binance, ~4,81 M$) date de juin 2025, largement hors fenêtre des 48h.",
+        "assumptions_note": "Sources : CoinGlass (open interest, via WebSearch, pages non datées et contradictoires), Stacky/StakingRewards (ratio de staking, via WebSearch, non daté et contradictoire entre les deux), CoinMarketCap (mise à jour d'usage réseau, via WebSearch, datée août 2026), recherche whale via WebSearch (Blockscout indisponible ce cycle : quota de session épuisé après la résolution du contrat LPT et les vérifications ARB). api.llama.fi et coinglass.com confirmés injoignables en appel direct ce cycle (proxy : connect_rejected).",
+        "resume": "Pas de TVL/OI fiables ce cycle (sources datées ou contradictoires) ; usage réseau en hausse au T1 2026 ; aucun mouvement whale daté d'octobre 2026."
       },
       "open_interest": {
         "value_usd": null,
         "funding_rate_pct": null,
-        "source": null,
-        "note": "Recherche WebSearch ce cycle : écart entre sources (Coinglass JP ~8,5M$ d'OI à 1,43$, Coinranking ~6,74M$ à 1,50$, prix proches de l'actuel 1,48$ mais sans horodatage confirmé d'octobre 2026) ; funding Coinalyze dispersé selon la plateforme (environ +0,01%/8h sur Binance/Bybit, +0,005% OKX, +0,12% Kraken). Aucune confirmation datée avec certitude d'octobre 2026. Laissé à null plutôt que de retenir une valeur non datée."
+        "source": "CoinGlass (résultat indexé via WebSearch, aucun appel API direct possible)",
+        "note": "Pages CoinGlass trouvées ce cycle contradictoires et non datées (OI ~13,8 M$ à un prix affiché de 2,17$ sur une page, ~8,5 M$ à 1,43$ sur une autre) : écart de prix de ~50% entre les deux pages, aucune ne confirmée fraîche. Laissé à null."
       },
       "defi_tvl": {
         "value_usd": null,
         "change_7d_pct": null,
         "source": null,
-        "note": "Reconfirmé ce cycle (fait structurel, pas de nouvelle recherche nécessaire) : Livepeer n'est pas un protocole DeFi à TVL (réseau de staking/transcodage vidéo, pas de pools de liquidité) — même conclusion que les cycles précédents. Laissé à null plutôt qu'à 0."
+        "note": "DefiLlama n'affiche pas de TVL significative pour Livepeer (protocole sans pools de liquidité selon une source WebSearch de 2026) ; staking LPT trouvé entre ~30% et ~60,9% de l'offre selon la source (Stacky vs StakingRewards), ni l'une ni l'autre datée d'octobre 2026 et les deux mesures incompatibles entre elles. Laissé à null plutôt que de mélanger TVL protocole et ratio de staking."
       },
       "onchain_signal": {
         "available": false,
-        "note": "LPT est un jeton ERC-20 sur Ethereum (chain_id 1, couvert par Blockscout), mais l'endpoint générique /api/v2/tokens/{address}/transfers a déjà dépassé la limite de taille de réponse sur ARB ce cycle (même limite attendue sur LPT, token également très actif) ; budget de session Blockscout restant insuffisant pour retenter avec un sous-ensemble filtré après les 4 appels consacrés à ethereum/arbitrum (onchain-history.json) et la tentative ARB. Recherche WebSearch ciblée sur un mouvement baleine LPT dans la fenêtre du 23/10 08h20 UTC au 25/10 08h20 UTC (48h) : aucun événement daté dans cette fenêtre trouvé (résultat le plus proche : retrait de 526 000 LPT du contrat de staking vers Binance daté de juin 2025, hors fenêtre).",
+        "note": "Vérification Blockscout impossible ce cycle (quota de session de 8 appels épuisé après les recherches ARB et la résolution du contrat LPT, 0x58b6A8A3302369DAEc383334672404Ee733aB239, confirmée via lookup_token_by_symbol) ; repli WebSearch ciblé \"whale transfer alert\" : aucun évènement daté d'octobre 2026, le plus récent (retrait de 526 000 LPT du staking vers Binance, ~4,81 M$) date de juin 2025, hors fenêtre des 48h.",
         "source_url": null,
-        "resume": "Aucun mouvement de baleine notable identifié sur les dernières 48 heures."
+        "resume": "Vérification Blockscout impossible ce cycle (quota épuisé) ; aucun mouvement whale daté d'octobre 2026 trouvé par recherche de repli."
       }
     },
     "AIOZ": {
@@ -431,36 +431,36 @@
       }
     },
     "ARB": {
-      "last_computed_at": "2026-10-25T08:30:00Z",
+      "last_computed_at": "2026-10-30T08:28:07Z",
       "competitor": {
-        "ticker": "OP",
-        "name": "Optimism",
-        "comparison_note": "Au 25/10/2026 (CoinGecko API, compare-coins, appel direct) : ARB cote 0,165532$, capitalisation ~1,142 Md$ (rang #71), contre 0,111061$ et ~255,41 M$ (rang #150) pour OP — écart d'environ 4,5x. ARB recule un peu plus qu'OP sur 24h (-1,89% contre -1,55%) ; sur 7 jours ARB résiste mieux (-9,24% contre -11,81%) ; mais sur 30 jours ARB recule nettement plus (-22,58% contre -15,62%), inversion par rapport au 20/10/2026 où ARB était en légère hausse à 7 jours."
+        "ticker": "BASE",
+        "name": "Base (rollup Coinbase, pas de jeton coté)",
+        "comparison_note": "Selon des sources de 2026 (non datées avec précision, février-mai 2026), la TVL d'Arbitrum se situait entre ~12,8 Md$ et ~16 Md$ (~40-44% de part L2) contre ~10,2-12 Md$ pour Base (~28-30% de part) ; une source indique que Base a brièvement dépassé Arbitrum sur la mesure \"total value secured\" de L2Beat au T2 2026. Chiffres contradictoires selon la méthodologie (TVL DeFi vs valeur totale sécurisée), aucun daté d'octobre 2026."
       },
       "long_term_thesis": {
-        "bull": "La couverture Standard Chartered (objectif 10$ fin 2030, soit x70, paliers intermédiaires 0,50$ fin 2026 / 1,50$ fin 2027 / 3,50$ fin 2028 / 6,50$ fin 2029, initiée mi-septembre 2026) reste la thèse de référence, fondée sur une redevance de 10% des revenus nets protocolaires des chaînes externes utilisant la pile technique d'Arbitrum (Arbitrum Expansion Program) ; aucune mise à jour plus récente trouvée ce cycle.",
-        "base": "Prix au 25/10/2026 (CoinGecko en direct) : 0,165532$, -22,58% sur 30 jours et -9,24% sur 7 jours — repli qui s'accentue depuis le 20/10/2026 (0,190406$, alors +1,59% sur 7 jours), sans catalyseur négatif spécifique identifié au-delà de la pression des déblocages mensuels récurrents.",
-        "bear": "Les déblocages mensuels d'environ 92,65 M ARB se poursuivent (le suivant après celui de mi-octobre est attendu en novembre 2026, série continuant jusqu'à début 2027 selon 247wallst, ou jusqu'à février/mars 2027 selon d'autres estimations) ; Standard Chartered note elle-même que les revenus du protocole reviennent au trésor de la DAO, sans mécanisme direct de capture de valeur pour le jeton ARB à ce jour.",
-        "assumptions_note": "Prix/capitalisation : CoinGecko API (compare-coins), appel direct, 25/10/2026. Couverture Standard Chartered et calendrier de déblocage : The Block/TheDefiant/247wallst (mi-septembre à début octobre 2026), aucune confirmation plus récente datée d'octobre 2026 trouvée ce cycle pour un montant précis du déblocage de novembre.",
-        "resume": "Prix en repli marqué (-23 % sur 30 jours) malgré la thèse haussière de Standard Chartered (10 $ visé fin 2030)."
+        "bull": "TVL/valeur sécurisée de la chaîne Arbitrum trouvée entre ~1,51 Md$ (DefiLlama, \"DeFi TVL\" via un rapport Cache256 de mai 2026) et ~15,5 Md$ (L2Beat, \"total value secured\", même rapport) : ces deux métriques ne mesurent pas la même chose et aucune n'est datée d'octobre 2026, non retenues comme à jour.",
+        "base": "Open interest ARB trouvé ce cycle entre ~70,7 M$ et ~93,5 M$ selon la page CoinGlass consultée (non datées, incohérentes), et un chiffre KuCoin isolé à ~332 M$ sans date claire et sans accord avec les pages CoinGlass : écart trop important pour retenir une valeur, laissé à null.",
+        "bear": "Vérification Blockscout ce cycle (contrat ARB 0x912CE59144191C1204E64559FE8253a0e49E6548, 50 derniers transferts du jour) : transfert le plus important ≈596 511 ARB (~98 050$ au prix affiché 0,164374$), daté du 30/10/2026 07h25 UTC — sous le seuil considéré comme un mouvement de baleine significatif ; échantillon limité à environ 1h de blocs (budget de session Blockscout épuisé juste après, clé PRO non configurée), pas une fenêtre complète de 48h.",
+        "assumptions_note": "Sources : CoinGlass (open interest, via WebSearch, pages non datées et contradictoires), DefiLlama via un rapport Cache256 et une page AMBCrypto non datée (TVL chaîne, via WebSearch), L2Beat (comparaison avec Base/Optimism, via WebSearch, rapports de février à mai 2026). Blockscout MCP (chain_id=42161, lookup_token_by_symbol puis /api/v2/tokens/{adresse}/transfers, 50 derniers transferts) — vérifié en direct ce cycle, budget de session épuisé juste après (clé PRO non configurée depuis le 08/10/2026).",
+        "resume": "TVL/OI Arbitrum non confirmés pour octobre 2026 (sources contradictoires) ; plus gros transfert ARB du jour ≈98 000$, sous le seuil whale."
       },
       "open_interest": {
         "value_usd": null,
         "funding_rate_pct": null,
-        "source": null,
-        "note": "Recherche WebSearch ce cycle : snapshots Coinglass incohérents entre eux (70,69 M$ à 0,084$ en anglais, 82,28 M$ et 82,06 M$ en vietnamien/japonais, sans prix associé) et prix affiché (0,084$) très éloigné du prix actuel (0,165532$ au 25/10/2026), signe d'instantanés non datés/obsolètes. Aucune confirmation fraîche datée d'octobre 2026. Laissé à null plutôt que de retenir une valeur incohérente."
+        "source": "CoinGlass (résultat indexé via WebSearch, aucun appel API direct possible)",
+        "note": "Pages CoinGlass trouvées ce cycle non datées et incohérentes entre elles (~93,5 M$, ~88,6 M$, ~70,7 M$ selon la page), et un chiffre KuCoin isolé à ~332 M$ sans date claire et sans accord avec CoinGlass. Laissé à null plutôt que de choisir arbitrairement."
       },
       "defi_tvl": {
         "value_usd": null,
         "change_7d_pct": null,
-        "source": null,
-        "note": "Accès direct à api.llama.fi toujours bloqué par le proxy de l'environnement (CONNECT tunnel failed 403, reconfirmé ce cycle via curl direct). Recherche WebSearch ce cycle : seules des pages de sous-catégories Arbitrum sur DeFiLlama (ex. The Standard ~10 533$ au 18/10/2026, une page individuelle) sont apparues, jamais la page agrégée Chains/Arbitrum avec le total ; l'article le plus récent sur le TVL global (Cointelegraph, multi-mois bas) date de février 2026. Laissé à null plutôt que de sommer des sous-catégories partielles ou de retenir un chiffre ancien."
+        "source": "DefiLlama (résultat indexé via WebSearch, aucun appel API direct possible — api.llama.fi confirmé injoignable, connect_rejected)",
+        "note": "Chiffres trouvés contradictoires et non datés d'octobre 2026 : ~1,51 Md$ de \"DeFi TVL\" (rapport Cache256 citant DefiLlama, mai 2026) contre ~4,12 Md$ selon une page AMBCrypto non datée, et ~15,5 Md$ de \"total value secured\" L2Beat (métrique différente). Aucune valeur unique et datée ne peut être confirmée ce cycle — laissé à null."
       },
       "onchain_signal": {
         "available": false,
-        "note": "Blockscout accessible ce cycle : le contrat ARB sur Arbitrum One (0x912CE59144191C1204E64559FE8253a0e49E6548) a de nouveau été tenté via /api/v2/tokens/{address}/transfers, mais la réponse a de nouveau dépassé la limite de taille de l'outil (104510 caractères > 100000), même échec qu'au cycle du 20/10/2026 ; budget de session Blockscout déjà réduit par les 4 appels ethereum/arbitrum (onchain-history.json) ne permettait pas de retenter avec un sous-ensemble filtré. Recherche WebSearch ciblée sur un mouvement baleine ARB dans la fenêtre du 23/10 08h20 UTC au 25/10 08h20 UTC (48h) : aucun événement daté dans cette fenêtre trouvé (résultats les plus proches datent de 2023-2024).",
+        "note": "Blockscout MCP (chain_id=42161, contrat ARB 0x912CE59144191C1204E64559FE8253a0e49E6548 trouvé via lookup_token_by_symbol, endpoint /api/v2/tokens/{adresse}/transfers, 50 derniers transferts constatés le 30/10/2026 entre 07h25 et 07h26 UTC) : transfert le plus important ≈596 511 ARB (~98 050$ au prix affiché 0,164374$) — sous le seuil considéré comme un mouvement de baleine significatif. Échantillon limité à environ 1h de blocs (budget de session Blockscout épuisé juste après, clé PRO non configurée), pas une fenêtre complète de 48h.",
         "source_url": null,
-        "resume": "Aucun mouvement de baleine notable identifié sur les dernières 48 heures."
+        "resume": "Plus gros transfert ARB observé ce cycle ≈98 000$, sous le seuil whale ; échantillon Blockscout limité à ~1h, pas les 48h complètes."
       }
     },
     "INJ": {
