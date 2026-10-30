@@ -1,172 +1,433 @@
 {
-  "updated_at": "2026-10-27T15:59:58Z",
+  "updated_at": "2026-10-30T15:50:36Z",
   "sources": [
     "Google Actualités (fr) — bitcoin, ether",
     "Google Actualités (fr) — autres favoris",
+    "Google Actualités (fr) — marché",
+    "Google News (en) — sécurité des plateformes",
     "Cointribune",
     "Journal du Coin"
   ],
   "items": [
     {
-      "title": "Acheter du Chainlink : six plateformes et leurs frais",
-      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE0xMFBwMF9GUm1ZNGJlN0dtX2RkZ0JhLXVuZDNOQUswYl9aeEJ5aFBEM1FkbWpWMlJUa2JyOGUzbndnLVhJQjVZcHo0WHZndkJSMXBRYnozczJqRUhUbzRScGYyaFh1YXJKZG8xazA2NFA?oc=5",
-      "source": "CryptoTicker.io",
-      "published_at": "2026-10-27T15:47:03Z",
+      "title": "How Hackers Steal Crypto — And What They Do With It",
+      "url": "https://news.google.com/rss/articles/CBMiugFBVV95cUxNTHlSaUVFRXI2R2w3aVp3Q3RiaTRyRWdNWjhyck92bXNFN3Y4SnBJRUVJVEYzS180djRfQWVGY0xMZFprZDlXV3AyZFdsdnFNMks4M0Vodl8xVl95am9HdEYxUnJvV2M1cmRUTXJaUmNFd0ZMUndad19RVlZaVEFCbVZTeF80TnNDalZicXBFeHFsb1prQ2lsQVZwTGtvenRfVkhoR2ZFcXhXcWxLNTRaZGJlM2JPc1lHdGc?oc=5",
+      "source": "Bloomberg.com",
+      "published_at": "2026-10-30T15:38:12Z",
       "excerpt": null,
+      "tickers": [],
+      "event": "securite"
+    },
+    {
+      "title": "Binance Estimates $6.3 Billion Hacked in Crypto's Biggest Heist",
+      "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPNW1MdGRoUFFwNW96WUJ5SHUzUUdhT1NVeXVZN2dBc0hQeGxzNkNvSTNiMG4xQTFHTTVCdVEwaTdJSmNDaUtXaU5KRWI2VmdSRUNybkNzeHdvbXVaZWZnZ01EbEdzdTZpemNiY0E0dDdTLTNGa3dCNXpqU1JEVXZFOHJGekRMY3hOMUFwRVBGckNZdTd2WUREakdBY1EtRV90SXM5aC1sRFdvMzJGT29wOQ?oc=5",
+      "source": "Bloomberg.com",
+      "published_at": "2026-10-30T15:26:18Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "securite"
+    },
+    {
+      "title": "The Binance Hacker Now Holds More Than 420,000 ETH. Could Selling It Push Ethereum Below $2,000?",
+      "url": "https://news.google.com/rss/articles/CBMi5AFBVV95cUxQb3lnbHA4MEp0Tktsem83YTNua3VwdERHQVNseThiRFl4Y0NpeVhwc0gzSW9ZS3ZCLURUdTJEU1N5SEd4ZjlZSnpUSVdTYXRBNkFEM2JSRUZZV0xpbEctMkF3ZXNWVm1HSjVaakg5N1RwVlNDdy1LcFhrOEFJS3JhVzdhdVVBSFl2ZjV5UHJRVW93WU45OEViVWpsZktSOWw3alU0ZHpZeXNjaFA2Q1VNaFRyRkRXVnNKTFJ0WTRNNG5lMXRzUXBXMWpIU20wMy1vMG1sa2JEaXlOYjgwSFk3OS1vS04?oc=5",
+      "source": "24/7 Wall St.",
+      "published_at": "2026-10-30T15:25:15Z",
+      "excerpt": null,
+      "tickers": [
+        "ETH"
+      ],
+      "event": "securite"
+    },
+    {
+      "title": "Comment le piratage de Binance révèle les failles de sécurité des cryptomonnaies",
+      "url": "https://news.google.com/rss/articles/CBMiggJBVV95cUxObXRZVGlrNzVSdGxGaFFMOE1NT3VkT3hmSi0tbUhTOEh1LW5FZWJObnFJeEpGRkRVQ0hrT2pBZjJjRVJPVFo4REF6dXc1NEZGRDZiVjloQVg2dXFSVmQ5T1g1VVBGaFo2LUt5TWtWUXVhWGI4YWVLVXFfakdjN2VmdVFTSkdHLUdZNUNJWmw3M3Z3SFRGb0tmMldnS1d0VzFVTHRCWC1BMzJfcnczOG8zQnhNOFVHSjNiZTdKU185YW0zS2FpODJ5M2M1TkZGRlItNzBIeVNFeXE1U05yVFFyMkZLQmdLQ1hmcDlGUncycm5uRmliOWJZUndSME9qbkhpWkHSAYcCQVVfeXFMT3VSTWFKMHhLUWlrM1ZaUHhsS1hiUk1jWG9OOXY4MWRaa3ZaV3JwcWxYSmh5aEVqRFhxUm9FR3ZNeW1ZakVodkh5ZVE2a2xSdFREWEpHeVJUSU8xVlpFa09FbFNUd0hkV2JMX0pOR2lHZmFmMU1STGltc1R2a2lqak1KTk9uTWdMd3Vnb0FkZXJUNWF6cWk1a1d4STFQTWR5TnRjaDVaOFRFLWdLRTNGWHVnZFR6OHc1QTdxZDgwWHVWNXgtWXkxMkFqODZYNXNrcUp3bk9KSWZNMkVHSGo3R0pKc0NwaEZ4ay1wMUY0Rzd5WExXT0JsbzNUbnJpRzIxLUx5azhoU00?oc=5",
+      "source": "Boursorama",
+      "published_at": "2026-10-30T15:24:05Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "securite"
+    },
+    {
+      "title": "Binance victime d'une cyberattaque record, $6,3 mds de cryptomonnaies partis en fumée",
+      "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxNLUtuMTJTVkMzVTduUUg4elBqNHhQWS00SDdhbjY3cnEyY3cyLUhGVU9hbThCb1dNTVY3NGpVS2wtQ19QRkRWYlB5bmUteVdnaFpxbzI4UGVkRGdUeWZ4eS1TcUdWT3dtQldfQ0F6ZmJQTE8wWU9IeDZpR1NmRy1CSWcxamo2V2dNY2J2aXliYmdzVVlBdENoT1VhZkNabEpTVnU5dkZjdGJTd0R4TDMzR2d4WW9fczhqWlAzcWNFa0MzMTB2WU1jY2VydUdrd0pia2dvUkRR?oc=5",
+      "source": "Boursier.com",
+      "published_at": "2026-10-30T15:23:03Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "plateforme"
+    },
+    {
+      "title": "What Binance users should do right now following $6.3 billion hack",
+      "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxQT01fVFNJdm84cFFIa04tYU5MT3lrRDRnNnlPcE5SUmtQdFktY1l0VEhJanpkUVJ6VVhNRDFLSEs5T3NyZ09yWkdzcTNCQkV3Ym1xRmlXXzZGLXVlN3J3UGpZY2toRlllZVp1N1Z6V2hHQVduQ1hhajZUWDNaZC1NUFM2ZFp3X3FVdW02bzFDRHpMbjBMMkpVS2J5TVk3VUVqeEJHX18yWVhFWUoydEpGeENWZWFiN3l5eGlMamJmUzYzTGhjQ1BpZGZla19GSEhWcENFakJfcw?oc=5",
+      "source": "Yahoo Finance",
+      "published_at": "2026-10-30T15:22:39Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "securite"
+    },
+    {
+      "title": "Qu’est-ce que Binance, le mastodonte des cryptomonnaies victime du « casse numérique du siècle » ?",
+      "url": "https://news.google.com/rss/articles/CBMizwFBVV95cUxPNDFqdkExVE4wMTV0VW1zXzlUUDBRRHRHSmc4QXBjSTRaX0IxblNMaUpoRXF0eENhN0plQ1FKVzE3MjduWWIzLW5KMzB4eU8zVEtiVWZKRDlocnFnb1RUQnFNR3p3TTh0amZYYlRSdmpfaGxJUVRRUy1GVUV2Qkh3Yk1EYjFzdXRDb0pLQmpNcVRwNkhHTEQ0dDd1X3d0UjFaMzFiOTVlOWxTeDFrbkZLMzRNMDRpbzlTUmg1SUdPMDhwTkYwemFfU1A4cGpqajA?oc=5",
+      "source": "La Croix",
+      "published_at": "2026-10-30T15:22:13Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "plateforme"
+    },
+    {
+      "title": "Massive crypto hack probably the largest theft of digital currencies in history",
+      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOVFRVMmJEaTJ5dlpFZG8yQlhlQ1NoM3MydEJfSFN4NTVNV01WS3hmSk1JaVhCempndVNIQmxtMGhwWC1TcmhuRlpVaG5MZ1dUb3F0V2dWTGhXTkdXMHZqWkw4a2lEeDEtMGhyWU9JekwxYzVXZGY4Q013ZXd3WTM1dWlkNmxNT1FqaFZkek5yeXVzQ2dXMFdIYkR4VnA2SXFIRm5FYTd2cU8wWDlvaFF5aFB1RHQxQVpaSFdqRA?oc=5",
+      "source": "The Washington Post",
+      "published_at": "2026-10-30T15:20:35Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "securite"
+    },
+    {
+      "title": "North Korean hackers likelinked to record-breaking $6.3 billion Binance crypto heist",
+      "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxNT2UxWkZ6bE9JSWJzdHlMUTE4aW04WUlETVFWQ0xjZGF0WXVwbm53RktXclJVdWFzY1ZyV3dXWUVjTTZudXMyZ0w2LVFUV3NMam1LNTNNZldRNXFHUTNQVkpIV1BJZ24wOHd2QjR0OE9WZU90UURsMTB1REV2Uy12Zl9HWGZRU3hWdzVlWnJmd0t6c09aVW9uMGwyNkdKZTJRMUZEZWJndklncXhHV3ZvNVd6UjdCbFAwdUsyd3lzUE9BQkEta0F0V284ZXRxdzBYTkk1aWRRRQ?oc=5",
+      "source": "Yahoo Finance",
+      "published_at": "2026-10-30T15:16:09Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "securite"
+    },
+    {
+      "title": "What to Know About the Binance Hack",
+      "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxPSE9rR0xQM2tDMGhFd3NYMnFSV19uZGpudzVXcm9mY3hKdUVPTmhabTlWV0stR3B2bTlyOFZPd1VmVW5xYndwNGw5aTZjSWpseFctZUhLdTRaNTgzbXMwZ2w2cm1mcmo5Y3AxNkN4OG9JU2JFRmRwbV9YbF9QSDRwaUFhRzY2dw?oc=5",
+      "source": "The New York Times",
+      "published_at": "2026-10-30T15:14:37Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "securite"
+    },
+    {
+      "title": "North Korea-linked group steals $6.3B from Binance in largest-ever cryptocurrency hack",
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQMzd2WVZ5Vk9ZYTMxdi1zblhqWS1iX1A0ZWRTWEhSZmh4RVpfXzczNVV5eTk0RWJDc2NFN1FNMEFHZFVKTzlZRzU5cTNSYkZrbzBCWklrZFRzT3RBd1pXY1JXOF9aNUc0T0NpQm1MdnRXZkUwUUpUS3ZydlYtM3cyY3JpWnpSdXNheWNtcXNjeV8yakxmMk1J?oc=5",
+      "source": "Cybersecurity Dive",
+      "published_at": "2026-10-30T15:12:33Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "securite"
+    },
+    {
+      "title": "Cyberattaque chez Binance : \"On touche à ce qui constitue l'élément central des cryptomonnaies\"",
+      "url": "https://news.google.com/rss/articles/CBMijgJBVV95cUxQeTMyZUk5Z3E3WEJvWUFJRE5MdjllanBOb212OVJBaFpQYmNEVmJmMXd5Z0VkN3ZsR1VybWdiblJidGE1VjRzbWtGcEpsZ2lNbnRmdFAzVUVYckJhOVd4a2RJS1IzaEM1bmJaeEdzbV9VQm1vM0pLYU95eFhpZ0FNOUs5TC1VOFMzeXlSQ0pMVENXcmdEWXRzODNOTjBCU2FldmtGdmQ4dlVobEUtVW5XLUNjbDVGSHhzTW5kRWU5T3JXU1BYVXE1V1Z1UEd1bVRxOEc4Tk9FMTZkWkJreDNEaUQxRm5UOWFiYzJkazVaNDB4aHlGeGkweWdIRVZMcG8xOEJBZHdLMDRrUzk2VkE?oc=5",
+      "source": "La Libre.be",
+      "published_at": "2026-10-30T15:12:00Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "plateforme"
+    },
+    {
+      "title": "Le Bitcoin peut-il tenir après la vente massive ? Voici ce que dit l’analyse technique",
+      "url": "https://news.google.com/rss/articles/CBMitgFBVV95cUxPcVhxbXVvUlM4cHljcE5EWnZCSXRvcWppdjl6X0RUeTM2bHc2MzZaSEttSFRFOU1COEljQmxKdTl2UmtqWWtpSnhVODgwMkNvNXV6R2tidnZIM1JjUzZRRnRvd29YdGgxckZ3WDlTdWw4ZHBGY21xUWlYMVBlZFFCNjZ0TTdtZHlJc25WU2VMTllPY1ZYbEVDdU9UY2pXXzFPaFU5ajFiX0xmeUdjNWVidUpiQmQ5dw?oc=5",
+      "source": "Benzinga France",
+      "published_at": "2026-10-30T14:05:06Z",
+      "excerpt": null,
+      "tickers": [
+        "BTC"
+      ],
+      "event": null
+    },
+    {
+      "title": "Bitcoin slides after crypto’s nightmare scenario: a historic $6.3 billion heist",
+      "url": "https://news.google.com/rss/articles/CBMi1AFBVV95cUxObjhENjRIb1VnWnZoNUs0clFWV1BWc09BNzQwdXVnUmJVcjdFRHJiTVZ3YTQzblF6aUc3UzRGSkc0akxZbEJJNjhSY1B0U29KQmhQcWcyNWZWRHJMdGIzdzFOX1ZfYzNiYmlnMDk5dEZSaGdJd0duOUVSbktMTERhbHRESzFhZFBOY2NPUmxuU2pRU2lKQWI1c094aVk3cXYzSFk5dl9XVmZ3OTZ1UWkxdXR4UklpVUd3M2FFMzB1TmhTUDRUMWlNSm9tYk4xdVpDaklMaA?oc=5",
+      "source": "MarketWatch",
+      "published_at": "2026-10-30T13:13:00Z",
+      "excerpt": null,
+      "tickers": [
+        "BTC"
+      ],
+      "event": null
+    },
+    {
+      "title": "Kevin O'Leary affirme que le Bitcoin pourrait ne pas rebondir « automatiquement » même si la loi CLARITY est adoptée, et avertit que les élections de mi-mandat pourraient créer une « paralysie » à Washington.",
+      "url": "https://news.google.com/rss/articles/CBMisgJBVV95cUxNbnc3X1dYbVZEUGdfNUcxb3o4R2FpNHdtQmtrbTVCYXYzVUIwWG9EZFI1cHh6VnB4LVUxa2g0Qy0zVFFET3N5QU1JTmVKdE5ZX0dlcGY4RVZ2Uk5YYjVvTURBcklSaVF4WVNXWnpzTjNtV3ViTnpBdGtjOXIxOW11dnR1X0Jva0VxSk1sZU1qSHNOcmh5dmctVW52dElEUFd3aVI0NkNkOUZhVk1FUmFPVzAzWDhtRGs3dTBkeC13SUplV3ZsMkVnMDlsZUZvSVdRUFhHU3Vnc0V6TVc2andhb0VDanJmWWNma1NGaDBZeno0ZUh6OWxPSFRwcGlDWmFubzcyVFpNT2VFNERRb1VoSmVFR3BaVkRxeGNlbk0xSzNhcTdHeHA0RlZQRmVrRDBra1E?oc=5",
+      "source": "Benzinga France",
+      "published_at": "2026-10-30T13:08:17Z",
+      "excerpt": null,
+      "tickers": [
+        "BTC"
+      ],
+      "event": null
+    },
+    {
+      "title": "RWA tokenisés : Chainlink lance le prix 24/7, Aave l’adopte pour ses prêts",
+      "url": "https://journalducoin.com/defi/rwa-tokenises-chainlink-lance-prix-24-7/",
+      "source": "Journal du Coin",
+      "published_at": "2026-10-30T13:00:00Z",
+      "excerpt": "Chainlink lance un prix 24/7 pour les RWA tokenisés, week-end compris. Aave, 34 milliards de dollars de TVL, l'adopte pour ses prêts institutionnels. L’article RWA tokenisés : Chainlink lance le prix 24/7, Aave l&rsquo;a",
       "tickers": [
         "LINK"
-      ]
+      ],
+      "event": null
     },
     {
-      "title": "Prévision Bitcoin : une fourchette de 6 % avant la Fed",
-      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTFBYV2R1bDB1c0EtYy1vLUlRZGx3NGsxVWV6OVRJSmQyVnNHemdIbjlEWU5hb21KUDlnaG5xY2lTM2p0TUluV1NuYmUzenRpeWh5YWdyVVBFZ0c2aE1YUUtCaHpHbGxEWll1d0dkcU9leHpQN3FxNWZF?oc=5",
+      "title": "Prévision Ethereum : échéance mensuelle du 30 octobre",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNUjZRWWtqTHV5bktHRGk1SmJFaUMySXZUSngxSjl4QmJ6bElyM1I0aVA2Y0lvRHV5QVU3ZUNKLWNaREJady1HUVo4SE02T1NxRDNMbjhMSEtGREVUQzhoYkpGaGlPeDVlbExoTjdYOTVaMmFJcmNOX2pWMVMtQnZxM0QxeVdyWHFC?oc=5",
       "source": "CryptoTicker.io",
-      "published_at": "2026-10-27T15:40:00Z",
+      "published_at": "2026-10-30T12:28:35Z",
       "excerpt": null,
       "tickers": [
-        "BTC"
-      ]
+        "ETH"
+      ],
+      "event": null
     },
     {
-      "title": "Bitcoin est majoritairement détenu par les particuliers, contrairement aux autres actifs",
-      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTFByQkVTNXNob1FqdndxM00wSnk5b2hJVlczWnJ3TGtRWTYzNzBmR2s1amdXTU9DMWk4ZGlXYzZYZ2Y3SUtweHpqN3hIVTk0TVJoVU9zVHBhcG1aUzNObmJCNXRhM1g4WXZPR05POExWU21QMkNUb09GLVlwQ1M?oc=5",
+      "title": "Fed, BCE, BoJ : Les banques centrales imposent 3 statu quo cette semaine",
+      "url": "https://journalducoin.com/bitcoin/fed-bce-boj-statu-quo-hausse-decembre-bitcoin/",
+      "source": "Journal du Coin",
+      "published_at": "2026-10-30T12:00:00Z",
+      "excerpt": "Fed, BCE et BoJ ont gardé leurs taux cette semaine mais visent une hausse en décembre. Ce que Warsh, Lagarde et Ueda ont dit, et le risque pour le bitcoin. L’article Fed, BCE, BoJ : Les banques centrales imposent 3 statu",
+      "tickers": [
+        "BTC"
+      ],
+      "event": null
+    },
+    {
+      "title": "Risque quantique : il faudrait beaucoup moins de matériel que prévu pour casser les clés cryptographiques de Bitcoin",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPc3NQNnQyU25Oc014VTF1b2xDUkJWeF9LaVhVaHZtczNkQWZMT3BaazVSMXdDSlFBX2lQSXg5Z21VMV9jNEFZaG9YTDdqME1tYkZ2UFJQOHlBNVlaSnM1d3YzdHBUczlrMWJ1TEtPWnpRd3V6MkNJVTdScG1pUmhmMWw0TUNfdW9FY280ckNweVNJeW9QWUNzLWVsalZ0SFM3dlRmeE1OQXU2clQtcnprOTFEajk?oc=5",
       "source": "Cryptoast",
-      "published_at": "2026-10-27T14:52:20Z",
+      "published_at": "2026-10-30T11:19:44Z",
       "excerpt": null,
       "tickers": [
         "BTC"
-      ]
+      ],
+      "event": null
     },
     {
-      "title": "Bitcoin pourrait balayer les 75-78K $ avant de rallier vers 92K $",
-      "url": "https://www.cointribune.com/bitcoin-pourrait-balayer-les-75-78k-avant-de-rallier-vers-92k/",
+      "title": "Bitcoin : Glassnode alerte sur un risque majeur pour la reprise",
+      "url": "https://news.google.com/rss/articles/CBMilAFBVV95cUxOb0xuR19NMXF5eWpFbnV3YWlHbnhESnczaUhMczlWakdXVlN3dUN2WjQxNGdJVzgycEk4ektwNFJPd3E3REVOZExscDBtd0g0dFpORUlnRFlaR3NrTWQ5ak16TFk4eTNINlRKemQ0QWJYcEYwRFNhVXc2eFVXc3VycExQWE5wb0d5VW5KMWs0UjhFa2tw?oc=5",
       "source": "Cointribune",
-      "published_at": "2026-10-27T14:12:00Z",
-      "excerpt": "Bitcoin a été plutôt calme ces derniers jours, et je sais que ce genre de marché peut être frustrant. Mais il y a encore quelques niveaux que je surveille de près. Sur le graphique journalier, nous avons perdu la moyenne",
-      "tickers": [
-        "BTC"
-      ]
-    },
-    {
-      "title": "Les prises de bénéfices sur le Bitcoin ralentissent, mais les analystes restent prudents à l’approche du FOMC",
-      "url": "https://news.google.com/rss/articles/CBMi1gFBVV95cUxOT3FabTM4cUs3UXMwYk4wWHJmNFRHTjdPeDVYYU1QQXFGX3V3a2h6MDd2bXFMcnM1cXFPUEhpN0xlRmhickhzV3NwbTBldmlUTmxvblE3bWg5SS1fWHhYWnBRejd2QVRWM3FOTTBOSE1Gc1J2bGFmMG1HNXg2M3Y1aWw1TENtQkQtMFNBNXFGR2Q1ZXJvVTJ5LUFRaE1fc1kta1ROamk4R0NscTBWZUViYzdFVlB5UVFCU3ZKZDFRNnE3bUxWdEp5RWFpd09FUktXX1d3dVdB?oc=5",
-      "source": "Benzinga France",
-      "published_at": "2026-10-27T14:05:21Z",
+      "published_at": "2026-10-30T11:03:11Z",
       "excerpt": null,
       "tickers": [
         "BTC"
-      ]
+      ],
+      "event": null
     },
     {
-      "title": "10 000 simulations de Bitcoin indiquent que le cours médian atteindrait 1 million de dollars en 2033",
-      "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxOY3VsTnhObzJBSlJVcm9UYUh6Y1JRQzYtNElTaU5DVWg0Yk5EajlEbzNBWjNyWlkzVHJfMFl5RnBnTDRpYUwtSEE1VnlTd0hwOTJ5NWZfb196ZktTTzJCblVzZ0xabEFreWdNRzhHZ2o2c0h4RDRoV0J6ZHJib25ySFNsMHNGQQ?oc=5",
-      "source": "BeInCrypto",
-      "published_at": "2026-10-27T13:40:17Z",
-      "excerpt": null,
-      "tickers": [
-        "BTC"
-      ]
-    },
-    {
-      "title": "Blackrock génère 110 M$ d'entrées dans les ETF bitcoin",
-      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxNMjlaaEdwZjJjTnlvYmRSUUJ6cVpEMlczWUJGcFYzbmVFWTAtMGZnY25PNDlra05oZV9HTUxINE02RGdEdGVFM2l2VWNqYlNMUkR6SktzNzllSTZRb2VXVXFyQU52dS1IUDl2UnAyV2kxemlCQ3ZwclVnamQybS1qX050SDJvamZzMGtQSnkwZEtVbXNXUVVz?oc=5",
-      "source": "Bitcoin News",
-      "published_at": "2026-10-27T13:29:58Z",
-      "excerpt": null,
-      "tickers": [
-        "BTC"
-      ]
-    },
-    {
-      "title": "Bitcoin chute sous les 80 000 dollars - Que se passe-t-il ?",
-      "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNSDdIMlpGanV3Z1FtbFd5aW1fc0M2UTJGX0E3ZFFWVFZ6UHhfX0E5MEE0RzQ2YUNBUnlnNU96akxJZmxpTEJ5enRBc3JNMlBNYmtja1FFaFhhaDdJN2F2b3ZJcDYzandCbnVXaWtuUTRTUENQX0h4cHdHOGFxRnVmWG05Yw?oc=5",
+      "title": "Liste des Bitcoin Treasury Companies : ces entreprises cotées qui accumulent des BTC",
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQWkhlOHZSanV2N2hPNlZTSDVabGtMaEpxa1ZNYjhyZVNKR0JlSUFyNVhfbThvdnZMcmdHTEJnUXo5c3NQYUI0dWkwLVNGaUo5aWUwcXp2NkQ4YXVKRkI0U1BKd3pVN05UTUIzY1VhU1JQc0lWTkhsMnJBcDFwNUFIS3FfYmdQT0R2dEJNWXAzNno2NERZSmlBWTlxYTM1UjlJb1ppN3hPRQ?oc=5",
       "source": "Cryptoast",
-      "published_at": "2026-10-27T13:03:05Z",
+      "published_at": "2026-10-30T10:57:39Z",
       "excerpt": null,
       "tickers": [
         "BTC"
-      ]
+      ],
+      "event": null
     },
     {
-      "title": "Cryptomonnaies aujourd’hui : Bitcoin, Ethereum et XRP sous tension face à l’intensification des pressions vendeuses",
-      "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxOcnR6a1h2RnpaRnlNVWVKODVBTExVQzRzZWFrZE1NYWpRVkZ3MjNLR01vM0lFd0tYT2ZUMVllVXBYZUxEcmhrUlJCd0NaOUNSQU84bmpDdThtelRZZVJOdm1FYmgyb1E5XzlfV3pUV0tRODNDTE54TjBpWExaclRUU21TUDBUZWxqUzg2LWpxVXBsSHZGbkpMMm5XZ1ZmcjBicjgzd1NPbTVrR1A3X3Vfd0phUmlMcGsyS3JoVzdsZ2tfRkpHOWRFYmY0MFJfb2NRNXVXZWJZbW1fcFFRWGc?oc=5",
-      "source": "www.tmgm.com",
-      "published_at": "2026-10-27T13:00:47Z",
+      "title": "Cours du bitcoin et clôture mensuelle d’octobre",
+      "url": "https://news.google.com/rss/articles/CBMiiAFBVV95cUxNblVtSWtRU01IWklWOUZaeUhGdm1xWFFiR3dLbEFKM21rWW9fRTlySGVZckhHUkhLMnJzSzRsSmgxVE14T3Y3SEhJb1NNZ3dIS3VZQzVxR1lXTVZNQmpVNzBWTjJ1WDNvdVZfQS1wM1pQNGowM0JmdkZvTkRILTVDUnpQYlBNVC1O?oc=5",
+      "source": "CryptoTicker.io",
+      "published_at": "2026-10-30T09:21:28Z",
+      "excerpt": null,
+      "tickers": [
+        "BTC"
+      ],
+      "event": null
+    },
+    {
+      "title": "ETF Bitcoin: +423 M$ en 3 jours, BlackRock en tête",
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNblVXNTd6dUU3dlBMTmNiMTJ2UnlBa3NMWkdjZm9xbjEzQ1dacF93SHdTR1JmVmlTak4yaEpibFlwNjdVc2oyUUcwU2ZoUEpEMDloUUJjTThLOGlvZ3JVN1RjZGJULWpIZUpGMW12clB2cGFlZXZoVDhGbFE5UGxjTGJjQlFJYnQ4UVlKNmp1S1k?oc=5",
+      "source": "Bitcoin News",
+      "published_at": "2026-10-30T09:21:27Z",
+      "excerpt": null,
+      "tickers": [
+        "BTC"
+      ],
+      "event": null
+    },
+    {
+      "title": "Les sorties continues des ETF spot peuvent-elles peser sur Ethereum ?",
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxNd2NRTXk3cmpqUnFUdkZkSDdhMjNzS3lDMnROaVFzelVVQktSTFZDTGg5cWlZeWxzMDlpcF8yMHp3UmtPc3pzLXd1TW9ueFo1UUpYdUZsZkphakc1clFTdTFTaEgwMk9ONTFaQmNRN0FvOE04WlVaS1JwaVc3dUdXSHRDTXBtMmVzOGRrWjQtaTZ3Y1otRHlCcGlidFotRTJvM2p6UlpQYU4?oc=5",
+      "source": "Traders Union",
+      "published_at": "2026-10-30T08:07:55Z",
+      "excerpt": null,
+      "tickers": [
+        "ETH"
+      ],
+      "event": null
+    },
+    {
+      "title": "Le Bitcoin recule alors que les sanctions de l’OFAC visent le blanchiment de cryptoactifs nord-coréens",
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxQV3hjdFBDdlBaNzFEc1lUQnpOZE1sX3R1cGRNeHNqSFotUG5SbFp0emw2UG03SEdQcXBrSzVYbFphUGlkSEJac29GQXVLWXFTS04tUnpfVmRxdnZFVnZoX0lNcW53b1dRVHAzd1NUaGh2eEYtcDBLdG11dktkejhGRmpUZVNQZUxwS1VPdGNlUTVBeXc4NUhYcVlZMjg2ejNXX0RJTXR1NA?oc=5",
+      "source": "Traders Union",
+      "published_at": "2026-10-30T08:03:40Z",
+      "excerpt": null,
+      "tickers": [
+        "BTC"
+      ],
+      "event": null
+    },
+    {
+      "title": "Chainlink chute de 11 % : plus bas que le bitcoin",
+      "url": "https://news.google.com/rss/articles/CBMie0FVX3lxTE1rNlA0eE1PM1ZjUmtRQkkwMU5nb0hmNXdnWmdURE95dXZjMXRoYlR1dDVmc1N4NkFtWmNSb2Y3UzRzSEF6ZWZfOWU2aFR1MzhXa1dHMFBPcWJBOHBOSmVaWDlibUpMTGNaUFo4X052SlZWT2wyM01fcFl2UQ?oc=5",
+      "source": "CryptoTicker.io",
+      "published_at": "2026-10-30T06:33:15Z",
       "excerpt": null,
       "tickers": [
         "BTC",
-        "ETH"
-      ]
+        "LINK"
+      ],
+      "event": null
     },
     {
-      "title": "Bitcoin : 110 M$ entrent dans les ETF après 774 M$ de retraits",
-      "url": "https://www.cointribune.com/bitcoin-110-m-entrent-dans-les-etf-apres-774-m-de-retraits/",
-      "source": "Cointribune",
-      "published_at": "2026-10-27T13:00:00Z",
-      "excerpt": "Les ETF Bitcoin américains afficheraient un rebond de 110 millions de dollars , alors que le BTC reste sous les 80 000 dollars. Le dernier relevé Binance consulté situe Bitcoin autour de 79 730 dollars. Le retour annoncé",
-      "tickers": [
-        "BTC"
-      ]
-    },
-    {
-      "title": "Plus de 95 % du Bitcoin déjà miné : un explorateur trace la route vers le halving de 2028",
-      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQZE42V3RYTWRYNDlVMnRQUlhnVTNtZ0oyZDJEVlczZ0YwNkM1ZmVONUlwbkdXRExodTFZZF8xcFFwQkRwTnJLelNoSVBPeXFrOGlEWllDUTByM1BlZkFFTWZSMDRLVUI2QnBUNHZsazlSb2tTRG1kbmhuSXV5OGZpVXp6OVZOekVacTlJeHVkU2FHMEc5Y0FxZDM3RnhRUUxlakxXZ25FMlhyQkJoYUt6Wnl3?oc=5",
-      "source": "Cryptopolitan",
-      "published_at": "2026-10-27T12:43:29Z",
+      "title": "Pourquoi le cours de Celestia baisse-t-il de 13,4 % aujourd’hui ?",
+      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNdUZ1YkdrbThVTnNTeTZGdnJlTVdNMmlqYkx0QkRjTVFRQnAwYjZsamhGSHd3cHhQUDFsdk9ObWxLQXdIeDh0U3plZ2U4bEVybmhYVHZfQzlnbEgyajJWN0YzWTBSX3A4aU5xdHhqbDVjSEhScTZUSG5JZmRtcnRfSVJVV3BmUlM1X0NoYjVYeHRjNkRoc0ZzREFycnBCNlY2M25z?oc=5",
+      "source": "Traders Union",
+      "published_at": "2026-10-30T06:07:46Z",
       "excerpt": null,
       "tickers": [
-        "BTC"
-      ]
+        "TIA"
+      ],
+      "event": null
     },
     {
-      "title": "Bitcoin sous 80 000 $: deux baleines envoient 206 M$ de BTC à Coinbase",
-      "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxON0JsNEp4eGlMRlVnSGdGODBpdGlWdGJVMTkxNEpFLW5XeWI0MG1vSC1Ob0VZcEJlbHI1NzhQeVl6ZF8wWUZQYUVIalEzaEpUbEw1d19jOUtRWGFUWi1MbkczR3cyckdUd1UzWXlnRjZWMVNnMDVLZUFleDhvSjR0Sk84cVpiYTgxNTFDUV9oVzJCRlFNbkhick91b29oVGplLW8wajRseV8tTlk?oc=5",
-      "source": "Bitcoin News",
-      "published_at": "2026-10-27T12:08:44Z",
+      "title": "Qu’est-ce qui explique le dernier repli de 10,7 % du cours de Fetch.ai ?",
+      "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxNUzRINjRqaUxMZTdQNVVueS1qaWxmczFGdWtlM1ZReDMwaFdTc2VLZjJIanFWdWxkT2tJekFwUG8yZlRONlViNlp3UXZqd0t0d1BCR3ZZRUt0ck5LXzlJSmJNRlpkbkgxTWw0VUtPOVhGYjd1R05sS1RlODZqMzgwLXF4TzhkQnVLNXZWQWtOR1FIdU9TRFVSNjBOUkJaRjZSa19n?oc=5",
+      "source": "Traders Union",
+      "published_at": "2026-10-29T23:48:42Z",
       "excerpt": null,
       "tickers": [
-        "BTC"
-      ]
+        "FET"
+      ],
+      "event": null
     },
     {
-      "title": "Le Bitcoin montre des signes de faiblesse tandis que la victoire bancaire de Ripple ne parvient pas à soutenir le XRP",
-      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOS2phWVJicEJGQlpPa1pIQnRCdnlKQWZhVkx2ZU80QlBNLUdCcWZtT3NWOUgteER2aGVpMndkUXlGeVp0Y0xReUM5YmVMcUV3N1ZXc0hlbFBaSExFcVVPWGlnT1BCRmpHRUF2cURhRF9HZ1FPbHYzNUFVOE9RcmFEcFRNN0hTWHdRVXBHZWVGVXJQQTVteHJuTHBDRG5YSFRfeUItbUJFVHViZGY4NjRLcVVnMDhxTTlqUHQ3WUY5ejZSS21T?oc=5",
-      "source": "CoinDesk",
-      "published_at": "2026-10-27T12:07:51Z",
-      "excerpt": null,
-      "tickers": [
-        "BTC"
-      ]
-    },
-    {
-      "title": "Arbitrum en tête de la croissance des capitalisations",
-      "url": "https://news.google.com/rss/articles/CBMijwFBVV95cUxQbUxMb1pTN3JfR3hvTHhuWktUWk9LSy1HdVpqUWZES2hjSzE0Uk92MkJtQTItZmlhbVlfXzgtdTRlMGd2MURISE1mXzlIZzNCT0JfMl9uVlR1ajN0X2xzOGNYd3dMR0xzNWpNTWV5Zk92bnVQa3ZXUE1DVTQ3X19zTlhvbGlZSlJ4dVhnaTgzWQ?oc=5",
-      "source": "Coinfomania",
-      "published_at": "2026-10-27T03:13:10Z",
-      "excerpt": null,
-      "tickers": [
-        "ARB"
-      ]
-    },
-    {
-      "title": "Chainlink lance CustodySync avant l’événement Link:NYC",
-      "url": "https://news.google.com/rss/articles/CBMijgFBVV95cUxPazZjQVdHOTRidTdVdGphU1F5c0g4LW84UkZZcllHazFmR2tFQkpwbGxaeVlLU1h5VWwxQndFV2VBWFAxeWdNYUhIZUtWSTJNZDZyMXBJMDF2RDlvU3NDaGNTODVIQmNndTlxd3FoLTkwRnZLSTNLc1RpUGVQRktVU2tLbWx1dEFhVmhvYnRR?oc=5",
-      "source": "Coinfomania",
-      "published_at": "2026-10-27T02:15:55Z",
+      "title": "Prévision du cours de Chainlink : la dynamique baissière menace le support à 10,66 $",
+      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxPOG5lZ1lRdDhLcnNnNU5Obmg4V0FYcDVtT09fZTNSMjZEWkVUWHY0aWp2YVhHYkk5N3Uwa3htN3ZfWnliXy1pT2hLVTEzLUxHUTNMQmxRSW1tclQ4Nk4wOW01VVM5VTYtSkZjZ1lxWTJTd0dtYWYydjB0dlZEaWdPVDhmR2R5Q1gzUkZuemttVVlUVDF0aUV2b0dFS19veXN5TC0zekJ6ZlRDQQ?oc=5",
+      "source": "Traders Union",
+      "published_at": "2026-10-29T22:25:50Z",
       "excerpt": null,
       "tickers": [
         "LINK"
-      ]
+      ],
+      "event": null
     },
     {
-      "title": "FTDA_US tokenise ses fonds sur Arbitrum",
-      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE5LVlN0ZWJDZFRucE54VzRtQjF5ZnJpV1VtVktMX0JPRGlhOXRTaEFxRGlaUU9iM29EM1lXcnFLdXloSl9fblR3VDZ1MmZQRUN4ZUVidzh2V3cyOHlhbXpOVTNJLXZIdzJXOHprNWVVeWI?oc=5",
-      "source": "Coinfomania",
-      "published_at": "2026-10-26T19:33:46Z",
+      "title": "Polymarket désigne Chainlink comme oracle officiel à l’occasion du lancement des marchés de l’or et de l’argent",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxQWkl2WXJmVU9lbnRvcU5zd3Bic2ZxQ1ljd2l3RHBlVTZkQjIxMGtjNWF3dGFVa0IzTDNCSjUzRmN3ZHhuU1BRdl9VZHVOMEpENm54b2ZTUE5RVjNVY200Vmd5Zk02eEtWdHdfejhRczJpNC11OFhPNDhmTFFlX1ZsVTlXcWd5SVdZTlhDbXU5UUM3eFZRd2tRanEybGl4dDRa?oc=5",
+      "source": "Securities.io",
+      "published_at": "2026-10-29T21:21:02Z",
+      "excerpt": null,
+      "tickers": [
+        "LINK"
+      ],
+      "event": null
+    },
+    {
+      "title": "Chainlink ajoute la tarification du week-end pour les actifs tokenisés, avec Aave comme partenaire de lancement",
+      "url": "https://news.google.com/rss/articles/CBMiwAFBVV95cUxOcURVWjdINUcxb0Y1NDFscDNqM2hqOEpYWmx5OTBLMUlfRC16dXJiUldiS3hzTHpjaXdRZG1TT01JMkI5aHhWbkRCOF8xZFRSbFF0LWtrelF0Z2hoRGl5Rk9fejk5YjFDalZLczVSaF9wUEZlaWNFb3VGWFlfMFBHQ2JkR1N3RnpNeDFoc1E1SnZ5MzJhNXdQMGgtU0dPZWd1SjYycXIyU3VKUzkyYU0wd3RqZ1lKYk9JT3poSEJhQ3c?oc=5",
+      "source": "CoinDesk",
+      "published_at": "2026-10-29T14:15:00Z",
+      "excerpt": null,
+      "tickers": [
+        "LINK"
+      ],
+      "event": null
+    },
+    {
+      "title": "Arbitrum One dépasse 1 million d’adresses actives quotidiennes",
+      "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxNY2dwNTR5bGh1QVBOZl9OT29pTXh6YmJkLVZ4Rk1YVktJRkphRjFPSWR6T1dvNV9ObU9SUTR1ZHBtLWlHTkdONFJERVRkbzdBam1mZklDc3RZcEN4Tnc3RDRhelFBTU5BaGt1UWJTdTMwdTFvRjRwMFA1Y0hLWmh4YlFuS1FrX1VFRDBFSGh5WmlmcTI3T3llbQ?oc=5",
+      "source": "PortalCripto",
+      "published_at": "2026-10-29T13:15:00Z",
       "excerpt": null,
       "tickers": [
         "ARB"
-      ]
+      ],
+      "event": null
+    },
+    {
+      "title": "L’Arbitrum est-il un bon achat au cours actuel ?",
+      "url": "https://news.google.com/rss/articles/CBMifEFVX3lxTE1NTHpGN3lIaWF4c1Fxc1NIS1Z6QmE0T2xCNVZyYkF2d0tVQ0FVX1NjNkY4LTZSay1jTWtrZVREWW1udl9pWGVGWEpFdXh4TTZqWm1LRUxMTHRIZUVYQ1pxMElCbVA0X3UwYkJYZExhaHNZRXQ0UHJzdU02aEo?oc=5",
+      "source": "CryptoTicker.io",
+      "published_at": "2026-10-29T06:32:01Z",
+      "excerpt": null,
+      "tickers": [
+        "ARB"
+      ],
+      "event": null
+    },
+    {
+      "title": "ARB parviendra-t-il à se maintenir au-dessus du support à 0,1471 malgré la persistance d’un momentum faible ?",
+      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxPRG51YlAwWU5pNFltOHFNTElYVnJPdVpBQUFUUHFWcUtvbHNMZHRMMzdsWDYwbnBfWFJ2RDZKYjhpdGN5UVNiakpQTG9BVXJFZ0VOcDZubEtPLU5naG41Z0FBRElqVDdPNHdzcENiYUtWN0tFTm43enJ0NzZtTHd1cUNlSjRRc3N6QTNaYVY0NnZCUEpVSl9kbmxHVTdMTFVLeEV3bml3?oc=5",
+      "source": "Traders Union",
+      "published_at": "2026-10-29T00:34:53Z",
+      "excerpt": null,
+      "tickers": [
+        "ARB"
+      ],
+      "event": null
+    },
+    {
+      "title": "(0,1524 €) Cours du Arbitrum - ARB valeur Euro",
+      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBvVWNKTGdjX19mdHBlTzFDVnpWcmdCV0c4dmtmRkNxTElodGZORk9pMFk4alNhNkhPTHpOemtPSE9KLTlhWkZWa2VmbUdYV3VQZmVn?oc=5",
+      "source": "BTC direct",
+      "published_at": "2026-10-28T23:48:35Z",
+      "excerpt": null,
+      "tickers": [
+        "ARB"
+      ],
+      "event": null
+    },
+    {
+      "title": "Injective grimpe de 3,58 % avec Stockdrop et le lancement du testnet d’options",
+      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTE5kT1FDV0NnNG1WQkRDeDdLUGNJMWVULWVmd1dqZ2JTbWRXaGkwS29SeXN6RUhwcXliUVdUdzRVRjZhR0taNFI3MEZ2UFFxbnB5d0FmRTZYNFBFSGU1SXJZWWwya0NUN0hFaFZzdjF6eVpEakhF?oc=5",
+      "source": "CoinMarketCap",
+      "published_at": "2026-10-28T20:04:00Z",
+      "excerpt": null,
+      "tickers": [
+        "INJ"
+      ],
+      "event": null
+    },
+    {
+      "title": "Le cours ONDO rebondit grâce à l’offre exclusive de pré-IPO sur OpenAI par Ondo Finance",
+      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE5PTWxNd0Q2Tjc3Vkw1ZnBUd0ZjcG9hYVFlNXRtb21jcHNtbjJaN1JqdUtaZG9OMmRDS3F5RUdqbTVUMWtZemZzYWlsYzhYdmd2N2x1QTNTd1BFVktteGF1RDdPTnJqaHcxTXh4cEh0OUtvYnl1NV9v0gF8QVVfeXFMUGQ1TlY0WmF5eU9HNl9IV2ZEUVBYTVFqaWx0U1EtSlRkV2l6VXNycjgxalJnUWNGazVEZkZ5WHlGSGMxNWNYNVljZ1pzZlIyb21rRlczOW9KcmJqRUJESlZseWVFV1lOR1paWXdVM21VZ0ktVWJObU8zS3g5eA?oc=5",
+      "source": "ConseilsCrypto.com",
+      "published_at": "2026-10-28T03:54:33Z",
+      "excerpt": null,
+      "tickers": [
+        "ONDO"
+      ],
+      "event": null
+    },
+    {
+      "title": "Arbitrum annonce le lancement d’ENSv2 sur Ethereum",
+      "url": "https://news.google.com/rss/articles/CBMikAFBVV95cUxNOS1sSnBmSUZCX2NlLWszTGV3WEJLbFgweVVPUlE3dkxYX2ZORndwNGRNVllyYnZIMDNGaU5yMEIwekkyMzFYR3Q4ZzJsU3dySElkdmpQMVlCclVuS1RCdFYzSDhCeDZBQ3cybEZ3cTV3d1o1aWJCV3hqdHVHLXFBNzE3YUEwZW5vOUpBVW9IYm8?oc=5",
+      "source": "Coinfomania",
+      "published_at": "2026-10-28T03:16:05Z",
+      "excerpt": null,
+      "tickers": [
+        "ETH",
+        "ARB"
+      ],
+      "event": null
+    },
+    {
+      "title": "Recul marqué sur sept jours dans un contexte de volatilité accrue : perspectives hebdomadaires d’Injective — INJ peut-il se stabiliser au-dessus du support ?",
+      "url": "https://news.google.com/rss/articles/CBMipwFBVV95cUxPQUJjdHV2cm5sOXM1QW1QdTMycDRYdC1vcFVtRlFtSGRrLW9FYTdmSHRCenJoa2toSzB2angtVkQ2TW4zSi1SSW14NkFKdjRVS19vSUJCQkE2VVgwR2l1ZU9zaGxfQkEyeXVXUjFKVFFhT18xMXZCTWlGeUVhb18tNjVMbjlEQThoM3prQ3FQamEyRnhBUFlocjBfNDNOVThuVWdWUVFmdw?oc=5",
+      "source": "Traders Union",
+      "published_at": "2026-10-27T07:42:28Z",
+      "excerpt": null,
+      "tickers": [
+        "INJ"
+      ],
+      "event": null
+    },
+    {
+      "title": "Injective lance un marché de contrats à terme on-chain suivant les coûts de location des GPU Nvidia",
+      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTFBUbkMxZ0NjM0l1Sy1ISDhndWM1M3ZCa1VDUkkwdm9TR1E1MnVZMS1neG1iNFEweTVOZDE3TERTZmF1ZU1fUGEyOTlYaENFaVd6LVd4djdUbTY2OXFXT1BLa2ZnWTdxWVNia2JQWEM2UQ?oc=5",
+      "source": "TradingView",
+      "published_at": "2026-10-26T21:23:32Z",
+      "excerpt": null,
+      "tickers": [
+        "INJ"
+      ],
+      "event": null
     },
     {
       "title": "Jupiter Exchange lance une nouvelle expérience de staking",
@@ -176,7 +437,30 @@
       "excerpt": null,
       "tickers": [
         "JUP"
-      ]
+      ],
+      "event": null
+    },
+    {
+      "title": "Prévision The Graph octobre 2026 : le test IA du GRT",
+      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTFBBb3VWM05pRWYtM0NEa0d5NXJudzJKWHV6REsweGxYZFVhYXpoRDYxc3IxOVN0eks5emJjTFJ0Sk1xdXZKMzBxc0JoRFpLSEZsbkNJNnB4NnVoTEFKb2VvNkVmakdiQnFQWUVOMV9KVFRDQQ?oc=5",
+      "source": "CryptoTicker.io",
+      "published_at": "2026-10-25T22:25:25Z",
+      "excerpt": null,
+      "tickers": [
+        "GRT"
+      ],
+      "event": null
+    },
+    {
+      "title": "Prévision Injective pour octobre 2026 : test INJ",
+      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE9UcllfTzFuQ0JRSVV0ZjNCOTlod3FEY0haM0hUUUlZRDZTYmJuOUpNOVhtTndoTEtIQ3Nqbjc0RFBlTEFlU0xkQjFNLVJVNnczcFpBMElrR3lZVFRZaE83d0RWcjdUWng2ZVZ3eS05OTJIZw?oc=5",
+      "source": "CryptoTicker.io",
+      "published_at": "2026-10-25T22:25:25Z",
+      "excerpt": null,
+      "tickers": [
+        "INJ"
+      ],
+      "event": null
     },
     {
       "title": "Perspectives sur le cours d’Injective : la dynamique haussière se maintient malgré les signaux de surachat",
@@ -186,147 +470,19 @@
       "excerpt": null,
       "tickers": [
         "INJ"
-      ]
+      ],
+      "event": null
     },
     {
-      "title": "Arbitrum chute de 24 % en 30 jours et l’ARB atteint son plus bas sur 4 semaines",
-      "url": "https://news.google.com/rss/articles/CBMirAFBVV95cUxPZjhBMFY4SUd5Nkhmc096WXE5d1Flbm5ubHFPaDZQOER0bUI2TUkwM2xuVllKWVdPbkl0VFUxMFBXdTUxclhHQVBkNndxMnQ2aU5LVHBnQVQ5WkczZHJTaGk0S2pVbUtPU3NNZ1pRaGVERjNVZTVRVlo4Wk9yVnYtU2c0d1JzWldsYU5VXzJ2NjJZWVByZXhMVmhMcXJhWmdZYUVwX3lYQW5tNElG?oc=5",
-      "source": "PortalCripto",
-      "published_at": "2026-10-25T12:28:35Z",
-      "excerpt": null,
-      "tickers": [
-        "ARB"
-      ]
-    },
-    {
-      "title": "Chainlink : contrat coréen, le LINK sous pression",
-      "url": "https://news.google.com/rss/articles/CBMicEFVX3lxTE1DNkhjTWVNb2JQcEplYjNnSXpGNW05NU02cmIxZ2lJQVF0T0NOc3ZOOHoteVdFNUUzaHhIbTFtdmJhdEhITTFnZUZjbzVzdHphZ3pHUUtSZ3dtcWhxdFhIaFRITGJscy1ZdjV4WnZ6LWI?oc=5",
-      "source": "CryptoTicker",
-      "published_at": "2026-10-24T15:24:09Z",
-      "excerpt": null,
-      "tickers": [
-        "LINK"
-      ]
-    },
-    {
-      "title": "Prévision du cours d’Arbitrum : momentum faible et risque de baisse, les vendeurs gardant le contrôle",
-      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxOTGtjeFBqbzV1Z2RQdlZGV0dFamZxNDJueHo2MFplUE1mbGx3VkQ3Y1hxcWVnb1JvV1VFZXFsRWFVYXFLQ1RhZ2gtWjluU04tZ3lJZXhqbGREVkxvLUtxRWMzQjdwcTdfVzhlajNoRlE3Q2xNYWttVENwS0xQbVU3clFHRDZYc3ZKVjRnQ2FrMzlhV2l2bldwUDN4eGxoVkliLU4zcQ?oc=5",
+      "title": "Le FET recule, pénalisé par un momentum faible et la pression vendeuse",
+      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOcXJubzhNaHlIZHpmelNaNlZiVzVyM2RlYUVETVJoWXA1cEExOTY4YWVHNks1QWhCdF9XNEl3N1J6akVXOUtLLXB6Y2QxV1JTSi1MbVJPdkdYZllaQVdrU3ZUdU1OY2lhVzc4T1FhT0VKNm1RY0hROUdqdWJ3U3ZwQUFQY0lVWkJDMW85MGJockxOVXFTSVJMa1MzeE9oM0JX?oc=5",
       "source": "Traders Union",
-      "published_at": "2026-10-24T08:21:30Z",
-      "excerpt": null,
-      "tickers": [
-        "ARB"
-      ]
-    },
-    {
-      "title": "LG CNS conclut un partenariat avec Chainlink pour des stablecoins en won",
-      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNQkdyVFk4Y2FCOExjRUJSTXdNSVBKMnh0Y1U5b3AwSnpBbjNyMjR1cC1hd25kYmFmUW8wcjBSejAtRW5rNHhCLWEzOXVrc1Qza19WcTlia2hfRm5HWlNiRTNNMktETkhmNXVBM0lfRkxOcTM4ZDBKWE91QVBEQnlZVnlfYzVWZWl2Q25uSXBCMmU3TjN5ODdhWXRpX2M0bVFPUlhYMWJn?oc=5",
-      "source": "PortalCripto",
-      "published_at": "2026-10-23T16:48:30Z",
-      "excerpt": null,
-      "tickers": [
-        "LINK"
-      ]
-    },
-    {
-      "title": "(0,1507 €) Cours du Arbitrum - ARB valeur Euro",
-      "url": "https://news.google.com/rss/articles/CBMiU0FVX3lxTFBvVWNKTGdjX19mdHBlTzFDVnpWcmdCV0c4dmtmRkNxTElodGZORk9pMFk4alNhNkhPTHpOemtPSE9KLTlhWkZWa2VmbUdYV3VQZmVn?oc=5",
-      "source": "BTC direct",
-      "published_at": "2026-10-23T16:22:46Z",
-      "excerpt": null,
-      "tickers": [
-        "ARB"
-      ]
-    },
-    {
-      "title": "Celestia (TIA) perd 3,06 points sur fond d’aversion au risque et de déverrouillage",
-      "url": "https://news.google.com/rss/articles/CBMidEFVX3lxTFBMdlptdzR2Y0otdXN6QXRnY05DNm13ZUdFRDZvRUMwMFNjNmpDYUR4YVNHVG8ySDUta01LeGZ5Tl9XYVBuTWltNEdCN0JUc3lzQWRhdjFTaGx6MWl6el9MSE5tM0ZLZVk4azdTeUdFbXhmUjdf?oc=5",
-      "source": "CoinMarketCap",
-      "published_at": "2026-10-23T14:04:00Z",
-      "excerpt": null,
-      "tickers": [
-        "TIA"
-      ]
-    },
-    {
-      "title": "PEPE, UNI, ENA : Un investisseur achète neuf cryptos pour 7,22 M$",
-      "url": "https://www.cointribune.com/pepe-uni-ena-un-investisseur-achete-neuf-cryptos-pour-722-m/",
-      "source": "Cointribune",
-      "published_at": "2026-10-23T12:00:00Z",
-      "excerpt": "Une adresse suivie par Lookonchain a acheté pour environ 7,22 millions de dollars de cryptos en vingt-quatre heures. Son portefeuille privilégie Ethena, Ondo, Aerodrome et Uniswap, tandis que Pepe ne représente qu’une fa",
-      "tickers": [
-        "ONDO"
-      ]
-    },
-    {
-      "title": "Prévision du cours de The Graph : l’évolution dans une fourchette devrait se poursuivre, les risques de baisse dominant",
-      "url": "https://news.google.com/rss/articles/CBMiogFBVV95cUxPWFZpUWxIdkE2RkhnSDZqN28zVU5Xa1pTM0EtOE81aE10T0dKdGRlNjF6cW9Hd0c0TTJOWnByZUEwXzFqdU9WRVRpRjFXZ0VYRjU5VEh1amV1Tjd0Z0hvSzZfbjFjQnhrS2dJUjFhekZlQmg4emVHakdsSDVoc3JZNmJmSkp0Mk16UGRCeWJ5eXJkdEtYY1VQMmtmSUxpVC1JVkE?oc=5",
-      "source": "Traders Union",
-      "published_at": "2026-10-22T20:44:43Z",
-      "excerpt": null,
-      "tickers": [
-        "GRT"
-      ]
-    },
-    {
-      "title": "Chainlink : 22,7 millions de LINK en fonds et en réserve : le plus bas du jour est à 11,94 dollars",
-      "url": "https://news.google.com/rss/articles/CBMid0FVX3lxTE8zWENnbGp1ZXlmb0FxVFNaM2dqNmJqOFdPaFNyakxNVGJSZjdYcGdVUnBnWjJnand4akhGSDd0bEVRV3JWMlZmWUpkQjVnMTNldFpURm1LT2UyLS01cWhQOXQ3Ymh4ZURSdzBBcmU2b2ZLbjM1Wmlz?oc=5",
-      "source": "CryptoTicker",
-      "published_at": "2026-10-22T18:18:57Z",
-      "excerpt": null,
-      "tickers": [
-        "LINK"
-      ]
-    },
-    {
-      "title": "FET recule alors que la baisse s’accélère sous la pression vendeuse",
-      "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxNQW8tMVBqVXRRdVByaGMzTzZSMS04RERQQ0M5QWdIYkN6Uld0T25jam1aZWdkRXBoSVFVVm83Nl9qOVoyMFFueHpjc25EeUIwX3JKR05nZUhKcHBxN3BCcGNuQUluUEJ6MzUwU2piZjFsZWpBdnBkdGk4cU1Ob2M2b0IwZW56STdhQnRXQjdiZ2ItYWRjMVd0R0toQTdBWk9P?oc=5",
-      "source": "Traders Union",
-      "published_at": "2026-10-22T16:38:55Z",
+      "published_at": "2026-10-24T09:08:31Z",
       "excerpt": null,
       "tickers": [
         "FET"
-      ]
-    },
-    {
-      "title": "Les dépôts accélérés sur les plateformes pèsent sur le cours d’Injective, les vendeurs dominant le marché",
-      "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxOVlhBY3I0UFhCY3FHVkN1a01UVkhPbmc2bXc3b21WbWdKR1BnOWdXSTJ6Sk9xQWQ2angxakRHMVZmQlplUHc0MzlLVmlnMnVsRVVheVVnQTA4VTdfenZmQTZXa19vMEFWNkFGQWN4ZE12OEo0dlhuRVRzTVJXS1ZUUXA0ZldEcnZ6N2dRdjVlV0haVUdoa0dMdmZ0Wkd6cVJUdGZfd3FQVnFFdw?oc=5",
-      "source": "Traders Union",
-      "published_at": "2026-10-22T08:44:31Z",
-      "excerpt": null,
-      "tickers": [
-        "INJ"
-      ]
-    },
-    {
-      "title": "Injective conclut un accord pour régler des RWA en won avec KRW1",
-      "url": "https://news.google.com/rss/articles/CBMimwFBVV95cUxQaEljMk5nQVdFNU5ldHNoeHBNMml5MGFMeDhicHpRbTVtZEpJc3QzSUwyT0FVU29Qelo4SXJpR250WFlZVUtodzh3bGRLZ2NtM2oyM3Y4S2E5dkk1TFpZR2JPazhSNDRrdEJLQkRXcE1JWTJ1Uklfc3dYVTlFYnlPMVh1YmtUNXJ3UzRlam4xc055OTV5WWpLUm81dw?oc=5",
-      "source": "PortalCripto",
-      "published_at": "2026-10-21T00:46:40Z",
-      "excerpt": null,
-      "tickers": [
-        "INJ"
-      ]
-    },
-    {
-      "title": "Injective et BDACS prévoient un règlement en stablecoin adossé au won pour les actifs tokenisés",
-      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE1fWGx5SlEzSktGUlhFOWw0aGFFd0ZUcGVfNVlZdG9VVGF5YVJ3bHZMVlUyX2NWV0I1WXEtVkV5VjJkUnd6eG9MNlk4YUVkUlg3UW9HWlAzaXRHdWNDdTRYOHk5RzZTbW40Q0l1TGhRdw?oc=5",
-      "source": "TradingView",
-      "published_at": "2026-10-20T16:47:48Z",
-      "excerpt": null,
-      "tickers": [
-        "INJ"
-      ]
-    },
-    {
-      "title": "Injective, BDACS plan Korean won stablecoin settlement for tokenized assets",
-      "url": "https://news.google.com/rss/articles/CBMi0wFBVV95cUxPVFRzMWpJSFJJcFU3MW9RTWZDck5ZdGdLRU0xZ2FHcEM3QzlmWWt5aW9xYWk5MU9kTFVNNHBVdmw0OGRaN0hOYkJBalFkdEJfLXJ5elJoNG5hNlZEQXRneE5aQU94TnJmSFdXTFBQbHZsQWx6Ym5RQ1hjemRJQ0FIc2FvZVg3U193OTlfT2o3bTczZUQ4a0N5UW5qSWdXTTltSm1CMmlvTm9MRk1kcmNSZEMwNzBmQ3ltNk1aZTNqS1NlY1N6U2xGNEFacGptMkFYZVZN?oc=5",
-      "source": "TradingView",
-      "published_at": "2026-10-20T16:47:48Z",
-      "excerpt": null,
-      "tickers": [
-        "INJ"
-      ]
+      ],
+      "event": null
     }
   ],
   "errors": []

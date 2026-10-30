@@ -1564,6 +1564,108 @@
       ],
       "files_broken": [],
       "note": "Fraîcheur OK : cycle profond il y a 0h52, actualités (last_checked_at) il y a 0h52, opportunités il y a 5h04 - rien à signaler."
+    },
+    {
+      "checked_at": "2026-10-28T08:52:07Z",
+      "site_reachable": false,
+      "files_ok": [
+        "verdicts.json",
+        "opportunities.json",
+        "engine-history.json",
+        "alerts.json",
+        "news.json",
+        "control-group.json",
+        "market-context.json",
+        "favoris-context.json",
+        "health-log.json"
+      ],
+      "files_broken": [],
+      "counts": {
+        "verdicts": 131,
+        "alerts": 213,
+        "opportunities": 5,
+        "news": 10,
+        "favoris_context_populated": 15
+      },
+      "note": "Les 9 fichiers JSON sont valides et non vides ; index.html référence bien les 22 scripts js/*.js. Aucune chute de volume (verdicts 122 → 131, alertes 212 → 213, opportunités 5 → 5, actualités 10 → 10). Site non vérifiable depuis cette session : le domaine jaki2402-dev.github.io n'est pas autorisé dans les paramètres réseau (échec de résolution DNS), ce qui ne prouve pas une panne du site."
+    },
+    {
+      "checked_at": "2026-10-28T09:17:00Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~0h56)",
+        "data/news.json (last_checked_at, ~0h56)",
+        "data/opportunities.json (last_scan_at, ~5h04)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h56, actualités (last_checked_at) il y a 0h56, opportunités il y a 5h04 - rien à signaler."
+    },
+    {
+      "checked_at": "2026-10-29T08:55:00Z",
+      "site_reachable": false,
+      "files_ok": [
+        "data/verdicts.json",
+        "data/opportunities.json",
+        "data/engine-history.json",
+        "data/alerts.json",
+        "data/news.json",
+        "data/control-group.json",
+        "data/market-context.json",
+        "data/favoris-context.json",
+        "data/health-log.json"
+      ],
+      "files_broken": [],
+      "counts": {
+        "verdicts": 131,
+        "alerts": 213,
+        "opportunities": 5,
+        "news": 10,
+        "favoris_context_populated": 15
+      },
+      "note": "Site non vérifié : la session ne peut pas résoudre jaki2402-dev.github.io (domaine hors de la liste réseau autorisée), donc site_reachable=false ne signifie pas que le site est en panne. Les 9 fichiers data/*.json sont des JSON valides et non vides, tous les scripts js/*.js sont référencés dans index.html, et les volumes sont identiques au passage précédent (131 verdicts, 213 alertes, 5 opportunités, 10 actualités, 15 favoris renseignés) : aucune anomalie."
+    },
+    {
+      "checked_at": "2026-10-29T09:17:00Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~0h58)",
+        "data/news.json (last_checked_at, ~0h58)",
+        "data/opportunities.json (last_scan_at, ~5h04)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h58, actualités (last_checked_at) il y a 0h58, opportunités il y a 5h04 - rien à signaler."
+    },
+    {
+      "checked_at": "2026-10-30T08:51:00Z",
+      "site_reachable": false,
+      "files_ok": [
+        "verdicts.json",
+        "opportunities.json",
+        "engine-history.json",
+        "alerts.json",
+        "news.json",
+        "control-group.json",
+        "market-context.json",
+        "favoris-context.json",
+        "health-log.json"
+      ],
+      "files_broken": [],
+      "counts": {
+        "verdicts": 131,
+        "alerts": 219,
+        "opportunities": 5,
+        "news": 10,
+        "favoris_context_populated": 15
+      },
+      "note": "Site non vérifiable depuis cette session : jaki2402-dev.github.io est hors des domaines réseau autorisés (échec de résolution DNS), ce n'est pas un constat de panne du site. Les 9 fichiers JSON sont valides et non vides, index.html référence les 22 scripts js/*.js présents. Volumes stables par rapport au dernier passage (verdicts 131→131, alertes 213→219, opportunités 5→5, actualités 10→10, favoris renseignés 15→15) : aucune anomalie."
+    },
+    {
+      "checked_at": "2026-10-30T09:19:00Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~1h00)",
+        "data/news.json (last_checked_at, ~1h00)",
+        "data/opportunities.json (last_scan_at, ~5h07)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 1h00, actualités (last_checked_at) il y a 1h00, opportunités il y a 5h07 - rien à signaler."
     }
   ]
 }

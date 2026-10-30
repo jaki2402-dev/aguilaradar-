@@ -1067,6 +1067,12 @@ footer.site-footer {
    un sens directionnel que le titre seul ne permet pas de garantir. */
 .news-item.important { background: rgba(229, 169, 59, 0.07); border-left: 2px solid var(--warning); padding-left: 12px; }
 .news-important-flag { color: var(--warning); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.02em; }
+/* Pouls du marché en direct (app.js renderMarketPulse) : bandeau seulement en cas de mouvement fort
+   ou d'incident de sécurité récent, vide sinon. */
+.market-pulse { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--loss); border-radius: var(--radius-sm); padding: 12px 14px; margin-bottom: 14px; overflow-wrap: anywhere; }
+.market-pulse.up { border-left-color: var(--gain); }
+.market-pulse p { margin: 6px 0 0; font-size: 0.88rem; }
+.market-pulse a { color: var(--text); }
 /* Intertitres du fil des médias / de la sélection du cycle : pleine largeur de la grille. */
 .news-feed-heading { grid-column: 1 / -1; margin: 4px 0 0; font-size: 0.78rem; font-weight: 600; color: var(--text-dim); }
 

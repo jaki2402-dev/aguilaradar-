@@ -184,8 +184,11 @@ le filet de secours si ce KV est vide.
 - `engine-history.json` : `correction_log` = mémoire du moteur ; `global_stats` recalculé ;
   `routine_health.last_success_at` touché à **chaque** cycle réussi, même sans verdict.
 - `news.json` : `last_checked_at` à chaque cycle ; `last_updated_at` seulement si `items` change.
-- `news-feed.json` (≠ `news.json`) : fil des médias, robot `price-alerts` (`scripts/news-feed.mjs`,
-  flux RSS publics), titres tels que publiés citant un favori, 7 j glissants, le plus récent EN TÊTE.
+- `news-feed.json` (≠ `news.json`) : fil des médias, robot `news-feed` toutes les 30 min, file d'attente
+  À PART (jamais `data-commit` : il annulerait les passages en attente des autres robots). Titres tels
+  que publiés citant un favori OU événement de marché (`event`, ex. piratage de Binance du 29/10, aucun
+  favori cité), 7 j glissants, le plus récent EN TÊTE. Site : `renderMarketPulse` (variations 24 h en
+  direct + incident < 48 h), car le régime est un jugement de fond qui ne voit pas un krach du jour.
 - `digest.json` : seul fichier `data/` que la routine `digest-6h` (06h05/18h05 UTC) a le droit
   d'écrire ; son push companion passe par `POST /send-digest` du Worker (voir Relais IA), plus par
   une copie de clés VAPID dans son propre prompt.

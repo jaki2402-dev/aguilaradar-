@@ -1011,7 +1011,7 @@ describe("app.js — fil des médias (data/news-feed.json, robot 4×/jour)", () 
     expect(el.querySelector("b")).toBeNull();
     expect(items[0].textContent).toContain("Les Echos · il y a 2 h · BTC");
     expect(items[1].textContent).toContain("Cointribune · il y a 2 j · LINK");
-    expect(el.textContent).toContain("Fil des médias — titres publiés citant un favori (relevé il y a moins d'1 h)");
+    expect(el.textContent).toContain("Fil des médias — titres publiés sur tes favoris et sur le marché (relevé il y a moins d'1 h)");
     expect(el.textContent).toContain("Sélection du cycle profond");
   });
 
@@ -1045,6 +1045,68 @@ describe("app.js — fil des médias (data/news-feed.json, robot 4×/jour)", () 
     const el = d.window.document.getElementById("last-deep-cycle");
     expect(el.classList.contains("freshness-stale")).toBe(true);
     expect(el.textContent).toContain("Fil des médias");
+  });
+});
+
+describe("app.js — pouls du marché en direct (29/10/2026 : régime « Neutre » pendant la chute liée au piratage de Binance)", () => {
+  // 7 favoris réels (ids de config.js) : bitcoin, ether et 5 autres.
+  const prices = (btc, others) => {
+    const p = {};
+    p.bitcoin = { eur: 70000, eur_24h_change: btc };
+    p.ethereum = { eur: 2500, eur_24h_change: others };
+    getGlobal(dom, "FAVORIS").slice(2, 7).forEach((f) => (p[f.cgId] = { eur: 1, eur_24h_change: others }));
+    return p;
+  };
+  const HACK = { title: "Binance pauses withdrawals as hackers suspected of stealing billions in crypto", url: "https://techcrunch.com/x", source: "TechCrunch", published_at: "2026-10-29T18:00:00Z", tickers: [], event: "securite" };
+  let dom;
+  beforeEach(() => {
+    dom = loadPage(["config.js", "prices.js", "app.js"], { html: "<!doctype html><html><body><div id='market-pulse'></div><div id='news-body'></div></body></html>" });
+    freezeNow(dom, "2026-10-29T21:00:00Z");
+  });
+
+  it("mesure la variation sur 24 h, sans jugement : forte baisse au-delà du seuil directionnel", () => {
+    const p = dom.window.computeMarketPulse(prices(-6.2, -8));
+    expect(p).toMatchObject({ level: "baisse", btc: -6.2, median: -8, down: 7, total: 7 });
+    expect(dom.window.computeMarketPulse(prices(-2, -1.5)).level).toBeNull();
+    expect(dom.window.computeMarketPulse({})).toBeNull();
+  });
+
+  it("bandeau : variations, incident de sécurité récent (lien sûr, titre échappé) et régime daté", () => {
+    setGlobal(dom, "latestFavorisPrices", prices(-6.2, -8));
+    setGlobal(dom, "latestNewsFeed", { items: [HACK] });
+    setGlobal(dom, "latestEngineHistoryForPulse", { macro_regime: { regime: "neutre", last_computed_at: "2026-10-28T08:15:00Z" } });
+    dom.window.renderMarketPulse(Date.parse("2026-10-29T21:00:00Z"));
+    const el = dom.window.document.getElementById("market-pulse");
+    expect(el.textContent).toContain("Marché en forte baisse");
+    expect(el.textContent).toContain("Bitcoin -6,2 % · Ether -8,0 % sur 24 h — 7 favoris sur 7 en baisse (médiane -8,0 %)");
+    expect(el.querySelector("a").getAttribute("href")).toBe("https://techcrunch.com/x");
+    expect(el.textContent).toContain("TechCrunch, il y a 3 h");
+    expect(el.textContent).toContain("« Neutre », évalué le 28/10");
+  });
+
+  it("bandeau : les titres qui nomment la plateforme d'abord, deux au plus (titres réels du 30/10)", () => {
+    setGlobal(dom, "latestFavorisPrices", prices(-1, -1));
+    const t = (title, hour) => ({ title, url: `https://x.fr/${hour}`, source: "S", published_at: `2026-10-30T0${hour}:00:00Z`, tickers: [], event: "securite" });
+    setGlobal(dom, "latestNewsFeed", { items: [t("The $2.54 Billion Question: Who Pays When A Crypto Exchange Gets Hacked?", 3), t("Crypto platform Binance confirms major hack, more than US$2.5 billion frozen", 2), t("Billions frozen as massive hack rattles crypto", 1)] });
+    dom.window.renderMarketPulse(Date.parse("2026-10-30T04:00:00Z"));
+    const titles = Array.from(dom.window.document.querySelectorAll("#market-pulse .market-pulse-event a")).map((a) => a.textContent);
+    expect(titles).toEqual(["Crypto platform Binance confirms major hack, more than US$2.5 billion frozen", "The $2.54 Billion Question: Who Pays When A Crypto Exchange Gets Hacked?"]);
+  });
+
+  it("rien à signaler : bandeau vide ; incident de plus de 48 h : plus affiché", () => {
+    setGlobal(dom, "latestFavorisPrices", prices(-1, -1));
+    setGlobal(dom, "latestNewsFeed", { items: [HACK] });
+    dom.window.renderMarketPulse(Date.parse("2026-11-01T00:00:00Z"));
+    expect(dom.window.document.getElementById("market-pulse").innerHTML).toBe("");
+  });
+
+  it("fil des médias : l'incident de sécurité est épinglé en tête, signalé, avec sa catégorie", () => {
+    const btc = Array.from({ length: 6 }, (_, i) => ({ title: `BTC ${i}`, url: `https://a.fr/${i}`, source: "A", published_at: "2026-10-29T20:30:00Z", tickers: ["BTC"] }));
+    dom.window.renderNews({ items: [] }, { updated_at: "2026-10-29T20:40:00Z", items: [...btc, HACK] });
+    const first = dom.window.document.querySelector("#news-body .news-feed-item");
+    expect(first.classList.contains("important")).toBe(true);
+    expect(first.textContent).toContain("Incident de sécurité");
+    expect(first.textContent).toContain("TechCrunch · il y a 3 h · Sécurité");
   });
 });
 
