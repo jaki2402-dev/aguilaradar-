@@ -837,3 +837,23 @@ secours), jamais supprimé — seule façon de démarrer le système avant le pr
 réussi, ou si le KV est vidé. Rien de nouveau à faire par l'utilisateur au-delà de ce qui était
 déjà prévu pour P1 (déployer le Worker) — une fois déployé, le prochain clic « Régénérer » suffit,
 plus de copier-coller de `PUSH_SUBSCRIPTION_JSON` à faire à la main pour une rotation future.
+
+### 30/10/2026 — piratage de Binance (29/10) invisible sur le site, régime « Neutre » pendant la chute
+
+- Constat de l'utilisateur (capture, 30/10 ~02h UTC) : à « pourquoi le marché est en baisse ? »,
+  l'Assistant répond par le régime « Neutre » évalué le 28/10. Événement réel vérifié (The Block,
+  TechCrunch, CoinDesk du 29/10) : 1,7 à 5,8 Md$ sortis des portefeuilles chauds de Binance, retraits
+  suspendus. `news-feed.json` (dernier relevé 29/10 17h03) : aucun titre Binance/piratage.
+- Causes : (1) le fil ne gardait que les titres citant un favori — « Binance piraté » n'en cite aucun ;
+  (2) le fil tournait dans `price-alerts`, lancé 3×/jour par GitHub (17h03 puis rien pendant 9 h) ;
+  (3) aucun signal « mouvement en cours » sur le site, le régime étant un jugement de fond ; (4) la
+  réponse venait du filet par mots-clés (relais IA indisponible à ce moment, cause non vérifiable
+  d'ici : `workers.dev` refusé par le proxy de la session).
+- Correctifs : catégories d'événements de marché (`MARKET_EVENTS` : sécurité, plateforme, stablecoin,
+  régulation, macro, marché ; mots génériques seulement avec un mot crypto ; lu sur le titre seul) +
+  2 recherches Google (fr marché, en sécurité des plateformes) ; robot `news-feed.yml` toutes les
+  30 min, commit seulement si titre nouveau ou relevé publié > 3 h, groupe de concurrence à part ;
+  site : bandeau `renderMarketPulse` (variations 24 h des prix en direct, seuil directionnel unique,
+  incident de sécurité < 48 h épinglé), fil relu toutes les 10 min ; Assistant : « ce qui bouge
+  maintenant » avant le régime, dans la réponse de secours comme dans le contexte de l'IA.
+

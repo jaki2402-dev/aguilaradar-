@@ -1,4 +1,4 @@
-// Fil d'actualités des favoris (data/news-feed.json) — GitHub Action price-alerts, aucun quota.
+// Fil d'actualités des favoris et du marché (data/news-feed.json) — GitHub Action news-feed, aucun quota.
 // Pourquoi : la veille du cycle (docs/routines/cycle-2h-verdict.md §8) n'ajoute une actualité que si
 // elle est jugée « réellement nouvelle et significative » ; plus rien depuis le 05/10/2026 (7 jours)
 // et ses items ne sont pas datés. Ce robot ne remplace pas cette sélection : il récupère les TITRES
@@ -9,21 +9,29 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 
 const PATH = "data/news-feed.json";
-const MAX_ITEMS = 40;
+const MAX_ITEMS = 50;
 // Plafonds par sujet : titres sur le seul bitcoin/ether, et par autre favori — sinon un seul
 // sujet très couvert chasse tous les autres du fil.
 const MAX_MAJORS_ONLY = 12;
 const MAX_PER_ALT = 5;
+const MAX_MARKET = 12;
 const MAX_AGE_DAYS = 7;
 
 // Deux recherches Google Actualités : le bitcoin et l'ether occupent sinon tout le fil (constaté au
 // 1er passage, 12/10/2026 : 24 titres BTC + 7 ETH sur 30, aucun autre favori, 12 h couvertes).
 const GOOGLE_MAJORS = "(bitcoin OR ethereum) crypto when:1d";
 const GOOGLE_ALTS = '(chainlink OR arbitrum OR celestia OR injective OR "ondo finance" OR livepeer OR "the graph" OR cartesi OR peaq OR aioz OR "fetch.ai" OR "jupiter exchange" OR "flux network") crypto when:7d';
-const google = (q) => `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=fr&gl=FR&ceid=FR:fr`;
+// Événements de tout le marché (plateformes, stablecoins, piratages, régulation) : le piratage de
+// Binance du 29/10/2026 n'est jamais entré dans le fil, ses titres ne citant aucun favori.
+const GOOGLE_MARKET = "(crypto OR cryptomonnaie OR cryptomonnaies) (piratage OR piraté OR hack OR Binance OR Coinbase OR Tether OR stablecoin OR SEC OR liquidations OR krach) when:1d";
+const GOOGLE_MARKET_EN = "(Binance OR Coinbase OR Kraken OR OKX OR Bybit OR Tether OR crypto exchange) (hack OR hacked OR exploit OR breach OR withdrawals OR insolvency) when:1d";
+const google = (q, lang = "fr") =>
+  lang === "en" ? `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-US&gl=US&ceid=US:en` : `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=fr&gl=FR&ceid=FR:fr`;
 export const FEEDS = [
   { name: "Google Actualités (fr) — bitcoin, ether", url: google(GOOGLE_MAJORS), aggregator: true },
   { name: "Google Actualités (fr) — autres favoris", url: google(GOOGLE_ALTS), aggregator: true },
+  { name: "Google Actualités (fr) — marché", url: google(GOOGLE_MARKET), aggregator: true },
+  { name: "Google News (en) — sécurité des plateformes", url: google(GOOGLE_MARKET_EN, "en"), aggregator: true },
   { name: "Cointribune", url: "https://www.cointribune.com/feed/" },
   { name: "Journal du Coin", url: "https://journalducoin.com/feed/" },
 ];
@@ -63,6 +71,30 @@ export function tickersIn(text) {
       return p.name.test(t) && (!p.context || CRYPTO_CONTEXT.test(t));
     })
     .map(([k]) => k);
+}
+
+// Événements qui touchent tout le marché, même sans favori cité. Ordre = priorité (un titre « Binance
+// piraté » est classé « securite » avant « plateforme »). Mots génériques (Fed, SEC, ETF) : seulement
+// avec un mot du monde crypto dans le titre, sinon une actualité de bourse classique passerait.
+export const MARKET_EVENTS = [
+  ["securite", /piratage|piraté|pirates|\bhack(ed|ers?|s)?\b|\bexploit(é|s)?\b|\bbreach\b|dérob|(?<![a-zà-ÿ])vol(é|és|ée|ées)(?![a-zà-ÿ])|\bstolen\b|drain(é|ed)|retraits? (suspendus?|gelés?|bloqués?)|suspend(s|u|ues?|ent)? (les )?retraits|withdrawals? (paused|halted|suspended)|pauses? withdrawals|faille de sécurité/i],
+  ["plateforme", /\b(binance|coinbase|kraken|okx|bybit|bitget|upbit|bitstamp|gemini|crypto\.com)\b/i],
+  ["stablecoin", /\b(tether|usdt|usdc|circle|stablecoins?)\b/i],
+  ["regulation", /\b(sec|cftc|mica|amf)\b|régulat|réglementation|regulat|interdiction|\bban\b/i],
+  ["macro", /\bfed\b|réserve fédérale|federal reserve|\bfomc\b|taux directeurs?|powell/i],
+  ["marche", /liquidations?|\bkrach\b|\bcrash\b|capitalisation (totale|du marché)|marché (crypto|des cryptos?)|crypto market/i],
+];
+const CRYPTO_WORD = /crypto|bitcoin|\bbtc\b|ether|blockchain|stablecoin|binance|coinbase|tether|usdt|usdc|jeton|token/i;
+const NEEDS_CRYPTO_WORD = new Set(["regulation", "macro", "marche"]);
+
+export function marketEventIn(text) {
+  const t = String(text || "");
+  for (const [kind, re] of MARKET_EVENTS) {
+    if (!re.test(t)) continue;
+    if (NEEDS_CRYPTO_WORD.has(kind) && !CRYPTO_WORD.test(t)) continue;
+    return kind;
+  }
+  return null;
 }
 
 // Pages sans valeur d'information : source réduite à une adresse (sites de recopie) ou
@@ -129,16 +161,19 @@ export function mergeFeed(previous, fresh, now = new Date()) {
     const t = Date.parse(it.published_at);
     if (!Number.isFinite(t) || t < minTime || t > now.getTime() + 3600000 || isJunk(it)) continue;
     const tickers = tickersIn(`${it.title} ${it.excerpt || ""}`);
-    if (!tickers.length) continue;
+    // Catégorie d'événement lue sur le TITRE seul : l'extrait d'un article sur un favori cite
+    // souvent Binance ou la Fed en passant, sans que l'article porte sur tout le marché.
+    const event = marketEventIn(it.title);
+    if (!tickers.length && !event) continue;
     const key = normTitle(it.title);
     if (seenUrl.has(it.url) || seenTitle.has(key)) continue;
-    const topic = tickers.find((k) => !MAJORS.has(k)) || "MAJORS";
-    const cap = topic === "MAJORS" ? MAX_MAJORS_ONLY : MAX_PER_ALT;
+    const topic = event ? "MARCHE" : tickers.find((k) => !MAJORS.has(k)) || "MAJORS";
+    const cap = topic === "MARCHE" ? MAX_MARKET : topic === "MAJORS" ? MAX_MAJORS_ONLY : MAX_PER_ALT;
     if ((perTopic.get(topic) || 0) >= cap) continue;
     perTopic.set(topic, (perTopic.get(topic) || 0) + 1);
     seenUrl.add(it.url);
     seenTitle.add(key);
-    out.push({ ...it, tickers });
+    out.push({ ...it, tickers, event });
     if (out.length >= MAX_ITEMS) break;
   }
   return out;

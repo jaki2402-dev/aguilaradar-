@@ -85,6 +85,10 @@ natif (colonne « Test réel », onglet Moteur) — voir P14 dans « Résolu » 
 
 ## Journal des sessions (le plus récent en haut)
 
+- **30/10/2026** — Piratage de Binance (29/10) jamais apparu sur le site, régime « Neutre » pendant la
+  chute. Fil des médias élargi aux événements de marché + robot dédié toutes les 30 min ; bandeau
+  « Marché en forte baisse/hausse » en direct ; Assistant : mouvement en direct et événements avant le
+  régime. Relais IA : indisponible au moment de la question, cause non vérifiable depuis la session.
 - **23/10/2026 (suite 4)** — P8 (« tu veux que je m'y mette ? » → « Oui ») : inventaire complet des
   routines par `list_triggers` (14 réelles, dont une désactivée — watchdog — et une absente malgré
   une mention contraire dans CLAUDE.md jusqu'à aujourd'hui, `coinmarketcap-quotidien`). 9 nouveaux

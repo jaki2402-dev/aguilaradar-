@@ -183,6 +183,7 @@ async function refreshPrices() {
     // argument : réutilise les positions/verdicts déjà chargés par le dernier loadAllData(),
     // voir portfolio.js.
     if (window.renderPortfolio) renderPortfolio();
+    renderMarketPulse();
     document.getElementById("last-price-update").textContent =
       "Prix à l'instant : " + new Date().toLocaleTimeString("fr-FR");
   } catch (err) {
@@ -504,17 +505,28 @@ function ageLabel(iso, now = Date.now()) {
 }
 
 const NEWS_FEED_SHOWN = 10;
+// Catégories d'événements de tout le marché (scripts/news-feed.mjs, MARKET_EVENTS).
+const MARKET_EVENT_LABELS = { securite: "Sécurité", plateforme: "Plateforme", stablecoin: "Stablecoin", regulation: "Régulation", macro: "Macro", marche: "Marché" };
+// Un incident de sécurité (piratage de plateforme…) reste épinglé en tête 48 h.
+const MARKET_EVENT_PINNED_HOURS = 48;
 // Au plus 4 titres sur le seul bitcoin/ether parmi ceux affichés : ils sont de loin les plus
 // couverts et masqueraient sinon tous les autres favoris (constaté au 1er relevé, 12/10/2026).
 const NEWS_FEED_MAJORS_SHOWN = 4;
-function pickFeedItems(items) {
+function recentSecurityEvents(items, now = Date.now()) {
+  return (items || []).filter((n) => n && n.event === "securite" && now - Date.parse(n.published_at) <= MARKET_EVENT_PINNED_HOURS * 3600000 && safeUrl(n.url));
+}
+
+function pickFeedItems(items, now = Date.now()) {
+  const pinned = recentSecurityEvents(items, now).slice(0, 3);
   let majors = 0;
-  return items.filter((n) => {
-    const majorsOnly = (n.tickers || []).every((t) => t === "BTC" || t === "ETH");
+  const rest = items.filter((n) => {
+    if (pinned.includes(n)) return false;
+    const majorsOnly = !n.event && (n.tickers || []).every((t) => t === "BTC" || t === "ETH");
     if (majorsOnly && majors >= NEWS_FEED_MAJORS_SHOWN) return false;
     if (majorsOnly) majors++;
     return true;
-  }).slice(0, NEWS_FEED_SHOWN);
+  });
+  return [...pinned, ...rest].slice(0, NEWS_FEED_SHOWN);
 }
 // Fil des médias (data/news-feed.json, robot price-alerts 4×/jour, aucun quota) : titres RÉELS
 // publiés par les médias crypto francophones et citant un favori, datés et sourcés, le plus
@@ -524,18 +536,70 @@ function renderNewsFeedBlock(feedData) {
   const items = ((feedData && feedData.items) || []).filter((n) => n && n.title && safeUrl(n.url));
   if (items.length === 0) return "";
   const updated = ageLabel(feedData.updated_at);
-  const heading = `<p class="news-feed-heading">Fil des médias — titres publiés citant un favori${updated ? ` (relevé ${updated})` : ""}</p>`;
+  const heading = `<p class="news-feed-heading">Fil des médias — titres publiés sur tes favoris et sur le marché${updated ? ` (relevé ${updated})` : ""}</p>`;
   const rows = pickFeedItems(items)
     .map((n) => {
-      const meta = [n.source, ageLabel(n.published_at), (n.tickers || []).join(", ")].filter(Boolean).join(" · ");
+      const topic = (n.tickers || []).length ? n.tickers.join(", ") : MARKET_EVENT_LABELS[n.event] || "";
+      const meta = [n.source, ageLabel(n.published_at), topic].filter(Boolean).join(" · ");
+      const important = n.event === "securite";
       return `
-      <div class="news-item news-feed-item">
+      <div class="news-item news-feed-item${important ? " important" : ""}">
+        ${important ? `<span class="news-important-flag">⚡ Incident de sécurité</span>` : ""}
         <a href="${escapeHtml(safeUrl(n.url))}" target="_blank" rel="noopener noreferrer"><span>${highlightKeyInfo(n.title)}</span></a>
         <span class="hint">${escapeHtml(meta)}</span>
       </div>`;
     })
     .join("");
   return heading + rows;
+}
+
+// Pouls du marché EN DIRECT (prix du navigateur, rafraîchis toutes les 60 s) : le régime de marché
+// est un jugement de fond du cycle (quelques fois par jour) — il restait « Neutre » le 29/10/2026
+// pendant la chute liée au piratage de Binance, sans que rien sur le site ne signale le mouvement.
+// Simple mesure des variations sur 24 h, jamais un verdict ; même seuil directionnel que partout.
+function computeMarketPulse(prices) {
+  const changes = FAVORIS.map((f) => prices && prices[f.cgId] && prices[f.cgId].eur_24h_change).filter((v) => Number.isFinite(v));
+  if (changes.length < 5) return null;
+  const sorted = changes.slice().sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  const median = sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+  const btc = prices.bitcoin && Number.isFinite(prices.bitcoin.eur_24h_change) ? prices.bitcoin.eur_24h_change : null;
+  const eth = prices.ethereum && Number.isFinite(prices.ethereum.eur_24h_change) ? prices.ethereum.eur_24h_change : null;
+  const t = THRESHOLDS.directionalMovePct;
+  const level = (btc !== null && btc <= -t) || median <= -t ? "baisse" : (btc !== null && btc >= t) || median >= t ? "hausse" : null;
+  return { btc, eth, median, down: changes.filter((c) => c < 0).length, up: changes.filter((c) => c > 0).length, total: changes.length, level };
+}
+
+const pulsePct = (v) => (Number.isFinite(v) ? `${v > 0 ? "+" : ""}${v.toLocaleString("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %` : "—");
+
+let latestNewsFeed = null;
+let latestNewsData = null;
+let latestEngineHistoryForPulse = null;
+
+function renderMarketPulse(now = Date.now()) {
+  const el = document.getElementById("market-pulse");
+  if (!el) return;
+  const pulse = computeMarketPulse(typeof latestFavorisPrices !== "undefined" ? latestFavorisPrices : null);
+  const event = recentSecurityEvents((latestNewsFeed && latestNewsFeed.items) || [], now)[0] || null;
+  if (!(pulse && pulse.level) && !event) {
+    el.innerHTML = "";
+    return;
+  }
+  const title = pulse && pulse.level === "baisse" ? "Marché en forte baisse" : pulse && pulse.level === "hausse" ? "Marché en forte hausse" : "Événement de marché à surveiller";
+  const moves = pulse
+    ? `<p class="market-pulse-moves">Bitcoin ${pulsePct(pulse.btc)} · Ether ${pulsePct(pulse.eth)} sur 24 h — ${pulse.level === "hausse" ? `${pulse.up} favoris sur ${pulse.total} en hausse` : `${pulse.down} favoris sur ${pulse.total} en baisse`} (médiane ${pulsePct(pulse.median)}).</p>`
+    : "";
+  const eventHtml = event
+    ? `<p class="market-pulse-event">⚡ <a href="${escapeHtml(safeUrl(event.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.title)}</a> <span class="hint">— ${escapeHtml([event.source, ageLabel(event.published_at, now)].filter(Boolean).join(", "))}</span></p>`
+    : "";
+  const r = latestEngineHistoryForPulse && latestEngineHistoryForPulse.macro_regime;
+  const regimeNote = pulse && pulse.level && r && r.last_computed_at
+    ? `<p class="hint">Le régime de marché (« ${escapeHtml(REGIME_LABELS[r.regime] || r.regime || "")} », évalué le ${escapeHtml(shortDate(r.last_computed_at))}) est un jugement de fond réévalué par le cycle : il ne reflète pas encore ce mouvement.</p>`
+    : "";
+  el.innerHTML = `<div class="market-pulse ${pulse && pulse.level === "hausse" ? "up" : "down"}" role="status">
+      <strong>${title}</strong>
+      ${moves}${eventHtml}${regimeNote}
+    </div>`;
 }
 
 function renderNews(newsData, feedData) {
@@ -662,7 +726,11 @@ async function loadAllData() {
   renderNotifications(alerts);
   renderAvisDuJour(alerts);
   if (window.updateNotifBellFromAlerts) updateNotifBellFromAlerts(alerts);
+  latestNewsFeed = newsFeed;
+  latestNewsData = news;
+  latestEngineHistoryForPulse = engineHistory;
   renderNews(news, newsFeed);
+  renderMarketPulse();
   renderMacroRegime(engineHistory, marketGauges);
   renderMarketContext(marketContext, marketGauges, cryptoGlobal);
   renderFavorisTechnical(technicalFavoris);
@@ -697,8 +765,9 @@ const FRESHNESS_SOURCES = [
   { key: "portfolioHistory", label: "Historique portefeuille", warnHours: 14, staleHours: 30 },
   // GitHub Action price-alerts, 4×/jour (jauges peur/cupidité + dominance BTC).
   { key: "marketGauges", label: "Jauges de marché", warnHours: 14, staleHours: 26 },
-  // Même robot (fil des médias) : updated_at n'avance que si au moins un flux a répondu.
-  { key: "newsFeed", label: "Fil des médias", warnHours: 14, staleHours: 26 },
+  // updated_at n'avance que si au moins un flux a répondu.
+  // Robot news-feed toutes les 30 min, relevé publié au moins toutes les 3 h.
+  { key: "newsFeed", label: "Fil des médias", warnHours: 8, staleHours: 16 },
 ];
 
 // Indicateur de fraîcheur bien visible : plusieurs routines à cadences différentes
@@ -750,6 +819,15 @@ function updateFreshnessIndicator(engineHistory, opportunities, news, portfolioH
     lastDeepCycle.textContent =
       (worst.status === "stale" ? "⚠ " : "") + worst.label + " : " + formatted + " (il y a " + elapsed + " — " + tail + ")";
   }
+}
+
+async function refreshNewsFeed() {
+  const feed = await loadJson(DATA_URLS.newsFeed);
+  if (!feed) return;
+  latestNewsFeed = feed;
+  if (window.aguilaradarData) window.aguilaradarData.newsFeed = feed;
+  renderNews(latestNewsData, feed);
+  renderMarketPulse();
 }
 
 let refreshInFlight = false;
@@ -865,6 +943,9 @@ async function initApp() {
   await refreshPrices();
   if (!pricesIntervalStarted) {
     setInterval(refreshPrices, 60000);
+    // Fil des médias relu toutes les 10 min sans recharger le reste de la page (cartes dépliées
+    // conservées) : le robot news-feed le met à jour toutes les 30 min.
+    setInterval(refreshNewsFeed, 10 * 60000);
     pricesIntervalStarted = true;
   }
   // Isolé (son propre try/catch, jamais dans un Promise.all partagé) : un échec ici ne doit

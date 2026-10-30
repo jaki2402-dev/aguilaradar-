@@ -524,6 +524,33 @@ function chatShortDate(iso) {
   return iso ? new Date(iso).toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit" }) : "";
 }
 
+const chatPct = (v) => (Number.isFinite(v) ? `${v > 0 ? "+" : ""}${v.toLocaleString("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %` : "—");
+const chatDayHour = (iso) => (iso ? new Date(iso).toLocaleString("fr-FR", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }) : "?");
+
+// Événements de tout le marché relevés par le fil des médias (piratage de plateforme, stablecoins,
+// régulation…), le plus récent d'abord, titres tels que publiés.
+function marketEvents(max) {
+  const items = (chatData.newsFeed && chatData.newsFeed.items) || [];
+  return items.filter((n) => n && n.event).slice(0, max).map((n) => `[${chatDayHour(n.published_at)}] ${n.source || "?"} — ${n.title}`);
+}
+
+// Ce qui bouge MAINTENANT : variations sur 24 h des prix en direct (computeMarketPulse, app.js) et
+// événements récents du fil. Le régime de marché, lui, est un jugement de fond daté : seul, il a
+// répondu « Neutre » le 30/10/2026 à « pourquoi le marché baisse ? » en pleine chute liée au
+// piratage de Binance.
+function liveMarketLines() {
+  const lines = [];
+  const prices = typeof latestFavorisPrices !== "undefined" ? latestFavorisPrices : null;
+  const pulse = typeof computeMarketPulse === "function" ? computeMarketPulse(prices) : null;
+  if (pulse) {
+    const strong = pulse.level ? ` — mouvement ${pulse.level === "baisse" ? "de forte baisse" : "de forte hausse"} (au-delà du seuil de ${THRESHOLDS.directionalMovePct} %)` : "";
+    lines.push(`En direct : bitcoin ${chatPct(pulse.btc)}, ether ${chatPct(pulse.eth)} sur 24 h ; ${pulse.down} favoris sur ${pulse.total} en baisse (médiane ${chatPct(pulse.median)})${strong}.`);
+  }
+  const events = marketEvents(5);
+  if (events.length) lines.push(`Événements de marché récents (titres de presse datés, tels que publiés) : ${events.join(" ; ")}`);
+  return lines;
+}
+
 function answerMarketWhy() {
   const m = chatMacroView();
   if (!m) return "Le régime de marché n'a pas encore été calculé — ça se fait au premier cycle profond.";
@@ -532,7 +559,9 @@ function answerMarketWhy() {
   const regimeLine = m.stale
     ? `Dernier régime de marché évalué : "${label}", le ${chatShortDate(m.regimeAt)} — pas réévalué depuis, donc à prendre comme un contexte passé.`
     : `Le régime de marché actuel est classé "${label}"${m.regimeAt ? ` (évalué le ${chatShortDate(m.regimeAt)})` : ""}.`;
-  let text = `${regimeLine} Indice de peur et de cupidité ${m.fearGreed ?? "—"}${m.fearGreedAt ? ` (au ${chatShortDate(m.fearGreedAt)})` : ""}, dominance BTC ${dominance}${m.dominanceAt ? ` (au ${chatShortDate(m.dominanceAt)})` : ""}.${m.stale || !m.note ? "" : "\n\n" + m.note}`;
+  const live = liveMarketLines();
+  const liveHead = live.length ? `Ce qui bouge maintenant :\n\n${live.map((l) => `• ${l}`).join("\n\n")}\n\nContexte de fond (jugement du cycle, plus lent) : ` : "";
+  let text = `${liveHead}${regimeLine} Indice de peur et de cupidité ${m.fearGreed ?? "—"}${m.fearGreedAt ? ` (au ${chatShortDate(m.fearGreedAt)})` : ""}, dominance BTC ${dominance}${m.dominanceAt ? ` (au ${chatShortDate(m.dominanceAt)})` : ""}.${m.stale || !m.note ? "" : "\n\n" + m.note}`;
   const ctx = chatData.marketContext;
   if (ctx && ctx.employment_us && ctx.employment_us.market_reaction_note) {
     text += `\n\nContexte macro complémentaire : ${ctx.employment_us.market_reaction_note}`;
@@ -556,7 +585,8 @@ function mediaHeadlines(max) {
   const items = (chatData.newsFeed && chatData.newsFeed.items) || [];
   return items.slice(0, max).map((n) => {
     const day = n.published_at ? new Date(n.published_at).toLocaleDateString("fr-FR", { day: "2-digit", month: "2-digit" }) : "?";
-    const tickers = (n.tickers || []).length ? ` (${n.tickers.join(", ")})` : "";
+    const label = (n.tickers || []).length ? n.tickers.join(", ") : n.event && typeof MARKET_EVENT_LABELS !== "undefined" ? MARKET_EVENT_LABELS[n.event] : n.event;
+    const tickers = label ? ` (${label})` : "";
     return `[${day}] ${n.source || "?"} — ${n.title}${tickers}`;
   });
 }
@@ -681,10 +711,12 @@ function backtestLine() {
 // chatData est déjà chargé par ensureChatData au moment où ceci est appelé, aucun fetch de plus.
 function buildAiContext() {
   const parts = [];
+  // En premier : ce qui bouge maintenant (prix en direct, événements datés), avant le régime.
+  parts.push(...liveMarketLines());
   const m = chatMacroView();
   if (m) {
     parts.push(
-      `Régime de marché : ${m.regime}${m.regimeAt ? ` (évalué le ${chatShortDate(m.regimeAt)}${m.stale ? ", PAS réévalué depuis : contexte passé" : ""})` : ""}. Peur/cupidité ${m.fearGreed ?? "—"}${m.fearGreedAt ? ` au ${chatShortDate(m.fearGreedAt)}` : ""}, dominance BTC ${m.dominance ?? "—"} %${m.dominanceAt ? ` au ${chatShortDate(m.dominanceAt)}` : ""}.${m.stale ? "" : " " + m.note}`
+      `Régime de marché (jugement de fond du cycle, ne reflète pas un mouvement des dernières heures) : ${m.regime}${m.regimeAt ? ` (évalué le ${chatShortDate(m.regimeAt)}${m.stale ? ", PAS réévalué depuis : contexte passé" : ""})` : ""}. Peur/cupidité ${m.fearGreed ?? "—"}${m.fearGreedAt ? ` au ${chatShortDate(m.fearGreedAt)}` : ""}, dominance BTC ${m.dominance ?? "—"} %${m.dominanceAt ? ` au ${chatShortDate(m.dominanceAt)}` : ""}.${m.stale ? "" : " " + m.note}`
     );
   }
   const d = chatData.digest;

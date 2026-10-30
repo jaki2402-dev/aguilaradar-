@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { loadPage, runScript, setGlobal } from "./helpers/loadPage.js";
+import { loadPage, runScript, setGlobal, getGlobal } from "./helpers/loadPage.js";
 
 describe("assistant.js — wordBoundaryMatch", () => {
   const dom = loadPage(["assistant.js"]);
@@ -1016,5 +1016,37 @@ describe("assistant.js — fil des médias dans le contexte de l'IA", () => {
     await dom.window.ensureChatData();
     const ctx = dom.window.buildAiContext();
     expect(ctx).toContain("Titres publiés par les médias crypto (fil automatique, daté, titre tel que publié — jamais un avis) : [11/10] Cointribune — Chainlink étend CCIP (LINK)");
+  });
+});
+
+describe("assistant.js — « pourquoi le marché baisse ? » : ce qui bouge maintenant avant le régime (30/10/2026)", () => {
+  const HACK = { title: "Binance pauses withdrawals as hackers suspected of stealing billions in crypto", url: "https://techcrunch.com/x", source: "TechCrunch", published_at: "2026-10-29T18:00:00Z", tickers: [], event: "securite" };
+  function setup() {
+    const dom = loadPage(["config.js", "prices.js", "app.js", "assistant.js"]);
+    const p = { bitcoin: { eur: 1, eur_24h_change: -6.2 }, ethereum: { eur: 1, eur_24h_change: -8 } };
+    getGlobal(dom, "FAVORIS").slice(2, 7).forEach((f) => (p[f.cgId] = { eur: 1, eur_24h_change: -8 }));
+    setGlobal(dom, "latestFavorisPrices", p);
+    dom.window.aguilaradarData = { verdicts: [], engineHistory: { macro_regime: { regime: "neutre", last_computed_at: "2026-10-28T08:15:00Z", note: "" } }, marketContext: {}, newsFeed: { items: [HACK] } };
+    return dom;
+  }
+
+  it("réponse de secours : mouvement en direct et incident daté d'abord, régime présenté comme contexte de fond", async () => {
+    const dom = setup();
+    await dom.window.ensureChatData();
+    const a = dom.window.answerMarketWhy();
+    expect(a.startsWith("Ce qui bouge maintenant")).toBe(true);
+    expect(a).toContain("bitcoin -6,2 %, ether -8,0 % sur 24 h ; 7 favoris sur 7 en baisse");
+    expect(a).toContain("mouvement de forte baisse");
+    expect(a).toContain("TechCrunch — Binance pauses withdrawals");
+    expect(a).toContain("Contexte de fond (jugement du cycle, plus lent)");
+  });
+
+  it("contexte de l'IA : les mêmes lignes en tête, avant le régime", async () => {
+    const dom = setup();
+    await dom.window.ensureChatData();
+    const ctx = dom.window.buildAiContext();
+    expect(ctx.indexOf("En direct : bitcoin -6,2 %")).toBe(0);
+    expect(ctx.indexOf("Événements de marché récents")).toBeLessThan(ctx.indexOf("Régime de marché"));
+    expect(ctx).toContain("(Sécurité)");
   });
 });

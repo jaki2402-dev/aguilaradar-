@@ -69,3 +69,30 @@ describe("scripts/news-feed.mjs — fil des médias crypto", () => {
     expect(items.filter((x) => !x.tickers.includes("LINK"))).toHaveLength(12);
   });
 });
+
+describe("événements de tout le marché, même sans favori cité (piratage de Binance, 29/10/2026)", async () => {
+  const { marketEventIn, mergeFeed: merge } = await import("../scripts/news-feed.mjs");
+
+  it("classe les titres réels de l'incident et ignore les faux amis", () => {
+    expect(marketEventIn("Binance pauses withdrawals as hackers suspected of stealing billions in crypto")).toBe("securite");
+    expect(marketEventIn("Binance investigating hack as suspicious outflows reach up to $5.8 billion")).toBe("securite");
+    expect(marketEventIn("Binance piraté : plus de 2 milliards de dollars dérobés")).toBe("securite");
+    expect(marketEventIn("Binance suspend les retraits sur plusieurs réseaux")).toBe("securite");
+    expect(marketEventIn("Tether gèle 1,56 milliard de dollars liés à Binance")).toBe("plateforme");
+    expect(marketEventIn("Circle gèle 800 millions d'USDC")).toBe("stablecoin");
+    expect(marketEventIn("Le bitcoin s'est envolé après la décision de la Fed")).toBe("macro");
+    expect(marketEventIn("La Fed maintient ses taux, Wall Street hésite")).toBeNull(); // aucun mot crypto
+    expect(marketEventIn("L'exploitation minière du bitcoin consomme moins")).toBeNull();
+    expect(marketEventIn("Le bitcoin s'est envolé de 5 %")).toBeNull();
+  });
+
+  it("garde un titre de marché sans favori, le classe à part et ne le noie pas parmi les titres bitcoin", () => {
+    const now = new Date("2026-10-29T22:00:00Z");
+    const btc = Array.from({ length: 20 }, (_, i) => ({ title: `Bitcoin recule n°${i}`, url: `https://m.fr/b/${i}`, source: "M", published_at: new Date(now.getTime() - i * 60000).toISOString(), excerpt: null }));
+    const hack = { title: "Binance pauses withdrawals as hackers suspected of stealing billions in crypto", url: "https://techcrunch.com/x", source: "TechCrunch", published_at: "2026-10-29T18:00:00Z", excerpt: null };
+    const items = merge(null, [...btc, hack], now);
+    const h = items.find((x) => x.source === "TechCrunch");
+    expect(h).toMatchObject({ tickers: [], event: "securite" });
+    expect(items.filter((x) => !x.event)).toHaveLength(12);
+  });
+});
