@@ -1,12 +1,23 @@
 {
-  "updated_at": "2026-10-30T02:07:26Z",
+  "updated_at": "2026-10-30T02:12:14Z",
   "sources": [
     "Google Actualités (fr) — bitcoin, ether",
     "Google Actualités (fr) — autres favoris",
+    "Google Actualités (fr) — marché",
+    "Google News (en) — sécurité des plateformes",
     "Cointribune",
     "Journal du Coin"
   ],
   "items": [
+    {
+      "title": "The $2.54 Billion Question: Who Pays When A Crypto Exchange Gets Hacked?",
+      "url": "https://news.google.com/rss/articles/CBMixAFBVV95cUxOYks5ZUI4STV6dmtKcU03YXNncDJhdDBDLWI2VnU4MjNPeDBORHZvYndCTjV4aTBvVkhhWGFJNE5iWUh5S3ZKWVpzYl9PZW1KRjg1TFZMdFpJUkNyd3FJNUxFNGpnWnJkZzdvMHZQZkhKVE1sMDQ3TWxoTEpnRnhZSnJlTzRTZEdKYl9YMFNyUEVnVVJoOXdsOWV6dDYxMkNMa0tVUmlMZW8wZFBYcGFRQzNxZTc4RGl4SEZRNjVtem1RcnFC0gHMAUFVX3lxTE9oR3F1SWxjalJMT2Z4d2xCZ1FTOVhyYUdiODV3T1cyT1VuV1hlS3cxMC1sNERtWkozWVcyRHR5bTFwQmRpbTV3RkVTNTdZSUZpMUNmN3VNVzNBZmlDTUhOYTBxVy1tcjNCMGRkNFlYOEdrWG1UbDNnNUNHRFB6UXR3Q05vUDZyMUluZDBFSjA3aWRnczN2Qm9tZE1LUVhZdVplb3p4bTZpOWVfeUpqY2NzLWFBM2FZblEtOWpEU242Wkhic3I5dFBCbnAwNg?oc=5",
+      "source": "NDTV Profit",
+      "published_at": "2026-10-30T02:04:29Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "securite"
+    },
     {
       "title": "Les haussiers de Bitcoin subissent une perte record lors d’une journée de liquidations crypto à 1,49 milliard de dollars",
       "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE5QTFVKcEN0MlZRUnZiVVk0MW5McnpIVmI1a0RpMTIycTR6RTdrVFVnZlAxdldqRU9UNVZ4dEhGSHA5WlVTZkdMeXRQNXpJdko2UGs4TGJzQzl6NEk5ay1LUzE2S2pxaTJoTEItOE9kR1BpWkVKX2dfTXJCN2NyZw?oc=5",
@@ -15,57 +26,120 @@
       "excerpt": null,
       "tickers": [
         "BTC"
-      ]
+      ],
+      "event": "marche"
     },
     {
-      "title": "Le bitcoin et les cryptomonnaies reculent après l’annonce par Binance d’un problème de sécurité",
-      "url": "https://news.google.com/rss/articles/CBMi7gFBVV95cUxOTEEwNFFaTTZrOTZQT2NnWXduZFlhTEZfQ2NPdldXTnJTWU85UXlsV09KQUNSbTY1ay16V1kzZnloQVFhbVl1WnlqUDFWVG9EbGdnaTBZR1VMVTRSMFhxRWMwdjlKZHBET2FhWXhpQ0JJb2ROREpGOHV1c05WdDRWMUp3VW5mdm9vRlJjNTlIVGQyTk1QTVFKTzNWcmJ2TF9GUEdmYjN4SV91Sk5OSm02d01HcW03TGNEaDI0MmlIcjIyb1UyNnAxRzVZd2dPSWNlaF96a2ZQOFJQa1AxOEJiUGdLUnZXTFdjb3JCTWhR?oc=5",
-      "source": "Zonebourse Suisse",
-      "published_at": "2026-10-30T00:39:26Z",
+      "title": "Binance Probes Suspected $5.8 Billion Crypto Hack, $3 Billion Frozen",
+      "url": "https://news.google.com/rss/articles/CBMigAFBVV95cUxOekJudUlHZVgzeEJfTVNkRzVselB3QUJFa3VXLTlUTU8wM2hzaEdEMXhaV0cyY2pUWXAzWU4tWDE0cXA3SWxQcGE1SnZlQ2Z2MzdKOGlkVENGZlE4Q1dCTE5SS2RxUjgtb21TYnZkdkdDenFFZU1TOUJQRkt1d3laUg?oc=5",
+      "source": "Hackread",
+      "published_at": "2026-10-30T02:02:50Z",
       "excerpt": null,
-      "tickers": [
-        "BTC"
-      ]
+      "tickers": [],
+      "event": "securite"
     },
     {
-      "title": "Binance frappée par un piratage historique, 5,8 milliards de dollars sortis et une partie gelée",
-      "url": "https://www.cointribune.com/binance-frappee-par-un-piratage-historique-58-milliards-de-dollars-sortis-et-une-partie-gelee/",
-      "source": "Cointribune",
-      "published_at": "2026-10-30T00:30:00Z",
-      "excerpt": "Un simple signal on-chain a suffi pour faire basculer la soirée du 29 octobre. À 22 h 32, le chercheur Spreek détecte une anomalie sur Ethereum. Quatre minutes plus tôt, un contrat venait de vider un portefeuille de Bina",
+      "title": "Crypto platform Binance confirms major hack, more than US$2.5 billion frozen",
+      "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxPbWVTckgxWXlsMy1kZnBmMWZOLWxxTU5jQURQd0JxNDM2d2xWUC0xLVZoOGNnM09ZTko2al9Pa0VEVEd5SG0wVGMwakduU1dmaTI1OTdpYV9SZDhVOEhxc2VxQ2ZJUHhDcElYMGpkQzFnMlJCN2VONWQ0Y3J2NHQ1MFYyVWx4Q0VSd2lCMUk4T1h3VnVEaDBkMkd5WmlKeDJnN3NKMFZYUGttLWJ3MHlENzhB?oc=5",
+      "source": "The Straits Times",
+      "published_at": "2026-10-30T01:59:00Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "securite"
+    },
+    {
+      "title": "Billions frozen as massive hack rattles crypto",
+      "url": "https://news.google.com/rss/articles/CBMihgJBVV95cUxPRXBtZGV4U1oxaS04ZnVIbVpIcW1sLW5xd0FyQ2VfeTdScDBtTk14RFVSeFV6ZmFMZXRZRHhJd2VvSWNEbWFDTHpEWDhrVG9lVWtMd2hpSll5M3ZrTWg4Nno2NVgtWXRheDNxcktCSkgtVXgzWVBEVW4tT3hCRXQtWkhXUmtOSExTbWc2Z0V2YnF0WVU0cXBXcGJjOEI4a3RqM2Vha1VMTnFSbndibm81Z1ZLSmU3WHhoUTl6cXNJYmxtRFFydHpnRXpETHJzUzVXUEVxak9BYW80X3k2NUFrdVRjRThXcmo1a2Izb2dlTmkxVWswNmN3QlNzLUp4M0pOQXhoMnB30gGLAkFVX3lxTFB5MDRZSGhFM3FPMDY4RmZSNkRiSjVmTmdpdF8tQ3ppZDNqV3ZncGJLeFlCeXlQSWFJNXVpdFUydmdZMVFPbFVaZ1FTY1hiMEZxYnhQbFYyU2poOXQ5NzVOd0Q4U2Rvci0zT1FHdjZSWGNwSGF3ZU5WSGltRFN1d3c3R3N5a0gyTlFhbWdwOTNhZkwtdnpzWm5tV1J6WFF5SUVmNDBpSWxVLWVJNU1yQU1rT09XdHNHZElac0QxVFpJMWFuUUV0SUxESHlUbGJQdHJLUGNvbUlXbkZoQVBwRGNhQkF6RnFHeWxNck5VODc2MHpOSk5YVXdpY2pHWkozYm1LQzlfUlQ0bXBQWQ?oc=5",
+      "source": "News.com.au",
+      "published_at": "2026-10-30T01:56:20Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "securite"
+    },
+    {
+      "title": "Billions in crypto frozen in Binance hack. Here's what happens next",
+      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxQYi1UZkphVnk0R09lOVpxcVRzSmJobkt0YVBGdDRBMkZ5d2dXdjNxa3k0VHB0bXZ3VkJzSFhHbGVGeFdCeF9vQW5UWkxxTUZzMU9hYU9xQVJZUXFOcEpNR0JjRFlEWmZURWNTSmd6RFRHOGZEcGJKakxCdExkZnhQRldRSzZ4eE52dHFBR09QNVFockE1b0pYaC1ZOGxOQndROVZVa05n0gGrAUFVX3lxTFBwNlVCU19abWpVbER1RGxqTHdyTExNei1IMzI4V0p5UTNoQUtuT21TQ1MtaDdzbWp0cDFTYmk5RlNiejJISlR2UzJIUTVVTGtVaHFVa2NrakNXTjlhMFM0eUtNWF9mN2ZSRzAxVm50VGpBYkdRd2EtQUQ3Z05tUlp4TXhHTW9zWDV0LXQ5WXo2cG1OeWM4Q1RaeDd6VUYycGpfVlRUYjgxUW5Cdw?oc=5",
+      "source": "CNBC",
+      "published_at": "2026-10-30T01:54:00Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "securite"
+    },
+    {
+      "title": "Crypto firms freeze $3 billion as fears of a massive hack spread",
+      "url": "https://news.google.com/rss/articles/CBMivAFBVV95cUxOVFRVMmJEaTJ5dlpFZG8yQlhlQ1NoM3MydEJfSFN4NTVNV01WS3hmSk1JaVhCempndVNIQmxtMGhwWC1TcmhuRlpVaG5MZ1dUb3F0V2dWTGhXTkdXMHZqWkw4a2lEeDEtMGhyWU9JekwxYzVXZGY4Q013ZXd3WTM1dWlkNmxNT1FqaFZkek5yeXVzQ2dXMFdIYkR4VnA2SXFIRm5FYTd2cU8wWDlvaFF5aFB1RHQxQVpaSFdqRA?oc=5",
+      "source": "The Washington Post",
+      "published_at": "2026-10-30T01:53:47Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "securite"
+    },
+    {
+      "title": "Binance has reportedly been hacked, billions in crypto stolen",
+      "url": "https://news.google.com/rss/articles/CBMib0FVX3lxTE5BazA0RVlTQ2o0NU5WZjNVR2xwT3JFbEdOenZTaC0zNEx1VWhUMjJOck5FWGRrOVpKdXVrSUpUQjAxY0ZRZU9kb2pfbDlMM2RpZ3dWRk91b3hyWFNxeE1mRlc3LXhTWUFOc05OaC1iVQ?oc=5",
+      "source": "Mashable",
+      "published_at": "2026-10-30T01:52:30Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "securite"
+    },
+    {
+      "title": "Crypto industry suffers 'largest bank heist in human history' as billions stolen in Binance hack",
+      "url": "https://news.google.com/rss/articles/CBMiygFBVV95cUxOdlZJVmZEbkVJYzhhUVg2Y1JlWWprWmkzLUxGRFlYcElVUnRQVk9mdVNxeERhbHM0ZWhNRHMtcF9qOEdDSmpRdFd1STBuTWFEWkc4MWRZMXpCVkJ0ems2RjRraXUtWll5RmhiVXFKOUVuN3JLdnlwRmJYVEZUT2dZdVppWU1DSkIwcmxHUDJvZXkwX0hhMTRLWUIyeHlVTXpNMGlGRGZDVjkyYjByWXBsYzJ2LVV1X0RCbEtReC1pNExwVzdwYkRkWWdn?oc=5",
+      "source": "Sky News",
+      "published_at": "2026-10-30T01:52:30Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "securite"
+    },
+    {
+      "title": "Un piratage géant de 3,3 milliards de dollars frappe le monde de la crypto",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxOczQzVTFVemRyZGwzbkNvUjRQZ1BxZS1WdVBKRV9LcFVfM2ltbXJoa2EzbFJldjBZa1ZlZ2E4NEJ2MklwRG9BX09hUHI4TUxjSzY1YzVwRUFSQjhoSHNoTWVzY2RiUmxYX29SQXh0OEdYTFZUa2lnU0M5Y2ZCd2RWQ182N1hpczBiWUkyMHVQTnc5TGZmNWt2TVkwS2tZdGxrdkpSUHRmWkVOUm1HZFJabmlDTmM?oc=5",
+      "source": "Blick",
+      "published_at": "2026-10-30T01:52:08Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "securite"
+    },
+    {
+      "title": "Binance Hack On-Chain Analysis: What the Blockchain Shows",
+      "url": "https://news.google.com/rss/articles/CBMiakFVX3lxTFBtUWo5elhMNlVRUUdKYTNOWkpHWHJzOTh4WVdmckF0WkRhYVBGX0taVlVCM09yWFJPaHZXU3I1TURkLVFBN1loOGQzUERFRWZkVEZPNUJIcFVXR3FkcFVpMk1nVVRTTUJ0Vnc?oc=5",
+      "source": "CryptoTicker.io",
+      "published_at": "2026-10-30T01:50:19Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "securite"
+    },
+    {
+      "title": "Ethereum sous 2 203 $ : le rebond technique doit encore faire ses preuves",
+      "url": "https://news.google.com/rss/articles/CBMilgFBVV95cUxNMlYzUXo4dVRGbC04MUlMdjBTZjdhc3h3WFZZcllYdmFvUmNZQnIyTG5BM0dBNzY0eWZMUC00dHYxcGdFMUlYMDBSLWhXQmdmdWZwZmw5Ums5ckJHaUtrbVVaejJHcG5mSFIyNUdfV0oxYVF0ZGQxb0hmSTNCTmlCRVNHcXRBeUJuTmtiNEhzU2c3Y29SSlE?oc=5",
+      "source": "Actu Crypto .info",
+      "published_at": "2026-10-30T01:45:15Z",
+      "excerpt": null,
       "tickers": [
         "ETH"
-      ]
+      ],
+      "event": null
     },
     {
-      "title": "Bitcoin sous les 80 000 $ après la Fed : les 79 500 $ vont-ils céder ?",
-      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOMmJzYlJMY3hlUFdGLVNNQjRvZzcxcmxvTURDYXZzRldTeU5YMzUxdFBobTBDZ3ExVGdfUTFuc3ZLUGQ3Nzd5NkdmaS1lUEtaRTZfd2tEQ2NfOFpxVDI5V2RKOV9vUHk1NUlTLU9DdzRKMF90UlJXMTFWNGtlUVRvQ2pTdEVhWnRKdGVobw?oc=5",
-      "source": "Cryptoast",
-      "published_at": "2026-10-29T23:53:45Z",
+      "title": "Binance's possible hack triggers $3 billion freeze in crypto assets",
+      "url": "https://news.google.com/rss/articles/CBMiWEFVX3lxTE9wYUZ6TTAxcTVCbHBlbGdRdzc0TXlETHZFNjIzMndZbHg2YnkwVU5VcGRCSjdvMXFfQURoRHYtUTlEbWFPdEZpMTZNRHRQVG9XZFQ0dG9LdXU?oc=5",
+      "source": "Taiwan News",
+      "published_at": "2026-10-30T01:44:00Z",
+      "excerpt": null,
+      "tickers": [],
+      "event": "securite"
+    },
+    {
+      "title": "Cours Bitcoin sous 77 000 $ : la vente BTC s'accélère, le support résiste",
+      "url": "https://news.google.com/rss/articles/CBMigwFBVV95cUxNZUlVWDdaQmNsTThOUXU4emdLQlRvUFZRckVLQ3BCak52MHE3RXAzdFBXTGhycDk2bXVwNkdsZktORlF3RnRHUjRpSGJXbl9zMW9YWDNFdURNYlpKWFJvOS0xZnFUa1N3aURXYkZmeWZQb0VCNHdHLTdSenBVNjNMS3VBWQ?oc=5",
+      "source": "Actu Crypto .info",
+      "published_at": "2026-10-30T01:11:09Z",
       "excerpt": null,
       "tickers": [
         "BTC"
-      ]
-    },
-    {
-      "title": "Prix du Bitcoin après le piratage de Binance",
-      "url": "https://news.google.com/rss/articles/CBMickFVX3lxTE13MVZNbmZ1cHRqYjRvdlVIZ1c4dEo3SzVCVjFFVXpxU1RQR1NSdGRUNDBla09Fd1ZpbFVpSXZLNnpqNVlvLTVHd2Z5TV85THdOa1BZS1dlNXJnQ0ZQYTdwSGxrdEpkcU9mMGxPVU1YQm95QQ?oc=5",
-      "source": "FinanceFeeds",
-      "published_at": "2026-10-29T23:42:34Z",
-      "excerpt": null,
-      "tickers": [
-        "BTC"
-      ]
-    },
-    {
-      "title": "Le Bitcoin en chute après le piratage d’une des principales plateformes d’échange de cryptomonnaies",
-      "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxNS2hyMTBnU1V3OFA0NFBob3lzN1FwSG9NYThpYXhzcWgzVVBXNDlVbTdpMWZsN3N1VW1uS29WN3J2MzItdHlfU2NrX3dMWXpLS0Z3YklfLXR0cllUc1V0X3Y1eDFTQnoyTGlUVnhOaFZGWVVxelA0c0RzZ3Jxc0hQVG9VVlk5Uk03X050TDJNcF9IY1lickZHWENMRUpFd0R4c0ZJZDNjZjdYUEM3MnNhQmUzaUtKM0JDRVZuRXBEeVN2STNKemNSaEwxYzI0ODBJSEltV3lHbm1rMy00NlNSVEtNY1NhWU9BaWNDWg?oc=5",
-      "source": "Le Parisien",
-      "published_at": "2026-10-29T23:11:48Z",
-      "excerpt": null,
-      "tickers": [
-        "BTC"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Strategy : record à 21 milliards de dollars, Saylor voit le bitcoin grimper",
@@ -75,27 +149,8 @@
       "excerpt": null,
       "tickers": [
         "BTC"
-      ]
-    },
-    {
-      "title": "Le bitcoin dévisse après des rumeurs de cyberattaque massive sur la plateforme de cryptomonnaies Binance",
-      "url": "https://news.google.com/rss/articles/CBMi6wFBVV95cUxPa0RnQlprNnVtVVBranpUOXV3b1h5TkxZMzhKdUlUVUF3QklVTmljTi1nUHdXblFjSUFreVIxdlVGcUptUTJ5OUh6ZlVhWjhnUjQ0VHBXejRuVVlWM3kxY0hCRGl2SFB5MkUtcVJ1TG1YZDVOcGRoY3J3UVd0NTZVR0QyN09VV2xBWURxQUpNbkpyaHZyM1ZickkzVDZpcmtBU1B5em1PTVpOX29pRUdyYURJT2EyWUx5ZGVDb2FScHpKRTViT1M2UjJGTjhMWWdOVVVQZ0RMTHdUMkJ6RXkzMGptbGt1WW50SGk0?oc=5",
-      "source": "Le Figaro",
-      "published_at": "2026-10-29T22:49:00Z",
-      "excerpt": null,
-      "tickers": [
-        "BTC"
-      ]
-    },
-    {
-      "title": "Bitcoin sous 79 000 $ : le hack de Binance fait chuter les cryptos",
-      "url": "https://news.google.com/rss/articles/CBMiekFVX3lxTE5KaVdNdUdVaV9YRXBRcFBlVFdOLVhWVzVJRzdDRF9OVjVLMHB6M0VrZEFrUHhld25rUHlwV0I2aWFaTFV1QzlsRzVWZG9PbnZpSzAwUEJKbGI3cGNGdlB6aHQ4eW5faFpCUTdZRy1hZlV3ZUowTE95YVZR?oc=5",
-      "source": "Cryptoast",
-      "published_at": "2026-10-29T22:39:18Z",
-      "excerpt": null,
-      "tickers": [
-        "BTC"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Prévision du cours de Chainlink : la dynamique baissière menace le support à 10,66 $",
@@ -105,17 +160,8 @@
       "excerpt": null,
       "tickers": [
         "LINK"
-      ]
-    },
-    {
-      "title": "Hack de Binance : 3,5 milliards de dollars siphonnés vers une adresse vierge",
-      "url": "https://journalducoin.com/exchanges/hack-binance-2-5-milliards-dollars-siphonnes/",
-      "source": "Journal du Coin",
-      "published_at": "2026-10-29T22:21:40Z",
-      "excerpt": "Hack de Binance : 2,5 milliards de dollars siphonnés depuis le hot wallet Ethereum de la plateforme, et jusqu’à 5,7 milliards toutes chaînes selon Arkham. L’article Hack de Binance : 3,5 milliards de dollars siphonnés ve",
-      "tickers": [
-        "ETH"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Bitcoin à 1,6 million de dollars : comment Bitwise compte y arriver en s'attaquant au marché historique de l'or",
@@ -125,17 +171,96 @@
       "excerpt": null,
       "tickers": [
         "BTC"
-      ]
+      ],
+      "event": null
     },
     {
-      "title": "Jusqu'où le Bitcoin peut-il chuter après Binance ?",
-      "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBLY21Iam53X3JpMW5HNTNfRVNudDRKQ1hJT1NFR2N0djQ2Yk5FdWpreEZGRDVGOWNaeTg3RWdMUl91RUtlY3RmNXR2Ym5LbGVKVndnb1ZKRVV6aWZjM3RzWjE2bHBCb21rNHJ5WXh2ZXRsbVg1X0U5Tk9raHlRTjQ?oc=5",
-      "source": "CryptoTicker.io",
-      "published_at": "2026-10-29T22:04:10Z",
+      "title": "470 milliards $ effacés, Wall Street plonge face à l’inflation",
+      "url": "https://www.cointribune.com/470-milliards-effaces-wall-street-plonge-face-a-linflation/",
+      "source": "Cointribune",
+      "published_at": "2026-10-29T21:00:00Z",
+      "excerpt": "Crash à la Bourse de New York ! L'indice d'inflation ICP au plus haut fait plonger Wall Street, effaçant 470 milliards de dollars d'actions. Entre la chute de Google et la réaction inattendue du Bitcoin, c’est une journé",
+      "tickers": [
+        "BTC"
+      ],
+      "event": null
+    },
+    {
+      "title": "Bitcoin pourrait répéter sa chute post-introduction en bourse de SpaceX avant l’IPO d’Anthropic, avertit un analyste",
+      "url": "https://news.google.com/rss/articles/CBMi3gFBVV95cUxPV24wdVFlQ20xSkg3R3dmUVdkdk9iUi1LOHlHc0FmVTRVTno5SlhkVzdEY2hORDdqTUltUmlKVTIxRDdaSUk3VkRIdFNtV3RtZjQ0SGQwX0pxN1RjSGxqV012V0NwN0JydnJBemFKeUxKcDdxT25lTzVCOW1OWkpSby1hcU1ZdDQ5eFlyRTlWZmcxZTk1b2NvbHBHeF9qN3V4WWszcUxleWQxNU5CdmtVenJNWjRDaHhWZnhFRk1MSElhTm1FRE1mUnJ4bE1NWVRRb014UklfYTdsOEVWd3c?oc=5",
+      "source": "Benzinga France",
+      "published_at": "2026-10-29T20:35:20Z",
       "excerpt": null,
       "tickers": [
         "BTC"
-      ]
+      ],
+      "event": null
+    },
+    {
+      "title": "Entre le buy and hold et le market neutral : comprendre les stratégies semi-neutres",
+      "url": "https://journalducoin.com/trading/strategies-semi-neutres-bitcoin-buy-and-hold-market-neutral/",
+      "source": "Journal du Coin",
+      "published_at": "2026-10-29T20:00:00Z",
+      "excerpt": "Stratégies semi-neutres : garder une exposition au bitcoin en amortissant ses chutes. Fonctionnement, comportement selon le marché, limites et exemple. L’article Entre le buy and hold et le market neutral : comprendre le",
+      "tickers": [
+        "BTC"
+      ],
+      "event": null
+    },
+    {
+      "title": "Le bitcoin se maintient autour des 80.000 dollars",
+      "url": "https://news.google.com/rss/articles/CBMikwFBVV95cUxPVFFmUUwxZXg1ZC1Ca2tXQ1gzYk8ybmpkRTdFRVdlTGdMRXJlYm56WFAwRjVlQnIyRjJ4Qk9pRnZXZUFvNUg0VnBLSmxRckVHdE5PN3JyN2s2Um5GT0cyam5wVTlvQWtWNWp4YTN2OFNpNWlZWlduNWtmMjFvWXpTMUs2cXlmM2c3NjlyMVVZNEpMTWc?oc=5",
+      "source": "ABC Bourse",
+      "published_at": "2026-10-29T19:39:19Z",
+      "excerpt": null,
+      "tickers": [
+        "BTC"
+      ],
+      "event": null
+    },
+    {
+      "title": "100 € de Bitcoin par mois depuis janvier : quelle plateforme a coûté le moins cher ?",
+      "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxPdEFrU3IwVVRvcG5oM08yWnF6RlJEZGhTdlg2em9wZXYyWTNNa3VTQ01ldWlMdE9YZzcwMkpqcHpIUVoyVXNsXzBxZklrYUtfRXpyQ2JRZVozalFpakFlalhlcERudnB2WFJ4WlpQSFJneEtkZUlrRjdCU2xNNlpMVDZHT2lxcG96bmxuOXJGZDAtQ3hxV0dPUHZfejI2MnNZVDNwbQ?oc=5",
+      "source": "Cryptoast",
+      "published_at": "2026-10-29T19:19:23Z",
+      "excerpt": null,
+      "tickers": [
+        "BTC"
+      ],
+      "event": null
+    },
+    {
+      "title": "Bitcoin : Le cours remonte à 81500 $ après les chiffres économiques américains",
+      "url": "https://news.google.com/rss/articles/CBMipgFBVV95cUxNc2kyVDhUWUx4cmVsUVpqMjU2WkN4di1hN055VHZJV0dfcF9MbER2dGhiaHNsNHhVWUI1ejhzNkpUMTZIWjJIc21YRmIzY1hwQWZRSmVYZ1V3NTFlNWNacjl0RXhZOTNYV2Z2ZnNtVXJDR1M3VHk1VG4yT2dRY0lCRnJQSWNDZjRDUnJaOWc5aTYxVDBPTTBIUWRSR2l4SHAxNXVESmJ3?oc=5",
+      "source": "Cointribune",
+      "published_at": "2026-10-29T19:00:00Z",
+      "excerpt": null,
+      "tickers": [
+        "BTC"
+      ],
+      "event": null
+    },
+    {
+      "title": "Bitcoin : il paie 100 000 euros de caution pour toucher 25 BTC qui n’ont jamais existé",
+      "url": "https://journalducoin.com/actualites/arnaque-bitcoin-gifhorn-caution-100000-euros-25-btc/",
+      "source": "Journal du Coin",
+      "published_at": "2026-10-29T19:00:00Z",
+      "excerpt": "À Gifhorn, un Allemand a viré plus de 100 000 € de caution pour encaisser 25 BTC annoncés par e-mail. Ces bitcoins n'ont jamais existé. L’article Bitcoin : il paie 100 000 euros de caution pour toucher 25 BTC qui n&rsquo",
+      "tickers": [
+        "BTC"
+      ],
+      "event": null
+    },
+    {
+      "title": "Standard Asset Company lance un duo d'investissement Bitcoin/immobilier de 1,5 milliard de $",
+      "url": "https://news.google.com/rss/articles/CBMijAFBVV95cUxOZFVFMEkxQ1Rvb0RPR1UySFhoSmUwRHVyYjFwc0U0WnczcmNtbHJwTjlWaUQ0ZGlXZkpSLXl5eGY1LWs4eDBoV28zcnctXy1UTVlQLVRtaGN1Yi1iTUhQODZHLTVDOXNjY1h1cFJ6REJOV21fVUY4N0lxTVRBTGg5LTNtUlBOWkJCMG5obA?oc=5",
+      "source": "Cryptoast",
+      "published_at": "2026-10-29T18:59:57Z",
+      "excerpt": null,
+      "tickers": [
+        "BTC"
+      ],
+      "event": null
     },
     {
       "title": "Chainlink ajoute la tarification du week-end pour les actifs tokenisés, avec Aave comme partenaire de lancement",
@@ -145,7 +270,8 @@
       "excerpt": null,
       "tickers": [
         "LINK"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Arbitrum One dépasse 1 million d’adresses actives quotidiennes",
@@ -155,7 +281,8 @@
       "excerpt": null,
       "tickers": [
         "ARB"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Crypto : Chainlink plonge alors que les réserves des exchanges diminuent",
@@ -165,7 +292,8 @@
       "excerpt": null,
       "tickers": [
         "LINK"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Chainlink chute de 21 % en octobre malgré la baisse de l'offre sur les exchanges",
@@ -175,7 +303,8 @@
       "excerpt": null,
       "tickers": [
         "LINK"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "L’Arbitrum est-il un bon achat au cours actuel ?",
@@ -185,7 +314,8 @@
       "excerpt": null,
       "tickers": [
         "ARB"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Injective grimpe de 3,58 % avec Stockdrop et le lancement du testnet d’options",
@@ -195,7 +325,8 @@
       "excerpt": null,
       "tickers": [
         "INJ"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Chainlink intègre les données de risque des coffres S&P sur la blockchain",
@@ -205,7 +336,8 @@
       "excerpt": null,
       "tickers": [
         "LINK"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Le cours ONDO rebondit grâce à l’offre exclusive de pré-IPO sur OpenAI par Ondo Finance",
@@ -215,7 +347,8 @@
       "excerpt": null,
       "tickers": [
         "ONDO"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Arbitrum annonce le lancement d’ENSv2 sur Ethereum",
@@ -226,7 +359,8 @@
       "tickers": [
         "ETH",
         "ARB"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Bleap lance le trading sans frais : cross-chain Solana et Arbitrum, actions et plus",
@@ -236,7 +370,8 @@
       "excerpt": null,
       "tickers": [
         "ARB"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "GMX lance de nouveaux contrats de Staking sur Arbitrum",
@@ -246,7 +381,8 @@
       "excerpt": null,
       "tickers": [
         "ARB"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Recul marqué sur sept jours dans un contexte de volatilité accrue : perspectives hebdomadaires d’Injective — INJ peut-il se stabiliser au-dessus du support ?",
@@ -256,7 +392,8 @@
       "excerpt": null,
       "tickers": [
         "INJ"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Injective lance un marché de contrats à terme on-chain suivant les coûts de location des GPU Nvidia",
@@ -266,7 +403,8 @@
       "excerpt": null,
       "tickers": [
         "INJ"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Jupiter Exchange lance une nouvelle expérience de staking",
@@ -276,7 +414,8 @@
       "excerpt": null,
       "tickers": [
         "JUP"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Prévision The Graph octobre 2026 : le test IA du GRT",
@@ -286,7 +425,8 @@
       "excerpt": null,
       "tickers": [
         "GRT"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Prévision Injective pour octobre 2026 : test INJ",
@@ -296,7 +436,8 @@
       "excerpt": null,
       "tickers": [
         "INJ"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Perspectives sur le cours d’Injective : la dynamique haussière se maintient malgré les signaux de surachat",
@@ -306,7 +447,8 @@
       "excerpt": null,
       "tickers": [
         "INJ"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Le FET recule, pénalisé par un momentum faible et la pression vendeuse",
@@ -316,7 +458,8 @@
       "excerpt": null,
       "tickers": [
         "FET"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "Celestia (TIA) perd 3,06 points sur fond d’aversion au risque et de déverrouillage",
@@ -326,7 +469,8 @@
       "excerpt": null,
       "tickers": [
         "TIA"
-      ]
+      ],
+      "event": null
     },
     {
       "title": "PEPE, UNI, ENA : Un investisseur achète neuf cryptos pour 7,22 M$",
@@ -336,7 +480,8 @@
       "excerpt": "Une adresse suivie par Lookonchain a acheté pour environ 7,22 millions de dollars de cryptos en vingt-quatre heures. Son portefeuille privilégie Ethena, Ondo, Aerodrome et Uniswap, tandis que Pepe ne représente qu’une fa",
       "tickers": [
         "ONDO"
-      ]
+      ],
+      "event": null
     }
   ],
   "errors": []
