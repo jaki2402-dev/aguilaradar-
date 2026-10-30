@@ -1936,5 +1936,35 @@
     "sentiment": "neutre",
     "message": "FET entre en zone de survente (RSI 14 j à 22) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : −13 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
     "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261030-inj-seuil",
+    "ticker_ou_theme": "INJ",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-30T08:56:50Z",
+    "verdict_id": "v-20261028-inj",
+    "sentiment": "négatif",
+    "message": "INJ : -8,94 % depuis l'émission du verdict ACHAT du 28/10 (7,94 $ → 7,23 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
+  },
+  {
+    "id": "alert-20261030-eth-seuil",
+    "ticker_ou_theme": "ETH",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-30T08:56:50Z",
+    "verdict_id": "v-20261019-eth",
+    "sentiment": "négatif",
+    "message": "ETH : -8,33 % depuis l'émission du verdict ACHAT du 19/10 (2 428,41 $ → 2 226,19 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
+  },
+  {
+    "id": "alert-20261030-ondo-seuil",
+    "ticker_ou_theme": "ONDO",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-30T08:56:50Z",
+    "verdict_id": "v-20261028-ondo",
+    "sentiment": "négatif",
+    "message": "ONDO : -6,87 % depuis l'émission du verdict ACHAT du 28/10 (0,41916 $ → 0,39037 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   }
 ]
