@@ -27,8 +27,9 @@ EOF
 ```
 
 - **Rien de dû et aucun ticker sans verdict pending** → cycle court : seulement §7 (santé), §8
-  en version courte (1 recherche hack/exploit + fear&greed, pas plus), §9 (commit). Pas de lecture
-  de `favoris-context.json`/`market-context.json`, pas de recherche de prix.
+  en version courte (événements du fil `news-feed.json` d'abord, puis 1 recherche hack/exploit +
+  fear&greed, pas plus), §9 (commit). Pas de lecture de `favoris-context.json`/`market-context.json`,
+  pas de recherche de prix — **sauf incident de marché, §7 « Exception »** (régime à réévaluer).
 - Sinon : traiter uniquement les tickers concernés ; prix des tickers concernés en UN seul appel (`vs_currencies=usd,eur` :
   USD pour émettre, la devise du verdict pour résoudre) groupé ; lire seulement l'entrée du ticker dans `favoris-context.json`/`portfolio-thesis.json`
   (extraction `python3`), et `market-context.json` une seule fois par cycle.
@@ -283,6 +284,15 @@ ni `btc_dominance_pct` : le site lit ces jauges dans `data/market-gauges.json` (
 « évalué le JJ/MM », c'est voulu. (Bloc resté figé du 14/09 au 04/10/2026 parce que cette étape
 avait disparu de la spec.)
 
+**Exception — incident de marché (depuis le 30/10/2026)** : si l'étape 0 du §8 trouve dans
+`data/news-feed.json` un titre `event: "securite"` publié depuis moins de 24 h (piratage d'une
+grande plateforme, retraits suspendus, stablecoin qui décroche), réévaluer le régime **même en
+cycle court** et l'écrire ici (`last_computed_at`, `regime`, `note`, `resume`). Un tel incident est
+une pression `risk-off` forte qui prime, le temps de l'incident, sur les signaux lents (Fed, ETF,
+stablecoins) ; la `note` cite le titre, la source et l'heure de publication, et rappelle les signaux
+lents s'ils pointent ailleurs. Raison : le 29/10/2026, piratage de Binance (1,7 à 5,8 Md$ sortis,
+retraits suspendus, marché en baisse) — le site affichait encore « Neutre » évalué le 28/10.
+
 **Ne plus écrire** `paper_portfolio_stats` ni `global_stats.baseline_buy_hold_btc_pct` : le site
 les calcule désormais en direct (`computePaperPortfolio`, `js/engine.js`, même formule que celle
 que la routine utilisait).
@@ -305,10 +315,18 @@ l'est jamais (fausse alerte du 15/09).
 
 ### Procédure, une fois par exécution
 
+0. **D'abord, sans aucune recherche** : le robot `news-feed` (toutes les 30 min) relève déjà les
+   événements de tout le marché. Extraire par `python3` les titres de `data/news-feed.json` dont
+   `event` est renseigné et `published_at` date de moins de 48 h (titre, source, url, heure,
+   `event`). Un incident `securite` absent de `items` → l'ajouter (`title` factuel en français,
+   `url` et `source` du fil, `resume`) et mettre à jour `last_updated_at` ; voir aussi §7
+   « Exception » pour le régime.
 1. Recherche ciblée (fear&greed, dominance, actualité générale, hack/exploit) — **2 à 4 recherches
    maximum** (2 en cycle court) : chercher un développement réellement nouveau et significatif
    (produit majeur, hack, régulation, mouvement institutionnel), jamais une reformulation d'un item
-   existant (comparer aux seuls `title` via `python3`, pas en lisant le fichier).
+   existant (comparer aux seuls `title` via `python3`, pas en lisant le fichier). **« Nouveau » =
+   publié depuis moins de 48 h et absent de `items`, pas « daté d'aujourd'hui »** : le cycle du
+   30/10 00h15 a écarté le piratage de Binance de la veille au soir comme « antérieur ».
 2. Si trouvé : l'ajouter à `items` (`title` factuel, `url` réelle, `source`) et mettre à jour
    `last_updated_at`.
 3. **Toujours** mettre à jour `last_checked_at` à l'heure de fin du cycle.

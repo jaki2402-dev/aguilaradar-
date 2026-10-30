@@ -59,13 +59,13 @@
     "last_failure_reason": "Cycle du 30/10/2026 00h15 UTC : cycle court, rien de du (aucun verdict pending >6h apres resolves_at, resolution deleguee a resolve-due) et aucun ticker sans verdict pending (15/15 couverts). Veille actualites : 2 recherches WebSearch (hack/exploit exchange crypto ; fear&greed et dominance BTC) -- aucun developpement date du 30/10/2026 trouve pour les deux (resultats non dates ou anterieurs) ; last_checked_at mis a jour, items inchanges. Aucun outil mcp__ utilise."
   },
   "macro_regime": {
-    "last_computed_at": "2026-10-28T08:20:00Z",
-    "regime": "neutre",
+    "last_computed_at": "2026-10-30T02:14:06Z",
+    "regime": "risk-off",
     "fear_greed_value": 57,
     "btc_dominance_pct": 59.35,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Cycle du 28/10 08h15 UTC. Régime neutre, inchangé depuis le cycle précédent : data/market-context.json (lecture seule, non remis à jour depuis le 27/10 08h55 UTC) toujours Fed hawkish (fourchette 3,75-4,00 %, décision FOMC le 28/10 à 14h ET, maintien jugé probable, rendement 10 ans non confirmé) ; flux ETF spot BTC nets positifs mais modestes (+23,16 M$ le 20/10, une seule source non recoupée), ETH non remis à jour depuis le 13/10 ; stablecoins à 11,42 % de dominance du marché crypto, quasi stable. Signaux macro contradictoires (Fed restrictive vs flux ETF BTC positifs), retenus comme tels plutôt que tranchés arbitrairement — décision FOMC attendue aujourd'hui même (28/10, 14h ET).",
-    "resume": "Régime macro neutre, inchangé : Fed restrictive avec décision FOMC ce jour, mais flux ETF BTC toujours nets positifs."
+    "note": "Réévaluation du 30/10 (session, règle « incident de marché » de la spec du cycle) : piratage de Binance signalé le 29/10 — 1,7 à 5,8 Md$ sortis de ses portefeuilles chauds selon les estimations, retraits suspendus sur plusieurs réseaux, environ 3 Md$ gelés par Tether et Circle (The Block, TechCrunch, CNBC). Bitcoin -4,0 %, ether -4,8 %, BNB -5,4 % sur 24 h (CoinGecko, 30/10 02h15 UTC) ; peur et cupidité à 30 (« peur ») le 30/10 contre 51 la veille. Signaux lents dans le même sens : Fed restrictive, part des stablecoins en hausse à 11,2 % (29/10) ; flux ETF non mis à jour depuis le 20/10.",
+    "resume": "Aversion au risque : piratage de Binance (1,7 à 5,8 Md$), bitcoin -4,0 % sur 24 h, peur et cupidité à 30."
   },
   "paper_portfolio_stats": {
     "last_computed_at": "2026-09-13T23:26:00Z",

@@ -856,4 +856,10 @@ plus de copier-coller de `PUSH_SUBSCRIPTION_JSON` à faire à la main pour une r
   site : bandeau `renderMarketPulse` (variations 24 h des prix en direct, seuil directionnel unique,
   incident de sécurité < 48 h épinglé), fil relu toutes les 10 min ; Assistant : « ce qui bouge
   maintenant » avant le régime, dans la réponse de secours comme dans le contexte de l'IA.
+- Le cycle du 30/10 00h15 avait bien cherché « hack/exploit » mais n'a retenu que du « daté du
+  30/10 » : piratage de la veille au soir écarté comme antérieur. Spec du cycle : §8 étape 0 (lire
+  d'abord les événements de `news-feed.json`, aucune recherche), « nouveau » = < 48 h et absent
+  d'`items` ; §7 « Exception — incident de marché » : régime réévalué même en cycle court.
+- Régime réécrit par la session le 30/10 02h14 selon cette règle : `risk-off` (piratage, BTC -4,0 %,
+  ETH -4,8 %, BNB -5,4 % sur 24 h à 02h15, peur/cupidité 51 → 30, part des stablecoins en hausse).
 
