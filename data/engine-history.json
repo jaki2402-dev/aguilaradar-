@@ -54,18 +54,18 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-30T08:18:26Z",
+    "last_success_at": "2026-10-30T16:18:55Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 30/10/2026 08h15 UTC : cycle court, rien de du (aucun verdict pending >6h apres resolves_at, resolution deleguee a resolve-due) et aucun ticker sans verdict pending (15/15 couverts). Veille actualites : etape 0 (news-feed.json) a trouve le piratage de Binance du 29/10 au soir (event=securite, <24h) absent de data/news.json -> ajoute (items, last_updated_at) ; deja pris en compte dans macro_regime par la session du 30/10 02h14 UTC, non retouche ici (aucun verdict emis ce cycle, regle generale du §7). 2 recherches WebSearch complementaires (hack/exploit exchange crypto ; fear&greed) : aucun autre developpement nouveau trouve. Aucun outil mcp__ utilise."
+    "last_failure_reason": "Cycle du 30/10/2026 16h15 UTC : cycle court, rien de dû (aucun verdict pending >6h après resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Étape 0 (news-feed.json) a trouvé une mise à jour significative du piratage de Binance (event=securite, <24h) : montant réévalué à 6,3 Md$, attribution Corée du Nord, pirate détenteur de 420 000 ETH -> ajoutée à data/news.json (items, last_updated_at) et macro_regime réévalué (§7 exception incident de marché), régime maintenu risk-off. 1 recherche complémentaire (fear&greed + autre hack éventuel) : aucune valeur fear&greed vérifiée datée du jour, aucun autre hack trouvé sur 24-48h (DefiLlama). Aucun outil mcp__ utilisé."
   },
   "macro_regime": {
-    "last_computed_at": "2026-10-30T02:14:06Z",
+    "last_computed_at": "2026-10-30T16:18:55Z",
     "regime": "risk-off",
     "fear_greed_value": 57,
     "btc_dominance_pct": 59.35,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Réévaluation du 30/10 (session, règle « incident de marché » de la spec du cycle) : piratage de Binance signalé le 29/10 — 1,7 à 5,8 Md$ sortis de ses portefeuilles chauds selon les estimations, retraits suspendus sur plusieurs réseaux, environ 3 Md$ gelés par Tether et Circle (The Block, TechCrunch, CNBC). Bitcoin -4,0 %, ether -4,8 %, BNB -5,4 % sur 24 h (CoinGecko, 30/10 02h15 UTC) ; peur et cupidité à 30 (« peur ») le 30/10 contre 51 la veille. Signaux lents dans le même sens : Fed restrictive, part des stablecoins en hausse à 11,2 % (29/10) ; flux ETF non mis à jour depuis le 20/10.",
-    "resume": "Aversion au risque : piratage de Binance (1,7 à 5,8 Md$), bitcoin -4,0 % sur 24 h, peur et cupidité à 30."
+    "note": "Mise à jour du 30/10 16h UTC (règle « incident de marché » de la spec du cycle) : le piratage de Binance du 29/10 est réévalué par Binance à 6,3 Md$ (contre 1,7-5,8 Md$ en fourchette la veille) et attribué à un groupe lié à la Corée du Nord (Bloomberg, Yahoo Finance, Cybersecurity Dive, 30/10 15h UTC) ; le pirate détient plus de 420 000 ETH, une vente éventuelle ferait peser un risque baissier supplémentaire sur l'ether. Aucune autre faille exchange/DeFi/pont trouvée sur 24-48h (DefiLlama). Pas de nouvelle valeur fear&greed vérifiée depuis la réévaluation du 30/10 02h14 UTC (peur à 30) : régime maintenu risk-off sur la base de cette dernière lecture et de l'escalade confirmée du piratage. Signaux lents inchangés : Fed restrictive, stablecoins en hausse (11,2 % le 29/10), flux ETF non mis à jour depuis le 20/10.",
+    "resume": "Risk-off maintenu : piratage de Binance réévalué à 6,3 Md$ (Corée du Nord), risque de vente de 420 000 ETH par le pirate."
   },
   "paper_portfolio_stats": {
     "last_computed_at": "2026-09-13T23:26:00Z",
