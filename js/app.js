@@ -572,6 +572,7 @@ function computeMarketPulse(prices) {
 
 const pulsePct = (v) => (Number.isFinite(v) ? `${v > 0 ? "+" : ""}${v.toLocaleString("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 })} %` : "—");
 
+const NAMED_PLATFORM = /\b(binance|coinbase|kraken|okx|bybit|bitget|upbit|bitstamp|gemini|tether|circle)\b/i;
 let latestNewsFeed = null;
 let latestNewsData = null;
 let latestEngineHistoryForPulse = null;
@@ -580,7 +581,15 @@ function renderMarketPulse(now = Date.now()) {
   const el = document.getElementById("market-pulse");
   if (!el) return;
   const pulse = computeMarketPulse(typeof latestFavorisPrices !== "undefined" ? latestFavorisPrices : null);
-  const event = recentSecurityEvents((latestNewsFeed && latestNewsFeed.items) || [], now)[0] || null;
+  // Les titres qui nomment la plateforme touchée d'abord (« Binance confirms major hack » plutôt que
+  // « Who Pays When A Crypto Exchange Gets Hacked? »), puis le plus récent ; deux au plus.
+  const named = (n) => (NAMED_PLATFORM.test(n.title) ? 0 : 1);
+  const events = recentSecurityEvents((latestNewsFeed && latestNewsFeed.items) || [], now)
+    .map((n, i) => ({ n, i }))
+    .sort((a, b) => named(a.n) - named(b.n) || a.i - b.i)
+    .slice(0, 2)
+    .map((x) => x.n);
+  const event = events[0] || null;
   if (!(pulse && pulse.level) && !event) {
     el.innerHTML = "";
     return;
@@ -589,9 +598,9 @@ function renderMarketPulse(now = Date.now()) {
   const moves = pulse
     ? `<p class="market-pulse-moves">Bitcoin ${pulsePct(pulse.btc)} · Ether ${pulsePct(pulse.eth)} sur 24 h — ${pulse.level === "hausse" ? `${pulse.up} favoris sur ${pulse.total} en hausse` : `${pulse.down} favoris sur ${pulse.total} en baisse`} (médiane ${pulsePct(pulse.median)}).</p>`
     : "";
-  const eventHtml = event
-    ? `<p class="market-pulse-event">⚡ <a href="${escapeHtml(safeUrl(event.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(event.title)}</a> <span class="hint">— ${escapeHtml([event.source, ageLabel(event.published_at, now)].filter(Boolean).join(", "))}</span></p>`
-    : "";
+  const eventHtml = events
+    .map((e) => `<p class="market-pulse-event">⚡ <a href="${escapeHtml(safeUrl(e.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(e.title)}</a> <span class="hint">— ${escapeHtml([e.source, ageLabel(e.published_at, now)].filter(Boolean).join(", "))}</span></p>`)
+    .join("");
   const r = latestEngineHistoryForPulse && latestEngineHistoryForPulse.macro_regime;
   const regimeNote = pulse && pulse.level && r && r.last_computed_at
     ? `<p class="hint">Le régime de marché (« ${escapeHtml(REGIME_LABELS[r.regime] || r.regime || "")} », évalué le ${escapeHtml(shortDate(r.last_computed_at))}) est un jugement de fond réévalué par le cycle : il ne reflète pas encore ce mouvement.</p>`

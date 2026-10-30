@@ -1084,6 +1084,15 @@ describe("app.js — pouls du marché en direct (29/10/2026 : régime « Neutre 
     expect(el.textContent).toContain("« Neutre », évalué le 28/10");
   });
 
+  it("bandeau : les titres qui nomment la plateforme d'abord, deux au plus (titres réels du 30/10)", () => {
+    setGlobal(dom, "latestFavorisPrices", prices(-1, -1));
+    const t = (title, hour) => ({ title, url: `https://x.fr/${hour}`, source: "S", published_at: `2026-10-30T0${hour}:00:00Z`, tickers: [], event: "securite" });
+    setGlobal(dom, "latestNewsFeed", { items: [t("The $2.54 Billion Question: Who Pays When A Crypto Exchange Gets Hacked?", 3), t("Crypto platform Binance confirms major hack, more than US$2.5 billion frozen", 2), t("Billions frozen as massive hack rattles crypto", 1)] });
+    dom.window.renderMarketPulse(Date.parse("2026-10-30T04:00:00Z"));
+    const titles = Array.from(dom.window.document.querySelectorAll("#market-pulse .market-pulse-event a")).map((a) => a.textContent);
+    expect(titles).toEqual(["Crypto platform Binance confirms major hack, more than US$2.5 billion frozen", "The $2.54 Billion Question: Who Pays When A Crypto Exchange Gets Hacked?"]);
+  });
+
   it("rien à signaler : bandeau vide ; incident de plus de 48 h : plus affiché", () => {
     setGlobal(dom, "latestFavorisPrices", prices(-1, -1));
     setGlobal(dom, "latestNewsFeed", { items: [HACK] });
