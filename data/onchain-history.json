@@ -557,6 +557,18 @@
             "tx_per_day": "Blockscout MCP (direct_api_call, chain_id=1, /api/v2/stats/charts/transactions, dernier point du tableau chart_data) ; recroisé avec /api/v2/stats (transactions_today=1993448, appel direct).",
             "active_addresses": "non confirmé ce cycle - /api/v1/lines renvoie 404 (endpoint inexistant sur ce déploiement), comme aux cycles précédents."
           }
+        },
+        {
+          "date": "2026-10-30",
+          "computed_at": "2026-10-30T08:28:07Z",
+          "tvl_usd": null,
+          "tx_per_day": 1761413,
+          "active_addresses": null,
+          "source": {
+            "tvl_usd": "DefiLlama - non confirmé ce cycle : Blockscout MCP (/api/v2/stats, chain_id=1) renvoie tvl:null ; api.llama.fi confirmé injoignable en appel direct ce cycle (proxy agent : connect_rejected), aucune tentative WebSearch supplémentaire ce cycle (budget de session Blockscout épuisé par les vérifications ARB/LPT, priorité donnée à tx_per_day). Laissé à null.",
+            "tx_per_day": "Blockscout MCP (direct_api_call, chain_id=1, /api/v2/stats/charts/transactions, dernier point du tableau chart_data, daté 2026-10-29) ; confirmé cohérent avec /api/v2/stats (transactions_today=1761413, appel direct).",
+            "active_addresses": "non confirmé ce cycle - /api/v2/stats-service/api/v1/lines renvoie systématiquement 404 (endpoint inexistant sur ce déploiement) aux cycles précédents ; non retesté ce cycle, budget de session Blockscout épuisé après les vérifications tx_per_day/transferts (8 appels, clé PRO non configurée)."
+          }
         }
       ]
     },
@@ -884,6 +896,18 @@
             "tvl_usd": "DefiLlama - non confirmé ce cycle : api.llama.fi injoignable en direct ; WebSearch ne remonte que des chiffres non datés ou contradictoires (~2,81 Md$ et ~1,64 Md$ selon agrégateur, sans accord ni date d'octobre 2026). Laissé à null.",
             "tx_per_day": "Blockscout MCP (direct_api_call, chain_id=42161, /api/v2/stats/charts/transactions, dernier point du tableau chart_data) ; recroisé avec /api/v2/stats (transactions_today=2460145, appel direct). Méthode identique à ethereum, confirmée séparément ce cycle.",
             "active_addresses": "non confirmé ce cycle - même endpoint 404 que pour ethereum (produit Blockscout identique)."
+          }
+        },
+        {
+          "date": "2026-10-30",
+          "computed_at": "2026-10-30T08:28:07Z",
+          "tvl_usd": null,
+          "tx_per_day": 1958282,
+          "active_addresses": null,
+          "source": {
+            "tvl_usd": "DefiLlama - non confirmé ce cycle : Blockscout MCP (/api/v2/stats, chain_id=42161) renvoie tvl:null ; api.llama.fi confirmé injoignable en appel direct ce cycle (proxy agent : connect_rejected). Laissé à null.",
+            "tx_per_day": "Blockscout MCP (direct_api_call, chain_id=42161, /api/v2/stats/charts/transactions, dernier point du tableau chart_data, daté 2026-10-29) ; confirmé cohérent avec /api/v2/stats (transactions_today=1958282, appel direct). Méthode identique à ethereum, confirmée séparément ce cycle.",
+            "active_addresses": "non confirmé ce cycle - même endpoint 404 que pour ethereum (produit Blockscout identique), non retesté séparément, budget de session Blockscout épuisé."
           }
         }
       ]
