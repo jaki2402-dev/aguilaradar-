@@ -54,18 +54,18 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-31T08:17:22Z",
+    "last_success_at": "2026-10-31T16:22:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 31/10/2026 08h15 UTC : cycle court, rien de dû (aucun verdict pending >6h apres resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Etape 0 (news-feed.json) : les 12 titres <48h restent des reactions/analyses du piratage Binance deja consigne (reevalue a 6,3 Md$, Coree du Nord) - rien de factuellement nouveau, pas d'ajout a news.json. 1 recherche complementaire (fear&greed + autre hack) : aucune valeur fear&greed datee du jour trouvee (requete API alternative.me bloquee par le proxy reseau de la session), aucun autre hack/exploit confirme sur 24-48h. Regime macro laisse inchange (risk-off, calcule au cycle du 30/10 16h15 UTC, toujours valide) - non reecrit ici, cycle sans verdict emis. Aucun outil mcp__ utilise."
+    "last_failure_reason": "Cycle du 31/10/2026 16h15 UTC : cycle court, rien de dû (aucun verdict pending >6h après resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Étape 0 (news-feed.json) : nouveau titre securite distinct du piratage Binance déjà consigné — Chainalysis piratée par des agents IA (BeInCrypto) — ajouté à news.json (item le plus ancien retiré pour rester à ~10). Régime macro réévalué par exception « incident de marché » (titres securite <24h) : maintenu risk-off, note et résumé rafraîchis avec fear&greed 30 (market-gauges.json), 10 ans à 4,98 %, dominance stablecoins 11,51 % et le fallout Binance (FBI, vente BTC envisagée par une société cotée). 1 recherche web (fear&greed daté) sans résultat vérifiable pour aujourd'hui — valeur retenue depuis market-gauges.json à la place (zéro coût). Aucun outil mcp__ utilisé."
   },
   "macro_regime": {
-    "last_computed_at": "2026-10-30T16:18:55Z",
+    "last_computed_at": "2026-10-31T16:22:00Z",
     "regime": "risk-off",
-    "fear_greed_value": 57,
-    "btc_dominance_pct": 59.35,
+    "fear_greed_value": 30,
+    "btc_dominance_pct": 59.22,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Mise à jour du 30/10 16h UTC (règle « incident de marché » de la spec du cycle) : le piratage de Binance du 29/10 est réévalué par Binance à 6,3 Md$ (contre 1,7-5,8 Md$ en fourchette la veille) et attribué à un groupe lié à la Corée du Nord (Bloomberg, Yahoo Finance, Cybersecurity Dive, 30/10 15h UTC) ; le pirate détient plus de 420 000 ETH, une vente éventuelle ferait peser un risque baissier supplémentaire sur l'ether. Aucune autre faille exchange/DeFi/pont trouvée sur 24-48h (DefiLlama). Pas de nouvelle valeur fear&greed vérifiée depuis la réévaluation du 30/10 02h14 UTC (peur à 30) : régime maintenu risk-off sur la base de cette dernière lecture et de l'escalade confirmée du piratage. Signaux lents inchangés : Fed restrictive, stablecoins en hausse (11,2 % le 29/10), flux ETF non mis à jour depuis le 20/10.",
-    "resume": "Risk-off maintenu : piratage de Binance réévalué à 6,3 Md$ (Corée du Nord), risque de vente de 420 000 ETH par le pirate."
+    "note": "Mise à jour du 31/10 16h22 UTC (règle « incident de marché » de la spec du cycle : plusieurs titres event=securite publiés dans les 24h sur le piratage de Binance, dont un nouveau développement distinct — Chainalysis, société qui traque les hackers crypto, elle-même piratée par des agents IA, BeInCrypto 31/10 12h46 UTC). Sur le piratage Binance : le FBI a rejoint l'enquête sur les 6,3 Md$ volés (Investing.com, 31/10 12h06 UTC) ; une société cotée au Nasdaq envisagerait de vendre 450 M$ de bitcoin en invoquant le piratage et des craintes liées au quantique (CoinDesk, 31/10 12h49 UTC) ; le pirate détient toujours plus de 420 000 ETH (risque de vente non levé). Régime maintenu risk-off : fear&greed à 30 (Peur, data/market-gauges.json 31/10 00h00 UTC, en net recul depuis le pic de 63 du 21/10) ; rendement du Trésor à 10 ans à 4,98 % (29/10, élevé) ; Fed toujours restrictive (3,75-4,00 %, vote 10-2 le 28/10, hausse anticipée en décembre par les marchés) ; dominance stablecoins en légère hausse (11,51 % le 31/10 contre 11,2 % le 29/10, data/market-context.json) — capital qui continue de se mettre en attente. Flux ETF BTC/ETH non rafraîchis depuis le 20/10 et 29/10 respectivement : signal non actionnable ce cycle. Aucun autre hack/exploit distinct trouvé sur 24-48h hors Binance et Chainalysis.",
+    "resume": "Risk-off maintenu : fallout du piratage Binance (FBI, vente de BTC par une société cotée) et Chainalysis elle-même piratée par des agents IA."
   },
   "paper_portfolio_stats": {
     "last_computed_at": "2026-09-13T23:26:00Z",
