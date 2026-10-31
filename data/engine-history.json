@@ -54,9 +54,9 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-30T16:18:55Z",
+    "last_success_at": "2026-10-31T00:18:27Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 30/10/2026 16h15 UTC : cycle court, rien de dû (aucun verdict pending >6h après resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Étape 0 (news-feed.json) a trouvé une mise à jour significative du piratage de Binance (event=securite, <24h) : montant réévalué à 6,3 Md$, attribution Corée du Nord, pirate détenteur de 420 000 ETH -> ajoutée à data/news.json (items, last_updated_at) et macro_regime réévalué (§7 exception incident de marché), régime maintenu risk-off. 1 recherche complémentaire (fear&greed + autre hack éventuel) : aucune valeur fear&greed vérifiée datée du jour, aucun autre hack trouvé sur 24-48h (DefiLlama). Aucun outil mcp__ utilisé."
+    "last_failure_reason": "Cycle du 31/10/2026 00h15 UTC : cycle court, rien de dû (aucun verdict pending >6h après resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Étape 0 (news-feed.json) : les 10 titres <24h restent des réactions/analyses du piratage Binance déjà consigné au cycle précédent (6,3 Md$, Corée du Nord) — rien de factuellement nouveau, pas d'ajout à news.json. 1 recherche complémentaire (fear&greed + autre hack) : aucune valeur fear&greed datée du jour trouvée, aucun autre hack/exploit confirmé sur 24-48h. Régime macro laissé inchangé (risk-off, calculé au cycle du 30/10 16h15 UTC, toujours valide). Aucun outil mcp__ utilisé."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-30T16:18:55Z",
