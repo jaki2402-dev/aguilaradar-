@@ -1986,5 +1986,15 @@
     "sentiment": "négatif",
     "message": "AIOZ : -5,04 % depuis l'émission du verdict ACHAT du 28/10 (0,095887 $ → 0,091051 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
     "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
+  },
+  {
+    "id": "alert-20261031-ctsi-seuil",
+    "ticker_ou_theme": "CTSI",
+    "type": "seuil_technique",
+    "triggered_at": "2026-10-31T01:46:07Z",
+    "verdict_id": "v-20261025-ctsi",
+    "sentiment": "négatif",
+    "message": "CTSI : -5,24 % depuis l'émission du verdict ACHAT du 25/10 (0,027985 $ → 0,02652 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   }
 ]
