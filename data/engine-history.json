@@ -54,9 +54,9 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-31T00:18:27Z",
+    "last_success_at": "2026-10-31T08:17:22Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 31/10/2026 00h15 UTC : cycle court, rien de dû (aucun verdict pending >6h après resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Étape 0 (news-feed.json) : les 10 titres <24h restent des réactions/analyses du piratage Binance déjà consigné au cycle précédent (6,3 Md$, Corée du Nord) — rien de factuellement nouveau, pas d'ajout à news.json. 1 recherche complémentaire (fear&greed + autre hack) : aucune valeur fear&greed datée du jour trouvée, aucun autre hack/exploit confirmé sur 24-48h. Régime macro laissé inchangé (risk-off, calculé au cycle du 30/10 16h15 UTC, toujours valide). Aucun outil mcp__ utilisé."
+    "last_failure_reason": "Cycle du 31/10/2026 08h15 UTC : cycle court, rien de dû (aucun verdict pending >6h apres resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Etape 0 (news-feed.json) : les 12 titres <48h restent des reactions/analyses du piratage Binance deja consigne (reevalue a 6,3 Md$, Coree du Nord) - rien de factuellement nouveau, pas d'ajout a news.json. 1 recherche complementaire (fear&greed + autre hack) : aucune valeur fear&greed datee du jour trouvee (requete API alternative.me bloquee par le proxy reseau de la session), aucun autre hack/exploit confirme sur 24-48h. Regime macro laisse inchange (risk-off, calcule au cycle du 30/10 16h15 UTC, toujours valide) - non reecrit ici, cycle sans verdict emis. Aucun outil mcp__ utilise."
   },
   "macro_regime": {
     "last_computed_at": "2026-10-30T16:18:55Z",
