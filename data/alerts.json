@@ -1996,5 +1996,25 @@
     "sentiment": "négatif",
     "message": "CTSI : -5,24 % depuis l'émission du verdict ACHAT du 25/10 (0,027985 $ → 0,02652 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
     "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
+  },
+  {
+    "id": "alert-20261031-tia-rsi-survente",
+    "ticker_ou_theme": "TIA",
+    "type": "signal_technique",
+    "signal_kind": "rsi_survente",
+    "triggered_at": "2026-10-31T02:34:52Z",
+    "sentiment": "neutre",
+    "message": "TIA entre en zone de survente (RSI 14 j à 14) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : +19 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261031-inj-rsi-survente",
+    "ticker_ou_theme": "INJ",
+    "type": "signal_technique",
+    "signal_kind": "rsi_survente",
+    "triggered_at": "2026-10-31T02:34:52Z",
+    "sentiment": "neutre",
+    "message": "INJ entre en zone de survente (RSI 14 j à 28) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : +31 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
   }
 ]

@@ -1,48 +1,48 @@
 {
-  "updated_at": "2026-10-30T02:44:26Z",
+  "updated_at": "2026-10-31T02:34:52Z",
   "currency": "USD",
   "source": "CoinGecko /coins/{id}/market_chart (365 j, quotidien) — calculs de js/detail.js",
   "indicator_basis": "clotures_quotidiennes",
   "assets": {
     "BTC": {
-      "price_usd": 77838.8,
+      "price_usd": 77223.2,
       "rsi14": 32.7,
-      "sma50": 81887.3,
-      "sma200": 73106.5,
-      "sma200_gap_pct": 6.5,
+      "sma50": 81900.7,
+      "sma200": 73120.2,
+      "sma200_gap_pct": 5.6,
       "sma50_above_sma200": true,
-      "macd_histogram": -381.73,
+      "macd_histogram": -494.447,
       "change_pct": {
-        "7d": -4.3,
-        "30d": -6.9,
-        "90d": 23.9,
+        "7d": -4.8,
+        "30d": -7.6,
+        "90d": 23,
         "365d": null
       },
       "volatility_30d_pct": 29,
-      "drawdown_from_365d_high_pct": -29.6,
-      "reading": "Tendance de fond haussière (+7 % vs moyenne 200 j), élan négatif ; RSI 33 neutre.",
+      "drawdown_from_365d_high_pct": -30.1,
+      "reading": "Tendance de fond haussière (+6 % vs moyenne 200 j), élan négatif ; RSI 33 neutre.",
       "valuation": {
-        "ratio": 55.2,
-        "percentile": 88,
-        "score": 1,
+        "ratio": 46.5,
+        "percentile": 61,
+        "score": 4,
         "days": 347
       },
-      "as_of": "2026-10-30T00:00:00Z",
+      "as_of": "2026-10-31T00:00:00Z",
       "supply": {
-        "market_cap_usd": 1554575226109,
-        "fdv_usd": 1554575226109,
+        "market_cap_usd": 1553336466384,
+        "fdv_usd": 1553336466384,
         "circulating_supply": 20105365,
         "total_supply": 20105365,
         "max_supply": 21000000,
-        "volume_24h_usd": 48382078801
+        "volume_24h_usd": 201288606707
       },
       "proposed_verdict": {
         "rule": "retour_moyenne_prudent",
         "verdict": "ACHAT",
         "raw_verdict": "ACHAT",
         "corrected": false,
-        "confidence_pct": 44,
-        "sample_n": 729,
+        "confidence_pct": 42,
+        "sample_n": 732,
         "context": "bitcoin en élan négatif, peur (< 45)",
         "context_n": 0,
         "basis": "Retour à la moyenne prudent : ACHAT",
@@ -50,44 +50,44 @@
       }
     },
     "ETH": {
-      "price_usd": 2249.48,
-      "rsi14": 26.9,
-      "sma50": 2529.8,
-      "sma200": 2159.29,
-      "sma200_gap_pct": 4.2,
+      "price_usd": 2242.5,
+      "rsi14": 27.8,
+      "sma50": 2525.9,
+      "sma200": 2158.64,
+      "sma200_gap_pct": 3.9,
       "sma50_above_sma200": true,
-      "macd_histogram": -10.1985,
+      "macd_histogram": -12.2038,
       "change_pct": {
-        "7d": -5.7,
-        "30d": -16,
-        "90d": 20.9,
+        "7d": -6,
+        "30d": -16.5,
+        "90d": 21.6,
         "365d": null
       },
       "volatility_30d_pct": 36,
-      "drawdown_from_365d_high_pct": -42.4,
-      "reading": "Tendance de fond haussière (+4 % vs moyenne 200 j), élan négatif ; RSI 27 : survente.",
+      "drawdown_from_365d_high_pct": -42.6,
+      "reading": "Tendance de fond haussière (+4 % vs moyenne 200 j), élan négatif ; RSI 28 : survente.",
       "valuation": {
-        "ratio": 22.9,
-        "percentile": 80,
+        "ratio": 23.3,
+        "percentile": 82,
         "score": 2,
         "days": 347
       },
-      "as_of": "2026-10-30T00:00:00Z",
+      "as_of": "2026-10-31T00:00:00Z",
       "supply": {
-        "market_cap_usd": 270001757899,
-        "fdv_usd": 270001757899,
-        "circulating_supply": 122174497.95194182,
-        "total_supply": 122174497.95194182,
+        "market_cap_usd": 273993218834,
+        "fdv_usd": 273993218834,
+        "circulating_supply": 122177241.20183855,
+        "total_supply": 122177241.20183855,
         "max_supply": null,
-        "volume_24h_usd": 22136270866
+        "volume_24h_usd": 15044295941
       },
       "proposed_verdict": {
         "rule": "retour_moyenne_prudent",
         "verdict": "ACHAT",
         "raw_verdict": "ACHAT",
         "corrected": false,
-        "confidence_pct": 44,
-        "sample_n": 729,
+        "confidence_pct": 42,
+        "sample_n": 732,
         "context": "bitcoin en élan négatif, peur (< 45)",
         "context_n": 0,
         "basis": "Retour à la moyenne prudent : ACHAT",
@@ -95,44 +95,44 @@
       }
     },
     "FET": {
-      "price_usd": 0.163152,
-      "rsi14": 21.9,
-      "sma50": 0.201128,
-      "sma200": 0.187558,
-      "sma200_gap_pct": -13,
+      "price_usd": 0.166607,
+      "rsi14": 28,
+      "sma50": 0.201216,
+      "sma200": 0.1872,
+      "sma200_gap_pct": -11,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.00274774,
+      "macd_histogram": -0.00268445,
       "change_pct": {
-        "7d": -11.4,
-        "30d": -26.7,
-        "90d": 16.1,
+        "7d": -7,
+        "30d": -27.2,
+        "90d": 19.9,
         "365d": null
       },
       "volatility_30d_pct": 96,
-      "drawdown_from_365d_high_pct": -56,
-      "reading": "Tendance de fond baissière (-13 % vs moyenne 200 j), élan négatif ; RSI 22 : survente.",
+      "drawdown_from_365d_high_pct": -55.1,
+      "reading": "Tendance de fond baissière (-11 % vs moyenne 200 j), élan négatif ; RSI 28 : survente.",
       "valuation": {
-        "ratio": 2.9,
-        "percentile": 0,
+        "ratio": 3.1,
+        "percentile": 5,
         "score": 10,
         "days": 347
       },
-      "as_of": "2026-10-30T00:00:00Z",
+      "as_of": "2026-10-31T00:00:00Z",
       "supply": {
-        "market_cap_usd": 358943619,
-        "fdv_usd": 421504425,
+        "market_cap_usd": 381696568,
+        "fdv_usd": 448223019,
         "circulating_supply": 2311508384.055814,
         "total_supply": 2714384546.672,
         "max_supply": 2714384546.672,
-        "volume_24h_usd": 119399422
+        "volume_24h_usd": 90024003
       },
       "proposed_verdict": {
         "rule": "retour_moyenne_prudent",
         "verdict": "ACHAT",
         "raw_verdict": "ACHAT",
         "corrected": false,
-        "confidence_pct": 44,
-        "sample_n": 729,
+        "confidence_pct": 42,
+        "sample_n": 732,
         "context": "bitcoin en élan négatif, peur (< 45)",
         "context_n": 0,
         "basis": "Retour à la moyenne prudent : ACHAT",
@@ -140,44 +140,44 @@
       }
     },
     "GRT": {
-      "price_usd": 0.0203409,
-      "rsi14": 20.8,
-      "sma50": 0.0245185,
-      "sma200": 0.0211861,
-      "sma200_gap_pct": -4,
+      "price_usd": 0.0207235,
+      "rsi14": 25.4,
+      "sma50": 0.0245786,
+      "sma200": 0.0211662,
+      "sma200_gap_pct": -2.1,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.000443836,
+      "macd_histogram": -0.000440818,
       "change_pct": {
-        "7d": -14.4,
-        "30d": -30.3,
-        "90d": 42.2,
+        "7d": -11.7,
+        "30d": -29.2,
+        "90d": 46.5,
         "365d": null
       },
       "volatility_30d_pct": 69,
-      "drawdown_from_365d_high_pct": -71,
-      "reading": "Tendance de fond baissière (-4 % vs moyenne 200 j), élan négatif ; RSI 21 : survente.",
+      "drawdown_from_365d_high_pct": -70.5,
+      "reading": "Tendance de fond baissière (-2 % vs moyenne 200 j), élan négatif ; RSI 25 : survente.",
       "valuation": {
-        "ratio": 16.6,
-        "percentile": 59,
-        "score": 4,
+        "ratio": 17.8,
+        "percentile": 71,
+        "score": 3,
         "days": 347
       },
-      "as_of": "2026-10-30T00:00:00Z",
+      "as_of": "2026-10-31T00:00:00Z",
       "supply": {
-        "market_cap_usd": 209136154,
-        "fdv_usd": 221974780,
+        "market_cap_usd": 222424431,
+        "fdv_usd": 236078809,
         "circulating_supply": 10941320353.04,
         "total_supply": 11612995353.0437,
         "max_supply": null,
-        "volume_24h_usd": 12214630
+        "volume_24h_usd": 15927751
       },
       "proposed_verdict": {
         "rule": "retour_moyenne_prudent",
         "verdict": "ACHAT",
         "raw_verdict": "ACHAT",
         "corrected": false,
-        "confidence_pct": 44,
-        "sample_n": 729,
+        "confidence_pct": 42,
+        "sample_n": 732,
         "context": "bitcoin en élan négatif, peur (< 45)",
         "context_n": 0,
         "basis": "Retour à la moyenne prudent : ACHAT",
@@ -185,91 +185,91 @@
       }
     },
     "TIA": {
-      "price_usd": 0.488972,
-      "rsi14": 36.6,
-      "sma50": 0.490871,
-      "sma200": 0.399463,
-      "sma200_gap_pct": 22.4,
+      "price_usd": 0.475069,
+      "rsi14": 13.5,
+      "sma50": 0.493005,
+      "sma200": 0.400254,
+      "sma200_gap_pct": 18.7,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.0152843,
+      "macd_histogram": -0.0173285,
       "change_pct": {
-        "7d": -12.5,
-        "30d": 10.9,
-        "90d": 52.8,
+        "7d": -11.6,
+        "30d": 7.5,
+        "90d": 48.3,
         "365d": null
       },
       "volatility_30d_pct": 145,
-      "drawdown_from_365d_high_pct": -53.9,
-      "reading": "Tendance de fond haussière (+22 % vs moyenne 200 j), élan négatif ; RSI 37 neutre.",
+      "drawdown_from_365d_high_pct": -55.2,
+      "reading": "Tendance de fond haussière (+19 % vs moyenne 200 j), élan négatif ; RSI 14 : survente.",
       "valuation": {
-        "ratio": 4.6,
+        "ratio": 4.7,
         "percentile": 0,
         "score": 10,
         "days": 347
       },
-      "as_of": "2026-10-30T00:00:00Z",
+      "as_of": "2026-10-31T00:00:00Z",
       "supply": {
-        "market_cap_usd": 456049768,
-        "fdv_usd": 545143491,
-        "circulating_supply": 987557194.572517,
-        "total_supply": 1180486022.322807,
+        "market_cap_usd": 463049830,
+        "fdv_usd": 553401654,
+        "circulating_supply": 987812711.285936,
+        "total_supply": 1180558015.261279,
         "max_supply": null,
-        "volume_24h_usd": 65538184
+        "volume_24h_usd": 69441494
       },
       "proposed_verdict": {
         "rule": "retour_moyenne_prudent",
         "verdict": "ACHAT",
         "raw_verdict": "ACHAT",
         "corrected": false,
-        "confidence_pct": 44,
-        "sample_n": 729,
+        "confidence_pct": 42,
+        "sample_n": 732,
         "context": "bitcoin en élan négatif, peur (< 45)",
         "context_n": 0,
         "basis": "Retour à la moyenne prudent : ACHAT",
         "vigilance": [
-          "Volatilité 30 j haut : la règle s'y est trompée 70.5 % du temps (312 cas)"
+          "Volatilité 30 j haut : la règle s'y est trompée 70.8 % du temps (308 cas)"
         ]
       }
     },
     "CTSI": {
-      "price_usd": 0.0257654,
-      "rsi14": 17.6,
-      "sma50": 0.0292983,
-      "sma200": 0.0273145,
-      "sma200_gap_pct": -5.7,
+      "price_usd": 0.0264652,
+      "rsi14": 20.2,
+      "sma50": 0.0293559,
+      "sma200": 0.02729,
+      "sma200_gap_pct": -3,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.000639059,
+      "macd_histogram": -0.000613225,
       "change_pct": {
-        "7d": -12.9,
-        "30d": -9.6,
-        "90d": 21.6,
+        "7d": -9.2,
+        "30d": -8.1,
+        "90d": 25.7,
         "365d": null
       },
       "volatility_30d_pct": 68,
-      "drawdown_from_365d_high_pct": -49.7,
-      "reading": "Tendance de fond baissière (-6 % vs moyenne 200 j), élan négatif ; RSI 18 : survente.",
+      "drawdown_from_365d_high_pct": -48.3,
+      "reading": "Tendance de fond baissière (-3 % vs moyenne 200 j), élan négatif ; RSI 20 : survente.",
       "valuation": {
         "ratio": 3.1,
-        "percentile": 20,
+        "percentile": 22,
         "score": 8,
         "days": 347
       },
-      "as_of": "2026-10-30T00:00:00Z",
+      "as_of": "2026-10-31T00:00:00Z",
       "supply": {
-        "market_cap_usd": 24446140,
-        "fdv_usd": 25595732,
-        "circulating_supply": 955086555.3982263,
+        "market_cap_usd": 25134746,
+        "fdv_usd": 26314963,
+        "circulating_supply": 955150355.3982263,
         "total_supply": 1000000000,
         "max_supply": 1000000000,
-        "volume_24h_usd": 3181368
+        "volume_24h_usd": 3637900
       },
       "proposed_verdict": {
         "rule": "retour_moyenne_prudent",
         "verdict": "ACHAT",
         "raw_verdict": "ACHAT",
         "corrected": false,
-        "confidence_pct": 44,
-        "sample_n": 729,
+        "confidence_pct": 42,
+        "sample_n": 732,
         "context": "bitcoin en élan négatif, peur (< 45)",
         "context_n": 0,
         "basis": "Retour à la moyenne prudent : ACHAT",
@@ -277,89 +277,91 @@
       }
     },
     "PEAQ": {
-      "price_usd": 0.0325931,
-      "rsi14": 29.1,
-      "sma50": 0.0365621,
-      "sma200": 0.0249164,
-      "sma200_gap_pct": 30.8,
+      "price_usd": 0.0334343,
+      "rsi14": 34.6,
+      "sma50": 0.0367217,
+      "sma200": 0.0250184,
+      "sma200_gap_pct": 33.6,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.000721904,
+      "macd_histogram": -0.00066697,
       "change_pct": {
-        "7d": -9.3,
-        "30d": -22.2,
-        "90d": 88.7,
+        "7d": -11,
+        "30d": -21.6,
+        "90d": 94.4,
         "365d": null
       },
       "volatility_30d_pct": 81,
-      "drawdown_from_365d_high_pct": -60.9,
-      "reading": "Tendance de fond haussière (+31 % vs moyenne 200 j), élan négatif ; RSI 29 : survente.",
+      "drawdown_from_365d_high_pct": -59.9,
+      "reading": "Tendance de fond haussière (+34 % vs moyenne 200 j), élan négatif ; RSI 35 neutre.",
       "valuation": {
-        "ratio": 31.8,
-        "percentile": 84,
-        "score": 2,
+        "ratio": 34.6,
+        "percentile": 88,
+        "score": 1,
         "days": 347
       },
-      "as_of": "2026-10-30T00:00:00Z",
+      "as_of": "2026-10-31T00:00:00Z",
       "supply": {
-        "market_cap_usd": 82795634,
-        "fdv_usd": 142269258,
-        "circulating_supply": 2594838372.4741454,
-        "total_supply": 4458758393.46518,
+        "market_cap_usd": 86873487,
+        "fdv_usd": 149231538,
+        "circulating_supply": 2595824977.5982957,
+        "total_supply": 4459115988.43388,
         "max_supply": 5667620228.64,
-        "volume_24h_usd": 3163770
+        "volume_24h_usd": 1484933
       },
       "proposed_verdict": {
         "rule": "retour_moyenne_prudent",
         "verdict": "ACHAT",
         "raw_verdict": "ACHAT",
         "corrected": false,
-        "confidence_pct": 44,
-        "sample_n": 729,
+        "confidence_pct": 42,
+        "sample_n": 732,
         "context": "bitcoin en élan négatif, peur (< 45)",
         "context_n": 0,
         "basis": "Retour à la moyenne prudent : ACHAT",
-        "vigilance": []
+        "vigilance": [
+          "Écart à la moyenne 200 j haut : la règle s'y est trompée 74.1 % du temps (309 cas)"
+        ]
       }
     },
     "LINK": {
-      "price_usd": 10.6003,
-      "rsi14": 25.2,
-      "sma50": 12.6248,
-      "sma200": 9.9935,
-      "sma200_gap_pct": 6.1,
+      "price_usd": 11.4462,
+      "rsi14": 40,
+      "sma50": 12.6244,
+      "sma200": 10.0038,
+      "sma200_gap_pct": 14.4,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.119059,
+      "macd_histogram": -0.0853983,
       "change_pct": {
-        "7d": -11.3,
-        "30d": -27.4,
-        "90d": 29.8,
+        "7d": -3.1,
+        "30d": -20.3,
+        "90d": 42,
         "365d": null
       },
-      "volatility_30d_pct": 57,
-      "drawdown_from_365d_high_pct": -39.8,
-      "reading": "Tendance de fond haussière (+6 % vs moyenne 200 j), élan négatif ; RSI 25 : survente.",
+      "volatility_30d_pct": 65,
+      "drawdown_from_365d_high_pct": -35,
+      "reading": "Tendance de fond haussière (+14 % vs moyenne 200 j), élan négatif ; RSI 40 neutre.",
       "valuation": {
-        "ratio": 25.8,
-        "percentile": 84,
-        "score": 2,
+        "ratio": 28.4,
+        "percentile": 87,
+        "score": 1,
         "days": 347
       },
-      "as_of": "2026-10-30T00:00:00Z",
+      "as_of": "2026-10-31T00:00:00Z",
       "supply": {
-        "market_cap_usd": 8208077432,
-        "fdv_usd": 10703628805,
+        "market_cap_usd": 8854575612,
+        "fdv_usd": 11546685731,
         "circulating_supply": 766849970.424884,
         "total_supply": 1000000000,
         "max_supply": 1000000000,
-        "volume_24h_usd": 726330089
+        "volume_24h_usd": 509834427
       },
       "proposed_verdict": {
         "rule": "retour_moyenne_prudent",
         "verdict": "ACHAT",
         "raw_verdict": "ACHAT",
         "corrected": false,
-        "confidence_pct": 44,
-        "sample_n": 729,
+        "confidence_pct": 42,
+        "sample_n": 732,
         "context": "bitcoin en élan négatif, peur (< 45)",
         "context_n": 0,
         "basis": "Retour à la moyenne prudent : ACHAT",
@@ -367,44 +369,44 @@
       }
     },
     "ONDO": {
-      "price_usd": 0.379869,
-      "rsi14": 24.1,
-      "sma50": 0.446275,
-      "sma200": 0.371784,
-      "sma200_gap_pct": 2.2,
+      "price_usd": 0.415765,
+      "rsi14": 40.1,
+      "sma50": 0.447739,
+      "sma200": 0.372574,
+      "sma200_gap_pct": 11.6,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.00609111,
+      "macd_histogram": -0.00436391,
       "change_pct": {
-        "7d": -11.3,
-        "30d": -24.3,
-        "90d": -2.5,
+        "7d": -0.6,
+        "30d": -16.9,
+        "90d": 9.5,
         "365d": null
       },
-      "volatility_30d_pct": 71,
-      "drawdown_from_365d_high_pct": -45.9,
-      "reading": "Tendance de fond haussière (+2 % vs moyenne 200 j), élan négatif ; RSI 24 : survente.",
+      "volatility_30d_pct": 80,
+      "drawdown_from_365d_high_pct": -40.8,
+      "reading": "Tendance de fond haussière (+12 % vs moyenne 200 j), élan négatif ; RSI 40 neutre.",
       "valuation": {
-        "ratio": 11.2,
-        "percentile": 21,
+        "ratio": 12.8,
+        "percentile": 24,
         "score": 8,
         "days": 347
       },
-      "as_of": "2026-10-30T00:00:00Z",
+      "as_of": "2026-10-31T00:00:00Z",
       "supply": {
-        "market_cap_usd": 1842997703,
-        "fdv_usd": 3784909748,
+        "market_cap_usd": 2029115876,
+        "fdv_usd": 4167135122,
         "circulating_supply": 4869330647,
         "total_supply": 10000000000,
         "max_supply": 10000000000,
-        "volume_24h_usd": 230658636
+        "volume_24h_usd": 173944780
       },
       "proposed_verdict": {
         "rule": "retour_moyenne_prudent",
         "verdict": "ACHAT",
         "raw_verdict": "ACHAT",
         "corrected": false,
-        "confidence_pct": 44,
-        "sample_n": 729,
+        "confidence_pct": 42,
+        "sample_n": 732,
         "context": "bitcoin en élan négatif, peur (< 45)",
         "context_n": 0,
         "basis": "Retour à la moyenne prudent : ACHAT",
@@ -412,44 +414,44 @@
       }
     },
     "JUP": {
-      "price_usd": 0.249827,
-      "rsi14": 29,
-      "sma50": 0.302301,
-      "sma200": 0.224311,
-      "sma200_gap_pct": 11.4,
+      "price_usd": 0.260175,
+      "rsi14": 34.7,
+      "sma50": 0.303014,
+      "sma200": 0.224755,
+      "sma200_gap_pct": 15.8,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.00675397,
+      "macd_histogram": -0.00653741,
       "change_pct": {
-        "7d": -19.8,
-        "30d": -24.3,
-        "90d": 29.4,
+        "7d": -13.1,
+        "30d": -21.1,
+        "90d": 34.9,
         "365d": null
       },
-      "volatility_30d_pct": 87,
-      "drawdown_from_365d_high_pct": -39.1,
-      "reading": "Tendance de fond haussière (+11 % vs moyenne 200 j), élan négatif ; RSI 29 : survente.",
+      "volatility_30d_pct": 89,
+      "drawdown_from_365d_high_pct": -36.6,
+      "reading": "Tendance de fond haussière (+16 % vs moyenne 200 j), élan négatif ; RSI 35 neutre.",
       "valuation": {
-        "ratio": 10.8,
-        "percentile": 1,
-        "score": 10,
+        "ratio": 11.5,
+        "percentile": 5,
+        "score": 9,
         "days": 347
       },
-      "as_of": "2026-10-30T00:00:00Z",
+      "as_of": "2026-10-31T00:00:00Z",
       "supply": {
-        "market_cap_usd": 823769550,
-        "fdv_usd": 1702818466,
+        "market_cap_usd": 859948795,
+        "fdv_usd": 1777604777,
         "circulating_supply": 3319369204.37,
-        "total_supply": 6861485930.593725,
+        "total_supply": 6861485925.127511,
         "max_supply": 10000000000,
-        "volume_24h_usd": 50452028
+        "volume_24h_usd": 46950784
       },
       "proposed_verdict": {
         "rule": "retour_moyenne_prudent",
         "verdict": "ACHAT",
         "raw_verdict": "ACHAT",
         "corrected": false,
-        "confidence_pct": 44,
-        "sample_n": 729,
+        "confidence_pct": 42,
+        "sample_n": 732,
         "context": "bitcoin en élan négatif, peur (< 45)",
         "context_n": 0,
         "basis": "Retour à la moyenne prudent : ACHAT",
@@ -457,44 +459,44 @@
       }
     },
     "LPT": {
-      "price_usd": 1.41161,
-      "rsi14": 16.7,
-      "sma50": 1.62823,
-      "sma200": 1.69424,
-      "sma200_gap_pct": -16.7,
+      "price_usd": 1.44453,
+      "rsi14": 21.9,
+      "sma50": 1.62997,
+      "sma200": 1.69087,
+      "sma200_gap_pct": -14.6,
       "sma50_above_sma200": false,
-      "macd_histogram": -0.0270297,
+      "macd_histogram": -0.0249603,
       "change_pct": {
-        "7d": -8.9,
-        "30d": -16.7,
-        "90d": 8.5,
+        "7d": -6,
+        "30d": -18.8,
+        "90d": 15.1,
         "365d": null
       },
-      "volatility_30d_pct": 75,
-      "drawdown_from_365d_high_pct": -75.2,
-      "reading": "Tendance de fond baissière (-17 % vs moyenne 200 j), élan négatif ; RSI 17 : survente.",
+      "volatility_30d_pct": 73,
+      "drawdown_from_365d_high_pct": -74.6,
+      "reading": "Tendance de fond baissière (-15 % vs moyenne 200 j), élan négatif ; RSI 22 : survente.",
       "valuation": {
-        "ratio": 5.2,
-        "percentile": 15,
-        "score": 9,
+        "ratio": 5.4,
+        "percentile": 22,
+        "score": 8,
         "days": 347
       },
-      "as_of": "2026-10-30T00:00:00Z",
+      "as_of": "2026-10-31T00:00:00Z",
       "supply": {
-        "market_cap_usd": 69063665,
-        "fdv_usd": 69063665,
+        "market_cap_usd": 70875021,
+        "fdv_usd": 70875021,
         "circulating_supply": 49688954.55,
         "total_supply": 49688954.55,
         "max_supply": null,
-        "volume_24h_usd": 6682451
+        "volume_24h_usd": 6864330
       },
       "proposed_verdict": {
         "rule": "retour_moyenne_prudent",
         "verdict": "ACHAT",
         "raw_verdict": "ACHAT",
         "corrected": false,
-        "confidence_pct": 44,
-        "sample_n": 729,
+        "confidence_pct": 42,
+        "sample_n": 732,
         "context": "bitcoin en élan négatif, peur (< 45)",
         "context_n": 0,
         "basis": "Retour à la moyenne prudent : ACHAT",
@@ -502,44 +504,44 @@
       }
     },
     "AIOZ": {
-      "price_usd": 0.0902768,
-      "rsi14": 30.5,
-      "sma50": 0.10232,
-      "sma200": 0.0690015,
-      "sma200_gap_pct": 30.8,
+      "price_usd": 0.0912905,
+      "rsi14": 34.7,
+      "sma50": 0.102771,
+      "sma200": 0.0691711,
+      "sma200_gap_pct": 32,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.00179357,
+      "macd_histogram": -0.00175481,
       "change_pct": {
-        "7d": -10.1,
-        "30d": -18.8,
-        "90d": 85.8,
+        "7d": -7.1,
+        "30d": -20.7,
+        "90d": 91.4,
         "365d": null
       },
-      "volatility_30d_pct": 69,
-      "drawdown_from_365d_high_pct": -49.9,
-      "reading": "Tendance de fond haussière (+31 % vs moyenne 200 j), élan négatif ; RSI 31 neutre.",
+      "volatility_30d_pct": 67,
+      "drawdown_from_365d_high_pct": -49.4,
+      "reading": "Tendance de fond haussière (+32 % vs moyenne 200 j), élan négatif ; RSI 35 neutre.",
       "valuation": {
         "ratio": 17.1,
         "percentile": 60,
         "score": 4,
         "days": 347
       },
-      "as_of": "2026-10-30T00:00:00Z",
+      "as_of": "2026-10-31T00:00:00Z",
       "supply": {
-        "market_cap_usd": 117070435,
-        "fdv_usd": 117101335,
-        "circulating_supply": 1287071352.8596113,
-        "total_supply": 1287411062.9875479,
+        "market_cap_usd": 117979726,
+        "fdv_usd": 117986357,
+        "circulating_supply": 1287540332.0203433,
+        "total_supply": 1287612692.3778195,
         "max_supply": null,
-        "volume_24h_usd": 4451333
+        "volume_24h_usd": 4676225
       },
       "proposed_verdict": {
         "rule": "retour_moyenne_prudent",
         "verdict": "ACHAT",
         "raw_verdict": "ACHAT",
         "corrected": false,
-        "confidence_pct": 44,
-        "sample_n": 729,
+        "confidence_pct": 42,
+        "sample_n": 732,
         "context": "bitcoin en élan négatif, peur (< 45)",
         "context_n": 0,
         "basis": "Retour à la moyenne prudent : ACHAT",
@@ -547,44 +549,44 @@
       }
     },
     "FLUX": {
-      "price_usd": 0.0609791,
-      "rsi14": 23.1,
-      "sma50": 0.0692108,
-      "sma200": 0.0576673,
-      "sma200_gap_pct": 5.7,
+      "price_usd": 0.0606569,
+      "rsi14": 23.3,
+      "sma50": 0.0694261,
+      "sma200": 0.0576899,
+      "sma200_gap_pct": 5.1,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.00151147,
+      "macd_histogram": -0.00148876,
       "change_pct": {
-        "7d": -6.3,
-        "30d": -15.3,
-        "90d": 56.5,
+        "7d": -8.2,
+        "30d": -17.9,
+        "90d": 57.1,
         "365d": null
       },
-      "volatility_30d_pct": 101,
-      "drawdown_from_365d_high_pct": -73.6,
-      "reading": "Tendance de fond haussière (+6 % vs moyenne 200 j), élan négatif ; RSI 23 : survente.",
+      "volatility_30d_pct": 100,
+      "drawdown_from_365d_high_pct": -73.7,
+      "reading": "Tendance de fond haussière (+5 % vs moyenne 200 j), élan négatif ; RSI 23 : survente.",
       "valuation": {
         "ratio": 4.8,
         "percentile": 6,
         "score": 9,
         "days": 347
       },
-      "as_of": "2026-10-30T00:00:00Z",
+      "as_of": "2026-10-31T00:00:00Z",
       "supply": {
-        "market_cap_usd": 25376950,
-        "fdv_usd": 25384160,
-        "circulating_supply": 422796033.6991484,
-        "total_supply": 422916162.09914845,
+        "market_cap_usd": 25492606,
+        "fdv_usd": 25494140,
+        "circulating_supply": 422962656.09914845,
+        "total_supply": 422988108.09914845,
         "max_supply": 440000000,
-        "volume_24h_usd": 4846142
+        "volume_24h_usd": 4805384
       },
       "proposed_verdict": {
         "rule": "retour_moyenne_prudent",
         "verdict": "ACHAT",
         "raw_verdict": "ACHAT",
         "corrected": false,
-        "confidence_pct": 44,
-        "sample_n": 729,
+        "confidence_pct": 42,
+        "sample_n": 732,
         "context": "bitcoin en élan négatif, peur (< 45)",
         "context_n": 0,
         "basis": "Retour à la moyenne prudent : ACHAT",
@@ -592,95 +594,95 @@
       }
     },
     "ARB": {
-      "price_usd": 0.154229,
-      "rsi14": 25.5,
-      "sma50": 0.187455,
-      "sma200": 0.121774,
-      "sma200_gap_pct": 26.7,
+      "price_usd": 0.162898,
+      "rsi14": 34,
+      "sma50": 0.187915,
+      "sma200": 0.122025,
+      "sma200_gap_pct": 33.5,
       "sma50_above_sma200": true,
-      "macd_histogram": -0.00298172,
+      "macd_histogram": -0.00264202,
       "change_pct": {
-        "7d": -13.8,
-        "30d": -24.2,
-        "90d": 97.2,
+        "7d": -5.1,
+        "30d": -19.8,
+        "90d": 106.5,
         "365d": null
       },
-      "volatility_30d_pct": 92,
-      "drawdown_from_365d_high_pct": -49.9,
-      "reading": "Tendance de fond haussière (+27 % vs moyenne 200 j), élan négatif ; RSI 26 : survente.",
+      "volatility_30d_pct": 95,
+      "drawdown_from_365d_high_pct": -47.1,
+      "reading": "Tendance de fond haussière (+34 % vs moyenne 200 j), élan négatif ; RSI 34 neutre.",
       "valuation": {
-        "ratio": 6.2,
-        "percentile": 24,
-        "score": 8,
+        "ratio": 6.6,
+        "percentile": 26,
+        "score": 7,
         "days": 347
       },
-      "as_of": "2026-10-30T00:00:00Z",
+      "as_of": "2026-10-31T00:00:00Z",
       "supply": {
-        "market_cap_usd": 1072886229,
-        "fdv_usd": 1556686480,
+        "market_cap_usd": 1116729205,
+        "fdv_usd": 1620299719,
         "circulating_supply": 6892115031,
         "total_supply": 10000000000,
         "max_supply": 10000000000,
-        "volume_24h_usd": 239454106
+        "volume_24h_usd": 152280715
       },
       "proposed_verdict": {
         "rule": "retour_moyenne_prudent",
         "verdict": "ACHAT",
         "raw_verdict": "ACHAT",
         "corrected": false,
-        "confidence_pct": 44,
-        "sample_n": 729,
-        "context": "bitcoin en élan négatif, peur (< 45)",
-        "context_n": 0,
-        "basis": "Retour à la moyenne prudent : ACHAT",
-        "vigilance": []
-      }
-    },
-    "INJ": {
-      "price_usd": 7.32609,
-      "rsi14": 33.3,
-      "sma50": 7.50943,
-      "sma200": 5.46249,
-      "sma200_gap_pct": 34.1,
-      "sma50_above_sma200": true,
-      "macd_histogram": -0.12609,
-      "change_pct": {
-        "7d": -7.3,
-        "30d": -3.7,
-        "90d": 50.6,
-        "365d": null
-      },
-      "volatility_30d_pct": 104,
-      "drawdown_from_365d_high_pct": -18,
-      "reading": "Tendance de fond haussière (+34 % vs moyenne 200 j), élan négatif ; RSI 33 neutre.",
-      "valuation": {
-        "ratio": 5.3,
-        "percentile": 16,
-        "score": 8,
-        "days": 347
-      },
-      "as_of": "2026-10-30T00:00:00Z",
-      "supply": {
-        "market_cap_usd": 708815340,
-        "fdv_usd": 708815340,
-        "circulating_supply": 100000000,
-        "total_supply": 100000000,
-        "max_supply": null,
-        "volume_24h_usd": 139894993
-      },
-      "proposed_verdict": {
-        "rule": "retour_moyenne_prudent",
-        "verdict": "ACHAT",
-        "raw_verdict": "ACHAT",
-        "corrected": false,
-        "confidence_pct": 44,
-        "sample_n": 729,
+        "confidence_pct": 42,
+        "sample_n": 732,
         "context": "bitcoin en élan négatif, peur (< 45)",
         "context_n": 0,
         "basis": "Retour à la moyenne prudent : ACHAT",
         "vigilance": [
-          "Écart à la moyenne 200 j haut : la règle s'y est trompée 73.4 % du temps (308 cas)"
+          "Écart à la moyenne 200 j haut : la règle s'y est trompée 74.1 % du temps (309 cas)"
         ]
+      }
+    },
+    "INJ": {
+      "price_usd": 7.17689,
+      "rsi14": 28.3,
+      "sma50": 7.53412,
+      "sma200": 5.48308,
+      "sma200_gap_pct": 30.9,
+      "sma50_above_sma200": true,
+      "macd_histogram": -0.156071,
+      "change_pct": {
+        "7d": -7.7,
+        "30d": -3.2,
+        "90d": 47.4,
+        "365d": null
+      },
+      "volatility_30d_pct": 104,
+      "drawdown_from_365d_high_pct": -19.7,
+      "reading": "Tendance de fond haussière (+31 % vs moyenne 200 j), élan négatif ; RSI 28 : survente.",
+      "valuation": {
+        "ratio": 5.4,
+        "percentile": 17,
+        "score": 8,
+        "days": 347
+      },
+      "as_of": "2026-10-31T00:00:00Z",
+      "supply": {
+        "market_cap_usd": 715043117,
+        "fdv_usd": 715043117,
+        "circulating_supply": 100000000,
+        "total_supply": 100000000,
+        "max_supply": null,
+        "volume_24h_usd": 105771759
+      },
+      "proposed_verdict": {
+        "rule": "retour_moyenne_prudent",
+        "verdict": "ACHAT",
+        "raw_verdict": "ACHAT",
+        "corrected": false,
+        "confidence_pct": 42,
+        "sample_n": 732,
+        "context": "bitcoin en élan négatif, peur (< 45)",
+        "context_n": 0,
+        "basis": "Retour à la moyenne prudent : ACHAT",
+        "vigilance": []
       }
     }
   },
@@ -1170,7 +1172,7 @@
         "btc_sma200_gap_pct": -8.8,
         "btc_macd_histogram": -24.0722,
         "btc_change_30d": 1.5,
-        "valuation_percentile": 39
+        "valuation_percentile": 38
       },
       {
         "id": "v-20260807-aioz",
@@ -1254,7 +1256,7 @@
         "btc_sma200_gap_pct": -8.8,
         "btc_macd_histogram": -24.0722,
         "btc_change_30d": 1.5,
-        "valuation_percentile": 64
+        "valuation_percentile": 63
       },
       {
         "id": "v-20260817-ctsi",
@@ -1275,7 +1277,7 @@
         "btc_sma200_gap_pct": -9.2,
         "btc_macd_histogram": -163.877,
         "btc_change_30d": -1.7,
-        "valuation_percentile": 22
+        "valuation_percentile": 23
       },
       {
         "id": "v-20260823-btc",
@@ -1527,7 +1529,7 @@
         "btc_sma200_gap_pct": 11.8,
         "btc_macd_histogram": 1572.42,
         "btc_change_30d": 18.5,
-        "valuation_percentile": 55
+        "valuation_percentile": 54
       },
       {
         "id": "v-20260823-arb",
@@ -1779,7 +1781,7 @@
         "btc_sma200_gap_pct": 14.6,
         "btc_macd_histogram": -108.593,
         "btc_change_30d": 24.2,
-        "valuation_percentile": 73
+        "valuation_percentile": 72
       },
       {
         "id": "v-20260906-ondo",
@@ -1800,7 +1802,7 @@
         "btc_sma200_gap_pct": 14.6,
         "btc_macd_histogram": -108.593,
         "btc_change_30d": 24.2,
-        "valuation_percentile": 48
+        "valuation_percentile": 49
       },
       {
         "id": "v-20260906-jup",
@@ -1821,7 +1823,7 @@
         "btc_sma200_gap_pct": 14.6,
         "btc_macd_histogram": -108.593,
         "btc_change_30d": 24.2,
-        "valuation_percentile": 25
+        "valuation_percentile": 24
       },
       {
         "id": "v-20260906-lpt",
@@ -2241,7 +2243,7 @@
         "btc_sma200_gap_pct": 15.3,
         "btc_macd_histogram": -167.721,
         "btc_change_30d": 11.3,
-        "valuation_percentile": 26
+        "valuation_percentile": 25
       },
       {
         "id": "v-20260920-grt",
@@ -2262,7 +2264,7 @@
         "btc_sma200_gap_pct": 15.3,
         "btc_macd_histogram": -167.721,
         "btc_change_30d": 11.3,
-        "valuation_percentile": 11
+        "valuation_percentile": 12
       },
       {
         "id": "v-20260920-tia",
@@ -2283,7 +2285,7 @@
         "btc_sma200_gap_pct": 15.3,
         "btc_macd_histogram": -167.721,
         "btc_change_30d": 11.3,
-        "valuation_percentile": 64
+        "valuation_percentile": 63
       },
       {
         "id": "v-20260920-peaq",
@@ -2598,7 +2600,7 @@
         "btc_sma200_gap_pct": 18.8,
         "btc_macd_histogram": 221.155,
         "btc_change_30d": 8.5,
-        "valuation_percentile": 72
+        "valuation_percentile": 71
       },
       {
         "id": "v-20260928-arb",
@@ -2955,7 +2957,7 @@
         "btc_sma200_gap_pct": 19.8,
         "btc_macd_histogram": -68.4139,
         "btc_change_30d": 7.5,
-        "valuation_percentile": 27
+        "valuation_percentile": 28
       },
       {
         "id": "v-20261010-ctsi",
@@ -2976,7 +2978,7 @@
         "btc_sma200_gap_pct": 14.9,
         "btc_macd_histogram": -566.032,
         "btc_change_30d": 5.5,
-        "valuation_percentile": 38
+        "valuation_percentile": 39
       },
       {
         "id": "v-20261013-grt",
@@ -3060,7 +3062,7 @@
         "btc_sma200_gap_pct": 13.5,
         "btc_macd_histogram": -582.276,
         "btc_change_30d": 5.9,
-        "valuation_percentile": 48
+        "valuation_percentile": 47
       },
       {
         "id": "v-20261013-ondo",
@@ -3186,7 +3188,7 @@
         "btc_sma200_gap_pct": 12.4,
         "btc_macd_histogram": -524.814,
         "btc_change_30d": 6.6,
-        "valuation_percentile": 25
+        "valuation_percentile": 26
       },
       {
         "id": "v-20261020-grt",
@@ -3375,7 +3377,7 @@
         "btc_sma200_gap_pct": 14.2,
         "btc_macd_histogram": -283.418,
         "btc_change_30d": 2.2,
-        "valuation_percentile": 42
+        "valuation_percentile": 41
       }
     ],
     "note": "Rétrospectif, petit échantillon, période majoritairement haussière : un indice pour orienter l'auto-correction du moteur, pas une preuve."
@@ -3398,44 +3400,44 @@
         "sentiment_marche": 6.7,
         "sentiment_marche_rsi": 13.3,
         "retour_moyenne_prudent": 10,
-        "regle_apprise": 56.7
+        "regle_apprise": 26.7
       },
       "lab_valid_n": 918,
       "lab_margin_pts": 2,
       "lab_scores": {
-        "tendance_rsi": 34.7,
-        "retour_moyenne_rsi": 41.4,
-        "retour_moyenne_marche": 37.5,
-        "tendance_pure": 26.4,
-        "marche_baissier_protege": 41.4,
-        "sentiment_marche": 41.4,
-        "sentiment_marche_rsi": 41.4,
-        "retour_moyenne_prudent": 44,
-        "regle_apprise": 30.3
+        "tendance_rsi": 34.2,
+        "retour_moyenne_rsi": 40.4,
+        "retour_moyenne_marche": 36.7,
+        "tendance_pure": 25.7,
+        "marche_baissier_protege": 40.4,
+        "sentiment_marche": 40.4,
+        "sentiment_marche_rsi": 40.4,
+        "retour_moyenne_prudent": 43,
+        "regle_apprise": 30.2
       }
     },
     "calibration": {
       "ACHAT": {
-        "n": 729,
-        "correct": 320,
+        "n": 732,
+        "correct": 311,
         "btc": {
           "hausse": {
-            "n": 195,
-            "correct": 94
+            "n": 183,
+            "correct": 85
           },
           "baisse": {
-            "n": 534,
+            "n": 549,
             "correct": 226
           }
         },
-        "pct": 44
+        "pct": 42
       },
       "ATTENTE": {
-        "n": 189,
+        "n": 186,
         "correct": 84,
         "btc": {
           "hausse": {
-            "n": 135,
+            "n": 132,
             "correct": 67
           },
           "baisse": {
@@ -3443,7 +3445,7 @@
             "correct": 17
           }
         },
-        "pct": 44
+        "pct": 45
       },
       "VENTE": {
         "n": 0,
