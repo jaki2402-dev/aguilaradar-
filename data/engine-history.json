@@ -54,18 +54,18 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-11-01T00:16:00Z",
+    "last_success_at": "2026-11-01T08:16:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 01/11/2026 00h15 UTC : cycle court, rien de dû (aucun verdict pending >6h après resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Étape 0 (news-feed.json) : nouveau développement distinct sur le piratage Binance déjà consigné — Binance affirme avoir couvert ~90 % de l'impact (sans confirmer la récupération des fonds volés) — ajouté à news.json (item le plus ancien, CLARITY Act, retiré pour rester à 10). Régime macro réévalué par exception « incident de marché » (titres securite <24h) : maintenu risk-off, signaux lents repris inchangés du cycle précédent (non rafraîchis, market-context.json pas encore mis à jour aujourd'hui). Aucun outil mcp__ utilisé."
+    "last_failure_reason": "Cycle du 01/11/2026 08h15 UTC : cycle court, rien de du (aucun verdict pending >6h apres resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Etape 0 (news-feed.json) : nouveau developpement significatif sur le piratage Binance (retraits rouverts par phases, ~95% recouveres selon Binance, FBI attribue l'attaque a la Coree du Nord) - ajoute a news.json (item le plus ancien, hausse de taux Fed du 16/09, retire pour rester a 10). Regime macro reevalue par exception << incident de marche >> (titres securite <24h) : maintenu risk-off, signaux lents repris de data/market-gauges.json (fear&greed 34, dominance BTC 59,23%). Aucun outil mcp__ utilise."
   },
   "macro_regime": {
-    "last_computed_at": "2026-11-01T00:16:00Z",
+    "last_computed_at": "2026-11-01T08:16:00Z",
     "regime": "risk-off",
-    "fear_greed_value": 30,
-    "btc_dominance_pct": 59.22,
+    "fear_greed_value": 34,
+    "btc_dominance_pct": 59.23,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Mise à jour du 01/11 00h16 UTC (règle « incident de marché » de la spec du cycle : plusieurs nouveaux titres event=securite publiés dans les 24h, tous liés au fallout du piratage Binance du 29/10 — Binance affirme avoir couvert ~90 % de l'impact, sans préciser si les fonds volés eux-mêmes sont récupérés ; commentaires du patron de la CFTC et comparaisons médiatiques à Mt. Gox). Signal mitigeant (couverture annoncée) mais pirate toujours détenteur de plus de 420 000 ETH (risque de vente non levé) et aucune confirmation indépendante de la part réellement récupérée. Signaux lents inchangés depuis le cycle précédent (31/10 16h22 UTC, non rafraîchis par market-contexte.json ce cycle) : fear&greed à 30 (Peur, data/market-gauges.json, as_of 31/10), dominance BTC 59,22 %, Fed toujours restrictive (3,75-4,00 %, vote 10-2 le 28/10), dominance stablecoins 11,51 % (31/10) — capital resté prudent. Régime maintenu risk-off : le fallout du piratage (même partiellement couvert) et les signaux macro lents pointent tous dans le même sens.",
-    "resume": "Risk-off maintenu : Binance dit avoir couvert ~90 % de l'impact du piratage, mais le pirate détient toujours plus de 420 000 ETH et rien n'est recouvré avec certitude."
+    "note": "Incident Binance toujours a moins de 24h en tete de l'actualite (fil du 29/10) : nouveaux developpements significatifs ce cycle - retraits rouverts par phases (Bitcoin d'abord), ~95 % des 6,3 Md$ voles desormais recouvres selon Binance (annonce de l'exchange, pas une confirmation independante), FBI attribue l'attaque a la Coree du Nord. Signal partiellement rassurant (reprise des retraits, recouvrement majoritaire annonce) mais normalisation encore partielle (retraits seulement par phases) - pression risk-off maintenue le temps que ca se confirme. Signaux lents repris de data/market-gauges.json (non recalcules, deja ecrits par un autre robot) : fear&greed 34 (Peur, en legere hausse depuis 30 le 31/10), dominance BTC 59,23 %, Fed toujours restrictive, stablecoins -1,37 % sur 7j (capital qui quitte legerement les stablecoins - signal risk-on isole et contradictoire, pas suffisant pour renverser la lecture tant que l'incident domine l'actualite).",
+    "resume": "Risk-off maintenu : retraits Binance rouverts par phases, ~95 % des fonds recouvres (non confirme), FBI blame la Coree du Nord, normalisation encore partielle."
   },
   "paper_portfolio_stats": {
     "last_computed_at": "2026-09-13T23:26:00Z",
