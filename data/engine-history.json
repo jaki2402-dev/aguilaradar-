@@ -54,18 +54,18 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-31T00:18:27Z",
+    "last_success_at": "2026-11-01T08:16:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 31/10/2026 00h15 UTC : cycle court, rien de dû (aucun verdict pending >6h après resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Étape 0 (news-feed.json) : les 10 titres <24h restent des réactions/analyses du piratage Binance déjà consigné au cycle précédent (6,3 Md$, Corée du Nord) — rien de factuellement nouveau, pas d'ajout à news.json. 1 recherche complémentaire (fear&greed + autre hack) : aucune valeur fear&greed datée du jour trouvée, aucun autre hack/exploit confirmé sur 24-48h. Régime macro laissé inchangé (risk-off, calculé au cycle du 30/10 16h15 UTC, toujours valide). Aucun outil mcp__ utilisé."
+    "last_failure_reason": "Cycle du 01/11/2026 08h15 UTC : cycle court, rien de du (aucun verdict pending >6h apres resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Etape 0 (news-feed.json) : nouveau developpement significatif sur le piratage Binance (retraits rouverts par phases, ~95% recouveres selon Binance, FBI attribue l'attaque a la Coree du Nord) - ajoute a news.json (item le plus ancien, hausse de taux Fed du 16/09, retire pour rester a 10). Regime macro reevalue par exception << incident de marche >> (titres securite <24h) : maintenu risk-off, signaux lents repris de data/market-gauges.json (fear&greed 34, dominance BTC 59,23%). Aucun outil mcp__ utilise."
   },
   "macro_regime": {
-    "last_computed_at": "2026-10-30T16:18:55Z",
+    "last_computed_at": "2026-11-01T08:16:00Z",
     "regime": "risk-off",
-    "fear_greed_value": 57,
-    "btc_dominance_pct": 59.35,
+    "fear_greed_value": 34,
+    "btc_dominance_pct": 59.23,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Mise à jour du 30/10 16h UTC (règle « incident de marché » de la spec du cycle) : le piratage de Binance du 29/10 est réévalué par Binance à 6,3 Md$ (contre 1,7-5,8 Md$ en fourchette la veille) et attribué à un groupe lié à la Corée du Nord (Bloomberg, Yahoo Finance, Cybersecurity Dive, 30/10 15h UTC) ; le pirate détient plus de 420 000 ETH, une vente éventuelle ferait peser un risque baissier supplémentaire sur l'ether. Aucune autre faille exchange/DeFi/pont trouvée sur 24-48h (DefiLlama). Pas de nouvelle valeur fear&greed vérifiée depuis la réévaluation du 30/10 02h14 UTC (peur à 30) : régime maintenu risk-off sur la base de cette dernière lecture et de l'escalade confirmée du piratage. Signaux lents inchangés : Fed restrictive, stablecoins en hausse (11,2 % le 29/10), flux ETF non mis à jour depuis le 20/10.",
-    "resume": "Risk-off maintenu : piratage de Binance réévalué à 6,3 Md$ (Corée du Nord), risque de vente de 420 000 ETH par le pirate."
+    "note": "Incident Binance toujours a moins de 24h en tete de l'actualite (fil du 29/10) : nouveaux developpements significatifs ce cycle - retraits rouverts par phases (Bitcoin d'abord), ~95 % des 6,3 Md$ voles desormais recouvres selon Binance (annonce de l'exchange, pas une confirmation independante), FBI attribue l'attaque a la Coree du Nord. Signal partiellement rassurant (reprise des retraits, recouvrement majoritaire annonce) mais normalisation encore partielle (retraits seulement par phases) - pression risk-off maintenue le temps que ca se confirme. Signaux lents repris de data/market-gauges.json (non recalcules, deja ecrits par un autre robot) : fear&greed 34 (Peur, en legere hausse depuis 30 le 31/10), dominance BTC 59,23 %, Fed toujours restrictive, stablecoins -1,37 % sur 7j (capital qui quitte legerement les stablecoins - signal risk-on isole et contradictoire, pas suffisant pour renverser la lecture tant que l'incident domine l'actualite).",
+    "resume": "Risk-off maintenu : retraits Binance rouverts par phases, ~95 % des fonds recouvres (non confirme), FBI blame la Coree du Nord, normalisation encore partielle."
   },
   "paper_portfolio_stats": {
     "last_computed_at": "2026-09-13T23:26:00Z",

@@ -1,8 +1,8 @@
 {
-  "last_scan_at": "2026-10-31T04:12:00Z",
+  "last_scan_at": "2026-11-01T05:12:00Z",
   "scanned_count": 20,
   "excluded_meme_count": 22,
-  "methodology": "Cycle du 31/10/2026 : criblage CoinGecko (top 20 par capitalisation, variations 7j derivees du sparkline horaire). Marche globalement stable (BTC -0,93%/24h). Reintegration de Hyperliquid (HYPE, archive le 13/10) : le bond du 30/10 (+17,3%/24h) est confirme par un 2e jour a niveau eleve (89-92 USD vs ~76-78 USD avant le pic), +16,08% sur 7j - reprise multi-jours cette fois jugee suffisante. Cardano s'ameliore legerement (+1,31%/24h). Monero, LEO, Zcash stables. WhiteBIT poursuit un leger recul sans acceleration. Bitcoin Cash (+2,37%/24h, +4,9%/7j) reste dans le Top 20 mais score trop modeste pour retention. Stellar (archive) encore -2,2%/7j.",
+  "methodology": "Cycle du 01/11/2026 : criblage CoinGecko (top 20 par capitalisation, variations 7j derivees du sparkline horaire). Marche globalement stable (BTC +0,68%/24h). Hyperliquid confirme son niveau eleve (+15,0%/7j, se maintient 87-92 USD) - reintegration validee. WhiteBIT s'ameliore legerement (-4,2%/7j, +0,64%/24h). Monero, Zcash, LEO, Cardano stables. NEAR (archive, reapparu rang #20) se rapproche de l'equilibre (-1,25%/7j, +2,27%/24h) mais pas encore assez confirme pour reintegration - a reverifier. 0 nouvelle entree retenue : reste du Top 20 inchange, Stellar (archive) encore legerement negatif (-1,6%/7j).",
   "opportunities": [
     {
       "id": "opp-20260818-xmr",
@@ -900,8 +900,13 @@
       "horizons": {
         "j1": {
           "check_at": "2026-11-01T04:12:00Z",
-          "status": "pending",
-          "outcome": null
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 78.4997,
+            "move_pct": -1.86,
+            "validated": false,
+            "checked_at": "2026-11-01T06:36:32Z"
+          }
         },
         "j3": {
           "check_at": "2026-11-03T04:12:00Z",
