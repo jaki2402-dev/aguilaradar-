@@ -2016,5 +2016,15 @@
     "sentiment": "neutre",
     "message": "INJ entre en zone de survente (RSI 14 j à 28) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : +31 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
     "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261101-peaq-seuil",
+    "ticker_ou_theme": "PEAQ",
+    "type": "seuil_technique",
+    "triggered_at": "2026-11-01T01:25:52Z",
+    "verdict_id": "v-20261027-peaq",
+    "sentiment": "négatif",
+    "message": "PEAQ : -8,83 % depuis l'émission du verdict ACHAT du 27/10 (0,034046 $ → 0,031039 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   }
 ]
