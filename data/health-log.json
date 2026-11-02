@@ -1758,6 +1758,16 @@
         "favoris_context_populated": 15
       },
       "note": "Site non vérifié : le domaine jaki2402-dev.github.io n'est pas résolu depuis le sandbox de la routine (erreur DNS ENOTFOUND, restriction réseau de la session, pas une panne avérée du site). Les 9 fichiers de données sont des JSON valides et non vides ; index.html référence tous les scripts js/*.js. Volumes identiques au passage précédent (verdicts 131, alertes 229, opportunités 6, actualités 10, favoris 15) : aucune anomalie."
+    },
+    {
+      "checked_at": "2026-11-02T09:20:00Z",
+      "files_ok": [
+        "data/engine-history.json (routine_health.last_success_at, ~0h50)",
+        "data/news.json (last_checked_at, ~0h50)",
+        "data/opportunities.json (last_scan_at, ~5h08)"
+      ],
+      "files_broken": [],
+      "note": "Fraîcheur OK : cycle profond il y a 0h50, actualités (last_checked_at) il y a 0h50, opportunités il y a 5h08 - rien à signaler."
     }
   ]
 }
