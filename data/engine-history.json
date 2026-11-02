@@ -54,18 +54,18 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-11-01T16:17:00Z",
+    "last_success_at": "2026-11-02T00:17:33Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 01/11/2026 16h15 UTC : cycle court, rien de du (aucun verdict pending >6h apres resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Etape 0 (news-feed.json) : aucun fait nouveau sur l'incident Binance par rapport au cycle 08h16 (memes faits repris par d'autres medias) - rien ajoute a news.json. Hack distinct note (plateforme b14g, 97M CORE) mais ecarte : aucun favori concerne, ampleur mineure vs items deja retenus. Regime macro reevalue par exception << incident de marche >> (titres securite <24h toujours presents) : maintenu risk-off, signaux lents stables (fear&greed 34, dominance BTC 59,92%). Aucun outil mcp__ utilise."
+    "last_failure_reason": "Cycle du 02/11/2026 00h15 UTC : cycle court, rien de du (aucun verdict pending >6h apres resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Etape 0 (news-feed.json) : nouveaux titres (FBI/Coree du Nord, 6,3 Md$, retraits rouverts par phases, grosses sorties de fonds post-reouverture) mais tous deja couverts par les items existants de news.json ou de nature rumeur/mouvements de portefeuille non confirmes comme fait distinct - rien ajoute. 1 recherche hack/exploit : aucun nouvel incident trouve au-dela de Binance. 1 recherche fear&greed : aucune valeur fiable datee d'aujourd'hui trouvee (resultats perimes) - gauges non modifiees, jauges du robot price-alerts inchangees (fear&greed 34, dominance BTC 59,99%). Regime macro reevalue par exception << incident de marche >> (titres securite <24h toujours presents) : maintenu risk-off. Aucun outil mcp__ utilise."
   },
   "macro_regime": {
-    "last_computed_at": "2026-11-01T16:17:00Z",
+    "last_computed_at": "2026-11-02T00:17:33Z",
     "regime": "risk-off",
     "fear_greed_value": 34,
     "btc_dominance_pct": 59.92,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Incident Binance toujours couvert par des titres \"securite\" de moins de 24h (cycle 08h16 UTC ce matin deja pris en compte), mais aucun fait nouveau depuis : les titres les plus recents (FBI attribue l'attaque a la Coree du Nord, retraits rouverts par phases, ~95% des fonds recouvres selon Binance) reprennent ce qui a deja ete ajoute a news.json ce matin, sans annonce chiffree nouvelle. Un hack distinct et bien plus modeste (plateforme de staking b14g, 97 M CORE) releve dans le fil mais pas ajoute : aucun favori concerne, ampleur sans comparaison avec les incidents deja retenus. Signaux lents stables depuis ce matin (data/market-gauges.json, non recalcules) : fear&greed 34 (Peur, inchange), dominance BTC 59,92% (+0,69 pt), stablecoins -1,36% sur 7j (quasi inchange). Pression risk-off maintenue au meme niveau qu'au cycle precedent, le temps que la normalisation Binance se confirme davantage.",
-    "resume": "Risk-off maintenu : pas de fait nouveau sur le piratage Binance depuis ce matin, signaux lents stables (peur 34, dominance BTC 59,9%)."
+    "note": "Incident Binance toujours couvert par des titres \"securite\" de moins de 24h (FBI attribue l'attaque a la Coree du Nord, montant reevalue a 6,3 Md$, retraits rouverts par phases) mais sans fait nouveau et verifie depuis le cycle precedent : ces elements sont deja dans news.json. Plusieurs titres recents sur de gros mouvements de fonds hors de Binance apres la reouverture des retraits restent non confirmes comme fait independant (rumeurs/mouvements internes), pas ajoutes. Signaux lents stables (data/market-gauges.json, non recalcules par ce cycle) : fear&greed 34 (Peur, inchange), dominance BTC 59,99% (+0,07 pt vs cycle precedent), stablecoins -1,38% sur 7j (quasi inchange). Pression risk-off maintenue au meme niveau, le temps que la normalisation Binance se confirme davantage.",
+    "resume": "Risk-off maintenu : pas de fait nouveau verifie sur le piratage Binance, signaux lents stables (peur 34, dominance BTC 60%)."
   },
   "paper_portfolio_stats": {
     "last_computed_at": "2026-09-13T23:26:00Z",
