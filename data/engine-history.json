@@ -54,18 +54,18 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-11-02T08:30:00Z",
+    "last_success_at": "2026-11-02T16:42:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 02/11/2026 08h15 UTC : cycle court, rien de du (aucun verdict pending >6h apres resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Etape 0 (news-feed.json) : nouveaux titres sur l'incident Binance (sorties nettes $3,64 Md, retraits $5,8 Md/24h, stabilisation des sorties) deja couverts par les items existants, sauf la reunion d'urgence de la FSC sud-coreenne (fait reglementaire distinct, ajoute a news.json). 1 recherche hack/exploit : aucun nouvel incident trouve au-dela de Binance. 1 recherche fear&greed : aucune valeur fiable datee d'aujourd'hui trouvee (resultats perimes) - jauges du robot price-alerts inchangees (fear&greed 34, dominance BTC 59,92%). Regime macro reevalue par exception << incident de marche >> (titres securite <24h toujours presents) : maintenu risk-off, prudence. Aucun outil mcp__ utilise."
+    "last_failure_reason": "Cycle du 02/11/2026 16h15 UTC : 3 tickers sans verdict pending (BTC, ETH, FET, 15/15 favoris couverts avant ce cycle, aucun autre dû) -> 3 verdicts émis (plafond respecté), aucun verdict en retard à résoudre. Étape 0 (news-feed.json) : nouveau développement significatif sur l'incident Binance (réouverture totale des retraits après plus de 7 Md$ de sorties nettes, Bloomingbit 09h40 UTC) ajouté à news.json, item le plus ancien retiré. Régime macro réévalué par l'exception « incident de marché » (titre securite < 24h) : maintenu risk-off. Aucun outil mcp__ utilisé."
   },
   "macro_regime": {
-    "last_computed_at": "2026-11-02T08:30:00Z",
+    "last_computed_at": "2026-11-02T16:42:00Z",
     "regime": "risk-off",
     "fear_greed_value": 34,
     "btc_dominance_pct": 59.92,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Incident Binance toujours couvert par des titres \"securite\" de moins de 24h (sorties nettes $3,64 Md puis stabilisation, retraits clients $5,8 Md sur 24h, FSC sud-coreenne convoque les plateformes en reunion d'urgence pour des reserves cold wallet plus elevees). Plusieurs titres recents indiquent une stabilisation (BTC stable pres de 78 000$, retraits qui reprennent, sorties qui se stabilisent) mais aucune confirmation suffisante pour relacher la pression : la reaction reglementaire sud-coreenne est un fait nouveau et distinct ajoute a news.json. Signaux lents inchanges depuis le cycle precedent (data/market-gauges.json non recalcules par ce cycle) : fear&greed 34 (Peur), dominance BTC 59,92%. Recherche fear&greed de ce cycle : aucune valeur fiable datee d'aujourd'hui trouvee (resultats perimes), jauges du robot price-alerts inchangees. 1 recherche hack/exploit : aucun nouvel incident trouve au-dela de Binance. Pression risk-off maintenue par prudence, le temps que la normalisation Binance et la reponse reglementaire se confirment davantage.",
-    "resume": "Risk-off maintenu : incident Binance en voie de stabilisation mais reaction reglementaire sud-coreenne nouvelle, prudence gardee."
+    "note": "Incident Binance toujours couvert par des titres \"securite\" de moins de 24h ce cycle : Binance a réautorisé l'ensemble des retraits ce matin après plus de 7 Md$ de sorties nettes consécutives au piratage de 6,3 Md$ (Bloomingbit, 02/11 09h40 UTC), tandis qu'OKX capte 445 M$ d'entrées — signe que la confiance reste fragile malgré la réouverture. Signaux lents non recalculés par ce cycle (data/market-gauges.json, robot price-alerts) : dernière lecture fear&greed 37 (Peur), dominance BTC 59,96 %, rendement du Trésor 10 ans à 4,98 % (29/10) et Fed toujours hawkish — tous pointent également vers risk-off, aucun signal lent ne contredit l'incident cette fois. Pression risk-off maintenue, le temps que les sorties nettes se stabilisent durablement.",
+    "resume": "Risk-off maintenu : Binance a réautorisé les retraits après plus de 7 Md$ de sorties nettes, confiance encore fragile."
   },
   "paper_portfolio_stats": {
     "last_computed_at": "2026-09-13T23:26:00Z",

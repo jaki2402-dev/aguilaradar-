@@ -5610,5 +5610,183 @@
       "verdict_correct": null,
       "resolved_at": null
     }
+  },
+  {
+    "id": "v-20261102-btc",
+    "issued_at": "2026-11-02T16:42:00Z",
+    "asset": "bitcoin",
+    "ticker": "BTC",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 41,
+    "signals_used": [
+      "RSI 14 j à 35,5 : neutre",
+      "Cours 7,1 % au-dessus de la moyenne 200 jours",
+      "MACD négatif (-449,31), signal baissier",
+      "Mouvement 7 j : -2,2 % ; 30 j : -7,3 %",
+      "Tendance de fond haussière (+7 % vs moyenne 200 j), élan négatif ; RSI 36 neutre."
+    ],
+    "reasoning": "Règle retour_moyenne_prudent : RSI 14 jours à 35,5 (zone neutre, pas de surachat), confiance mesurée 41 % sur 746 cas (contexte bitcoin en élan négatif, peur < 45). Tendance de fond restée haussière (cours 7,1 % au-dessus de sa moyenne 200 jours), mais élan court terme négatif : MACD négatif (-449,31), signal technique opposé au verdict ACHAT, recul de -2,2 % sur 7 jours et -7,3 % sur 30 jours malgré +23,4 % sur 90 jours. Vigilance signalée par le robot : la règle s'est trompée 71,3 % du temps quand le RSI du bitcoin est bas (300 cas). Thèse hebdo \"Conserver\" (conviction 6/10) et flux ETF BTC positifs le 28/10 (202 à 360 M$ selon la source) sans contradiction franche avec le signal technique. Régime macro risk-off : piratage de Binance (6,3 Md$ volés le 29/10) toujours actif — Binance a réautorisé les retraits ce matin après plus de 7 Md$ de sorties nettes (Bloomingbit, 02/11 09h40 UTC), incident qui prime sur les signaux lents (Fed hawkish, taux 10 ans à 4,98 %, fear&greed 37 en Peur).",
+    "resume": "RSI 36 neutre et retour à la moyenne déclenchent ACHAT ; régime risk-off (piratage Binance, 7 Md$ de sorties).",
+    "price_at_issue": 77389,
+    "currency": "USD",
+    "resolves_at": "2026-11-16T16:42:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-off",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "baissier",
+      "accord_count": 1
+    },
+    "decision_rule": "retour_moyenne_prudent",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_prudent",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 41,
+      "sample_n": 746,
+      "context": "bitcoin en élan négatif, peur (< 45)",
+      "context_n": 0,
+      "basis": "Retour à la moyenne prudent : ACHAT",
+      "vigilance": [
+        "RSI du bitcoin bas : la règle s'y est trompée 71.3 % du temps (300 cas)"
+      ]
+    },
+    "technical_at_issue": {
+      "as_of": "2026-11-02T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 35.5,
+      "sma200_gap_pct": 7.1,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261102-eth",
+    "issued_at": "2026-11-02T16:42:00Z",
+    "asset": "ethereum",
+    "ticker": "ETH",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 41,
+    "signals_used": [
+      "RSI 14 j à 33,4 : neutre",
+      "Cours 5,4 % au-dessus de la moyenne 200 jours",
+      "MACD négatif (-8,76), signal baissier",
+      "Mouvement 7 j : -2,3 % ; 30 j : -14,8 %",
+      "Tendance de fond haussière (+5 % vs moyenne 200 j), élan négatif ; RSI 33 neutre."
+    ],
+    "reasoning": "Règle retour_moyenne_prudent : RSI 14 jours à 33,4 (zone neutre), confiance mesurée 41 % sur 746 cas (contexte bitcoin en élan négatif, peur < 45). Tendance de fond restée haussière (cours 5,4 % au-dessus de sa moyenne 200 jours), mais élan court terme négatif : MACD négatif (-8,76), signal technique opposé au verdict ACHAT, recul de -2,3 % sur 7 jours et -14,8 % sur 30 jours malgré +22,4 % sur 90 jours. Vigilance signalée par le robot : la règle s'est trompée 71,3 % du temps quand le RSI du bitcoin est bas (300 cas). Thèse hebdo \"Conserver\" (conviction 5/10) : open interest ETH figé depuis plusieurs cycles (~32,15 Md$, cache quasi certain) et TVL DeFi stable à 53,54 Md$, aucune contradiction franche avec le signal technique. Régime macro risk-off : piratage de Binance (6,3 Md$ volés le 29/10) toujours actif — retraits réautorisés ce matin après plus de 7 Md$ de sorties nettes (Bloomingbit, 02/11 09h40 UTC), incident qui prime sur les signaux lents (Fed hawkish, taux 10 ans à 4,98 %, fear&greed 37 en Peur).",
+    "resume": "RSI 33 neutre et retour à la moyenne déclenchent ACHAT ; régime risk-off (piratage Binance, 7 Md$ de sorties).",
+    "price_at_issue": 2268.22,
+    "currency": "USD",
+    "resolves_at": "2026-11-16T16:42:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-off",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "baissier",
+      "accord_count": 1
+    },
+    "decision_rule": "retour_moyenne_prudent",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_prudent",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 41,
+      "sample_n": 746,
+      "context": "bitcoin en élan négatif, peur (< 45)",
+      "context_n": 0,
+      "basis": "Retour à la moyenne prudent : ACHAT",
+      "vigilance": [
+        "RSI du bitcoin bas : la règle s'y est trompée 71.3 % du temps (300 cas)"
+      ]
+    },
+    "technical_at_issue": {
+      "as_of": "2026-11-02T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 33.4,
+      "sma200_gap_pct": 5.4,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261102-fet",
+    "issued_at": "2026-11-02T16:42:00Z",
+    "asset": "fetch-ai",
+    "ticker": "FET",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 41,
+    "signals_used": [
+      "RSI 14 j à 31,2 : neutre",
+      "Cours 13,2 % sous la moyenne 200 jours",
+      "MACD négatif (-0,00263), signal baissier",
+      "Mouvement 7 j : -7,5 % ; 30 j : -26,1 %",
+      "Tendance de fond baissière (-13 % vs moyenne 200 j), élan négatif ; RSI 31 neutre."
+    ],
+    "reasoning": "Règle retour_moyenne_prudent : RSI 14 jours à 31,2 (zone neutre), confiance mesurée 41 % sur 746 cas (contexte bitcoin en élan négatif, peur < 45). Tendance de fond baissière (cours 13,2 % sous sa moyenne 200 jours) et élan court terme négatif : MACD négatif (-0,00263), deux signaux techniques opposés au verdict ACHAT, recul de -7,5 % sur 7 jours et -26,1 % sur 30 jours malgré +11,4 % sur 90 jours ; FET reste à -95 % de son plus haut historique. Vigilance signalée par le robot : la règle s'est trompée 71,5 % du temps avec un volume bas (298 cas) et 71,3 % du temps avec un RSI bitcoin bas (300 cas). Thèse hebdo \"Attendre\" (conviction 4/10) et signal on-chain : sortie inhabituelle d'environ 3,16 M$ du portefeuille Binance vers une adresse non identifiée le 29/10, nature de l'opération non déterminée — à surveiller, ni haussier ni baissier confirmé. Risque non résolu : exploit du pont SingularityNET du 20/09 toujours sans nouveau développement. Régime macro risk-off : piratage de Binance (6,3 Md$ volés le 29/10) toujours actif — retraits réautorisés ce matin après plus de 7 Md$ de sorties nettes (Bloomingbit, 02/11 09h40 UTC).",
+    "resume": "RSI 31 neutre déclenche ACHAT malgré un cours sous sa moyenne 200 j ; sortie Binance de 3,16 M$ à surveiller.",
+    "price_at_issue": 0.15704,
+    "currency": "USD",
+    "resolves_at": "2026-11-16T16:42:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-off",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "baissier",
+      "accord_count": 1
+    },
+    "decision_rule": "retour_moyenne_prudent",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_prudent",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 41,
+      "sample_n": 746,
+      "context": "bitcoin en élan négatif, peur (< 45)",
+      "context_n": 0,
+      "basis": "Retour à la moyenne prudent : ACHAT",
+      "vigilance": [
+        "Volume 7 j / 30 j bas : la règle s'y est trompée 71.5 % du temps (298 cas)",
+        "RSI du bitcoin bas : la règle s'y est trompée 71.3 % du temps (300 cas)"
+      ]
+    },
+    "technical_at_issue": {
+      "as_of": "2026-11-02T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 31.2,
+      "sma200_gap_pct": -13.2,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
   }
 ]
