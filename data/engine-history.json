@@ -54,18 +54,18 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-11-02T00:17:33Z",
+    "last_success_at": "2026-11-02T08:30:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 02/11/2026 00h15 UTC : cycle court, rien de du (aucun verdict pending >6h apres resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Etape 0 (news-feed.json) : nouveaux titres (FBI/Coree du Nord, 6,3 Md$, retraits rouverts par phases, grosses sorties de fonds post-reouverture) mais tous deja couverts par les items existants de news.json ou de nature rumeur/mouvements de portefeuille non confirmes comme fait distinct - rien ajoute. 1 recherche hack/exploit : aucun nouvel incident trouve au-dela de Binance. 1 recherche fear&greed : aucune valeur fiable datee d'aujourd'hui trouvee (resultats perimes) - gauges non modifiees, jauges du robot price-alerts inchangees (fear&greed 34, dominance BTC 59,99%). Regime macro reevalue par exception << incident de marche >> (titres securite <24h toujours presents) : maintenu risk-off. Aucun outil mcp__ utilise."
+    "last_failure_reason": "Cycle du 02/11/2026 08h15 UTC : cycle court, rien de du (aucun verdict pending >6h apres resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Etape 0 (news-feed.json) : nouveaux titres sur l'incident Binance (sorties nettes $3,64 Md, retraits $5,8 Md/24h, stabilisation des sorties) deja couverts par les items existants, sauf la reunion d'urgence de la FSC sud-coreenne (fait reglementaire distinct, ajoute a news.json). 1 recherche hack/exploit : aucun nouvel incident trouve au-dela de Binance. 1 recherche fear&greed : aucune valeur fiable datee d'aujourd'hui trouvee (resultats perimes) - jauges du robot price-alerts inchangees (fear&greed 34, dominance BTC 59,92%). Regime macro reevalue par exception << incident de marche >> (titres securite <24h toujours presents) : maintenu risk-off, prudence. Aucun outil mcp__ utilise."
   },
   "macro_regime": {
-    "last_computed_at": "2026-11-02T00:17:33Z",
+    "last_computed_at": "2026-11-02T08:30:00Z",
     "regime": "risk-off",
     "fear_greed_value": 34,
     "btc_dominance_pct": 59.92,
     "btc_dominance_trend_7d_pct": null,
-    "note": "Incident Binance toujours couvert par des titres \"securite\" de moins de 24h (FBI attribue l'attaque a la Coree du Nord, montant reevalue a 6,3 Md$, retraits rouverts par phases) mais sans fait nouveau et verifie depuis le cycle precedent : ces elements sont deja dans news.json. Plusieurs titres recents sur de gros mouvements de fonds hors de Binance apres la reouverture des retraits restent non confirmes comme fait independant (rumeurs/mouvements internes), pas ajoutes. Signaux lents stables (data/market-gauges.json, non recalcules par ce cycle) : fear&greed 34 (Peur, inchange), dominance BTC 59,99% (+0,07 pt vs cycle precedent), stablecoins -1,38% sur 7j (quasi inchange). Pression risk-off maintenue au meme niveau, le temps que la normalisation Binance se confirme davantage.",
-    "resume": "Risk-off maintenu : pas de fait nouveau verifie sur le piratage Binance, signaux lents stables (peur 34, dominance BTC 60%)."
+    "note": "Incident Binance toujours couvert par des titres \"securite\" de moins de 24h (sorties nettes $3,64 Md puis stabilisation, retraits clients $5,8 Md sur 24h, FSC sud-coreenne convoque les plateformes en reunion d'urgence pour des reserves cold wallet plus elevees). Plusieurs titres recents indiquent une stabilisation (BTC stable pres de 78 000$, retraits qui reprennent, sorties qui se stabilisent) mais aucune confirmation suffisante pour relacher la pression : la reaction reglementaire sud-coreenne est un fait nouveau et distinct ajoute a news.json. Signaux lents inchanges depuis le cycle precedent (data/market-gauges.json non recalcules par ce cycle) : fear&greed 34 (Peur), dominance BTC 59,92%. Recherche fear&greed de ce cycle : aucune valeur fiable datee d'aujourd'hui trouvee (resultats perimes), jauges du robot price-alerts inchangees. 1 recherche hack/exploit : aucun nouvel incident trouve au-dela de Binance. Pression risk-off maintenue par prudence, le temps que la normalisation Binance et la reponse reglementaire se confirment davantage.",
+    "resume": "Risk-off maintenu : incident Binance en voie de stabilisation mais reaction reglementaire sud-coreenne nouvelle, prudence gardee."
   },
   "paper_portfolio_stats": {
     "last_computed_at": "2026-09-13T23:26:00Z",
