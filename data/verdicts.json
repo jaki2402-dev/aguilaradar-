@@ -4412,7 +4412,7 @@
     "price_at_issue": 1.63,
     "currency": "USD",
     "resolves_at": "2026-11-02T16:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "threshold_pct": 5,
     "regime_at_issue": "neutre",
     "signal_consensus": {
@@ -4442,11 +4442,11 @@
       "macd": "baissier"
     },
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 1.38124,
+      "actual_move_pct": -15.26,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-11-02T18:50:09Z"
     }
   },
   {
@@ -4469,7 +4469,7 @@
     "price_at_issue": 0.069791,
     "currency": "USD",
     "resolves_at": "2026-11-02T16:20:00Z",
-    "status": "pending",
+    "status": "resolved",
     "threshold_pct": 5,
     "regime_at_issue": "neutre",
     "signal_consensus": {
@@ -4501,11 +4501,11 @@
       "macd": "baissier"
     },
     "outcome": {
-      "price_at_resolution": null,
-      "actual_move_pct": null,
-      "actual_direction": null,
-      "verdict_correct": null,
-      "resolved_at": null
+      "price_at_resolution": 0.0567072,
+      "actual_move_pct": -18.75,
+      "actual_direction": "VENTE",
+      "verdict_correct": false,
+      "resolved_at": "2026-11-02T18:50:09Z"
     }
   },
   {
