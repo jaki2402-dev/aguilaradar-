@@ -54,18 +54,15 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-11-02T16:42:00Z",
+    "last_success_at": "2026-11-03T00:15:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 02/11/2026 16h15 UTC : 3 tickers sans verdict pending (BTC, ETH, FET, 15/15 favoris couverts avant ce cycle, aucun autre dû) -> 3 verdicts émis (plafond respecté), aucun verdict en retard à résoudre. Étape 0 (news-feed.json) : nouveau développement significatif sur l'incident Binance (réouverture totale des retraits après plus de 7 Md$ de sorties nettes, Bloomingbit 09h40 UTC) ajouté à news.json, item le plus ancien retiré. Régime macro réévalué par l'exception « incident de marché » (titre securite < 24h) : maintenu risk-off. Aucun outil mcp__ utilisé."
+    "last_failure_reason": "Cycle du 03/11/2026 00h15 UTC : 2 tickers sans verdict pending (FLUX, LPT) -> 2 verdicts émis (ACHAT, règle retour_moyenne_prudent), aucun verdict en retard à résoudre. Étape 0 (news-feed.json) : nouveau développement significatif ajouté à news.json (quatre nouvelles attaques de plateformes dans les jours suivant le piratage de Binance, dont Mercado Bitcoin 46 M$), item le plus ancien retiré. Régime macro réévalué (incident Binance toujours actif, titre securite < 24h) : maintenu risk-off. Aucun outil mcp__ utilisé."
   },
   "macro_regime": {
-    "last_computed_at": "2026-11-02T16:42:00Z",
+    "last_computed_at": "2026-11-03T00:15:00Z",
     "regime": "risk-off",
-    "fear_greed_value": 34,
-    "btc_dominance_pct": 59.92,
-    "btc_dominance_trend_7d_pct": null,
-    "note": "Incident Binance toujours couvert par des titres \"securite\" de moins de 24h ce cycle : Binance a réautorisé l'ensemble des retraits ce matin après plus de 7 Md$ de sorties nettes consécutives au piratage de 6,3 Md$ (Bloomingbit, 02/11 09h40 UTC), tandis qu'OKX capte 445 M$ d'entrées — signe que la confiance reste fragile malgré la réouverture. Signaux lents non recalculés par ce cycle (data/market-gauges.json, robot price-alerts) : dernière lecture fear&greed 37 (Peur), dominance BTC 59,96 %, rendement du Trésor 10 ans à 4,98 % (29/10) et Fed toujours hawkish — tous pointent également vers risk-off, aucun signal lent ne contredit l'incident cette fois. Pression risk-off maintenue, le temps que les sorties nettes se stabilisent durablement.",
-    "resume": "Risk-off maintenu : Binance a réautorisé les retraits après plus de 7 Md$ de sorties nettes, confiance encore fragile."
+    "note": "Piratage de Binance (6,3 Md$) toujours actif moins de 24 h avant ce cycle (nouveaux développements : 95 % des actifs couverts selon Binance, blanchiment nord-coréen rapide, quatre hacks supplémentaires sur d'autres plateformes) — pression risk-off forte qui prime sur les signaux lents. Signaux lents inchangés : Fed hawkish (taux 3,75-4,00 %, hausse anticipée en décembre), flux ETF BTC/ETH nets positifs mais anciens et non recoupés, dominance des stablecoins quasi stable (11,48 %).",
+    "resume": "Régime risk-off maintenu : piratage de Binance toujours actif avec de nouveaux développements inquiétants."
   },
   "paper_portfolio_stats": {
     "last_computed_at": "2026-09-13T23:26:00Z",

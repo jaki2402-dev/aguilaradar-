@@ -5788,5 +5788,125 @@
       "verdict_correct": null,
       "resolved_at": null
     }
+  },
+  {
+    "id": "v-20261103-flux",
+    "issued_at": "2026-11-03T00:15:00Z",
+    "asset": "zelcash",
+    "ticker": "FLUX",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 41,
+    "signals_used": [
+      "RSI 14 j à 26,6 : survente",
+      "Cours 1,6 % au-dessus de la moyenne 200 jours",
+      "MACD négatif (-0,0014), signal baissier",
+      "Mouvement 7 j : -7,3 % ; 30 j : -18,9 %",
+      "Tendance de fond haussière (+2 % vs moyenne 200 j), élan négatif ; RSI 27 : survente."
+    ],
+    "reasoning": "Règle retour_moyenne_prudent : RSI 14 jours à 26,6 (survente), confiance mesurée 41 % sur 746 cas (contexte bitcoin en élan négatif, peur < 45). Cours proche de sa moyenne 200 jours (+1,6 %) mais MACD négatif (-0,0014), signal baissier contraire au verdict ACHAT ; recul de -7,3 % sur 7 jours et -18,9 % sur 30 jours malgré +48,3 % sur 90 jours. FLUX reste à -74,6 % de son plus haut sur 1 an. Vigilance signalée par le robot : la règle s'est trompée 71,5 % du temps avec un volume bas (298 cas) et 71,3 % du temps avec un RSI bitcoin bas (300 cas). Thèse hebdo \"Attendre\" (conviction 3/10) : aucune actualité 2026 confirmée sur Flux, projet DePIN ancien à faible visibilité, à ne pas renforcer sans information vérifiée. Régime macro risk-off : piratage de Binance (6,3 Md$) toujours actif, Fed restrictive (taux 3,75-4,00 %, hausse anticipée en décembre).",
+    "resume": "RSI 27 en survente déclenche ACHAT malgré un MACD baissier ; thèse hebdo \"Attendre\", projet à faible visibilité.",
+    "price_at_issue": 0.055899,
+    "currency": "USD",
+    "resolves_at": "2026-11-17T00:15:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-off",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "baissier",
+      "accord_count": 1
+    },
+    "decision_rule": "retour_moyenne_prudent",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_prudent",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 41,
+      "sample_n": 746,
+      "context": "bitcoin en élan négatif, peur (< 45)",
+      "context_n": 0,
+      "basis": "Retour à la moyenne prudent : ACHAT",
+      "vigilance": [
+        "Volume 7 j / 30 j bas : la règle s'y est trompée 71.5 % du temps (298 cas)",
+        "RSI du bitcoin bas : la règle s'y est trompée 71.3 % du temps (300 cas)"
+      ]
+    },
+    "technical_at_issue": {
+      "as_of": "2026-11-02T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 26.6,
+      "sma200_gap_pct": 1.6,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
+  },
+  {
+    "id": "v-20261103-lpt",
+    "issued_at": "2026-11-03T00:15:00Z",
+    "asset": "livepeer",
+    "ticker": "LPT",
+    "verdict": "ACHAT",
+    "horizon_days": 14,
+    "confidence_pct": 41,
+    "signals_used": [
+      "RSI 14 j à 26,8 : survente",
+      "Cours 15,8 % sous la moyenne 200 jours",
+      "MACD négatif (-0,0212), signal baissier",
+      "Mouvement 7 j : -4,4 % ; 30 j : -16,9 %",
+      "Tendance de fond baissière (-16 % vs moyenne 200 j), élan négatif ; RSI 27 : survente."
+    ],
+    "reasoning": "Règle retour_moyenne_prudent : RSI 14 jours à 26,8 (survente), confiance mesurée 41 % sur 746 cas (contexte bitcoin en élan négatif, peur < 45). Cours 15,8 % sous sa moyenne 200 jours et MACD négatif (-0,0212), deux signaux techniques opposés au verdict ACHAT ; recul de -4,4 % sur 7 jours et -16,9 % sur 30 jours, +9,5 % sur 90 jours. LPT reste à -75,1 % de son plus haut sur 1 an. Vigilance signalée par le robot : la règle s'est trompée 71,5 % du temps avec un volume bas (298 cas) et 71,3 % du temps avec un RSI bitcoin bas (300 cas). Thèse hebdo \"Conserver\" (conviction 4/10) : capitalisation faible d'après un instantané non daté, risque de liquidité élevé, ne pas renforcer. Régime macro risk-off : piratage de Binance (6,3 Md$) toujours actif, Fed restrictive (taux 3,75-4,00 %, hausse anticipée en décembre).",
+    "resume": "RSI 27 en survente déclenche ACHAT malgré un cours 16 % sous sa moyenne 200 j et un MACD baissier.",
+    "price_at_issue": 1.37,
+    "currency": "USD",
+    "resolves_at": "2026-11-17T00:15:00Z",
+    "status": "pending",
+    "threshold_pct": 5,
+    "regime_at_issue": "risk-off",
+    "signal_consensus": {
+      "technique": "haussier",
+      "fondamental": "neutre",
+      "macro": "baissier",
+      "accord_count": 1
+    },
+    "decision_rule": "retour_moyenne_prudent",
+    "proposed_at_issue": {
+      "rule": "retour_moyenne_prudent",
+      "verdict": "ACHAT",
+      "raw_verdict": "ACHAT",
+      "corrected": false,
+      "confidence_pct": 41,
+      "sample_n": 746,
+      "context": "bitcoin en élan négatif, peur (< 45)",
+      "context_n": 0,
+      "basis": "Retour à la moyenne prudent : ACHAT",
+      "vigilance": [
+        "Volume 7 j / 30 j bas : la règle s'y est trompée 71.5 % du temps (298 cas)",
+        "RSI du bitcoin bas : la règle s'y est trompée 71.3 % du temps (300 cas)"
+      ]
+    },
+    "technical_at_issue": {
+      "as_of": "2026-11-02T00:00:00Z",
+      "source": "technical-favoris",
+      "rsi14": 26.8,
+      "sma200_gap_pct": -15.8,
+      "macd": "baissier"
+    },
+    "outcome": {
+      "price_at_resolution": null,
+      "actual_move_pct": null,
+      "actual_direction": null,
+      "verdict_correct": null,
+      "resolved_at": null
+    }
   }
 ]
