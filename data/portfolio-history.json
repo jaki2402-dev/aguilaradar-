@@ -340,11 +340,29 @@
     },
     {
       "date": "2026-10-31",
-      "computed_at": "2026-10-31T01:46:09Z",
-      "total_value_eur": 6435.85,
+      "computed_at": "2026-10-31T21:39:56Z",
+      "total_value_eur": 6402.76,
       "total_invested_eur": 9309.35,
-      "total_pnl_eur": -2873.5,
-      "total_pnl_pct": -30.87,
+      "total_pnl_eur": -2906.59,
+      "total_pnl_pct": -31.22,
+      "source": "CoinGecko /simple/price (GitHub Action portfolio-snapshot)"
+    },
+    {
+      "date": "2026-11-01",
+      "computed_at": "2026-11-01T22:05:49Z",
+      "total_value_eur": 6395.01,
+      "total_invested_eur": 9309.35,
+      "total_pnl_eur": -2914.34,
+      "total_pnl_pct": -31.31,
+      "source": "CoinGecko /simple/price (GitHub Action portfolio-snapshot)"
+    },
+    {
+      "date": "2026-11-02",
+      "computed_at": "2026-11-02T20:29:27Z",
+      "total_value_eur": 6215.82,
+      "total_invested_eur": 9309.35,
+      "total_pnl_eur": -3093.53,
+      "total_pnl_pct": -33.23,
       "source": "CoinGecko /simple/price (GitHub Action portfolio-snapshot)"
     }
   ]

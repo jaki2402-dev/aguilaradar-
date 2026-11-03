@@ -1,37 +1,7 @@
 {
-  "last_updated_at": "2026-10-30T16:18:39Z",
-  "last_checked_at": "2026-10-31T00:18:27Z",
+  "last_updated_at": "2026-11-03T00:15:00Z",
+  "last_checked_at": "2026-11-03T00:15:00Z",
   "items": [
-    {
-      "title": "Les ETF spot Bitcoin engrangent un flux net de 999 M$ le 21 septembre (plus forte journée de créations nettes de 2026, la plus forte depuis le 6 octobre 2025), suivi de 714,7 M$ le 22 septembre (IBIT de BlackRock +350 M$, FBTC de Fidelity +257,4 M$) — série de 4 séances consécutives d'entrées nettes cumulant plus de 2,3 Md$, retournement net par rapport à la sortie de 592 M$ du 15/09 (Sénat/CLARITY Act, voir plus bas) ; BTC/ETH restent proches de leurs plus hauts sur 8 mois pendant que la plupart des 13 autres favoris reculent nettement ce cycle (voir price_at_issue vs prix courant des verdicts pending), une divergence notée sans être tranchée",
-      "url": "https://www.thecoinrepublic.com/2026/09/23/bitcoin-etf-inflows-hit-999m-in-biggest-day-since-october-2025/",
-      "source": "The Coin Republic"
-    },
-    {
-      "title": "Le vote de clôture du Sénat américain sur le CLARITY Act échoue le 15 septembre (46 voix pour, 43 contre, décompte non officiel — 60 requises), signant probablement la fin de toute législation de structure de marché crypto pour 2026 ; le marché a réagi à la baisse dans la foulée",
-      "url": "https://www.coindesk.com/business/2026/09/15/live-updates-bitcoin-slides-from-nearly-usd80-000-as-senate-votes-on-clarity-act",
-      "source": "CoinDesk"
-    },
-    {
-      "title": "La Fed relève son taux directeur de 25 points de base à 3,75-4,00 % le 16 septembre (vote 12-0), première hausse depuis 2023 — décidée pour contrer une inflation persistante liée à l'énergie ; les projections publiées le même jour montrent 16 des 18 participants anticipant au moins une nouvelle hausse d'ici la fin de l'année, dont 4 en anticipant deux",
-      "url": "https://www.cnbc.com/2026/09/16/fed-rate-decision-september-2026.html",
-      "source": "CNBC"
-    },
-    {
-      "title": "Circle lance le mainnet public de sa blockchain layer 1 Arc le 16 septembre, dédiée aux paiements agentiques en USDC pour les marchés financiers : validateurs institutionnels dont BlackRock et Visa, 3,5 milliards de dollars de volume transactionnel dès le premier jour",
-      "url": "https://www.coindesk.com/business/2026/09/15/circle-debuts-arc-blockchain-which-jeremy-allaire-calls-more-consequential-than-usdc",
-      "source": "CoinDesk"
-    },
-    {
-      "title": "Une enquête du Wall Street Journal publiée le 20 septembre révèle une tentative de fraude d'au moins 10 millions de dollars sur Polymarket US par cartes bancaires volées (dépôts débutés en février 2026) : le taux de rejet des dépôts jugés frauduleux par le prestataire de paiement Checkout.com a dépassé 80 % sur la plateforme contre ~1 % dans l'industrie ; le PDG Shayne Coplan aurait privilégié la croissance à la conformité, la CFTC enquête désormais et a ordonné la conservation des documents internes",
-      "url": "https://www.theblock.co/news/regulation/2026-09-20-polymarket-faced-10-million-fraud-attempt-as-its-ceo-pushed-growth-over-compliance-concerns-wsj-415875",
-      "source": "The Block"
-    },
-    {
-      "title": "La SEC accorde le 17 septembre une « Innovation Exemption » autorisant le trading on-chain de titres américains tokenisés sur des plateformes dédiées (« Tokenized Securities Venues »), via pools de liquidité de type AMM en environnement permissionné : maximum 75 grandes valeurs cotées par plateforme, volume plafonné à 0,25 % du volume quotidien moyen de chaque titre, versions synthétiques interdites, exemption valable 5 ans — trading secondaire uniquement, pas d'émission primaire ; développement réglementaire directement pertinent pour la thématique RWA (Ondo Finance)",
-      "url": "https://www.sec.gov/newsroom/press-releases/2026-90-sec-issues-innovation-exemption-facilitate-trading-tokenized-nms-stock-request-comment",
-      "source": "SEC.gov"
-    },
     {
       "title": "Bitget (hack du 24/09, 387,5 M$ déjà logué) : le CEO Gracy Chen déclare le 2 octobre à CNBC ne pas s'attendre à récupérer une part significative des fonds volés — seulement 1,1 M$ gelés à ce jour sur les ~388 M$, l'exchange ayant reconstitué son fonds de protection utilisateurs à 300 M$ sur ses propres réserves plutôt que d'attendre un recouvrement on-chain.",
       "url": "https://www.cnbc.com/2026/10/02/bitget-crypto-stolen-hack-recovery.html",
@@ -53,6 +23,42 @@
       "resume": "Le montant volé lors du piratage de Binance du 29/10 est réévalué à 6,3 Md$ et attribué à des pirates nord-coréens ; le pirate détient plus de 420 000 ETH, une vente éventuelle ferait peser un risque baissier sur l'ether.",
       "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPNW1MdGRoUFFwNW96WUJ5SHUzUUdhT1NVeXVZN2dBc0hQeGxzNkNvSTNiMG4xQTFHTTVCdVEwaTdJSmNDaUtXaU5KRWI2VmdSRUNybkNzeHdvbXVaZWZnZ01EbEdzdTZpemNiY0E0dDdTLTNGa3dCNXpqU1JEVXZFOHJGekRMY3hOMUFwRVBGckNZdTd2WUREakdBY1EtRV90SXM5aC1sRFdvMzJGT29wOQ?oc=5",
       "source": "Bloomberg.com"
+    },
+    {
+      "title": "Chainalysis, l'entreprise qui traque les hackers crypto, victime d'un hack par des agents IA",
+      "resume": "Chainalysis, la société qui traque les hackers crypto, a elle-même été piratée par des agents IA.",
+      "url": "https://news.google.com/rss/articles/CBMifkFVX3lxTE1ORV8zQ1ZyZEFEOUhzTTd4WE01RGtIblQyeGVHbVNHbS1ZOEppbXFiMGM1MmlRTVlMOVg5NFlNbWo5Rk5TSlVybk5BZGw1dnJJTWt5T3JESlVxMlpHOTVJYzQwYmhOb2U2VU5NclhqV1dmZ01Kd250bHdQaWlwQQ?oc=5",
+      "source": "BeInCrypto"
+    },
+    {
+      "title": "Binance affirme avoir couvert environ 90 % de l'impact du piratage du 29/10, sans préciser la part des fonds effectivement récupérés ; le pirate détiendrait toujours plus de 420 000 ETH",
+      "resume": "Binance dit avoir couvert environ 90 % de l'impact du piratage du 29/10, mais la récupération réelle des fonds volés reste floue.",
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxPc2EtclVlQmllc3J4WExWRndhZUwweVB5ZVR0dEJrZVJoTkhKWEVkVlVFSl8yV0xYNVdHeWxzTUlJNDdrVXRHazhiYVRGdGJ6TGRpWnZISVg4bDhZRnhiTlNvWUNFeV9TYWFWVTRBZDcycUtRUjZXdERrOUJXWFVQcUZWVVNJLUFVeFBPXzEtWWw0X1dKRTlv?oc=5",
+      "source": "Yahoo Finance"
+    },
+    {
+      "title": "Binance reprend les retraits crypto par phases (Bitcoin d'abord) apres avoir recouvre environ 95 % des fonds voles lors du piratage du 29/10 ; le FBI attribue l'attaque a la Coree du Nord",
+      "resume": "Binance rouvre les retraits par phases (Bitcoin d'abord) apres avoir recouvre ~95 % des 6,3 Md$ voles ; le FBI attribue le piratage a la Coree du Nord.",
+      "url": "https://news.google.com/rss/articles/CBMi4AFBVV95cUxPWmg4c01rNE5OTEZ4ZUZjQV9fazdna201aWJTSXZhcDRvV2M5S1BMNVptVFpfWi04ZXlwMHZ5Vkc5QktFaFBOU2VvODY5Y2dwQ3ZWbURTMzJnUDZUZHExT2NtaGt3NFpjWHAtdkprTURMQ3ByZndlc2pNRjFwT1dnUXEyT0JfMUlUanYyRVNPT0duNkJDMWdzVVhiNUtyOUx3Y000Mk1rVWlDTVprcGpnU0hPTGRWbmpiWkdxNWxTRHhjR3VpemNYS1BwQ2ZZQTVEbzF5ajI1bXVRTklCX2ZzZw?oc=5",
+      "source": "Investing.com France"
+    },
+    {
+      "title": "La FSC sud-coreenne convoque une reunion d'urgence avec les plateformes crypto apres le piratage de Binance, envisage d'exiger davantage de reserves en cold wallet",
+      "resume": "Le regulateur sud-coreen reunit en urgence les plateformes crypto apres le piratage de Binance pour renforcer les reserves en cold wallet.",
+      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTE0wMzQwaWFOdG1vT2NYbmQyUDRQSy1GbzQyenNLMERObFVsVUl1bTVIVHVkUHoxUDljYjQ4Skh0OTlKbDFMbXRFV0dQMWQ2UU1MUVd3NQ?oc=5",
+      "source": "bloomingbit"
+    },
+    {
+      "title": "Binance réautorise tous les retraits après plus de 7 Md$ de sorties nettes consécutives au piratage de 6,3 Md$",
+      "resume": "Binance a rouvert l'ensemble des retraits ce matin, après plus de 7 Md$ de sorties nettes depuis le piratage, tandis qu'OKX capte 445 M$ d'entrées.",
+      "url": "https://news.google.com/rss/articles/CBMiVEFVX3lxTFBPWVlhNUpXM1BzOWRlUGFFOXNzZmd1eFdEaXdKSmZZNWdFQnVZWHBLbmpNdVFCeUVrMTJvRnN1WjZSY09qTGJtVnFfNVc3NEI5QlNlag?oc=5",
+      "source": "bloomingbit"
+    },
+    {
+      "title": "Quatre nouvelles attaques de plateformes crypto surviennent dans les jours qui suivent le piratage de Binance",
+      "resume": "Quatre nouveaux piratages de plateformes crypto en quelques jours après celui de Binance, dont Mercado Bitcoin (46 M$).",
+      "url": "https://news.google.com/rss/articles/CBMilwFBVV95cUxQTmlTTEgtY2liak93ckhVLUl0TTRJczV4MTJLZHdnalFGVzZzTzBjMjFEMnlmMWRvNXZscTJ3cUR3ZVBvanJVNXgxN2lhUFRXZlE2OE05MTJWbVQtbVZxWTJVYkhqYm5zZHNGUV9LMkZHX3BLUUtsbXFuRGRNQlVlUlhxVndQQWxaNTBQNWlvdkxOZ2c2QlpZ?oc=5",
+      "source": "Yahoo Finance"
     }
   ]
 }

@@ -1,80 +1,80 @@
 {
-  "generated_at": "2026-10-26T05:03:16Z",
+  "generated_at": "2026-11-02T05:03:21Z",
   "positions": {
     "bitcoin": {
       "recommendation": "Conserver",
       "conviction": 6,
-      "constat": "Les flux ETF restent contrastés en octobre : environ -679 M$ la semaine du 5 au 9 (BTC de 86 480 $ à 82 546 $), puis +175,6 M$ le 13 et +23 M$ le 20 (KuCoin, Cointelegraph, sources agrégées qui divergent). Flux et prix de la semaine du 19 au 23 : donnée non confirmée. Socle du portefeuille, sensible à la décision de la Fed du 28 octobre."
+      "constat": "Un maintien de la Fed suivi d'une baisse du bitcoin (zone 74 000-78 000 $ selon deux sources aux dates imprécises) pèse sur le sentiment ; flux ETF de la semaine : donnée non confirmée. Socle du portefeuille : pas de raison de renforcer tant que la macro (baisses de taux repoussées) reste défavorable."
     },
     "ethereum": {
       "recommendation": "Conserver",
-      "conviction": 6,
-      "constat": "Le fork de test Glamsterdam sur Sepolia était prévu le 6 octobre, le calendrier du mainnet reste indécidé (Analytics Insight, Pluang). ETH vers 2 700 $ début octobre, résistance à 2 800 $, très sous son pic d'octobre 2025 ; les ETF ETH ont perdu des flux le 20 octobre (KuCoin). Prix actuel : donnée non confirmée."
+      "conviction": 5,
+      "constat": "L'ether a décroché plus que le bitcoin après la décision de la Fed (zone 2 250-2 350 $, sources non datées avec certitude) ; flux ETF et staking de la semaine : donnée non confirmée. Plus sensible au risque que BTC, à conserver sans renforcer à ce stade."
     },
     "fetch-ai": {
       "recommendation": "Attendre",
       "conviction": 4,
-      "constat": "Aucune actualité d'octobre 2026 trouvée sur l'Artificial Superintelligence Alliance ; les pages de prix consultées donnent des chiffres incohérents entre elles (de 0,21 $ à 0,28 $, non datés). Sans catalyseur vérifié ni prix fiable, donnée non confirmée : position la plus grosse du portefeuille, on attend un signal sourcé."
+      "constat": "Position la plus lourde parmi les altcoins, sur un secteur IA volatil. Aucun catalyseur ni unlock daté confirmé : un tracker indique un calendrier de vesting terminé, une note MEXC mentionne un petit déblocage en juin 2026 (sources divergentes). Pas de renfort sans catalyseur vérifié."
     },
     "celestia": {
-      "recommendation": "Conserver",
-      "conviction": 5,
-      "constat": "Aucune actualité d'octobre 2026 trouvée. Dernier élément récent : une analyse de mars 2026 évoquant 50 % de part de marché en disponibilité des données et un rachat de 62,5 M$, de ton promotionnel et non recoupé. Position à garder sans renforcer tant que l'adoption n'est pas confirmée."
+      "recommendation": "Attendre",
+      "conviction": 4,
+      "constat": "Les mises à jour Matcha puis Hibiscus sont annoncées, mais le lancement d'Hibiscus n'est pas confirmé et l'unlock d'avril 2026 ne repose que sur une source peu fiable. Position déjà importante : donnée non confirmée sur tout catalyseur de la semaine, donc pas de renfort."
     },
     "chainlink": {
       "recommendation": "Conserver",
-      "conviction": 7,
-      "constat": "Chainlink a lancé Fulcrum (prêt/emprunt inter-chaînes pour institutions) le 30 septembre, CCIP 2.0 serait sorti le 28 septembre et Open Standard l'a nommé oracle de son stablecoin Open USD. À venir : DTCC Collateral AppChain (T4 2026) et SmartCon en novembre. Prix : de 12,08 $ au 15 octobre (Bitcoin.com) à 14,40 $ début octobre, donnée non confirmée."
+      "conviction": 6,
+      "constat": "Fondamentaux solides : partenariats institutionnels fin octobre (LG CNS/Banque de Corée, Anchorage, S&P Global, événement Link:NYC avec Swift, Citi, DTCC), mais cours en baisse d'environ 21 % sur le mois (sources agrégées, chiffres divergents) et aucune entrée nette sur les ETF LINK le 26 octobre. Conserver."
     },
     "the-graph": {
       "recommendation": "Conserver",
       "conviction": 4,
-      "constat": "Rewards Eligibility Oracle actif depuis le 26 août, mais Coinbase a suspendu la paire GRT-BTC et Bitget a retiré GRT/USDT en septembre (résumés CoinMarketCap, source secondaire). Prix autour de 0,025 $ le 17 octobre selon CoinStats, non recoupé. Aucune annonce officielle d'octobre trouvée."
+      "constat": "Aucune actualité 2026 trouvée sur The Graph : donnée non confirmée pour catalyseurs, unlocks et risques de la semaine. Revenu de la position à surveiller plutôt qu'à renforcer."
     },
     "peaq-2": {
       "recommendation": "Attendre",
-      "conviction": 4,
-      "constat": "La recherche n'a retourné aucun résultat sur peaq : aucune actualité, catalyseur ni unlock vérifiable cette semaine. Donnée non confirmée ; en l'absence de visibilité, on attend plutôt que de renforcer."
+      "conviction": 3,
+      "constat": "Aucune actualité vérifiable trouvée cette semaine sur peaq : donnée non confirmée. Petite position DePIN/machines à faible visibilité ; attendre un catalyseur confirmé."
     },
     "livepeer": {
       "recommendation": "Conserver",
-      "conviction": 5,
-      "constat": "Aucune actualité d'octobre 2026 trouvée sur Livepeer ; les pages de prix donnent des valeurs contradictoires (de 5,12 $ à 14,38 $, non datées), donc prix actuel : donnée non confirmée. Position modeste conservée sans nouveau signal."
+      "conviction": 4,
+      "constat": "Feuille de route évoquant une initiative de gestion du capital du protocole (échéance février 2026, avancement donnée non confirmée). Capitalisation faible d'après un instantané non daté, donc risque de liquidité élevé. Conserver sans renforcer."
     },
     "injective-protocol": {
       "recommendation": "Conserver",
       "conviction": 5,
-      "constat": "Dossier réglementaire en cours : enregistrement d'agent de transfert SEC déposé en juillet 2026 et livre blanc MiCA soumis, plus 43 500 INJ brûlés en juillet (résumés CoinMarketCap/KuCoin, secondaires). Connexion IBC testnet avec Cardano début août. Rien de confirmé pour octobre ; prix donnée non confirmée (4,65 à 5,18 $ selon les pages)."
+      "constat": "Un tracker indique l'offre intégralement débloquée, donc pas de pression d'unlock à venir. Catalyseurs de la semaine : donnée non confirmée. Petite ligne, à conserver."
     },
     "cartesi": {
-      "recommendation": "Attendre",
+      "recommendation": "Conserver",
       "conviction": 4,
-      "constat": "La recherche n'a renvoyé aucun résultat sur le projet Cartesi (uniquement des homonymes sans rapport) : aucun catalyseur ni risque vérifiable cette semaine. Donnée non confirmée ; on attend."
+      "constat": "Mises à jour mensuelles officielles jusqu'en juin 2026 : versions alpha du système de preuve de fraude en route vers la production. Aucune actualité d'octobre confirmée. Petite ligne spéculative à conserver."
     },
     "jupiter-exchange-solana": {
-      "recommendation": "Attendre",
+      "recommendation": "Conserver",
       "conviction": 4,
-      "constat": "Aucune actualité d'octobre 2026 trouvée ; les résultats ne couvrent que 2024-2025 (lancement du token, rachats de 50 % des frais annoncés en janvier 2025). L'état actuel des rachats et du calendrier de déblocage est donnée non confirmée."
+      "constat": "Aucun unlock ni catalyseur daté vérifié pour JUP cette semaine : donnée non confirmée. Dépend de l'activité de l'écosystème Solana ; petite ligne à conserver."
     },
     "arbitrum": {
       "recommendation": "Attendre",
-      "conviction": 4,
-      "constat": "Déblocage mensuel d'environ 92,65 M ARB (team et investisseurs) le 16 octobre, soit 1,6 à 2 % de l'offre circulante selon les sources, et récurrent jusqu'à début 2027 (CoinOtag, 247WallSt). ARB avait gagné environ 159 % en 60 jours début octobre à 0,20 $ : rebond fragile face à une pression vendeuse mensuelle."
+      "conviction": 3,
+      "constat": "Les déblocages mensuels d'ARB pour investisseurs et équipe pèsent structurellement sur le cours (source ancienne, calendrier 2026 : donnée non confirmée). Très petite ligne, pas de renfort."
     },
     "ondo-finance": {
       "recommendation": "Conserver",
-      "conviction": 5,
-      "constat": "Thèse RWA solide : environ 3,76 Md$ d'actifs on-chain, autorisation FINRA, lancement d'un service de tokenisation DTCC espéré en octobre (prévision de mai, non confirmée). Risque : le token ONDO ne capte pas encore les revenus du protocole, vote de gouvernance sur les frais en attente (Datawallet, Pluang)."
+      "conviction": 4,
+      "constat": "Le gros déblocage de janvier 2026 est passé ; le calendrier de novembre 2026 n'a pas été trouvé (donnée non confirmée). Thème actifs réels tokenisés porteur sur le long terme, ligne minime à conserver."
     },
     "aioz-network": {
-      "recommendation": "Attendre",
-      "conviction": 3,
-      "constat": "Aucune actualité d'octobre 2026 trouvée ; derniers éléments officiels de début 2026 (Vision Paper V2, outils pour développeurs). Les données d'offre vues sont incohérentes (1,28 Md en circulation pour 1 Md de plafond). Donnée non confirmée, conviction faible."
+      "recommendation": "Conserver",
+      "conviction": 4,
+      "constat": "Repositionnement en couche DePIN (Vision Paper V2, janvier 2026) et lancement S3 en février 2026 selon des sources secondaires. Aucune actualité récente confirmée ; conserver."
     },
     "zelcash": {
       "recommendation": "Attendre",
       "conviction": 3,
-      "constat": "Aucune actualité d'octobre 2026 trouvée sur Flux ; CoinMarketCap décrivait en août un marché de petites capitalisations en peur et peu liquide. Livraison des VPON prévus au T2 2026 : donnée non confirmée. Conviction faible."
+      "constat": "Aucune actualité 2026 trouvée sur Flux : donnée non confirmée. Projet DePIN ancien à faible visibilité, ne pas renforcer sans information vérifiée."
     }
   }
 }

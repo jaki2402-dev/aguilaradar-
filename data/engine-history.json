@@ -1,20 +1,20 @@
 {
   "current_version": "v1",
   "global_stats": {
-    "last_computed_at": "2026-10-28T08:56:49Z",
-    "total_verdicts_issued": 131,
-    "total_verdicts_resolved": 116,
-    "accuracy_strict_pct": 22.41,
-    "coverage_pct": 37.93,
-    "baseline_majority_class_pct": 40.52,
+    "last_computed_at": "2026-11-02T18:50:09Z",
+    "total_verdicts_issued": 134,
+    "total_verdicts_resolved": 121,
+    "accuracy_strict_pct": 21.49,
+    "coverage_pct": 40.5,
+    "baseline_majority_class_pct": 41.32,
     "baseline_buy_hold_btc_pct": 18.59,
-    "f1_macro": 19.82,
-    "f1_weighted": 16.51,
+    "f1_macro": 19.32,
+    "f1_weighted": 15.57,
     "confusion_matrix": {
       "ACHAT": {
         "ACHAT": 6,
         "ATTENTE": 6,
-        "VENTE": 28
+        "VENTE": 33
       },
       "ATTENTE": {
         "ACHAT": 39,
@@ -54,18 +54,15 @@
     "accuracy_by_market_regime": null
   },
   "routine_health": {
-    "last_success_at": "2026-10-31T00:18:27Z",
+    "last_success_at": "2026-11-03T00:15:00Z",
     "consecutive_failures": 0,
-    "last_failure_reason": "Cycle du 31/10/2026 00h15 UTC : cycle court, rien de dû (aucun verdict pending >6h après resolves_at) et aucun ticker sans verdict pending (15/15 couverts). Étape 0 (news-feed.json) : les 10 titres <24h restent des réactions/analyses du piratage Binance déjà consigné au cycle précédent (6,3 Md$, Corée du Nord) — rien de factuellement nouveau, pas d'ajout à news.json. 1 recherche complémentaire (fear&greed + autre hack) : aucune valeur fear&greed datée du jour trouvée, aucun autre hack/exploit confirmé sur 24-48h. Régime macro laissé inchangé (risk-off, calculé au cycle du 30/10 16h15 UTC, toujours valide). Aucun outil mcp__ utilisé."
+    "last_failure_reason": "Cycle du 03/11/2026 00h15 UTC : 2 tickers sans verdict pending (FLUX, LPT) -> 2 verdicts émis (ACHAT, règle retour_moyenne_prudent), aucun verdict en retard à résoudre. Étape 0 (news-feed.json) : nouveau développement significatif ajouté à news.json (quatre nouvelles attaques de plateformes dans les jours suivant le piratage de Binance, dont Mercado Bitcoin 46 M$), item le plus ancien retiré. Régime macro réévalué (incident Binance toujours actif, titre securite < 24h) : maintenu risk-off. Aucun outil mcp__ utilisé."
   },
   "macro_regime": {
-    "last_computed_at": "2026-10-30T16:18:55Z",
+    "last_computed_at": "2026-11-03T00:15:00Z",
     "regime": "risk-off",
-    "fear_greed_value": 57,
-    "btc_dominance_pct": 59.35,
-    "btc_dominance_trend_7d_pct": null,
-    "note": "Mise à jour du 30/10 16h UTC (règle « incident de marché » de la spec du cycle) : le piratage de Binance du 29/10 est réévalué par Binance à 6,3 Md$ (contre 1,7-5,8 Md$ en fourchette la veille) et attribué à un groupe lié à la Corée du Nord (Bloomberg, Yahoo Finance, Cybersecurity Dive, 30/10 15h UTC) ; le pirate détient plus de 420 000 ETH, une vente éventuelle ferait peser un risque baissier supplémentaire sur l'ether. Aucune autre faille exchange/DeFi/pont trouvée sur 24-48h (DefiLlama). Pas de nouvelle valeur fear&greed vérifiée depuis la réévaluation du 30/10 02h14 UTC (peur à 30) : régime maintenu risk-off sur la base de cette dernière lecture et de l'escalade confirmée du piratage. Signaux lents inchangés : Fed restrictive, stablecoins en hausse (11,2 % le 29/10), flux ETF non mis à jour depuis le 20/10.",
-    "resume": "Risk-off maintenu : piratage de Binance réévalué à 6,3 Md$ (Corée du Nord), risque de vente de 420 000 ETH par le pirate."
+    "note": "Piratage de Binance (6,3 Md$) toujours actif moins de 24 h avant ce cycle (nouveaux développements : 95 % des actifs couverts selon Binance, blanchiment nord-coréen rapide, quatre hacks supplémentaires sur d'autres plateformes) — pression risk-off forte qui prime sur les signaux lents. Signaux lents inchangés : Fed hawkish (taux 3,75-4,00 %, hausse anticipée en décembre), flux ETF BTC/ETH nets positifs mais anciens et non recoupés, dominance des stablecoins quasi stable (11,48 %).",
+    "resume": "Régime risk-off maintenu : piratage de Binance toujours actif avec de nouveaux développements inquiétants."
   },
   "paper_portfolio_stats": {
     "last_computed_at": "2026-09-13T23:26:00Z",
