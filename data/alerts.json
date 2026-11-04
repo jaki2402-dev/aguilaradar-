@@ -2076,5 +2076,35 @@
     "sentiment": "neutre",
     "message": "ARB entre en zone de survente (RSI 14 j à 21) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : +27 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
     "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261104-btc-rsi-survente",
+    "ticker_ou_theme": "BTC",
+    "type": "signal_technique",
+    "signal_kind": "rsi_survente",
+    "triggered_at": "2026-11-04T03:04:23Z",
+    "sentiment": "neutre",
+    "message": "BTC entre en zone de survente (RSI 14 j à 30) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : +6 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261104-eth-rsi-survente",
+    "ticker_ou_theme": "ETH",
+    "type": "signal_technique",
+    "signal_kind": "rsi_survente",
+    "triggered_at": "2026-11-04T03:04:23Z",
+    "sentiment": "neutre",
+    "message": "ETH entre en zone de survente (RSI 14 j à 29) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : +5 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261104-peaq-rsi-survente",
+    "ticker_ou_theme": "PEAQ",
+    "type": "signal_technique",
+    "signal_kind": "rsi_survente",
+    "triggered_at": "2026-11-04T03:04:23Z",
+    "sentiment": "neutre",
+    "message": "PEAQ entre en zone de survente (RSI 14 j à 26) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : +19 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
   }
 ]
