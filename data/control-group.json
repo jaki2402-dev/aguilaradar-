@@ -309,12 +309,12 @@
       "sampled_at": "2026-10-25T09:18:39Z",
       "price_at_issue": 0.172367,
       "resolves_at": "2026-11-08T09:18:39Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 0.13604,
+        "move_pct": -21.08,
+        "validated": false,
+        "resolved_at": "2026-11-08T13:54:18Z"
       }
     },
     {
@@ -324,12 +324,12 @@
       "sampled_at": "2026-10-25T09:18:39Z",
       "price_at_issue": 0.03917169,
       "resolves_at": "2026-11-08T09:18:39Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 0.0336486,
+        "move_pct": -14.1,
+        "validated": false,
+        "resolved_at": "2026-11-08T13:54:18Z"
       }
     },
     {
@@ -339,12 +339,12 @@
       "sampled_at": "2026-10-25T09:18:39Z",
       "price_at_issue": 0.00563332,
       "resolves_at": "2026-11-08T09:18:39Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 0.00482032,
+        "move_pct": -14.43,
+        "validated": false,
+        "resolved_at": "2026-11-08T13:54:18Z"
       }
     },
     {
@@ -354,18 +354,18 @@
       "sampled_at": "2026-10-25T09:18:39Z",
       "price_at_issue": 0.106931,
       "resolves_at": "2026-11-08T09:18:39Z",
-      "status": "pending",
+      "status": "resolved",
       "outcome": {
-        "price_at_resolution": null,
-        "move_pct": null,
-        "validated": null,
-        "resolved_at": null
+        "price_at_resolution": 0.0929138,
+        "move_pct": -13.11,
+        "validated": false,
+        "resolved_at": "2026-11-08T13:54:18Z"
       }
     }
   ],
   "stats": {
-    "total_resolved": 20,
-    "validated_pct": 25,
-    "note": "5 actifs sur 20 tirés au hasard dans le Top 300 ont pris +5 % ou plus en 14 jours. Recalculé par le robot de vérification le 08/11/2026."
+    "total_resolved": 24,
+    "validated_pct": 20.8,
+    "note": "5 actifs sur 24 tirés au hasard dans le Top 300 ont pris +5 % ou plus en 14 jours. Recalculé par le robot de vérification le 08/11/2026."
   }
 }
