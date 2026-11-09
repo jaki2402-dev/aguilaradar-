@@ -2166,5 +2166,35 @@
     "sentiment": "négatif",
     "message": "FLUX : -5,20 % depuis l'émission du verdict ACHAT du 03/11 (0,055899 $ → 0,052991 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
     "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
+  },
+  {
+    "id": "alert-20261109-eth-mm200-dessous",
+    "ticker_ou_theme": "ETH",
+    "type": "signal_technique",
+    "signal_kind": "mm200_dessous",
+    "triggered_at": "2026-11-09T02:50:00Z",
+    "sentiment": "négatif",
+    "message": "ETH passe sous sa moyenne 200 jours (−1 %) : la tendance de fond devient baissière. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261109-fet-rsi-survente",
+    "ticker_ou_theme": "FET",
+    "type": "signal_technique",
+    "signal_kind": "rsi_survente",
+    "triggered_at": "2026-11-09T02:50:00Z",
+    "sentiment": "neutre",
+    "message": "FET entre en zone de survente (RSI 14 j à 29) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : −25 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261109-tia-rsi-survente",
+    "ticker_ou_theme": "TIA",
+    "type": "signal_technique",
+    "signal_kind": "rsi_survente",
+    "triggered_at": "2026-11-09T02:50:00Z",
+    "sentiment": "neutre",
+    "message": "TIA entre en zone de survente (RSI 14 j à 29) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : +2 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
   }
 ]
