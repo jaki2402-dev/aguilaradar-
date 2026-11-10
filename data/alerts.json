@@ -2216,5 +2216,15 @@
     "sentiment": "neutre",
     "message": "LPT entre en zone de survente (RSI 14 j à 29) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : −21 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
     "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261110-btc-seuil",
+    "ticker_ou_theme": "BTC",
+    "type": "seuil_technique",
+    "triggered_at": "2026-11-10T18:12:31Z",
+    "verdict_id": "v-20261102-btc",
+    "sentiment": "négatif",
+    "message": "BTC : -5,38 % depuis l'émission du verdict ACHAT du 02/11 (77 389,00 $ → 73 227,00 $), seuil de mouvement directionnel de 5 % franchi à la baisse, en sens opposé au verdict. Calcul automatique sur le prix, sans analyse d'actualité — le verdict reste à juger à son échéance.",
+    "source": "Calcul automatique (GitHub Action price-alerts) : prix CoinGecko /simple/price vs price_at_issue du verdict, même devise (USD)"
   }
 ]
