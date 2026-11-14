@@ -2256,5 +2256,35 @@
     "sentiment": "négatif",
     "message": "PEAQ passe sous sa moyenne 200 jours (−0 %) : la tendance de fond devient baissière. Mesure automatique sur les cours, pas un conseil.",
     "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261114-tia-mm200-dessous",
+    "ticker_ou_theme": "TIA",
+    "type": "signal_technique",
+    "signal_kind": "mm200_dessous",
+    "triggered_at": "2026-11-14T03:25:06Z",
+    "sentiment": "négatif",
+    "message": "TIA passe sous sa moyenne 200 jours (−5 %) : la tendance de fond devient baissière. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261114-link-mm200-dessous",
+    "ticker_ou_theme": "LINK",
+    "type": "signal_technique",
+    "signal_kind": "mm200_dessous",
+    "triggered_at": "2026-11-14T03:25:06Z",
+    "sentiment": "négatif",
+    "message": "LINK passe sous sa moyenne 200 jours (−2 %) : la tendance de fond devient baissière. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261114-btc-rsi-survente",
+    "ticker_ou_theme": "BTC",
+    "type": "signal_technique",
+    "signal_kind": "rsi_survente",
+    "triggered_at": "2026-11-14T03:25:06Z",
+    "sentiment": "neutre",
+    "message": "BTC entre en zone de survente (RSI 14 j à 28) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : −6 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
   }
 ]
