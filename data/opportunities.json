@@ -935,8 +935,13 @@
         },
         "j14": {
           "check_at": "2026-11-14T04:12:00Z",
-          "status": "pending",
-          "outcome": null
+          "status": "resolved",
+          "outcome": {
+            "price_at_check": 65.04964598807139,
+            "move_pct": -18.67,
+            "validated": false,
+            "checked_at": "2026-11-14T07:02:13Z"
+          }
         },
         "m6": {
           "check_at": "2027-05-01T04:12:00Z",
