@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-16T10:08:20Z",
+  "updated_at": "2026-11-16T20:39:49Z",
   "fear_greed": {
     "value": 10,
     "classification": "Extreme Fear",
@@ -7,8 +7,8 @@
     "source": "alternative.me /fng (Crypto Fear & Greed Index)"
   },
   "btc_dominance": {
-    "pct": 59.29,
-    "as_of": "2026-11-16T10:01:54Z",
+    "pct": 58.69,
+    "as_of": "2026-11-16T20:33:34Z",
     "source": "CoinGecko /api/v3/global (market_cap_percentage.btc)"
   },
   "gold": null,
@@ -18,8 +18,8 @@
     "source": "FRED (Réserve fédérale de Saint-Louis), série DGS10"
   },
   "stablecoins": {
-    "total_usd": 287089412726,
-    "change_7d_pct": -1.41,
+    "total_usd": 287100675874,
+    "change_7d_pct": -1.42,
     "as_of": "2026-11-16T00:00:00Z",
     "source": "DefiLlama /stablecoincharts/all (stablecoins adossés au dollar)"
   },
