@@ -1,10 +1,10 @@
 {
-  "updated_at": "2026-11-19T04:19:04Z",
+  "updated_at": "2026-11-20T04:07:05Z",
   "method": "Cas réels : chaque favori, chaque jour avec 200 jours d'historique ; issue = cours 7 ou 14 jours plus tard (horizon de l'actif), seuil ±5 %, comme les verdicts. 60 % des jours les plus anciens pour apprendre, les plus récents pour noter.",
   "period": {
-    "from": "2026-06-07",
-    "cut": "2026-09-10",
-    "to": "2026-11-12"
+    "from": "2026-06-08",
+    "cut": "2026-09-11",
+    "to": "2026-11-13"
   },
   "samples": {
     "total": 2343,
@@ -12,61 +12,61 @@
     "valid": 918
   },
   "actual_valid": {
-    "ACHAT": 251,
+    "ACHAT": 244,
     "ATTENTE": 212,
-    "VENTE": 455
+    "VENTE": 462
   },
   "rules": {
     "tendance_rsi": {
-      "train": 33,
-      "valid": 29,
+      "train": 33.2,
+      "valid": 29.2,
       "name": "Tendance + RSI",
       "real_recent": 16.7
     },
     "retour_moyenne_rsi": {
-      "train": 30.5,
-      "valid": 28.5,
+      "train": 30.2,
+      "valid": 27.9,
       "name": "Retour à la moyenne (RSI)",
       "real_recent": 0
     },
     "retour_moyenne_marche": {
-      "train": 29.8,
-      "valid": 27.7,
+      "train": 29.6,
+      "valid": 27,
       "name": "Retour à la moyenne + marché",
       "real_recent": 0
     },
     "tendance_pure": {
-      "train": 27.8,
-      "valid": 27.5,
+      "train": 27.9,
+      "valid": 27.8,
       "name": "Suivi de tendance",
       "real_recent": 16.7
     },
     "marche_baissier_protege": {
-      "train": 29.8,
-      "valid": 28.5,
+      "train": 29.5,
+      "valid": 28.1,
       "name": "Retour à la moyenne protégé",
       "real_recent": 0
     },
     "sentiment_marche": {
-      "train": 30.5,
-      "valid": 28.5,
+      "train": 30.2,
+      "valid": 27.9,
       "name": "Sentiment de marché",
       "real_recent": 0
     },
     "sentiment_marche_rsi": {
-      "train": 30.5,
-      "valid": 28.5,
+      "train": 30.2,
+      "valid": 27.9,
       "name": "Sentiment de marché + RSI",
       "real_recent": 0
     },
     "retour_moyenne_prudent": {
-      "train": 33.8,
-      "valid": 28.1,
+      "train": 33.6,
+      "valid": 27.5,
       "name": "Retour à la moyenne prudent",
       "real_recent": 0
     },
     "regle_apprise": {
-      "train": 39.9,
+      "train": 39.7,
       "valid": 23.1,
       "name": "Règle apprise",
       "real_recent": 0
@@ -81,7 +81,7 @@
         "threshold": 400.65,
         "left": {
           "leaf": "ATTENTE",
-          "n": 630
+          "n": 615
         },
         "right": {
           "leaf": "VENTE",
@@ -93,7 +93,7 @@
         "threshold": 400.65,
         "left": {
           "leaf": "ACHAT",
-          "n": 315
+          "n": 330
         },
         "right": {
           "leaf": "ATTENTE",
@@ -111,80 +111,106 @@
   "selected": "retour_moyenne_prudent",
   "features": [
     {
+      "key": "fng",
+      "name": "Peur / cupidité",
+      "low_below": 27,
+      "high_from": 59,
+      "train": {
+        "low_n": 645,
+        "high_n": 330,
+        "up_low": 20.9,
+        "up_high": 43.9,
+        "down_low": 36.3,
+        "down_high": 19.1
+      },
+      "valid": {
+        "low_n": 33,
+        "high_n": 480,
+        "up_low": 9.1,
+        "up_high": 32.7,
+        "down_low": 63.6,
+        "down_high": 38.5
+      },
+      "up_diff_train": 23,
+      "up_diff_valid": 23.6,
+      "predictive": true,
+      "direction": "plus haut → plus de hausses"
+    },
+    {
       "key": "valuation_percentile",
       "name": "Valorisation (centile 1 an)",
       "low_below": 28,
       "high_from": 69,
       "train": {
-        "low_n": 344,
-        "high_n": 594,
-        "up_low": 20.6,
-        "up_high": 34,
-        "down_low": 37.8,
-        "down_high": 25.1
+        "low_n": 340,
+        "high_n": 595,
+        "up_low": 20.9,
+        "up_high": 33.9,
+        "down_low": 37.9,
+        "down_high": 25.4
       },
       "valid": {
-        "low_n": 426,
+        "low_n": 427,
         "high_n": 190,
-        "up_low": 31.5,
-        "up_high": 14.7,
-        "down_low": 50.5,
-        "down_high": 57.9
+        "up_low": 30.4,
+        "up_high": 13.7,
+        "down_low": 51.8,
+        "down_high": 58.4
       },
-      "up_diff_train": 13.4,
-      "up_diff_valid": -16.8,
+      "up_diff_train": 13,
+      "up_diff_valid": -16.7,
       "predictive": false,
       "direction": null
     },
     {
       "key": "drawdown_pct",
       "name": "Repli depuis le plus haut",
-      "low_below": -54.3,
-      "high_from": -33,
+      "low_below": -52.7,
+      "high_from": -32.2,
       "train": {
-        "low_n": 660,
-        "high_n": 273,
-        "up_low": 32.4,
-        "up_high": 22,
-        "down_low": 30.8,
-        "down_high": 33.3
+        "low_n": 658,
+        "high_n": 267,
+        "up_low": 32.1,
+        "up_high": 21.3,
+        "down_low": 31.2,
+        "down_high": 34.8
       },
       "valid": {
-        "low_n": 119,
-        "high_n": 508,
-        "up_low": 37,
-        "up_high": 19.7,
-        "down_low": 50.4,
-        "down_high": 50
+        "low_n": 122,
+        "high_n": 514,
+        "up_low": 34.4,
+        "up_high": 19.8,
+        "down_low": 53.3,
+        "down_high": 50.4
       },
-      "up_diff_train": -10.4,
-      "up_diff_valid": -17.3,
+      "up_diff_train": -10.8,
+      "up_diff_valid": -14.6,
       "predictive": true,
       "direction": "plus bas → plus de hausses"
     },
     {
       "key": "rel_strength_30d",
       "name": "Force relative vs BTC (30 j)",
-      "low_below": -8.5,
-      "high_from": 5.3,
+      "low_below": -8.6,
+      "high_from": 5.2,
       "train": {
-        "low_n": 587,
-        "high_n": 289,
-        "up_low": 32.5,
-        "up_high": 22.5,
-        "down_low": 32.5,
-        "down_high": 31.8
+        "low_n": 585,
+        "high_n": 295,
+        "up_low": 32.3,
+        "up_high": 23.1,
+        "down_low": 32.6,
+        "down_high": 32.5
       },
       "valid": {
-        "low_n": 190,
-        "high_n": 492,
-        "up_low": 12.6,
+        "low_n": 196,
+        "high_n": 487,
+        "up_low": 11.7,
         "up_high": 33.7,
-        "down_low": 65.8,
-        "down_high": 43.5
+        "down_low": 67.3,
+        "down_high": 43.3
       },
-      "up_diff_train": -10,
-      "up_diff_valid": 21.1,
+      "up_diff_train": -9.2,
+      "up_diff_valid": 22,
       "predictive": false,
       "direction": null
     },
@@ -194,75 +220,23 @@
       "low_below": -4.9,
       "high_from": 2.8,
       "train": {
-        "low_n": 428,
-        "high_n": 483,
-        "up_low": 39,
-        "up_high": 29.2,
-        "down_low": 23.1,
-        "down_high": 32.7
+        "low_n": 413,
+        "high_n": 496,
+        "up_low": 38.3,
+        "up_high": 29.4,
+        "down_low": 23.7,
+        "down_high": 33.1
       },
       "valid": {
-        "low_n": 351,
-        "high_n": 299,
-        "up_low": 19.1,
-        "up_high": 40.5,
-        "down_low": 57.5,
+        "low_n": 359,
+        "high_n": 288,
+        "up_low": 18.7,
+        "up_high": 40.3,
+        "down_low": 57.9,
         "down_high": 36.5
       },
-      "up_diff_train": -9.8,
-      "up_diff_valid": 21.4,
-      "predictive": false,
-      "direction": null
-    },
-    {
-      "key": "sma200_gap_pct",
-      "name": "Écart à la moyenne 200 j",
-      "low_below": -12.8,
-      "high_from": 14.3,
-      "train": {
-        "low_n": 742,
-        "high_n": 199,
-        "up_low": 29.6,
-        "up_high": 20.6,
-        "down_low": 30.9,
-        "down_high": 35.7
-      },
-      "valid": {
-        "low_n": 35,
-        "high_n": 583,
-        "up_low": 57.1,
-        "up_high": 24.4,
-        "down_low": 37.1,
-        "down_high": 47.7
-      },
-      "up_diff_train": -9,
-      "up_diff_valid": -32.7,
-      "predictive": false,
-      "direction": null
-    },
-    {
-      "key": "macd_histogram",
-      "name": "Élan MACD",
-      "low_below": 0,
-      "high_from": 0,
-      "train": {
-        "low_n": 330,
-        "high_n": 555,
-        "up_low": 36.7,
-        "up_high": 27.9,
-        "down_low": 24.5,
-        "down_high": 31.2
-      },
-      "valid": {
-        "low_n": 451,
-        "high_n": 226,
-        "up_low": 19.7,
-        "up_high": 34.1,
-        "down_low": 55.9,
-        "down_high": 37.6
-      },
-      "up_diff_train": -8.8,
-      "up_diff_valid": 14.4,
+      "up_diff_train": -8.9,
+      "up_diff_valid": 21.6,
       "predictive": false,
       "direction": null
     },
@@ -270,51 +244,25 @@
       "key": "volatility_30d_pct",
       "name": "Volatilité 30 j",
       "low_below": 64,
-      "high_from": 91,
+      "high_from": 90,
       "train": {
-        "low_n": 637,
-        "high_n": 289,
-        "up_low": 35.3,
-        "up_high": 26.6,
+        "low_n": 636,
+        "high_n": 293,
+        "up_low": 35.2,
+        "up_high": 26.3,
         "down_low": 25.3,
-        "down_high": 36.7
+        "down_high": 38.2
       },
       "valid": {
-        "low_n": 130,
-        "high_n": 492,
-        "up_low": 16.2,
-        "up_high": 27.8,
-        "down_low": 49.2,
-        "down_high": 50.6
+        "low_n": 131,
+        "high_n": 493,
+        "up_low": 13.7,
+        "up_high": 27.4,
+        "down_low": 51.1,
+        "down_high": 50.5
       },
-      "up_diff_train": -8.7,
-      "up_diff_valid": 11.6,
-      "predictive": false,
-      "direction": null
-    },
-    {
-      "key": "volume_ratio",
-      "name": "Volume 7 j / 30 j",
-      "low_below": 0.81,
-      "high_from": 1.04,
-      "train": {
-        "low_n": 439,
-        "high_n": 462,
-        "up_low": 25.7,
-        "up_high": 34,
-        "down_low": 39.4,
-        "down_high": 25.3
-      },
-      "valid": {
-        "low_n": 320,
-        "high_n": 321,
-        "up_low": 14.1,
-        "up_high": 38,
-        "down_low": 61.6,
-        "down_high": 40.8
-      },
-      "up_diff_train": 8.3,
-      "up_diff_valid": 23.9,
+      "up_diff_train": -8.9,
+      "up_diff_valid": 13.7,
       "predictive": false,
       "direction": null
     },
@@ -326,21 +274,99 @@
       "train": {
         "low_n": 165,
         "high_n": 690,
-        "up_low": 29.1,
+        "up_low": 27.9,
         "up_high": 19.7,
-        "down_low": 28.5,
+        "down_low": 31.5,
         "down_high": 37
       },
       "valid": {
         "low_n": 603,
         "high_n": 105,
-        "up_low": 27,
+        "up_low": 25.9,
         "up_high": 35.2,
-        "down_low": 54.4,
+        "down_low": 55.6,
         "down_high": 32.4
       },
-      "up_diff_train": -9.4,
-      "up_diff_valid": 8.2,
+      "up_diff_train": -8.2,
+      "up_diff_valid": 9.3,
+      "predictive": false,
+      "direction": null
+    },
+    {
+      "key": "volume_ratio",
+      "name": "Volume 7 j / 30 j",
+      "low_below": 0.81,
+      "high_from": 1.03,
+      "train": {
+        "low_n": 436,
+        "high_n": 484,
+        "up_low": 25.5,
+        "up_high": 33.5,
+        "down_low": 39.7,
+        "down_high": 26
+      },
+      "valid": {
+        "low_n": 328,
+        "high_n": 318,
+        "up_low": 13.7,
+        "up_high": 38.1,
+        "down_low": 61.9,
+        "down_high": 40.6
+      },
+      "up_diff_train": 8,
+      "up_diff_valid": 24.4,
+      "predictive": false,
+      "direction": null
+    },
+    {
+      "key": "macd_histogram",
+      "name": "Élan MACD",
+      "low_below": 0,
+      "high_from": 0,
+      "train": {
+        "low_n": 325,
+        "high_n": 562,
+        "up_low": 35.7,
+        "up_high": 27.9,
+        "down_low": 25.8,
+        "down_high": 31.5
+      },
+      "valid": {
+        "low_n": 456,
+        "high_n": 219,
+        "up_low": 19.1,
+        "up_high": 33.8,
+        "down_low": 56.4,
+        "down_high": 37.4
+      },
+      "up_diff_train": -7.8,
+      "up_diff_valid": 14.7,
+      "predictive": false,
+      "direction": null
+    },
+    {
+      "key": "sma200_gap_pct",
+      "name": "Écart à la moyenne 200 j",
+      "low_below": -12.3,
+      "high_from": 14.3,
+      "train": {
+        "low_n": 742,
+        "high_n": 205,
+        "up_low": 28.7,
+        "up_high": 21,
+        "down_low": 31.3,
+        "down_high": 37.1
+      },
+      "valid": {
+        "low_n": 39,
+        "high_n": 580,
+        "up_low": 48.7,
+        "up_high": 24.1,
+        "down_low": 43.6,
+        "down_high": 47.6
+      },
+      "up_diff_train": -7.7,
+      "up_diff_valid": -24.6,
       "predictive": false,
       "direction": null
     },
@@ -350,48 +376,48 @@
       "low_below": 43.7,
       "high_from": 55.4,
       "train": {
-        "low_n": 345,
+        "low_n": 330,
         "high_n": 585,
-        "up_low": 37.4,
+        "up_low": 36.4,
         "up_high": 30.4,
-        "down_low": 22.6,
+        "down_low": 23.3,
         "down_high": 26.8
       },
       "valid": {
-        "low_n": 423,
+        "low_n": 438,
         "high_n": 210,
-        "up_low": 11.6,
+        "up_low": 11.2,
         "up_high": 30.5,
-        "down_low": 67.8,
+        "down_low": 68.5,
         "down_high": 32.9
       },
-      "up_diff_train": -7,
-      "up_diff_valid": 18.9,
+      "up_diff_train": -6,
+      "up_diff_valid": 19.3,
       "predictive": false,
       "direction": null
     },
     {
       "key": "change_30d",
       "name": "Évolution 30 j",
-      "low_below": -11.3,
-      "high_from": 12,
+      "low_below": -11.4,
+      "high_from": 11.9,
       "train": {
-        "low_n": 593,
-        "high_n": 275,
-        "up_low": 28.2,
-        "up_high": 28.7,
-        "down_low": 34.9,
-        "down_high": 25.8
+        "low_n": 580,
+        "high_n": 290,
+        "up_low": 27.1,
+        "up_high": 29.3,
+        "down_low": 35.7,
+        "down_high": 27.2
       },
       "valid": {
-        "low_n": 187,
-        "high_n": 507,
-        "up_low": 2.7,
-        "up_high": 40.6,
-        "down_low": 75.4,
-        "down_high": 36.3
+        "low_n": 200,
+        "high_n": 495,
+        "up_low": 2.5,
+        "up_high": 40.4,
+        "down_low": 76.5,
+        "down_high": 36.2
       },
-      "up_diff_train": 0.5,
+      "up_diff_train": 2.2,
       "up_diff_valid": 37.9,
       "predictive": false,
       "direction": null
@@ -399,77 +425,51 @@
     {
       "key": "rsi14",
       "name": "RSI 14 j",
-      "low_below": 39,
+      "low_below": 39.1,
       "high_from": 56.4,
       "train": {
-        "low_n": 498,
-        "high_n": 435,
-        "up_low": 31.7,
-        "up_high": 32,
-        "down_low": 28.3,
-        "down_high": 22.1
+        "low_n": 486,
+        "high_n": 439,
+        "up_low": 30.9,
+        "up_high": 32.1,
+        "down_low": 29,
+        "down_high": 22.3
       },
       "valid": {
-        "low_n": 283,
-        "high_n": 347,
-        "up_low": 6.4,
-        "up_high": 39.2,
-        "down_low": 69.3,
+        "low_n": 294,
+        "high_n": 344,
+        "up_low": 6.1,
+        "up_high": 39,
+        "down_low": 70.1,
         "down_high": 34.6
       },
-      "up_diff_train": 0.3,
-      "up_diff_valid": 32.8,
+      "up_diff_train": 1.2,
+      "up_diff_valid": 32.9,
       "predictive": false,
       "direction": null
     },
     {
       "key": "btc_gap",
       "name": "Bitcoin vs sa moyenne 200 j",
-      "low_below": -10.6,
+      "low_below": -10.5,
       "high_from": 11.7,
       "train": {
         "low_n": 780,
-        "high_n": 255,
-        "up_low": 20.4,
-        "up_high": 37.3,
-        "down_low": 33.8,
-        "down_high": 22.4
+        "high_n": 270,
+        "up_low": 19.4,
+        "up_high": 37.8,
+        "down_low": 34.9,
+        "down_high": 23.3
       },
       "valid": {
         "low_n": 0,
-        "high_n": 540,
+        "high_n": 525,
         "up_low": null,
-        "up_high": 23,
+        "up_high": 22.3,
         "down_low": null,
-        "down_high": 47.4
+        "down_high": 47.6
       },
-      "up_diff_train": 16.9,
-      "up_diff_valid": null,
-      "predictive": false,
-      "direction": null
-    },
-    {
-      "key": "fng",
-      "name": "Peur / cupidité",
-      "low_below": 27,
-      "high_from": 59,
-      "train": {
-        "low_n": 660,
-        "high_n": 315,
-        "up_low": 21.8,
-        "up_high": 43.8,
-        "down_low": 35.6,
-        "down_high": 18.1
-      },
-      "valid": {
-        "low_n": 24,
-        "high_n": 495,
-        "up_low": 12.5,
-        "up_high": 33.1,
-        "down_low": 58.3,
-        "down_high": 38.6
-      },
-      "up_diff_train": 22,
+      "up_diff_train": 18.4,
       "up_diff_valid": null,
       "predictive": false,
       "direction": null
@@ -477,31 +477,31 @@
   ],
   "errors": {
     "n": 918,
-    "error_pct": 71.9,
+    "error_pct": 72.5,
     "worst": [
       {
         "key": "rsi14",
         "name": "RSI 14 j",
         "zone": "bas",
-        "bound": 40.2,
-        "n": 306,
-        "error_pct": 93.1
+        "bound": 39.7,
+        "n": 305,
+        "error_pct": 93.8
       },
       {
         "key": "change_30d",
         "name": "Évolution 30 j",
         "zone": "bas",
-        "bound": 3.7,
+        "bound": 2.5,
         "n": 306,
-        "error_pct": 92.2
+        "error_pct": 93.8
       },
       {
         "key": "volume_ratio",
         "name": "Volume 7 j / 30 j",
         "zone": "bas",
-        "bound": 0.8,
-        "n": 304,
-        "error_pct": 87.2
+        "bound": 0.79,
+        "n": 300,
+        "error_pct": 88
       }
     ],
     "best": [
@@ -509,17 +509,9 @@
         "key": "btc_macd",
         "name": "Élan du bitcoin",
         "zone": "bas",
-        "bound": -491.14,
+        "bound": -481.34,
         "n": 300,
-        "error_pct": 54.3
-      },
-      {
-        "key": "rsi14",
-        "name": "RSI 14 j",
-        "zone": "haut",
-        "bound": 58.6,
-        "n": 308,
-        "error_pct": 58.1
+        "error_pct": 56
       },
       {
         "key": "macd_histogram",
@@ -527,28 +519,36 @@
         "zone": "haut",
         "bound": 0,
         "n": 306,
-        "error_pct": 58.2
+        "error_pct": 57.2
+      },
+      {
+        "key": "rsi14",
+        "name": "RSI 14 j",
+        "zone": "haut",
+        "bound": 58.5,
+        "n": 306,
+        "error_pct": 57.8
       }
     ]
   },
   "calibration": {
     "ACHAT": {
-      "n": 816,
-      "correct": 223,
+      "n": 817,
+      "correct": 217,
       "btc": {
         "hausse": {
           "n": 61,
           "correct": 26
         },
         "baisse": {
-          "n": 755,
-          "correct": 197
+          "n": 756,
+          "correct": 191
         }
       },
       "pct": 27
     },
     "ATTENTE": {
-      "n": 102,
+      "n": 101,
       "correct": 35,
       "btc": {
         "hausse": {
@@ -556,11 +556,11 @@
           "correct": 19
         },
         "baisse": {
-          "n": 43,
+          "n": 42,
           "correct": 16
         }
       },
-      "pct": 34
+      "pct": 35
     },
     "VENTE": {
       "n": 0,
@@ -582,8 +582,8 @@
   "corrections": {
     "method": "Par situation (élan du bitcoin × peur/cupidité) : si une autre issue a été plus fréquente d'au moins 10 points sur au moins 80 cas, l'appel de la règle est corrigé vers elle. Validation : apprise sur la période ancienne, notée sur la récente.",
     "test": {
-      "raw_valid": 28.1,
-      "corrected_valid": 28.1,
+      "raw_valid": 27.5,
+      "corrected_valid": 27.5,
       "learned_on_train": 1
     },
     "used": false,
