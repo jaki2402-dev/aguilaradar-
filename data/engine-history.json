@@ -168,6 +168,17 @@
       "validation_score_before_pct": 13.3,
       "validation_score_after_pct": null,
       "status": "accepted"
+    },
+    {
+      "id": "corr-auto-20261121-tendance_rsi",
+      "logged_at": "2026-11-21T04:06:34Z",
+      "trigger": "Auto-sélection quotidienne de la règle du moteur (GitHub Action technical-daily)",
+      "what": "Sur les 30 derniers verdicts vérifiés (indicateurs connus le jour de l'émission) : tendance_rsi 16.7 %, retour_moyenne_rsi 0 %, retour_moyenne_marche 0 %, tendance_pure 16.7 %, marche_baissier_protege 0 %, sentiment_marche 0 %, sentiment_marche_rsi 0 %, retour_moyenne_prudent 0 %, regle_apprise 0 %.",
+      "why": "La règle « tendance_rsi » fait mieux que « retour_moyenne_prudent » d'au moins 5 points sur au moins 20 verdicts : seuil de changement automatique atteint.",
+      "action": "Règle du moteur : retour_moyenne_prudent → tendance_rsi (docs/routines/cycle-2h-verdict.md §2 : le cycle applique proposed_verdict, qui suit la règle choisie).",
+      "validation_score_before_pct": 0,
+      "validation_score_after_pct": null,
+      "status": "accepted"
     }
   ]
 }
