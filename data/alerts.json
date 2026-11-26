@@ -2416,5 +2416,15 @@
     "sentiment": "négatif",
     "message": "INJ passe sous sa moyenne 200 jours (−2 %) : la tendance de fond devient baissière. Mesure automatique sur les cours, pas un conseil.",
     "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
+  },
+  {
+    "id": "alert-20261126-peaq-rsi-survente",
+    "ticker_ou_theme": "PEAQ",
+    "type": "signal_technique",
+    "signal_kind": "rsi_survente",
+    "triggered_at": "2026-11-26T05:15:12Z",
+    "sentiment": "neutre",
+    "message": "PEAQ entre en zone de survente (RSI 14 j à 29) : forte baisse récente, un rebond est possible sans être garanti. Tendance de fond : −25 % vs moyenne 200 j. Mesure automatique sur les cours, pas un conseil.",
+    "source": "Calcul automatique (GitHub Action technical-daily) : lecture technique du jour comparée à celle de la veille, historique CoinGecko"
   }
 ]
